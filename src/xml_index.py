@@ -47,12 +47,25 @@ def main():
         url="http://localhost:11434/api/embeddings",
     )
 
-    collection = client.get_or_create_collection(
+    # Delete the existing collection so every indexing run
+    # starts with a completely fresh collection.
+    print(f"Deleting existing collection: {COLLECTION_NAME}")
+
+    try:
+        client.delete_collection(
+            name=COLLECTION_NAME
+        )
+        print("  Existing collection deleted.")
+    except Exception as e:
+        print(f"  Collection did not exist or could not be deleted: {e}")
+
+    # Create a new empty collection.
+    collection = client.create_collection(
         name=COLLECTION_NAME,
         embedding_function=embedding_function,
     )
 
-    print(f"Collection: {COLLECTION_NAME}")
+    print(f"Created new collection: {COLLECTION_NAME}")
     print()
 
     all_chunks = []
@@ -129,6 +142,8 @@ def main():
                 "paragraph": chunk["paragraph"],
                 "eId": chunk["eId"],
                 "xpath": chunk["xpath"],
+                "table_row": str(chunk.get("table_row", "")),
+                "table_title": chunk.get("table_title", ""),
             }
 
             metadatas.append(metadata)

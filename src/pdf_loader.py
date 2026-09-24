@@ -4,8 +4,8 @@ import fitz
 
 def extract_pdf_chunks(
     pdf_path: str,
-    chunk_size: int = 1200,
-    overlap: int = 200,
+    chunk_size: int = 2000,
+    overlap: int = 300,
 ) -> list[dict]:
     """
     Extract text from a PDF and split it into overlapping chunks.

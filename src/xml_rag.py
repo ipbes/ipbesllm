@@ -25,7 +25,7 @@ COLLECTION_NAME = "xml_documents"
 
 def retrieve(
     question: str,
-    k: int = 5,
+    k: int = 10,
 ):
 
     client = chromadb.PersistentClient(

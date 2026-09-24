@@ -242,6 +242,7 @@ def paragraph_text(paragraph: ET.Element) -> str:
     return clean_text(" ".join(parts))
 
 
+
 def table_rows(table: ET.Element):
     """
     Convert an Akoma Ntoso table into row-level text chunks.
@@ -270,6 +271,72 @@ def table_rows(table: ET.Element):
 
     return rows
 
+def get_table_context(
+    table: ET.Element,
+    parent_map: dict,
+) -> dict:
+    """
+    Extract useful contextual information surrounding
+    an Akoma Ntoso table.
+    """
+
+    context = {
+        "table_title": "",
+        "table_description": "",
+        "division": "",
+        "subdivision": "",
+    }
+
+    divisions, subdivisions = get_heading_context(
+        table,
+        parent_map,
+    )
+
+    if divisions:
+        context["division"] = divisions[-1]
+
+    if subdivisions:
+        context["subdivision"] = subdivisions[-1]
+
+    # The table normally lives inside a subdivision.
+    parent = parent_map.get(table)
+
+    if parent is not None:
+
+        # Look for a heading associated with the table's
+        # containing subdivision.
+        heading = first_child(parent, "heading")
+
+        if heading is not None:
+            context["table_title"] = element_text(
+                heading
+            )
+
+        # Look for descriptive <p> elements before the table.
+        for child in list(parent):
+
+            if child is table:
+                break
+
+            if local_name(child.tag) == "content":
+
+                for p in child.iter():
+
+                    if local_name(p.tag) == "p":
+
+                        text = element_text(p)
+
+                        if text:
+                            context["table_description"] = text
+
+                            # Usually the first descriptive
+                            # paragraph is enough.
+                            break
+
+                if context["table_description"]:
+                    break
+
+    return context
 
 def parse_akn_file(xml_path: str) -> list[dict]:
     """
@@ -497,65 +564,144 @@ def parse_akn_file(xml_path: str) -> list[dict]:
             parent_map,
         )
 
-        divisions, subdivisions = get_heading_context(
+        table_context = get_table_context(
             table,
             parent_map,
         )
 
-        section = divisions[-1] if divisions else ""
-        subsection = subdivisions[-1] if subdivisions else ""
-
         rows = table_rows(table)
 
-        for row_number, row_text in enumerate(rows, start=1):
+        if not rows:
+            continue
+
+        # --------------------------------------------------------
+        # Extract the first row as a header when appropriate.
+        # --------------------------------------------------------
+
+        header = rows[0]
+
+        # --------------------------------------------------------
+        # Create one chunk per row, but repeat the table context
+        # in EVERY row.
+        # --------------------------------------------------------
+
+        for row_number, row_text in enumerate(
+            rows,
+            start=1,
+        ):
 
             context_lines = []
 
             if document_metadata["title"]:
                 context_lines.append(
-                    f"Document: {document_metadata['title']}"
+                    f"Document: "
+                    f"{document_metadata['title']}"
                 )
 
-            if section:
+            if document_metadata["date"]:
                 context_lines.append(
-                    f"Section: {section}"
+                    f"Date: "
+                    f"{document_metadata['date']}"
                 )
 
-            if subsection:
+            if table_context["division"]:
                 context_lines.append(
-                    f"Subsection: {subsection}"
+                    f"Section: "
+                    f"{table_context['division']}"
+                )
+
+            if table_context["subdivision"]:
+                context_lines.append(
+                    f"Table: "
+                    f"{table_context['subdivision']}"
+                )
+
+            if table_context["table_title"]:
+                context_lines.append(
+                    f"Table title: "
+                    f"{table_context['table_title']}"
+                )
+
+            if table_context["table_description"]:
+                context_lines.append(
+                    f"Table description: "
+                    f"{table_context['table_description']}"
                 )
 
             context_lines.append(
                 f"Table row: {row_number}"
             )
 
+            # Include column/header information with every row.
+            if row_number != 1:
+                context_lines.append(
+                    f"Table header: {header}"
+                )
+
             context_lines.append("")
-            context_lines.append(row_text)
+            context_lines.append(
+                f"Row data: {row_text}"
+            )
 
             chunks.append(
                 {
-                    "text": "\n".join(context_lines),
+                    "text": "\n".join(
+                        context_lines
+                    ),
+
                     "source_file": path.name,
+
                     "chunk_id": (
                         f"{path.stem}-"
                         f"table-{chunk_index}-"
                         f"row-{row_number}"
                     ),
+
                     "chunk_type": "table_row",
-                    "document_type": document_metadata["document_type"],
-                    "title": document_metadata["title"],
-                    "date": document_metadata["date"],
-                    "language": document_metadata["language"],
-                    "country": document_metadata["country"],
-                    "subtype": document_metadata["subtype"],
-                    "number": document_metadata["number"],
-                    "division": section,
-                    "subdivision": subsection,
+
+                    "document_type":
+                        document_metadata[
+                            "document_type"
+                        ],
+
+                    "title":
+                        document_metadata["title"],
+
+                    "date":
+                        document_metadata["date"],
+
+                    "language":
+                        document_metadata["language"],
+
+                    "country":
+                        document_metadata["country"],
+
+                    "subtype":
+                        document_metadata["subtype"],
+
+                    "number":
+                        document_metadata["number"],
+
+                    "division":
+                        table_context["division"],
+
+                    "subdivision":
+                        table_context["subdivision"],
+
                     "paragraph": "",
-                    "eId": table.attrib.get("eId", ""),
+
+                    "eId":
+                        table.attrib.get(
+                            "eId",
+                            "",
+                        ),
+
                     "xpath": xpath,
+
                     "table_row": row_number,
+
+                    "table_title":
+                        table_context["table_title"],
                 }
             )
 
