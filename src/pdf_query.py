@@ -1,4 +1,5 @@
 import chromadb
+from chromadb.errors import NotFoundError
 from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 
 
@@ -18,12 +19,22 @@ def main():
         url="http://localhost:11434/api/embeddings",
     )
 
-    collection = client.get_collection(
-        name=COLLECTION_NAME,
-        embedding_function=embedding_function,
-    )
+    try:
+        collection = client.get_collection(
+            name=COLLECTION_NAME,
+            embedding_function=embedding_function,
+        )
+    except (NotFoundError, ValueError) as e:
+        raise SystemExit(
+            f"Collection '{COLLECTION_NAME}' not found in "
+            f"'{CHROMA_DIR}'. Run pdf_index.py first. "
+            f"(Original error: {e})"
+        )
 
-    question = input("Question: ")
+    question = input("Question: ").strip()
+
+    if not question:
+        return
 
     results = collection.query(
         query_texts=[question],
@@ -42,9 +53,16 @@ def main():
 
         print()
         print(f"Result #{i + 1}")
-        print(f"Distance: {distance}")
-        print(f"Source: {metadata['source_file']}")
-        print(f"Page: {metadata['page']}")
+        print(f"Distance: {distance:.4f}")
+        print(f"Source: {metadata.get('source_file', '')}")
+        print(
+            f"Page: {metadata.get('page', '')} "
+            f"of {metadata.get('page_count', '')}"
+        )
+        print(
+            f"Chunk: {metadata.get('chunk_index', '')} "
+            f"of {metadata.get('chunk_total', '')}"
+        )
         print()
         print(document)
 

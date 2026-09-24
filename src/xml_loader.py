@@ -5,6 +5,14 @@ import xml.etree.ElementTree as ET
 
 AKN_NS = "http://docs.oasis-open.org/legaldocml/ns/akn/3.0"
 
+# Elements whose text should never appear in a chunk's main content.
+# These are typically metadata/footnotes rather than narrative text.
+EXCLUDED_TEXT_ELEMENTS = {
+    "authorialNote",
+    "authorialNotes",
+    "note",
+}
+
 
 def local_name(tag: str) -> str:
     """Return the local XML element name without the namespace."""
@@ -21,12 +29,57 @@ def clean_text(text: str | None) -> str:
     return text.strip()
 
 
-def element_text(element: ET.Element) -> str:
+def _is_inside_excluded(
+    element: ET.Element,
+    parent_map: dict,
+) -> bool:
+    """
+    Return True if `element` is a descendant of any element whose
+    local name is in EXCLUDED_TEXT_ELEMENTS.
+    """
+    current = parent_map.get(element)
+
+    while current is not None:
+        if local_name(current.tag) in EXCLUDED_TEXT_ELEMENTS:
+            return True
+        current = parent_map.get(current)
+
+    return False
+
+
+def element_text(
+    element: ET.Element,
+    parent_map: dict | None = None,
+) -> str:
     """
     Extract visible text from an XML element, including inline
     elements such as <i>, <b>, <sup>, etc.
+
+    If `parent_map` is supplied, any text belonging to an excluded
+    subtree (e.g. <authorialNote>) is skipped.
     """
-    return clean_text(" ".join(element.itertext()))
+    if parent_map is None:
+        return clean_text(" ".join(element.itertext()))
+
+    parts: list[str] = []
+
+    for node in element.iter():
+        # Skip anything inside an excluded subtree.
+        if local_name(node.tag) in EXCLUDED_TEXT_ELEMENTS:
+            continue
+        if _is_inside_excluded(node, parent_map):
+            continue
+
+        if node.text:
+            parts.append(node.text)
+
+        # `tail` is the text that appears *after* the closing tag
+        # of `node` but still inside its parent. It belongs to the
+        # parent's narrative, not to any excluded subtree.
+        if node.tail and not _is_inside_excluded(node, parent_map):
+            parts.append(node.tail)
+
+    return clean_text(" ".join(parts))
 
 
 def direct_children(element: ET.Element, name: str):
@@ -162,13 +215,13 @@ def get_heading_context(element: ET.Element, parent_map: dict):
             heading_element = first_child(current, "heading")
 
             number = (
-                element_text(num_element)
+                element_text(num_element, parent_map)
                 if num_element is not None
                 else ""
             )
 
             heading = (
-                element_text(heading_element)
+                element_text(heading_element, parent_map)
                 if heading_element is not None
                 else ""
             )
@@ -210,31 +263,58 @@ def make_chunk_id(
     return f"{source_stem}-{kind}-{safe_id}"
 
 
-def paragraph_text(paragraph: ET.Element) -> str:
+def paragraph_text(
+    paragraph: ET.Element,
+    parent_map: dict,
+) -> str:
     """
     Extract the main paragraph text.
 
-    We deliberately focus on <content>/<p> instead of calling
-    itertext() over the entire paragraph so that authorial notes
-    do not get accidentally mixed into the main paragraph text.
+    We deliberately focus on <content>/<p> and <content>/<intro> rather
+    than calling itertext() over the entire paragraph, so that:
+
+      * authorial notes do not get mixed into the main paragraph text;
+      * the <num> element's text is not duplicated into the body.
+
+    Akoma Ntoso paragraphs have this shape:
+
+        <paragraph>
+          <num>1.</num>
+          <content>
+            <p>...</p>
+          </content>
+        </paragraph>
+
+    Structured paragraphs use <intro> followed by nested
+    <subparagraph> blocks:
+
+        <paragraph>
+          <num>22.</num>
+          <content>
+            <intro><p>...</p></intro>
+            <subparagraph>...</subparagraph>
+          </content>
+        </paragraph>
     """
 
-    parts = []
+    parts: list[str] = []
 
     for content in direct_children(paragraph, "content"):
 
+        # Walk the content subtree in document order and pick up
+        # narrative <p> elements. This naturally includes <p> under
+        # <intro> and any top-level <p> under <content>.
         for child in content.iter():
 
             if local_name(child.tag) != "p":
                 continue
 
-            # Skip p elements belonging to authorial notes.
-            ancestor_is_note = False
-            # We don't have a parent map here, so identify notes
-            # through the paragraph's immediate content structure.
-            # Nested notes are uncommon in the main p structure.
+            # Skip <p> that live inside an excluded subtree, e.g.
+            # an <authorialNote>.
+            if _is_inside_excluded(child, parent_map):
+                continue
 
-            text = element_text(child)
+            text = element_text(child, parent_map)
 
             if text:
                 parts.append(text)
@@ -242,8 +322,10 @@ def paragraph_text(paragraph: ET.Element) -> str:
     return clean_text(" ".join(parts))
 
 
-
-def table_rows(table: ET.Element):
+def table_rows(
+    table: ET.Element,
+    parent_map: dict,
+):
     """
     Convert an Akoma Ntoso table into row-level text chunks.
     """
@@ -262,7 +344,7 @@ def table_rows(table: ET.Element):
             if local_name(cell.tag) != "td":
                 continue
 
-            cell_text = element_text(cell)
+            cell_text = element_text(cell, parent_map)
 
             cells.append(cell_text)
 
@@ -270,6 +352,7 @@ def table_rows(table: ET.Element):
             rows.append(" | ".join(cells))
 
     return rows
+
 
 def get_table_context(
     table: ET.Element,
@@ -309,7 +392,8 @@ def get_table_context(
 
         if heading is not None:
             context["table_title"] = element_text(
-                heading
+                heading,
+                parent_map,
             )
 
         # Look for descriptive <p> elements before the table.
@@ -324,7 +408,7 @@ def get_table_context(
 
                     if local_name(p.tag) == "p":
 
-                        text = element_text(p)
+                        text = element_text(p, parent_map)
 
                         if text:
                             context["table_description"] = text
@@ -337,6 +421,7 @@ def get_table_context(
                     break
 
     return context
+
 
 def parse_akn_file(xml_path: str) -> list[dict]:
     """
@@ -373,7 +458,7 @@ def parse_akn_file(xml_path: str) -> list[dict]:
         if local_name(paragraph.tag) != "paragraph":
             continue
 
-        text = paragraph_text(paragraph)
+        text = paragraph_text(paragraph, parent_map)
 
         if not text:
             continue
@@ -386,7 +471,7 @@ def parse_akn_file(xml_path: str) -> list[dict]:
         number_element = first_child(paragraph, "num")
 
         paragraph_number = (
-            element_text(number_element)
+            element_text(number_element, parent_map)
             if number_element is not None
             else ""
         )
@@ -493,7 +578,12 @@ def parse_akn_file(xml_path: str) -> list[dict]:
             ):
                 continue
 
-        text = element_text(element)
+        # Skip <p> nested inside an excluded subtree, e.g. an
+        # <authorialNote>.
+        if _is_inside_excluded(element, parent_map):
+            continue
+
+        text = element_text(element, parent_map)
 
         if not text:
             continue
@@ -569,7 +659,7 @@ def parse_akn_file(xml_path: str) -> list[dict]:
             parent_map,
         )
 
-        rows = table_rows(table)
+        rows = table_rows(table, parent_map)
 
         if not rows:
             continue
@@ -579,6 +669,20 @@ def parse_akn_file(xml_path: str) -> list[dict]:
         # --------------------------------------------------------
 
         header = rows[0]
+
+        # --------------------------------------------------------
+        # Stable table identifier: prefer the table's eId, fall back
+        # to the running chunk index only if no eId exists.
+        # --------------------------------------------------------
+
+        table_e_id = table.attrib.get("eId")
+
+        if table_e_id:
+            safe_table_id = re.sub(
+                r"[^A-Za-z0-9_.-]", "_", table_e_id
+            )
+        else:
+            safe_table_id = f"table-{chunk_index}"
 
         # --------------------------------------------------------
         # Create one chunk per row, but repeat the table context
@@ -651,10 +755,11 @@ def parse_akn_file(xml_path: str) -> list[dict]:
 
                     "source_file": path.name,
 
+                    # Stable across runs: depends only on the
+                    # table's eId and the row number within it.
                     "chunk_id": (
-                        f"{path.stem}-"
-                        f"table-{chunk_index}-"
-                        f"row-{row_number}"
+                        f"{path.stem}-table-"
+                        f"{safe_table_id}-row-{row_number}"
                     ),
 
                     "chunk_type": "table_row",

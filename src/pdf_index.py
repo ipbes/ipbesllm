@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import chromadb
+from chromadb.errors import NotFoundError
 from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 
 from pdf_loader import extract_pdf_chunks
@@ -13,6 +14,21 @@ COLLECTION_NAME = "pdf_documents"
 EMBED_MODEL = "nomic-embed-text"
 
 BATCH_SIZE = 25
+
+
+def _delete_collection_if_exists(client, name: str) -> None:
+    try:
+        client.delete_collection(name=name)
+        print(f"  Existing collection '{name}' deleted.")
+    except NotFoundError:
+        print(f"  Collection '{name}' did not exist.")
+    except ValueError as e:
+        # Older Chroma versions raise ValueError for a missing
+        # collection.
+        if "does not exist" in str(e).lower():
+            print(f"  Collection '{name}' did not exist.")
+        else:
+            raise
 
 
 def main():
@@ -45,18 +61,23 @@ def main():
         url="http://localhost:11434/api/embeddings",
     )
 
-    collection = client.get_or_create_collection(
+    print(f"Deleting existing collection: {COLLECTION_NAME}")
+    _delete_collection_if_exists(client, COLLECTION_NAME)
+
+    collection = client.create_collection(
         name=COLLECTION_NAME,
         embedding_function=embedding_function,
+        metadata={"hnsw:space": "cosine"},
     )
 
-    print(f"Collection: {COLLECTION_NAME}")
+    print(f"Created new collection: {COLLECTION_NAME}")
+    print("Distance metric: cosine")
     print()
 
-    all_chunks = []
+    all_chunks: list[dict] = []
 
     for pdf_path in pdf_files:
-        print(f"Processing: {pdf_path}")
+        print(f"Processing: {pdf_path.name}")
 
         chunks = extract_pdf_chunks(
             str(pdf_path)
@@ -74,12 +95,13 @@ def main():
         print("ERROR: No text was extracted from the PDFs.")
         print()
         print(
-               "The PDF may be scanned/image-based, "
-               "or the PDF extraction needs investigation."
-            )
+            "The PDF may be scanned/image-based, "
+            "or the PDF extraction needs investigation."
+        )
         return
 
     print("Creating embeddings in batches...")
+    print(f"Embedding model: {EMBED_MODEL}")
     print(f"Batch size: {BATCH_SIZE}")
     print()
 
@@ -94,29 +116,25 @@ def main():
 
         batch = all_chunks[start:end]
 
-        ids = [
-            chunk["chunk_id"]
-            for chunk in batch
-        ]
+        ids = [chunk["chunk_id"] for chunk in batch]
 
-        documents = [
-            chunk["text"]
-            for chunk in batch
-        ]
+        documents = [chunk["text"] for chunk in batch]
 
         metadatas = [
             {
                 "source_type": "pdf",
                 "source_file": chunk["source_file"],
                 "page": chunk["page"],
+                "page_count": chunk["page_count"],
+                "chunk_index": chunk["chunk_index"],
+                "chunk_total": chunk["chunk_total"],
+                "total_chunks": chunk["total_chunks"],
             }
             for chunk in batch
         ]
 
         print(
-            f"Creating embeddings and storing in Chroma..."
-            f"{start + 1}-{end} "
-            f"of {total}..."
+            f"Storing chunks {start + 1}-{end} of {total}..."
         )
 
         collection.upsert(
@@ -125,9 +143,7 @@ def main():
             metadatas=metadatas,
         )
 
-        print(
-            f"  Stored {end}/{total}"
-        )
+        print(f"  Stored {end}/{total}")
 
     print()
     print("=" * 60)

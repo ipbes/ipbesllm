@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import chromadb
+from chromadb.errors import NotFoundError
 from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 
 from xml_loader import parse_akn_file
@@ -56,16 +57,27 @@ def main():
             name=COLLECTION_NAME
         )
         print("  Existing collection deleted.")
-    except Exception as e:
-        print(f"  Collection did not exist or could not be deleted: {e}")
+    except NotFoundError:
+        print("  Collection did not exist; nothing to delete.")
+    except ValueError as e:
+        # Older Chroma versions raise ValueError for a missing
+        # collection; treat it the same way.
+        if "does not exist" in str(e).lower():
+            print("  Collection did not exist; nothing to delete.")
+        else:
+            raise
 
-    # Create a new empty collection.
+    # Create a new empty collection with cosine distance.
+    # nomic-embed-text is trained for cosine similarity, so this
+    # matches how the model was intended to be used.
     collection = client.create_collection(
         name=COLLECTION_NAME,
         embedding_function=embedding_function,
+        metadata={"hnsw:space": "cosine"},
     )
 
     print(f"Created new collection: {COLLECTION_NAME}")
+    print("Distance metric: cosine")
     print()
 
     all_chunks = []
