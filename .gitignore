@@ -1,0 +1,12 @@
+.venv
+venv/
+venv.bak/
+env.bak
+.webui_secret_key
+__pycache__/
+.DS_Store
+chroma/
+data/
+src/__pycache__/
+*.sqlite3
+.cache
