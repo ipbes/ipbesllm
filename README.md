@@ -9,3 +9,6 @@ How many member states did the platform have as of 21 January 2013
 Who was selected as chair by the Plenary?
 What was the total cash contribution listed for Germany
 What was the in-kind contribution for Germany in 2012?
+
+TTL
+What are the key messages identified in the IPBES LDR assessment?

@@ -1,4 +1,5 @@
 import os
+import sys
 
 import chromadb
 import ollama
@@ -33,9 +34,36 @@ def _get_collection():
         )
 
 
-def retrieve(question: str, k: int = 5):
+def retrieve(question: str, k: int = 5, chunk_type: str | None = None):
     collection = _get_collection()
-    return collection.query(query_texts=[question], n_results=k)
+    where = {"chunk_type": chunk_type} if chunk_type else None
+    return collection.query(
+        query_texts=[question],
+        n_results=k,
+        where=where,
+    )
+
+
+def _infer_chunk_type(question: str) -> str | None:
+    """Infer a chunk_type filter from the question text."""
+    q = question.lower()
+    if "key message" in q:
+        return "key"
+    if "knowledge gap" in q:
+        return "kg"
+    if "sub-message" in q or "submessage" in q or "sub message" in q:
+        return "subm"
+    if "background message" in q:
+        return "bgm"
+    if "illustration" in q or "figure" in q:
+        return "il"
+    if "reference" in q or "citation" in q:
+        return "ref"
+    if "author" in q or "person" in q or "expert" in q:
+        return "person"
+    if "subchapter" in q or "section" in q:
+        return "sch"
+    return None
 
 
 def generate_answer(question: str, results):
@@ -50,10 +78,11 @@ SOURCE {i + 1}
 
 File: {metadata['source_file']}
 Title: {metadata['title']}
-Chunk type: {metadata['chunk_type']}
+Chunk type: {metadata.get('chunk_type', '(unknown)')}
 Chapter: {metadata['division']}
 Subchapter: {metadata['subdivision']}
-Subject URI: {metadata['xpath']}
+Subject URI: {metadata.get('xpath', '(unknown)')}
+eId: {metadata.get('eId', '(unknown)')}
 
 Content:
 {document}
@@ -69,14 +98,14 @@ as RDF/Turtle using the IPBES ontology.
 Use ONLY the supplied context.
 
 The context contains structured chunks extracted from the ontology:
-- background_message
-- sub_message
-- key_message
-- knowledge_gap
-- subchapter
-- illustration
-- reference
-- person
+- bgm (BackgroundMessage)
+- subm (SubMessage)
+- key (KeyMessage)
+- kg (KnowledgeGap)
+- sch (SubChapter)
+- il (Illustration)
+- ref (Reference)
+- person (Person)
 
 Each chunk may carry an "Identifier" (a section number or message number)
 and a "Qualifier" (well established / established but incomplete /
@@ -133,7 +162,18 @@ def main():
     if not question:
         return
 
-    results = retrieve(question, k=5)
+    # Infer chunk type filter from question
+    chunk_type = _infer_chunk_type(question)
+    if chunk_type:
+        print(f"(Filtering to chunk_type='{chunk_type}')")
+        print()
+
+    results = retrieve(question, k=5, chunk_type=chunk_type)
+
+    if not results["documents"][0]:
+        print("No results found.")
+        return
+
     answer = generate_answer(question, results)
 
     print()
@@ -151,10 +191,10 @@ def main():
         distance = results["distances"][0][i]
         print(
             f"{i + 1}. {metadata['source_file']} | "
-            f"{metadata['chunk_type']} | "
-            f"{metadata['division']} | "
-            f"{metadata['subdivision']} | "
-            f"eId={metadata['eId']} | "
+            f"{metadata.get('chunk_type', '?')} | "
+            f"{metadata.get('division', '')} | "
+            f"{metadata.get('subdivision', '')} | "
+            f"eId={metadata.get('eId', '?')} | "
             f"distance={distance:.4f}"
         )
 

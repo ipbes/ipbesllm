@@ -1,12 +1,16 @@
 from pathlib import Path
-from urllib.parse import urlparse
 
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, RDFS, DCTERMS, SKOS, FOAF, OWL
 
 
-IPBES = "http://ontology.ipbes.net/report/"
+# Fallback only; the real value comes from the file's own @prefix.
+IPBES = "http://ontology.ipbes.net/report"
 
+
+# ---------------------------------------------------------------------------
+# Small helpers
+# ---------------------------------------------------------------------------
 
 def _is_literal(value) -> bool:
     return isinstance(value, Literal)
@@ -27,18 +31,19 @@ def _text(value) -> str:
         return ""
     if _is_literal(value):
         return str(value).strip()
-    # URIRef — fall back to the local name.
     return str(value).rstrip("/").rsplit("/", 1)[-1]
 
 
-def _local_name(uri: URIRef) -> str:
+def _local_name(uri) -> str:
+    if uri is None:
+        return ""
     return str(uri).rstrip("/").rsplit("/", 1)[-1]
 
 
 def _qualifier(graph, subject) -> str:
     """
-    Evidence qualifier for SubMessage/BackgroundMessage prose.
-    These come from IPBES's own confidence language.
+    IPBES evidence qualifier for a message: 'well established',
+    'established but incomplete', or 'unresolved'.
     """
     if _first(graph, subject, URIRef(IPBES + "hasWellestablished")):
         return "well established"
@@ -49,13 +54,15 @@ def _qualifier(graph, subject) -> str:
     return ""
 
 
-def _submessage_sort_key(sm_uri: URIRef) -> int:
-    """subm/LDR18-1-SM3 -> 3; used to order SubMessages under a BackgroundMessage."""
+def _submessage_sort_key(sm_uri) -> int:
+    """subm/LDR18-1-SM3 -> 3."""
     name = _local_name(sm_uri)
     if "-SM" not in name:
         return 10**6
-    return int(name.rsplit("-SM", 1)[-1])
-
+    try:
+        return int(name.rsplit("-SM", 1)[-1])
+    except ValueError:
+        return 10**6
 
 def _report_uri(graph, subject):
     return _first(graph, subject, URIRef(IPBES + "Report"))
@@ -72,47 +79,61 @@ def _subchapter_uris(graph, subject):
 def _illustration_uri(graph, subject):
     return _first(graph, subject, URIRef(IPBES + "Illustration"))
 
-
 def _describe_heading(graph, uri) -> str:
+    """
+    '1.5 Conclusion' style label for a Chapter or SubChapter URI.
+    """
     if uri is None:
         return ""
-    label = _first(graph, uri, SKOS.prefLabel)
-    ident = _first(graph, uri, DCTERMS.identifier)
-    parts = [p for p in (_text(ident), _text(label)) if p]
+
+    label = _text(_first(graph, uri, SKOS.prefLabel))
+    ident = _text(_first(graph, uri, DCTERMS.identifier))
+
+    parts = [p for p in (ident, label) if p]
     return " ".join(parts)
 
 
-def _build_context_lines(
-    doc_meta: dict,
-    subchapter_uris: list,
-    graph,
-    extra: dict | None = None,
-) -> list[str]:
-    lines = []
+# ---------------------------------------------------------------------------
+# Namespace discovery
+# ---------------------------------------------------------------------------
 
-    if doc_meta.get("title"):
-        lines.append(f"Document: {doc_meta['title']}")
-    if doc_meta.get("date"):
-        lines.append(f"Date: {doc_meta['date']}")
+def _discover_ipbes_namespace(graph: Graph) -> str:
+    """
+    Find the IPBES namespace in the parsed graph.
 
-    for sub_uri in subchapter_uris:
-        heading = _describe_heading(graph, sub_uri)
-        if heading:
-            lines.append(f"Subchapter: {heading}")
+    Preference:
+      1. A prefix literally named 'ipbes'.
+      2. Any namespace whose URI contains 'ipbes.net'.
 
-    if extra:
-        for key, value in extra.items():
-            if value:
-                lines.append(f"{key}: {value}")
+    Returns the namespace string exactly as the file uses it,
+    including or excluding a trailing separator as declared.
+    """
+    candidates = []
 
-    return lines
+    for prefix, ns in graph.namespaces():
+        ns_str = str(ns)
+        if prefix == "ipbes":
+            return ns_str
+        if "ipbes.net" in ns_str:
+            candidates.append(ns_str)
 
+    if candidates:
+        return sorted(candidates, key=len)[0]
+
+    raise RuntimeError(
+        "Could not find an 'ipbes' namespace in the TTL file."
+    )
+
+
+# ---------------------------------------------------------------------------
+# Main entry point
+# ---------------------------------------------------------------------------
 
 def parse_ttl_file(ttl_path: str) -> list[dict]:
     """
     Parse an IPBES ontology TTL file into retrieval-oriented chunks.
 
-    Chunk types mirror the TTL's RDF classes:
+    Chunk types:
       - background_message
       - sub_message
       - key_message
@@ -122,15 +143,19 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
       - reference
       - person
     """
+    global IPBES
+
     path = Path(ttl_path)
 
     graph = Graph()
     graph.parse(path, format="ttl")
 
-    # ------------------------------------------------------------
-    # Document-level metadata, harvested from the report URI.
-    # We discover it via the first ipbes:Report triple.
-    # ------------------------------------------------------------
+    IPBES = _discover_ipbes_namespace(graph)
+    print(f"  Using IPBES namespace: {IPBES!r}")
+
+    # -----------------------------------------------------------------
+    # Document-level metadata
+    # -----------------------------------------------------------------
 
     report_uri = None
     for _, _, obj in graph.triples(
@@ -150,8 +175,13 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
     }
 
     if report_uri is not None:
-        doc_meta["title"] = _text(_first(graph, report_uri, SKOS.prefLabel))
-        doc_meta["date"] = _text(_first(graph, report_uri, DCTERMS.date))
+        title = _text(_first(graph, report_uri, SKOS.prefLabel))
+        alt_title = _text(_first(graph, report_uri, SKOS.altLabel))
+        year = _text(_first(graph, report_uri, URIRef(IPBES + "year")))
+        date = _text(_first(graph, report_uri, DCTERMS.date))
+
+        doc_meta["title"] = title or alt_title
+        doc_meta["date"] = date or year
         doc_meta["language"] = _text(
             _first(graph, report_uri, DCTERMS.language)
         )
@@ -174,26 +204,41 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         if not body:
             return
 
-        context_lines = _build_context_lines(
-            doc_meta, subchapter_uris, graph
-        )
+        lines = []
+
+        if doc_meta["title"]:
+            lines.append(f"Document: {doc_meta['title']}")
+        if doc_meta["date"]:
+            lines.append(f"Date: {doc_meta['date']}")
+
+        # Chapter heading
+        chapter_uri = _first(graph, subject, URIRef(IPBES + "Chapter"))
+        chapter_heading = _describe_heading(graph, chapter_uri)
+        if chapter_heading:
+            lines.append(f"Chapter: {chapter_heading}")
+
+        # Subchapter headings
+        for sub_uri in subchapter_uris:
+            sub_heading = _describe_heading(graph, sub_uri)
+            if sub_heading:
+                lines.append(f"Subchapter: {sub_heading}")
 
         if heading:
-            context_lines.append(f"Heading: {heading}")
+            lines.append(f"Heading: {heading}")
 
         if extra_meta:
             for key, value in extra_meta.items():
                 if value:
-                    context_lines.append(f"{key}: {value}")
+                    lines.append(f"{key}: {value}")
 
-        context_lines.append("")
-        context_lines.append(body)
+        lines.append("")
+        lines.append(body)
 
         chunk_id = f"{path.stem}-{chunk_type}-{_local_name(subject)}"
 
         chunks.append(
             {
-                "text": "\n".join(context_lines),
+                "text": "\n".join(lines),
                 "source_file": path.name,
                 "chunk_id": chunk_id,
                 "chunk_type": chunk_type,
@@ -204,25 +249,23 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
                 "country": doc_meta["country"],
                 "subtype": doc_meta["subtype"],
                 "number": doc_meta["number"],
-                "division": (
-                    _local_name(_chapter_uri(graph, subject))
-                    if _chapter_uri(graph, subject)
-                    else ""
-                ),
+                "division": chapter_heading,
                 "subdivision": " | ".join(
                     _describe_heading(graph, s)
                     for s in subchapter_uris
+                    if _describe_heading(graph, s)
                 ),
                 "paragraph": "",
                 "eId": _local_name(subject),
                 "xpath": str(subject),
             }
         )
+
         chunk_index += 1
 
-    # ------------------------------------------------------------
-    # BackgroundMessage — narrative summary + its SubMessages
-    # ------------------------------------------------------------
+    # -----------------------------------------------------------------
+    # BackgroundMessage — its own description + all SubMessage bodies
+    # -----------------------------------------------------------------
 
     bgm_type = URIRef(IPBES + "BackgroundMessage")
 
@@ -237,26 +280,26 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         )
 
         sm_bodies = []
+        subchapters = []
+
         for sm in sm_uris:
             sm_desc = _text(
                 _first(graph, sm, URIRef(IPBES + "hasDescription"))
             )
             if sm_desc:
-                sm_bodies.append(
-                    f"[{_local_name(sm)}] {sm_desc}"
-                )
+                sm_bodies.append(f"[{_local_name(sm)}] {sm_desc}")
+
+            subchapters.extend(_subchapter_uris(graph, sm))
 
         combined = description
         if sm_bodies:
-            combined = (description + "\n\n" + "\n\n".join(sm_bodies)).strip()
-
-        subchapters = []
-        for sm in sm_uris:
-            subchapters.extend(_subchapter_uris(graph, sm))
+            combined = (
+                description + "\n\n" + "\n\n".join(sm_bodies)
+            ).strip()
 
         emit(
             subject=bgm,
-            chunk_type="background_message",
+            chunk_type="bgm",
             heading="",
             body=combined,
             subchapter_uris=subchapters,
@@ -268,9 +311,9 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             },
         )
 
-    # ------------------------------------------------------------
-    # SubMessage — each one individually
-    # ------------------------------------------------------------
+    # -----------------------------------------------------------------
+    # SubMessage — individual
+    # -----------------------------------------------------------------
 
     sm_type = URIRef(IPBES + "SubMessage")
 
@@ -279,12 +322,16 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             _first(graph, sm, URIRef(IPBES + "hasDescription"))
         )
 
-        ill = _illustration_uri(graph, sm)
-        ill_label = _text(_first(graph, ill, SKOS.prefLabel)) if ill else ""
+        ill_uri = _first(graph, sm, URIRef(IPBES + "Illustration"))
+        ill_label = ""
+        if ill_uri is not None:
+            ill_label = _text(
+                _first(graph, ill_uri, SKOS.prefLabel)
+            )
 
         emit(
             subject=sm,
-            chunk_type="sub_message",
+            chunk_type="subm",
             heading=ill_label,
             body=description,
             subchapter_uris=_subchapter_uris(graph, sm),
@@ -296,9 +343,9 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             },
         )
 
-    # ------------------------------------------------------------
-    # KeyMessage — headline + supporting narrative
-    # ------------------------------------------------------------
+    # -----------------------------------------------------------------
+    # KeyMessage — headline + narrative
+    # -----------------------------------------------------------------
 
     km_type = URIRef(IPBES + "KeyMessage")
 
@@ -314,7 +361,7 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
 
         emit(
             subject=km,
-            chunk_type="key_message",
+            chunk_type="key",
             heading="",
             body=body,
             subchapter_uris=[],
@@ -325,9 +372,9 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             },
         )
 
-    # ------------------------------------------------------------
-    # KnowledgeGap — short, single-sentence facts
-    # ------------------------------------------------------------
+    # -----------------------------------------------------------------
+    # KnowledgeGap
+    # -----------------------------------------------------------------
 
     kg_type = URIRef(IPBES + "KnowledgeGap")
 
@@ -338,7 +385,7 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
 
         emit(
             subject=kg,
-            chunk_type="knowledge_gap",
+            chunk_type="kg",
             heading="",
             body=description,
             subchapter_uris=[],
@@ -349,9 +396,9 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             },
         )
 
-    # ------------------------------------------------------------
+    # -----------------------------------------------------------------
     # SubChapter — the big narrative blocks
-    # ------------------------------------------------------------
+    # -----------------------------------------------------------------
 
     sch_type = URIRef(IPBES + "SubChapter")
 
@@ -360,22 +407,18 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             _first(graph, sch, URIRef(IPBES + "hasDescription"))
         )
 
-        chapter = _chapter_uri(graph, sch)
-
         emit(
             subject=sch,
-            chunk_type="subchapter",
+            chunk_type="sch",
             heading=_describe_heading(graph, sch),
             body=description,
             subchapter_uris=[sch],
-            extra_meta={
-                "Chapter": _local_name(chapter) if chapter else "",
-            },
+            extra_meta={},
         )
 
-    # ------------------------------------------------------------
-    # Illustration — figure/box/table captions
-    # ------------------------------------------------------------
+    # -----------------------------------------------------------------
+    # Illustration — only if it has a caption
+    # -----------------------------------------------------------------
 
     il_type = URIRef(IPBES + "Illustration")
 
@@ -383,23 +426,21 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         ident = _text(_first(graph, il, DCTERMS.identifier))
         caption = _text(_first(graph, il, SKOS.prefLabel))
 
-        # Skip illustrations with no caption at all — common when the
-        # ontology only records the identifier (e.g. Box SPM1).
         if not caption:
             continue
 
         emit(
             subject=il,
-            chunk_type="illustration",
+            chunk_type="il",
             heading=ident,
             body=caption,
             subchapter_uris=[],
             extra_meta={},
         )
 
-    # ------------------------------------------------------------
-    # Reference — bibliography entries
-    # ------------------------------------------------------------
+    # -----------------------------------------------------------------
+    # Reference
+    # -----------------------------------------------------------------
 
     ref_type = URIRef(IPBES + "Reference")
 
@@ -407,7 +448,6 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         doi = _text(_first(graph, ref, URIRef(IPBES + "hasDoi")))
         zotero = _text(_first(graph, ref, OWL.sameAs))
 
-        # Description only — no free text in this class in the sample.
         body = f"DOI: {doi}" if doi else ""
         if zotero:
             body = (body + f"\nZotero: {zotero}").strip()
@@ -417,31 +457,26 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
 
         emit(
             subject=ref,
-            chunk_type="reference",
+            chunk_type="ref",
             heading="",
             body=body,
             subchapter_uris=_subchapter_uris(graph, ref),
-            extra_meta={
-                "Chapter": _local_name(_chapter_uri(graph, ref))
-                if _chapter_uri(graph, ref)
-                else "",
-            },
+            extra_meta={},
         )
 
-    # ------------------------------------------------------------
-    # Person — author bios
-    # ------------------------------------------------------------
+    # -----------------------------------------------------------------
+    # Person
+    # -----------------------------------------------------------------
 
-    person_type = FOAF.Person
-
-    for person in graph.subjects(RDF.type, person_type):
+    for person in graph.subjects(RDF.type, FOAF.Person):
         name = _text(_first(graph, person, SKOS.prefLabel))
         if not name:
             continue
 
-        country = _text(_first(graph, person, URIRef(IPBES + "country")))
+        country = _text(
+            _first(graph, person, URIRef(IPBES + "country"))
+        )
 
-        # Role strings.
         roles = []
         for role in ("ca", "la", "cl", "re", "fl", "cs"):
             value = _text(
