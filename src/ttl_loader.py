@@ -197,6 +197,7 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         body: str,
         subchapter_uris: list,
         extra_meta: dict | None = None,
+        country_override: str | None = None,
     ):
         nonlocal chunk_index
 
@@ -247,6 +248,7 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
                 "date": doc_meta["date"],
                 "language": doc_meta["language"],
                 "country": doc_meta["country"],
+                "country": country_override or doc_meta["country"],
                 "subtype": doc_meta["subtype"],
                 "number": doc_meta["number"],
                 "division": chapter_heading,
@@ -258,6 +260,8 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
                 "paragraph": "",
                 "eId": _local_name(subject),
                 "xpath": str(subject),
+                "identifier": _text(_first(graph, subject, DCTERMS.identifier)),
+                "qualifier": _qualifier(graph, subject),
             }
         )
 
@@ -396,6 +400,48 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             },
         )
 
+        # -----------------------------------------------------------------
+    # Chapter — top-level sections (04, 05, 06, ...)
+    # -----------------------------------------------------------------
+
+    ch_type = URIRef(IPBES + "Chapter")
+
+    for ch in graph.subjects(RDF.type, ch_type):
+        heading = _describe_heading(graph, ch)
+        if not heading:
+            continue
+
+        # Collect author names, if present, as an optional body line.
+        authors = []
+        for person in _all(graph, ch, FOAF.Person):
+            name = _text(_first(graph, person, SKOS.prefLabel))
+            if name:
+                authors.append(name)
+
+        body = ""
+        if authors:
+            body = "Authors: " + "; ".join(authors)
+
+        # If there's no description and no authors, fall back to the
+        # heading itself so the chunk is not dropped by emit()'s
+        # "if not body: return" guard.
+        if not body:
+            body = heading
+
+        emit(
+            subject=ch,
+            chunk_type="chapter",
+            heading=heading,
+            body=body,
+            subchapter_uris=[],
+            extra_meta={
+                "Identifier": _text(
+                    _first(graph, ch, DCTERMS.identifier)
+                ),
+            },
+        )
+
+        
     # -----------------------------------------------------------------
     # SubChapter — the big narrative blocks
     # -----------------------------------------------------------------
@@ -500,6 +546,7 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             body=body,
             subchapter_uris=[],
             extra_meta={},
+            country_override=country,
         )
 
     return chunks

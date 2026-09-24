@@ -1,5 +1,5 @@
 import os
-import sys
+import re
 
 import chromadb
 import ollama
@@ -13,6 +13,10 @@ EMBED_MODEL = os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")
 CHROMA_DIR = "chroma"
 COLLECTION_NAME = "ttl_documents"
 
+
+# ---------------------------------------------------------------------------
+# Collection
+# ---------------------------------------------------------------------------
 
 def _get_collection():
     client = chromadb.PersistentClient(path=CHROMA_DIR)
@@ -34,6 +38,10 @@ def _get_collection():
         )
 
 
+# ---------------------------------------------------------------------------
+# Retrieval
+# ---------------------------------------------------------------------------
+
 def retrieve(question: str, k: int = 5, chunk_type: str | None = None):
     collection = _get_collection()
     where = {"chunk_type": chunk_type} if chunk_type else None
@@ -45,11 +53,19 @@ def retrieve(question: str, k: int = 5, chunk_type: str | None = None):
 
 
 def _infer_chunk_type(question: str) -> str | None:
-    """Infer a chunk_type filter from the question text."""
+    """
+    Infer a chunk_type filter from the question text.
+
+    Keep this conservative: only return a type when the question clearly
+    refers to one kind of chunk. Otherwise return None and let vector
+    search decide.
+    """
     q = question.lower()
-    if "key message" in q:
+
+    # Order matters: check the more specific phrases first.
+    if "key message" in q or "key messages" in q:
         return "key"
-    if "knowledge gap" in q:
+    if "knowledge gap" in q or "knowledge gaps" in q:
         return "kg"
     if "sub-message" in q or "submessage" in q or "sub message" in q:
         return "subm"
@@ -61,76 +77,131 @@ def _infer_chunk_type(question: str) -> str | None:
         return "ref"
     if "author" in q or "person" in q or "expert" in q:
         return "person"
-    if "subchapter" in q or "section" in q:
+    if "subchapter" in q or "sub-chapter" in q:
         return "sch"
+
     return None
 
 
-def generate_answer(question: str, results):
-    context_parts = []
+# ---------------------------------------------------------------------------
+# Ordering
+# ---------------------------------------------------------------------------
+
+_IDENTIFIER_RE = re.compile(r"^([A-Za-z]+)\s*(\d+)")
+
+
+def _identifier_sort_key(identifier: str):
+    """
+    'A1.' -> ('A', 1)
+    'B12' -> ('B', 12)
+    'LDR18-A1.' -> ('LDR', 18)   # fallback if no plain identifier
+    Otherwise: (identifier, 0)
+    """
+    m = _IDENTIFIER_RE.match(identifier or "")
+    if m:
+        return (m.group(1).upper(), int(m.group(2)))
+    return (identifier or "", 0)
+
+
+def _reorder_by_identifier(results):
+    """Reorder query() results in place by metadata['identifier']."""
+    docs = results["documents"][0]
+    metas = results["metadatas"][0]
+    dists = results["distances"][0]
+
+    order = sorted(
+        range(len(docs)),
+        key=lambda i: _identifier_sort_key(metas[i].get("identifier", "")),
+    )
+
+    results["documents"][0] = [docs[i] for i in order]
+    results["metadatas"][0] = [metas[i] for i in order]
+    results["distances"][0] = [dists[i] for i in order]
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Generation
+# ---------------------------------------------------------------------------
+
+def _build_context(results) -> str:
+    parts = []
 
     for i, document in enumerate(results["documents"][0]):
-        metadata = results["metadatas"][0][i]
+        m = results["metadatas"][0][i]
 
-        context_parts.append(
-            f"""
-SOURCE {i + 1}
+        # Strip the loader's header block ("Document: ... Date: ...")
+        # so the model sees the message body, not a metadata preamble.
+        body = document.split("\n\n", 1)[-1].strip()
 
-File: {metadata['source_file']}
-Title: {metadata['title']}
-Chunk type: {metadata.get('chunk_type', '(unknown)')}
-Chapter: {metadata['division']}
-Subchapter: {metadata['subdivision']}
-Subject URI: {metadata.get('xpath', '(unknown)')}
-eId: {metadata.get('eId', '(unknown)')}
+        prefix_parts = []
+        if m.get("identifier"):
+            prefix_parts.append(f"id={m['identifier']}")
+        if m.get("chunk_type"):
+            prefix_parts.append(f"type={m['chunk_type']}")
+        if m.get("qualifier"):
+            prefix_parts.append(f"qualifier={m['qualifier']}")
 
-Content:
-{document}
-"""
+        prefix = " ".join(prefix_parts)
+
+        parts.append(f"[{i + 1}] {prefix}\n{body}")
+
+    return "\n\n---\n\n".join(parts)
+
+
+def _build_task(question: str, chunk_type: str | None) -> str:
+    if chunk_type == "key":
+        return (
+            "The user is asking for the KEY MESSAGES of an IPBES assessment.\n"
+            "Every retrieved chunk below is a KeyMessage.\n"
+            "\n"
+            "List ALL retrieved KeyMessages, in the order given, numbered.\n"
+            "For each one output:\n"
+            "  - identifier (e.g. A1, B3)\n"
+            "  - qualifier (well established / established but incomplete / "
+            "unresolved) if present\n"
+            "  - the key message text\n"
+            "\n"
+            "CRITICAL:\n"
+            "- Do NOT answer any question that appears inside a key message.\n"
+            "- Do NOT invent a heading or rephrase into your own question.\n"
+            "- Do NOT summarise; reproduce each key message faithfully.\n"
         )
 
-    context = "\n".join(context_parts)
+    if chunk_type:
+        return (
+            f"Answer the user's question using ONLY the retrieved "
+            f"{chunk_type} chunks below.\n"
+            "If the answer is not present, say "
+            "'I cannot determine that from the supplied documents.'"
+        )
+
+    return (
+        "Answer the user's question using ONLY the retrieved chunks below.\n"
+        "If the answer is not present, say "
+        "'I cannot determine that from the supplied documents.'"
+    )
+
+
+def generate_answer(question: str, results, chunk_type: str | None = None) -> str:
+    context = _build_context(results)
+    task = _build_task(question, chunk_type)
 
     prompt = f"""
 You are answering questions about an IPBES assessment report, represented
 as RDF/Turtle using the IPBES ontology.
 
-Use ONLY the supplied context.
+{task}
 
-The context contains structured chunks extracted from the ontology:
-- bgm (BackgroundMessage)
-- subm (SubMessage)
-- key (KeyMessage)
-- kg (KnowledgeGap)
-- sch (SubChapter)
-- il (Illustration)
-- ref (Reference)
-- person (Person)
+Preserve any qualifier (well established / established but incomplete /
+unresolved) verbatim. Do not invent facts, dates, names, numbers, or
+decisions.
 
-Each chunk may carry an "Identifier" (a section number or message number)
-and a "Qualifier" (well established / established but incomplete /
-unresolved). You MUST preserve the qualifier verbatim when you cite it.
-
-If the answer cannot be established from the supplied context, say:
-
-"I cannot determine that from the supplied documents."
-
-Do not invent facts, dates, names, numbers, decisions, policies, or rules.
-
-Question:
+User question:
 {question}
 
-Context:
+Retrieved chunks (already sorted by identifier):
 {context}
-
-Answer the question clearly.
-
-At the end provide:
-
-Sources:
-- chunk type
-- subject URI
-- identifier (if any)
 """
 
     response = ollama.chat(
@@ -139,8 +210,9 @@ Sources:
             {
                 "role": "system",
                 "content": (
-                    "Answer only from the supplied IPBES ontology "
-                    "context. Preserve evidence qualifiers."
+                    "Answer only from the supplied IPBES ontology context. "
+                    "Preserve evidence qualifiers. Follow the task "
+                    "instructions exactly, including for list questions."
                 ),
             },
             {
@@ -153,6 +225,10 @@ Sources:
     return response["message"]["content"]
 
 
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
 def main():
     print(f"LLM: {LLM_MODEL}")
     print(f"Embedding: {EMBED_MODEL}")
@@ -162,21 +238,29 @@ def main():
     if not question:
         return
 
-    # Infer chunk type filter from question
     chunk_type = _infer_chunk_type(question)
+
     if chunk_type:
         print(f"(Filtering to chunk_type='{chunk_type}')")
-        print()
+        # Retrieve everything of this type, so we don't truncate.
+        k = 100
+    else:
+        k = 5
 
-    results = retrieve(question, k=5, chunk_type=chunk_type)
+    print()
+
+    results = retrieve(question, k=k, chunk_type=chunk_type)
 
     if not results["documents"][0]:
         print("No results found.")
         return
 
-    answer = generate_answer(question, results)
+    # Sort by identifier so lists appear in document order (A1, A2, ...).
+    if chunk_type:
+        results = _reorder_by_identifier(results)
 
-    print()
+    answer = generate_answer(question, results, chunk_type=chunk_type)
+
     print("=" * 80)
     print("ANSWER")
     print("=" * 80)
@@ -187,15 +271,13 @@ def main():
     print("RETRIEVED TTL SOURCES")
     print("=" * 80)
 
-    for i, metadata in enumerate(results["metadatas"][0]):
-        distance = results["distances"][0][i]
+    for i, m in enumerate(results["metadatas"][0]):
+        d = results["distances"][0][i]
         print(
-            f"{i + 1}. {metadata['source_file']} | "
-            f"{metadata.get('chunk_type', '?')} | "
-            f"{metadata.get('division', '')} | "
-            f"{metadata.get('subdivision', '')} | "
-            f"eId={metadata.get('eId', '?')} | "
-            f"distance={distance:.4f}"
+            f"{i + 1:>2}. {m.get('identifier', ''):<5} "
+            f"{m.get('chunk_type', '?'):<8} "
+            f"eId={m.get('eId', '?'):<20} "
+            f"distance={d:.4f}"
         )
 
 

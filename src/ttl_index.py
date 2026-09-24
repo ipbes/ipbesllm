@@ -119,6 +119,8 @@ def main():
                 "paragraph": chunk["paragraph"],
                 "eId": chunk["eId"],
                 "xpath": chunk["xpath"],
+                "identifier": chunk["identifier"],
+                "qualifier": chunk["qualifier"],
             }
             for chunk in batch
         ]
@@ -142,6 +144,14 @@ def main():
     print(f"Chunks indexed: {total}")
     print(f"Collection: {COLLECTION_NAME}")
     print(f"Total in collection: {collection.count()}")
+
+    # After collecting all chunks:
+    from collections import Counter
+    type_counts = Counter(c["chunk_type"] for c in all_chunks)
+    print("Chunk types:")
+    for t, count in sorted(type_counts.items()):
+        print(f"  {t}: {count}")
+    print()
 
 
 if __name__ == "__main__":
