@@ -89,7 +89,6 @@ ipbesllm/
 │   ├── cache.py
 │   ├── geo.py
 │   ├── models.py
-│   ├── cache.py
 │   ├── pdf_index.py
 │   ├── pdf_loader.py
 │   ├── pdf_query.py
@@ -108,10 +107,6 @@ ipbesllm/
 │   ├── xml_rag.py
 │   ├── xml_test_chunks.py
 │   └── xml_test.py
-│
-├── rag_cache.sqlite3
-│   └── local answer cache
-│
 ├── .webui_secret_key
 ├── app.py
 ├── README.md

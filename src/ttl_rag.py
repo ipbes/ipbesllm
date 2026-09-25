@@ -8,6 +8,8 @@ from chromadb.errors import NotFoundError
 from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 from rdflib import Graph, URIRef
 from rdflib.namespace import RDF, SKOS
+from cache import cache, make_key 
+from loguru import logger
 
 
 # ---------------------------------------------------------------------------
@@ -138,10 +140,29 @@ def _expand_collection(uri) -> set[str]:
 def _codes_for_region(label: str) -> set[str]:
     g = _geo()
     needle = label.strip().lower()
+
+    # 1. Exact match.
     for coll in g.subjects(RDF.type, SKOS.Collection):
         for lab in _en_labels(coll):
             if lab.lower() == needle:
                 return _expand_collection(coll)
+
+    # 2. Prefix match: "east africa" -> "East Africa and adjacent islands"
+    for coll in g.subjects(RDF.type, SKOS.Collection):
+        for lab in _en_labels(coll):
+            if lab.lower().startswith(needle):
+                return _expand_collection(coll)
+
+    # 3. Substring match, but skip the four continent-level collections
+    #    unless the needle itself is that continent's name.
+    broad = {"africa", "americas", "asia", "europe",
+             "europe and central asia", "asia and the pacific"}
+    for coll in g.subjects(RDF.type, SKOS.Collection):
+        for lab in _en_labels(coll):
+            lab_l = lab.lower()
+            if needle in lab_l and lab_l not in broad:
+                return _expand_collection(coll)
+
     return set()
 
 
@@ -149,6 +170,7 @@ def _codes_for_region(label: str) -> set[str]:
 # "Central Asia" wins over "Asia".
 _REGION_NAMES = [
     "east africa and adjacent islands",
+    "east africa",
     "central and western europe",
     "europe and central asia",
     "asia and the pacific",
@@ -187,12 +209,13 @@ def _infer_country_names(question: str) -> set[str]:
 
     codes: set[str] = set()
 
-    # 1. Region / sub-region.
-    for name in _REGION_NAMES:
-        if name in q:
-            codes = _codes_for_region(name)
-            if codes:
-                break
+    # 1. Region / sub-region (Pick the longest region name that appears in the question)
+    matches = [n for n in _REGION_NAMES if n in q]
+    matches.sort(key=len, reverse=True)
+    for name in matches:
+        codes = _codes_for_region(name)
+        if codes:
+            break
 
     # 2. Individual country.
     if not codes:
@@ -484,10 +507,102 @@ Retrieved chunks (already sorted by identifier):
 
 
 # ---------------------------------------------------------------------------
+# Caching
+# ---------------------------------------------------------------------------
+
+# ---------- retrieval (async) ----------
+
+async def retrieve_cached(
+    question: str,
+    k: int = 5,
+    chunk_type: str | None = None,
+    country_names: set[str] | None = None,
+):
+    """
+    Async, cached version of retrieve(). Reuses your existing sync
+    retrieve() by running it in a thread so the event loop isn't blocked
+    (chromadb + Ollama embedding are sync).
+    """
+    import anyio
+
+    norm_countries = sorted(country_names) if country_names else None
+    key = make_key("ttl:retrieve", question, k, chunk_type, norm_countries)
+
+    hit = await cache.get(key)
+    if hit is not None:
+        logger.debug(f"ttl retrieve HIT  q={question[:50]!r}")
+        return hit
+
+    result = await anyio.to_thread.run_sync(
+        lambda: retrieve(question, k=k, chunk_type=chunk_type,
+                         country_names=country_names)
+    )
+    await cache.set(key, result, ttl=3600)
+    return result
+
+
+# ---------- generation (async) ----------
+
+async def generate_answer_cached(
+    question: str,
+    results,
+    chunk_type: str | None = None,
+    country_names: set[str] | None = None,
+) -> dict:
+    """
+    Cache the LLM call keyed on (question, chunk_type, country_names,
+    context-hash). We hash the context because different retrievals for
+    the same question (e.g. after re-indexing) must not collide.
+    """
+    import anyio
+
+    context = _build_context(results)
+    ctx_hash = make_key("ctx", context)[:16]
+
+    key = make_key(
+        "ttl:answer",
+        question,
+        chunk_type,
+        sorted(country_names) if country_names else None,
+        ctx_hash,
+    )
+
+    hit = await cache.get(key)
+    if hit is not None:
+        logger.debug(f"ttl answer HIT  q={question[:50]!r}")
+        hit["_cached"] = True
+        return hit
+
+    answer = await anyio.to_thread.run_sync(
+        lambda: generate_answer(
+            question, results,
+            chunk_type=chunk_type,
+            country_names=country_names,
+        )
+    )
+
+    payload = {
+        "answer": answer,
+        "retrieved": [
+            {
+                "identifier": m.get("identifier"),
+                "chunk_type": m.get("chunk_type"),
+                "country": m.get("country"),
+                "eId": m.get("eId"),
+                "distance": results["distances"][0][i],
+            }
+            for i, m in enumerate(results["metadatas"][0])
+        ],
+        "_cached": False,
+    }
+    await cache.set(key, payload, ttl=60 * 60 * 6)
+    return payload
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
-def main():
+async def async_main():
     print(f"LLM: {LLM_MODEL}")
     print(f"Embedding: {EMBED_MODEL}")
     print()
@@ -514,7 +629,7 @@ def main():
 
     print()
 
-    results = retrieve(
+    results = await retrieve_cached(
         question,
         k=k,
         chunk_type=chunk_type,
@@ -531,17 +646,20 @@ def main():
     if chunk_type:
         results = _reorder_by_identifier(results)
 
-    answer = generate_answer(
+    payload = await generate_answer_cached(
         question,
         results,
         chunk_type=chunk_type,
         country_names=country_names,
     )
 
+    if payload.get("_cached"):
+        print("(cache hit)")
+
     print("=" * 80)
     print("ANSWER")
     print("=" * 80)
-    print(answer)
+    print(payload["answer"])
 
     print()
     print("=" * 80)
@@ -558,6 +676,11 @@ def main():
             f"eId={m.get('eId', '?'):<25} "
             f"distance={d:.4f}"
         )
+
+
+def main():
+    import asyncio
+    asyncio.run(async_main())
 
 
 if __name__ == "__main__":
