@@ -858,15 +858,19 @@ This information is particularly useful for improving chunking, retrieval, promp
 | PDF extraction | Working |
 | PDF embeddings / Chroma | Working |
 | PDF RAG | Working |
-| Akoma Ntoso XML parsing | Working |
+| XML parsing | Working |
 | XML embeddings / Chroma | Working |
 | XML RAG | Working |
 | XML table-aware retrieval | Being improved |
-| RDF/TTL retrieval | In development |
-| Answer cache | Implemented |
+| TTL parsing | Working |
+| TTL embeddings | Working |
+| TTL RAG | Working |
+| Answer cache | Planned/ in development |
 | Streamlit UI | Planned / in development |
 | Docker deployment | Planned / in development |
 | Colleague testing | Next deployment stage |
+| Architecture diagrams | Later stage |
+| OICT approval | Later stage |
 | Azure deployment | Later stage |
 
 ---
