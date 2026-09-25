@@ -403,26 +403,46 @@ The following questions are useful for testing retrieval and source attribution.
 
 ```text
 What are the main topics discussed in the report?
+```
 
+```text
 What decisions were taken during the session?
+```
 
+```text
 What was discussed regarding the work programme?
+```
 
+```text
 What financial arrangements are described in the report?
+```
 
+```text
 How many member states did the platform have as of 21 January 2013?
+```
 
+```text
 What was the in-kind contribution for Germany in 2012?
+```
 
+```text
 What is the status of in-kind contributions to IPBES?
+```
 
+```text
 Who was selected as chair by the Plenary?
+```
 
+```text
 What cash contribution did Germany make in 2012?
+```
 
+```text
 What sections are included in the report?
+```
 
-What was discussed under the institutional arrangements section?
+```textWhat was discussed under the institutional arrangements section?
+
 ```
 
 For table questions, pay particular attention to whether the retrieved context includes:
@@ -448,29 +468,52 @@ How much has Germany contributed to IPBES?
 ### Specific questions
 ```text
 What are the key messages identified in the IPBES LDR assessment?
+```
 
+```text
 What are the background messages identified in the IPBES LDR assessment?
+```
 
+```text
 What are the chapter of the IPBES LDR assessment?
+```
 
+```text
 Which experts come from Kenya?
+```
 
+```text
 Which experts come from East Africa?
+```
 
+```text
 What findings across the different IPBES assessments refer to cities?
+```
 
+```text
 Provide a summary of the topics covered across these different assessments?
-
+```
+```text
 Provide a summary of the topics covered across these different assessments and add the sections in the assessments where these topics are covered
+```
 
+```text
 I am preparing a report on the major findings IPBES has had that are relevant to marine systems. Prepare a summary of 10 key points traceable across IPBES assessments that are relevant to marine systems
+```
 
+```text
 Who were the Review Editors of Ch. 4 of the values assessment
+```
 
+```text
 How have previous IPBES assessments approached the IPBES Conceptual Framework? Do you have figures referring to it?
+```
 
+```text
 Provide a summary of the key findings in IPBES assessments that directly refer to the KMGBF
+```
 
+```text
 Provide the same output in a table by KMGBF goal and target vs. assessment, and including also the reference to the sections where the information is being obtained from
 ```
 
@@ -673,15 +716,20 @@ You probably need to build the index first.
 For PDF:
 
 ```bash
-PYTHONPATH=src python src/index_pdf.py
+PYTHONPATH=src python src/pdf_index.py
 ```
 
 For XML:
 
 ```bash
-PYTHONPATH=src python src/index_xml.py
+PYTHONPATH=src python src/xml_index.py
 ```
 
+For TTL:
+
+```bash
+PYTHONPATH=src python src/ttl_index.py
+```
 ---
 
 ## Answers say that information cannot be determined
@@ -689,13 +737,13 @@ PYTHONPATH=src python src/index_xml.py
 First inspect the retrieved sources:
 
 ```bash
-PYTHONPATH=src python src/query_xml.py
+PYTHONPATH=src python src/xml_query.py
 ```
 
 or:
 
 ```bash
-PYTHONPATH=src python src/query_pdf.py
+PYTHONPATH=src python src/pdf_query.py
 ```
 
 The important distinction is:
