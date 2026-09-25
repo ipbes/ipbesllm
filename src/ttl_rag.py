@@ -1,17 +1,221 @@
 import os
 import re
+from pathlib import Path
 
 import chromadb
 import ollama
 from chromadb.errors import NotFoundError
 from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
+from rdflib import Graph, URIRef
+from rdflib.namespace import RDF, SKOS
 
+
+# ---------------------------------------------------------------------------
+# Config
+# ---------------------------------------------------------------------------
 
 LLM_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:latest")
 EMBED_MODEL = os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")
 
 CHROMA_DIR = "chroma"
 COLLECTION_NAME = "ttl_documents"
+
+# Path to the IPBES geography vocabulary.
+GEO_PATH = Path("data/rdf/ipbes-geo.rdf")
+
+ISO3166 = URIRef("http://purl.org/dc/terms/ISO3166")
+
+
+# ---------------------------------------------------------------------------
+# Geography helpers (load ipbes-geo.rdf)
+# ---------------------------------------------------------------------------
+
+_geo_graph: Graph | None = None
+
+
+def _geo() -> Graph:
+    global _geo_graph
+    if _geo_graph is None:
+        g = Graph()
+        g.parse(GEO_PATH, format="xml")
+        _geo_graph = g
+    return _geo_graph
+
+
+def _labels_of_type(subject, predicate) -> list[str]:
+    g = _geo()
+    out = []
+    for o in g.objects(subject, predicate):
+        lang = getattr(o, "language", None)
+        if lang in (None, "en"):
+            out.append(str(o).strip())
+    return out
+
+
+def _en_labels(subject) -> list[str]:
+    labels = []
+    for p in (SKOS.prefLabel, SKOS.altLabel, SKOS.hiddenLabel):
+        labels.extend(_labels_of_type(subject, p))
+    return labels
+
+
+def _country_concepts():
+    """Yield (concept, iso_code) for every country in the geo file."""
+    g = _geo()
+    for concept in g.subjects(
+        RDF.type, URIRef("http://www.w3.org/2004/02/skos/core#Concept")
+    ):
+        for notation in g.objects(concept, SKOS.notation):
+            if getattr(notation, "datatype", None) == ISO3166:
+                yield concept, str(notation)
+                break
+
+
+def country_code_for_label(label: str) -> str | None:
+    """Map a free-text country label to its ISO 3166 alpha-3 code."""
+    if not label:
+        return None
+    needle = label.strip().lower()
+
+    for concept, code in _country_concepts():
+        for lab in _en_labels(concept):
+            if lab.lower() == needle:
+                return code
+        if str(concept).rsplit("/", 1)[-1].lower() == needle:
+            return code
+
+    return None
+
+
+def country_label_for_code(code: str) -> str | None:
+    """
+    Map an ISO 3166 alpha-3 code back to the plain English country name
+    that the TTL files actually use for ipbes:country.
+
+    Preference order:
+      1. skos:hiddenLabel  (e.g. 'Tanzania', 'Netherlands', 'Gambia')
+      2. skos:prefLabel with any trailing parenthetical stripped
+    """
+    code = (code or "").upper()
+    for concept, c in _country_concepts():
+        if c != code:
+            continue
+        hidden = _labels_of_type(concept, SKOS.hiddenLabel)
+        if hidden:
+            return hidden[0]
+        pref = _labels_of_type(concept, SKOS.prefLabel)
+        if pref:
+            short = re.sub(r"\s*\(.*\)\s*$", "", pref[0]).strip()
+            return short or pref[0]
+        return None
+    return None
+
+
+def _expand_collection(uri) -> set[str]:
+    """Recursively collect ISO codes under a skos:Collection."""
+    g = _geo()
+    codes: set[str] = set()
+    stack = [uri]
+    seen = set()
+
+    while stack:
+        node = stack.pop()
+        if node in seen:
+            continue
+        seen.add(node)
+
+        for member in g.objects(node, SKOS.member):
+            for notation in g.objects(member, SKOS.notation):
+                if getattr(notation, "datatype", None) == ISO3166:
+                    codes.add(str(notation))
+                    break
+            else:
+                stack.append(member)
+
+    return codes
+
+
+def _codes_for_region(label: str) -> set[str]:
+    g = _geo()
+    needle = label.strip().lower()
+    for coll in g.subjects(RDF.type, SKOS.Collection):
+        for lab in _en_labels(coll):
+            if lab.lower() == needle:
+                return _expand_collection(coll)
+    return set()
+
+
+# Region/sub-region names to look for, longest first so that
+# "Central Asia" wins over "Asia".
+_REGION_NAMES = [
+    "east africa and adjacent islands",
+    "central and western europe",
+    "europe and central asia",
+    "asia and the pacific",
+    "western europe",
+    "eastern europe",
+    "central asia",
+    "north africa",
+    "north america",
+    "north-east asia",
+    "south america",
+    "south asia",
+    "south-east asia",
+    "southern africa",
+    "west africa",
+    "western asia",
+    "central africa",
+    "mesoamerica",
+    "caribbean",
+    "oceania",
+    "africa",
+    "americas",
+    "asia",
+    "europe",
+]
+
+
+def _infer_country_names(question: str) -> set[str]:
+    """
+    Return the country *names* implied by the question, matching what is
+    stored in the current Chroma index (e.g. 'Kenya', 'Tanzania').
+
+    Internally uses the geo vocabulary: region -> set of ISO codes,
+    then ISO code -> plain name.
+    """
+    q = question.lower()
+
+    codes: set[str] = set()
+
+    # 1. Region / sub-region.
+    for name in _REGION_NAMES:
+        if name in q:
+            codes = _codes_for_region(name)
+            if codes:
+                break
+
+    # 2. Individual country.
+    if not codes:
+        tokens = re.findall(r"[A-Za-z][A-Za-z\-']+", question)
+        candidates = list(tokens) + [
+            f"{tokens[i]} {tokens[i + 1]}"
+            for i in range(len(tokens) - 1)
+        ]
+        for cand in candidates:
+            code = country_code_for_label(cand)
+            if code:
+                codes = {code}
+                break
+
+    if not codes:
+        return set()
+
+    names = set()
+    for c in codes:
+        label = country_label_for_code(c)
+        if label:
+            names.add(label)
+    return names
 
 
 # ---------------------------------------------------------------------------
@@ -42,9 +246,31 @@ def _get_collection():
 # Retrieval
 # ---------------------------------------------------------------------------
 
-def retrieve(question: str, k: int = 5, chunk_type: str | None = None):
+def retrieve(
+    question: str,
+    k: int = 5,
+    chunk_type: str | None = None,
+    country_names: set[str] | None = None,
+):
     collection = _get_collection()
-    where = {"chunk_type": chunk_type} if chunk_type else None
+
+    where_clauses = []
+    if chunk_type:
+        where_clauses.append({"chunk_type": chunk_type})
+    if country_names:
+        names = sorted(country_names)
+        if len(names) == 1:
+            where_clauses.append({"country": names[0]})
+        else:
+            where_clauses.append({"country": {"$in": names}})
+
+    if not where_clauses:
+        where = None
+    elif len(where_clauses) == 1:
+        where = where_clauses[0]
+    else:
+        where = {"$and": where_clauses}
+
     return collection.query(
         query_texts=[question],
         n_results=k,
@@ -52,17 +278,13 @@ def retrieve(question: str, k: int = 5, chunk_type: str | None = None):
     )
 
 
-def _infer_chunk_type(question: str) -> str | None:
-    """
-    Infer a chunk_type filter from the question text.
+# ---------------------------------------------------------------------------
+# Chunk-type inference
+# ---------------------------------------------------------------------------
 
-    Keep this conservative: only return a type when the question clearly
-    refers to one kind of chunk. Otherwise return None and let vector
-    search decide.
-    """
+def _infer_chunk_type(question: str) -> str | None:
     q = question.lower()
 
-    # Order matters: check the more specific phrases first.
     if "key message" in q or "key messages" in q:
         return "key"
     if "knowledge gap" in q or "knowledge gaps" in q:
@@ -91,12 +313,6 @@ _IDENTIFIER_RE = re.compile(r"^([A-Za-z]+)\s*(\d+)")
 
 
 def _identifier_sort_key(identifier: str):
-    """
-    'A1.' -> ('A', 1)
-    'B12' -> ('B', 12)
-    'LDR18-A1.' -> ('LDR', 18)   # fallback if no plain identifier
-    Otherwise: (identifier, 0)
-    """
     m = _IDENTIFIER_RE.match(identifier or "")
     if m:
         return (m.group(1).upper(), int(m.group(2)))
@@ -104,7 +320,6 @@ def _identifier_sort_key(identifier: str):
 
 
 def _reorder_by_identifier(results):
-    """Reorder query() results in place by metadata['identifier']."""
     docs = results["documents"][0]
     metas = results["metadatas"][0]
     dists = results["distances"][0]
@@ -130,8 +345,6 @@ def _build_context(results) -> str:
     for i, document in enumerate(results["documents"][0]):
         m = results["metadatas"][0][i]
 
-        # Strip the loader's header block ("Document: ... Date: ...")
-        # so the model sees the message body, not a metadata preamble.
         body = document.split("\n\n", 1)[-1].strip()
 
         prefix_parts = []
@@ -141,6 +354,8 @@ def _build_context(results) -> str:
             prefix_parts.append(f"type={m['chunk_type']}")
         if m.get("qualifier"):
             prefix_parts.append(f"qualifier={m['qualifier']}")
+        if m.get("country"):
+            prefix_parts.append(f"country={m['country']}")
 
         prefix = " ".join(prefix_parts)
 
@@ -149,7 +364,11 @@ def _build_context(results) -> str:
     return "\n\n---\n\n".join(parts)
 
 
-def _build_task(question: str, chunk_type: str | None) -> str:
+def _build_task(
+    question: str,
+    chunk_type: str | None,
+    country_names: set[str],
+) -> str:
     if chunk_type == "key":
         return (
             "The user is asking for the KEY MESSAGES of an IPBES assessment.\n"
@@ -168,6 +387,32 @@ def _build_task(question: str, chunk_type: str | None) -> str:
             "- Do NOT summarise; reproduce each key message faithfully.\n"
         )
 
+    if chunk_type == "person" and country_names:
+        names = ", ".join(sorted(country_names))
+        return (
+            f"The user is asking about experts from: {names}.\n"
+            f"Every retrieved chunk is a Person whose country field is one "
+            f"of those names.\n"
+            "\n"
+            "List ALL retrieved persons by their full name (the heading).\n"
+            "For each, also give the country and the role(s) mentioned in "
+            "the body, if any.\n"
+            "\n"
+            "CRITICAL:\n"
+            "- Only include persons whose country matches one of the names "
+            "above.\n"
+            "- If a retrieved chunk's body shows a different country, drop "
+            "it.\n"
+            "- Do not invent names, countries, or roles.\n"
+        )
+
+    if chunk_type == "person":
+        return (
+            "The user is asking about experts.\n"
+            "Each retrieved chunk is a Person. List the persons and the "
+            "country and roles mentioned in the body.\n"
+        )
+
     if chunk_type:
         return (
             f"Answer the user's question using ONLY the retrieved "
@@ -183,9 +428,14 @@ def _build_task(question: str, chunk_type: str | None) -> str:
     )
 
 
-def generate_answer(question: str, results, chunk_type: str | None = None) -> str:
+def generate_answer(
+    question: str,
+    results,
+    chunk_type: str | None = None,
+    country_names: set[str] | None = None,
+) -> str:
     context = _build_context(results)
-    task = _build_task(question, chunk_type)
+    task = _build_task(question, chunk_type, country_names or set())
 
     prompt = f"""
 You are answering questions about an IPBES assessment report, represented
@@ -240,26 +490,45 @@ def main():
 
     chunk_type = _infer_chunk_type(question)
 
+    country_names: set[str] = set()
+    if chunk_type == "person":
+        country_names = _infer_country_names(question)
+
     if chunk_type:
         print(f"(Filtering to chunk_type='{chunk_type}')")
-        # Retrieve everything of this type, so we don't truncate.
         k = 100
     else:
         k = 5
 
+    if country_names:
+        print(f"(Filtering to countries: {sorted(country_names)})")
+        k = 200
+
     print()
 
-    results = retrieve(question, k=k, chunk_type=chunk_type)
+    results = retrieve(
+        question,
+        k=k,
+        chunk_type=chunk_type,
+        country_names=country_names or None,
+    )
 
     if not results["documents"][0]:
-        print("No results found.")
+        if country_names:
+            print(f"No results found for countries {sorted(country_names)}.")
+        else:
+            print("No results found.")
         return
 
-    # Sort by identifier so lists appear in document order (A1, A2, ...).
     if chunk_type:
         results = _reorder_by_identifier(results)
 
-    answer = generate_answer(question, results, chunk_type=chunk_type)
+    answer = generate_answer(
+        question,
+        results,
+        chunk_type=chunk_type,
+        country_names=country_names,
+    )
 
     print("=" * 80)
     print("ANSWER")
@@ -274,9 +543,11 @@ def main():
     for i, m in enumerate(results["metadatas"][0]):
         d = results["distances"][0][i]
         print(
-            f"{i + 1:>2}. {m.get('identifier', ''):<5} "
+            f"{i + 1:>2}. "
+            f"{m.get('identifier', ''):<5} "
             f"{m.get('chunk_type', '?'):<8} "
-            f"eId={m.get('eId', '?'):<20} "
+            f"country={m.get('country', ''):<25} "
+            f"eId={m.get('eId', '?'):<25} "
             f"distance={d:.4f}"
         )
 
