@@ -8,7 +8,7 @@ from chromadb.errors import NotFoundError
 from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 from rdflib import Graph, URIRef
 from rdflib.namespace import RDF, SKOS
-from cache import cache, make_key 
+from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key 
 from loguru import logger
 
 
@@ -107,7 +107,7 @@ def country_label_for_code(code: str) -> str | None:
             return hidden[0]
         pref = _labels_of_type(concept, SKOS.prefLabel)
         if pref:
-            short = re.sub(r"\s*\(.*\)\s*$", "", pref[0]).strip()
+            short = re.sub(r"\s*\([^)]*\)\s*$", "", pref[0]).strip()
             return short or pref[0]
         return None
     return None
@@ -518,30 +518,39 @@ async def retrieve_cached(
     chunk_type: str | None = None,
     country_names: set[str] | None = None,
 ):
-    """
-    Async, cached version of retrieve(). Reuses your existing sync
-    retrieve() by running it in a thread so the event loop isn't blocked
-    (chromadb + Ollama embedding are sync).
-    """
+    """Cached Chroma retrieval."""
     import anyio
 
     norm_countries = sorted(country_names) if country_names else None
-    key = make_key("ttl:retrieve", question, k, chunk_type, norm_countries)
+    key = make_key(
+        CACHE_VERSION,
+        PIPELINE_ID,
+        "retrieve",
+        EMBED_MODEL,
+        COLLECTION_NAME,
+        question.strip(),
+        k,
+        chunk_type,
+        norm_countries,
+    )
 
     hit = await cache.get(key)
     if hit is not None:
-        logger.debug(f"ttl retrieve HIT  q={question[:50]!r}")
+        logger.debug(f"ttl retrieve HIT q={question[:50]!r}")
         return hit
 
     result = await anyio.to_thread.run_sync(
-        lambda: retrieve(question, k=k, chunk_type=chunk_type,
-                         country_names=country_names)
+        lambda: retrieve(
+            question,
+            k=k,
+            chunk_type=chunk_type,
+            country_names=country_names,
+        )
     )
     await cache.set(key, result, ttl=3600)
+    logger.debug(f"ttl retrieve MISS q={question[:50]!r}")
     return result
 
-
-# ---------- generation (async) ----------
 
 async def generate_answer_cached(
     question: str,
@@ -549,19 +558,17 @@ async def generate_answer_cached(
     chunk_type: str | None = None,
     country_names: set[str] | None = None,
 ) -> dict:
-    """
-    Cache the LLM call keyed on (question, chunk_type, country_names,
-    context-hash). We hash the context because different retrievals for
-    the same question (e.g. after re-indexing) must not collide.
-    """
+    """Cache the LLM answer using the retrieved context as part of the key."""
     import anyio
 
     context = _build_context(results)
-    ctx_hash = make_key("ctx", context)[:16]
-
+    ctx_hash = make_key("ctx", context)
     key = make_key(
-        "ttl:answer",
-        question,
+        CACHE_VERSION,
+        PIPELINE_ID,
+        "answer",
+        LLM_MODEL,
+        question.strip(),
         chunk_type,
         sorted(country_names) if country_names else None,
         ctx_hash,
@@ -569,13 +576,13 @@ async def generate_answer_cached(
 
     hit = await cache.get(key)
     if hit is not None:
-        logger.debug(f"ttl answer HIT  q={question[:50]!r}")
-        hit["_cached"] = True
-        return hit
+        logger.debug(f"ttl answer HIT q={question[:50]!r}")
+        return {**hit, "_cached": True}
 
     answer = await anyio.to_thread.run_sync(
         lambda: generate_answer(
-            question, results,
+            question,
+            results,
             chunk_type=chunk_type,
             country_names=country_names,
         )
@@ -595,7 +602,8 @@ async def generate_answer_cached(
         ],
         "_cached": False,
     }
-    await cache.set(key, payload, ttl=60 * 60 * 6)
+    await cache.set(key, payload, ttl=6 * 60 * 60)
+    logger.debug(f"ttl answer MISS q={question[:50]!r}")
     return payload
 
 # ---------------------------------------------------------------------------
