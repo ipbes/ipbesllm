@@ -345,7 +345,15 @@ def _build_context(results) -> str:
     for i, document in enumerate(results["documents"][0]):
         m = results["metadatas"][0][i]
 
-        body = document.split("\n\n", 1)[-1].strip()
+        # Drop only the document-level preamble lines, keep the rest
+        # (Heading / Chapter / Subchapter / Country / Roles ...).
+        lines = document.splitlines()
+        keep = [
+            ln for ln in lines
+            if not ln.startswith("Document:")
+            and not ln.startswith("Date:")
+        ]
+        body = "\n".join(keep).strip()
 
         prefix_parts = []
         if m.get("identifier"):
