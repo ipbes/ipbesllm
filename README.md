@@ -283,15 +283,6 @@ Build vector index whenever there are RDF changes to the IPBES thesaurus
 python -m src.rdf_index data/rdf/ipbes-thesaurus.rdf
 ```
 
-Test RDF query
-```bash
-python -c "
-from src.rdf_rag import ThesaurusRAG
-rag = ThesaurusRAG('data/rdf/ipbes-thesaurus.rdf')
-print(rag.answer('How does ecological integrity relate to ecosystem health?'))
-"
-```
-
 The indexer extracts text from the PDFs, creates chunks, generates embeddings using `nomic-embed-text`, and stores them in Chroma.
 
 ## Test PDF retrieval
@@ -380,6 +371,14 @@ data/ttl/
 
 ```bash
 PYTHONPATH=src python src/ttl_test.py
+```
+
+```bash
+python -c "
+from src.rdf_rag import ThesaurusRAG
+rag = ThesaurusRAG('data/rdf/ipbes-thesaurus.rdf')
+print(rag.answer('How does ecological integrity relate to ecosystem health?'))
+"
 ```
 
 ## Index TTL documents
