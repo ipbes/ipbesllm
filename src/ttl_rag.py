@@ -1,3 +1,4 @@
+import json
 import os
 import re
 from pathlib import Path
@@ -8,9 +9,9 @@ from chromadb.errors import NotFoundError
 from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 from rdflib import Graph, URIRef
 from rdflib.namespace import RDF, SKOS
-from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key 
+from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key
 from loguru import logger
-from geo import infer_country_names
+from geo import infer_country_names, canonical_country
 
 
 # ---------------------------------------------------------------------------
@@ -22,6 +23,11 @@ EMBED_MODEL = os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")
 
 CHROMA_DIR = "chroma"
 COLLECTION_NAME = "ttl_documents"
+
+# Manifest written by ttl_index.py listing the assessments it indexed.
+# Used by the RAG to fan out one query per assessment so no single
+# assessment can dominate the top-k results.
+MANIFEST_PATH = Path(CHROMA_DIR) / "assessments.json"
 
 # Path to the IPBES geography vocabulary.
 GEO_PATH = Path("data/rdf/ipbes-geo.rdf")
@@ -56,39 +62,168 @@ def _get_collection():
 
 
 # ---------------------------------------------------------------------------
+# Assessment discovery (from manifest)
+# ---------------------------------------------------------------------------
+
+_ASSESSMENT_CACHE: list[str] | None = None
+
+
+def _get_assessments() -> list[str]:
+    """
+    Return the assessment IDs recorded by the indexer in the manifest.
+
+    Falls back to an empty list if the manifest is missing (i.e. an index
+    produced before this change). Callers must treat an empty list as
+    'per-assessment retrieval not available' and fall back to a single
+    query.
+    """
+    global _ASSESSMENT_CACHE
+    if _ASSESSMENT_CACHE is not None:
+        return _ASSESSMENT_CACHE
+
+    if not MANIFEST_PATH.exists():
+        logger.warning(
+            f"Assessment manifest {MANIFEST_PATH} not found; "
+            f"per-assessment retrieval disabled. Re-run ttl_index.py."
+        )
+        _ASSESSMENT_CACHE = []
+        return _ASSESSMENT_CACHE
+
+    try:
+        data = json.loads(MANIFEST_PATH.read_text())
+    except (OSError, json.JSONDecodeError) as e:
+        logger.warning(
+            f"Could not read assessment manifest {MANIFEST_PATH}: {e}; "
+            f"per-assessment retrieval disabled."
+        )
+        _ASSESSMENT_CACHE = []
+        return _ASSESSMENT_CACHE
+
+    _ASSESSMENT_CACHE = sorted(data.get("assessments", []))
+    logger.debug(f"Loaded assessments from manifest: {_ASSESSMENT_CACHE}")
+    return _ASSESSMENT_CACHE
+
+
+# ---------------------------------------------------------------------------
 # Retrieval
 # ---------------------------------------------------------------------------
+
+def _build_where(
+    chunk_type: str | None,
+    country_names: set[str] | None,
+    assessment: str | None = None,
+):
+    """Build a Chroma `where` clause from the individual filters."""
+    clauses = []
+    if chunk_type:
+        clauses.append({"chunk_type": chunk_type})
+    if country_names:
+        names = sorted(country_names)
+        if len(names) == 1:
+            clauses.append({"country": names[0]})
+        else:
+            clauses.append({"country": {"$in": names}})
+    if assessment:
+        clauses.append({"assessment": assessment})
+
+    if not clauses:
+        return None
+    if len(clauses) == 1:
+        return clauses[0]
+    return {"$and": clauses}
+
+
+def _empty_results():
+    return {
+        "ids": [[]],
+        "documents": [[]],
+        "metadatas": [[]],
+        "distances": [[]],
+    }
+
+
+def _merge_results(results_list):
+    """Concatenate several Chroma result dicts into one."""
+    merged = _empty_results()
+    for r in results_list:
+        merged["ids"][0].extend(r["ids"][0])
+        merged["documents"][0].extend(r["documents"][0])
+        merged["metadatas"][0].extend(r["metadatas"][0])
+        merged["distances"][0].extend(r["distances"][0])
+    return merged
+
 
 def retrieve(
     question: str,
     k: int = 5,
     chunk_type: str | None = None,
     country_names: set[str] | None = None,
+    per_assessment: bool = False,
 ):
+    """
+    Retrieve chunks. When `per_assessment=True`, run one query per assessment
+    (using `k` results each) and merge, so no single assessment can crowd
+    out the others.
+    """
     collection = _get_collection()
 
-    where_clauses = []
-    if chunk_type:
-        where_clauses.append({"chunk_type": chunk_type})
-    if country_names:
-        names = sorted(country_names)
-        if len(names) == 1:
-            where_clauses.append({"country": names[0]})
-        else:
-            where_clauses.append({"country": {"$in": names}})
+    # Sanity guard: a runaway country filter (e.g. a bug in
+    # infer_country_names) would otherwise silently zero out retrieval.
+    if country_names and len(country_names) > 50:
+        logger.warning(
+            f"country_names has {len(country_names)} entries; "
+            f"this looks like a bug in infer_country_names. "
+            f"Dropping the filter."
+        )
+        country_names = None
 
-    if not where_clauses:
-        where = None
-    elif len(where_clauses) == 1:
-        where = where_clauses[0]
-    else:
-        where = {"$and": where_clauses}
+    # Fast path: no per-assessment split requested.
+    if not per_assessment:
+        return collection.query(
+            query_texts=[question],
+            n_results=k,
+            where=_build_where(chunk_type, country_names),
+        )
 
-    return collection.query(
-        query_texts=[question],
-        n_results=k,
-        where=where,
-    )
+    assessments = _get_assessments()
+    if not assessments:
+        # No manifest -> behave like the pre-per-assessment code path.
+        logger.warning(
+            "per_assessment=True but no assessments available; "
+            "falling back to a single query."
+        )
+        return collection.query(
+            query_texts=[question],
+            n_results=k,
+            where=_build_where(chunk_type, country_names),
+        )
+
+    per_assessment_results = []
+    for a in assessments:
+        where = _build_where(chunk_type, country_names, assessment=a)
+
+        try:
+            r = collection.query(
+                query_texts=[question],
+                n_results=k,
+                where=where,
+            )
+        except Exception as e:  # noqa: BLE001
+            logger.warning(f"Per-assessment query failed for {a!r}: {e}")
+            continue
+
+        # Tag each returned metadata with the assessment so downstream
+        # code (and the LLM context) can show where it came from.
+        for m in r["metadatas"][0]:
+            m.setdefault("assessment", a)
+
+        if r["documents"][0]:
+            per_assessment_results.append(r)
+
+    if not per_assessment_results:
+        return _empty_results()
+
+    return _merge_results(per_assessment_results)
 
 
 # ---------------------------------------------------------------------------
@@ -175,6 +310,8 @@ def _build_context(results) -> str:
             prefix_parts.append(f"type={m['chunk_type']}")
         if m.get("qualifier"):
             prefix_parts.append(f"qualifier={m['qualifier']}")
+        if m.get("assessment"):
+            prefix_parts.append(f"assessment={m['assessment']}")
         if m.get("country"):
             prefix_parts.append(f"country={m['country']}")
 
@@ -307,6 +444,7 @@ async def retrieve_cached(
     k: int = 5,
     chunk_type: str | None = None,
     country_names: set[str] | None = None,
+    per_assessment: bool = False,
 ):
     """Cached Chroma retrieval."""
     import anyio
@@ -322,6 +460,7 @@ async def retrieve_cached(
         k,
         chunk_type,
         norm_countries,
+        per_assessment,
     )
 
     hit = await cache.get(key)
@@ -335,6 +474,7 @@ async def retrieve_cached(
             k=k,
             chunk_type=chunk_type,
             country_names=country_names,
+            per_assessment=per_assessment,
         )
     )
     await cache.set(key, result, ttl=3600)
@@ -384,6 +524,7 @@ async def generate_answer_cached(
             {
                 "identifier": m.get("identifier"),
                 "chunk_type": m.get("chunk_type"),
+                "assessment": m.get("assessment"),
                 "country": m.get("country"),
                 "eId": m.get("eId"),
                 "distance": results["distances"][0][i],
@@ -413,7 +554,15 @@ async def async_main():
 
     country_names: set[str] = set()
     if chunk_type == "person":
-        country_names = infer_country_names(question)
+        country_names = {
+            c for c in (
+                canonical_country(x) for x in infer_country_names(question)
+            ) if c
+        }
+
+    # Fan out per assessment whenever we're filtering (chunk_type and/or
+    # country), because otherwise one assessment can dominate the top-k.
+    per_assessment = bool(chunk_type or country_names)
 
     if chunk_type:
         print(f"(Filtering to chunk_type='{chunk_type}')")
@@ -423,7 +572,10 @@ async def async_main():
 
     if country_names:
         print(f"(Filtering to countries: {sorted(country_names)})")
-        k = 200
+        k = 200  # per-assessment cap when fanning out
+
+    if per_assessment:
+        print("(Retrieving per assessment)")
 
     print()
 
@@ -432,6 +584,7 @@ async def async_main():
         k=k,
         chunk_type=chunk_type,
         country_names=country_names or None,
+        per_assessment=per_assessment,
     )
 
     if not results["documents"][0]:
@@ -470,6 +623,7 @@ async def async_main():
             f"{i + 1:>2}. "
             f"{m.get('identifier', ''):<5} "
             f"{m.get('chunk_type', '?'):<8} "
+            f"assessment={m.get('assessment', '?'):<8} "
             f"country={m.get('country', ''):<25} "
             f"eId={m.get('eId', '?'):<25} "
             f"distance={d:.4f}"

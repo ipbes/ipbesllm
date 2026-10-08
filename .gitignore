@@ -7,7 +7,9 @@ __pycache__/
 .DS_Store
 chroma/
 data/
+tests/
 prompts/
 src/__pycache__/
+src/test.py
 *.sqlite3
 .cache

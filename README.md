@@ -89,24 +89,35 @@ ipbesllm/
 │   ├── cache.py
 │   ├── geo.py
 │   ├── models.py
-│   ├── pdf_index.py
+│   ├── pdf_index.py       # Embed concept profiles → Chroma
 │   ├── pdf_loader.py
 │   ├── pdf_query.py
-│   ├── pdf_rag.py
+│   ├── pdf_rag.py         # Retrieval
 │   ├── pdf_test_embeddings.py
-│   ├── pdf_test.py
+│   ├── pdf_test.py        # Sanity checks
+│   ├── pdf_ttl_compare.py
+│   ├── rdf_loader.py      # Parse RDF into a graph + extract concept profiles
+│   ├── rdf_graph.py       # Graph DB wrapper (in-memory RDFLib + persistent store)
+│   ├── rdf_index.py       # Embed concept profiles → Chroma
+│   ├── rdf_query.py       # Hybrid retrieval (vector + graph traversal)
+│   ├── rdf_rag.py         # RAG chain that uses hybrid retrieval
+│   ├── rdf_test.py        # Sanity checks
 │   ├── stage1_ollama.py
-│   ├── ttl_index.py
+│   ├── ttl_index.py       # Embed concept profiles → Chroma
 │   ├── ttl_loader.py
 │   ├── ttl_query.py
-│   ├── ttl_rag.py
-│   ├── ttl_test.py
-│   ├── xml_index.py
+│   ├── ttl_rag.py         # Retrieval
+│   ├── ttl_test.py        # Sanity checks
+│   ├── xml_chunks.py
+│   ├── xml_index.py       # Embed concept profiles → Chroma
 │   ├── xml_loader.py
 │   ├── xml_query.py
-│   ├── xml_rag.py
+│   ├── xml_rag.py         # Retrieval
 │   ├── xml_test_chunks.py
-│   └── xml_test.py
+│   └── xml_test.py        # Sanity checks
+├── tests/
+│   ├── pdf_ttl_compare.csv
+│   └── ttl_experts.py
 ├── .webui_secret_key
 ├── app.py
 ├── README.md
@@ -860,6 +871,11 @@ This information is particularly useful for improving chunking, retrieval, promp
 | TTL parsing | Working |
 | TTL embeddings | Working |
 | TTL RAG | Working |
+| Test/Compare results | In Progress |
+| Helper for countries ipbes-geo.rdf and geo.py | In Progress |
+| Helper for deliverables | Next |
+| Helper for meetings | Next |
+| Helper for Experts | Next |
 | Answer cache | Planned/ in development |
 | Streamlit UI | Planned / in development |
 | Docker deployment | Planned / in development |

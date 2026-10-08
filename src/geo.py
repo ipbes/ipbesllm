@@ -242,3 +242,35 @@ def infer_country_names(question: str) -> set[str]:
         if label:
             names.add(label)
     return names
+
+def canonical_country(value: str | None) -> str | None:
+    """
+    Normalise any country value to the canonical IPBES country name.
+
+      'CHN'  / 'chn'  / 'China' / 'china' -> 'China'
+      'TZA'  / 'Tanzania'                 -> 'Tanzania'
+
+    Returns the trimmed input unchanged if it can't be resolved, so no
+    data is silently dropped.
+    """
+    if value is None:
+        return None
+    s = str(value).strip()
+    if not s:
+        return None
+
+    # Path A: looks like an ISO code (2-3 letters), try code -> label.
+    if len(s) <= 3 and s.isalpha():
+        label = country_label_for_code(s)
+        if label:
+            return label
+
+    # Path B: free-text label -> code -> label.
+    code = country_code_for_label(s)
+    if code:
+        label = country_label_for_code(code)
+        if label:
+            return label
+
+    # Path C: unrecognised. Return trimmed input.
+    return s

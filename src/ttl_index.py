@@ -1,3 +1,6 @@
+import json
+import re
+from collections import Counter
 from pathlib import Path
 
 import chromadb
@@ -5,6 +8,7 @@ from chromadb.errors import NotFoundError
 from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 
 from ttl_loader import parse_ttl_file
+from geo import canonical_country
 
 
 TTL_DIR = Path("data/ttl")
@@ -12,9 +16,27 @@ TTL_DIR = Path("data/ttl")
 CHROMA_DIR = "chroma"
 COLLECTION_NAME = "ttl_documents"
 
+# Manifest consumed by ttl_rag.py to fan out one query per assessment.
+MANIFEST_PATH = Path(CHROMA_DIR) / "assessments.json"
+
 EMBED_MODEL = "nomic-embed-text"
 
 BATCH_SIZE = 25
+
+# Matches a trailing version suffix like "_v09" / "_v01".
+_VERSION_SUFFIX_RE = re.compile(r"_v\d+$")
+
+
+def assessment_id_from_path(path: Path) -> str:
+    """
+    Derive a stable assessment ID from a TTL filename.
+
+    Examples:
+        GA1_v09.ttl   -> "GA1"
+        IAS_v04.ttl   -> "IAS"
+        LDR_v01.ttl   -> "LDR"
+    """
+    return _VERSION_SUFFIX_RE.sub("", path.stem)
 
 
 def _delete_collection_if_exists(client, name: str) -> None:
@@ -36,11 +58,11 @@ def main():
     print(f"TTL directory: {TTL_DIR.resolve()}")
     print()
 
-    ttl_files = list(TTL_DIR.glob("*.ttl"))
+    ttl_files = sorted(TTL_DIR.glob("*.ttl"))
 
     print(f"TTL files found: {len(ttl_files)}")
     for ttl in ttl_files:
-        print(f"  - {ttl}")
+        print(f"  - {ttl}  -> assessment={assessment_id_from_path(ttl)!r}")
     print()
 
     if not ttl_files:
@@ -70,11 +92,20 @@ def main():
     print()
 
     all_chunks: list[dict] = []
+    indexed_assessments: set[str] = set()
 
     for ttl_path in ttl_files:
-        print(f"Processing: {ttl_path.name}")
+        assessment_id = assessment_id_from_path(ttl_path)
+        indexed_assessments.add(assessment_id)
+
+        print(f"Processing: {ttl_path.name}  (assessment={assessment_id})")
 
         chunks = parse_ttl_file(str(ttl_path))
+
+        # Tag every chunk with its assessment so it can be filtered
+        # per-assessment downstream.
+        for chunk in chunks:
+            chunk["assessment"] = assessment_id
 
         print(f"  Chunks extracted: {len(chunks)}")
 
@@ -82,6 +113,7 @@ def main():
 
     print()
     print(f"Total chunks: {len(all_chunks)}")
+    print(f"Assessments: {sorted(indexed_assessments)}")
     print()
 
     if not all_chunks:
@@ -111,7 +143,8 @@ def main():
                 "title": chunk["title"],
                 "date": chunk["date"],
                 "language": chunk["language"],
-                "country": chunk["country"],
+                "country": canonical_country(chunk["country"]),
+                "country_raw": chunk["country"],
                 "subtype": chunk["subtype"],
                 "number": chunk["number"],
                 "division": chunk["division"],
@@ -121,13 +154,12 @@ def main():
                 "xpath": chunk["xpath"],
                 "identifier": chunk["identifier"],
                 "qualifier": chunk["qualifier"],
+                "assessment": chunk["assessment"],
             }
             for chunk in batch
         ]
 
-        print(
-            f"Storing chunks {start + 1}-{end} of {total}..."
-        )
+        print(f"Storing chunks {start + 1}-{end} of {total}...")
 
         collection.upsert(
             ids=ids,
@@ -137,6 +169,22 @@ def main():
 
         print(f"  Stored {end}/{total}")
 
+    # ------------------------------------------------------------------
+    # Write the assessment manifest consumed by ttl_rag.py.
+    # ------------------------------------------------------------------
+    MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
+    MANIFEST_PATH.write_text(
+        json.dumps(
+            {
+                "assessments": sorted(indexed_assessments),
+                "collection": COLLECTION_NAME,
+                "embed_model": EMBED_MODEL,
+            },
+            indent=2,
+        )
+    )
+    print(f"Wrote assessment manifest: {MANIFEST_PATH}")
+
     print()
     print("=" * 60)
     print("TTL indexing complete.")
@@ -144,13 +192,17 @@ def main():
     print(f"Chunks indexed: {total}")
     print(f"Collection: {COLLECTION_NAME}")
     print(f"Total in collection: {collection.count()}")
+    print(f"Assessments: {sorted(indexed_assessments)}")
 
-    # After collecting all chunks:
-    from collections import Counter
     type_counts = Counter(c["chunk_type"] for c in all_chunks)
     print("Chunk types:")
     for t, count in sorted(type_counts.items()):
         print(f"  {t}: {count}")
+
+    assessment_counts = Counter(c["assessment"] for c in all_chunks)
+    print("Chunks per assessment:")
+    for a, count in sorted(assessment_counts.items()):
+        print(f"  {a}: {count}")
     print()
 
 
