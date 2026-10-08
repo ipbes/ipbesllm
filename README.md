@@ -98,7 +98,7 @@ ipbesllm/
 │   ├── pdf_ttl_compare.py
 │   ├── rdf_loader.py                     # Parse RDF into a graph + extract concept profiles
 │   ├── rdf_graph.py                      # Graph DB wrapper (in-memory RDFLib + persistent store)
-│   ├── rdf_index.py                      # Embed concept profiles → Chroma
+│   ├── rdf_index.py                      # Indexes(embeds) RDF into Chroma
 │   ├── rdf_query.py                      # Hybrid retrieval (vector + graph traversal)
 │   ├── rdf_rag.py                        # RAG chain that uses hybrid retrieval
 │   ├── rdf_test.py                       # Sanity checks

@@ -36,6 +36,8 @@ GEO_PATH = Path("data/rdf/ipbes-geo.rdf")
 
 ISO3166 = URIRef("http://purl.org/dc/terms/ISO3166")
 
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+THESAURUS_PATH = _PROJECT_ROOT / "data" / "rdf" / "ipbes-thesaurus.rdf"
 # Weight of the thesaurus-neighborhood signal in post-retrieval re-ranking.
 # 0.0 = pure vector search; 0.25 = gentle nudge (recommended).
 THESAURUS_RERANK_ALPHA = float(os.getenv("THESAURUS_RERANK_ALPHA", "0.25"))

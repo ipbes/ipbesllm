@@ -1,5 +1,7 @@
 import json
 import re
+import time
+from httpx import ReadTimeout  # Import the specific exception
 from collections import Counter
 from pathlib import Path
 
@@ -21,11 +23,13 @@ MANIFEST_PATH = Path(CHROMA_DIR) / "assessments.json"
 
 EMBED_MODEL = "nomic-embed-text"
 
-BATCH_SIZE = 25
-
 # Matches a trailing version suffix like "_v09" / "_v01".
 _VERSION_SUFFIX_RE = re.compile(r"_v\d+$")
 
+# Manage time out issues ...
+BATCH_SIZE = 10  # Reduced from 25 to prevent timeouts
+MAX_RETRIES = 3
+RETRY_DELAY = 5  # seconds
 
 def assessment_id_from_path(path: Path) -> str:
     """
@@ -161,13 +165,30 @@ def main():
 
         print(f"Storing chunks {start + 1}-{end} of {total}...")
 
-        collection.upsert(
-            ids=ids,
-            documents=documents,
-            metadatas=metadatas,
-        )
-
-        print(f"  Stored {end}/{total}")
+        for attempt in range(MAX_RETRIES):
+            try:
+                collection.upsert(
+                    ids=ids,
+                    documents=documents,
+                    metadatas=metadatas,
+                )
+                print(f"  Stored {end}/{total}")
+                break
+            except ReadTimeout:
+                if attempt < MAX_RETRIES - 1:
+                    print(
+                        f"  Timeout — retrying in {RETRY_DELAY}s "
+                        f"(attempt {attempt + 1}/{MAX_RETRIES})..."
+                    )
+                    time.sleep(RETRY_DELAY)
+                else:
+                    print(
+                        f"  FAILED after {MAX_RETRIES} attempts. "
+                        f"Skipping chunks {start + 1}-{end}."
+                    )
+            except Exception as e:
+                print(f"  Unexpected error on chunks {start + 1}-{end}: {e}")
+                raise
 
     # ------------------------------------------------------------------
     # Write the assessment manifest consumed by ttl_rag.py.

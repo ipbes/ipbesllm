@@ -43,6 +43,7 @@ class ThesaurusHelper:
 
         self.graph = ThesaurusGraph(rdf_path)
         self._lexicon: dict[str, str] = {}
+        self._acronyms: set[str] = set()
         self._concept_cache: dict[str, Concept] = {}
         self._build_lexicon()
 
@@ -58,19 +59,39 @@ class ThesaurusHelper:
             if c.pref_label.startswith("http"):
                 continue
 
-            self._lexicon[self._normalize(c.pref_label)] = uri
+            self._register_label(c.pref_label, uri)
             for alt in c.alt_labels:
                 if alt and not alt.startswith("http"):
-                    self._lexicon.setdefault(self._normalize(alt), uri)
+                    self._register_label(alt, uri)
             for hidden in c.hidden_labels:
                 if hidden and not hidden.startswith("http"):
-                    self._lexicon.setdefault(self._normalize(hidden), uri)
+                    self._register_label(hidden, uri)
 
         self._sorted_labels = sorted(self._lexicon.keys(), key=len, reverse=True)
         logger.info(
-            "Thesaurus lexicon: %d labels across %d concepts",
-            len(self._lexicon), len(self.graph.all_concept_uris()),
+            "Thesaurus lexicon: %d labels (%d acronyms) across %d concepts",
+            len(self._lexicon),
+            len(self._acronyms),
+            len(self.graph.all_concept_uris()),
         )
+
+    def _register_label(self, label: str, uri: str) -> None:
+        """
+        Add a label to the lexicon, and tag it as an acronym if it looks
+        like one. Acronyms bypass the minimum-length filter in
+        `find_mentions` so short but meaningful terms (NCP, TEK, ILK,
+        IPLC, MSA, ...) can still be detected.
+        """
+        norm = self._normalize(label)
+        if not norm:
+            return
+        self._lexicon.setdefault(norm, uri)
+
+        stripped = label.strip()
+        # Heuristic: 2–6 characters, all letters, and uppercased in the
+        # original label. Catches NCP, TEK, ILK, IPLC, MSA, BOD, GDP.
+        if 2 <= len(stripped) <= 6 and stripped.isalpha() and stripped.isupper():
+            self._acronyms.add(norm)
 
     @staticmethod
     def _normalize(text: str) -> str:
@@ -93,7 +114,7 @@ class ThesaurusHelper:
         found: dict[str, ConceptMention] = {}
 
         for label in self._sorted_labels:
-            if len(label) < 5:            # avoid 4-char false positives
+            if len(label) < 5 and label not in self._acronyms:           # Short labels are only accepted when they look like acronyms.
                 continue
             pattern = r"\b" + re.escape(label) + r"\b"
             if not re.search(pattern, text_norm):
