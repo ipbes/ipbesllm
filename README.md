@@ -891,12 +891,13 @@ This information is particularly useful for improving chunking, retrieval, promp
 | TTL RAG | Working |
 | Test/Compare results | In Progress |
 | Helper for countries ipbes-geo.rdf and geo.py | In Progress |
+| Helper for thesaurus ipbes-thesaurus.rdf and thesaurus_helper.py | In Progress |
 | Helper for deliverables | Next |
 | Helper for meetings | Next |
 | Helper for Experts | Next |
-| Answer cache | Planned/ in development |
-| Streamlit UI | Planned / in development |
-| Docker deployment | Planned / in development |
+| Answer cache | In development |
+| Streamlit UI | Planned |
+| Docker deployment | Planned |
 | Colleague testing | Next deployment stage |
 | Architecture diagrams | Later stage |
 | OICT approval | Later stage |
