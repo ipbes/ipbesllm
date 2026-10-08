@@ -89,32 +89,32 @@ ipbesllm/
 │   ├── cache.py
 │   ├── geo.py
 │   ├── models.py
-│   ├── pdf_index.py       # Embed concept profiles → Chroma
+│   ├── pdf_index.py                      # Embed concept profiles → Chroma
 │   ├── pdf_loader.py
 │   ├── pdf_query.py
-│   ├── pdf_rag.py         # Retrieval
+│   ├── pdf_rag.py                        # Retrieval
 │   ├── pdf_test_embeddings.py
-│   ├── pdf_test.py        # Sanity checks
+│   ├── pdf_test.py                       # Sanity checks
 │   ├── pdf_ttl_compare.py
-│   ├── rdf_loader.py      # Parse RDF into a graph + extract concept profiles
-│   ├── rdf_graph.py       # Graph DB wrapper (in-memory RDFLib + persistent store)
-│   ├── rdf_index.py       # Embed concept profiles → Chroma
-│   ├── rdf_query.py       # Hybrid retrieval (vector + graph traversal)
-│   ├── rdf_rag.py         # RAG chain that uses hybrid retrieval
-│   ├── rdf_test.py        # Sanity checks
+│   ├── rdf_loader.py                     # Parse RDF into a graph + extract concept profiles
+│   ├── rdf_graph.py                      # Graph DB wrapper (in-memory RDFLib + persistent store)
+│   ├── rdf_index.py                      # Embed concept profiles → Chroma
+│   ├── rdf_query.py                      # Hybrid retrieval (vector + graph traversal)
+│   ├── rdf_rag.py                        # RAG chain that uses hybrid retrieval
+│   ├── rdf_test.py                       # Sanity checks
 │   ├── stage1_ollama.py
-│   ├── ttl_index.py       # Embed concept profiles → Chroma
+│   ├── ttl_index.py                      # Embed concept profiles → Chroma
 │   ├── ttl_loader.py
 │   ├── ttl_query.py
-│   ├── ttl_rag.py         # Retrieval
-│   ├── ttl_test.py        # Sanity checks
+│   ├── ttl_rag.py                        # Retrieval
+│   ├── ttl_test.py                       # Sanity checks
 │   ├── xml_chunks.py
-│   ├── xml_index.py       # Embed concept profiles → Chroma
+│   ├── xml_index.py                      # Embed concept profiles → Chroma
 │   ├── xml_loader.py
 │   ├── xml_query.py
-│   ├── xml_rag.py         # Retrieval
+│   ├── xml_rag.py                        # Retrieval
 │   ├── xml_test_chunks.py
-│   └── xml_test.py        # Sanity checks
+│   └── xml_test.py                       # Sanity checks
 ├── tests/
 │   ├── pdf_ttl_compare.csv
 │   └── ttl_experts.py
