@@ -471,8 +471,9 @@ def generate_answer(
     context = _build_context(results)
     task = _build_task(question, chunk_type, country_names or set())
 
-    # -------- Thesaurus glossary injection --------
+    # -------- Thesaurus glossary + primary definitions --------
     glossary = ""
+    thesaurus_primaries = ""
     th = _get_thesaurus()
     if th is not None and not chunk_type:
         try:
@@ -482,7 +483,41 @@ def generate_answer(
             logger.warning(f"Glossary build failed: {e}")
             glossary = ""
 
+        # If the question explicitly names thesaurus concepts, surface
+        # their full definitions as an authoritative context block. This
+        # matters when the assessment corpus doesn't define the concept
+        # itself (e.g. LDR assumes 'NCP' is known to the reader).
+        try:
+            mentions = th.find_mentions(question)
+            if mentions:
+                blocks = []
+                for m in mentions:
+                    c = th.graph.get_concept(m.uri)
+                    lines = [f"### {m.pref_label}  (IPBES thesaurus)"]
+                    for d in c.definitions:
+                        lines.append(d)
+
+                    broader_labels = [
+                        th.graph.pref_label_of(u) for u in c.broader[:2]
+                    ]
+                    related_labels = [
+                        th.graph.pref_label_of(u) for u in c.related[:4]
+                    ]
+                    if broader_labels:
+                        lines.append(f"Broader: {', '.join(broader_labels)}")
+                    if related_labels:
+                        lines.append(f"Related: {', '.join(related_labels)}")
+                    blocks.append("\n".join(lines))
+                if blocks:
+                    thesaurus_primaries = (
+                        "## Authoritative IPBES definitions\n\n"
+                        + "\n\n---\n\n".join(blocks)
+                    )
+        except Exception as e:  # noqa: BLE001
+            logger.warning(f"Thesaurus primary block failed: {e}")
+
     glossary_block = f"\n{glossary}\n" if glossary else ""
+    primary_block = f"\n{thesaurus_primaries}\n" if thesaurus_primaries else ""
 
     prompt = f"""
 You are answering questions about an IPBES assessment report, represented
@@ -510,8 +545,13 @@ Retrieved chunks (already sorted by identifier):
                     "Answer only from the supplied IPBES ontology context. "
                     "Preserve evidence qualifiers. Follow the task "
                     "instructions exactly, including for list questions. "
-                    "If IPBES Thesaurus Definitions are provided, prefer "
-                    "their wording for technical terms."
+                    "If a section titled 'Authoritative IPBES definitions' "
+                    "is present, treat it as the primary source for any "
+                    "concept it defines, and cite that definition rather "
+                    "than inferring one from the retrieved chunks. If the "
+                    "retrieved chunks do not address the question, say so "
+                    "explicitly rather than substituting an unrelated "
+                    "topic."
                 ),
             },
             {
