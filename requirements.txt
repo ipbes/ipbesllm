@@ -143,7 +143,7 @@ mypy_extensions==1.1.0
 narwhals==2.26.0
 networkx==3.6.1
 nltk==3.9.2
-numpy==2.2.6
+numpy==1.26.4
 oauthlib==3.3.1
 olefile==0.47
 ollama==0.6.2
