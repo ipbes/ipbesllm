@@ -499,7 +499,7 @@ User question:
 
 Retrieved chunks (already sorted by identifier):
 {context}
-{glossary_block}"""
+{primary_block}{glossary_block}"""
 
     response = ollama.chat(
         model=LLM_MODEL,
