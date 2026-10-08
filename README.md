@@ -377,7 +377,7 @@ data/ttl/
 ## Test the TTL parser
 
 ```bash
-PYTHONPATH=src python src/ttll_test.py
+PYTHONPATH=src python src/ttl_test.py
 ```
 
 ## Index TTL documents
