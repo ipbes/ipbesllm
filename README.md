@@ -3,8 +3,8 @@
 A local Retrieval-Augmented Generation (RAG) application for exploring and comparing IPBES documents across three source formats:
 
 - **PDF** — document text extracted with PyMuPDF, chunked, embedded, and stored in Chroma.
-- **XML** — Akoma Ntoso / LegalDocML documents parsed into structured paragraphs and table rows, then embedded in Chroma.
-- **TTL** — RDF/Turtle knowledge represented as a graph and queried with RDFLib/SPARQL.
+- **XML** — Akoma Ntoso / LegalDocML documents parsed into structured paragraphs and table rows, then embedded in Chroma: Meeting documents (Reports, Decisions, Resolutions)
+- **TTL** — RDF/Turtle knowledge represented as a graph and queried with RDFLib/SPARQL: Assessments
 
 The application uses **Ollama** for local language-model generation and embeddings.
 
