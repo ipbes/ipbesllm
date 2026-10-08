@@ -1,3 +1,4 @@
+# ttl_rag.py
 import json
 import os
 import re
@@ -12,6 +13,7 @@ from rdflib.namespace import RDF, SKOS
 from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key
 from loguru import logger
 from geo import infer_country_names, canonical_country
+from thesaurus_helper import ThesaurusHelper
 
 
 # ---------------------------------------------------------------------------
@@ -34,6 +36,9 @@ GEO_PATH = Path("data/rdf/ipbes-geo.rdf")
 
 ISO3166 = URIRef("http://purl.org/dc/terms/ISO3166")
 
+# Weight of the thesaurus-neighborhood signal in post-retrieval re-ranking.
+# 0.0 = pure vector search; 0.25 = gentle nudge (recommended).
+THESAURUS_RERANK_ALPHA = float(os.getenv("THESAURUS_RERANK_ALPHA", "0.25"))
 
 # ---------------------------------------------------------------------------
 # Collection
@@ -60,6 +65,27 @@ def _get_collection():
             f"Run ttl_index.py first. (Original error: {e})"
         )
 
+# ---------------------------------------------------------------------------
+# Thesaurus (lazy singleton)
+# ---------------------------------------------------------------------------
+
+_THESAURUS: ThesaurusHelper | None = None
+
+
+def _get_thesaurus() -> ThesaurusHelper | None:
+    global _THESAURUS
+    if _THESAURUS is not None:
+        return _THESAURUS
+
+    try:
+        _THESAURUS = ThesaurusHelper()   # <-- resolves path internally
+    except FileNotFoundError as e:
+        logger.warning(f"Thesaurus unavailable: {e}")
+        return None
+    except Exception as e:  # noqa: BLE001
+        logger.warning(f"Failed to load thesaurus: {e}")
+        return None
+    return _THESAURUS
 
 # ---------------------------------------------------------------------------
 # Assessment discovery (from manifest)
@@ -152,6 +178,44 @@ def _merge_results(results_list):
         merged["distances"][0].extend(r["distances"][0])
     return merged
 
+# ---------------------------------------------------------------------------
+# Thesaurus-aware post-processing
+# ---------------------------------------------------------------------------
+
+def _apply_thesaurus_rerank(question: str, results, alpha: float):
+    """
+    Blend Chroma cosine *similarity* (1 - distance) with the thesaurus
+    neighborhood score. Mutates and returns `results`.
+    """
+    th = _get_thesaurus()
+    if th is None or alpha <= 0.0:
+        return results
+    if not results["documents"][0]:
+        return results
+
+    docs = results["documents"][0]
+    dists = results["distances"][0]
+
+    # Chroma cosine distance -> similarity in [0, 1] (roughly).
+    sims = [max(0.0, 1.0 - d) for d in dists]
+    thes = [th.score_chunk(question, doc) for doc in docs]
+    combined = [
+        (1.0 - alpha) * s + alpha * t
+        for s, t in zip(sims, thes)
+    ]
+
+    order = sorted(range(len(docs)), key=lambda i: combined[i], reverse=True)
+
+    results["documents"][0] = [docs[i] for i in order]
+    results["metadatas"][0] = [results["metadatas"][0][i] for i in order]
+    results["distances"][0] = [dists[i] for i in order]
+    results["ids"][0] = [results["ids"][0][i] for i in order]
+
+    return results
+
+# ---------------------------------------------------------------------------
+# Retrieve
+# ---------------------------------------------------------------------------
 
 def retrieve(
     question: str,
@@ -392,8 +456,31 @@ def generate_answer(
     chunk_type: str | None = None,
     country_names: set[str] | None = None,
 ) -> str:
+    # -------- Thesaurus re-ranking --------
+    # Only safe when we're NOT filtering by chunk_type: the caller sorts
+    # by identifier afterwards in those cases, which would undo our order.
+    # We also skip it when the caller asked for a specific chunk_type
+    # (list-style answers must stay in identifier order).
+    if not chunk_type:
+        results = _apply_thesaurus_rerank(
+            question, results, THESAURUS_RERANK_ALPHA
+        )
+
     context = _build_context(results)
     task = _build_task(question, chunk_type, country_names or set())
+
+    # -------- Thesaurus glossary injection --------
+    glossary = ""
+    th = _get_thesaurus()
+    if th is not None and not chunk_type:
+        try:
+            chunk_texts = list(results["documents"][0])
+            glossary = th.build_glossary(question, chunk_texts)
+        except Exception as e:  # noqa: BLE001
+            logger.warning(f"Glossary build failed: {e}")
+            glossary = ""
+
+    glossary_block = f"\n{glossary}\n" if glossary else ""
 
     prompt = f"""
 You are answering questions about an IPBES assessment report, represented
@@ -410,7 +497,7 @@ User question:
 
 Retrieved chunks (already sorted by identifier):
 {context}
-"""
+{glossary_block}"""
 
     response = ollama.chat(
         model=LLM_MODEL,
@@ -420,7 +507,9 @@ Retrieved chunks (already sorted by identifier):
                 "content": (
                     "Answer only from the supplied IPBES ontology context. "
                     "Preserve evidence qualifiers. Follow the task "
-                    "instructions exactly, including for list questions."
+                    "instructions exactly, including for list questions. "
+                    "If IPBES Thesaurus Definitions are provided, prefer "
+                    "their wording for technical terms."
                 ),
             },
             {
@@ -432,13 +521,11 @@ Retrieved chunks (already sorted by identifier):
 
     return response["message"]["content"]
 
-
 # ---------------------------------------------------------------------------
 # Caching
 # ---------------------------------------------------------------------------
 
 # ---------- retrieval (async) ----------
-
 async def retrieve_cached(
     question: str,
     k: int = 5,
@@ -446,10 +533,24 @@ async def retrieve_cached(
     country_names: set[str] | None = None,
     per_assessment: bool = False,
 ):
-    """Cached Chroma retrieval."""
+    """Cached Chroma retrieval with thesaurus-driven query expansion."""
     import anyio
 
     norm_countries = sorted(country_names) if country_names else None
+
+    # --- Thesaurus expansion (only affects what we send to Chroma) -----
+    th = _get_thesaurus()
+    expanded_question = question
+    if th is not None:
+        try:
+            expanded_question = th.expand_query(question)
+        except Exception as e:  # noqa: BLE001
+            logger.warning(f"Query expansion failed: {e}")
+            expanded_question = question
+
+    # --- Cache key uses the ORIGINAL question so caches stay stable ----
+    # (otherwise a change to the thesaurus would invalidate every cache
+    # entry, and identical user questions would land in different buckets)
     key = make_key(
         CACHE_VERSION,
         PIPELINE_ID,
@@ -470,7 +571,7 @@ async def retrieve_cached(
 
     result = await anyio.to_thread.run_sync(
         lambda: retrieve(
-            question,
+            expanded_question,          # <-- use expanded for the query
             k=k,
             chunk_type=chunk_type,
             country_names=country_names,
@@ -480,7 +581,6 @@ async def retrieve_cached(
     await cache.set(key, result, ttl=3600)
     logger.debug(f"ttl retrieve MISS q={question[:50]!r}")
     return result
-
 
 async def generate_answer_cached(
     question: str,
@@ -492,7 +592,19 @@ async def generate_answer_cached(
     import anyio
 
     context = _build_context(results)
-    ctx_hash = make_key("ctx", context)
+
+    # Add the glossary to the key so thesaurus updates invalidate cache.
+    th = _get_thesaurus()
+    glossary_for_key = ""
+    if th is not None and not chunk_type:
+        try:
+            glossary_for_key = th.build_glossary(
+                question, list(results["documents"][0])
+            )
+        except Exception:  # noqa: BLE001
+            glossary_for_key = ""
+
+    ctx_hash = make_key("ctx", context + "\n" + glossary_for_key)
     key = make_key(
         CACHE_VERSION,
         PIPELINE_ID,
@@ -545,6 +657,13 @@ async def async_main():
     print(f"LLM: {LLM_MODEL}")
     print(f"Embedding: {EMBED_MODEL}")
     print()
+
+    # Pre-load the thesaurus so the first user query isn't slowed by it.
+    th = _get_thesaurus()
+    if th is not None:
+        print(f"Thesaurus: loaded ({len(th._lexicon)} labels)")  # noqa: SLF001
+    else:
+        print("Thesaurus: not available (expansion disabled)")
 
     question = input("Question: ").strip()
     if not question:

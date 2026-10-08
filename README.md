@@ -73,7 +73,7 @@ ipbesllm/
 ├── chroma/
 │   └── Chroma persistent vector database
 │
-├── data/
+├── data/                      # This needs to be added locally with relevant files added
 │   ├── pdf/
 │   │   └── *.pdf
 │   ├── rdf/
@@ -103,22 +103,23 @@ ipbesllm/
 │   ├── rdf_rag.py                        # RAG chain that uses hybrid retrieval
 │   ├── rdf_test.py                       # Sanity checks
 │   ├── stage1_ollama.py
-│   ├── ttl_index.py                      # Embed concept profiles → Chroma
-│   ├── ttl_loader.py
-│   ├── ttl_query.py
-│   ├── ttl_rag.py                        # Retrieval
+│   ├── thesaurus_helper.py
+│   ├── ttl_index.py                      # Indexes(embeds) into Chroma
+│   ├── ttl_loader.py                     # Loads TTL files
+│   ├── ttl_query.py                      # Queries the index
+│   ├── ttl_rag.py                        # Retrieval from the RAG chain
 │   ├── ttl_test.py                       # Sanity checks
 │   ├── xml_chunks.py
-│   ├── xml_index.py                      # Embed concept profiles → Chroma
-│   ├── xml_loader.py
-│   ├── xml_query.py
+│   ├── xml_index.py                      # Indexes(embeds) into Chroma
+│   ├── xml_loader.py                     # Loads XML files
+│   ├── xml_query.py                      # Queries the index
 │   ├── xml_rag.py                        # Retrieval
 │   ├── xml_test_chunks.py
 │   └── xml_test.py                       # Sanity checks
 ├── tests/
 │   ├── pdf_ttl_compare.csv
 │   └── ttl_experts.py
-├── .webui_secret_key
+├── .webui_secret_key                     # Will automatically created when you run 'open-webui serve'
 ├── app.py
 ├── README.md
 └── requirements.txt
@@ -272,6 +273,21 @@ Then build/rebuild the PDF Chroma collection:
 
 ```bash
 PYTHONPATH=src python src/index_pdf.py
+```
+
+Build vector index whenever there are RDF changes to the IPBES thesaurus
+
+```bash
+python -m src.rdf_index data/rdf/ipbes-thesaurus.rdf
+```
+
+Test RDF query
+```bash
+python -c "
+from src.rdf_rag import ThesaurusRAG
+rag = ThesaurusRAG('data/rdf/ipbes-thesaurus.rdf')
+print(rag.answer('How does ecological integrity relate to ecosystem health?'))
+"
 ```
 
 The indexer extracts text from the PDFs, creates chunks, generates embeddings using `nomic-embed-text`, and stores them in Chroma.
