@@ -28,6 +28,7 @@ QUESTIONS = [
     "What are the chapters of the IPBES LDR assessment?",
     "Chapters of the assessments",
     "What findings across the different IPBES assessments refer to cities?",
+    "What is NCP and how does it relate to nature?",
     "Provide a summary of the topics covered across these different assessments?",
     "Provide a summary of the topics covered across these different assessments and add the sections in the assessments where these topics are covered",
     "Who were the Review Editors of Ch. 4 of the values assessment",
