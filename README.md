@@ -4,7 +4,7 @@ A local Retrieval-Augmented Generation (RAG) application for exploring and compa
 
 - **PDF** — document text extracted with PyMuPDF, chunked, embedded, and stored in Chroma.
 - **XML** — Akoma Ntoso / LegalDocML documents parsed into structured paragraphs and table rows, then embedded in Chroma.
-- **TTL / RDF ** — RDF/Turtle knowledge represented as a graph and queried with RDFLib/SPARQL.
+- **TTL** — RDF/Turtle knowledge represented as a graph and queried with RDFLib/SPARQL.
 
 The application uses **Ollama** for local language-model generation and embeddings.
 
@@ -103,7 +103,7 @@ ipbesllm/
 │   ├── rdf_rag.py                        # RAG chain that uses hybrid retrieval
 │   ├── rdf_test.py                       # Sanity checks
 │   ├── stage1_ollama.py
-│   ├── thesaurus_helper.py
+│   ├── thesaurus_helper.py               # In-memory helper to use RDF thesaurus to improve RAG quality
 │   ├── ttl_index.py                      # Indexes(embeds) into Chroma
 │   ├── ttl_loader.py                     # Loads TTL files
 │   ├── ttl_query.py                      # Queries the index
