@@ -10,8 +10,10 @@ Same behaviour as ttl_index.py:
   * Everything is parsed and validated BEFORE anything is deleted or written.
   * The existing collection is kept by default. A chunk is skipped when the
     collection already holds its id with the same text and embedding model;
-    new or changed chunks are embedded; chunks no longer in the PDFs are
-    removed. A crash or Ctrl-C costs at most one batch: re-run to resume.
+    new or changed chunks are embedded; chunks whose text is unchanged but
+    whose metadata changed get their metadata rewritten without re-embedding;
+    chunks no longer in the PDFs are removed. A crash or Ctrl-C costs at most
+    one batch: re-run to resume.
   * Embedding uses an explicit timeout (OLLAMA_EMBED_TIMEOUT, default 300s) with
     exponential backoff. A batch that cannot be embedded stops the run unless
     --skip-failed is given.
@@ -32,7 +34,8 @@ from pdf_loader import extract_pdf_chunks
 from rag_utils import (
     EMBED_MODEL, MAX_BATCH_CHARS, MAX_BATCH_ITEMS, GET_PAGE,
     check_scalar_metadata, delete_collection_if_exists, load_existing,
-    make_batches, make_embedding_function, run_embedding_loop, text_hash,
+    make_batches, make_embedding_function, plan_changes, retag,
+    run_embedding_loop, text_hash, with_fingerprints,
 )
 
 PDF_DIR = Path("data/pdf")
@@ -55,9 +58,8 @@ def build_metadata(chunk: dict) -> dict:
         "chunk_index": chunk["chunk_index"],
         "chunk_total": chunk["chunk_total"],
         "total_chunks": chunk["total_chunks"],
-        "text_hash": chunk["text_hash"],
     }
-    return {k: v for k, v in md.items() if v is not None}
+    return with_fingerprints(md, chunk)
 
 
 def load_chunks() -> tuple[list[dict], list[str]]:
@@ -113,6 +115,14 @@ def write_manifest(complete: bool, chunk_count: int, files: int) -> None:
         "files": files,
         "written": time.strftime("%Y-%m-%d %H:%M:%S"),
     }, indent=2))
+
+
+def manifest_complete() -> bool:
+    try:
+        data = json.loads(MANIFEST_PATH.read_text())
+    except (OSError, ValueError):
+        return False
+    return data.get("complete") is True and data.get("embed_model") == EMBED_MODEL
 
 
 def parse_args(argv=None):
@@ -171,24 +181,33 @@ def main(argv=None) -> None:
     existing = load_existing(collection)
     current_ids = {c["chunk_id"] for c in chunks}
     stale = [i for i in existing if i not in current_ids]
-    todo = [c for c in chunks if existing.get(c["chunk_id"]) != c["text_hash"]]
+    todo, to_retag = plan_changes(chunks, existing, build_metadata)
     todo_chars = sum(len(c["text"]) for c in todo)
-    print(f"\nAlready indexed and unchanged: {len(chunks) - len(todo)}")
+    print(f"\nAlready indexed and unchanged: {len(chunks) - len(todo) - len(to_retag)}")
     print(f"To embed (new or changed):     {len(todo)}  ({todo_chars:,} chars)")
+    print(f"Metadata changed only:         {len(to_retag)}")
     print(f"Stale (no longer in the PDFs): {len(stale)}")
+
+    if not (todo or to_retag or stale) and manifest_complete():
+        # Leave the manifest alone: rewriting it would invalidate pdf_rag's cache.
+        print("\nIndex is up to date; nothing to do.")
+        return
+
+    write_manifest(False, len(chunks), files)   # incomplete until the end
 
     if stale:
         for i in range(0, len(stale), GET_PAGE):
             collection.delete(ids=stale[i:i + GET_PAGE])
         print(f"  Removed {len(stale)} stale chunks.")
-
-    write_manifest(False, len(chunks), files)   # incomplete until the end
+    if to_retag:
+        retag(collection, to_retag, existing, build_metadata)
+        print(f"  Rewrote metadata of {len(to_retag)} chunks.")
 
     # --- Embed and store -------------------------------------------------
     failed = run_embedding_loop(
         collection, todo, build_metadata,
         model=EMBED_MODEL, max_items=args.max_items, max_chars=args.max_chars,
-        skip_failed=args.skip_failed,
+        skip_failed=args.skip_failed, existing=existing,
     )
 
     # --- Wrap up ---------------------------------------------------------

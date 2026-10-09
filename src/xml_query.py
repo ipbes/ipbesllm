@@ -1,15 +1,11 @@
 import chromadb
 
-from chromadb.utils.embedding_functions import (
-    OllamaEmbeddingFunction,
-)
+from rag_utils import embed_query
 
 
 CHROMA_DIR = "chroma"
 
 COLLECTION_NAME = "xml_documents"
-
-EMBED_MODEL = "nomic-embed-text"
 
 
 def main():
@@ -18,14 +14,10 @@ def main():
         path=CHROMA_DIR
     )
 
-    embedding_function = OllamaEmbeddingFunction(
-        model_name=EMBED_MODEL,
-        url="http://localhost:11434/api/embeddings",
-    )
-
+    # No embedding function: the question is embedded by embed_query
+    # (rag_utils: OLLAMA_URL, OLLAMA_EMBED_MODEL, timeout and retries).
     collection = client.get_collection(
         name=COLLECTION_NAME,
-        embedding_function=embedding_function,
     )
 
     print(
@@ -40,7 +32,7 @@ def main():
     ).strip()
 
     results = collection.query(
-        query_texts=[question],
+        query_embeddings=[list(embed_query(question))],
         n_results=5,
     )
 

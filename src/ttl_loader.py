@@ -8,6 +8,16 @@ from chunking import split_long_chunks
 # Fallback only; the real value comes from the file's own @prefix.
 IPBES = "http://ontology.ipbes.net/report"
 
+# Person role properties (ipbes:ca, ipbes:la, ...) and their labels.
+_ROLE_LABELS = {
+    "cs": "Co-chair",
+    "cl": "Coordinating Lead Author",
+    "la": "Lead Author",
+    "re": "Review Editor",
+    "fl": "Fellow",
+    "ca": "Contributing Author",
+}
+
 
 # ---------------------------------------------------------------------------
 # Small helpers
@@ -524,19 +534,25 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             _first(graph, person, URIRef(IPBES + "country"))
         )
 
+        # Every value of every role (a person can hold the same role in
+        # several chapters). Values normally name the role already
+        # ("Review Editor in GA119-ch2.3"); prefix the label when not.
         roles = []
-        for role in ("ca", "la", "cl", "re", "fl", "cs"):
-            value = _text(
-                _first(graph, person, URIRef(IPBES + role))
-            )
-            if value:
+        for role, label in _ROLE_LABELS.items():
+            values = sorted({
+                _text(v)
+                for v in _all(graph, person, URIRef(IPBES + role))
+            } - {""})
+            for value in values:
+                if label.lower() not in value.lower():
+                    value = f"{label}: {value}"
                 roles.append(value)
 
         body_parts = []
         if country:
             body_parts.append(f"Country: {country}")
         if roles:
-            body_parts.append("Roles: " + "; ".join(roles))
+            body_parts.append("Roles:\n" + "\n".join(f"- {r}" for r in roles))
 
         body = "\n".join(body_parts)
 

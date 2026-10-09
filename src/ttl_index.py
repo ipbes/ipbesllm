@@ -11,8 +11,10 @@ Behaviour:
   * Everything is parsed and validated BEFORE anything is deleted or written.
   * By default the existing collection is kept. A chunk is skipped when the
     collection already holds its id with the same text (and embedding model);
-    new or changed chunks are embedded; chunks no longer in the sources are
-    removed. A crash or Ctrl-C therefore costs at most one batch: re-run.
+    new or changed chunks are embedded; chunks whose text is unchanged but
+    whose metadata changed (e.g. after an ipbes-geo.rdf update) get their
+    metadata rewritten without re-embedding; chunks no longer in the sources
+    are removed. A crash or Ctrl-C therefore costs at most one batch: re-run.
   * Embedding is done here (ollama client, explicit timeout, exponential
     backoff) and the vectors are handed to Chroma. A batch that cannot be
     embedded stops the run unless --skip-failed is given.
@@ -40,6 +42,9 @@ from chromadb.errors import NotFoundError
 from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 
 from geo import canonical_country, country_code_for_label
+from rag_utils import (
+    load_existing, plan_changes, replacing, retag, with_fingerprints,
+)
 from ttl_loader import parse_ttl_file
 
 # ---------------------------------------------------------------------------
@@ -224,7 +229,7 @@ def build_metadata(chunk: dict) -> dict:
     plus plain strings for display.
     """
     codes, names, raw, _ = country_info(chunk)
-    md = {"source_type": "ttl", "country_raw": raw, "text_hash": chunk["text_hash"]}
+    md = {"source_type": "ttl", "country_raw": raw}
     for field in _META_FIELDS:
         md[field] = chunk.get(field)
     if codes:
@@ -232,7 +237,7 @@ def build_metadata(chunk: dict) -> dict:
         md["country_names"] = "; ".join(names)
         for code in codes:
             md[f"country_{code}"] = True
-    return {k: v for k, v in md.items() if v is not None}
+    return with_fingerprints(md, chunk)
 
 
 def check_metadata_types(chunks: list[dict]) -> None:
@@ -362,20 +367,6 @@ def open_collection(client, rebuild: bool):
         )
 
 
-def load_existing(collection) -> dict[str, str]:
-    """id -> text_hash for everything already stored ('' for legacy entries)."""
-    existing: dict[str, str] = {}
-    offset = 0
-    while True:
-        page = collection.get(include=["metadatas"], limit=_GET_PAGE, offset=offset)
-        ids = page["ids"]
-        if not ids:
-            return existing
-        for cid, md in zip(ids, page["metadatas"]):
-            existing[cid] = (md or {}).get("text_hash", "")
-        offset += len(ids)
-
-
 def write_manifest(assessments: set[str], complete: bool, skip_types: set[str],
                    chunk_count: int) -> None:
     MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -445,19 +436,23 @@ def main(argv=None) -> None:
     existing = load_existing(collection)
     current_ids = {c["chunk_id"] for c in chunks}
     stale = [i for i in existing if i not in current_ids]
-    todo = [c for c in chunks if existing.get(c["chunk_id"]) != c["text_hash"]]
+    todo, to_retag = plan_changes(chunks, existing, build_metadata)
     todo_chars = sum(len(c["text"]) for c in todo)
-    print(f"\nAlready indexed and unchanged: {len(chunks) - len(todo)}")
+    print(f"\nAlready indexed and unchanged: {len(chunks) - len(todo) - len(to_retag)}")
     print(f"To embed (new or changed):     {len(todo)}  ({todo_chars:,} chars)")
+    print(f"Metadata changed only:         {len(to_retag)}")
     print(f"Stale (no longer in sources):  {len(stale)}")
+
+    # Incomplete until the very end; ttl_rag.py only reads "assessments".
+    write_manifest(assessments, False, skip_types, len(chunks))
 
     if stale:
         for i in range(0, len(stale), _GET_PAGE):
             collection.delete(ids=stale[i:i + _GET_PAGE])
         print(f"  Removed {len(stale)} stale chunks.")
-
-    # Incomplete until the very end; ttl_rag.py only reads "assessments".
-    write_manifest(assessments, False, skip_types, len(chunks))
+    if to_retag:
+        retag(collection, to_retag, existing, build_metadata)
+        print(f"  Rewrote metadata of {len(to_retag)} chunks.")
 
     # --- Embed and store -------------------------------------------------
     failed: list[dict] = []
@@ -481,7 +476,9 @@ def main(argv=None) -> None:
                     collection.upsert(
                         ids=[c["chunk_id"] for c, _ in ok],
                         documents=[c["text"] for c, _ in ok],
-                        metadatas=[build_metadata(c) for c, _ in ok],
+                        metadatas=[replacing(build_metadata(c),
+                                             existing.get(c["chunk_id"]))
+                                   for c, _ in ok],
                         embeddings=[v for _, v in ok],
                     )
                     stored += len(ok)

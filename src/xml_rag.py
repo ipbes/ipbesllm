@@ -1,21 +1,13 @@
 import os
 
 import chromadb
-import ollama
 
-from chromadb.utils.embedding_functions import (
-    OllamaEmbeddingFunction,
-)
+from rag_utils import EMBED_MODEL, chat_client, embed_query
 
 
 LLM_MODEL = os.getenv(
     "OLLAMA_MODEL",
     "llama3.1:latest",
-)
-
-EMBED_MODEL = os.getenv(
-    "OLLAMA_EMBED_MODEL",
-    "nomic-embed-text",
 )
 
 CHROMA_DIR = "chroma"
@@ -32,18 +24,14 @@ def retrieve(
         path=CHROMA_DIR
     )
 
-    embedding_function = OllamaEmbeddingFunction(
-        model_name=EMBED_MODEL,
-        url="http://localhost:11434/api/embeddings",
-    )
-
+    # No embedding function: the question is embedded by embed_query
+    # (rag_utils: OLLAMA_URL, OLLAMA_EMBED_MODEL, timeout and retries).
     collection = client.get_collection(
         name=COLLECTION_NAME,
-        embedding_function=embedding_function,
     )
 
     return collection.query(
-        query_texts=[question],
+        query_embeddings=[list(embed_query(question, EMBED_MODEL))],
         n_results=k,
     )
 
@@ -134,7 +122,7 @@ Sources:
 - Akoma Ntoso location
 """
 
-    response = ollama.chat(
+    response = chat_client().chat(
         model=LLM_MODEL,
         messages=[
             {

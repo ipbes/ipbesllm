@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import inspect
+import json
 import os
 import sys
 import time
@@ -155,6 +156,59 @@ def text_hash(text: str, model: str = EMBED_MODEL) -> str:
     return hashlib.sha1(f"{model}\n{text}".encode("utf-8")).hexdigest()[:16]
 
 
+def metadata_hash(md: dict) -> str:
+    """Fingerprint of a chunk's metadata (without the fingerprints themselves).
+    A change here means the metadata must be rewritten, not re-embedded."""
+    body = {k: v for k, v in md.items() if k not in ("text_hash", "meta_hash")}
+    raw = json.dumps(body, sort_keys=True, default=str)
+    return hashlib.sha1(raw.encode("utf-8")).hexdigest()[:16]
+
+
+def with_fingerprints(md: dict, chunk: dict) -> dict:
+    """Add text_hash and meta_hash to the metadata built for a chunk."""
+    md = {k: v for k, v in md.items() if v is not None}
+    md["meta_hash"] = metadata_hash(md)
+    md["text_hash"] = chunk["text_hash"]
+    return md
+
+
+def replacing(new_md: dict, old_md: dict | None) -> dict:
+    """Metadata that REPLACES the stored record. Chroma's update/upsert merge
+    keys, so keys no longer produced (e.g. a dropped country_KEN flag) are
+    set to None, which deletes them."""
+    if not old_md:
+        return new_md
+    return {**{k: None for k in old_md if k not in new_md}, **new_md}
+
+
+def plan_changes(chunks: list[dict], existing: dict[str, dict], build_metadata):
+    """Split chunks into (to_embed, to_retag).
+
+    to_embed: new chunks, or chunks whose text (or embedding model) changed.
+    to_retag: same text, different metadata: rewrite metadata, keep vectors.
+    """
+    to_embed, to_retag = [], []
+    for c in chunks:
+        old = existing.get(c["chunk_id"])
+        if old is None or old.get("text_hash") != c["text_hash"]:
+            to_embed.append(c)
+        elif old.get("meta_hash") != build_metadata(c)["meta_hash"]:
+            to_retag.append(c)
+    return to_embed, to_retag
+
+
+def retag(collection, chunks: list[dict], existing: dict[str, dict],
+          build_metadata) -> None:
+    """Rewrite the metadata of already-embedded chunks (no re-embedding)."""
+    for i in range(0, len(chunks), GET_PAGE):
+        page = chunks[i:i + GET_PAGE]
+        collection.update(
+            ids=[c["chunk_id"] for c in page],
+            metadatas=[replacing(build_metadata(c), existing.get(c["chunk_id"]))
+                       for c in page],
+        )
+
+
 def check_scalar_metadata(chunks: list[dict], build_metadata) -> None:
     """Fail before anything is written if Chroma would reject any metadata
     (only str/int/float/bool/None are accepted; lists are not)."""
@@ -202,9 +256,9 @@ def delete_collection_if_exists(client, name: str) -> None:
             raise
 
 
-def load_existing(collection) -> dict[str, str]:
-    """id -> text_hash for everything already stored ('' for legacy entries)."""
-    existing: dict[str, str] = {}
+def load_existing(collection) -> dict[str, dict]:
+    """id -> stored metadata for everything in the collection."""
+    existing: dict[str, dict] = {}
     offset = 0
     while True:
         page = collection.get(include=["metadatas"], limit=GET_PAGE, offset=offset)
@@ -212,7 +266,7 @@ def load_existing(collection) -> dict[str, str]:
         if not ids:
             return existing
         for cid, md in zip(ids, page["metadatas"]):
-            existing[cid] = (md or {}).get("text_hash", "")
+            existing[cid] = dict(md or {})
         offset += len(ids)
 
 
@@ -220,8 +274,12 @@ def run_embedding_loop(collection, todo: list[dict], build_metadata, *,
                        model: str = EMBED_MODEL,
                        max_items: int = MAX_BATCH_ITEMS,
                        max_chars: int = MAX_BATCH_CHARS,
-                       skip_failed: bool = False) -> list[dict]:
+                       skip_failed: bool = False,
+                       existing: dict[str, dict] | None = None) -> list[dict]:
     """Embed `todo` in batches and upsert each batch as soon as it is ready.
+
+    `existing` (from load_existing) lets the upsert drop metadata keys the
+    stored record has but the new metadata no longer produces.
 
     Returns the chunks that could not be embedded (only with skip_failed).
     On Ctrl-C or a fatal error it prints how to resume and exits with 1;
@@ -252,7 +310,9 @@ def run_embedding_loop(collection, todo: list[dict], build_metadata, *,
                 collection.upsert(
                     ids=[c["chunk_id"] for c, _ in ok],
                     documents=[c["text"] for c, _ in ok],
-                    metadatas=[build_metadata(c) for c, _ in ok],
+                    metadatas=[replacing(build_metadata(c),
+                                         (existing or {}).get(c["chunk_id"]))
+                               for c, _ in ok],
                     embeddings=[v for _, v in ok],
                 )
                 stored += len(ok)
