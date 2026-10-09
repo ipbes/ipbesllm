@@ -6,7 +6,7 @@ from __future__ import annotations
 
 import logging
 
-from rag_utils import chat_client
+from rag_utils import chat
 from rdf_graph import ThesaurusGraph
 from rdf_query import HybridThesaurusRetriever
 from settings import THESAURUS_RDF
@@ -31,14 +31,13 @@ class ThesaurusRAG:
         self.model_name = model_name
 
     def _call_llm(self, prompt: str) -> str:
-        response = chat_client().chat(
+        return chat(
             model=self.model_name,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": prompt},
             ],
         )
-        return response["message"]["content"]
 
     def answer(self, query: str, return_context: bool = False):
         retrieved = self.retriever.retrieve(query)

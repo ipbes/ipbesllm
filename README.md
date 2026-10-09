@@ -677,6 +677,12 @@ export REDIS_URL=redis://127.0.0.1:6379/0
 
 WSL without systemd: use `sudo service redis-server start` instead of `systemctl`.
 
+`export` only lasts for the current terminal. To set `REDIS_URL` in every new terminal, add it to `~/.bashrc`:
+
+```bash
+echo 'export REDIS_URL=redis://localhost:6379/0' >> ~/.bashrc
+```
+
 ---
 
 # Rebuilding a vector collection

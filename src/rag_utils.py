@@ -38,6 +38,16 @@ MAX_RETRY_DELAY = 120
 
 GET_PAGE = 5000
 
+# Answers. Every pipeline sends the same num_ctx: Ollama reloads the model
+# whenever it changes. Ollama reserves memory for the whole window when it
+# loads the model, so 8192 keeps llama3.1 8B inside an 8 GB machine (16384
+# made it swap or get killed). Ollama silently drops the START of prompts
+# longer than num_ctx (the instructions), so MAX_CONTEXT_CHARS (~5.5k tokens
+# of retrieved text) stays well below it. Raise both on a bigger machine.
+NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "8192"))
+MAX_CONTEXT_CHARS = int(os.getenv("RAG_MAX_CONTEXT_CHARS", "20000"))
+CHAT_KEEP_ALIVE = os.getenv("OLLAMA_CHAT_KEEP_ALIVE", "30m")  # stay loaded between questions
+
 
 # ---------------------------------------------------------------------------
 # Ollama clients
@@ -51,6 +61,17 @@ def embed_client():
 @lru_cache(maxsize=1)
 def chat_client():
     return ollama.Client(host=OLLAMA_URL)
+
+
+def chat(model: str, messages: list[dict], **options):
+    """Ask the answer model; returns the reply text."""
+    response = chat_client().chat(
+        model=model,
+        messages=messages,
+        options={"num_ctx": NUM_CTX, **options},
+        keep_alive=CHAT_KEEP_ALIVE,
+    )
+    return response["message"]["content"]
 
 
 def is_retryable(exc: Exception) -> bool:

@@ -11,7 +11,7 @@ from loguru import logger
 from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key
 # infer_country_names / canonical_country are re-exported for app.py.
 from geo import canonical_country, country_code_for_label, infer_country_names
-from rag_utils import EMBED_MODEL, chat_client, embed_query
+from rag_utils import EMBED_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, embed_query
 from thesaurus_helper import get_thesaurus
 from settings import CHROMA_DIR
 
@@ -21,13 +21,6 @@ from settings import CHROMA_DIR
 # ---------------------------------------------------------------------------
 
 LLM_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:latest")
-
-# Context window requested from Ollama, and how much retrieved text we put in
-# the prompt. Ollama silently truncates prompts that exceed num_ctx (usually
-# dropping the START, i.e. the instructions), so keep the cap comfortably
-# below it: 36,000 chars is roughly 10k tokens.
-NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "16384"))
-MAX_CONTEXT_CHARS = int(os.getenv("RAG_MAX_CONTEXT_CHARS", "36000"))
 
 COLLECTION_NAME = "ttl_documents"
 
@@ -610,7 +603,7 @@ Retrieved chunks (already sorted by identifier):
 {context}
 {truncation_note}{primary_block}{glossary_block}"""
 
-    response = chat_client().chat(
+    return chat(
         model=LLM_MODEL,
         messages=[
             {
@@ -633,10 +626,7 @@ Retrieved chunks (already sorted by identifier):
                 "content": prompt,
             },
         ],
-        options={"num_ctx": NUM_CTX},
     )
-
-    return response["message"]["content"]
 
 # ---------------------------------------------------------------------------
 # Caching

@@ -9,7 +9,7 @@ from loguru import logger
 from cache import CACHE_VERSION, cache, make_key
 # infer_country_names is re-exported for app.py.
 from geo import infer_country_names  # noqa: F401
-from rag_utils import EMBED_MODEL, chat_client, embed_query
+from rag_utils import EMBED_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, embed_query
 from thesaurus_helper import get_thesaurus
 from settings import CHROMA_DIR
 
@@ -30,12 +30,6 @@ ANSWER_TTL = 60 * 60 * 6      # 6 hours
 # 0.0 = pure vector search; 0.25 = gentle nudge. Same variable as ttl_rag.py.
 THESAURUS_RERANK_ALPHA = float(os.getenv("THESAURUS_RERANK_ALPHA", "0.25"))
 RERANK_OVERFETCH = max(1, int(os.getenv("PDF_RERANK_OVERFETCH", "3")))
-
-# Context window requested from Ollama and the cap on retrieved text in the
-# prompt. Ollama silently truncates prompts longer than num_ctx (usually
-# dropping the START, i.e. the instructions), so stay below it.
-NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "16384"))
-MAX_CONTEXT_CHARS = int(os.getenv("RAG_MAX_CONTEXT_CHARS", "36000"))
 
 # Part of the cache keys: bump when retrieval or prompts change.
 RETRIEVAL_VERSION = "2"
@@ -253,7 +247,7 @@ Answer the question clearly.
 At the end, list the source pages you relied on.
 """
 
-    response = chat_client().chat(
+    return chat(
         model=LLM_MODEL,
         messages=[
             {
@@ -270,10 +264,9 @@ At the end, list the source pages you relied on.
                 "content": prompt,
             },
         ],
-        options={"temperature": 0, "seed": 42, "num_ctx": NUM_CTX},
+        temperature=0,
+        seed=42,
     )
-
-    return response["message"]["content"]
 
 
 # ---------------------------------------------------------------------------

@@ -2,7 +2,7 @@ import os
 
 import chromadb
 
-from rag_utils import EMBED_MODEL, chat_client, embed_query
+from rag_utils import EMBED_MODEL, chat, embed_query
 from settings import CHROMA_DIR
 
 
@@ -122,7 +122,7 @@ Sources:
 - Akoma Ntoso location
 """
 
-    response = chat_client().chat(
+    return chat(
         model=LLM_MODEL,
         messages=[
             {
@@ -138,8 +138,6 @@ Sources:
             },
         ],
     )
-
-    return response["message"]["content"]
 
 
 def main():
