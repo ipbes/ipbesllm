@@ -12,6 +12,7 @@ import hashlib
 import inspect
 import json
 import os
+import re
 import sys
 import time
 from functools import lru_cache
@@ -146,6 +147,68 @@ def embed_chunks(client, batch: list[dict], model: str, skip_failed: bool):
             raise RuntimeError(msg) from exc
         print(f"  SKIPPING: {msg}")
         return [], [c]
+
+
+# ---------------------------------------------------------------------------
+# Retrieval helpers (shared by pdf_rag.py and ttl_rag.py)
+# ---------------------------------------------------------------------------
+
+# Words that describe the whole corpus rather than a topic ("What do IPBES
+# assessments say about pollution?"). They match every chunk about equally
+# and drown out the topic in the embedding, so they are removed from the
+# SEARCH text; the model still gets the question as asked.
+_CORPUS_WORDS_RE = re.compile(
+    r"\b(?:what\s+(?:do|does|did)\s+(?:the\s+)?"
+    r"|according\s+to\s+(?:the\s+)?"
+    r"|(?:say|says|said|tell|tells)\s+(?:us\s+)?about"
+    r"|ipbes|assessments?|reports?)\b",
+    re.IGNORECASE,
+)
+
+
+def strip_corpus_words(question: str) -> str:
+    """The question without corpus-generic words (see _CORPUS_WORDS_RE)."""
+    cleaned = re.sub(r"\s+", " ", _CORPUS_WORDS_RE.sub(" ", question))
+    cleaned = cleaned.strip(" ?.,;:")
+    return cleaned if len(cleaned) >= 3 else question
+
+
+def named_assessments(question: str, available: list[str]) -> list[str]:
+    """Assessment ids (GA1, IAS, LDR ...) the question names as words."""
+    words = {w.upper() for w in re.findall(r"\w+", question)}
+    return [a for a in available if a.upper() in words]
+
+
+def empty_results() -> dict:
+    return {"ids": [[]], "documents": [[]], "metadatas": [[]], "distances": [[]]}
+
+
+def interleave_results(results_list: list[dict]) -> dict:
+    """Merge Chroma results by rank: the best of each, then the second of
+    each, ... so a context cut-off never drops a whole assessment."""
+    merged = empty_results()
+    depth = max((len(r["ids"][0]) for r in results_list), default=0)
+    for i in range(depth):
+        for r in results_list:
+            if i < len(r["ids"][0]):
+                for key in ("ids", "documents", "metadatas", "distances"):
+                    merged[key][0].append(r[key][0][i])
+    return merged
+
+
+def concat_results(results_list: list[dict]) -> dict:
+    """Merge Chroma results one after the other."""
+    merged = empty_results()
+    for r in results_list:
+        for key in ("ids", "documents", "metadatas", "distances"):
+            merged[key][0].extend(r[key][0])
+    return merged
+
+
+def select_results(results: dict, order: list[int]) -> dict:
+    """The entries of one Chroma result at the positions in `order`."""
+    return {key: [[results[key][0][i] for i in order]]
+            for key in ("ids", "documents", "metadatas", "distances")}
 
 
 # ---------------------------------------------------------------------------

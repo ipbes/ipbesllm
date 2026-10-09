@@ -11,9 +11,8 @@ from pdf_rag import (
 from ttl_rag import (
     retrieve_cached as ttl_retrieve,
     generate_answer_cached as ttl_answer,
-    _infer_chunk_type as ttl_infer_chunk_type,
+    plan_query as ttl_plan_query,
 )
-from geo import infer_country_names
 
 
 QUESTIONS = [
@@ -34,6 +33,22 @@ QUESTIONS = [
     "Who were the Review Editors of Ch. 4 of the values assessment",
     "How have previous IPBES assessments approached the IPBES Conceptual Framework? Do you have figures referring to it?",
     "Provide a summary of the key findings in IPBES assessments that directly refer to the KMGBF",
+    # Priority topics: how each assessment responds. Each assessment is
+    # searched separately, so answers should cover GA1, IAS and LDR in turn.
+    # Pollution
+    "What do IPBES assessments say about pollution?",
+    "How do the assessments describe chemical pollution, plastics and nutrient runoff as drivers of nature loss?",
+    # Cities
+    "What do IPBES assessments say about cities and urbanization?",
+    "What role do nature-based solutions and ecological connectivity play in cities according to the assessments?",
+    # Climate change
+    "What do IPBES assessments say about climate change?",
+    "How do the assessments link climate change adaptation, mitigation and extreme events to biodiversity?",
+    # Poverty
+    "What do IPBES assessments say about poverty?",
+    "How do the assessments link nature to poverty, inequality, vulnerability and food security?",
+    # One assessment only (named in the question)
+    "What does the IAS assessment say about poverty?",
     # add more here
 ]
 
@@ -78,24 +93,15 @@ async def run_pdf(question: str) -> tuple[str, str]:
 
 async def run_ttl(question: str) -> tuple[str, str]:
     """Return (answer, sources_as_string)."""
-    chunk_type = ttl_infer_chunk_type(question)
-
-    country_names: set[str] = set()
-    if chunk_type == "person":
-        country_names = infer_country_names(question)
-
-    if chunk_type:
-        k = 100
-    else:
-        k = 5
-    if country_names:
-        k = 200
+    plan = ttl_plan_query(question)
+    chunk_type, country_names = plan["chunk_type"], plan["country_names"]
 
     results = await ttl_retrieve(
         question,
-        k=k,
+        k=plan["k"],
         chunk_type=chunk_type,
         country_names=country_names or None,
+        per_assessment=plan["per_assessment"],
     )
     if not results["documents"][0]:
         return "(no results)", ""

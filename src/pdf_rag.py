@@ -9,7 +9,10 @@ from loguru import logger
 from cache import CACHE_VERSION, cache, make_key
 # infer_country_names is re-exported for app.py.
 from geo import infer_country_names  # noqa: F401
-from rag_utils import EMBED_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, embed_query
+from rag_utils import (
+    EMBED_MODEL, GET_PAGE, MAX_CONTEXT_CHARS, NUM_CTX, chat, embed_query,
+    interleave_results, named_assessments, select_results, strip_corpus_words,
+)
 from thesaurus_helper import get_thesaurus
 from settings import CHROMA_DIR
 
@@ -32,8 +35,8 @@ THESAURUS_RERANK_ALPHA = float(os.getenv("THESAURUS_RERANK_ALPHA", "0.25"))
 RERANK_OVERFETCH = max(1, int(os.getenv("PDF_RERANK_OVERFETCH", "3")))
 
 # Part of the cache keys: bump when retrieval or prompts change.
-RETRIEVAL_VERSION = "2"
-PROMPT_VERSION = "2"
+RETRIEVAL_VERSION = "3"
+PROMPT_VERSION = "3"
 
 
 # ---------------------------------------------------------------------------
@@ -43,7 +46,7 @@ PROMPT_VERSION = "2"
 # its manifest (start and end of every run), so a long-lived process never
 # keeps a handle to a collection that was rebuilt.
 
-_STATE: dict = {"stamp": None, "collection": None}
+_STATE: dict = {"stamp": None, "collection": None, "assessments": None}
 
 
 def _index_stamp() -> int:
@@ -56,7 +59,7 @@ def _index_stamp() -> int:
 def _get_collection():
     stamp = _index_stamp()
     if _STATE["stamp"] != stamp:
-        _STATE.update(stamp=stamp, collection=None)
+        _STATE.update(stamp=stamp, collection=None, assessments=None)
         if stamp:
             _check_manifest()
 
@@ -79,6 +82,34 @@ def _get_collection():
                 )
             raise
     return _STATE["collection"]
+
+
+def _assessment_id(source_file: str) -> str:
+    """ga1_report.pdf -> GA1 (the part of the file name before the first _)."""
+    return Path(source_file).stem.split("_")[0].upper()
+
+
+def _assessment_files() -> dict[str, list[str]]:
+    """Assessment id -> the indexed PDF files of that assessment.
+
+    The PDF index has no assessment field, so it comes from the file names
+    (ga1_report.pdf and ga1_spm.pdf are both GA1). Cached until re-indexing.
+    """
+    collection = _get_collection()
+    if _STATE["assessments"] is None:
+        files: set[str] = set()
+        offset = 0
+        while True:
+            page = collection.get(include=["metadatas"], limit=GET_PAGE, offset=offset)
+            if not page["ids"]:
+                break
+            files.update(m.get("source_file", "") for m in page["metadatas"] if m)
+            offset += len(page["ids"])
+        groups: dict[str, list[str]] = {}
+        for f in sorted(files - {""}):
+            groups.setdefault(_assessment_id(f), []).append(f)
+        _STATE["assessments"] = groups
+    return _STATE["assessments"]
 
 
 def _check_manifest() -> None:
@@ -108,12 +139,18 @@ def retrieve(
     k: int = 5,
     country_names: set[str] | None = None,
     search_text: str | None = None,
+    per_assessment: bool = True,
 ):
-    """Top-k chunks for `question`.
+    """Top-k chunks for `question`, per assessment by default.
 
     `search_text` (default: the question) is what gets embedded; the cached
-    wrapper passes the thesaurus-expanded query here. Re-ranking always uses
-    the original question.
+    wrapper passes a cleaned, thesaurus-expanded version. Re-ranking and the
+    choice of assessments always use the original question.
+
+    With `per_assessment=True`, each assessment (GA1, IAS, LDR ..., from the
+    file names) is searched separately for `k` chunks, re-ranked on its own,
+    and the results are interleaved by rank, so no assessment crowds out the
+    others. When the question names assessments, only those are searched.
 
     `country_names` is accepted for compatibility but ignored: the PDF index
     has no country metadata.
@@ -125,28 +162,33 @@ def retrieve(
 
     rerank = _rerank_enabled()
     fetch_k = k * RERANK_OVERFETCH if rerank else k
+    vector = list(embed_query(search_text or question))
 
-    raw = collection.query(
-        query_embeddings=[list(embed_query(search_text or question))],
-        n_results=fetch_k,
-        include=["documents", "metadatas", "distances"],
-    )
-    ids, docs = raw["ids"][0], raw["documents"][0]
-    metas, dists = raw["metadatas"][0], raw["distances"][0]
+    groups = _assessment_files() if per_assessment else {}
+    chosen = named_assessments(question, list(groups)) or list(groups)
+    wheres = [{"source_file": {"$in": groups[a]}} for a in chosen] or [None]
 
-    if rerank and docs:
-        order = get_thesaurus().rerank_order(
-            question, docs, dists, THESAURUS_RERANK_ALPHA
-        )[:k]
-    else:
-        order = list(range(min(k, len(docs))))
+    parts = []
+    for where in wheres:
+        raw = collection.query(
+            query_embeddings=[vector],
+            n_results=fetch_k,
+            where=where,
+            include=["documents", "metadatas", "distances"],
+        )
+        docs, dists = raw["documents"][0], raw["distances"][0]
+        if rerank and docs:
+            order = get_thesaurus().rerank_order(
+                question, docs, dists, THESAURUS_RERANK_ALPHA
+            )[:k]
+        else:
+            order = list(range(min(k, len(docs))))
+        parts.append(select_results(raw, order))
 
-    return {
-        "ids": [[ids[i] for i in order]],
-        "documents": [[docs[i] for i in order]],
-        "metadatas": [[metas[i] for i in order]],
-        "distances": [[dists[i] for i in order]],
-    }
+    results = interleave_results(parts)
+    for m in results["metadatas"][0]:
+        m.setdefault("assessment", _assessment_id(m.get("source_file", "")))
+    return results
 
 
 # ---------------------------------------------------------------------------
@@ -156,6 +198,8 @@ def retrieve(
 def _build_task(question: str, country_names: set[str]) -> str:
     return (
         "Answer the user's question using ONLY the retrieved chunks below.\n"
+        "Say which assessment each point comes from, and note where "
+        "assessments differ or one says nothing.\n"
         "If the answer is not present, say "
         "'I cannot determine that from the supplied documents.'"
     )
@@ -175,6 +219,7 @@ def _build_context(results, max_chars: int = MAX_CONTEXT_CHARS) -> tuple[str, in
         metadata = results["metadatas"][0][i]
         part = (
             f"SOURCE {i + 1}\n"
+            f"Assessment: {metadata.get('assessment', '')}\n"
             f"File: {metadata.get('source_file', '')}\n"
             f"Title: {metadata.get('title', '')}\n"
             f"Page: {metadata.get('page', '')} of {metadata.get('page_count', '')}\n"
@@ -277,14 +322,16 @@ async def retrieve_cached(
     question: str,
     k: int = 5,
     country_names: set[str] | None = None,
+    per_assessment: bool = True,
 ):
-    # Thesaurus expansion only changes what gets embedded; the cache key uses
-    # the ORIGINAL question so identical questions share an entry.
+    # The search text is cleaned of corpus-generic words and expanded with
+    # the thesaurus; the cache key uses the ORIGINAL question so identical
+    # questions share an entry.
     th = get_thesaurus()
-    expanded = question
+    search = strip_corpus_words(question)
     if th is not None:
         try:
-            expanded = th.expand_query(question)
+            search = th.expand_query(search)
         except Exception as e:  # noqa: BLE001
             logger.warning(f"Query expansion failed: {e}")
 
@@ -299,6 +346,7 @@ async def retrieve_cached(
         RERANK_OVERFETCH,
         question.strip(),
         k,
+        per_assessment,
     )
 
     hit = await cache.get(key)
@@ -311,7 +359,8 @@ async def retrieve_cached(
         question,
         k,
         country_names,
-        expanded,
+        search,
+        per_assessment,
     )
     # Never cache an empty result: it may just mean the index was missing,
     # incomplete or mid-rebuild, and it would stick for the whole TTL.

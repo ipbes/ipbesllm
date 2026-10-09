@@ -70,33 +70,14 @@ def run_pdf(question: str, k: int):
 
 def run_ttl(question: str, k: int):
     """Run the existing TTL retrieval and generation pipeline."""
-    chunk_type = ttl_rag._infer_chunk_type(question)
-
-    country_names = set()
-    if chunk_type == "person":
-        country_names = {
-            canonical
-            for canonical in (
-                ttl_rag.canonical_country(name)
-                for name in ttl_rag.infer_country_names(question)
-            )
-            if canonical
-        }
-
-    per_assessment = bool(chunk_type or country_names)
-
-    # Retain the specialized retrieval behavior used by ttl_rag.main().
-    if country_names:
-        retrieval_k = 200
-    elif chunk_type:
-        retrieval_k = 100
-    else:
-        retrieval_k = k
+    plan = ttl_rag.plan_query(question, k)
+    chunk_type, country_names = plan["chunk_type"], plan["country_names"]
+    per_assessment = plan["per_assessment"]
 
     results = run_sync(
         ttl_rag.retrieve_cached(
             question,
-            k=retrieval_k,
+            k=plan["k"],
             chunk_type=chunk_type,
             country_names=country_names or None,
             per_assessment=per_assessment,
@@ -147,13 +128,13 @@ def render_sources(source: str, results):
 
         if source == "PDF":
             title = (
-                f"{index + 1}. "
+                f"{index + 1}. [{metadata.get('assessment', '?')}] "
                 f"{metadata.get('source_file', 'Unknown file')} — "
                 f"page {metadata.get('page', '?')}"
             )
         else:
             title = (
-                f"{index + 1}. "
+                f"{index + 1}. [{metadata.get('assessment', '?')}] "
                 f"{metadata.get('identifier', 'No identifier')} — "
                 f"{metadata.get('chunk_type', 'Unknown type')}"
             )
@@ -164,6 +145,7 @@ def render_sources(source: str, results):
 
             if source == "PDF":
                 keys = [
+                    "assessment",
                     "source_file",
                     "title",
                     "page",
@@ -211,13 +193,14 @@ with st.sidebar:
     )
 
     k = st.slider(
-        "Chunks to retrieve",
+        "Chunks per assessment",
         min_value=1,
         max_value=20,
         value=5,
         help=(
-            "For TTL, specialized chunk-type and country queries "
-            "use the pipeline's existing larger retrieval limits."
+            "Each assessment (GA1, IAS, LDR) is searched separately, or only "
+            "the ones the question names. For TTL, key-message, person and "
+            "country questions use larger limits to list everything."
         ),
     )
 

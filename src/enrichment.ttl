@@ -1,0 +1,18 @@
+# Local additions to the IPBES thesaurus (data/helpers/ipbes-thesaurus.rdf).
+#
+# thesaurus_helper.py loads this file on top of the official RDF, so every
+# triple here behaves as if it were in the thesaurus itself. Use standard
+# SKOS so the additions can be proposed upstream or shared as linked data:
+#
+#   skos:altLabel  another name that should find a concept
+#   skos:related   a curated link between two concepts
+#
+# Labels shorter than 5 characters are ignored when matching text (unless
+# they are acronyms), so "city" and "town" are not listed.
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix th:   <https://ibok.ipbes.net/thesaurus/> .
+
+# Urban. The thesaurus has no "City" concept; its definition already
+# reads "the built-up, human-inhabited environment (cities, towns, villages)".
+th:9431 skos:altLabel "cities"@en, "towns"@en, "urban area"@en, "urban areas"@en .

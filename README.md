@@ -92,6 +92,7 @@ ipbesllm/
 │   ├── cache.py                          # Answer/retrieval cache (Redis, or in-memory)
 │   ├── chunking.py                       # Splits oversized TTL chunks
 │   ├── diagnose_chunks.py                # Inspect TTL chunk sizes before indexing
+│   ├── enrichment.ttl                    # Local SKOS additions to the IPBES thesaurus
 │   ├── geo.py
 │   ├── models.py
 │   ├── pdf_index.py                      # Embed concept profiles → Chroma
@@ -450,6 +451,16 @@ PYTHONPATH=src python src/ttl_rag.py
 
 ---
 
+# How questions are searched (PDF and TTL)
+
+- **One search per assessment.** Each assessment (GA1, IAS, LDR) is searched separately and the results are interleaved by rank, so the largest assessment cannot crowd out the others and every assessment survives the context limit. If the question names an assessment ("What does the LDR assessment say about pollution?"), only that one is searched. For PDFs the assessment comes from the file name (`ga1_report.pdf` is GA1).
+- **Search text.** Words that describe the whole corpus ("IPBES", "assessments", "what do … say about") are removed before searching, because they match every chunk and drown out the topic. The model still gets the question as asked.
+- **Thesaurus.** Concepts named in the question add synonyms and neighbouring terms to the search, re-rank the results, and put their definitions into the prompt ("Authoritative IPBES definitions").
+- **Inferred links.** Where the thesaurus has no broader/narrower/related links (Pollution and Poverty have none), `thesaurus_helper.py` infers them from words: concepts sharing the name (*Soil pollution*), concepts named in the definition, and concepts whose definitions mention it (*Direct drivers*). They are labelled "not curated" in the prompt.
+- **Enrichment.** `src/enrichment.ttl` holds local SKOS additions loaded on top of the official thesaurus, e.g. `skos:altLabel "cities"` on *Urban*, which has no "City" concept. Add curated `skos:altLabel` or `skos:related` triples there; they take effect at the next start.
+
+---
+
 # Streamlit workbench
 
 `src/app.py` is a prototype web interface for the PDF and TTL pipelines. It shows the answer together with the retrieved chunks, their metadata and Chroma distances. Paths to `chroma/` and `data/` are resolved from the project root (see `src/settings.py`), so it can be started from any directory:
@@ -702,7 +713,7 @@ PYTHONPATH=src python src/pdf_index.py
 PYTHONPATH=src python src/ttl_index.py
 ```
 
-Use `--rebuild` to wipe the collection and start over. Do this when only chunk **metadata** changed (e.g. after updating `ipbes-geo.rdf` or the country handling): the incremental check compares chunk text only, so metadata-only changes are not picked up otherwise.
+Use `--rebuild` to wipe the collection and start over. It is not needed when only chunk **metadata** changed (e.g. after updating `ipbes-geo.rdf` or the country handling): an incremental run rewrites the metadata of those chunks without re-embedding them.
 
 ```bash
 PYTHONPATH=src python src/pdf_index.py --rebuild

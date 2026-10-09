@@ -11,7 +11,11 @@ from loguru import logger
 from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key
 # infer_country_names / canonical_country are re-exported for app.py.
 from geo import canonical_country, country_code_for_label, infer_country_names
-from rag_utils import EMBED_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, embed_query
+from rag_utils import (
+    EMBED_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, concat_results, embed_query,
+    empty_results, interleave_results, named_assessments, select_results,
+    strip_corpus_words,
+)
 from thesaurus_helper import get_thesaurus
 from settings import CHROMA_DIR
 
@@ -39,8 +43,8 @@ MAX_COUNTRY_FILTER = 100
 
 # Part of the cache keys: bump when retrieval or prompts change so stale
 # entries are never served after a code change.
-RETRIEVAL_VERSION = "3"
-PROMPT_VERSION = "2"
+RETRIEVAL_VERSION = "4"
+PROMPT_VERSION = "3"
 
 
 # ---------------------------------------------------------------------------
@@ -211,26 +215,6 @@ def _build_where(
     return {"$and": clauses}
 
 
-def _empty_results():
-    return {
-        "ids": [[]],
-        "documents": [[]],
-        "metadatas": [[]],
-        "distances": [[]],
-    }
-
-
-def _merge_results(results_list):
-    """Concatenate several Chroma result dicts into one."""
-    merged = _empty_results()
-    for r in results_list:
-        merged["ids"][0].extend(r["ids"][0])
-        merged["documents"][0].extend(r["documents"][0])
-        merged["metadatas"][0].extend(r["metadatas"][0])
-        merged["distances"][0].extend(r["distances"][0])
-    return merged
-
-
 def _query(collection, query_vector, k: int, where):
     return collection.query(
         query_embeddings=[list(query_vector)],
@@ -241,39 +225,18 @@ def _query(collection, query_vector, k: int, where):
 
 
 # ---------------------------------------------------------------------------
-# Thesaurus-aware post-processing
+# Thesaurus-aware re-ranking
 # ---------------------------------------------------------------------------
 
-def _apply_thesaurus_rerank(question: str, results, alpha: float):
-    """
-    Blend Chroma cosine *similarity* (1 - distance) with the thesaurus
-    neighborhood score. Mutates and returns `results`.
-    """
+def _rerank(question: str, results):
+    """Re-order one result set by vector similarity blended with the
+    thesaurus neighbourhood score (THESAURUS_RERANK_ALPHA)."""
     th = _get_thesaurus()
-    if th is None or alpha <= 0.0:
+    if th is None or THESAURUS_RERANK_ALPHA <= 0.0 or not results["documents"][0]:
         return results
-    if not results["documents"][0]:
-        return results
-
-    docs = results["documents"][0]
-    dists = results["distances"][0]
-
-    # Chroma cosine distance -> similarity in [0, 1] (roughly).
-    sims = [max(0.0, 1.0 - d) for d in dists]
-    thes = [th.score_chunk(question, doc) for doc in docs]
-    combined = [
-        (1.0 - alpha) * s + alpha * t
-        for s, t in zip(sims, thes)
-    ]
-
-    order = sorted(range(len(docs)), key=lambda i: combined[i], reverse=True)
-
-    results["documents"][0] = [docs[i] for i in order]
-    results["metadatas"][0] = [results["metadatas"][0][i] for i in order]
-    results["distances"][0] = [dists[i] for i in order]
-    results["ids"][0] = [results["ids"][0][i] for i in order]
-
-    return results
+    order = th.rerank_order(question, results["documents"][0],
+                            results["distances"][0], THESAURUS_RERANK_ALPHA)
+    return select_results(results, order)
 
 
 # ---------------------------------------------------------------------------
@@ -286,11 +249,21 @@ def retrieve(
     chunk_type: str | None = None,
     country_names: set[str] | None = None,
     per_assessment: bool = False,
+    search_text: str | None = None,
 ):
     """
-    Retrieve chunks. When `per_assessment=True`, run one query per assessment
-    (using `k` results each) and merge, so no single assessment can crowd
-    out the others.
+    Retrieve chunks.
+
+    `search_text` (default: the question) is what gets embedded; the cached
+    wrapper passes a cleaned, thesaurus-expanded version. Re-ranking and the
+    choice of assessments use the question itself.
+
+    With `per_assessment=True`, run one query per assessment (`k` results
+    each) so no single assessment can crowd out the others; when the question
+    names assessments (GA1, IAS, LDR ...) only those are searched. Typed
+    results (key messages, persons ...) are concatenated, to be sorted by
+    identifier later; general ones are re-ranked with the thesaurus within
+    each assessment and interleaved by rank.
     """
     collection = _get_collection()
 
@@ -306,10 +279,10 @@ def retrieve(
         # for specific countries we cannot map to codes.
         logger.warning(f"No ISO codes for countries {sorted(country_names)}; "
                        f"returning no results.")
-        return _empty_results()
+        return empty_results()
 
     # Embed once; every per-assessment query reuses the same vector.
-    query_vector = embed_query(question)
+    query_vector = embed_query(search_text or question)
 
     assessments = _get_assessments() if per_assessment else []
     if per_assessment and not assessments:
@@ -318,11 +291,11 @@ def retrieve(
             "per_assessment=True but no assessments available; "
             "falling back to a single query."
         )
+    assessments = named_assessments(question, assessments) or assessments
 
     if not assessments:
-        return _annotate_metadata(
-            _query(collection, query_vector, k, _build_where(chunk_type, codes))
-        )
+        r = _query(collection, query_vector, k, _build_where(chunk_type, codes))
+        return _annotate_metadata(r if chunk_type else _rerank(question, r))
 
     per_assessment_results, errors = [], []
     for a in assessments:
@@ -341,16 +314,44 @@ def retrieve(
             m.setdefault("assessment", a)
 
         if r["documents"][0]:
-            per_assessment_results.append(r)
+            per_assessment_results.append(r if chunk_type else _rerank(question, r))
 
     if not per_assessment_results:
         if errors and len(errors) == len(assessments):
             # Every query failed: surface it instead of returning "no
             # results" (which would also be cached).
             raise errors[-1]
-        return _empty_results()
+        return empty_results()
 
-    return _annotate_metadata(_merge_results(per_assessment_results))
+    merge = concat_results if chunk_type else interleave_results
+    return _annotate_metadata(merge(per_assessment_results))
+
+
+def plan_query(question: str, k: int = 5) -> dict:
+    """How to retrieve for `question`: chunk type, countries, and results per
+    assessment. Shared by main(), app.py and pdf_ttl_compare.py.
+
+    Every question is searched per assessment. Typed questions (key messages,
+    persons ...) list everything, so they fetch far more than `k`.
+    """
+    chunk_type = _infer_chunk_type(question)
+    country_names: set[str] = set()
+    if chunk_type == "person":
+        country_names = {
+            c for c in (
+                canonical_country(x) for x in infer_country_names(question)
+            ) if c
+        }
+    if country_names:
+        k = 200
+    elif chunk_type:
+        k = 100
+    return {
+        "chunk_type": chunk_type,
+        "country_names": country_names,
+        "k": k,
+        "per_assessment": True,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -528,6 +529,8 @@ def _build_task(
 
     return (
         "Answer the user's question using ONLY the retrieved chunks below.\n"
+        "Say which assessment (the assessment= field) each point comes from, "
+        "and note where assessments differ or one says nothing.\n"
         "If the answer is not present, say "
         "'I cannot determine that from the supplied documents.'"
     )
@@ -539,16 +542,7 @@ def generate_answer(
     chunk_type: str | None = None,
     country_names: set[str] | None = None,
 ) -> str:
-    # -------- Thesaurus re-ranking --------
-    # Only safe when we're NOT filtering by chunk_type: the caller sorts
-    # by identifier afterwards in those cases, which would undo our order.
-    # We also skip it when the caller asked for a specific chunk_type
-    # (list-style answers must stay in identifier order).
-    if not chunk_type:
-        results = _apply_thesaurus_rerank(
-            question, results, THESAURUS_RERANK_ALPHA
-        )
-
+    # Thesaurus re-ranking happens in retrieve(), within each assessment.
     context, used = _build_context(results)
     total = len(results["documents"][0])
     truncation_note = ""
@@ -586,6 +580,9 @@ def generate_answer(
     glossary_block = f"\n{glossary}\n" if glossary else ""
     primary_block = f"\n{thesaurus_primaries}\n" if thesaurus_primaries else ""
 
+    order_note = (" (sorted by identifier)" if chunk_type else
+                  " (taken from each assessment in turn, best match first)")
+
     prompt = f"""
 You are answering questions about an IPBES assessment report, represented
 as RDF/Turtle using the IPBES ontology.
@@ -599,7 +596,7 @@ decisions.
 User question:
 {question}
 
-Retrieved chunks (already sorted by identifier):
+Retrieved chunks{order_note}:
 {context}
 {truncation_note}{primary_block}{glossary_block}"""
 
@@ -640,20 +637,20 @@ async def retrieve_cached(
     country_names: set[str] | None = None,
     per_assessment: bool = False,
 ):
-    """Cached Chroma retrieval with thesaurus-driven query expansion."""
+    """Cached Chroma retrieval. Only the search text is cleaned of
+    corpus-generic words and expanded with the thesaurus."""
     import anyio
 
     norm_countries = sorted(country_names) if country_names else None
 
-    # --- Thesaurus expansion (only affects what we send to Chroma) -----
+    # --- Search text (only affects what we send to Chroma) -------------
     th = _get_thesaurus()
-    expanded_question = question
+    search = strip_corpus_words(question)
     if th is not None:
         try:
-            expanded_question = th.expand_query(question)
+            search = th.expand_query(search)
         except Exception as e:  # noqa: BLE001
             logger.warning(f"Query expansion failed: {e}")
-            expanded_question = question
 
     # --- Cache key uses the ORIGINAL question so caches stay stable ----
     # (otherwise a change to the thesaurus would invalidate every cache
@@ -680,11 +677,12 @@ async def retrieve_cached(
 
     result = await anyio.to_thread.run_sync(
         lambda: retrieve(
-            expanded_question,          # <-- use expanded for the query
+            question,
             k=k,
             chunk_type=chunk_type,
             country_names=country_names,
             per_assessment=per_assessment,
+            search_text=search,
         )
     )
     # Never cache an empty result: it may just mean the index was missing,
@@ -706,13 +704,15 @@ async def generate_answer_cached(
     context, used = _build_context(results)
     total = len(results["documents"][0])
 
-    # Add the glossary to the key so thesaurus updates invalidate cache.
+    # Add the glossary and definitions to the key so thesaurus updates
+    # (including src/enrichment.ttl) invalidate the cache.
     th = _get_thesaurus()
     glossary_for_key = ""
     if th is not None and not chunk_type:
         try:
-            glossary_for_key = th.build_glossary(
-                question, list(results["documents"][0])
+            glossary_for_key = (
+                th.build_glossary(question, list(results["documents"][0]))
+                + th.definitions_block(question)
             )
         except Exception:  # noqa: BLE001
             glossary_for_key = ""
@@ -786,41 +786,21 @@ async def async_main():
     if not question:
         return
 
-    chunk_type = _infer_chunk_type(question)
-
-    country_names: set[str] = set()
-    if chunk_type == "person":
-        country_names = {
-            c for c in (
-                canonical_country(x) for x in infer_country_names(question)
-            ) if c
-        }
-
-    # Fan out per assessment whenever we're filtering (chunk_type and/or
-    # country), because otherwise one assessment can dominate the top-k.
-    per_assessment = bool(chunk_type or country_names)
-
+    plan = plan_query(question)
+    chunk_type, country_names = plan["chunk_type"], plan["country_names"]
     if chunk_type:
         print(f"(Filtering to chunk_type='{chunk_type}')")
-        k = 100
-    else:
-        k = 5
-
     if country_names:
         print(f"(Filtering to countries: {sorted(country_names)})")
-        k = 200  # per-assessment cap when fanning out
-
-    if per_assessment:
-        print("(Retrieving per assessment)")
-
+    print("(Retrieving per assessment)")
     print()
 
     results = await retrieve_cached(
         question,
-        k=k,
+        k=plan["k"],
         chunk_type=chunk_type,
         country_names=country_names or None,
-        per_assessment=per_assessment,
+        per_assessment=plan["per_assessment"],
     )
 
     if not results["documents"][0]:

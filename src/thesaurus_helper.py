@@ -5,6 +5,7 @@ Thesaurus-aware helpers that improve TTL and PDF RAG retrieval and generation.
 Public API used by ttl_rag.py and pdf_rag.py:
     get_thesaurus()                          -> shared ThesaurusHelper | None
     th.find_mentions(text)                   -> tuple[ConceptMention, ...]
+    th.inferred_links(uri)                   -> dict[str, list[str]]
     th.expand_query(query)                   -> str
     th.score_chunk(query, chunk_text)        -> float in [0, 1]
     th.rerank_order(query, docs, dists, a)   -> list[int]  (best first)
@@ -26,12 +27,13 @@ from __future__ import annotations
 import logging
 import re
 import threading
+from collections import Counter
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 
 from rdf_graph import ThesaurusGraph, Concept
-from settings import THESAURUS_RDF
+from settings import THESAURUS_ENRICHMENT, THESAURUS_RDF
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +46,32 @@ _TOKEN_RE = re.compile(r"\w+")
 # word boundary ("use" no longer matches inside "because", while "ecosystem"
 # still matches "ecosystems"). Set to False for the old plain-substring test.
 SCORE_REQUIRE_WORD_START = True
+
+# Inferred links (see inferred_links): at most this many per kind, and
+# concepts named in more definitions than this are too generic to count as a
+# link ("Nature", "System", ...).
+MAX_INFERRED_LINKS = 8
+GENERIC_DEFINITION_COUNT = 30
+
+# Endings removed from a concept's last word so "pollution" also finds
+# "pollutant" and "polluter". The first matching ending wins; if the stem
+# would be shorter than 4 letters the word is used whole ("cities").
+_SUFFIXES = ("ations", "ation", "ions", "ion", "ants", "ant", "ies", "es", "s")
+
+
+def _stem_pattern(label: str) -> re.Pattern | None:
+    """Regex for a label's words at word starts, any ending on the last word."""
+    words = _TOKEN_RE.findall((label or "").lower())
+    if not words or len(label) < 5:
+        return None
+    last = words[-1]
+    for suffix in _SUFFIXES:
+        if last.endswith(suffix):
+            if len(last) - len(suffix) >= 4:
+                last = last[: -len(suffix)]
+            break
+    parts = [re.escape(w) for w in words[:-1]] + [re.escape(last)]
+    return re.compile(r"\b" + r"\W+".join(parts) + r"\w*")
 
 
 @dataclass(frozen=True)
@@ -63,10 +91,15 @@ class ThesaurusHelper:
             raise FileNotFoundError(f"Thesaurus RDF not found: {rdf_path}")
 
         self.graph = ThesaurusGraph(rdf_path)
+        if THESAURUS_ENRICHMENT.exists():
+            self.graph.graph.parse(str(THESAURUS_ENRICHMENT), format="turtle")
+            logger.info("Loaded thesaurus enrichment %s", THESAURUS_ENRICHMENT)
         self._lexicon: dict[str, str] = {}
         self._acronyms: set[str] = set()
         self._concept_cache: dict[str, Concept] = {}
         self._neighborhood_cache: dict[str, frozenset[str]] = {}
+        self._inferred_cache: dict[str, dict[str, list[str]]] = {}
+        self._def_index = None
         self._patterns: dict[str, re.Pattern] = {}
         self._build_lexicon()
 
@@ -211,19 +244,22 @@ class ThesaurusHelper:
         query_norm = self._normalize(query)
         extras: list[str] = []
 
+        def add(term: str) -> None:
+            norm = self._normalize(term)
+            if norm and norm not in query_norm and term not in extras:
+                extras.append(term)
+
         for m in mentions:
             c = self._get_concept(m.uri)
-            # Synonyms first (safest signal)
+            # The concept's own name when the query used another label
+            # ("cities" -> "Urban"), then synonyms (safest signal)
+            add(m.pref_label)
             for alt in c.alt_labels[:2]:
-                alt_norm = self._normalize(alt)
-                if alt_norm and alt_norm not in query_norm and alt not in extras:
-                    extras.append(alt)
-            # Then one related concept
-            for rel_uri in c.related[:1]:
-                rel_label = self.graph.pref_label_of(rel_uri)
-                rel_norm = self._normalize(rel_label)
-                if rel_label and rel_norm not in query_norm and rel_label not in extras:
-                    extras.append(rel_label)
+                add(alt)
+            # Then one related concept: a formal one, else an inferred one
+            # sharing its name ("Pollution" -> "Soil pollution")
+            for rel_uri in (c.related or self.inferred_links(m.uri)["same_name"])[:1]:
+                add(self.graph.pref_label_of(rel_uri))
             if len(extras) >= max_extra_terms:
                 break
 
@@ -235,14 +271,94 @@ class ThesaurusHelper:
         return expanded
 
     # ------------------------------------------------------------------
+    # Inferred links
+    # ------------------------------------------------------------------
+    def _definition_index(self):
+        """(normalised definition text per concept, the concepts each
+        definition names in order of appearance, how many definitions name
+        each concept). Built once, on first use."""
+        if self._def_index is None:
+            texts: dict[str, str] = {}
+            names: dict[str, list[str]] = {}
+            counts: Counter[str] = Counter()
+            for uri in self.graph.all_concept_uris():
+                text = self._normalize(" ".join(self._get_concept(uri).definitions))
+                if not text:
+                    continue
+                texts[uri] = text
+                found = [m for m in self._scan_mentions(text) if m.uri != uri]
+                found.sort(key=lambda m: self._pattern(m.label).search(text).start())
+                names[uri] = [m.uri for m in found]
+                counts.update(set(names[uri]))
+            self._def_index = (texts, names, counts)
+        return self._def_index
+
+    def inferred_links(self, uri: str) -> dict[str, list[str]]:
+        """Links the thesaurus does not state, found by matching words.
+
+        same_name     concepts whose names contain this one's ("Soil pollution")
+        in_definition concepts named in this concept's definition
+        defined_by    concepts whose definitions mention this one, those that
+                      mention it most (and most briefly) first
+
+        Formally linked concepts and over-generic ones are left out, so these
+        only fill the gaps in broader / narrower / related. They are word
+        matches, not curated, and are labelled as inferred wherever they are
+        shown.
+        """
+        cached = self._inferred_cache.get(uri)
+        if cached is not None:
+            return cached
+
+        c = self._get_concept(uri)
+        texts, names, counts = self._definition_index()
+        taken = {uri, *c.broader, *c.narrower, *c.related}
+
+        def usable(u: str) -> bool:
+            return u not in taken and counts[u] <= GENERIC_DEFINITION_COUNT
+
+        pattern = _stem_pattern(c.pref_label or "")
+        same_name: list[str] = []
+        defined_by: list[tuple[int, int, str]] = []
+        if pattern:
+            for other in self.graph.all_concept_uris():
+                if not usable(other):
+                    continue
+                oc = self._get_concept(other)
+                if not oc.pref_label or oc.pref_label.startswith("http"):
+                    continue
+                labels = [oc.pref_label, *oc.alt_labels]
+                if any(pattern.search(self._normalize(label)) for label in labels):
+                    same_name.append(other)
+                elif other in texts:
+                    hits = len(pattern.findall(texts[other]))
+                    if hits:
+                        defined_by.append((-hits, len(texts[other]), other))
+
+        same_name.sort(key=lambda u: len(self.graph.pref_label_of(u)))
+        same_name = same_name[:MAX_INFERRED_LINKS]
+        in_definition = [u for u in names.get(uri, []) if usable(u)][:MAX_INFERRED_LINKS]
+        shown = set(same_name) | set(in_definition)
+        links = {
+            "same_name": same_name,
+            "in_definition": in_definition,
+            "defined_by": [u for _, _, u in sorted(defined_by)
+                           if u not in shown][:MAX_INFERRED_LINKS],
+        }
+        self._inferred_cache[uri] = links
+        return links
+
+    # ------------------------------------------------------------------
     # (2) Re-ranking
     # ------------------------------------------------------------------
     def _neighborhood_terms(self, uri: str) -> frozenset[str]:
         cached = self._neighborhood_cache.get(uri)
         if cached is None:
             c = self._get_concept(uri)
+            inferred = self.inferred_links(uri)
             terms: set[str] = set()
-            for u in c.broader + c.narrower + c.related:
+            for u in (c.broader + c.narrower + c.related + inferred["same_name"]
+                      + inferred["in_definition"] + inferred["defined_by"]):
                 terms.add(self._normalize(self.graph.pref_label_of(u)))
             terms.discard("")
             cached = frozenset(terms)
@@ -374,12 +490,31 @@ class ThesaurusHelper:
             lines = [f"### {m.pref_label}  (IPBES thesaurus)"]
             lines.extend(c.definitions)
 
-            broader_labels = [self.graph.pref_label_of(u) for u in c.broader[:2]]
-            related_labels = [self.graph.pref_label_of(u) for u in c.related[:4]]
+            label = self.graph.pref_label_of
+            broader_labels = [label(u) for u in c.broader[:2]]
+            narrower_labels = [label(u) for u in c.narrower[:6]]
+            related_labels = [label(u) for u in c.related[:4]]
             if broader_labels:
                 lines.append(f"Broader: {', '.join(broader_labels)}")
+            if narrower_labels:
+                lines.append(f"Narrower: {', '.join(narrower_labels)}")
             if related_labels:
                 lines.append(f"Related: {', '.join(related_labels)}")
+
+            inferred = self.inferred_links(m.uri)
+            inferred_lines = [
+                f"- {title}: {', '.join(label(u) for u in inferred[kind])}"
+                for kind, title in (
+                    ("same_name", "Concepts sharing its name"),
+                    ("in_definition", "Concepts named in its definition"),
+                    ("defined_by", "Concepts whose definitions mention it"),
+                )
+                if inferred[kind]
+            ]
+            if inferred_lines:
+                lines.append("Inferred links (word matches in the thesaurus, "
+                             "not curated relationships):")
+                lines.extend(inferred_lines)
             blocks.append("\n".join(lines))
 
         return "## Authoritative IPBES definitions\n\n" + "\n\n---\n\n".join(blocks)
