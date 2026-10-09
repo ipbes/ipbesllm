@@ -1,8 +1,9 @@
 # src/rdf_test.py
-from src.rdf_graph import ThesaurusGraph
-from src.rdf_query import HybridThesaurusRetriever
+from rdf_graph import ThesaurusGraph
+from rdf_query import HybridThesaurusRetriever
+from settings import THESAURUS_RDF
 
-RDF_PATH = "data/rdf/ipbes-thesaurus.rdf"
+RDF_PATH = THESAURUS_RDF
 
 def main() -> None:
     g = ThesaurusGraph(RDF_PATH)

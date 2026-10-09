@@ -1,9 +1,9 @@
 import chromadb
 
 from rag_utils import embed_query
+from settings import CHROMA_DIR
 
 
-CHROMA_DIR = "chroma"
 
 COLLECTION_NAME = "xml_documents"
 

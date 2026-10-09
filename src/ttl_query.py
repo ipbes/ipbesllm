@@ -1,25 +1,19 @@
 # ttl_query.py
 import chromadb
-from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
+
+from rag_utils import embed_query
+from settings import CHROMA_DIR
 
 
-CHROMA_DIR = "chroma"
 COLLECTION_NAME = "ttl_documents"
-EMBED_MODEL = "nomic-embed-text"
 
 
 def main():
     client = chromadb.PersistentClient(path=CHROMA_DIR)
 
-    embedding_function = OllamaEmbeddingFunction(
-        model_name=EMBED_MODEL,
-        url="http://localhost:11434/api/embeddings",
-    )
-
-    collection = client.get_collection(
-        name=COLLECTION_NAME,
-        embedding_function=embedding_function,
-    )
+    # No embedding function: the question is embedded by embed_query
+    # (rag_utils: OLLAMA_URL, OLLAMA_EMBED_MODEL, timeout and retries).
+    collection = client.get_collection(name=COLLECTION_NAME)
 
     print(f"Collection contains {collection.count()} chunks.")
     print()
@@ -29,7 +23,7 @@ def main():
         return
 
     results = collection.query(
-        query_texts=[question],
+        query_embeddings=[list(embed_query(question))],
         n_results=5,
     )
 
@@ -46,12 +40,12 @@ def main():
         print(f"RESULT #{i + 1}")
         print("-" * 80)
         print(f"Distance: {distance:.4f}")
-        print(f"File: {metadata['source_file']}")
-        print(f"Type: {metadata['chunk_type']}")
-        print(f"Division: {metadata['division']}")
-        print(f"Subdivision: {metadata['subdivision']}")
-        print(f"eId: {metadata['eId']}")
-        print(f"XPath: {metadata['xpath']}")
+        print(f"File: {metadata.get('source_file', '')}")
+        print(f"Type: {metadata.get('chunk_type', '')}")
+        print(f"Division: {metadata.get('division', '')}")
+        print(f"Subdivision: {metadata.get('subdivision', '')}")
+        print(f"eId: {metadata.get('eId', '')}")
+        print(f"XPath: {metadata.get('xpath', '')}")
         print()
         print(document)
 

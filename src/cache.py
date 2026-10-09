@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import json
 import os
+import threading
 from typing import Any
 from urllib.parse import urlparse
 
@@ -34,6 +36,23 @@ def _build_cache() -> Cache:
 
 
 cache: Cache = _build_cache()
+
+# The Redis connection is bound to the event loop it is first used on, so
+# synchronous callers (Streamlit) must run every cached call on one loop:
+# asyncio.run() makes a new loop per call and breaks the shared connection.
+_loop: asyncio.AbstractEventLoop | None = None
+_loop_lock = threading.Lock()
+
+
+def run_sync(coro):
+    """Run a coroutine on this module's long-lived event loop and wait."""
+    global _loop
+    with _loop_lock:
+        if _loop is None:
+            _loop = asyncio.new_event_loop()
+            threading.Thread(target=_loop.run_forever, name="cache-event-loop",
+                             daemon=True).start()
+    return asyncio.run_coroutine_threadsafe(coro, _loop).result()
 
 
 def make_key(*parts: Any) -> str:

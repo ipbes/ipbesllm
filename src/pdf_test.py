@@ -1,7 +1,8 @@
 from pdf_loader import extract_pdf_chunks
+from settings import PDF_DIR
 
 
-PDF_PATH = "data/pdf/2013-1.pdf"
+PDF_PATH = str(PDF_DIR / "2013-1.pdf")
 
 
 def main():

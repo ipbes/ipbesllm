@@ -3,6 +3,7 @@ import os
 import chromadb
 
 from rag_utils import EMBED_MODEL, chat_client, embed_query
+from settings import CHROMA_DIR
 
 
 LLM_MODEL = os.getenv(
@@ -10,7 +11,6 @@ LLM_MODEL = os.getenv(
     "llama3.1:latest",
 )
 
-CHROMA_DIR = "chroma"
 
 COLLECTION_NAME = "xml_documents"
 

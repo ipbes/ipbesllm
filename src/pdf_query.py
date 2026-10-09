@@ -2,9 +2,9 @@ import chromadb
 from chromadb.errors import NotFoundError
 
 from rag_utils import EMBED_MODEL, embed_query
+from settings import CHROMA_DIR
 
 
-CHROMA_DIR = "chroma"
 COLLECTION_NAME = "pdf_documents"
 
 

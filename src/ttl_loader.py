@@ -144,15 +144,16 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
     """
     Parse an IPBES ontology TTL file into retrieval-oriented chunks.
 
-    Chunk types:
-      - background_message
-      - sub_message
-      - key_message
-      - knowledge_gap
-      - subchapter
-      - illustration
-      - reference
-      - person
+    Chunk types (the `chunk_type` value, then the IPBES class):
+      - bgm      BackgroundMessage
+      - subm     SubMessage
+      - key      KeyMessage
+      - kg       KnowledgeGap
+      - chapter  Chapter
+      - sch      SubChapter
+      - il       Illustration
+      - ref      Reference
+      - person   foaf:Person
     """
     global IPBES
 
@@ -258,7 +259,6 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
                 "title": doc_meta["title"],
                 "date": doc_meta["date"],
                 "language": doc_meta["language"],
-                "country": doc_meta["country"],
                 "country": country_override or doc_meta["country"],
                 "subtype": doc_meta["subtype"],
                 "number": doc_meta["number"],

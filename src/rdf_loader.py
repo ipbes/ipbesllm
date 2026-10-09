@@ -9,7 +9,7 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 
-from src.rdf_graph import ThesaurusGraph, Concept
+from rdf_graph import ThesaurusGraph, Concept
 
 logger = logging.getLogger(__name__)
 

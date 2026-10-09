@@ -7,9 +7,9 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass, field
 
-from src.rag_utils import embed_query
-from src.rdf_graph import ThesaurusGraph
-from src.rdf_index import get_client, COLLECTION_NAME
+from rag_utils import embed_query
+from rdf_graph import ThesaurusGraph
+from rdf_index import get_client, COLLECTION_NAME
 
 logger = logging.getLogger(__name__)
 

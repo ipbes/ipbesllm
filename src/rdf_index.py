@@ -10,15 +10,15 @@ from pathlib import Path
 import chromadb
 from chromadb.config import Settings
 
-from src.rag_utils import (
+from rag_utils import (
     EMBED_MODEL, embed_client, embed_texts, make_batches, make_embedding_function,
 )
-from src.rdf_graph import ThesaurusGraph
-from src.rdf_loader import build_all_documents, ConceptDocument
+from rdf_graph import ThesaurusGraph
+from rdf_loader import build_all_documents, ConceptDocument
+from settings import CHROMA_DIR, THESAURUS_RDF
 
 logger = logging.getLogger(__name__)
 
-CHROMA_DIR = "chroma"
 COLLECTION_NAME = "ipbes_thesaurus"
 
 
@@ -29,7 +29,7 @@ def get_client() -> chromadb.PersistentClient:
     )
 
 
-def build_index(rdf_path: str, reset: bool = True) -> chromadb.Collection:
+def build_index(rdf_path: str | Path = THESAURUS_RDF, reset: bool = True) -> chromadb.Collection:
     client = get_client()
 
     if reset:
@@ -70,5 +70,5 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     import sys
 
-    rdf_file = sys.argv[1] if len(sys.argv) > 1 else "data/rdf/ipbes-thesaurus.rdf"
+    rdf_file = sys.argv[1] if len(sys.argv) > 1 else THESAURUS_RDF
     build_index(rdf_file)

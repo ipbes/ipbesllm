@@ -1,20 +1,20 @@
 
-import asyncio
 import sys
 from pathlib import Path
 
 import streamlit as st
 
-# Ensure existing modules such as cache.py, geo.py and thesaurus_helper.py
-# can be imported when Streamlit is launched from the project root.
-PROJECT_ROOT = Path(__file__).resolve().parent
-SRC_DIR = PROJECT_ROOT / "src"
+# This file lives in src/; make its sibling modules (cache.py, geo.py,
+# thesaurus_helper.py ...) importable however Streamlit was launched.
+SRC_DIR = Path(__file__).resolve().parent
 
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
 import pdf_rag
 import ttl_rag
+# Never asyncio.run() here: see cache.run_sync.
+from cache import run_sync
 
 
 st.set_page_config(
@@ -38,7 +38,7 @@ def run_pdf(question: str, k: int):
     # Preserve the existing pipeline's behavior and do not filter.
     country_names = set()
 
-    results = asyncio.run(
+    results = run_sync(
         pdf_rag.retrieve_cached(
             question,
             k=k,
@@ -53,7 +53,7 @@ def run_pdf(question: str, k: int):
             "cached": False,
         }
 
-    payload = asyncio.run(
+    payload = run_sync(
         pdf_rag.generate_answer_cached(
             question,
             results,
@@ -93,7 +93,7 @@ def run_ttl(question: str, k: int):
     else:
         retrieval_k = k
 
-    results = asyncio.run(
+    results = run_sync(
         ttl_rag.retrieve_cached(
             question,
             k=retrieval_k,
@@ -113,7 +113,7 @@ def run_ttl(question: str, k: int):
     if chunk_type:
         results = ttl_rag._reorder_by_identifier(results)
 
-    payload = asyncio.run(
+    payload = run_sync(
         ttl_rag.generate_answer_cached(
             question,
             results,

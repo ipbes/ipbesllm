@@ -31,13 +31,12 @@ from functools import lru_cache
 from pathlib import Path
 
 from rdf_graph import ThesaurusGraph, Concept
+from settings import THESAURUS_RDF
 
 logger = logging.getLogger(__name__)
 
 
-# Resolve relative to the project root, regardless of cwd.
-_PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_RDF_PATH = _PROJECT_ROOT / "data" / "rdf" / "ipbes-thesaurus.rdf"
+DEFAULT_RDF_PATH = THESAURUS_RDF
 
 _TOKEN_RE = re.compile(r"\w+")
 

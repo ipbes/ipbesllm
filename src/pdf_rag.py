@@ -11,11 +11,11 @@ from cache import CACHE_VERSION, cache, make_key
 from geo import infer_country_names  # noqa: F401
 from rag_utils import EMBED_MODEL, chat_client, embed_query
 from thesaurus_helper import get_thesaurus
+from settings import CHROMA_DIR
 
 
 LLM_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:latest")
 
-CHROMA_DIR = "chroma"
 COLLECTION_NAME = "pdf_documents"
 
 # Written by pdf_index.py; its modification time marks "the index changed".

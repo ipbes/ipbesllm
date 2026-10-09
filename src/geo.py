@@ -5,8 +5,9 @@ from pathlib import Path
 
 from rdflib import Graph
 from rdflib.namespace import RDF, SKOS
+from settings import GEO_RDF
 
-GEO_PATH = Path("data/rdf/ipbes-geo.rdf")
+GEO_PATH = GEO_RDF
 
 ISO3166_DATATYPE = "http://purl.org/dc/terms/ISO3166"
 _graph = None

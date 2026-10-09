@@ -1,9 +1,9 @@
 from pathlib import Path
 
 from xml_loader import parse_akn_file
+from settings import XML_DIR
 
 
-XML_DIR = Path("data/xml")
 
 
 def main():

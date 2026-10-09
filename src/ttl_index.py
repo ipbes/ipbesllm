@@ -15,8 +15,8 @@ Behaviour:
     whose metadata changed (e.g. after an ipbes-geo.rdf update) get their
     metadata rewritten without re-embedding; chunks no longer in the sources
     are removed. A crash or Ctrl-C therefore costs at most one batch: re-run.
-  * Embedding is done here (ollama client, explicit timeout, exponential
-    backoff) and the vectors are handed to Chroma. A batch that cannot be
+  * Embedding goes through rag_utils (ollama client, explicit timeout,
+    exponential backoff) and the vectors are handed to Chroma. A batch that cannot be
     embedded stops the run unless --skip-failed is given.
   * Batches are limited by characters as well as item count, so a few long
     chunks can never produce a huge request.
@@ -24,10 +24,7 @@ Behaviour:
 from __future__ import annotations
 
 import argparse
-import hashlib
-import inspect
 import json
-import os
 import re
 import sys
 import time
@@ -36,51 +33,32 @@ from functools import lru_cache
 from pathlib import Path
 
 import chromadb
-import httpx
-import ollama
-from chromadb.errors import NotFoundError
-from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 
 from geo import canonical_country, country_code_for_label
 from rag_utils import (
-    load_existing, plan_changes, replacing, retag, with_fingerprints,
+    EMBED_MODEL, GET_PAGE, MAX_BATCH_CHARS, MAX_BATCH_ITEMS,
+    check_scalar_metadata, delete_collection_if_exists, load_existing,
+    make_batches, make_embedding_function, plan_changes, retag,
+    run_embedding_loop, text_hash, with_fingerprints,
 )
+from settings import CHROMA_DIR, TTL_DIR
 from ttl_loader import parse_ttl_file
 
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
 
-TTL_DIR = Path("data/ttl")
-
-CHROMA_DIR = "chroma"
 COLLECTION_NAME = "ttl_documents"
 
 # Manifest consumed by ttl_rag.py to fan out one query per assessment.
 MANIFEST_PATH = Path(CHROMA_DIR) / "assessments.json"
 FAILED_PATH = Path(CHROMA_DIR) / "failed_chunks.json"
 
-EMBED_MODEL = os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
-EMBED_TIMEOUT = float(os.getenv("OLLAMA_EMBED_TIMEOUT", "300"))  # seconds per request
-KEEP_ALIVE = "30m"          # keep the model loaded between batches
-
-# Batching: a batch ends when EITHER limit would be exceeded.
-MAX_BATCH_ITEMS = 64
-MAX_BATCH_CHARS = 16_000
-BATCH_SIZE = MAX_BATCH_ITEMS  # kept for scripts that import the old name
-
-# Retries (transport errors, timeouts, Ollama 5xx/429): 5s, 10s, 20s, 40s, ...
-MAX_RETRIES = 5
-RETRY_DELAY = 5
-MAX_RETRY_DELAY = 120
-
 # Abort the run if a non-empty ipbes:country value resolves to NO ISO code.
 STRICT_COUNTRY_RESOLUTION = True
 
 _VERSION_SUFFIX_RE = re.compile(r"_v\d+$")
 _COUNTRY_SEP_RE = re.compile(r"\s*[;/]\s*")
-_GET_PAGE = 5000
 
 _META_FIELDS = (
     "source_file", "chunk_type", "document_type", "title", "date", "language",
@@ -162,13 +140,8 @@ def report_countries(unresolved: Counter, partial: Counter) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Parsing, batching, metadata
+# Parsing and metadata
 # ---------------------------------------------------------------------------
-
-def text_hash(text: str) -> str:
-    """Fingerprint of what gets embedded; includes the model name."""
-    return hashlib.sha1(f"{EMBED_MODEL}\n{text}".encode("utf-8")).hexdigest()[:16]
-
 
 def load_chunks(skip_types: set[str]) -> tuple[list[dict], set[str]]:
     ttl_files = sorted(TTL_DIR.glob("*.ttl"))
@@ -186,7 +159,7 @@ def load_chunks(skip_types: set[str]) -> tuple[list[dict], set[str]]:
         parsed = parse_ttl_file(str(path))
         for c in parsed:
             c["assessment"] = aid
-            c["text_hash"] = text_hash(c["text"])
+            c["text_hash"] = text_hash(c["text"], EMBED_MODEL)
         print(f"  Chunks extracted: {len(parsed)}")
         chunks.extend(parsed)
 
@@ -202,24 +175,6 @@ def load_chunks(skip_types: set[str]) -> tuple[list[dict], set[str]]:
     if dups:
         raise SystemExit(f"ERROR: {len(dups)} duplicate chunk_ids, e.g. {dups[:5]}")
     return chunks, assessments
-
-
-def make_batches(chunks, max_items: int = MAX_BATCH_ITEMS,
-                 max_chars: int = MAX_BATCH_CHARS):
-    """Yield lists of chunks limited by item count AND total characters.
-
-    A single chunk larger than max_chars gets a batch of its own.
-    """
-    batch, size = [], 0
-    for c in chunks:
-        n = len(c["text"])
-        if batch and (len(batch) >= max_items or size + n > max_chars):
-            yield batch
-            batch, size = [], 0
-        batch.append(c)
-        size += n
-    if batch:
-        yield batch
 
 
 def build_metadata(chunk: dict) -> dict:
@@ -240,124 +195,14 @@ def build_metadata(chunk: dict) -> dict:
     return with_fingerprints(md, chunk)
 
 
-def check_metadata_types(chunks: list[dict]) -> None:
-    """Fail before anything is written if Chroma would reject any metadata."""
-    bad: Counter[str] = Counter()
-    for chunk in chunks:
-        for key, value in build_metadata(chunk).items():
-            if not isinstance(value, (str, int, float, bool)):
-                bad[f"{key} ({type(value).__name__})"] += 1
-    if bad:
-        raise SystemExit(
-            "ERROR: metadata values Chroma will reject (only str/int/float/bool "
-            f"are allowed): {dict(bad)}. Nothing was changed."
-        )
-
-
-# ---------------------------------------------------------------------------
-# Embedding (explicit timeout + exponential backoff)
-# ---------------------------------------------------------------------------
-
-def _is_retryable(exc: Exception) -> bool:
-    if isinstance(exc, (httpx.TransportError, ConnectionError)):
-        return True  # timeouts, connection resets, Ollama restarting
-    if isinstance(exc, ollama.ResponseError):
-        status = getattr(exc, "status_code", 0) or 0
-        return status >= 500 or status == 429
-    return False
-
-
-def embed_texts(client, texts: list[str]) -> list[list[float]]:
-    for attempt in range(MAX_RETRIES):
-        try:
-            vectors = client.embed(
-                model=EMBED_MODEL, input=texts, keep_alive=KEEP_ALIVE
-            )["embeddings"]
-            if len(vectors) != len(texts):
-                raise RuntimeError(
-                    f"Ollama returned {len(vectors)} vectors for {len(texts)} inputs"
-                )
-            return vectors
-        except Exception as exc:  # noqa: BLE001
-            if not _is_retryable(exc) or attempt == MAX_RETRIES - 1:
-                raise
-            delay = min(RETRY_DELAY * 2 ** attempt, MAX_RETRY_DELAY)
-            print(f"  {type(exc).__name__}: retry in {delay}s "
-                  f"(attempt {attempt + 1}/{MAX_RETRIES})")
-            time.sleep(delay)
-    raise AssertionError("unreachable")
-
-
-def embed_chunks(client, batch: list[dict], skip_failed: bool):
-    """Embed a batch. Returns ([(chunk, vector)], [failed chunks]).
-
-    If Ollama rejects the batch itself (a ResponseError that is not a transient
-    5xx), retry one chunk at a time to isolate the culprit. Transport errors
-    that survive the retries propagate: Ollama is down or too slow.
-    """
-    try:
-        vectors = embed_texts(client, [c["text"] for c in batch])
-        return list(zip(batch, vectors)), []
-    except ollama.ResponseError as exc:
-        if len(batch) > 1:
-            print(f"  Ollama rejected a batch of {len(batch)} ({exc}); "
-                  "retrying chunk by chunk to isolate it...")
-            ok, bad = [], []
-            for c in batch:
-                o, b = embed_chunks(client, [c], skip_failed)
-                ok += o
-                bad += b
-            return ok, bad
-        c = batch[0]
-        msg = f"Could not embed {c['chunk_id']} ({len(c['text'])} chars): {exc}"
-        if not skip_failed:
-            raise RuntimeError(msg) from exc
-        print(f"  SKIPPING: {msg}")
-        return [], [c]
-
-
-# ---------------------------------------------------------------------------
-# Chroma helpers
-# ---------------------------------------------------------------------------
-
-def make_embedding_function():
-    """Embedding function attached to the collection (used for queries).
-
-    Chroma versions differ in the OllamaEmbeddingFunction signature, so only
-    pass the arguments this install supports.
-    """
-    params = inspect.signature(OllamaEmbeddingFunction.__init__).parameters
-    kwargs = {"model_name": EMBED_MODEL}
-    if "host" in params:
-        kwargs["host"] = OLLAMA_URL
-    else:
-        kwargs["url"] = f"{OLLAMA_URL}/api/embeddings"
-    if "timeout" in params:
-        kwargs["timeout"] = int(EMBED_TIMEOUT)
-    return OllamaEmbeddingFunction(**kwargs)
-
-
-def _delete_collection_if_exists(client, name: str) -> None:
-    try:
-        client.delete_collection(name=name)
-        print(f"  Existing collection '{name}' deleted.")
-    except NotFoundError:
-        print(f"  Collection '{name}' did not exist.")
-    except ValueError as exc:
-        if "does not exist" in str(exc).lower():
-            print(f"  Collection '{name}' did not exist.")
-        else:
-            raise
-
-
 def open_collection(client, rebuild: bool):
     if rebuild:
         print(f"Rebuilding: deleting collection '{COLLECTION_NAME}'")
-        _delete_collection_if_exists(client, COLLECTION_NAME)
+        delete_collection_if_exists(client, COLLECTION_NAME)
     try:
         return client.get_or_create_collection(
             name=COLLECTION_NAME,
-            embedding_function=make_embedding_function(),
+            embedding_function=make_embedding_function(EMBED_MODEL),
             metadata={"hnsw:space": "cosine"},
         )
     except ValueError as exc:
@@ -420,7 +265,7 @@ def main(argv=None) -> None:
                          "Fix the source TTLs (list above) and re-run. "
                          "Nothing was changed.")
 
-    check_metadata_types(chunks)
+    check_scalar_metadata(chunks, build_metadata)
 
     if args.dry_run:
         n = sum(1 for _ in make_batches(chunks, args.max_items, args.max_chars))
@@ -447,52 +292,19 @@ def main(argv=None) -> None:
     write_manifest(assessments, False, skip_types, len(chunks))
 
     if stale:
-        for i in range(0, len(stale), _GET_PAGE):
-            collection.delete(ids=stale[i:i + _GET_PAGE])
+        for i in range(0, len(stale), GET_PAGE):
+            collection.delete(ids=stale[i:i + GET_PAGE])
         print(f"  Removed {len(stale)} stale chunks.")
     if to_retag:
         retag(collection, to_retag, existing, build_metadata)
         print(f"  Rewrote metadata of {len(to_retag)} chunks.")
 
     # --- Embed and store -------------------------------------------------
-    failed: list[dict] = []
-    if todo:
-        ollama_client = ollama.Client(host=OLLAMA_URL, timeout=EMBED_TIMEOUT)
-        print(f"\nWarming up {EMBED_MODEL} (timeout {EMBED_TIMEOUT:.0f}s)...")
-        try:
-            embed_texts(ollama_client, ["warmup"])
-        except Exception as exc:  # noqa: BLE001
-            raise SystemExit(f"Cannot reach Ollama at {OLLAMA_URL}: "
-                             f"{type(exc).__name__}: {exc}")
-
-        batches = list(make_batches(todo, args.max_items, args.max_chars))
-        print(f"Embedding {len(todo)} chunks in {len(batches)} batches...\n")
-        t0, done_chars, stored = time.time(), 0, 0
-        try:
-            for n, batch in enumerate(batches, 1):
-                ok, bad = embed_chunks(ollama_client, batch, args.skip_failed)
-                failed += bad
-                if ok:
-                    collection.upsert(
-                        ids=[c["chunk_id"] for c, _ in ok],
-                        documents=[c["text"] for c, _ in ok],
-                        metadatas=[replacing(build_metadata(c),
-                                             existing.get(c["chunk_id"]))
-                                   for c, _ in ok],
-                        embeddings=[v for _, v in ok],
-                    )
-                    stored += len(ok)
-                done_chars += sum(len(c["text"]) for c in batch)
-                elapsed = time.time() - t0
-                eta = elapsed / done_chars * (todo_chars - done_chars)
-                print(f"  batch {n}/{len(batches)}  stored {stored}/{len(todo)}  "
-                      f"elapsed {elapsed / 60:.1f}m  ETA {eta / 60:.1f}m")
-        except (KeyboardInterrupt, RuntimeError, httpx.TransportError,
-                ConnectionError, ollama.ResponseError) as exc:
-            print(f"\nSTOPPED after storing {stored} chunks this run "
-                  f"({type(exc).__name__}: {exc}).")
-            print("Progress is saved. Re-run the same command to resume.")
-            sys.exit(1)
+    failed = run_embedding_loop(
+        collection, todo, build_metadata,
+        model=EMBED_MODEL, max_items=args.max_items, max_chars=args.max_chars,
+        skip_failed=args.skip_failed, existing=existing,
+    )
 
     # --- Wrap up ---------------------------------------------------------
     if failed:

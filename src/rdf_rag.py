@@ -6,8 +6,10 @@ from __future__ import annotations
 
 import logging
 
-from src.rdf_graph import ThesaurusGraph
-from src.rdf_query import HybridThesaurusRetriever
+from rag_utils import chat_client
+from rdf_graph import ThesaurusGraph
+from rdf_query import HybridThesaurusRetriever
+from settings import THESAURUS_RDF
 
 logger = logging.getLogger(__name__)
 
@@ -23,19 +25,13 @@ If the context is insufficient, say so explicitly.
 
 
 class ThesaurusRAG:
-    def __init__(self, rdf_path: str, model_name: str = "llama3.1"):
+    def __init__(self, rdf_path=THESAURUS_RDF, model_name: str = "llama3.1"):
         self.graph = ThesaurusGraph(rdf_path)
         self.retriever = HybridThesaurusRetriever(self.graph, n_results=5)
         self.model_name = model_name
 
     def _call_llm(self, prompt: str) -> str:
-        """
-        Replace with whatever you use in stage1_ollama.py.
-        If you're using ollama-python, use chat().
-        """
-        import ollama
-
-        response = ollama.chat(
+        response = chat_client().chat(
             model=self.model_name,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},

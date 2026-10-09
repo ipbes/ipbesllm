@@ -1,9 +1,9 @@
 from pathlib import Path
 
 from xml_chunks import make_structured_chunks
+from settings import XML_DIR
 
 
-XML_DIR = Path("data/xml")
 
 
 def main():

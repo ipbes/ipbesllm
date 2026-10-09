@@ -101,7 +101,7 @@ ipbesllm/
 │   ├── pdf_test_embeddings.py
 │   ├── pdf_test.py                       # Sanity checks
 │   ├── pdf_ttl_compare.py
-│   ├── rag_utils.py
+│   ├── rag_utils.py                      # Shared embedding, batching and Chroma helpers
 │   ├── rdf_loader.py                     # Parse RDF into a graph + extract concept profiles
 │   ├── rdf_graph.py                      # Graph DB wrapper (in-memory RDFLib + persistent store)
 │   ├── rdf_index.py                      # Indexes(embeds) RDF into Chroma
@@ -109,6 +109,7 @@ ipbesllm/
 │   ├── rdf_rag.py                        # RAG chain that uses hybrid retrieval
 │   ├── rdf_test.py                       # Sanity checks
 │   ├── stage1_ollama.py
+│   ├── settings.py                       # Project paths (data/, chroma/), resolved from the project root
 │   ├── thesaurus_helper.py               # In-memory helper to use RDF thesaurus to improve RAG quality
 │   ├── ttl_index.py                      # Indexes(embeds) into Chroma
 │   ├── ttl_loader.py                     # Loads TTL files
@@ -285,7 +286,7 @@ PYTHONPATH=src python src/pdf_index.py
 Build vector index whenever there are RDF changes to the IPBES thesaurus
 
 ```bash
-python -m src.rdf_index data/rdf/ipbes-thesaurus.rdf
+PYTHONPATH=src python src/rdf_index.py data/rdf/ipbes-thesaurus.rdf
 ```
 
 The indexer extracts text from the PDFs, creates chunks, generates embeddings using `nomic-embed-text`, and stores them in Chroma.
@@ -395,9 +396,9 @@ PYTHONPATH=src python src/ttl_test.py
 ```
 
 ```bash
-python -c "
-from src.rdf_rag import ThesaurusRAG
-rag = ThesaurusRAG('data/rdf/ipbes-thesaurus.rdf')
+PYTHONPATH=src python -c "
+from rdf_rag import ThesaurusRAG
+rag = ThesaurusRAG()
 print(rag.answer('How does ecological integrity relate to ecosystem health?'))
 "
 ```
@@ -451,7 +452,7 @@ PYTHONPATH=src python src/ttl_rag.py
 
 # Streamlit workbench
 
-`src/app.py` is a prototype web interface for the PDF and TTL pipelines. It shows the answer together with the retrieved chunks, their metadata and Chroma distances. Run it from the project root (the paths to `chroma/` and `data/` are relative to the current directory):
+`src/app.py` is a prototype web interface for the PDF and TTL pipelines. It shows the answer together with the retrieved chunks, their metadata and Chroma distances. Paths to `chroma/` and `data/` are resolved from the project root (see `src/settings.py`), so it can be started from any directory:
 
 ```bash
 PYTHONPATH=src streamlit run src/app.py

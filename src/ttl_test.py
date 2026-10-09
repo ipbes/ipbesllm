@@ -1,9 +1,10 @@
 from collections import Counter
 
 from ttl_loader import parse_ttl_file
+from settings import TTL_DIR
 
 
-TTL_PATH = "data/ttl/LDR_v01.ttl"
+TTL_PATH = str(TTL_DIR / "LDR_v01.ttl")
 
 
 def main():

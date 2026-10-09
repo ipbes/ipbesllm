@@ -36,10 +36,9 @@ from rag_utils import (
     make_batches, make_embedding_function, plan_changes, retag,
     run_embedding_loop, text_hash, with_fingerprints,
 )
+from settings import CHROMA_DIR, XML_DIR
 from xml_loader import parse_akn_file
 
-XML_DIR = Path("data/xml")
-CHROMA_DIR = "chroma"
 COLLECTION_NAME = "xml_documents"
 
 FAILED_PATH = Path(CHROMA_DIR) / "xml_failed_chunks.json"

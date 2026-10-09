@@ -2,20 +2,18 @@
 import json
 import os
 import re
-import time
-from functools import lru_cache
 from pathlib import Path
 
 import chromadb
-import httpx
-import ollama
 from chromadb.errors import NotFoundError
 from loguru import logger
 
 from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key
 # infer_country_names / canonical_country are re-exported for app.py.
 from geo import canonical_country, country_code_for_label, infer_country_names
+from rag_utils import EMBED_MODEL, chat_client, embed_query
 from thesaurus_helper import get_thesaurus
+from settings import CHROMA_DIR
 
 
 # ---------------------------------------------------------------------------
@@ -23,11 +21,6 @@ from thesaurus_helper import get_thesaurus
 # ---------------------------------------------------------------------------
 
 LLM_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:latest")
-EMBED_MODEL = os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")
-
-# Must match ttl_index.py so queries and documents are embedded the same way.
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
-EMBED_TIMEOUT = float(os.getenv("OLLAMA_EMBED_TIMEOUT", "300"))
 
 # Context window requested from Ollama, and how much retrieved text we put in
 # the prompt. Ollama silently truncates prompts that exceed num_ctx (usually
@@ -36,7 +29,6 @@ EMBED_TIMEOUT = float(os.getenv("OLLAMA_EMBED_TIMEOUT", "300"))
 NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "16384"))
 MAX_CONTEXT_CHARS = int(os.getenv("RAG_MAX_CONTEXT_CHARS", "36000"))
 
-CHROMA_DIR = "chroma"
 COLLECTION_NAME = "ttl_documents"
 
 # Manifest written by ttl_index.py listing the assessments it indexed.
@@ -56,41 +48,6 @@ MAX_COUNTRY_FILTER = 100
 # entries are never served after a code change.
 RETRIEVAL_VERSION = "3"
 PROMPT_VERSION = "2"
-
-
-# ---------------------------------------------------------------------------
-# Embedding (queries)
-# ---------------------------------------------------------------------------
-
-@lru_cache(maxsize=1)
-def _embed_client():
-    return ollama.Client(host=OLLAMA_URL, timeout=EMBED_TIMEOUT)
-
-
-@lru_cache(maxsize=1)
-def _chat_client():
-    return ollama.Client(host=OLLAMA_URL)
-
-
-@lru_cache(maxsize=256)
-def _embed_query(text: str) -> tuple[float, ...]:
-    """Embed a query once (cached), with a short retry on transient errors.
-
-    Uses the same ollama client call as ttl_index.py, so query and document
-    vectors come from the same code path.
-    """
-    for attempt in range(3):
-        try:
-            vector = _embed_client().embed(model=EMBED_MODEL, input=[text])
-            return tuple(vector["embeddings"][0])
-        except (httpx.TransportError, ConnectionError) as exc:
-            if attempt == 2:
-                raise
-            delay = 2 * 2 ** attempt
-            logger.warning(f"Query embedding failed ({type(exc).__name__}); "
-                           f"retrying in {delay}s")
-            time.sleep(delay)
-    raise AssertionError("unreachable")
 
 
 # ---------------------------------------------------------------------------
@@ -121,7 +78,7 @@ def _get_collection():
     if _STATE["collection"] is None:
         client = chromadb.PersistentClient(path=CHROMA_DIR)
         try:
-            # No embedding function: queries are embedded by _embed_query and
+            # No embedding function: queries are embedded by embed_query and
             # passed as vectors, so the collection never embeds anything.
             _STATE["collection"] = client.get_collection(name=COLLECTION_NAME)
         except NotFoundError as exc:
@@ -359,7 +316,7 @@ def retrieve(
         return _empty_results()
 
     # Embed once; every per-assessment query reuses the same vector.
-    query_vector = _embed_query(question)
+    query_vector = embed_query(question)
 
     assessments = _get_assessments() if per_assessment else []
     if per_assessment and not assessments:
@@ -653,7 +610,7 @@ Retrieved chunks (already sorted by identifier):
 {context}
 {truncation_note}{primary_block}{glossary_block}"""
 
-    response = _chat_client().chat(
+    response = chat_client().chat(
         model=LLM_MODEL,
         messages=[
             {

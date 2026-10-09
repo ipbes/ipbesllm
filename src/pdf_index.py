@@ -37,9 +37,8 @@ from rag_utils import (
     make_batches, make_embedding_function, plan_changes, retag,
     run_embedding_loop, text_hash, with_fingerprints,
 )
+from settings import CHROMA_DIR, PDF_DIR
 
-PDF_DIR = Path("data/pdf")
-CHROMA_DIR = "chroma"
 COLLECTION_NAME = "pdf_documents"
 
 # Read by pdf_rag.py: its modification time invalidates cached retrievals.

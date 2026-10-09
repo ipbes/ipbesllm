@@ -1,12 +1,10 @@
-"""Shared helpers for pdf_index.py, pdf_rag.py and pdf_query.py.
+"""Shared embedding, batching and Chroma helpers for every *_index.py,
+*_rag.py and *_query.py script.
 
 Embedding goes through the ollama client directly, with an explicit timeout
 and exponential backoff, and the vectors are handed to Chroma. (Chroma's own
 OllamaEmbeddingFunction uses a short default timeout, which is what made
 large batches fail with httpx.ReadTimeout.)
-
-ttl_index.py / ttl_rag.py carry their own copies of this logic; they behave
-the same way and use the same environment variables.
 """
 from __future__ import annotations
 

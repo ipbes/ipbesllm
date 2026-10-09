@@ -1,7 +1,7 @@
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
-from xml_loader_archive import (
+from xml_loader import (
     clean_text,
     build_xpath,
 )
