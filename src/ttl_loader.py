@@ -2,6 +2,7 @@ from pathlib import Path
 
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, RDFS, DCTERMS, SKOS, FOAF, OWL
+from chunking import split_long_chunks
 
 
 # Fallback only; the real value comes from the file's own @prefix.
@@ -549,4 +550,4 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             country_override=country,
         )
 
-    return chunks
+    return split_long_chunks(chunks)

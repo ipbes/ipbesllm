@@ -1,6 +1,7 @@
 import json
 import re
 import time
+import httpx
 from collections import Counter
 from pathlib import Path
 
@@ -11,6 +12,33 @@ from httpx import ReadTimeout
 
 from ttl_loader import parse_ttl_file
 from geo import canonical_country, country_code_for_label
+
+
+
+OLLAMA = httpx.Client(
+    base_url="http://localhost:11434",
+    timeout=httpx.Timeout(300.0, connect=10.0),
+)
+
+def embed(texts: list[str]) -> list[list[float]]:
+    r = OLLAMA.post("/api/embed", json={
+        "model": EMBED_MODEL,
+        "input": texts,
+        "truncate": True,          # avoid errors on over-long chunks
+    })
+    r.raise_for_status()
+    return r.json()["embeddings"]
+
+def embed_with_retry(texts):
+    for attempt in range(MAX_RETRIES):
+        try:
+            return embed(texts)
+        except (httpx.TransportError, httpx.HTTPStatusError) as e:
+            if attempt == MAX_RETRIES - 1:
+                raise                      # don't silently skip
+            delay = RETRY_DELAY * 2 ** attempt
+            print(f"  {type(e).__name__} — retry in {delay}s")
+            time.sleep(delay)
 
 
 TTL_DIR = Path("data/ttl")
@@ -27,9 +55,9 @@ EMBED_MODEL = "nomic-embed-text"
 _VERSION_SUFFIX_RE = re.compile(r"_v\d+$")
 
 # Manage time out issues ...
-BATCH_SIZE = 10  # Reduced from 25 to prevent timeouts
-MAX_RETRIES = 3
-RETRY_DELAY = 5  # seconds
+BATCH_SIZE = 8  # Reduced to 8 to prevent Ollama timeout spikes
+MAX_RETRIES = 5  # Increased retries
+RETRY_DELAY = 5  # Starting delay for exponential backoff (5s, 10s, 20s, 40s)
 
 # Set to True to abort the whole run if any ipbes:country value in the
 # source TTLs cannot be resolved to an ISO alpha-3 code. Leave True in
@@ -172,6 +200,7 @@ def main():
     embedding_function = OllamaEmbeddingFunction(
         model_name=EMBED_MODEL,
         url="http://localhost:11434/api/embeddings",
+        timeout=300,
     )
 
     print(f"Deleting existing collection: {COLLECTION_NAME}")
@@ -279,6 +308,7 @@ def main():
                     ids=ids,
                     documents=documents,
                     metadatas=metadatas,
+                    embeddings=embed_with_retry(documents),
                 )
                 print(f"  Stored {end}/{total}")
                 break
