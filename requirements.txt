@@ -21,4 +21,4 @@ loguru==0.7.3
 streamlit==1.65.0
 
 # Tests (PYTHONPATH=src python -m pytest src/test_xml_loader.py)
-pytest
+pytest==9.1.1

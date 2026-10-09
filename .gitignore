@@ -2,7 +2,6 @@
 venv/
 venv.bak/
 env.bak
-.webui_secret_key
 __pycache__/
 .DS_Store
 chroma/
@@ -12,3 +11,4 @@ src/test.py
 *.sqlite3
 .cache
 *:Zone.Identifier
+.pytest_cache/

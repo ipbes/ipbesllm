@@ -128,7 +128,6 @@ ipbesllm/
 ├── tests/                                # Local only: listed in .gitignore
 │   ├── comparison_<run_id>.csv           # Written by pdf_ttl_compare.py
 │   └── ttl_experts.py
-├── .webui_secret_key                     # Will automatically created when you run 'open-webui serve'
 ├── app.py
 ├── README.md
 └── requirements.txt
@@ -226,22 +225,10 @@ Install the project dependencies:
 ```bash
 python -m pip install -r requirements.txt
 ```
-To create or take a snapshot of project dependencies 
-```bash
-python -m pip freeze > requirements.txt
-```
 
-Additional packages may be required as features, the Streamlit interface and Docker deployment are added.
+`requirements.txt` lists only the packages the code imports, pinned; pip installs their dependencies. When the code starts using a new package, add it there by hand. Do not overwrite the file with `pip freeze`, which pins every sub-dependency and pulls in whatever else happens to be installed.
 
----
-
-## 6. Open WebUI
-Open WebUI already exposes Ollama through its API, so we can integrate our finished pipeline with it later rather than allowing the UI's retrieval implementation to obscure the experiment.
-```bash
-python3.11 -m venv .venv
-source .venv/bin/activate
-open-webui serve
-```
+Open WebUI is not needed: the Streamlit workbench is the interface. To use Open WebUI as a general chat front end for Ollama, install it in its own environment or with Docker, not in this one (it brings several GB of packages this project does not use).
 
 
 ---
