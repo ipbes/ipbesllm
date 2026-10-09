@@ -88,7 +88,7 @@ ipbesllm/
 ├── src/
 │   ├── __pycache__/
 │   │   └── *.pyc
-│   ├── app.py                            # Streamlit workbench (PDF and TTL)
+│   ├── app.py                            # Streamlit workbench (PDF, TTL and XML)
 │   ├── cache.py                          # Answer/retrieval cache (Redis, or in-memory)
 │   ├── chunking.py                       # Splits oversized TTL chunks
 │   ├── diagnose_chunks.py                # Inspect TTL chunk sizes before indexing
@@ -469,7 +469,7 @@ PYTHONPATH=src python src/ttl_rag.py
 PYTHONPATH=src streamlit run src/app.py
 ```
 
-The XML pipeline is not in the workbench yet; use `src/xml_rag.py`.
+The workbench covers the PDF, TTL and XML pipelines.
 
 ---
 

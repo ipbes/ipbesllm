@@ -12,12 +12,12 @@ DATA_DIR = PROJECT_ROOT / "data"
 PDF_DIR = DATA_DIR / "pdf"
 TTL_DIR = DATA_DIR / "ttl"
 XML_DIR = DATA_DIR / "xml"
-HELPERS_DIR = DATA_DIR / "helpers"   # thesaurus and geography RDF
+RDF_DIR = DATA_DIR / "rdf"   # thesaurus and geography RDF
 
-THESAURUS_RDF = HELPERS_DIR / "ipbes-thesaurus.rdf"
+THESAURUS_RDF = RDF_DIR / "ipbes-thesaurus.rdf"
 # Local SKOS additions loaded on top of the thesaurus. Kept with the code,
 # not in data/, so it cannot be left out of a data package.
 THESAURUS_ENRICHMENT = PROJECT_ROOT / "src" / "enrichment.ttl"
-GEO_RDF = HELPERS_DIR / "ipbes-geo.rdf"
+GEO_RDF = RDF_DIR / "ipbes-geo.rdf"
 
 CHROMA_DIR = Path(os.getenv("CHROMA_DIR", PROJECT_ROOT / "chroma")).resolve()

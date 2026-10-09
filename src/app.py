@@ -13,6 +13,7 @@ if str(SRC_DIR) not in sys.path:
 
 import pdf_rag
 import ttl_rag
+import xml_rag
 # Never asyncio.run() here: see cache.run_sync.
 from cache import run_sync
 
@@ -25,7 +26,7 @@ st.set_page_config(
 
 st.title("IPBES RAG Workbench")
 st.caption(
-    "Test PDF and TTL retrieval, inspect evidence, "
+    "Test PDF, TTL and XML retrieval, inspect evidence, "
     "and evaluate grounded answers."
 )
 
@@ -60,6 +61,26 @@ def run_pdf(question: str, k: int):
             country_names=country_names,
         )
     )
+
+    return {
+        "answer": payload["answer"],
+        "results": results,
+        "cached": payload.get("_cached", False),
+    }
+
+
+def run_xml(question: str, k: int):
+    """Run the XML (Akoma Ntoso) retrieval and generation pipeline."""
+    results = xml_rag.retrieve(question, k=k)
+
+    if not results["documents"][0]:
+        return {
+            "answer": "No relevant XML chunks were retrieved.",
+            "results": results,
+            "cached": False,
+        }
+
+    payload = run_sync(xml_rag.generate_answer_cached(question, results))
 
     return {
         "answer": payload["answer"],
@@ -132,6 +153,12 @@ def render_sources(source: str, results):
                 f"{metadata.get('source_file', 'Unknown file')} — "
                 f"page {metadata.get('page', '?')}"
             )
+        elif source == "XML":
+            title = (
+                f"{index + 1}. "
+                f"{metadata.get('source_file', 'Unknown file')} — "
+                f"{metadata.get('division') or metadata.get('eId', '?')}"
+            )
         else:
             title = (
                 f"{index + 1}. [{metadata.get('assessment', '?')}] "
@@ -153,6 +180,20 @@ def render_sources(source: str, results):
                     "chunk_index",
                     "chunk_total",
                     "country",
+                ]
+            elif source == "XML":
+                keys = [
+                    "source_file",
+                    "document_type",
+                    "title",
+                    "date",
+                    "division",
+                    "subdivision",
+                    "paragraph",
+                    "table_title",
+                    "table_row",
+                    "eId",
+                    "xpath",
                 ]
             else:
                 keys = [
@@ -185,15 +226,16 @@ with st.sidebar:
 
     source = st.selectbox(
         "Knowledge source",
-        ["PDF", "TTL"],
+        ["PDF", "TTL", "XML"],
         help=(
-            "TTL queries can use RDF thesaurus expansion and reranking "
-            "through your existing pipeline."
+            "PDF and TTL search the assessments (GA1, IAS, LDR) with "
+            "thesaurus expansion and re-ranking. XML searches the Akoma "
+            "Ntoso plenary documents in data/xml."
         ),
     )
 
     k = st.slider(
-        "Chunks per assessment",
+        "Chunks per assessment (XML: chunks in total)",
         min_value=1,
         max_value=20,
         value=5,
@@ -206,13 +248,10 @@ with st.sidebar:
 
     st.divider()
     st.caption("LLM model")
-    st.code(
-        pdf_rag.LLM_MODEL if source == "PDF" else ttl_rag.LLM_MODEL
-    )
+    pipeline = {"PDF": pdf_rag, "TTL": ttl_rag, "XML": xml_rag}[source]
+    st.code(pipeline.LLM_MODEL)
     st.caption("Embedding model")
-    st.code(
-        pdf_rag.EMBED_MODEL if source == "PDF" else ttl_rag.EMBED_MODEL
-    )
+    st.code(pipeline.EMBED_MODEL)
 
 
 with st.form("rag_query_form"):
@@ -239,6 +278,8 @@ if submitted:
             with st.spinner(f"Running {source} retrieval and generation..."):
                 if source == "PDF":
                     output = run_pdf(question.strip(), k)
+                elif source == "XML":
+                    output = run_xml(question.strip(), k)
                 else:
                     output = run_ttl(question.strip(), k)
 

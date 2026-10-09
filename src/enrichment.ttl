@@ -1,4 +1,4 @@
-# Local additions to the IPBES thesaurus (data/helpers/ipbes-thesaurus.rdf).
+# Local additions to the IPBES thesaurus (data/rdf/ipbes-thesaurus.rdf).
 #
 # thesaurus_helper.py loads this file on top of the official RDF, so every
 # triple here behaves as if it were in the thesaurus itself. Use standard
