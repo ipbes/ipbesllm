@@ -1,16 +1,16 @@
 import json
 import re
 import time
-from httpx import ReadTimeout  # Import the specific exception
 from collections import Counter
 from pathlib import Path
 
 import chromadb
 from chromadb.errors import NotFoundError
 from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
+from httpx import ReadTimeout
 
 from ttl_loader import parse_ttl_file
-from geo import canonical_country
+from geo import canonical_country, country_code_for_label
 
 
 TTL_DIR = Path("data/ttl")
@@ -30,6 +30,13 @@ _VERSION_SUFFIX_RE = re.compile(r"_v\d+$")
 BATCH_SIZE = 10  # Reduced from 25 to prevent timeouts
 MAX_RETRIES = 3
 RETRY_DELAY = 5  # seconds
+
+# Set to True to abort the whole run if any ipbes:country value in the
+# source TTLs cannot be resolved to an ISO alpha-3 code. Leave True in
+# production: a silent drop means a record that no country filter can
+# ever match.
+STRICT_COUNTRY_RESOLUTION = True
+
 
 def assessment_id_from_path(path: Path) -> str:
     """
@@ -55,6 +62,74 @@ def _delete_collection_if_exists(client, name: str) -> None:
         else:
             raise
 
+
+# ---------------------------------------------------------------------------
+# Country normalisation
+# ---------------------------------------------------------------------------
+
+def _resolve_country(raw) -> tuple[str | None, str | None, str | None]:
+    """
+    Normalise a raw ipbes:country value.
+
+    Returns (code, name, raw):
+      code  — ISO alpha-3, or None if the raw value is unrecognised.
+      name  — human-readable canonical name, or None.
+      raw   — the original value, always preserved for provenance.
+
+    The index is keyed on `code`. `name` is for display only.
+    """
+    raw = ("" if raw is None else str(raw)).strip() or None
+    if raw is None:
+        return None, None, None
+
+    code = country_code_for_label(raw)
+    if code is None:
+        return None, None, raw
+
+    return code, canonical_country(raw), raw
+
+
+def _validate_countries(all_chunks: list[dict]) -> dict[str, int]:
+    """
+    Collect every distinct raw country value, report unresolved ones.
+
+    Returns a Counter of unresolved raw values (empty if all resolve).
+    """
+    unresolved: Counter[str] = Counter()
+    seen: dict[str, str | None] = {}
+    for chunk in all_chunks:
+        raw = chunk.get("country")
+        raw_key = ("" if raw is None else str(raw)).strip()
+        if raw_key in seen:
+            if seen[raw_key] is None:
+                unresolved[raw_key] += 1
+            continue
+        code = country_code_for_label(raw_key) if raw_key else None
+        seen[raw_key] = code
+        if raw_key and code is None:
+            unresolved[raw_key] += 1
+    return unresolved
+
+
+def _report_unresolved(unresolved: Counter[str], total: int) -> None:
+    print()
+    print("!" * 60)
+    print("UNRESOLVED COUNTRY VALUES")
+    print("!" * 60)
+    n = sum(unresolved.values())
+    print(f"{n} chunk(s) carry a country value that is not a known ISO code:")
+    for raw, count in unresolved.most_common():
+        print(f"  {count:5d}  {raw!r}")
+    print()
+    print("These chunks will be indexed with country_code = None and will")
+    print("NOT match any country filter. Fix the source TTLs and re-run.")
+    print("!" * 60)
+    print()
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 
 def main():
     print("Starting TTL indexing...")
@@ -124,6 +199,18 @@ def main():
         print("ERROR: No chunks were extracted.")
         return
 
+    # ------------------------------------------------------------------
+    # Pre-index country validation. Do this BEFORE writing anything to
+    # Chroma, so an unresolved code doesn't produce a half-built index.
+    # ------------------------------------------------------------------
+    unresolved = _validate_countries(all_chunks)
+    if unresolved:
+        _report_unresolved(unresolved, total=len(all_chunks))
+        if STRICT_COUNTRY_RESOLUTION:
+            print("Aborting: STRICT_COUNTRY_RESOLUTION is enabled.")
+            print("Fix the source TTLs (see list above) and re-run.")
+            return
+
     print("Creating embeddings in batches...")
     print(f"Embedding model: {EMBED_MODEL}")
     print(f"Batch size: {BATCH_SIZE}")
@@ -138,8 +225,10 @@ def main():
         ids = [chunk["chunk_id"] for chunk in batch]
         documents = [chunk["text"] for chunk in batch]
 
-        metadatas = [
-            {
+        metadatas = []
+        for chunk in batch:
+            code, name, raw = _resolve_country(chunk["country"])
+            metadatas.append({
                 "source_type": "ttl",
                 "source_file": chunk["source_file"],
                 "chunk_type": chunk["chunk_type"],
@@ -147,8 +236,20 @@ def main():
                 "title": chunk["title"],
                 "date": chunk["date"],
                 "language": chunk["language"],
-                "country": canonical_country(chunk["country"]),
-                "country_raw": chunk["country"],
+
+                # --- country fields -----------------------------------
+                # country_code is the filter key. None if unrecognised.
+                # country_name is for display only.
+                # country_raw preserves the source value for provenance.
+                "country_code": code,
+                "country_name": name,
+                "country_raw": raw,
+                # Legacy key kept for one reindex cycle so any query-side
+                # code still reading metadata["country"] doesn't crash.
+                # Remove after you've updated ttl_rag.py to use
+                # country_code.
+                "country": name,
+
                 "subtype": chunk["subtype"],
                 "number": chunk["number"],
                 "division": chunk["division"],
@@ -159,9 +260,7 @@ def main():
                 "identifier": chunk["identifier"],
                 "qualifier": chunk["qualifier"],
                 "assessment": chunk["assessment"],
-            }
-            for chunk in batch
-        ]
+            })
 
         print(f"Storing chunks {start + 1}-{end} of {total}...")
 
@@ -200,6 +299,7 @@ def main():
                 "assessments": sorted(indexed_assessments),
                 "collection": COLLECTION_NAME,
                 "embed_model": EMBED_MODEL,
+                "country_key": "country_code",   # documents the filter key
             },
             indent=2,
         )
@@ -224,6 +324,16 @@ def main():
     print("Chunks per assessment:")
     for a, count in sorted(assessment_counts.items()):
         print(f"  {a}: {count}")
+
+    # Country coverage summary.
+    resolved = sum(
+        1 for c in all_chunks if country_code_for_label(c.get("country") or "")
+    )
+    unresolved_count = len(all_chunks) - resolved
+    print()
+    print(f"Chunks with a resolved country_code: {resolved}/{len(all_chunks)}")
+    if unresolved_count:
+        print(f"Chunks with country_code = None:    {unresolved_count}")
     print()
 
 

@@ -594,6 +594,28 @@ rm rag_cache.sqlite3
 
 This does **not** delete the Chroma vector database.
 
+Warning
+```text
+PYTHONPATH=src python src/ttl_rag.py
+2026-10-09 00:42:24.971 | WARNING  | cache:_build_cache:32 - REDIS_URL not set; using in-memory cache (dev only).
+```
+Solution: install Redis
+On MAC
+```bash
+brew install redis
+brew services start redis
+brew services status redis
+export REDIS_URL=redis://localhost:6379/0
+```
+
+On Linux
+```bash
+sudo apt install redis-server
+sudo systemctl start redis
+sudo systemctl status redis
+export REDIS_URL=redis://127.0.0.1:6379
+```
+
 ---
 
 # Rebuilding a vector collection

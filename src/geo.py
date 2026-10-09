@@ -1,276 +1,200 @@
-# geo.py
+"""Country and region lookup backed by the IPBES geography RDF."""
 import re
+from functools import lru_cache
 from pathlib import Path
 
-from rdflib import Graph, URIRef
-from rdflib.namespace import RDF, SKOS, DCTERMS
-
-
+from rdflib import Graph
+from rdflib.namespace import RDF, SKOS
 
 GEO_PATH = Path("data/rdf/ipbes-geo.rdf")
-ISO3166 = URIRef("http://purl.org/dc/terms/ISO3166")
 
+ISO3166_DATATYPE = "http://purl.org/dc/terms/ISO3166"
 _graph = None
 
-
-# ---------------------------------------------------------------------------
-# Loading
-# ---------------------------------------------------------------------------
+# Explicit colloquial aliases absent from, or inconsistently represented in, RDF.
+# Each alias resolves to an RDF-backed ISO alpha-3 code; no concepts are fabricated.
+_COUNTRY_ALIASES = {
+    "south korea": "KOR", "north korea": "PRK", "iran": "IRN",
+    "syria": "SYR", "vietnam": "VNM", "laos": "LAO",
+    "bolivia": "BOL", "venezuela": "VEN", "moldova": "MDA",
+    "palestine": "PSE", "vatican": "VAT", "vatican city": "VAT",
+    "tanzania": "TZA", "netherlands": "NLD",
+}
 
 def _load() -> Graph:
     global _graph
     if _graph is None:
-        g = Graph()
-        g.parse(GEO_PATH, format="xml")
-        _graph = g
+        graph = Graph()
+        graph.parse(GEO_PATH, format="xml")
+        _graph = graph
     return _graph
 
 
-def _labels_of_type(subject, predicate) -> list[str]:
-    g = _load()
-    out = []
-    for o in g.objects(subject, predicate):
-        lang = getattr(o, "language", None)
-        if lang in (None, "en"):
-            out.append(str(o).strip())
-    return out
+def _clean(value) -> str:
+    return re.sub(r"\s+", " ", str(value)).strip()
 
 
-def _en_labels(subject):
-    g = _load()
-    for p in (SKOS.prefLabel, SKOS.altLabel, SKOS.hiddenLabel):
-        for o in g.objects(subject, p):
-            if getattr(o, "language", None) in (None, "en"):
-                yield str(o).strip()
+def _strip_parenthetical(label: str) -> str:
+    return re.sub(r"\s*\([^()]*\)\s*$", "", _clean(label)).strip()
 
 
-# ---------------------------------------------------------------------------
-# Country concepts
-# ---------------------------------------------------------------------------
+def _key(value: str) -> str:
+    return _strip_parenthetical(_clean(value)).casefold()
+
+
+def _labels(subject, predicates=(SKOS.prefLabel, SKOS.altLabel, SKOS.hiddenLabel)):
+    graph = _load()
+    for predicate in predicates:
+        for obj in graph.objects(subject, predicate):
+            if getattr(obj, "language", None) in (None, "en"):
+                label = _clean(obj)
+                if label:
+                    yield label
+
 
 def _country_concepts():
-    """Yield (concept, iso_code) for every country in the geo file."""
-    g = _load()
-    for concept in g.subjects(
-        RDF.type, URIRef("http://www.w3.org/2004/02/skos/core#Concept")
-    ):
-        for notation in g.objects(concept, SKOS.notation):
-            if getattr(notation, "datatype", None) == ISO3166:
-                yield concept, str(notation)
+    """Yield (concept, ISO alpha-3 code) from the RDF."""
+    graph = _load()
+    for concept in graph.subjects(RDF.type, SKOS.Concept):
+        for notation in graph.objects(concept, SKOS.notation):
+            if str(getattr(notation, "datatype", "")) == ISO3166_DATATYPE:
+                yield concept, str(notation).upper()
                 break
 
 
-def country_code_for_label(label: str) -> str | None:
-    """Map a free-text country label to its ISO 3166 alpha-3 code."""
-    if not label:
-        return None
-    needle = label.strip().lower()
-
+@lru_cache(maxsize=1)
+def _country_index():
+    by_label, by_code = {}, {}
     for concept, code in _country_concepts():
-        for lab in _en_labels(concept):
-            if lab.lower() == needle:
-                return code
-        if str(concept).rsplit("/", 1)[-1].lower() == needle:
-            return code
+        by_code[code] = concept
+        for label in _labels(concept):
+            for variant in (label, _strip_parenthetical(label)):
+                if variant:
+                    by_label.setdefault(_key(variant), code)
+        uri_tail = str(concept).rstrip("/").rsplit("/", 1)[-1]
+        by_label.setdefault(_key(uri_tail), code)
+    for alias, code in _COUNTRY_ALIASES.items():
+        if code in by_code:
+            by_label[_key(alias)] = code
+    return by_label, by_code
 
-    return None
+
+def country_code_for_label(label: str) -> str | None:
+    """Map an ISO alpha-3 code or an English/RDF/colloquial label to alpha-3."""
+    if not label or not _clean(label):
+        return None
+    value = _clean(label)
+    by_label, by_code = _country_index()
+    upper = value.upper()
+    if len(upper) == 3 and upper in by_code:
+        return upper
+    return by_label.get(_key(value))
 
 
 def country_label_for_code(code: str) -> str | None:
-    """
-    Map an ISO 3166 alpha-3 code back to the plain English country name
-    that the TTL files actually use for ipbes:country.
+    """Return the canonical English preferred label from the RDF.
 
-    Preference:
-      1. skos:hiddenLabel   (e.g. 'Tanzania', 'Netherlands', 'Gambia')
-      2. skos:prefLabel with any trailing parenthetical stripped
+    Colloquial aliases are accepted for lookup only; they are never used as
+    output labels. A trailing parenthetical is removed from the preferred
+    label for a readable canonical name.
     """
-    code = (code or "").upper()
-    for concept, c in _country_concepts():
-        if c != code:
-            continue
-        hidden = _labels_of_type(concept, SKOS.hiddenLabel)
-        if hidden:
-            return hidden[0]
-        pref = _labels_of_type(concept, SKOS.prefLabel)
-        if pref:
-            short = re.sub(r"\s*\([^)]*\)\s*$", "", pref[0]).strip()
-            return short or pref[0]
+    if not code:
         return None
-    return None
+    _, by_code = _country_index()
+    concept = by_code.get(_clean(code).upper())
+    if concept is None:
+        return None
+    preferred = list(_labels(concept, (SKOS.prefLabel,)))
+    if preferred:
+        return _strip_parenthetical(preferred[0]) or preferred[0]
+    # Fallback only if the RDF concept has no English preferred label.
+    return next(iter(_labels(concept, (SKOS.altLabel, SKOS.hiddenLabel))), None)
 
-
-# ---------------------------------------------------------------------------
-# Region / collection expansion
-# ---------------------------------------------------------------------------
 
 def _expand(collection_uri) -> set[str]:
-    """Recursively collect all country codes under a skos:Collection."""
-    g = _load()
-    codes: set[str] = set()
-
-    stack = [collection_uri]
-    seen = set()
-
+    """Recursively collect ISO alpha-3 codes under a SKOS collection."""
+    graph = _load()
+    codes, stack, seen = set(), [collection_uri], set()
     while stack:
         node = stack.pop()
         if node in seen:
             continue
         seen.add(node)
-
-        for member in g.objects(node, SKOS.member):
-            for notation in g.objects(member, SKOS.notation):
-                if getattr(notation, "datatype", None) == ISO3166:
-                    codes.add(str(notation))
-                    break
-            else:
+        for member in graph.objects(node, SKOS.member):
+            notations = [str(n).upper() for n in graph.objects(member, SKOS.notation)
+                         if str(getattr(n, "datatype", "")) == ISO3166_DATATYPE]
+            if notations:
+                codes.add(notations[0])
+            elif (member, RDF.type, SKOS.Collection) in graph:
                 stack.append(member)
-
     return codes
 
 
+@lru_cache(maxsize=1)
+def _collections():
+    """Return labelled SKOS collections; region names are sourced from RDF."""
+    graph = _load()
+    return [(collection, list(_labels(collection)))
+            for collection in graph.subjects(RDF.type, SKOS.Collection)
+            if list(_labels(collection))]
+
+
 def country_codes_for_region(label: str) -> set[str]:
-    """
-    Return ISO codes for a named region or sub-region.
-
-    Matching is tried in order:
-      1. Exact label match.
-      2. Prefix match — 'east africa' -> 'East Africa and adjacent islands'.
-      3. Substring match, but skip continent-level collections unless the
-         needle itself names that continent.
-    """
-    g = _load()
-    needle = label.strip().lower()
-
-    # 1. Exact.
-    for coll in g.subjects(RDF.type, SKOS.Collection):
-        for lab in _en_labels(coll):
-            if lab.lower() == needle:
-                return _expand(coll)
-
-    # 2. Prefix.
-    for coll in g.subjects(RDF.type, SKOS.Collection):
-        for lab in _en_labels(coll):
-            if lab.lower().startswith(needle):
-                return _expand(coll)
-
-    # 3. Substring (skip broad continents).
-    broad = {
-        "africa", "americas", "asia", "europe",
-        "europe and central asia", "asia and the pacific",
-    }
-    for coll in g.subjects(RDF.type, SKOS.Collection):
-        for lab in _en_labels(coll):
-            lab_l = lab.lower()
-            if needle in lab_l and lab_l not in broad:
-                return _expand(coll)
-
-    return set()
+    """Resolve any labelled RDF region/collection to its member country codes."""
+    needle = _key(label or "")
+    if not needle:
+        return set()
+    collections = _collections()
+    for collection, labels in collections:
+        if any(_key(name) == needle for name in labels):
+            return _expand(collection)
+    candidates = [(len(_key(name)), collection) for collection, labels in collections
+                  for name in labels if _key(name).startswith(needle)]
+    if candidates:
+        return _expand(max(candidates, key=lambda item: item[0])[1])
+    candidates = [(len(_key(name)), collection) for collection, labels in collections
+                  for name in labels
+                  if needle in _key(name) and _key(name) not in
+                  {"ipbes region", "ipbes assessment regions"}]
+    return _expand(max(candidates, key=lambda item: item[0])[1]) if candidates else set()
 
 
-# ---------------------------------------------------------------------------
-# Top-level: question -> set of country names
-# ---------------------------------------------------------------------------
-
-# Longest names first so that 'east africa' wins over 'africa'.
-_REGION_NAMES = [
-    "east africa and adjacent islands",
-    "east africa",
-    "central and western europe",
-    "europe and central asia",
-    "asia and the pacific",
-    "western europe",
-    "eastern europe",
-    "central asia",
-    "north africa",
-    "north america",
-    "north-east asia",
-    "south america",
-    "south asia",
-    "south-east asia",
-    "southern africa",
-    "west africa",
-    "western asia",
-    "central africa",
-    "mesoamerica",
-    "caribbean",
-    "oceania",
-    "africa",
-    "americas",
-    "asia",
-    "europe",
-]
+def _region_mentions(question: str):
+    q = _clean(question).casefold()
+    matches = []
+    for collection, labels in _collections():
+        for label in labels:
+            variants = { _clean(label).casefold(), _strip_parenthetical(label).casefold() }
+            found = [v for v in variants if len(v) >= 3 and
+                     re.search(rf"(?<!\w){re.escape(v)}(?!\w)", q)]
+            if found:
+                matches.append((max(map(len, found)), collection))
+                break
+    matches.sort(key=lambda item: item[0], reverse=True)
+    return [collection for _, collection in matches]
 
 
 def infer_country_names(question: str) -> set[str]:
-    """
-    Return the country *names* implied by the question, matching what is
-    stored in the Chroma metadata (e.g. 'Kenya', 'Tanzania').
-
-    Region -> set of ISO codes -> set of names.
-    """
-    q = question.lower()
-    codes: set[str] = set()
-
-    # 1. Region / sub-region: pick the longest matching name.
-    matches = [n for n in _REGION_NAMES if n in q]
-    matches.sort(key=len, reverse=True)
-    for name in matches:
-        codes = country_codes_for_region(name)
-        if codes:
-            break
-
-    # 2. Individual country: try unigrams and bigrams from the question.
-    if not codes:
-        tokens = re.findall(r"[A-Za-z][A-Za-z\-']+", question)
-        candidates = list(tokens) + [
-            f"{tokens[i]} {tokens[i + 1]}"
-            for i in range(len(tokens) - 1)
-        ]
-        for cand in candidates:
-            code = country_code_for_label(cand)
-            if code:
-                codes = {code}
-                break
-
-    if not codes:
+    """Infer mentioned countries and countries covered by RDF-defined regions."""
+    if not question or not question.strip():
         return set()
+    codes = set()
+    for collection in _region_mentions(question):
+        codes.update(_expand(collection))
+    by_label, _ = _country_index()
+    for label, code in sorted(by_label.items(), key=lambda item: len(item[0]), reverse=True):
+        if len(label) >= 3 and re.search(rf"(?<!\w){re.escape(label)}(?!\w)",
+                                         question, re.IGNORECASE):
+            codes.add(code)
+    return {name for code in codes if (name := country_label_for_code(code))}
 
-    names = set()
-    for c in codes:
-        label = country_label_for_code(c)
-        if label:
-            names.add(label)
-    return names
 
 def canonical_country(value: str | None) -> str | None:
-    """
-    Normalise any country value to the canonical IPBES country name.
-
-      'CHN'  / 'chn'  / 'China' / 'china' -> 'China'
-      'TZA'  / 'Tanzania'                 -> 'Tanzania'
-
-    Returns the trimmed input unchanged if it can't be resolved, so no
-    data is silently dropped.
-    """
+    """Normalize country name/code; preserve trimmed unknown input."""
     if value is None:
         return None
-    s = str(value).strip()
-    if not s:
+    value = _clean(value)
+    if not value:
         return None
-
-    # Path A: looks like an ISO code (2-3 letters), try code -> label.
-    if len(s) <= 3 and s.isalpha():
-        label = country_label_for_code(s)
-        if label:
-            return label
-
-    # Path B: free-text label -> code -> label.
-    code = country_code_for_label(s)
-    if code:
-        label = country_label_for_code(code)
-        if label:
-            return label
-
-    # Path C: unrecognised. Return trimmed input.
-    return s
+    code = country_code_for_label(value)
+    return country_label_for_code(code) if code else value
