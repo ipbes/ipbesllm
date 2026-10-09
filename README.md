@@ -99,6 +99,7 @@ ipbesllm/
 │   ├── pdf_test_embeddings.py
 │   ├── pdf_test.py                       # Sanity checks
 │   ├── pdf_ttl_compare.py
+│   ├── rag_utils.py
 │   ├── rdf_loader.py                     # Parse RDF into a graph + extract concept profiles
 │   ├── rdf_graph.py                      # Graph DB wrapper (in-memory RDFLib + persistent store)
 │   ├── rdf_index.py                      # Indexes(embeds) RDF into Chroma
@@ -275,7 +276,7 @@ data/pdf/
 Then build/rebuild the PDF Chroma collection:
 
 ```bash
-PYTHONPATH=src python src/index_pdf.py
+PYTHONPATH=src python src/pdf_index.py
 ```
 
 Build vector index whenever there are RDF changes to the IPBES thesaurus
@@ -289,7 +290,7 @@ The indexer extracts text from the PDFs, creates chunks, generates embeddings us
 ## Test PDF retrieval
 
 ```bash
-PYTHONPATH=src python src/query_pdf.py
+PYTHONPATH=src python src/pdf_query.py
 ```
 
 ## Ask a PDF RAG question
@@ -392,8 +393,21 @@ data/ttl/
 
 Then:
 
+1. Resume / incremental
 ```bash
 PYTHONPATH=src python src/ttl_index.py
+```
+2. Wipe and start over   
+```bash        
+PYTHONPATH=src python src/ttl_index.py --rebuild 
+``` 
+3. Leave references out (Best for testing) 
+ ```bash
+PYTHONPATH=src python src/ttl_index.py --skip-types ref
+```
+4. Parse + validate only
+```bash
+PYTHONPATH=src python src/ttl_index.py --dry-run
 ```
 
 The TTL collection is:

@@ -1,12 +1,11 @@
 import chromadb
 from chromadb.errors import NotFoundError
-from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
+
+from rag_utils import EMBED_MODEL, embed_query
 
 
 CHROMA_DIR = "chroma"
 COLLECTION_NAME = "pdf_documents"
-
-EMBED_MODEL = "nomic-embed-text"
 
 
 def main():
@@ -14,16 +13,9 @@ def main():
         path=CHROMA_DIR
     )
 
-    embedding_function = OllamaEmbeddingFunction(
-        model_name=EMBED_MODEL,
-        url="http://localhost:11434/api/embeddings",
-    )
-
     try:
-        collection = client.get_collection(
-            name=COLLECTION_NAME,
-            embedding_function=embedding_function,
-        )
+        # No embedding function needed: the query is embedded below.
+        collection = client.get_collection(name=COLLECTION_NAME)
     except (NotFoundError, ValueError) as e:
         raise SystemExit(
             f"Collection '{COLLECTION_NAME}' not found in "
@@ -36,9 +28,11 @@ def main():
     if not question:
         return
 
+    print(f"(Embedding with {EMBED_MODEL}...)")
     results = collection.query(
-        query_texts=[question],
+        query_embeddings=[list(embed_query(question))],
         n_results=5,
+        include=["documents", "metadatas", "distances"],
     )
 
     print()
@@ -55,6 +49,7 @@ def main():
         print(f"Result #{i + 1}")
         print(f"Distance: {distance:.4f}")
         print(f"Source: {metadata.get('source_file', '')}")
+        print(f"Title: {metadata.get('title', '')}")
         print(
             f"Page: {metadata.get('page', '')} "
             f"of {metadata.get('page_count', '')}"

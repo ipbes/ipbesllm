@@ -2,18 +2,20 @@
 import json
 import os
 import re
+import time
+from functools import lru_cache
 from pathlib import Path
 
 import chromadb
+import httpx
 import ollama
 from chromadb.errors import NotFoundError
-from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
-from rdflib import Graph, URIRef
-from rdflib.namespace import RDF, SKOS
-from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key
 from loguru import logger
-from geo import infer_country_names, canonical_country
-from thesaurus_helper import ThesaurusHelper
+
+from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key
+# infer_country_names / canonical_country are re-exported for app.py.
+from geo import canonical_country, country_code_for_label, infer_country_names
+from thesaurus_helper import get_thesaurus
 
 
 # ---------------------------------------------------------------------------
@@ -23,6 +25,17 @@ from thesaurus_helper import ThesaurusHelper
 LLM_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:latest")
 EMBED_MODEL = os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")
 
+# Must match ttl_index.py so queries and documents are embedded the same way.
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
+EMBED_TIMEOUT = float(os.getenv("OLLAMA_EMBED_TIMEOUT", "300"))
+
+# Context window requested from Ollama, and how much retrieved text we put in
+# the prompt. Ollama silently truncates prompts that exceed num_ctx (usually
+# dropping the START, i.e. the instructions), so keep the cap comfortably
+# below it: 36,000 chars is roughly 10k tokens.
+NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "16384"))
+MAX_CONTEXT_CHARS = int(os.getenv("RAG_MAX_CONTEXT_CHARS", "36000"))
+
 CHROMA_DIR = "chroma"
 COLLECTION_NAME = "ttl_documents"
 
@@ -31,70 +44,112 @@ COLLECTION_NAME = "ttl_documents"
 # assessment can dominate the top-k results.
 MANIFEST_PATH = Path(CHROMA_DIR) / "assessments.json"
 
-# Path to the IPBES geography vocabulary.
-GEO_PATH = Path("data/rdf/ipbes-geo.rdf")
-
-ISO3166 = URIRef("http://purl.org/dc/terms/ISO3166")
-
-_PROJECT_ROOT = Path(__file__).resolve().parent.parent
-THESAURUS_PATH = _PROJECT_ROOT / "data" / "rdf" / "ipbes-thesaurus.rdf"
 # Weight of the thesaurus-neighborhood signal in post-retrieval re-ranking.
 # 0.0 = pure vector search; 0.25 = gentle nudge (recommended).
 THESAURUS_RERANK_ALPHA = float(os.getenv("THESAURUS_RERANK_ALPHA", "0.25"))
 
+# A country filter with more codes than this looks like a bug in
+# infer_country_names (the largest IPBES region has about 55 countries).
+MAX_COUNTRY_FILTER = 100
+
+# Part of the cache keys: bump when retrieval or prompts change so stale
+# entries are never served after a code change.
+RETRIEVAL_VERSION = "3"
+PROMPT_VERSION = "2"
+
+
 # ---------------------------------------------------------------------------
-# Collection
+# Embedding (queries)
 # ---------------------------------------------------------------------------
+
+@lru_cache(maxsize=1)
+def _embed_client():
+    return ollama.Client(host=OLLAMA_URL, timeout=EMBED_TIMEOUT)
+
+
+@lru_cache(maxsize=1)
+def _chat_client():
+    return ollama.Client(host=OLLAMA_URL)
+
+
+@lru_cache(maxsize=256)
+def _embed_query(text: str) -> tuple[float, ...]:
+    """Embed a query once (cached), with a short retry on transient errors.
+
+    Uses the same ollama client call as ttl_index.py, so query and document
+    vectors come from the same code path.
+    """
+    for attempt in range(3):
+        try:
+            vector = _embed_client().embed(model=EMBED_MODEL, input=[text])
+            return tuple(vector["embeddings"][0])
+        except (httpx.TransportError, ConnectionError) as exc:
+            if attempt == 2:
+                raise
+            delay = 2 * 2 ** attempt
+            logger.warning(f"Query embedding failed ({type(exc).__name__}); "
+                           f"retrying in {delay}s")
+            time.sleep(delay)
+    raise AssertionError("unreachable")
+
+
+# ---------------------------------------------------------------------------
+# Index state: collection + assessment manifest
+# ---------------------------------------------------------------------------
+# Both are cached, but dropped whenever ttl_index.py rewrites the manifest
+# (it does at the start and end of every run), so a long-lived process such
+# as Streamlit never keeps a handle to a collection that was rebuilt.
+
+_STATE: dict = {"stamp": None, "collection": None, "assessments": None}
+
+
+def _index_stamp() -> int:
+    try:
+        return MANIFEST_PATH.stat().st_mtime_ns
+    except OSError:
+        return 0
+
+
+def _sync_index_state() -> None:
+    stamp = _index_stamp()
+    if _STATE["stamp"] != stamp:
+        _STATE.update(stamp=stamp, collection=None, assessments=None)
+
 
 def _get_collection():
-    client = chromadb.PersistentClient(
-        path=CHROMA_DIR
-    )
+    _sync_index_state()
+    if _STATE["collection"] is None:
+        client = chromadb.PersistentClient(path=CHROMA_DIR)
+        try:
+            # No embedding function: queries are embedded by _embed_query and
+            # passed as vectors, so the collection never embeds anything.
+            _STATE["collection"] = client.get_collection(name=COLLECTION_NAME)
+        except NotFoundError as exc:
+            raise SystemExit(
+                f"Collection '{COLLECTION_NAME}' not found. "
+                f"Run ttl_index.py first. (Original error: {exc})"
+            )
+        except ValueError as exc:
+            if "does not exist" in str(exc).lower():
+                raise SystemExit(
+                    f"Collection '{COLLECTION_NAME}' not found. "
+                    f"Run ttl_index.py first. (Original error: {exc})"
+                )
+            raise
+    return _STATE["collection"]
 
-    embedding_function = OllamaEmbeddingFunction(
-        model_name=EMBED_MODEL,
-        url="http://localhost:11434/api/embeddings",
-    )
-
-    try:
-        return client.get_collection(
-            name=COLLECTION_NAME,
-            embedding_function=embedding_function,
-        )
-    except (NotFoundError, ValueError) as e:
-        raise SystemExit(
-            f"Collection '{COLLECTION_NAME}' not found. "
-            f"Run ttl_index.py first. (Original error: {e})"
-        )
 
 # ---------------------------------------------------------------------------
-# Thesaurus (lazy singleton)
+# Thesaurus (shared with pdf_rag via thesaurus_helper.get_thesaurus)
 # ---------------------------------------------------------------------------
 
-_THESAURUS: ThesaurusHelper | None = None
+def _get_thesaurus():
+    return get_thesaurus()
 
-
-def _get_thesaurus() -> ThesaurusHelper | None:
-    global _THESAURUS
-    if _THESAURUS is not None:
-        return _THESAURUS
-
-    try:
-        _THESAURUS = ThesaurusHelper()   # <-- resolves path internally
-    except FileNotFoundError as e:
-        logger.warning(f"Thesaurus unavailable: {e}")
-        return None
-    except Exception as e:  # noqa: BLE001
-        logger.warning(f"Failed to load thesaurus: {e}")
-        return None
-    return _THESAURUS
 
 # ---------------------------------------------------------------------------
 # Assessment discovery (from manifest)
 # ---------------------------------------------------------------------------
-
-_ASSESSMENT_CACHE: list[str] | None = None
-
 
 def _get_assessments() -> list[str]:
     """
@@ -105,17 +160,17 @@ def _get_assessments() -> list[str]:
     'per-assessment retrieval not available' and fall back to a single
     query.
     """
-    global _ASSESSMENT_CACHE
-    if _ASSESSMENT_CACHE is not None:
-        return _ASSESSMENT_CACHE
+    _sync_index_state()
+    if _STATE["assessments"] is not None:
+        return _STATE["assessments"]
 
     if not MANIFEST_PATH.exists():
         logger.warning(
             f"Assessment manifest {MANIFEST_PATH} not found; "
             f"per-assessment retrieval disabled. Re-run ttl_index.py."
         )
-        _ASSESSMENT_CACHE = []
-        return _ASSESSMENT_CACHE
+        _STATE["assessments"] = []
+        return _STATE["assessments"]
 
     try:
         data = json.loads(MANIFEST_PATH.read_text())
@@ -124,12 +179,56 @@ def _get_assessments() -> list[str]:
             f"Could not read assessment manifest {MANIFEST_PATH}: {e}; "
             f"per-assessment retrieval disabled."
         )
-        _ASSESSMENT_CACHE = []
-        return _ASSESSMENT_CACHE
+        _STATE["assessments"] = []
+        return _STATE["assessments"]
 
-    _ASSESSMENT_CACHE = sorted(data.get("assessments", []))
-    logger.debug(f"Loaded assessments from manifest: {_ASSESSMENT_CACHE}")
-    return _ASSESSMENT_CACHE
+    if data.get("complete") is False:
+        logger.warning("The index was not completed (ttl_index.py stopped "
+                       "early); results may be partial. Re-run ttl_index.py.")
+    if data.get("embed_model") not in (None, EMBED_MODEL):
+        logger.warning(f"Index was built with {data.get('embed_model')!r} but "
+                       f"queries use {EMBED_MODEL!r}; retrieval will be wrong.")
+
+    _STATE["assessments"] = sorted(data.get("assessments", []))
+    logger.debug(f"Loaded assessments from manifest: {_STATE['assessments']}")
+    return _STATE["assessments"]
+
+
+# ---------------------------------------------------------------------------
+# Countries
+# ---------------------------------------------------------------------------
+
+def _country_codes(country_names) -> set[str]:
+    """Canonical country names -> ISO alpha-3 codes (unknown names dropped)."""
+    codes = set()
+    for name in country_names or ():
+        code = country_code_for_label(name)
+        if code:
+            codes.add(code)
+    return codes
+
+
+def _country_text(m: dict) -> str:
+    """Display text for a chunk's country, from the indexer's metadata."""
+    names = m.get("country_names")
+    if isinstance(names, (list, tuple)):
+        return ", ".join(names)
+    return names or m.get("country_raw") or ""
+
+
+def _annotate_metadata(results):
+    """Add a display-only `country` string to each metadata dict.
+
+    The index stores country_codes / country_names strings; `country` is derived
+    so the context builder, app.py and the CLI printout can keep using it.
+    It is never used for filtering.
+    """
+    for m in results["metadatas"][0]:
+        if m is not None and "country" not in m:
+            text = _country_text(m)
+            if text:
+                m["country"] = text
+    return results
 
 
 # ---------------------------------------------------------------------------
@@ -138,19 +237,20 @@ def _get_assessments() -> list[str]:
 
 def _build_where(
     chunk_type: str | None,
-    country_names: set[str] | None,
+    country_codes: set[str] | None,
     assessment: str | None = None,
 ):
-    """Build a Chroma `where` clause from the individual filters."""
+    """Build a Chroma `where` clause from the individual filters.
+
+    Chroma 1.4 rejects list metadata, so the indexer stores one boolean flag
+    per country (country_KEN=True); several countries are OR-ed together.
+    """
     clauses = []
     if chunk_type:
         clauses.append({"chunk_type": chunk_type})
-    if country_names:
-        names = sorted(country_names)
-        if len(names) == 1:
-            clauses.append({"country": names[0]})
-        else:
-            clauses.append({"country": {"$in": names}})
+    if country_codes:
+        conds = [{f"country_{c}": True} for c in sorted(country_codes)]
+        clauses.append(conds[0] if len(conds) == 1 else {"$or": conds})
     if assessment:
         clauses.append({"assessment": assessment})
 
@@ -179,6 +279,16 @@ def _merge_results(results_list):
         merged["metadatas"][0].extend(r["metadatas"][0])
         merged["distances"][0].extend(r["distances"][0])
     return merged
+
+
+def _query(collection, query_vector, k: int, where):
+    return collection.query(
+        query_embeddings=[list(query_vector)],
+        n_results=k,
+        where=where,
+        include=["documents", "metadatas", "distances"],
+    )
+
 
 # ---------------------------------------------------------------------------
 # Thesaurus-aware post-processing
@@ -215,6 +325,7 @@ def _apply_thesaurus_rerank(question: str, results, alpha: float):
 
     return results
 
+
 # ---------------------------------------------------------------------------
 # Retrieve
 # ---------------------------------------------------------------------------
@@ -233,49 +344,45 @@ def retrieve(
     """
     collection = _get_collection()
 
-    # Sanity guard: a runaway country filter (e.g. a bug in
-    # infer_country_names) would otherwise silently zero out retrieval.
-    if country_names and len(country_names) > 50:
+    codes = _country_codes(country_names)
+    if country_names and len(codes) > MAX_COUNTRY_FILTER:
         logger.warning(
-            f"country_names has {len(country_names)} entries; "
-            f"this looks like a bug in infer_country_names. "
-            f"Dropping the filter."
+            f"country filter has {len(codes)} codes; this looks like a bug "
+            f"in infer_country_names. Dropping the filter."
         )
-        country_names = None
+        codes = set()
+    elif country_names and not codes:
+        # Never fall through to an unfiltered search when the caller asked
+        # for specific countries we cannot map to codes.
+        logger.warning(f"No ISO codes for countries {sorted(country_names)}; "
+                       f"returning no results.")
+        return _empty_results()
 
-    # Fast path: no per-assessment split requested.
-    if not per_assessment:
-        return collection.query(
-            query_texts=[question],
-            n_results=k,
-            where=_build_where(chunk_type, country_names),
-        )
+    # Embed once; every per-assessment query reuses the same vector.
+    query_vector = _embed_query(question)
 
-    assessments = _get_assessments()
-    if not assessments:
+    assessments = _get_assessments() if per_assessment else []
+    if per_assessment and not assessments:
         # No manifest -> behave like the pre-per-assessment code path.
         logger.warning(
             "per_assessment=True but no assessments available; "
             "falling back to a single query."
         )
-        return collection.query(
-            query_texts=[question],
-            n_results=k,
-            where=_build_where(chunk_type, country_names),
+
+    if not assessments:
+        return _annotate_metadata(
+            _query(collection, query_vector, k, _build_where(chunk_type, codes))
         )
 
-    per_assessment_results = []
+    per_assessment_results, errors = [], []
     for a in assessments:
-        where = _build_where(chunk_type, country_names, assessment=a)
+        where = _build_where(chunk_type, codes, assessment=a)
 
         try:
-            r = collection.query(
-                query_texts=[question],
-                n_results=k,
-                where=where,
-            )
+            r = _query(collection, query_vector, k, where)
         except Exception as e:  # noqa: BLE001
             logger.warning(f"Per-assessment query failed for {a!r}: {e}")
+            errors.append(e)
             continue
 
         # Tag each returned metadata with the assessment so downstream
@@ -287,9 +394,13 @@ def retrieve(
             per_assessment_results.append(r)
 
     if not per_assessment_results:
+        if errors and len(errors) == len(assessments):
+            # Every query failed: surface it instead of returning "no
+            # results" (which would also be cached).
+            raise errors[-1]
         return _empty_results()
 
-    return _merge_results(per_assessment_results)
+    return _annotate_metadata(_merge_results(per_assessment_results))
 
 
 # ---------------------------------------------------------------------------
@@ -334,18 +445,24 @@ def _identifier_sort_key(identifier: str):
 
 
 def _reorder_by_identifier(results):
+    """Sort by (assessment, identifier) so assessments are not interleaved."""
     docs = results["documents"][0]
     metas = results["metadatas"][0]
     dists = results["distances"][0]
+    ids = results["ids"][0]
 
     order = sorted(
         range(len(docs)),
-        key=lambda i: _identifier_sort_key(metas[i].get("identifier", "")),
+        key=lambda i: (
+            metas[i].get("assessment", ""),
+            _identifier_sort_key(metas[i].get("identifier", "")),
+        ),
     )
 
     results["documents"][0] = [docs[i] for i in order]
     results["metadatas"][0] = [metas[i] for i in order]
     results["distances"][0] = [dists[i] for i in order]
+    results["ids"][0] = [ids[i] for i in order]
     return results
 
 
@@ -353,8 +470,15 @@ def _reorder_by_identifier(results):
 # Generation
 # ---------------------------------------------------------------------------
 
-def _build_context(results) -> str:
-    parts = []
+def _build_context(results, max_chars: int = MAX_CONTEXT_CHARS) -> tuple[str, int]:
+    """Return (context text, number of chunks included).
+
+    Chunks are added in order until `max_chars` would be exceeded; the first
+    chunk is always included. The caller reports any truncation.
+    """
+    parts: list[str] = []
+    used = 0
+    separator = "\n\n---\n\n"
 
     for i, document in enumerate(results["documents"][0]):
         m = results["metadatas"][0][i]
@@ -378,14 +502,21 @@ def _build_context(results) -> str:
             prefix_parts.append(f"qualifier={m['qualifier']}")
         if m.get("assessment"):
             prefix_parts.append(f"assessment={m['assessment']}")
-        if m.get("country"):
-            prefix_parts.append(f"country={m['country']}")
+        country = _country_text(m)
+        if country:
+            prefix_parts.append(f"country={country}")
+        if m.get("paragraph"):
+            prefix_parts.append(f"part={m['paragraph']}")
 
         prefix = " ".join(prefix_parts)
+        part = f"[{i + 1}] {prefix}\n{body}"
 
-        parts.append(f"[{i + 1}] {prefix}\n{body}")
+        if parts and used + len(separator) + len(part) > max_chars:
+            break
+        parts.append(part)
+        used += len(separator) + len(part)
 
-    return "\n\n---\n\n".join(parts)
+    return separator.join(parts), len(parts)
 
 
 def _build_task(
@@ -468,7 +599,17 @@ def generate_answer(
             question, results, THESAURUS_RERANK_ALPHA
         )
 
-    context = _build_context(results)
+    context, used = _build_context(results)
+    total = len(results["documents"][0])
+    truncation_note = ""
+    if used < total:
+        logger.warning(f"Context capped at {used} of {total} retrieved chunks "
+                       f"(RAG_MAX_CONTEXT_CHARS={MAX_CONTEXT_CHARS}).")
+        truncation_note = (
+            f"\nNOTE: the context limit was reached, so only the first {used} "
+            f"of {total} retrieved chunks are shown above. Do not claim the "
+            f"list is complete.\n"
+        )
     task = _build_task(question, chunk_type, country_names or set())
 
     # -------- Thesaurus glossary + primary definitions --------
@@ -488,31 +629,7 @@ def generate_answer(
         # matters when the assessment corpus doesn't define the concept
         # itself (e.g. LDR assumes 'NCP' is known to the reader).
         try:
-            mentions = th.find_mentions(question)
-            if mentions:
-                blocks = []
-                for m in mentions:
-                    c = th.graph.get_concept(m.uri)
-                    lines = [f"### {m.pref_label}  (IPBES thesaurus)"]
-                    for d in c.definitions:
-                        lines.append(d)
-
-                    broader_labels = [
-                        th.graph.pref_label_of(u) for u in c.broader[:2]
-                    ]
-                    related_labels = [
-                        th.graph.pref_label_of(u) for u in c.related[:4]
-                    ]
-                    if broader_labels:
-                        lines.append(f"Broader: {', '.join(broader_labels)}")
-                    if related_labels:
-                        lines.append(f"Related: {', '.join(related_labels)}")
-                    blocks.append("\n".join(lines))
-                if blocks:
-                    thesaurus_primaries = (
-                        "## Authoritative IPBES definitions\n\n"
-                        + "\n\n---\n\n".join(blocks)
-                    )
+            thesaurus_primaries = th.definitions_block(question)
         except Exception as e:  # noqa: BLE001
             logger.warning(f"Thesaurus primary block failed: {e}")
 
@@ -534,9 +651,9 @@ User question:
 
 Retrieved chunks (already sorted by identifier):
 {context}
-{primary_block}{glossary_block}"""
+{truncation_note}{primary_block}{glossary_block}"""
 
-    response = ollama.chat(
+    response = _chat_client().chat(
         model=LLM_MODEL,
         messages=[
             {
@@ -559,6 +676,7 @@ Retrieved chunks (already sorted by identifier):
                 "content": prompt,
             },
         ],
+        options={"num_ctx": NUM_CTX},
     )
 
     return response["message"]["content"]
@@ -597,8 +715,10 @@ async def retrieve_cached(
         CACHE_VERSION,
         PIPELINE_ID,
         "retrieve",
+        RETRIEVAL_VERSION,
         EMBED_MODEL,
         COLLECTION_NAME,
+        _index_stamp(),            # a re-index invalidates cached retrievals
         question.strip(),
         k,
         chunk_type,
@@ -620,7 +740,10 @@ async def retrieve_cached(
             per_assessment=per_assessment,
         )
     )
-    await cache.set(key, result, ttl=3600)
+    # Never cache an empty result: it may just mean the index was missing,
+    # incomplete or mid-rebuild, and it would stick for the whole TTL.
+    if result["documents"][0]:
+        await cache.set(key, result, ttl=3600)
     logger.debug(f"ttl retrieve MISS q={question[:50]!r}")
     return result
 
@@ -633,7 +756,8 @@ async def generate_answer_cached(
     """Cache the LLM answer using the retrieved context as part of the key."""
     import anyio
 
-    context = _build_context(results)
+    context, used = _build_context(results)
+    total = len(results["documents"][0])
 
     # Add the glossary to the key so thesaurus updates invalidate cache.
     th = _get_thesaurus()
@@ -651,7 +775,9 @@ async def generate_answer_cached(
         CACHE_VERSION,
         PIPELINE_ID,
         "answer",
+        PROMPT_VERSION,
         LLM_MODEL,
+        NUM_CTX,
         question.strip(),
         chunk_type,
         sorted(country_names) if country_names else None,
@@ -674,12 +800,14 @@ async def generate_answer_cached(
 
     payload = {
         "answer": answer,
+        "context_chunks": used,
+        "context_truncated": used < total,
         "retrieved": [
             {
                 "identifier": m.get("identifier"),
                 "chunk_type": m.get("chunk_type"),
                 "assessment": m.get("assessment"),
-                "country": m.get("country"),
+                "country": _country_text(m),
                 "eId": m.get("eId"),
                 "distance": results["distances"][0][i],
             }
@@ -767,6 +895,10 @@ async def async_main():
 
     if payload.get("_cached"):
         print("(cache hit)")
+    if payload.get("context_truncated"):
+        print(f"(Only the first {payload['context_chunks']} of "
+              f"{len(results['documents'][0])} retrieved chunks fit in the "
+              f"prompt; raise RAG_MAX_CONTEXT_CHARS / OLLAMA_NUM_CTX to include more.)")
 
     print("=" * 80)
     print("ANSWER")

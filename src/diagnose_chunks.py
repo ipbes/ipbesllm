@@ -14,7 +14,7 @@ import time
 from collections import Counter, defaultdict
 
 from ttl_loader import parse_ttl_file
-from ttl_index import TTL_DIR, BATCH_SIZE, EMBED_MODEL, assessment_id_from_path
+from ttl_index import TTL_DIR, EMBED_MODEL, assessment_id_from_path, make_batches
 
 
 def pct(values, q):
@@ -56,12 +56,10 @@ def main():
         print("  (Chroma raises DuplicateIDError if two share a batch; "
               "otherwise upsert silently overwrites.)")
 
-    worst = max(
-        (sum(len(c["text"]) for c in chunks[i:i + BATCH_SIZE]), i)
-        for i in range(0, len(chunks), BATCH_SIZE)
-    )
-    print(f"\nHeaviest batch of {BATCH_SIZE}: {worst[0]:,} chars "
-          f"(chunks {worst[1] + 1}-{worst[1] + BATCH_SIZE})")
+    batches = list(make_batches(chunks))
+    worst = max(batches, key=lambda b: sum(len(c["text"]) for c in b))
+    print(f"\nBatches at the indexer's default limits: {len(batches)}; heaviest has "
+          f"{len(worst)} chunks / {sum(len(c['text']) for c in worst):,} chars")
 
     if args.embed:
         import ollama

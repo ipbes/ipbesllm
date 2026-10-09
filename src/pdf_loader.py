@@ -46,6 +46,7 @@ def extract_pdf_chunks(
     Each chunk is a dictionary containing:
       - text
       - source_file
+      - title         (PDF metadata title, or the file name without extension)
       - page
       - page_count
       - chunk_id
@@ -81,6 +82,7 @@ def extract_pdf_chunks(
 
         # Pull document-level metadata once.
         pdf_metadata = document.metadata or {}
+        title = (pdf_metadata.get("title") or "").strip() or path.stem
 
         # We need `total_chunks` in every chunk, so do a first pass
         # to compute the per-page chunk lists, then flatten.
@@ -121,9 +123,12 @@ def extract_pdf_chunks(
                 if end >= len(text):
                     break
 
-                # Guaranteed to advance because we enforced
-                # overlap < chunk_size above.
-                start = end - overlap
+                # The window must always advance. overlap < chunk_size is
+                # enforced above, but backing off to whitespace can end a
+                # chunk at only chunk_size // 2, so with a large overlap
+                # end - overlap could land at or before `start`.
+                next_start = end - overlap
+                start = next_start if next_start > start else end
 
             per_page_chunks.append(page_chunks)
 
@@ -142,6 +147,7 @@ def extract_pdf_chunks(
                     {
                         "text": chunk_text,
                         "source_file": path.name,
+                        "title": title,
                         "page": page_number,
                         "page_count": page_count,
                         "chunk_id": (

@@ -13,3 +13,4 @@ src/__pycache__/
 src/test.py
 *.sqlite3
 .cache
+*:Zone.Identifier
