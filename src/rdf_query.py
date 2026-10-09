@@ -7,6 +7,7 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass, field
 
+from src.rag_utils import embed_query
 from src.rdf_graph import ThesaurusGraph
 from src.rdf_index import get_client, COLLECTION_NAME
 
@@ -34,6 +35,8 @@ class HybridThesaurusRetriever:
         self.top_k = top_k
         self.n_results = n_results
         self.client = get_client()
+        # No embedding function: queries are embedded by embed_query and
+        # passed as vectors, as in pdf_rag.py.
         self.collection = self.client.get_collection(
             name=COLLECTION_NAME,
         )
@@ -41,7 +44,7 @@ class HybridThesaurusRetriever:
     # --------------------------------------------------------------
     def _vector_search(self, query: str) -> list[dict]:
         res = self.collection.query(
-            query_texts=[query],
+            query_embeddings=[list(embed_query(query))],
             n_results=self.n_results,
             include=["documents", "metadatas", "distances"],
         )

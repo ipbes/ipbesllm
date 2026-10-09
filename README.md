@@ -88,8 +88,10 @@ ipbesllm/
 ├── src/
 │   ├── __pycache__/
 │   │   └── *.pyc
-│   ├── app.py
-│   ├── cache.py
+│   ├── app.py                            # Streamlit workbench (PDF and TTL)
+│   ├── cache.py                          # Answer/retrieval cache (Redis, or in-memory)
+│   ├── chunking.py                       # Splits oversized TTL chunks
+│   ├── diagnose_chunks.py                # Inspect TTL chunk sizes before indexing
 │   ├── geo.py
 │   ├── models.py
 │   ├── pdf_index.py                      # Embed concept profiles → Chroma
@@ -119,9 +121,10 @@ ipbesllm/
 │   ├── xml_query.py                      # Queries the index
 │   ├── xml_rag.py                        # Retrieval
 │   ├── xml_test_chunks.py
-│   └── xml_test.py                       # Sanity checks
-├── tests/
-│   ├── pdf_ttl_compare.csv
+│   ├── xml_test.py                       # Sanity checks
+│   └── test_xml_loader.py                # Regression tests for the XML parser
+├── tests/                                # Local only: listed in .gitignore
+│   ├── comparison_<run_id>.csv           # Written by pdf_ttl_compare.py
 │   └── ttl_experts.py
 ├── .webui_secret_key                     # Will automatically created when you run 'open-webui serve'
 ├── app.py
@@ -134,8 +137,8 @@ Some files may be added or renamed as the project develops. The important separa
 ```text
 data/      source documents
 src/       application and RAG code
-chroma/    vector database
-cache      cached answers
+chroma/    vector database (plus the index manifests the RAG scripts read)
+Redis      cached retrievals and answers (in-memory when REDIS_URL is not set)
 ```
 
 ---
@@ -230,7 +233,7 @@ Additional packages may be required as features, the Streamlit interface and Doc
 
 ---
 
-## 5. Open WebUI
+## 6. Open WebUI
 Open WebUI already exposes Ollama through its API, so we can integrate our finished pipeline with it later rather than allowing the UI's retrieval implementation to obscure the experiment.
 ```bash
 python3.11 -m venv .venv
@@ -319,7 +322,21 @@ The parser preserves structural information such as:
 
 This is important because XML tables often contain meaning in the relationship between a table title, headers, year, country, and row value.
 
+The parser produces three chunk types:
+
+- `paragraph`: the text of a `<paragraph>`, including its `<intro>` and `<subparagraph>` text. Footnotes (`<authorialNote>`) are left out, but the text that follows them is kept.
+- `standalone_p`: a `<p>` that is not part of a paragraph or a table, e.g. directly under `<mainBody>`.
+- `table_row`: one chunk per table row, repeating the table title, description and header in every row. Leading rows of `<th>` cells are the header, and each value is labelled with its column, e.g. `Country: Germany | 2012: 400,000`. Merged cells (`colspan`/`rowspan`) are expanded so values line up with their columns. If a table has no `<th>` cells, the first row is shown as a probable header but values are not labelled.
+
 ## Test the XML parser
+
+Regression tests (small built-in XML snippets; no files in `data/` needed):
+
+```bash
+PYTHONPATH=src python src/test_xml_loader.py
+```
+
+Inspect the chunks produced from your own files in `data/xml/`:
 
 ```bash
 PYTHONPATH=src python src/xml_test.py
@@ -338,6 +355,8 @@ Then:
 ```bash
 PYTHONPATH=src python src/xml_index.py
 ```
+
+Unlike the PDF and TTL indexers, the XML indexer always deletes the collection and rebuilds it from scratch, so re-run it after any change to `xml_loader.py`.
 
 The XML collection is:
 
@@ -428,6 +447,17 @@ PYTHONPATH=src python src/ttl_query.py
 PYTHONPATH=src python src/ttl_rag.py
 ```
 
+---
+
+# Streamlit workbench
+
+`src/app.py` is a prototype web interface for the PDF and TTL pipelines. It shows the answer together with the retrieved chunks, their metadata and Chroma distances. Run it from the project root (the paths to `chroma/` and `data/` are relative to the current directory):
+
+```bash
+PYTHONPATH=src streamlit run src/app.py
+```
+
+The XML pipeline is not in the workbench yet; use `src/xml_rag.py`.
 
 ---
 
@@ -479,8 +509,8 @@ What cash contribution did Germany make in 2012?
 What sections are included in the report?
 ```
 
-```textWhat was discussed under the institutional arrangements section?
-
+```text
+What was discussed under the institutional arrangements section?
 ```
 
 For table questions, pay particular attention to whether the retrieved context includes:
@@ -571,18 +601,21 @@ A useful RAG response should explain the ambiguity and provide the relevant valu
 
 # Answer caching
 
-The application includes a lightweight SQLite answer cache:
+The PDF and TTL pipelines cache both retrieval results and generated answers (`src/cache.py`, built on `aiocache`). The XML pipeline has no cache yet.
 
-```text
-rag_cache.sqlite3
-```
+Where the cache lives depends on `REDIS_URL`:
 
-The cache is keyed using:
+- **Not set (default):** an in-memory cache. It lasts only as long as the Python process, so for the command-line scripts it is empty on every run; it is mainly useful in the long-running Streamlit app. You will see the warning `REDIS_URL not set; using in-memory cache (dev only)`.
+- **Set:** Redis, shared between runs and processes (see "Using Redis" below).
 
-- corpus
-- question
-- model
-- prompt version
+Cache keys are hashes of:
+
+| Cached item | Key includes | Expires after |
+|---|---|---|
+| Retrieval results | cache version, pipeline/collection, `RETRIEVAL_VERSION`, embedding model, time the index was last written, question, `k`, TTL filters (chunk type, countries, per-assessment), PDF re-ranking settings | 1 hour |
+| Answers | cache version, `PROMPT_VERSION`, LLM model, `num_ctx`, question, TTL filters, a hash of the retrieved context (and thesaurus glossary) | 6 hours |
+
+So re-indexing invalidates cached retrievals automatically, and an answer is only reused when the same question was answered from exactly the same context. Empty retrieval results are never cached.
 
 This means that asking the exact same question again can avoid another LLM generation request.
 
@@ -599,23 +632,32 @@ CACHE HIT
 Time: 0.003s
 ```
 
-If the RAG prompt changes, increment the corresponding `PROMPT_VERSION` so that old answers are not reused.
+If the RAG prompt changes, increment `PROMPT_VERSION` in the corresponding `*_rag.py`; if retrieval logic changes, increment `RETRIEVAL_VERSION`. Old entries are then no longer used.
 
-To clear the answer cache:
+## Clearing the cache
+
+- **In-memory cache:** restart the process (e.g. stop and restart Streamlit).
+- **Everything, without touching Redis:** set a new cache version, e.g. `export RAG_CACHE_VERSION=v2`.
+- **Redis:** delete the project's keys (all prefixed `ipbes`):
 
 ```bash
-rm rag_cache.sqlite3
+redis-cli --scan --pattern 'ipbes*' | xargs -r redis-cli del
 ```
 
-This does **not** delete the Chroma vector database.
+(Add `-n <db>` to both `redis-cli` calls if `REDIS_URL` uses a database other than 0.)
 
-Warning
-```text
-PYTHONPATH=src python src/ttl_rag.py
-2026-10-09 00:42:24.971 | WARNING  | cache:_build_cache:32 - REDIS_URL not set; using in-memory cache (dev only).
+Or, without `redis-cli`, use the same `REDIS_URL` as the app:
+
+```bash
+PYTHONPATH=src python -c "import asyncio, cache; asyncio.run(cache.invalidate_all())"
 ```
-Solution: install Redis
-On MAC
+
+None of these touch the Chroma vector database in `chroma/`.
+
+## Using Redis
+
+macOS:
+
 ```bash
 brew install redis
 brew services start redis
@@ -623,13 +665,16 @@ brew services status redis
 export REDIS_URL=redis://localhost:6379/0
 ```
 
-On Linux
+Linux:
+
 ```bash
 sudo apt install redis-server
-sudo systemctl start redis
-sudo systemctl status redis
-export REDIS_URL=redis://127.0.0.1:6379
+sudo systemctl start redis-server
+sudo systemctl status redis-server
+export REDIS_URL=redis://127.0.0.1:6379/0
 ```
+
+WSL without systemd: use `sudo service redis-server start` instead of `systemctl`.
 
 ---
 
@@ -637,33 +682,27 @@ export REDIS_URL=redis://127.0.0.1:6379
 
 When changing the chunking or parsing logic, rebuild the corresponding Chroma collection.
 
-For example, after changing XML table parsing:
+For XML (always rebuilds the collection from scratch):
 
 ```bash
-PYTHONPATH=src python src/index_xml.py
+PYTHONPATH=src python src/xml_index.py
 ```
 
-The indexer should recreate the relevant collection when required.
-
-For PDF changes:
+For PDF and TTL, the indexers are incremental: they re-embed only chunks whose text changed and remove chunks that no longer exist. After changing chunking or parsing logic, this is usually enough:
 
 ```bash
-PYTHONPATH=src python src/index_pdf.py
+PYTHONPATH=src python src/pdf_index.py
+PYTHONPATH=src python src/ttl_index.py
 ```
 
-Do not confuse:
+Use `--rebuild` to wipe the collection and start over. Do this when only chunk **metadata** changed (e.g. after updating `ipbes-geo.rdf` or the country handling): the incremental check compares chunk text only, so metadata-only changes are not picked up otherwise.
 
-```text
-rag_cache.sqlite3
+```bash
+PYTHONPATH=src python src/pdf_index.py --rebuild
+PYTHONPATH=src python src/ttl_index.py --rebuild
 ```
 
-with:
-
-```text
-chroma/
-```
-
-The first contains cached answers. The second contains vectorized document data.
+Do not confuse the cache with `chroma/`: the cache holds retrieval results and generated answers; `chroma/` holds the vectorized document data.
 
 ---
 
@@ -931,8 +970,8 @@ This information is particularly useful for improving chunking, retrieval, promp
 | Helper for deliverables | Next |
 | Helper for meetings | Next |
 | Helper for Experts | Next |
-| Answer cache | In development |
-| Streamlit UI | Planned |
+| Answer cache | Working for PDF and TTL (in-memory, or Redis via `REDIS_URL`) |
+| Streamlit UI | Prototype for PDF and TTL (`src/app.py`) |
 | Docker deployment | Planned |
 | Colleague testing | Next deployment stage |
 | Architecture diagrams | Later stage |
@@ -954,3 +993,7 @@ No confidential, personal or draft documents should be added to this project.
 ## Questions and feedback
 
 For bugs, retrieval problems, incorrect answers, or suggestions, provide the exact question and corpus used so that the issue can be reproduced.
+
+## Questions and feedback
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_011dLeNFDsreHM27isYTEnwC

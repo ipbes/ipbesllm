@@ -10,6 +10,9 @@ from pathlib import Path
 import chromadb
 from chromadb.config import Settings
 
+from src.rag_utils import (
+    EMBED_MODEL, embed_client, embed_texts, make_batches, make_embedding_function,
+)
 from src.rdf_graph import ThesaurusGraph
 from src.rdf_loader import build_all_documents, ConceptDocument
 
@@ -26,19 +29,6 @@ def get_client() -> chromadb.PersistentClient:
     )
 
 
-def _get_embedding_function():
-    """
-    Reuse whatever embedding function your other indexes use.
-    If your other modules use a local sentence-transformer or Ollama,
-    swap this to match.
-    """
-    from chromadb.utils import embedding_functions
-    # Example: local sentence-transformer — adjust to taste
-    return embedding_functions.SentenceTransformerEmbeddingFunction(
-        model_name="all-MiniLM-L6-v2"
-    )
-
-
 def build_index(rdf_path: str, reset: bool = True) -> chromadb.Collection:
     client = get_client()
 
@@ -51,27 +41,28 @@ def build_index(rdf_path: str, reset: bool = True) -> chromadb.Collection:
 
     collection = client.get_or_create_collection(
         name=COLLECTION_NAME,
-        embedding_function=_get_embedding_function(),
+        embedding_function=make_embedding_function(EMBED_MODEL),
         metadata={"hnsw:space": "cosine"},
     )
 
     graph = ThesaurusGraph(rdf_path)
     docs: list[ConceptDocument] = build_all_documents(graph)
 
-    # Batch insert
-    ids = [d.concept_id for d in docs]
-    texts = [d.text for d in docs]
-    metadatas = [d.metadata for d in docs]
-
-    BATCH = 100
-    for i in range(0, len(docs), BATCH):
+    # Embed with the same Ollama model as the other indexes (rag_utils) and
+    # hand the vectors to Chroma.
+    chunks = [{"chunk_id": d.concept_id, "text": d.text, "metadata": d.metadata}
+              for d in docs]
+    client = embed_client()
+    for batch in make_batches(chunks):
         collection.add(
-            ids=ids[i : i + BATCH],
-            documents=texts[i : i + BATCH],
-            metadatas=metadatas[i : i + BATCH],
+            ids=[c["chunk_id"] for c in batch],
+            documents=[c["text"] for c in batch],
+            metadatas=[c["metadata"] for c in batch],
+            embeddings=embed_texts(client, [c["text"] for c in batch], EMBED_MODEL),
         )
 
-    logger.info("Indexed %d concepts into %s", len(docs), COLLECTION_NAME)
+    logger.info("Indexed %d concepts into %s (%s)", len(docs), COLLECTION_NAME,
+                EMBED_MODEL)
     return collection
 
 

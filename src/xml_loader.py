@@ -13,6 +13,10 @@ EXCLUDED_TEXT_ELEMENTS = {
     "note",
 }
 
+# Table structure. <p> inside these are indexed as table rows, never as
+# paragraph or standalone text.
+TABLE_ELEMENTS = {"table", "tr", "td", "th"}
+
 
 def local_name(tag: str) -> str:
     """Return the local XML element name without the namespace."""
@@ -61,25 +65,34 @@ def element_text(
     if parent_map is None:
         return clean_text(" ".join(element.itertext()))
 
+    if local_name(element.tag) in EXCLUDED_TEXT_ELEMENTS:
+        return ""
+
     parts: list[str] = []
-
-    for node in element.iter():
-        # Skip anything inside an excluded subtree.
-        if local_name(node.tag) in EXCLUDED_TEXT_ELEMENTS:
-            continue
-        if _is_inside_excluded(node, parent_map):
-            continue
-
-        if node.text:
-            parts.append(node.text)
-
-        # `tail` is the text that appears *after* the closing tag
-        # of `node` but still inside its parent. It belongs to the
-        # parent's narrative, not to any excluded subtree.
-        if node.tail and not _is_inside_excluded(node, parent_map):
-            parts.append(node.tail)
-
+    _collect_text(element, parts)
     return clean_text(" ".join(parts))
+
+
+def _collect_text(node: ET.Element, parts: list[str]) -> None:
+    """
+    Append the visible text of `node` (excluding its own tail) to `parts`,
+    skipping excluded subtrees such as <authorialNote>.
+
+    A child's `tail` is the text after the child's closing tag, so it
+    belongs to `node`'s narrative. It is kept even when the child itself
+    is excluded:
+
+        <p>Germany<authorialNote>...</authorialNote> contributed USD 400,000.</p>
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^ tail
+    """
+    if node.text:
+        parts.append(node.text)
+
+    for child in node:
+        if local_name(child.tag) not in EXCLUDED_TEXT_ELEMENTS:
+            _collect_text(child, parts)
+        if child.tail:
+            parts.append(child.tail)
 
 
 def direct_children(element: ET.Element, name: str):
@@ -299,27 +312,198 @@ def paragraph_text(
 
     parts: list[str] = []
 
+    for p in paragraph_p_elements(paragraph, parent_map):
+
+        text = element_text(p, parent_map)
+
+        if text:
+            parts.append(text)
+
+    return clean_text(" ".join(parts))
+
+
+def _has_ancestor(
+    element: ET.Element,
+    parent_map: dict,
+    names: set[str],
+    stop: ET.Element | None = None,
+) -> bool:
+    """True if an ancestor of `element` (below `stop`) has a local name in `names`."""
+    current = parent_map.get(element)
+
+    while current is not None and current is not stop:
+        if local_name(current.tag) in names:
+            return True
+        current = parent_map.get(current)
+
+    return False
+
+
+def paragraph_p_elements(
+    paragraph: ET.Element,
+    parent_map: dict,
+) -> list[ET.Element]:
+    """
+    The <p> elements whose text makes up a paragraph chunk.
+
+    Walks each direct <content> child in document order. This includes <p>
+    under <intro> and nested <subparagraph> blocks, and excludes <p> that
+    sit inside an excluded subtree (e.g. <authorialNote>) or inside a table:
+    tables get their own row-level chunks with header context.
+
+    The standalone-<p> pass uses the same list to avoid indexing these
+    <p> a second time.
+    """
+    elements: list[ET.Element] = []
+
     for content in direct_children(paragraph, "content"):
 
-        # Walk the content subtree in document order and pick up
-        # narrative <p> elements. This naturally includes <p> under
-        # <intro> and any top-level <p> under <content>.
         for child in content.iter():
 
             if local_name(child.tag) != "p":
                 continue
 
-            # Skip <p> that live inside an excluded subtree, e.g.
-            # an <authorialNote>.
             if _is_inside_excluded(child, parent_map):
                 continue
 
-            text = element_text(child, parent_map)
+            if _has_ancestor(child, parent_map, TABLE_ELEMENTS, stop=content):
+                continue
 
-            if text:
+            elements.append(child)
+
+    return elements
+
+
+def _span(cell: ET.Element, attribute: str) -> int:
+    """colspan/rowspan as a positive int (1 when missing or invalid)."""
+    try:
+        return max(1, int(cell.attrib.get(attribute, "1")))
+    except ValueError:
+        return 1
+
+
+def _nearest_table(element: ET.Element, parent_map: dict):
+    current = parent_map.get(element)
+    while current is not None:
+        if local_name(current.tag) == "table":
+            return current
+        current = parent_map.get(current)
+    return None
+
+
+def table_grid(
+    table: ET.Element,
+    parent_map: dict,
+) -> list[tuple[list[str], bool]]:
+    """
+    Read an Akoma Ntoso table into a grid of rows.
+
+    Returns [(cells, is_header), ...] in document order, where:
+      * both <td> and <th> cells are read;
+      * a cell with colspan=N fills N columns, and one with rowspan=N is
+        repeated in the same column of the next N-1 rows, so every row's
+        cells line up with the header columns;
+      * `is_header` is True when every cell that starts in the row is a <th>.
+
+    Rows of nested tables are left to those tables; empty rows are dropped.
+    """
+    grid: list[tuple[list[str], bool]] = []
+
+    # column -> [text, rows still to fill] for cells spanning several rows
+    pending: dict[int, list] = {}
+
+    for tr in table.iter():
+
+        if local_name(tr.tag) != "tr":
+            continue
+
+        if _nearest_table(tr, parent_map) is not table:
+            continue
+
+        cells: list[str] = []
+        own_kinds: list[str] = []
+
+        def fill_carried() -> None:
+            # Place cells carried down from a rowspan above.
+            while len(cells) in pending:
+                column = len(cells)
+                text, rows_left = pending[column]
+                cells.append(text)
+                if rows_left <= 1:
+                    del pending[column]
+                else:
+                    pending[column][1] = rows_left - 1
+
+        carried_before = dict(pending)
+
+        for cell in list(tr):
+
+            kind = local_name(cell.tag)
+
+            if kind not in {"td", "th"}:
+                continue
+
+            fill_carried()
+
+            text = element_text(cell, parent_map)
+            rowspan = _span(cell, "rowspan")
+
+            for _ in range(_span(cell, "colspan")):
+                column = len(cells)
+                cells.append(text)
+                if rowspan > 1:
+                    pending[column] = [text, rowspan - 1]
+
+            own_kinds.append(kind)
+
+        # Carried cells to the right of the last cell in this row.
+        for column in sorted(c for c in carried_before if c >= len(cells)):
+            while len(cells) < column:
+                cells.append("")
+            fill_carried()
+
+        if any(cells):
+            is_header = bool(own_kinds) and all(k == "th" for k in own_kinds)
+            grid.append((cells, is_header))
+
+    return grid
+
+
+def _column_labels(header_rows: list[list[str]]) -> list[str]:
+    """
+    One label per column from one or more header rows, e.g.
+
+        | In-kind contribution  |   (colspan=2)
+        | 2012     | 2013       |
+    ->  ["In-kind contribution – 2012", "In-kind contribution – 2013"]
+    """
+    width = max((len(row) for row in header_rows), default=0)
+    labels = []
+
+    for column in range(width):
+        parts: list[str] = []
+        for row in header_rows:
+            text = row[column] if column < len(row) else ""
+            if text and text not in parts:
                 parts.append(text)
+        labels.append(" – ".join(parts))
 
-    return clean_text(" ".join(parts))
+    return labels
+
+
+def format_row(cells: list[str], labels: list[str]) -> str:
+    """
+    'Country: Germany | 2012: 400,000' when the header lines up with the
+    row; plain 'Germany | 400,000' otherwise.
+    """
+    if labels and len(labels) == len(cells):
+        return " | ".join(
+            f"{label}: {value}" if label else value
+            for label, value in zip(labels, cells)
+            if value
+        )
+
+    return " | ".join(cells)
 
 
 def table_rows(
@@ -327,31 +511,11 @@ def table_rows(
     parent_map: dict,
 ):
     """
-    Convert an Akoma Ntoso table into row-level text chunks.
+    Plain row strings ('cell | cell | ...') for every row, header rows
+    included. Kept for scripts that only need the raw rows; parse_akn_file
+    uses table_grid().
     """
-
-    rows = []
-
-    for row in table.iter():
-
-        if local_name(row.tag) != "tr":
-            continue
-
-        cells = []
-
-        for cell in list(row):
-
-            if local_name(cell.tag) != "td":
-                continue
-
-            cell_text = element_text(cell, parent_map)
-
-            cells.append(cell_text)
-
-        if any(cells):
-            rows.append(" | ".join(cells))
-
-    return rows
+    return [" | ".join(cells) for cells, _ in table_grid(table, parent_map)]
 
 
 def get_table_context(
@@ -449,6 +613,10 @@ def parse_akn_file(xml_path: str) -> list[dict]:
     chunks = []
     chunk_index = 0
 
+    # <p> elements already included in a paragraph chunk; the standalone
+    # pass skips them so the same text is not indexed twice.
+    covered_p: set[ET.Element] = set()
+
     # ------------------------------------------------------------
     # Paragraph chunks
     # ------------------------------------------------------------
@@ -457,6 +625,8 @@ def parse_akn_file(xml_path: str) -> list[dict]:
 
         if local_name(paragraph.tag) != "paragraph":
             continue
+
+        covered_p.update(paragraph_p_elements(paragraph, parent_map))
 
         text = paragraph_text(paragraph, parent_map)
 
@@ -556,7 +726,11 @@ def parse_akn_file(xml_path: str) -> list[dict]:
     # These occur in places such as:
     #   <mainBody><p>...</p>
     #
-    # They are not inside <paragraph>.
+    # Skipped:
+    #   * <p> already part of a paragraph chunk (including <intro> and
+    #     <subparagraph> text);
+    #   * <p> inside a table cell (indexed as table rows below);
+    #   * <p> inside an excluded subtree, e.g. an <authorialNote>.
     # ------------------------------------------------------------
 
     for element in root.iter():
@@ -564,22 +738,15 @@ def parse_akn_file(xml_path: str) -> list[dict]:
         if local_name(element.tag) != "p":
             continue
 
-        parent = parent_map.get(element)
-
-        if parent is None:
+        if element in covered_p:
             continue
 
-        if local_name(parent.tag) == "content":
-            grandparent = parent_map.get(parent)
+        if parent_map.get(element) is None:
+            continue
 
-            if (
-                grandparent is not None
-                and local_name(grandparent.tag) == "paragraph"
-            ):
-                continue
+        if _has_ancestor(element, parent_map, TABLE_ELEMENTS):
+            continue
 
-        # Skip <p> nested inside an excluded subtree, e.g. an
-        # <authorialNote>.
         if _is_inside_excluded(element, parent_map):
             continue
 
@@ -659,16 +826,41 @@ def parse_akn_file(xml_path: str) -> list[dict]:
             parent_map,
         )
 
-        rows = table_rows(table, parent_map)
+        grid = table_grid(table, parent_map)
 
-        if not rows:
+        if not grid:
             continue
 
         # --------------------------------------------------------
-        # Extract the first row as a header when appropriate.
+        # Header rows.
+        #
+        # Leading rows made of <th> cells are the header. Their column
+        # labels are attached to every value in the data rows
+        # ("Country: Germany | 2012: 400,000"), and they are not indexed
+        # as rows of their own unless the table has nothing else.
+        #
+        # Without <th> cells the first row is still shown as a probable
+        # header (as before), but values are not labelled with it,
+        # because it may well be data.
         # --------------------------------------------------------
 
-        header = rows[0]
+        header_count = 0
+
+        while header_count < len(grid) and grid[header_count][1]:
+            header_count += 1
+
+        numbered_rows = list(enumerate(grid, start=1))
+
+        if header_count:
+            labels = _column_labels(
+                [cells for cells, _ in grid[:header_count]]
+            )
+            header = " | ".join(labels)
+            data_rows = numbered_rows[header_count:] or numbered_rows
+        else:
+            labels = []
+            header = " | ".join(grid[0][0])
+            data_rows = numbered_rows
 
         # --------------------------------------------------------
         # Stable table identifier: prefer the table's eId, fall back
@@ -689,10 +881,12 @@ def parse_akn_file(xml_path: str) -> list[dict]:
         # in EVERY row.
         # --------------------------------------------------------
 
-        for row_number, row_text in enumerate(
-            rows,
-            start=1,
-        ):
+        for row_number, (cells, is_header_row) in data_rows:
+
+            row_text = format_row(
+                cells,
+                [] if is_header_row else labels,
+            )
 
             context_lines = []
 
@@ -737,7 +931,7 @@ def parse_akn_file(xml_path: str) -> list[dict]:
             )
 
             # Include column/header information with every row.
-            if row_number != 1:
+            if header and not (header_count == 0 and row_number == 1):
                 context_lines.append(
                     f"Table header: {header}"
                 )

@@ -42,7 +42,8 @@ def make_key(*parts: Any) -> str:
 
 
 async def invalidate_all() -> None:
-    await cache.clear()
+    # Without a namespace aiocache runs FLUSHDB on Redis (the whole database).
+    await cache.clear(namespace="ipbes")
     logger.info("Cache cleared.")
 
 
