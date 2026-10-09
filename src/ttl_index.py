@@ -66,66 +66,83 @@ def _delete_collection_if_exists(client, name: str) -> None:
 # ---------------------------------------------------------------------------
 # Country normalisation
 # ---------------------------------------------------------------------------
+# --- country splitting / resolution ---------------------------------------
 
-def _resolve_country(raw) -> tuple[str | None, str | None, str | None]:
+_COUNTRY_SEP_RE = re.compile(r"\s*[;/]\s*")
+
+
+def _resolve_countries(raw) -> tuple[list[str], list[str], str | None]:
     """
-    Normalise a raw ipbes:country value.
+    Split a raw ipbes:country value on ';' or '/', resolve each part to
+    an ISO alpha-3 code.
 
-    Returns (code, name, raw):
-      code  — ISO alpha-3, or None if the raw value is unrecognised.
-      name  — human-readable canonical name, or None.
-      raw   — the original value, always preserved for provenance.
-
-    The index is keyed on `code`. `name` is for display only.
+    Returns (codes, names, raw):
+      codes — sorted, deduplicated list of ISO alpha-3 codes.
+              Empty list if the value is empty or fully unresolved.
+      names — parallel list of canonical display names.
+      raw   — the original value, or None if empty.
     """
-    raw = ("" if raw is None else str(raw)).strip() or None
     if raw is None:
-        return None, None, None
+        return [], [], None
+    s = str(raw).strip()
+    if not s:
+        return [], [], None
 
-    code = country_code_for_label(raw)
-    if code is None:
-        return None, None, raw
+    codes: list[str] = []
+    names: list[str] = []
+    for part in _COUNTRY_SEP_RE.split(s):
+        part = part.strip()
+        if not part:
+            continue
+        code = country_code_for_label(part)
+        if code is None:
+            continue
+        if code not in codes:
+            codes.append(code)
+            name = canonical_country(part)
+            if name:
+                names.append(name)
+    return codes, names, s
 
-    return code, canonical_country(raw), raw
 
-
-def _validate_countries(all_chunks: list[dict]) -> dict[str, int]:
+def _validate_countries(all_chunks: list[dict]) -> Counter[str]:
     """
-    Collect every distinct raw country value, report unresolved ones.
-
-    Returns a Counter of unresolved raw values (empty if all resolve).
+    Count raw country values that are non-empty and fully unresolved.
     """
     unresolved: Counter[str] = Counter()
-    seen: dict[str, str | None] = {}
+    cache: dict[str, bool] = {}
     for chunk in all_chunks:
-        raw = chunk.get("country")
-        raw_key = ("" if raw is None else str(raw)).strip()
-        if raw_key in seen:
-            if seen[raw_key] is None:
-                unresolved[raw_key] += 1
+        raw = ("" if chunk.get("country") is None else str(chunk["country"])).strip()
+        if not raw:
             continue
-        code = country_code_for_label(raw_key) if raw_key else None
-        seen[raw_key] = code
-        if raw_key and code is None:
-            unresolved[raw_key] += 1
+        if raw in cache:
+            if not cache[raw]:
+                unresolved[raw] += 1
+            continue
+        codes, _, _ = _resolve_countries(raw)
+        ok = bool(codes)
+        cache[raw] = ok
+        if not ok:
+            unresolved[raw] += 1
     return unresolved
 
 
 def _report_unresolved(unresolved: Counter[str], total: int) -> None:
     print()
     print("!" * 60)
-    print("UNRESOLVED COUNTRY VALUES")
+    print("UNRESOLVED COUNTRY VALUES (non-empty)")
     print("!" * 60)
     n = sum(unresolved.values())
-    print(f"{n} chunk(s) carry a country value that is not a known ISO code:")
+    print(f"{n} chunk(s) carry a non-empty country value that does not")
+    print("contain any resolvable ISO code:")
     for raw, count in unresolved.most_common():
         print(f"  {count:5d}  {raw!r}")
     print()
-    print("These chunks will be indexed with country_code = None and will")
+    print("(Empty country values are normal and are not reported.)")
+    print("These chunks will be indexed without a country_code and will")
     print("NOT match any country filter. Fix the source TTLs and re-run.")
     print("!" * 60)
     print()
-
 
 # ---------------------------------------------------------------------------
 # Main
@@ -227,8 +244,8 @@ def main():
 
         metadatas = []
         for chunk in batch:
-            code, name, raw = _resolve_country(chunk["country"])
-            metadatas.append({
+            codes, names, raw = _resolve_countries(chunk["country"])
+            md = {
                 "source_type": "ttl",
                 "source_file": chunk["source_file"],
                 "chunk_type": chunk["chunk_type"],
@@ -236,20 +253,7 @@ def main():
                 "title": chunk["title"],
                 "date": chunk["date"],
                 "language": chunk["language"],
-
-                # --- country fields -----------------------------------
-                # country_code is the filter key. None if unrecognised.
-                # country_name is for display only.
-                # country_raw preserves the source value for provenance.
-                "country_code": code,
-                "country_name": name,
                 "country_raw": raw,
-                # Legacy key kept for one reindex cycle so any query-side
-                # code still reading metadata["country"] doesn't crash.
-                # Remove after you've updated ttl_rag.py to use
-                # country_code.
-                "country": name,
-
                 "subtype": chunk["subtype"],
                 "number": chunk["number"],
                 "division": chunk["division"],
@@ -260,7 +264,12 @@ def main():
                 "identifier": chunk["identifier"],
                 "qualifier": chunk["qualifier"],
                 "assessment": chunk["assessment"],
-            })
+            }
+            if codes:
+                md["country_code"] = sorted(codes)
+            if names:
+                md["country_name"] = names
+            metadatas.append(md)
 
         print(f"Storing chunks {start + 1}-{end} of {total}...")
 
