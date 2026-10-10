@@ -8,14 +8,19 @@ large batches fail with httpx.ReadTimeout.)
 """
 from __future__ import annotations
 
+import contextlib
 import hashlib
+import http.client
 import inspect
 import json
 import os
 import re
+import socket
 import sys
+import threading
 import time
 from functools import lru_cache
+from urllib.parse import urlparse
 
 import httpx
 import ollama
@@ -67,33 +72,112 @@ def chat_client():
 
 
 class GenerationCancelled(Exception):
-    """Raised by an on_token callback to stop a streamed answer."""
+    """The answer was cancelled through its AnswerStream."""
 
 
-def chat(model: str, messages: list[dict], on_token=None, **options):
+class AnswerStream:
+    """Receives a streamed answer, piece by piece, as the model writes it.
+
+    Each piece goes to `on_piece`. Setting `cancelled` stops the request,
+    even while Ollama is still reading the prompt (see _stream_chat).
+    """
+
+    def __init__(self, on_piece):
+        self.on_piece = on_piece
+        self.cancelled = threading.Event()
+
+    def put(self, piece: str) -> None:
+        if self.cancelled.is_set():
+            raise GenerationCancelled()
+        self.on_piece(piece)
+
+
+def chat(model: str, messages: list[dict], answer_stream: AnswerStream | None = None,
+         **options):
     """Ask the answer model; returns the reply text.
 
-    With `on_token`, the reply is streamed and each piece is passed to it as
-    it arrives. The callback may raise (e.g. GenerationCancelled) to stop:
-    closing the stream makes Ollama stop generating.
+    With `answer_stream`, the reply is streamed into it as it arrives.
     """
-    response = chat_client().chat(
-        model=model,
-        messages=messages,
-        options={"num_ctx": NUM_CTX, **options},
-        keep_alive=CHAT_KEEP_ALIVE,
-        stream=on_token is not None,
-    )
-    if on_token is None:
+    if answer_stream is None:
+        response = chat_client().chat(
+            model=model,
+            messages=messages,
+            options={"num_ctx": NUM_CTX, **options},
+            keep_alive=CHAT_KEEP_ALIVE,
+        )
         return response["message"]["content"]
 
-    pieces = []
-    for part in response:
-        piece = part["message"]["content"]
-        if piece:
-            pieces.append(piece)
-            on_token(piece)
-    return "".join(pieces)
+    return _stream_chat(
+        {
+            "model": model,
+            "messages": messages,
+            "options": {"num_ctx": NUM_CTX, **options},
+            "keep_alive": CHAT_KEEP_ALIVE,
+            "stream": True,
+        },
+        answer_stream,
+    )
+
+
+def _stream_chat(payload: dict, answer_stream: AnswerStream) -> str:
+    """POST /api/chat over a connection whose socket we hold.
+
+    Ollama sends nothing until the first token, which on a CPU can be minutes
+    of prompt reading, and the ollama/httpx client gives no way to abort a
+    request from another thread before then. Shutting the socket down does:
+    Ollama cancels the request when the connection drops (after finishing
+    the prompt batch it is on).
+    """
+    if answer_stream.cancelled.is_set():
+        raise GenerationCancelled()
+
+    url = urlparse(OLLAMA_URL)
+    connection_class = (http.client.HTTPSConnection if url.scheme == "https"
+                        else http.client.HTTPConnection)
+    conn = connection_class(url.hostname, url.port)
+    conn.connect()
+    sock = conn.sock          # conn.close() sets conn.sock to None
+    finished = threading.Event()
+
+    def cut_on_cancel():
+        while not finished.is_set():
+            if answer_stream.cancelled.wait(0.5):
+                if not finished.is_set():
+                    with contextlib.suppress(OSError):
+                        sock.shutdown(socket.SHUT_RDWR)
+                return
+
+    threading.Thread(target=cut_on_cancel, name="chat-cancel", daemon=True).start()
+    try:
+        conn.request("POST", url.path.rstrip("/") + "/api/chat",
+                     body=json.dumps(payload),
+                     headers={"Content-Type": "application/json"})
+        response = conn.getresponse()
+        if response.status != 200:
+            raise ollama.ResponseError(
+                response.read().decode(errors="replace"), response.status
+            )
+        pieces = []
+        for line in response:                      # one JSON object per line
+            if not line.strip():
+                continue
+            part = json.loads(line)
+            if "error" in part:
+                raise ollama.ResponseError(part["error"])
+            piece = part.get("message", {}).get("content", "")
+            if piece:
+                pieces.append(piece)
+                answer_stream.put(piece)
+            if part.get("done"):
+                break
+        return "".join(pieces)
+    except (OSError, http.client.HTTPException):
+        if answer_stream.cancelled.is_set():
+            raise GenerationCancelled() from None
+        raise
+    finally:
+        finished.set()
+        conn.close()
 
 
 def is_retryable(exc: Exception) -> bool:

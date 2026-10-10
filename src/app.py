@@ -2,6 +2,7 @@
 import queue
 import sys
 import threading
+import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -21,7 +22,7 @@ import xml_rag
 # Never asyncio.run() here: see cache.run_sync.
 from cache import run_sync
 from rag_utils import (
-    CHAT_KEEP_ALIVE, NUM_CTX, GenerationCancelled, chat_client, embed_query,
+    CHAT_KEEP_ALIVE, NUM_CTX, AnswerStream, chat_client, embed_query,
 )
 from thesaurus_helper import get_thesaurus
 
@@ -83,40 +84,49 @@ start_warm_up()
 def run_streamed(run, question: str, k: int):
     """Run a pipeline in a worker thread and show the answer as it streams.
 
-    If the script stops first (a new query, a page reload), the generation is
-    cancelled, so Ollama does not keep working on an answer nobody will see
-    while the next question waits behind it.
+    Streamlit only acts on Stop (or a new query, or a reload) when the script
+    sends something to the page, so while waiting the status line is updated
+    every second. When the script is stopped, the request to Ollama is cut,
+    so it does not keep working on an answer nobody will see while the next
+    question waits behind it.
     """
     pieces = queue.Queue()
     done = object()
-    cancelled = threading.Event()
+    answer_stream = AnswerStream(pieces.put)
 
-    def on_token(piece: str):
-        if cancelled.is_set():
-            raise GenerationCancelled()
-        pieces.put(piece)
-
-    future = pipeline_executor().submit(run, question, k, on_token)
+    future = pipeline_executor().submit(run, question, k, answer_stream)
     future.add_done_callback(lambda _: pieces.put(done))
 
-    def stream():
-        while (piece := pieces.get()) is not done:
-            yield piece
-
-    live = st.empty()
+    status = st.empty()
+    answer = st.empty()
+    started = time.monotonic()
+    text = ""
     try:
-        with live.container():
-            st.subheader("Generated answer")
-            st.write_stream(stream())
+        while True:
+            try:
+                piece = pieces.get(timeout=1)
+            except queue.Empty:
+                piece = None
+            if piece is done:
+                break
+            if piece:
+                text += piece
+                answer.markdown(text)
+            elapsed = time.monotonic() - started
+            status.caption(
+                f"{source}: writing the answer… {elapsed:.0f} s" if text else
+                f"{source}: retrieving and reading the prompt… {elapsed:.0f} s"
+            )
     finally:
-        cancelled.set()
+        answer_stream.cancelled.set()
 
     output = future.result()
-    live.empty()
+    status.empty()
+    answer.empty()
     return output
 
 
-def run_pdf(question: str, k: int, on_token=None):
+def run_pdf(question: str, k: int, answer_stream=None):
     """Run the existing PDF retrieval and generation pipeline."""
     country_names = pdf_rag.infer_country_names(question)
 
@@ -144,7 +154,7 @@ def run_pdf(question: str, k: int, on_token=None):
             question,
             results,
             country_names=country_names,
-            on_token=on_token,
+            answer_stream=answer_stream,
         )
     )
 
@@ -155,7 +165,7 @@ def run_pdf(question: str, k: int, on_token=None):
     }
 
 
-def run_xml(question: str, k: int, on_token=None):
+def run_xml(question: str, k: int, answer_stream=None):
     """Run the XML (Akoma Ntoso) retrieval and generation pipeline."""
     results = xml_rag.retrieve(question, k=k)
 
@@ -166,7 +176,7 @@ def run_xml(question: str, k: int, on_token=None):
             "cached": False,
         }
 
-    payload = run_sync(xml_rag.generate_answer_cached(question, results, on_token=on_token))
+    payload = run_sync(xml_rag.generate_answer_cached(question, results, answer_stream=answer_stream))
 
     return {
         "answer": payload["answer"],
@@ -175,7 +185,7 @@ def run_xml(question: str, k: int, on_token=None):
     }
 
 
-def run_ttl(question: str, k: int, on_token=None):
+def run_ttl(question: str, k: int, answer_stream=None):
     """Run the existing TTL retrieval and generation pipeline."""
     plan = ttl_rag.plan_query(question, k)
     chunk_type, country_names = plan["chunk_type"], plan["country_names"]
@@ -207,7 +217,7 @@ def run_ttl(question: str, k: int, on_token=None):
             results,
             chunk_type=chunk_type,
             country_names=country_names,
-            on_token=on_token,
+            answer_stream=answer_stream,
         )
     )
 
@@ -364,8 +374,7 @@ if submitted:
     else:
         try:
             run = {"PDF": run_pdf, "XML": run_xml, "TTL": run_ttl}[source]
-            with st.spinner(f"Running {source} retrieval and generation..."):
-                output = run_streamed(run, question.strip(), k)
+            output = run_streamed(run, question.strip(), k)
 
             st.session_state["rag_output"] = output
             st.session_state["rag_source"] = source
