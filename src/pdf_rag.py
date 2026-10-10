@@ -257,6 +257,7 @@ def generate_answer(
     question: str,
     results,
     country_names: set[str] | None = None,
+    on_token=None,
 ):
     context, used = _build_context(results)
     total = len(results["documents"][0])
@@ -309,6 +310,7 @@ At the end, list the source pages you relied on.
                 "content": prompt,
             },
         ],
+        on_token=on_token,
         temperature=0,
         seed=42,
     )
@@ -374,6 +376,7 @@ async def generate_answer_cached(
     question: str,
     results,
     country_names: set[str] | None = None,
+    on_token=None,
 ) -> dict:
     context, used = _build_context(results)
     total = len(results["documents"][0])
@@ -404,6 +407,7 @@ async def generate_answer_cached(
         question,
         results,
         country_names,
+        on_token,
     )
 
     payload = {

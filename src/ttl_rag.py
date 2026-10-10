@@ -541,6 +541,7 @@ def generate_answer(
     results,
     chunk_type: str | None = None,
     country_names: set[str] | None = None,
+    on_token=None,
 ) -> str:
     # Thesaurus re-ranking happens in retrieve(), within each assessment.
     context, used = _build_context(results)
@@ -623,6 +624,7 @@ Retrieved chunks{order_note}:
                 "content": prompt,
             },
         ],
+        on_token=on_token,
     )
 
 # ---------------------------------------------------------------------------
@@ -697,6 +699,7 @@ async def generate_answer_cached(
     results,
     chunk_type: str | None = None,
     country_names: set[str] | None = None,
+    on_token=None,
 ) -> dict:
     """Cache the LLM answer using the retrieved context as part of the key."""
     import anyio
@@ -742,6 +745,7 @@ async def generate_answer_cached(
             results,
             chunk_type=chunk_type,
             country_names=country_names,
+            on_token=on_token,
         )
     )
 

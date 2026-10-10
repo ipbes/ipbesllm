@@ -1,8 +1,12 @@
 
+import queue
 import sys
+import threading
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import streamlit as st
+from loguru import logger
 
 # This file lives in src/; make its sibling modules (cache.py, geo.py,
 # thesaurus_helper.py ...) importable however Streamlit was launched.
@@ -16,6 +20,10 @@ import ttl_rag
 import xml_rag
 # Never asyncio.run() here: see cache.run_sync.
 from cache import run_sync
+from rag_utils import (
+    CHAT_KEEP_ALIVE, NUM_CTX, GenerationCancelled, chat_client, embed_query,
+)
+from thesaurus_helper import get_thesaurus
 
 
 st.set_page_config(
@@ -31,7 +39,84 @@ st.caption(
 )
 
 
-def run_pdf(question: str, k: int):
+@st.cache_resource(show_spinner=False)
+def start_warm_up():
+    """Once per server process, load in the background what the first
+    question would otherwise wait for: the thesaurus, the geography graph,
+    the Chroma collections and both Ollama models."""
+    def load_answer_models():
+        for model in {pdf_rag.LLM_MODEL, ttl_rag.LLM_MODEL, xml_rag.LLM_MODEL}:
+            # An empty prompt only loads the model. Same num_ctx as the
+            # answers, or Ollama would reload it for the first question.
+            chat_client().generate(model=model, prompt="",
+                                   keep_alive=CHAT_KEEP_ALIVE,
+                                   options={"num_ctx": NUM_CTX})
+
+    steps = [
+        ("thesaurus", get_thesaurus),
+        ("geography", lambda: pdf_rag.infer_country_names("warm up")),
+        ("PDF collection", pdf_rag._get_collection),
+        ("TTL collection", ttl_rag._get_collection),
+        ("embedding model", lambda: embed_query("warm up")),
+        ("answer model", load_answer_models),
+    ]
+
+    def warm():
+        for name, step in steps:
+            try:
+                step()
+            except (Exception, SystemExit) as exc:  # noqa: BLE001
+                logger.warning(f"Warm-up of {name} failed: {exc}")
+        logger.info("Warm-up finished.")
+
+    threading.Thread(target=warm, name="warm-up", daemon=True).start()
+
+
+@st.cache_resource(show_spinner=False)
+def pipeline_executor():
+    return ThreadPoolExecutor(max_workers=2, thread_name_prefix="rag")
+
+
+start_warm_up()
+
+
+def run_streamed(run, question: str, k: int):
+    """Run a pipeline in a worker thread and show the answer as it streams.
+
+    If the script stops first (a new query, a page reload), the generation is
+    cancelled, so Ollama does not keep working on an answer nobody will see
+    while the next question waits behind it.
+    """
+    pieces = queue.Queue()
+    done = object()
+    cancelled = threading.Event()
+
+    def on_token(piece: str):
+        if cancelled.is_set():
+            raise GenerationCancelled()
+        pieces.put(piece)
+
+    future = pipeline_executor().submit(run, question, k, on_token)
+    future.add_done_callback(lambda _: pieces.put(done))
+
+    def stream():
+        while (piece := pieces.get()) is not done:
+            yield piece
+
+    live = st.empty()
+    try:
+        with live.container():
+            st.subheader("Generated answer")
+            st.write_stream(stream())
+    finally:
+        cancelled.set()
+
+    output = future.result()
+    live.empty()
+    return output
+
+
+def run_pdf(question: str, k: int, on_token=None):
     """Run the existing PDF retrieval and generation pipeline."""
     country_names = pdf_rag.infer_country_names(question)
 
@@ -59,6 +144,7 @@ def run_pdf(question: str, k: int):
             question,
             results,
             country_names=country_names,
+            on_token=on_token,
         )
     )
 
@@ -69,7 +155,7 @@ def run_pdf(question: str, k: int):
     }
 
 
-def run_xml(question: str, k: int):
+def run_xml(question: str, k: int, on_token=None):
     """Run the XML (Akoma Ntoso) retrieval and generation pipeline."""
     results = xml_rag.retrieve(question, k=k)
 
@@ -80,7 +166,7 @@ def run_xml(question: str, k: int):
             "cached": False,
         }
 
-    payload = run_sync(xml_rag.generate_answer_cached(question, results))
+    payload = run_sync(xml_rag.generate_answer_cached(question, results, on_token=on_token))
 
     return {
         "answer": payload["answer"],
@@ -89,7 +175,7 @@ def run_xml(question: str, k: int):
     }
 
 
-def run_ttl(question: str, k: int):
+def run_ttl(question: str, k: int, on_token=None):
     """Run the existing TTL retrieval and generation pipeline."""
     plan = ttl_rag.plan_query(question, k)
     chunk_type, country_names = plan["chunk_type"], plan["country_names"]
@@ -121,6 +207,7 @@ def run_ttl(question: str, k: int):
             results,
             chunk_type=chunk_type,
             country_names=country_names,
+            on_token=on_token,
         )
     )
 
@@ -238,11 +325,12 @@ with st.sidebar:
         "Chunks per assessment (XML: chunks in total)",
         min_value=1,
         max_value=20,
-        value=5,
+        value=3,
         help=(
             "Each assessment (GA1, IAS, LDR) is searched separately, or only "
             "the ones the question names. For TTL, key-message, person and "
-            "country questions use larger limits to list everything."
+            "country questions use larger limits to list everything. "
+            "More chunks make a longer prompt and a slower answer."
         ),
     )
 
@@ -275,13 +363,9 @@ if submitted:
         st.warning("Please enter a question.")
     else:
         try:
+            run = {"PDF": run_pdf, "XML": run_xml, "TTL": run_ttl}[source]
             with st.spinner(f"Running {source} retrieval and generation..."):
-                if source == "PDF":
-                    output = run_pdf(question.strip(), k)
-                elif source == "XML":
-                    output = run_xml(question.strip(), k)
-                else:
-                    output = run_ttl(question.strip(), k)
+                output = run_streamed(run, question.strip(), k)
 
             st.session_state["rag_output"] = output
             st.session_state["rag_source"] = source

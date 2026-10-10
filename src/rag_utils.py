@@ -26,7 +26,9 @@ from loguru import logger
 EMBED_MODEL = os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 EMBED_TIMEOUT = float(os.getenv("OLLAMA_EMBED_TIMEOUT", "300"))  # seconds / request
-KEEP_ALIVE = "30m"               # keep the model loaded between batches
+# Keep the embedding model loaded between batches and between questions
+# (Ollama's own default unloads it after 5 minutes).
+KEEP_ALIVE = os.getenv("OLLAMA_EMBED_KEEP_ALIVE", "2h")
 
 # A batch ends when EITHER limit would be exceeded.
 MAX_BATCH_ITEMS = 64
@@ -64,15 +66,34 @@ def chat_client():
     return ollama.Client(host=OLLAMA_URL)
 
 
-def chat(model: str, messages: list[dict], **options):
-    """Ask the answer model; returns the reply text."""
+class GenerationCancelled(Exception):
+    """Raised by an on_token callback to stop a streamed answer."""
+
+
+def chat(model: str, messages: list[dict], on_token=None, **options):
+    """Ask the answer model; returns the reply text.
+
+    With `on_token`, the reply is streamed and each piece is passed to it as
+    it arrives. The callback may raise (e.g. GenerationCancelled) to stop:
+    closing the stream makes Ollama stop generating.
+    """
     response = chat_client().chat(
         model=model,
         messages=messages,
         options={"num_ctx": NUM_CTX, **options},
         keep_alive=CHAT_KEEP_ALIVE,
+        stream=on_token is not None,
     )
-    return response["message"]["content"]
+    if on_token is None:
+        return response["message"]["content"]
+
+    pieces = []
+    for part in response:
+        piece = part["message"]["content"]
+        if piece:
+            pieces.append(piece)
+            on_token(piece)
+    return "".join(pieces)
 
 
 def is_retryable(exc: Exception) -> bool:
@@ -110,7 +131,9 @@ def embed_query(text: str, model: str = EMBED_MODEL) -> tuple[float, ...]:
     """Embed a query once (cached), with a short retry on transient errors."""
     for attempt in range(3):
         try:
-            return tuple(embed_client().embed(model=model, input=[text])["embeddings"][0])
+            return tuple(embed_client().embed(
+                model=model, input=[text], keep_alive=KEEP_ALIVE
+            )["embeddings"][0])
         except (httpx.TransportError, ConnectionError) as exc:
             if attempt == 2:
                 raise

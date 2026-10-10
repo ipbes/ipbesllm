@@ -91,6 +91,7 @@ Content:
 def generate_answer(
     question: str,
     results,
+    on_token=None,
 ):
 
     context, used = _build_context(results)
@@ -167,10 +168,11 @@ Sources:
                 "content": prompt,
             },
         ],
+        on_token=on_token,
     )
 
 
-async def generate_answer_cached(question: str, results) -> dict:
+async def generate_answer_cached(question: str, results, on_token=None) -> dict:
     """Cache the answer, keyed on the question and the retrieved context."""
     context, used = _build_context(results)
     total = len(results["documents"][0])
@@ -189,7 +191,7 @@ async def generate_answer_cached(question: str, results) -> dict:
         logger.debug(f"xml answer HIT  q={question[:50]!r}")
         return {**hit, "_cached": True}
 
-    answer = await asyncio.to_thread(generate_answer, question, results)
+    answer = await asyncio.to_thread(generate_answer, question, results, on_token)
     payload = {
         "answer": answer,
         "context_chunks": used,
