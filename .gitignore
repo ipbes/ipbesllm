@@ -16,3 +16,7 @@ src/test.py
 .env
 tests/
 *.log
+# Generated: data bundle, run logs, answer ratings
+dist/
+compare.log
+feedback/

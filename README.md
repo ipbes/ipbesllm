@@ -633,6 +633,42 @@ Time: 0.003s
 
 If the RAG prompt changes, increment `PROMPT_VERSION` in the corresponding `*_rag.py`; if retrieval logic changes, increment `RETRIEVAL_VERSION`. Old entries are then no longer used.
 
+## Deploying to Streamlit Community Cloud
+
+The deployed app answers with Azure OpenAI and embeds questions in-process
+(`LOCAL_EMBEDDINGS=1`: the same nomic-embed-text vectors as Ollama), so it
+needs no Ollama. The search data is not in git; the app downloads it once at
+startup from `DATA_BUNDLE_URL`.
+
+1. Build the data bundle (Chroma database + thesaurus/geography RDF) after
+   indexing, and upload `dist/ipbes-data.zip` to a private Azure Blob
+   container:
+
+   ```bash
+   python src/data_bundle.py
+   ```
+
+2. Create a read-only SAS URL for the uploaded zip.
+3. On share.streamlit.io, create an app from this repository: branch `main`,
+   main file `src/app.py`, Python 3.11.
+4. In the app's *Secrets*, set:
+
+   ```toml
+   AZURE_OPENAI_ENDPOINT = "https://<resource>.services.ai.azure.com/openai/v1/"
+   AZURE_OPENAI_API_KEY = "<key>"
+   AZURE_OPENAI_DEPLOYMENT = "gpt-5.4"
+   LOCAL_EMBEDDINGS = "1"
+   DATA_BUNDLE_URL = "<SAS URL of ipbes-data.zip>"
+   ```
+
+5. Limit sharing to invited viewers: the app spends the Azure key's budget.
+
+After re-indexing, rebuild and re-upload the bundle, then reboot the app
+(the download only happens when `chroma/` is missing).
+
+Answer ratings (`feedback/feedback.csv`) are not kept across restarts on
+Community Cloud.
+
 ## Clearing the cache
 
 - **In-memory cache:** restart the process (e.g. stop and restart Streamlit).

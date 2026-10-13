@@ -71,13 +71,64 @@ AZURE_REASONING_EFFORT = os.getenv("AZURE_OPENAI_REASONING_EFFORT", "low")
 LLM_MODEL = (os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-5.4") if USE_AZURE
              else os.getenv("OLLAMA_MODEL", "llama3.1:latest"))
 
+# Embeddings. With AZURE_OPENAI_EMBED_DEPLOYMENT also set, they come from that
+# Azure deployment, shortened to EMBED_DIMENSIONS (768: the size of the
+# nomic-embed-text vectors, so existing collections can be re-embedded in
+# place and keep their size); otherwise from Ollama. Vectors from different
+# models do not mix: re-run the *_index.py scripts after switching.
+AZURE_EMBED_DEPLOYMENT = os.getenv("AZURE_OPENAI_EMBED_DEPLOYMENT", "")
+USE_AZURE_EMBED = USE_AZURE and bool(AZURE_EMBED_DEPLOYMENT)
+EMBED_DIMENSIONS = int(os.getenv("AZURE_OPENAI_EMBED_DIMENSIONS", "768"))
+if USE_AZURE_EMBED:
+    EMBED_MODEL = AZURE_EMBED_DEPLOYMENT
+
+# LOCAL_EMBEDDINGS=1 embeds in this process instead of calling Ollama, with
+# the same nomic-embed-text v1.5 weights (ONNX, via fastembed): the vectors
+# match Ollama's, so indexes built with Ollama keep working. For a deployed
+# app with no Ollama; the model (~550 MB) downloads on first use.
+LOCAL_EMBEDDINGS = os.getenv("LOCAL_EMBEDDINGS", "") == "1" and not USE_AZURE_EMBED
+LOCAL_EMBED_MODELS = {"nomic-embed-text": "nomic-ai/nomic-embed-text-v1.5"}
+
 
 # ---------------------------------------------------------------------------
 # Ollama clients
 # ---------------------------------------------------------------------------
 
+class _AzureEmbedClient:
+    """Answers embed() like ollama.Client, from the Azure deployment."""
+
+    def embed(self, model: str, input: list[str], **_ollama_only):
+        response = azure_client().embeddings.create(
+            model=model, input=input, dimensions=EMBED_DIMENSIONS
+        )
+        data = sorted(response.data, key=lambda d: d.index)
+        return {"embeddings": [d.embedding for d in data]}
+
+
+class _LocalEmbedClient:
+    """Answers embed() like ollama.Client, with fastembed in this process."""
+
+    def __init__(self):
+        from fastembed import TextEmbedding  # only needed with LOCAL_EMBEDDINGS
+        if EMBED_MODEL not in LOCAL_EMBED_MODELS:
+            raise SystemExit(f"LOCAL_EMBEDDINGS has no ONNX model for {EMBED_MODEL!r}")
+        self.model = TextEmbedding(LOCAL_EMBED_MODELS[EMBED_MODEL])
+
+    def embed(self, model: str, input: list[str], **_ollama_only):
+        vectors = []
+        for vector in self.model.embed(input):
+            # Ollama returns unit-length vectors; fastembed does not here.
+            norm = float((vector ** 2).sum()) ** 0.5
+            vectors.append([float(x) / norm for x in vector])
+        return {"embeddings": vectors}
+
+
 @lru_cache(maxsize=1)
 def embed_client():
+    if USE_AZURE_EMBED:
+        return _AzureEmbedClient()
+    if LOCAL_EMBEDDINGS:
+        return _LocalEmbedClient()
     return ollama.Client(host=OLLAMA_URL, timeout=EMBED_TIMEOUT)
 
 
@@ -244,6 +295,9 @@ def is_retryable(exc: Exception) -> bool:
     if isinstance(exc, ollama.ResponseError):
         status = getattr(exc, "status_code", 0) or 0
         return status >= 500 or status == 429
+    if isinstance(exc, (openai.APIConnectionError, openai.RateLimitError,
+                        openai.InternalServerError)):
+        return True
     return False
 
 
@@ -276,7 +330,8 @@ def embed_query(text: str, model: str = EMBED_MODEL) -> tuple[float, ...]:
             return tuple(embed_client().embed(
                 model=model, input=[text], keep_alive=KEEP_ALIVE
             )["embeddings"][0])
-        except (httpx.TransportError, ConnectionError) as exc:
+        except (httpx.TransportError, ConnectionError,
+                openai.APIConnectionError) as exc:
             if attempt == 2:
                 raise
             delay = 2 * 2 ** attempt
@@ -296,9 +351,9 @@ def embed_chunks(client, batch: list[dict], model: str, skip_failed: bool):
     try:
         vectors = embed_texts(client, [c["text"] for c in batch], model)
         return list(zip(batch, vectors)), []
-    except ollama.ResponseError as exc:
+    except (ollama.ResponseError, openai.BadRequestError) as exc:
         if len(batch) > 1:
-            print(f"  Ollama rejected a batch of {len(batch)} ({exc}); "
+            print(f"  The embedding model rejected a batch of {len(batch)} ({exc}); "
                   "retrying chunk by chunk to isolate it...")
             ok, bad = [], []
             for c in batch:
@@ -540,7 +595,8 @@ def run_embedding_loop(collection, todo: list[dict], build_metadata, *,
     try:
         embed_texts(client, ["warmup"], model)
     except Exception as exc:  # noqa: BLE001
-        raise SystemExit(f"Cannot reach Ollama at {OLLAMA_URL}: "
+        where = "Azure OpenAI" if USE_AZURE_EMBED else f"Ollama at {OLLAMA_URL}"
+        raise SystemExit(f"Cannot reach {where}: "
                          f"{type(exc).__name__}: {exc}")
 
     todo_chars = sum(len(c["text"]) for c in todo)
@@ -569,7 +625,7 @@ def run_embedding_loop(collection, todo: list[dict], build_metadata, *,
             print(f"  batch {n}/{len(batches)}  stored {stored}/{len(todo)}  "
                   f"elapsed {elapsed / 60:.1f}m  ETA {eta / 60:.1f}m")
     except (KeyboardInterrupt, RuntimeError, httpx.TransportError,
-            ConnectionError, ollama.ResponseError) as exc:
+            ConnectionError, ollama.ResponseError, openai.OpenAIError) as exc:
         print(f"\nSTOPPED after storing {stored} chunks this run "
               f"({type(exc).__name__}: {exc}).")
         print("Progress is saved. Re-run the same command to resume.")

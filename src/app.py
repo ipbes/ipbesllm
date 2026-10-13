@@ -26,6 +26,7 @@ from cache import run_sync
 from rag_utils import (
     CHAT_KEEP_ALIVE, NUM_CTX, USE_AZURE, AnswerStream, chat_client, embed_query,
 )
+from data_bundle import ensure_data
 from settings import PROJECT_ROOT
 from thesaurus_helper import get_thesaurus
 
@@ -142,6 +143,13 @@ def pipeline_executor():
     return ThreadPoolExecutor(max_workers=2, thread_name_prefix="rag")
 
 
+@st.cache_resource(show_spinner="Downloading the search data (first start only)…")
+def prepare_data():
+    """On a fresh deployment, fetch the Chroma database and RDF files."""
+    ensure_data()
+
+
+prepare_data()
 start_warm_up()
 
 
