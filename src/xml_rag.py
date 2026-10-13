@@ -1,19 +1,16 @@
 import asyncio
-import os
 
 import chromadb
 from chromadb.errors import NotFoundError
 from loguru import logger
 
 from cache import CACHE_VERSION, cache, make_key
-from rag_utils import EMBED_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, embed_query
+from rag_utils import (
+    EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, embed_query,
+)
 from settings import CHROMA_DIR
 
 
-LLM_MODEL = os.getenv(
-    "OLLAMA_MODEL",
-    "llama3.1:latest",
-)
 
 
 COLLECTION_NAME = "xml_documents"

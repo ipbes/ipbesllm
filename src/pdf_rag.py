@@ -10,14 +10,14 @@ from cache import CACHE_VERSION, cache, make_key
 # infer_country_names is re-exported for app.py.
 from geo import infer_country_names  # noqa: F401
 from rag_utils import (
-    EMBED_MODEL, GET_PAGE, MAX_CONTEXT_CHARS, NUM_CTX, chat, embed_query,
-    interleave_results, named_assessments, select_results, strip_corpus_words,
+    EMBED_MODEL, GET_PAGE, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat,
+    embed_query, interleave_results, named_assessments, select_results,
+    strip_corpus_words,
 )
 from thesaurus_helper import get_thesaurus
 from settings import CHROMA_DIR
 
 
-LLM_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:latest")
 
 COLLECTION_NAME = "pdf_documents"
 

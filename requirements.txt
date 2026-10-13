@@ -5,6 +5,8 @@
 # Vector store and models
 chromadb==1.4.0
 ollama==0.6.2
+openai==3.29.0
+python-dotenv==1.2.4
 httpx==0.28.1
 
 # Parsing

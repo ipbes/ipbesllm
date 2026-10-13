@@ -22,7 +22,7 @@ import xml_rag
 # Never asyncio.run() here: see cache.run_sync.
 from cache import run_sync
 from rag_utils import (
-    CHAT_KEEP_ALIVE, NUM_CTX, AnswerStream, chat_client, embed_query,
+    CHAT_KEEP_ALIVE, NUM_CTX, USE_AZURE, AnswerStream, chat_client, embed_query,
 )
 from thesaurus_helper import get_thesaurus
 
@@ -46,6 +46,8 @@ def start_warm_up():
     question would otherwise wait for: the thesaurus, the geography graph,
     the Chroma collections and both Ollama models."""
     def load_answer_models():
+        if USE_AZURE:
+            return          # nothing to load: the model runs in Azure
         for model in {pdf_rag.LLM_MODEL, ttl_rag.LLM_MODEL, xml_rag.LLM_MODEL}:
             # An empty prompt only loads the model. Same num_ctx as the
             # answers, or Ollama would reload it for the first question.
@@ -345,7 +347,7 @@ with st.sidebar:
     )
 
     st.divider()
-    st.caption("LLM model")
+    st.caption("LLM model" + (" (Azure OpenAI)" if USE_AZURE else " (Ollama)"))
     pipeline = {"PDF": pdf_rag, "TTL": ttl_rag, "XML": xml_rag}[source]
     st.code(pipeline.LLM_MODEL)
     st.caption("Embedding model")

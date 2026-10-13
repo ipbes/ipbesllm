@@ -2,11 +2,18 @@
 working directory.
 
 CHROMA_DIR can be moved with the CHROMA_DIR environment variable.
+
+Settings and secrets (e.g. AZURE_OPENAI_API_KEY) can also be put in a .env
+file at the project root; it is git-ignored. Real environment variables win.
 """
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+load_dotenv(PROJECT_ROOT / ".env")
 
 DATA_DIR = PROJECT_ROOT / "data"
 PDF_DIR = DATA_DIR / "pdf"

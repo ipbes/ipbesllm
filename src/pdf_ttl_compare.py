@@ -136,14 +136,23 @@ async def main():
     started = datetime.datetime.now()
     run_id = started.strftime("%Y%m%d-%H%M%S")
 
-    out_path = Path(f"tests/comparison_{run_id}.csv")
+    # Next to the project, wherever the script is run from.
+    out_path = Path(__file__).resolve().parent.parent / "tests" / f"comparison_{run_id}.csv"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
 
     print(f"Run id: {run_id}")
     print(f"Output: {out_path.resolve()}")
     print(f"Questions: {len(QUESTIONS)}")
     print()
 
-    rows = []
+    # Each row is written as soon as its question is done, so an interrupted
+    # run keeps what it finished. Answers are also cached (Redis), so a rerun
+    # skips the questions already answered.
+    out_file = out_path.open("w", newline="", encoding="utf-8")
+    writer = csv.DictWriter(out_file, fieldnames=FIELDNAMES, quoting=csv.QUOTE_ALL)
+    writer.writeheader()
+    out_file.flush()
+    rows = 0
 
     for i, q in enumerate(QUESTIONS, start=1):
         ts = datetime.datetime.now().isoformat(timespec="seconds")
@@ -159,7 +168,7 @@ async def main():
         except Exception as e:
             ttl_ans, ttl_src = f"(error: {e})", ""
 
-        rows.append(
+        writer.writerow(
             {
                 "timestamp": ts,
                 "run_id": run_id,
@@ -170,25 +179,20 @@ async def main():
                 "ttl_source": ttl_src,
             }
         )
+        out_file.flush()
+        rows += 1
 
         print(f"  pdf: {pdf_ans[:80]!r}")
         print(f"  ttl: {ttl_ans[:80]!r}")
         print()
 
-    with out_path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=FIELDNAMES,
-            quoting=csv.QUOTE_ALL,
-        )
-        writer.writeheader()
-        writer.writerows(rows)
+    out_file.close()
 
     finished = datetime.datetime.now()
     duration = (finished - started).total_seconds()
 
     print(
-        f"Wrote {len(rows)} rows to {out_path.resolve()} "
+        f"Wrote {rows} rows to {out_path.resolve()} "
         f"({duration:.1f}s)"
     )
 

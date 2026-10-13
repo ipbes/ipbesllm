@@ -24,9 +24,12 @@ from urllib.parse import urlparse
 
 import httpx
 import ollama
+import openai
 from chromadb.errors import NotFoundError
 from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 from loguru import logger
+
+import settings  # noqa: F401  (loads .env before the settings below are read)
 
 EMBED_MODEL = os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
@@ -56,6 +59,18 @@ NUM_CTX = int(os.getenv("OLLAMA_NUM_CTX", "8192"))
 MAX_CONTEXT_CHARS = int(os.getenv("RAG_MAX_CONTEXT_CHARS", "20000"))
 CHAT_KEEP_ALIVE = os.getenv("OLLAMA_CHAT_KEEP_ALIVE", "30m")  # stay loaded between questions
 
+# Answer model. With AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY set,
+# answers come from that Azure OpenAI (Microsoft Foundry) deployment;
+# otherwise from the local Ollama model. Embeddings always use Ollama.
+AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT", "")
+AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY", "")
+USE_AZURE = bool(AZURE_OPENAI_ENDPOINT and AZURE_OPENAI_API_KEY)
+# GPT-5 models think before answering; "low" keeps answers quick.
+AZURE_REASONING_EFFORT = os.getenv("AZURE_OPENAI_REASONING_EFFORT", "low")
+
+LLM_MODEL = (os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-5.4") if USE_AZURE
+             else os.getenv("OLLAMA_MODEL", "llama3.1:latest"))
+
 
 # ---------------------------------------------------------------------------
 # Ollama clients
@@ -69,6 +84,22 @@ def embed_client():
 @lru_cache(maxsize=1)
 def chat_client():
     return ollama.Client(host=OLLAMA_URL)
+
+
+def _azure_base_url(endpoint: str) -> str:
+    """The v1 base URL, also when the endpoint was copied with an API path
+    (".../openai/v1/responses" or ".../chat/completions") on the end."""
+    endpoint = endpoint.strip().rstrip("/")
+    endpoint = re.sub(r"/(responses|chat/completions)$", "", endpoint)
+    if not endpoint.endswith("/openai/v1"):
+        endpoint += "/openai/v1"
+    return endpoint + "/"
+
+
+@lru_cache(maxsize=1)
+def azure_client():
+    return openai.OpenAI(base_url=_azure_base_url(AZURE_OPENAI_ENDPOINT),
+                         api_key=AZURE_OPENAI_API_KEY, max_retries=MAX_RETRIES)
 
 
 class GenerationCancelled(Exception):
@@ -97,7 +128,12 @@ def chat(model: str, messages: list[dict], answer_stream: AnswerStream | None = 
     """Ask the answer model; returns the reply text.
 
     With `answer_stream`, the reply is streamed into it as it arrives.
+    `options` are Ollama options (temperature, seed ...); Azure ignores them
+    (GPT-5 models only accept their default temperature).
     """
+    if USE_AZURE:
+        return _azure_chat(model, messages, answer_stream)
+
     if answer_stream is None:
         response = chat_client().chat(
             model=model,
@@ -117,6 +153,28 @@ def chat(model: str, messages: list[dict], answer_stream: AnswerStream | None = 
         },
         answer_stream,
     )
+
+
+def _azure_chat(model: str, messages: list[dict],
+                answer_stream: AnswerStream | None) -> str:
+    request = dict(model=model, messages=messages,
+                   reasoning_effort=AZURE_REASONING_EFFORT)
+    if answer_stream is None:
+        response = azure_client().chat.completions.create(**request)
+        return response.choices[0].message.content or ""
+
+    if answer_stream.cancelled.is_set():
+        raise GenerationCancelled()
+    pieces = []
+    # Leaving the with-block (also by GenerationCancelled from put) closes
+    # the connection, which stops the generation.
+    with azure_client().chat.completions.create(**request, stream=True) as stream:
+        for chunk in stream:
+            piece = chunk.choices[0].delta.content if chunk.choices else None
+            if piece:
+                pieces.append(piece)
+                answer_stream.put(piece)
+    return "".join(pieces)
 
 
 def _stream_chat(payload: dict, answer_stream: AnswerStream) -> str:

@@ -12,9 +12,9 @@ from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key
 # infer_country_names / canonical_country are re-exported for app.py.
 from geo import canonical_country, country_code_for_label, infer_country_names
 from rag_utils import (
-    EMBED_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, concat_results, embed_query,
-    empty_results, interleave_results, named_assessments, select_results,
-    strip_corpus_words,
+    EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, concat_results,
+    embed_query, empty_results, interleave_results, named_assessments,
+    select_results, strip_corpus_words,
 )
 from thesaurus_helper import get_thesaurus
 from settings import CHROMA_DIR
@@ -24,7 +24,6 @@ from settings import CHROMA_DIR
 # Config
 # ---------------------------------------------------------------------------
 
-LLM_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:latest")
 
 COLLECTION_NAME = "ttl_documents"
 

@@ -12,3 +12,7 @@ src/test.py
 .cache
 *:Zone.Identifier
 .pytest_cache/
+# Local settings and secrets (API keys)
+.env
+tests/
+*.log
