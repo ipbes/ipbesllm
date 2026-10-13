@@ -1,0 +1,7 @@
+[server]
+# Serves src/static/ (next to app.py) at /app/static/, e.g. the background.
+enableStaticServing = true
+
+[theme]
+# The chat sits on light panels over the background photo.
+base = "light"

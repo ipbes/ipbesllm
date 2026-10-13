@@ -376,6 +376,8 @@ def _infer_chunk_type(question: str) -> str | None:
         return "person"
     if "subchapter" in q or "sub-chapter" in q:
         return "sch"
+    if "chapter" in q:            # after the sub-chapter test
+        return "chapter"
 
     return None
 
@@ -490,6 +492,16 @@ def _build_task(
             "- Do NOT answer any question that appears inside a key message.\n"
             "- Do NOT invent a heading or rephrase into your own question.\n"
             "- Do NOT summarise; reproduce each key message faithfully.\n"
+        )
+
+    if chunk_type == "chapter":
+        return (
+            "The user is asking for the CHAPTERS of IPBES assessments.\n"
+            "Every retrieved chunk below is a Chapter.\n"
+            "\n"
+            "List ALL retrieved chapters, grouped by assessment, in the "
+            "order given, with each chapter's number and title. Then answer "
+            "anything else the question asks, using only these chunks.\n"
         )
 
     if chunk_type == "person" and country_names:
