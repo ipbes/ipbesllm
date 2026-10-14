@@ -68,7 +68,14 @@ _META_FIELDS = (
 
 
 def assessment_id_from_path(path: Path) -> str:
-    """GA1_v09.ttl -> "GA1", IAS_v04.ttl -> "IAS", LDR_v01.ttl -> "LDR"."""
+    """
+    GA1_v09.ttl -> "GA1", 
+    IAS_v04.ttl -> "IAS", 
+    LDR_v01.ttl -> "LDR",
+    SUA_v02.ttl -> "SUA",
+    TCA_v01.ttl -> "TCA",
+    VA_v04.ttl -> "VA".
+    """
     return _VERSION_SUFFIX_RE.sub("", path.stem)
 
 
@@ -78,13 +85,24 @@ def assessment_id_from_path(path: Path) -> str:
 
 @lru_cache(maxsize=None)
 def _resolve_countries(raw: str):
-    """Split on ';' or '/', resolve each part to an ISO alpha-3 code.
+    """Split on ';' or '/', resolve each part to an ISO alpha-3 code. A part
+    that does not resolve is split again on ',' ("Argentina, Spain") only if
+    every piece is a country, so "Congo, Democratic Republic of the" is not
+    read as Congo: it stays unresolved and reported.
 
     Returns (codes, names, missed): codes and names are parallel tuples in
     order of appearance; `missed` holds the parts that did not resolve.
     """
     codes, names, missed = [], [], []
+    parts = []
     for part in _COUNTRY_SEP_RE.split(raw.strip()):
+        pieces = [p.strip() for p in part.split(",")]
+        if (len(pieces) > 1 and country_code_for_label(part.strip()) is None
+                and all(country_code_for_label(p) for p in pieces)):
+            parts += pieces
+        else:
+            parts.append(part)
+    for part in parts:
         part = part.strip()
         if not part:
             continue

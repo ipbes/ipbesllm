@@ -15,11 +15,35 @@ _graph = None
 # Explicit colloquial aliases absent from, or inconsistently represented in, RDF.
 # Each alias resolves to an RDF-backed ISO alpha-3 code; no concepts are fabricated.
 _COUNTRY_ALIASES = {
-    "south korea": "KOR", "north korea": "PRK", "iran": "IRN",
-    "syria": "SYR", "vietnam": "VNM", "laos": "LAO",
-    "bolivia": "BOL", "venezuela": "VEN", "moldova": "MDA",
-    "palestine": "PSE", "vatican": "VAT", "vatican city": "VAT",
-    "tanzania": "TZA", "netherlands": "NLD",
+    "bolivia": "BOL", 
+    "britain": "GBR", 
+    "cote d'ivoire": "CIV", 
+    "german": "DEU", 
+    "great britain": "GBR",
+    "iran": "IRN",
+    "ivory coast": "CIV",
+    "laos": "LAO",
+    "moldova": "MDA",
+    "netherlands": "NLD",
+    "north korea": "PRK", 
+    "palestine": "PSE", 
+    "rom": "ROU",
+    "russia": "RUS",
+    "south korea": "KOR",
+    "syria": "SYR", 
+    "tanzania": "TZA", 
+    "u.k.": "GBR", 
+    "u.s.": "USA", 
+    "u.s.a.": "USA", 
+    "uk": "GBR", 
+    "united kingdom": "GBR", 
+    "united states of america": "USA",
+    "united states": "USA", 
+    "us": "USA", 
+    "vatican city": "VAT",
+    "vatican": "VAT", 
+    "venezuela": "VEN", 
+    "vietnam": "VNM",
 }
 
 def _load() -> Graph:
@@ -89,7 +113,14 @@ def country_code_for_label(label: str) -> str | None:
     upper = value.upper()
     if len(upper) == 3 and upper in by_code:
         return upper
-    return by_label.get(_key(value))
+    code = by_label.get(_key(value))
+    if code is None and "Ã" in value:
+        # UTF-8 read as Latin-1 somewhere upstream: "CÃ´te" -> "Côte".
+        try:
+            return country_code_for_label(value.encode("latin-1").decode("utf-8"))
+        except UnicodeError:
+            pass
+    return code
 
 
 def country_label_for_code(code: str) -> str | None:
