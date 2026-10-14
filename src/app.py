@@ -18,13 +18,15 @@ SRC_DIR = Path(__file__).resolve().parent
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
+import combined_rag
 import pdf_rag
 import ttl_rag
 import xml_rag
 # Never asyncio.run() here: see cache.run_sync.
 from cache import run_sync
 from rag_utils import (
-    CHAT_KEEP_ALIVE, NUM_CTX, USE_AZURE, AnswerStream, chat_client, embed_query,
+    CHAT_KEEP_ALIVE, LLM_MODEL, NUM_CTX, USE_AZURE, AnswerStream, chat_client,
+    embed_query,
 )
 from data_bundle import ensure_data
 from settings import PROJECT_ROOT
@@ -73,7 +75,9 @@ st.markdown(
 # Answer ratings (👍/👎), one row per click, for evaluating the pipelines.
 FEEDBACK_PATH = PROJECT_ROOT / "feedback" / "feedback.csv"
 
+# ALL is what users get; the single sources are for analysis (developer mode).
 SOURCES = {
+    "ALL": "IPBES Assessments and Plenary Reports",
     "PDF": "Assessments and Plenary Reports (PDF text)",
     "TTL": "Assessments (TTL/RDF)",
     "XML": "Plenary Reports (XML)",
@@ -237,67 +241,19 @@ def run_pdf(question: str, k: int, answer_stream=None):
     }
 
 
+def run_all(question: str, k: int, answer_stream=None):
+    """Assessments and Plenary reports together (combined_rag.ask)."""
+    return run_sync(combined_rag.ask(question, k, answer_stream=answer_stream))
+
+
 def run_xml(question: str, k: int, answer_stream=None):
-    """Run the XML (Akoma Ntoso) retrieval and generation pipeline."""
-    results = xml_rag.retrieve(question, k=k)
-
-    if not results["documents"][0]:
-        return {
-            "answer": "No relevant XML chunks were retrieved.",
-            "results": results,
-            "cached": False,
-        }
-
-    payload = run_sync(xml_rag.generate_answer_cached(question, results, answer_stream=answer_stream))
-
-    return {
-        "answer": payload["answer"],
-        "results": results,
-        "cached": payload.get("_cached", False),
-    }
+    """The XML (Akoma Ntoso) Plenary reports only."""
+    return run_sync(combined_rag.ask_xml(question, k, answer_stream))
 
 
 def run_ttl(question: str, k: int, answer_stream=None):
-    """Run the existing TTL retrieval and generation pipeline."""
-    plan = ttl_rag.plan_query(question, k)
-    chunk_type, country_names = plan["chunk_type"], plan["country_names"]
-    per_assessment = plan["per_assessment"]
-
-    results = run_sync(
-        ttl_rag.retrieve_cached(
-            question,
-            k=plan["k"],
-            chunk_type=chunk_type,
-            country_names=country_names or None,
-            per_assessment=per_assessment,
-        )
-    )
-
-    if not results["documents"][0]:
-        return {
-            "answer": "No relevant TTL chunks were retrieved.",
-            "results": results,
-            "cached": False,
-        }
-
-    if chunk_type:
-        results = ttl_rag._reorder_by_identifier(results)
-
-    payload = run_sync(
-        ttl_rag.generate_answer_cached(
-            question,
-            results,
-            chunk_type=chunk_type,
-            country_names=country_names,
-            answer_stream=answer_stream,
-        )
-    )
-
-    return {
-        "answer": payload["answer"],
-        "results": results,
-        "cached": payload.get("_cached", False),
-    }
+    """The TTL assessments only."""
+    return run_sync(combined_rag.ask_ttl(question, k, answer_stream))
 
 
 def source_title(source: str, number: int, metadata: dict) -> str:
@@ -325,6 +281,11 @@ METADATA_KEYS = {
 }
 
 
+# What each chunk is, from its source_type metadata (combined answers mix
+# TTL and XML chunks); PDF chunks have none.
+CHUNK_KINDS = {"ttl": "TTL", "xml": "XML"}
+
+
 def render_sources(source: str, results, developer: bool):
     """The chunks the answer was based on, numbered as in the prompt."""
     documents = results["documents"][0]
@@ -337,9 +298,10 @@ def render_sources(source: str, results, developer: bool):
     with st.expander(f"Sources ({len(documents)})"):
         for index, document in enumerate(documents):
             metadata = metadatas[index] or {}
-            st.markdown(f"**{source_title(source, index + 1, metadata)}**")
+            kind = CHUNK_KINDS.get(metadata.get("source_type"), source)
+            st.markdown(f"**{source_title(kind, index + 1, metadata)}**")
             if developer:
-                visible = {key: metadata[key] for key in METADATA_KEYS[source]
+                visible = {key: metadata[key] for key in METADATA_KEYS[kind]
                            if metadata.get(key) is not None}
                 if index < len(distances):
                     visible["distance"] = round(distances[index], 4)
@@ -374,6 +336,8 @@ def render_answer(index: int, message: dict, developer: bool):
         render_sources(message["source"], message["results"], developer)
     details = [SOURCES[message["source"]]]
     if developer:
+        if message.get("route"):
+            details.append(f"route: {message['route']}")
         details.append(message["model"])
         if message.get("seconds") is not None:
             details.append(f"{message['seconds']:.0f} s")
@@ -401,20 +365,11 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-    source = st.radio(
-        "Search in",
-        list(SOURCES),
-        format_func=SOURCES.get,
-        help=(
-            "The assessments (GA1, IAS, LDR) as PDF text or as structured "
-            "data, or the Akoma Ntoso plenary documents."
-        ),
-    )
-
     with st.expander("About"):
         st.markdown(
-            "Answers questions about IPBES assessments and plenary documents "
-            "using only the retrieved text, and lists the sources it used. "
+            "Answers questions about the IPBES assessments and the reports of "
+            "the IPBES Plenary sessions, using only the retrieved text, and "
+            "lists the sources it used. "
             "Each question is answered on its own: earlier questions are not "
             "taken into account.\n\n"
             "It is a research aid, not a replacement for the documents: "
@@ -424,8 +379,20 @@ with st.sidebar:
 
     developer = st.toggle("Developer mode",
                           help="Show retrieval settings, models and metadata.")
-    # PDF and TTL search each assessment for k chunks; XML takes k in
-    # total, and its paragraphs are short, so it needs a larger k.
+    source = "ALL"
+    if developer:
+        source = st.selectbox(
+            "Search in",
+            list(SOURCES),
+            format_func=SOURCES.get,
+            help=(
+                "All: the assessments (TTL) and the Plenary reports (XML), "
+                "routed per question. The single sources are for analysis."
+            ),
+        )
+    # PDF, TTL and ALL search each assessment for k chunks; XML takes k in
+    # total, and its paragraphs are short, so it needs a larger k (ALL uses
+    # combined_rag.XML_K for the Plenary reports).
     k = 12 if source == "XML" else 3
     if developer:
         k = st.slider(
@@ -434,14 +401,14 @@ with st.sidebar:
             max_value=20,
             value=k,
             help=(
-                "Each assessment (GA1, IAS, LDR) is searched separately, or "
+                "Each assessment is searched separately, or "
                 "only the ones the question names. For TTL, key-message, "
                 "person and country questions use larger limits to list "
                 "everything. More chunks make a longer prompt and a slower "
                 "answer."
             ),
         )
-        pipeline = {"PDF": pdf_rag, "TTL": ttl_rag, "XML": xml_rag}[source]
+        pipeline = {"PDF": pdf_rag, "TTL": ttl_rag, "XML": xml_rag}.get(source, ttl_rag)
         st.caption("LLM model" + (" (Azure OpenAI)" if USE_AZURE else " (Ollama)"))
         st.code(pipeline.LLM_MODEL)
         st.caption("Embedding model")
@@ -456,7 +423,7 @@ for index, message in enumerate(st.session_state.messages):
             render_answer(index, message, developer)
 
 
-question = st.chat_input("Ask a question about IPBES assessments…")
+question = st.chat_input("Ask a question about IPBES assessments and Plenary sessions…")
 
 # A new "Search in" choice applies to the next question; offer to ask the
 # last one again there, rather than leaving its old answer looking current.
@@ -474,10 +441,10 @@ if not st.session_state.messages and not question:
             "**Hi, I'm IBOK Chat.** Ask me about the IPBES "
             "assessments or plenary documents, or start with one of these:"
         )
-    group = "plenary" if source == "XML" else "assessments"
-    suggestions = random.Random(st.session_state.suggestion_seed).sample(
-        SUGGESTED_QUESTIONS[group], 4
-    )
+    pool = {"XML": SUGGESTED_QUESTIONS["plenary"],
+            "ALL": SUGGESTED_QUESTIONS["assessments"] + SUGGESTED_QUESTIONS["plenary"],
+            }.get(source, SUGGESTED_QUESTIONS["assessments"])
+    suggestions = random.Random(st.session_state.suggestion_seed).sample(pool, 4)
     columns = st.columns(2)
     for i, suggestion in enumerate(suggestions):
         if columns[i % 2].button(suggestion, key=f"suggestion_{i}",
@@ -494,14 +461,15 @@ if question and question.strip():
         st.markdown(question)
 
     with st.chat_message("assistant"):
-        run = {"PDF": run_pdf, "XML": run_xml, "TTL": run_ttl}[source]
-        pipeline = {"PDF": pdf_rag, "TTL": ttl_rag, "XML": xml_rag}[source]
+        run = {"ALL": run_all, "PDF": run_pdf, "XML": run_xml,
+               "TTL": run_ttl}[source]
         message = {"role": "assistant", "source": source, "question": question,
-                   "model": pipeline.LLM_MODEL}
+                   "model": LLM_MODEL}
         try:
             output = run_streamed(run, question, k, SOURCES[source])
             message.update(content=output["answer"], results=output["results"],
-                           cached=output["cached"], seconds=output["seconds"])
+                           cached=output["cached"], seconds=output["seconds"],
+                           route=output.get("route"))
         except Exception as exc:  # noqa: BLE001
             logger.exception("Query failed")
             message.update(content=f"Sorry, the query failed: {exc}", results=None)

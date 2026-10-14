@@ -179,11 +179,20 @@ def _build_context(results, max_chars: int = XML_MAX_CONTEXT_CHARS) -> tuple[str
     used = 0
 
     for i, document in enumerate(results["documents"][0]):
-        m = results["metadatas"][0][i] or {}
-        part = f"""
-SOURCE {i + 1}
+        part = f"\nSOURCE {i + 1}\n\n" + format_chunk(
+            document, results["metadatas"][0][i] or {}
+        )
+        if parts and used + len(part) + 1 > max_chars:
+            break
+        parts.append(part)
+        used += len(part) + 1
 
-File: {m.get("source_file", "")}
+    return "\n".join(parts), len(parts)
+
+
+def format_chunk(document: str, m: dict) -> str:
+    """One chunk as the prompt shows it: its location, then its text."""
+    return f"""File: {m.get("source_file", "")}
 Document type: {m.get("document_type", "")}
 Title: {m.get("title", "")}
 Date: {m.get("date", "")}
@@ -198,12 +207,6 @@ Location: {m.get("xpath", "")}
 Content:
 {document}
 """
-        if parts and used + len(part) + 1 > max_chars:
-            break
-        parts.append(part)
-        used += len(part) + 1
-
-    return "\n".join(parts), len(parts)
 
 
 def generate_answer(

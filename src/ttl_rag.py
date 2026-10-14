@@ -422,6 +422,36 @@ def _reorder_by_identifier(results):
 # Generation
 # ---------------------------------------------------------------------------
 
+def format_chunk(document: str, m: dict) -> str:
+    """One chunk as the prompt shows it: a line of its metadata, then text."""
+    # Drop only the document-level preamble lines, keep the rest
+    # (Heading / Chapter / Subchapter / Country / Roles ...).
+    lines = document.splitlines()
+    keep = [
+        ln for ln in lines
+        if not ln.startswith("Document:")
+        and not ln.startswith("Date:")
+    ]
+    body = "\n".join(keep).strip()
+
+    prefix_parts = []
+    if m.get("identifier"):
+        prefix_parts.append(f"id={m['identifier']}")
+    if m.get("chunk_type"):
+        prefix_parts.append(f"type={m['chunk_type']}")
+    if m.get("qualifier"):
+        prefix_parts.append(f"qualifier={m['qualifier']}")
+    if m.get("assessment"):
+        prefix_parts.append(f"assessment={m['assessment']}")
+    country = _country_text(m)
+    if country:
+        prefix_parts.append(f"country={country}")
+    if m.get("paragraph"):
+        prefix_parts.append(f"part={m['paragraph']}")
+
+    return " ".join(prefix_parts) + "\n" + body
+
+
 def _build_context(results, max_chars: int = MAX_CONTEXT_CHARS) -> tuple[str, int]:
     """Return (context text, number of chunks included).
 
@@ -433,35 +463,7 @@ def _build_context(results, max_chars: int = MAX_CONTEXT_CHARS) -> tuple[str, in
     separator = "\n\n---\n\n"
 
     for i, document in enumerate(results["documents"][0]):
-        m = results["metadatas"][0][i]
-
-        # Drop only the document-level preamble lines, keep the rest
-        # (Heading / Chapter / Subchapter / Country / Roles ...).
-        lines = document.splitlines()
-        keep = [
-            ln for ln in lines
-            if not ln.startswith("Document:")
-            and not ln.startswith("Date:")
-        ]
-        body = "\n".join(keep).strip()
-
-        prefix_parts = []
-        if m.get("identifier"):
-            prefix_parts.append(f"id={m['identifier']}")
-        if m.get("chunk_type"):
-            prefix_parts.append(f"type={m['chunk_type']}")
-        if m.get("qualifier"):
-            prefix_parts.append(f"qualifier={m['qualifier']}")
-        if m.get("assessment"):
-            prefix_parts.append(f"assessment={m['assessment']}")
-        country = _country_text(m)
-        if country:
-            prefix_parts.append(f"country={country}")
-        if m.get("paragraph"):
-            prefix_parts.append(f"part={m['paragraph']}")
-
-        prefix = " ".join(prefix_parts)
-        part = f"[{i + 1}] {prefix}\n{body}"
+        part = f"[{i + 1}] " + format_chunk(document, results["metadatas"][0][i])
 
         if parts and used + len(separator) + len(part) > max_chars:
             break
