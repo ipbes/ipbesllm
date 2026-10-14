@@ -318,7 +318,8 @@ METADATA_KEYS = {
     "PDF": ["assessment", "source_file", "title", "page", "page_count",
             "chunk_index", "chunk_total", "country"],
     "XML": ["source_file", "document_type", "title", "date", "division",
-            "subdivision", "paragraph", "table_title", "table_row", "eId", "xpath"],
+            "subdivision", "paragraph", "table_title", "table_row", "eId", "xpath",
+            "neighbour_of"],
     "TTL": ["identifier", "chunk_type", "qualifier", "assessment", "country",
             "eId", "division", "subdivision", "xpath"],
 }
@@ -423,13 +424,15 @@ with st.sidebar:
 
     developer = st.toggle("Developer mode",
                           help="Show retrieval settings, models and metadata.")
-    k = 3
+    # PDF and TTL search each assessment for k chunks; XML takes k in
+    # total, and its paragraphs are short, so it needs a larger k.
+    k = 12 if source == "XML" else 3
     if developer:
         k = st.slider(
             "Chunks per assessment (XML: chunks in total)",
             min_value=1,
             max_value=20,
-            value=3,
+            value=k,
             help=(
                 "Each assessment (GA1, IAS, LDR) is searched separately, or "
                 "only the ones the question names. For TTL, key-message, "

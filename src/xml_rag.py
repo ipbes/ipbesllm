@@ -1,4 +1,7 @@
 import asyncio
+import os
+import re
+from collections import defaultdict
 
 import chromadb
 from chromadb.errors import NotFoundError
@@ -6,7 +9,8 @@ from loguru import logger
 
 from cache import CACHE_VERSION, cache, make_key
 from rag_utils import (
-    EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, embed_query,
+    EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat,
+    embed_query,
 )
 from settings import CHROMA_DIR
 
@@ -18,6 +22,57 @@ COLLECTION_NAME = "xml_documents"
 # Part of the answer cache key: bump when the prompt changes.
 PROMPT_VERSION = "1"
 ANSWER_TTL = 60 * 60 * 6      # 6 hours
+
+# Each matching paragraph also brings the NEIGHBOURS paragraphs before and
+# after it in the same section: a paragraph that is mostly a list (e.g. the
+# officers elected) matches questions poorly, but the one next to it often
+# matches well.
+NEIGHBOURS = 1
+
+# The neighbours make the prompt 2-3 times longer. The Ollama limit
+# (MAX_CONTEXT_CHARS, sized for an 8 GB machine) would cut lower-ranked
+# matches; an Azure model takes far more.
+XML_MAX_CONTEXT_CHARS = int(os.getenv(
+    "XML_MAX_CONTEXT_CHARS", 60_000 if USE_AZURE else MAX_CONTEXT_CHARS
+))
+
+# Plenary sessions, however a question names them: "IPBES-1", "IPBES 1",
+# "IPBES1", "#IPBES1", "first session", "1st session", "session 1". Each
+# report's metadata has its session in `number`, so a named session also
+# limits the search to its report.
+ORDINALS = ["first", "second", "third", "fourth", "fifth", "sixth",
+            "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth",
+            "thirteenth", "fourteenth", "fifteenth", "sixteenth",
+            "seventeenth", "eighteenth", "nineteenth", "twentieth"]
+_IPBES_SESSION = re.compile(r"#?\bIPBES[\s-]?(\d{1,2})\b", re.IGNORECASE)
+_SESSION_PHRASES = [
+    re.compile(r"\b(" + "|".join(ORDINALS) + r")\s+(?:plenary\s+)?session\b", re.IGNORECASE),
+    re.compile(r"\b(\d{1,2})(?:st|nd|rd|th)\s+(?:plenary\s+)?session\b", re.IGNORECASE),
+    re.compile(r"\bsession\s+(\d{1,2})\b", re.IGNORECASE),
+]
+
+
+def session_numbers(question: str) -> set[str]:
+    """The Plenary sessions a question names, as strings ("1", "2" ...)."""
+    found = {int(n) for n in _IPBES_SESSION.findall(question)}
+    for pattern in _SESSION_PHRASES:
+        for value in pattern.findall(question):
+            found.add(ORDINALS.index(value.lower()) + 1 if value.isalpha()
+                      else int(value))
+    return {str(n) for n in found if n >= 1}
+
+
+def _spell_out_sessions(question: str) -> str:
+    """ "IPBES-1" -> "the first session of the Plenary", as the reports say."""
+    def spell(match):
+        n = int(match.group(1))
+        if 1 <= n <= len(ORDINALS):
+            return f"the {ORDINALS[n - 1]} session of the Plenary"
+        return match.group(0)
+    return _IPBES_SESSION.sub(spell, question)
+
+
+_PARAGRAPH_XPATH = re.compile(r"^(.*/paragraph)\[(\d+)\]$")
 
 
 def retrieve(
@@ -41,14 +96,80 @@ def retrieve(
             f"Run xml_index.py first. (Original error: {exc})"
         )
 
-    return collection.query(
-        query_embeddings=[list(embed_query(question, EMBED_MODEL))],
+    sessions = session_numbers(question)
+    results = collection.query(
+        query_embeddings=[list(embed_query(_spell_out_sessions(question),
+                                           EMBED_MODEL))],
         n_results=k,
+        where={"number": {"$in": sorted(sessions)}} if sessions else None,
         include=["documents", "metadatas", "distances"],
     )
+    return _with_neighbours(collection, results)
 
 
-def _build_context(results, max_chars: int = MAX_CONTEXT_CHARS) -> tuple[str, int]:
+def _with_neighbours(collection, results):
+    """Add the paragraphs around each matching paragraph, in document order
+    next to it. A neighbour gets its match's distance and a `neighbour_of`
+    metadata key; one that is itself a match keeps its first position."""
+    ids = results["ids"][0]
+    documents = results["documents"][0]
+    metadatas = results["metadatas"][0]
+    distances = results["distances"][0]
+
+    # (offset, (source_file, xpath)) of the neighbours wanted, by match.
+    wanted: dict[int, list[tuple[int, tuple[str, str]]]] = defaultdict(list)
+    for i, metadata in enumerate(metadatas):
+        match = _PARAGRAPH_XPATH.match(metadata.get("xpath") or "")
+        if not match:
+            continue
+        base, number = match.group(1), int(match.group(2))
+        for offset in range(-NEIGHBOURS, NEIGHBOURS + 1):
+            if offset and number + offset >= 1:
+                wanted[i].append((offset, (metadata["source_file"],
+                                           f"{base}[{number + offset}]")))
+
+    xpaths_by_file: dict[str, set[str]] = defaultdict(set)
+    for neighbours in wanted.values():
+        for _, (source_file, xpath) in neighbours:
+            xpaths_by_file[source_file].add(xpath)
+    found = {}
+    for source_file, xpaths in xpaths_by_file.items():
+        got = collection.get(
+            where={"$and": [{"source_file": source_file},
+                            {"xpath": {"$in": sorted(xpaths)}}]},
+            include=["documents", "metadatas"],
+        )
+        for id_, document, metadata in zip(got["ids"], got["documents"],
+                                           got["metadatas"]):
+            found[(source_file, metadata["xpath"])] = (id_, document, metadata)
+
+    out = {"ids": [], "documents": [], "metadatas": [], "distances": []}
+    seen: set[str] = set()
+
+    def add(id_, document, metadata, distance):
+        if id_ not in seen:
+            seen.add(id_)
+            out["ids"].append(id_)
+            out["documents"].append(document)
+            out["metadatas"].append(metadata)
+            out["distances"].append(distance)
+
+    for i, id_ in enumerate(ids):
+        # Offsets run -NEIGHBOURS..NEIGHBOURS, so this is document order.
+        for offset, key in wanted.get(i, []) or [(0, None)]:
+            if offset > 0 and id_ not in seen:
+                add(id_, documents[i], metadatas[i], distances[i])
+            if key in found:
+                n_id, n_doc, n_meta = found[key]
+                add(n_id, n_doc,
+                    {**n_meta, "neighbour_of": metadatas[i].get("eId")},
+                    distances[i])
+        add(id_, documents[i], metadatas[i], distances[i])
+
+    return {key: [value] for key, value in out.items()}
+
+
+def _build_context(results, max_chars: int = XML_MAX_CONTEXT_CHARS) -> tuple[str, int]:
     """Return (context text, number of chunks included).
 
     Chunks are added in order until `max_chars` would be exceeded; the first
@@ -96,7 +217,7 @@ def generate_answer(
     truncation_note = ""
     if used < total:
         logger.warning(f"Context capped at {used} of {total} retrieved chunks "
-                       f"(RAG_MAX_CONTEXT_CHARS={MAX_CONTEXT_CHARS}).")
+                       f"(XML_MAX_CONTEXT_CHARS={XML_MAX_CONTEXT_CHARS}).")
         truncation_note = (
             f"\nNOTE: the context limit was reached, so only the first {used} "
             f"of {total} retrieved chunks are shown above.\n"
