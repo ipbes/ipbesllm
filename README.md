@@ -46,7 +46,7 @@ The application uses **Azure OpenAI** models, deployed in Microsoft Foundry:
 | Role | Model (Azure deployment) | Setting |
 |---|---|---|
 | Answers | `gpt-5.4` | `AZURE_OPENAI_DEPLOYMENT` |
-| Embeddings (documents and questions) | `text-embedding-3-small`, shortened to 768 dimensions | `AZURE_OPENAI_EMBED_DEPLOYMENT` |
+| Embeddings (documents and questions) | `text-embedding-3-small` | `AZURE_OPENAI_EMBED_DEPLOYMENT` |
 
 Without the Azure settings, the code falls back to local **Ollama** models (`llama3.1:latest` and `nomic-embed-text`) for offline development; see [Optional: Ollama instead of Azure](#optional-ollama-instead-of-azure). The collections must be indexed with the same embedding model that questions are embedded with; see [Switching the embedding model](#switching-the-embedding-model).
 

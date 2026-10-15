@@ -1,3 +1,4 @@
+import os
 import queue
 import random
 import sys
@@ -37,22 +38,29 @@ st.set_page_config(
     layout="wide",
 )
 
-# Background photo (src/static/, served by enableStaticServing in
-# .streamlit/config.toml), with the content on light panels so it stays
-# readable.
+# Page background: the IPBES teal by default, or APP_BACKGROUND=photo for
+# the photo (files in src/static/ are served by enableStaticServing in
+# .streamlit/config.toml). The content sits on light panels either way.
+PAGE_BACKGROUND = (
+    'url("./app/static/background.jpg") center / cover fixed'
+    if os.getenv("APP_BACKGROUND") == "photo" else "#037473"
+)
+
 st.markdown(
     """
     <style>
     [data-testid="stApp"] {
-        background: url("./app/static/background.jpg") center / cover fixed;
+        background: PAGE_BACKGROUND;
     }
     [data-testid="stHeader"],
     [data-testid="stBottom"],
     [data-testid="stBottom"] > div {
         background: transparent;
     }
+    /* At least 2rem of background on each side, so the panel never runs
+       into the (also light) sidebar. */
     [data-testid="stMainBlockContainer"] {
-        max-width: 1100px;
+        max-width: min(1100px, calc(100% - 4rem));
         margin: 4rem auto 1rem;
         padding: 2rem 2.5rem 1.5rem;
         background: rgba(255, 255, 255, 0.92);
@@ -60,13 +68,13 @@ st.markdown(
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
     }
     [data-testid="stBottomBlockContainer"] {
-        max-width: 1100px;
+        max-width: min(1100px, calc(100% - 4rem));
     }
     [data-testid="stSidebar"] {
         background: rgba(255, 255, 255, 0.90);
     }
     </style>
-    """,
+    """.replace("PAGE_BACKGROUND", PAGE_BACKGROUND),
     unsafe_allow_html=True,
 )
 
@@ -359,7 +367,8 @@ if "suggestion_seed" not in st.session_state:
     st.session_state.suggestion_seed = random.random()
 
 with st.sidebar:
-    st.title("🌿 IBOK Chat")
+    st.image(str(SRC_DIR / "static" / "ipbes-logo.png"), width=220)
+    st.title("IBOK Chat")
 
     if st.button("New conversation", icon=":material/add:",
                  use_container_width=True):
@@ -369,7 +378,7 @@ with st.sidebar:
     with st.expander("About"):
         st.markdown(
             "Answers questions from machine readable versions of IPBES assessments (BBA, GA1, IAS, LDR, PPA, SCM, SUA, TCA, VA) and the reports of "
-            "the IPBES Plenary sessions (IPBES 1 to IPBES 8), using only the retrieved text, and "
+            "the IPBES Plenary meeting reports and decisions (IPBES 1 to IPBES 8), using only the retrieved text, and "
             "lists the sources it used. "
             "Each question is answered on its own: earlier questions are not "
             "taken into account.\n\n"
