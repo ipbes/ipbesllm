@@ -1,5 +1,3 @@
-import csv
-import datetime
 import queue
 import random
 import sys
@@ -29,7 +27,7 @@ from rag_utils import (
     embed_query,
 )
 from data_bundle import ensure_data
-from settings import PROJECT_ROOT
+from feedback_store import save_rating
 from thesaurus_helper import get_thesaurus
 
 
@@ -71,9 +69,6 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-
-# Answer ratings (👍/👎), one row per click, for evaluating the pipelines.
-FEEDBACK_PATH = PROJECT_ROOT / "feedback" / "feedback.csv"
 
 # ALL is what users get; the single sources are for analysis (developer mode).
 SOURCES = {
@@ -311,23 +306,27 @@ def render_sources(source: str, results, developer: bool):
 
 
 def save_feedback(index: int):
-    """Append the rating of answer `index` to FEEDBACK_PATH."""
+    """Store the rating of answer `index` (feedback_store: Azure Blob when
+    FEEDBACK_CONTAINER_URL is set, otherwise feedback/ratings.csv)."""
     message = st.session_state.messages[index]
     rating = st.session_state.get(f"feedback_{index}")
     if rating is None:
         return
-    FEEDBACK_PATH.parent.mkdir(parents=True, exist_ok=True)
-    new_file = not FEEDBACK_PATH.exists()
-    with FEEDBACK_PATH.open("a", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        if new_file:
-            writer.writerow(["timestamp", "source", "model", "question",
-                             "answer", "rating"])
-        writer.writerow([
-            datetime.datetime.now().isoformat(timespec="seconds"),
-            message["source"], message["model"], message["question"],
-            message["content"], "up" if rating == 1 else "down",
-        ])
+    results = message.get("results") or {"documents": [[]]}
+    try:
+        save_rating(
+            rating="up" if rating == 1 else "down",
+            question=message["question"],
+            answer=message["content"],
+            source=message["source"],
+            route=message.get("route"),
+            model=message["model"],
+            sources=len(results["documents"][0]),
+        )
+        st.toast("Thank you for your feedback.")
+    except Exception:  # noqa: BLE001
+        logger.exception("Could not store the rating")
+        st.toast("Sorry, your rating could not be saved.")
 
 
 def render_answer(index: int, message: dict, developer: bool):

@@ -666,8 +666,12 @@ startup from `DATA_BUNDLE_URL`.
 After re-indexing, rebuild and re-upload the bundle, then reboot the app
 (the download only happens when `chroma/` is missing).
 
-Answer ratings (`feedback/feedback.csv`) are not kept across restarts on
-Community Cloud.
+Answer ratings: Community Cloud keeps no files across restarts, so store
+them in Azure Blob Storage. Create a private container (e.g. `feedback`),
+generate a SAS URL for the container with Read, Add, Create and Write
+permissions, and add it to the Secrets as `FEEDBACK_CONTAINER_URL`. Every
+rating is appended to `ratings.csv` in that container. Without it, ratings
+go to `feedback/ratings.csv`.
 
 ## Clearing the cache
 
