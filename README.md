@@ -90,7 +90,7 @@ ipbesllm/
 │   ├── data_bundle.py                    # Packs chroma/ and the RDF for a deployed app
 │   ├── diagnose_chunks.py                # Inspect TTL chunk sizes before indexing
 │   ├── enrichment.ttl                    # Local SKOS additions to the IPBES thesaurus
-│   ├── feedback_store.py                 # Answer ratings (Azure Blob or a local CSV)
+│   ├── feedback_store.py                 # Stores answer ratings Azure Blob Storage
 │   ├── geo.py
 │   ├── models.py
 │   ├── pdf_index.py                      # Embed concept profiles → Chroma
