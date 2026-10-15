@@ -43,7 +43,7 @@ MAX_COUNTRY_FILTER = 100
 # Part of the cache keys: bump when retrieval or prompts change so stale
 # entries are never served after a code change.
 RETRIEVAL_VERSION = "4"
-PROMPT_VERSION = "3"
+PROMPT_VERSION = "4"
 
 
 # ---------------------------------------------------------------------------
@@ -510,18 +510,18 @@ def _build_task(
         names = ", ".join(sorted(country_names))
         return (
             f"The user is asking about experts from: {names}.\n"
-            f"Every retrieved chunk is a Person whose country field is one "
-            f"of those names.\n"
+            f"Every retrieved chunk is a Person selected because one of "
+            f"their countries (the country= field) is one of those names. "
+            f"The Country line in the text may spell it differently "
+            f"(e.g. 'Italia') or list other countries too.\n"
             "\n"
             "List ALL retrieved persons by their full name (the heading).\n"
             "For each, also give the country and the role(s) mentioned in "
             "the body, if any.\n"
             "\n"
             "CRITICAL:\n"
-            "- Only include persons whose country matches one of the names "
-            "above.\n"
-            "- If a retrieved chunk's body shows a different country, drop "
-            "it.\n"
+            "- List every retrieved person: do not drop anyone because of "
+            "how their country is spelled or because they have several.\n"
             "- Do not invent names, countries, or roles.\n"
         )
 

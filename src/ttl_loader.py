@@ -530,9 +530,11 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         if not name:
             continue
 
-        country = _text(
-            _first(graph, person, URIRef(IPBES + "country"))
-        )
+        # Every country given (e.g. nationality and residence), sorted
+        # because RDF has no order; ttl_index splits them on ";".
+        country = "; ".join(sorted({
+            _text(v) for v in _all(graph, person, URIRef(IPBES + "country"))
+        } - {""}))
 
         # Every value of every role (a person can hold the same role in
         # several chapters). Values normally name the role already
