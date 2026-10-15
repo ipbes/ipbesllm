@@ -8,23 +8,18 @@ A local Retrieval-Augmented Generation (RAG) application for exploring and compa
 
 It is a tool and is not meant to replace reading of PDF format files which remain source of truth and provenance questions. It makes use of work done in converting assessments into machine readable formats with mapped semantic relations
 
-The application uses **Ollama** for local language-model generation and embeddings.
+The application uses **Azure OpenAI** models, deployed in Microsoft Foundry:
 
-The current generation model is:
+| Role | Model (Azure deployment) | Setting |
+|---|---|---|
+| Answers | `gpt-5.4` | `AZURE_OPENAI_DEPLOYMENT` |
+| Embeddings (documents and questions) | `text-embedding-3-small`, shortened to 768 dimensions | `AZURE_OPENAI_EMBED_DEPLOYMENT` |
 
-```text
-llama3.1:latest
-```
-
-The current embedding model is:
-
-```text
-nomic-embed-text
-```
+Without the Azure settings the code falls back to local **Ollama** models (`llama3.1:latest` and `nomic-embed-text`), for offline development; see "Optional: Ollama instead of Azure". The Chroma collections must be indexed with the same embedding model that the questions are embedded with: see "Switching the embedding model".
 
 The project is being developed as an evaluation platform for comparing retrieval and answer generation across PDF, XML, and RDF/TTL representations of IPBES knowledge. This will help build a chat function for IPBES data and guide allocation of resources.
 
-The project currently has 3 pipelines that stores data separately in pdf_documents, ttl_documents and xml_documents. Once testing is finalized the pipelines will be merged.
+The project has 3 pipelines that store data separately in pdf_documents, ttl_documents and xml_documents, which keeps them comparable for analysis. The Streamlit app searches the TTL and XML collections together (`combined_rag.py`), so users do not have to know where an answer is stored; the single sources stay available in its developer mode.
 
 ---
 
@@ -39,7 +34,7 @@ Documents
    │
    ├── XML ──► XML parser[Metadata, Paragraphs, Tables] ──► structured chunks ──► Embeddings ──► Chroma ──► Answer ──► Structured XML provenance
    │
-   └── TTL ──► RDFLib / SPARQL [Subjects, Predicates Objects] ──► Graph retrieval  ──► LLM (Ollama)──► Answer ──► Sources
+   └── TTL ──► RDFLib / SPARQL [Subjects, Predicates Objects] ──► Graph retrieval  ──► LLM (Azure OpenAI) ──► Answer ──► Sources
 
 ```
 
@@ -88,11 +83,14 @@ ipbesllm/
 ├── src/
 │   ├── __pycache__/
 │   │   └── *.pyc
-│   ├── app.py                            # Streamlit workbench (PDF, TTL and XML)
+│   ├── app.py                            # Streamlit chat app (TTL + XML; PDF in developer mode)
 │   ├── cache.py                          # Answer/retrieval cache (Redis, or in-memory)
 │   ├── chunking.py                       # Splits oversized TTL chunks
+│   ├── combined_rag.py                   # One search over TTL and XML, for the app
+│   ├── data_bundle.py                    # Packs chroma/ and the RDF for a deployed app
 │   ├── diagnose_chunks.py                # Inspect TTL chunk sizes before indexing
 │   ├── enrichment.ttl                    # Local SKOS additions to the IPBES thesaurus
+│   ├── feedback_store.py                 # Answer ratings (Azure Blob or a local CSV)
 │   ├── geo.py
 │   ├── models.py
 │   ├── pdf_index.py                      # Embed concept profiles → Chroma
@@ -110,7 +108,8 @@ ipbesllm/
 │   ├── rdf_rag.py                        # RAG chain that uses hybrid retrieval
 │   ├── rdf_test.py                       # Sanity checks
 │   ├── stage1_ollama.py
-│   ├── settings.py                       # Project paths (data/, chroma/), resolved from the project root
+│   ├── settings.py                       # Project paths (data/, chroma/); loads .env
+│   ├── static/background.jpg             # App background, served by Streamlit
 │   ├── thesaurus_helper.py               # In-memory helper to use RDF thesaurus to improve RAG quality
 │   ├── ttl_index.py                      # Indexes(embeds) into Chroma
 │   ├── ttl_loader.py                     # Loads TTL files
@@ -128,7 +127,8 @@ ipbesllm/
 ├── tests/                                # Local only: listed in .gitignore
 │   ├── comparison_<run_id>.csv           # Written by pdf_ttl_compare.py
 │   └── ttl_experts.py
-├── app.py
+├── .streamlit/config.toml                # Static file serving, light theme
+├── .env                                  # Local settings and secrets: never committed
 ├── README.md
 └── requirements.txt
 ```
@@ -153,43 +153,13 @@ You need:
 - macOS, Linux, or Windows
 - Python 3.11
 - Git
-- Ollama
+- an Azure OpenAI (Microsoft Foundry) resource with deployments of `gpt-5.4` and `text-embedding-3-small`
 - the required Python packages from `requirements.txt`
-
-Docker support is planned for deployment and colleague testing. The local Python/Ollama setup described below is useful for development and troubleshooting.
-
----
-
-## 2. Install Ollama
-
-Install Ollama from:
-
-https://ollama.com/
-
-Verify that it is available:
-
-```bash
-ollama --version
-```
-
-Pull the required models llama3.1:latest(generation/chat model) and nomic-embed-text (embedding model):
-
-```bash
-ollama pull llama3.1:latest
-ollama pull nomic-embed-text
-```
-
-Check the available models:
-
-```bash
-ollama list
-```
-
-You should see the generation and embedding models.
+- optionally Ollama, to work offline (see "Optional: Ollama instead of Azure")
 
 ---
 
-## 3. Clone the repository
+## 2. Clone the repository
 
 ```bash
 git clone git@github.com:ipbes/ipbesllm.git
@@ -198,7 +168,7 @@ cd ipbesllm
 
 ---
 
-## 4. Create a Python virtual environment
+## 3. Create a Python virtual environment
 
 Python 3.11 is recommended.
 
@@ -218,7 +188,7 @@ py -3.11 -m venv .venv
 
 ---
 
-## 5. Install Python dependencies
+## 4. Install Python dependencies
 
 Install the project dependencies:
 
@@ -233,25 +203,40 @@ Open WebUI is not needed: the Streamlit workbench is the interface. To use Open 
 
 ---
 
-# Configure Ollama
+## 5. Configure Azure OpenAI
 
-The application uses environment variables so that the model can be changed without modifying the Python source code.
+Create a `.env` file in the project root (it is listed in `.gitignore`: never commit it, it holds the key):
 
-macOS/Linux:
+```text
+AZURE_OPENAI_ENDPOINT=https://<resource>.services.ai.azure.com/openai/v1/
+AZURE_OPENAI_API_KEY=<key>
+AZURE_OPENAI_DEPLOYMENT=gpt-5.4
+AZURE_OPENAI_EMBED_DEPLOYMENT=text-embedding-3-small
+```
+
+The endpoint, deployment names and key are on the deployment's page in the Foundry portal. The endpoint also works as copied with `/responses` on the end. Environment variables of the same name override `.env`.
+
+Optional settings:
+
+| Setting | Default | Purpose |
+|---|---|---|
+| `AZURE_OPENAI_REASONING_EFFORT` | `low` | How long GPT-5 models think before answering (`low`, `medium`, `high`) |
+| `AZURE_OPENAI_EMBED_DIMENSIONS` | `768` | Embedding size; changing it means re-indexing everything |
+| `XML_MAX_CONTEXT_CHARS`, `COMBINED_MAX_CONTEXT_CHARS` | `60000` with Azure | Prompt size limit for XML and combined answers |
+| `RAG_MAX_CONTEXT_CHARS` | `20000` | Prompt size limit for PDF and TTL answers |
+
+## Optional: Ollama instead of Azure
+
+For offline development, the code uses local Ollama models when the Azure settings are absent: for answers without `AZURE_OPENAI_ENDPOINT` and `AZURE_OPENAI_API_KEY`, for embeddings without `AZURE_OPENAI_EMBED_DEPLOYMENT`. Install Ollama from https://ollama.com/ and pull the models:
 
 ```bash
-export OLLAMA_MODEL="llama3.1:latest"
-export OLLAMA_EMBED_MODEL="nomic-embed-text"
+ollama pull llama3.1:latest
+ollama pull nomic-embed-text
 ```
 
-Windows PowerShell:
+Other models can be set with `OLLAMA_MODEL` and `OLLAMA_EMBED_MODEL`. On a CPU-only laptop, answers take minutes instead of seconds.
 
-```powershell
-$env:OLLAMA_MODEL="llama3.1:latest"
-$env:OLLAMA_EMBED_MODEL="nomic-embed-text"
-```
-
-The defaults in the code are already configured for these models, so this step is mainly useful when testing a different model.
+The collections must then be indexed with `nomic-embed-text` too: vectors from different embedding models do not mix (see "Switching the embedding model").
 
 ---
 
@@ -277,7 +262,7 @@ Build vector index whenever there are RDF changes to the IPBES thesaurus
 PYTHONPATH=src python src/rdf_index.py data/rdf/ipbes-thesaurus.rdf
 ```
 
-The indexer extracts text from the PDFs, creates chunks, generates embeddings using `nomic-embed-text`, and stores them in Chroma.
+The indexer extracts text from the PDFs, creates chunks, generates embeddings with the configured embedding model (`text-embedding-3-small`), and stores them in Chroma.
 
 ## Test PDF retrieval
 
@@ -600,7 +585,7 @@ A useful RAG response should explain the ambiguity and provide the relevant valu
 
 # Answer caching
 
-The PDF and TTL pipelines cache both retrieval results and generated answers (`src/cache.py`, built on `aiocache`). The XML pipeline has no cache yet.
+The PDF and TTL pipelines cache both retrieval results and generated answers (`src/cache.py`, built on `aiocache`); the XML and combined pipelines cache answers only.
 
 Where the cache lives depends on `REDIS_URL`:
 
@@ -635,10 +620,9 @@ If the RAG prompt changes, increment `PROMPT_VERSION` in the corresponding `*_ra
 
 ## Deploying to Streamlit Community Cloud
 
-The deployed app answers with Azure OpenAI and embeds questions in-process
-(`LOCAL_EMBEDDINGS=1`: the same nomic-embed-text vectors as Ollama), so it
-needs no Ollama. The search data is not in git; the app downloads it once at
-startup from `DATA_BUNDLE_URL`.
+The deployed app uses the same Azure OpenAI models as local development, so
+it needs no Ollama. The search data is not in git; the app downloads it once
+at startup from `DATA_BUNDLE_URL`.
 
 1. Build the data bundle (Chroma database + thesaurus/geography RDF) after
    indexing, and upload `dist/ipbes-data.zip` to a private Azure Blob
@@ -657,9 +641,15 @@ startup from `DATA_BUNDLE_URL`.
    AZURE_OPENAI_ENDPOINT = "https://<resource>.services.ai.azure.com/openai/v1/"
    AZURE_OPENAI_API_KEY = "<key>"
    AZURE_OPENAI_DEPLOYMENT = "gpt-5.4"
-   LOCAL_EMBEDDINGS = "1"
+   AZURE_OPENAI_EMBED_DEPLOYMENT = "text-embedding-3-small"
    DATA_BUNDLE_URL = "<SAS URL of ipbes-data.zip>"
+   FEEDBACK_CONTAINER_URL = "<SAS URL of the feedback container>"
    ```
+
+   The data bundle must have been indexed with the same embedding model.
+   (`LOCAL_EMBEDDINGS = "1"` instead of `AZURE_OPENAI_EMBED_DEPLOYMENT`
+   embeds questions in the app with nomic-embed-text, for a bundle indexed
+   with Ollama.)
 
 5. Limit sharing to invited viewers: the app spends the Azure key's budget.
 
@@ -749,6 +739,19 @@ PYTHONPATH=src python src/ttl_index.py --rebuild
 
 Do not confuse the cache with `chroma/`: the cache holds retrieval results and generated answers; `chroma/` holds the vectorized document data.
 
+## Switching the embedding model
+
+Questions are embedded with the current embedding model, so every collection must be indexed with that same model. After changing `AZURE_OPENAI_EMBED_DEPLOYMENT`, `AZURE_OPENAI_EMBED_DIMENSIONS` or switching between Azure and Ollama, rebuild all four collections (back up `chroma/` first):
+
+```bash
+PYTHONPATH=src python src/xml_index.py --rebuild
+PYTHONPATH=src python src/ttl_index.py --rebuild --skip-types ref
+PYTHONPATH=src python src/rdf_index.py
+PYTHONPATH=src python src/pdf_index.py --rebuild
+```
+
+With Azure this takes about 30 minutes. Then rebuild and re-upload the data bundle for the deployed app (`python src/data_bundle.py`).
+
 ---
 
 # Development workflow
@@ -777,7 +780,7 @@ The intended development workflow is:
 10. Iterate
 ```
 
-The application is being prepared for a Docker + Streamlit deployment so that colleagues can test the application without installing Python, Ollama, Chroma, or the document-processing dependencies locally.
+The application is being prepared for a Docker + Streamlit deployment so that colleagues can test the application without installing Python, Chroma, or the document-processing dependencies locally.
 
 The longer-term deployment target is Azure.
 
@@ -816,7 +819,16 @@ The goal is not only to produce an answer, but to understand how representation 
 
 # Troubleshooting
 
-## Ollama is not responding
+## Azure OpenAI errors
+
+- **401 / authentication:** check `AZURE_OPENAI_API_KEY` in `.env` (or the app's Secrets).
+- **404 / deployment not found:** `AZURE_OPENAI_DEPLOYMENT` or `AZURE_OPENAI_EMBED_DEPLOYMENT` must match the deployment names in the Foundry portal exactly.
+- **429 / rate limit:** the indexers retry automatically; if it persists, raise the deployment's tokens-per-minute quota in Foundry.
+- **Answers cite unrelated passages after a model change:** the collections were indexed with a different embedding model (see "Switching the embedding model").
+
+---
+
+## Ollama is not responding (only when using Ollama)
 
 Check:
 
@@ -836,7 +848,7 @@ If that works, exit the model and retry the application.
 
 ---
 
-## Model not found
+## Ollama model not found
 
 Pull the models:
 
@@ -926,13 +938,13 @@ The intended architecture is:
               └─────┬─────┘
                     │
                     ▼
-              ┌───────────┐
-              │  Ollama   │
-              └───────────┘
+              ┌──────────────┐
+              │ Azure OpenAI │
+              └──────────────┘
                     │
-             ┌──────┴──────┐
-             ▼             ▼
-          Llama 3.1    Embeddings
+             ┌──────┴──────────────────┐
+             ▼                         ▼
+          gpt-5.4          text-embedding-3-small
 ```
 
 During development, Docker allows the local environment to be reproduced consistently.
@@ -962,7 +974,7 @@ Azure deployment
 When testing a new version, please report:
 
 1. The exact question.
-2. Which corpus was selected: PDF, XML, or TTL.
+2. Which corpus was searched: the app's default (assessments and Plenary reports together), or PDF, XML or TTL in developer mode.
 3. The answer returned.
 4. Whether the answer appears correct.
 5. Whether the cited source supports the answer.
@@ -998,7 +1010,9 @@ This information is particularly useful for improving chunking, retrieval, promp
 
 | Component | Status |
 |---|---|
-| Ollama local LLM | Working |
+| Azure OpenAI answers (gpt-5.4) | Working |
+| Azure OpenAI embeddings (text-embedding-3-small) | Working |
+| Ollama (offline fallback) | Working |
 | PDF extraction | Working |
 | PDF embeddings / Chroma | Working |
 | PDF RAG | Working |
@@ -1015,8 +1029,9 @@ This information is particularly useful for improving chunking, retrieval, promp
 | Helper for deliverables | Next |
 | Helper for meetings | Next |
 | Helper for Experts | Next |
-| Answer cache | Working for PDF and TTL (in-memory, or Redis via `REDIS_URL`) |
-| Streamlit UI | Prototype for PDF and TTL (`src/app.py`) |
+| Answer cache | Working (in-memory, or Redis via `REDIS_URL`) |
+| Streamlit UI | Chat over TTL + XML; single sources in developer mode (`src/app.py`) |
+| Streamlit Community Cloud | Set up (data bundle and ratings in Azure Blob Storage) |
 | Docker deployment | Planned |
 | Colleague testing | Next deployment stage |
 | Architecture diagrams | Later stage |
@@ -1038,7 +1053,3 @@ No confidential, personal or draft documents should be added to this project.
 ## Questions and feedback
 
 For bugs, retrieval problems, incorrect answers, or suggestions, provide the exact question and corpus used so that the issue can be reproduced.
-
-## Questions and feedback
-Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
-Claude-Session: https://claude.ai/code/session_011dLeNFDsreHM27isYTEnwC
