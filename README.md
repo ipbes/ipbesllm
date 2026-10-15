@@ -86,7 +86,7 @@ ipbesllm/
 │   ├── __pycache__/
 │   │   └── *.pyc
 │   ├── static/
-│   │   └── background.jpg                            #Background image for Streamlit app
+│   │   └── background.jpg                            # Background image for Streamlit app
 │   ├── app.py                            # Streamlit chat app (TTL + XML; PDF in developer mode)
 │   ├── cache.py                          # Answer/retrieval cache (Redis, or in-memory)
 │   ├── chunking.py                       # Splits oversized TTL chunks
@@ -112,8 +112,7 @@ ipbesllm/
 │   ├── rdf_rag.py                        # RAG chain that uses hybrid retrieval
 │   ├── rdf_test.py                       # Sanity checks
 │   ├── stage1_ollama.py
-│   ├── settings.py                       # Project paths (data/, chroma/); loads .env
-│   ├── static/background.jpg             # App background, served by Streamlit
+│   ├── settings.py                       # Project paths (data/, chroma/); loads .env        
 │   ├── thesaurus_helper.py               # In-memory helper to use RDF thesaurus to improve RAG quality
 │   ├── ttl_index.py                      # Indexes(embeds) into Chroma
 │   ├── ttl_loader.py                     # Loads TTL files
