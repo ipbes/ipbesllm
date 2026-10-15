@@ -1,5 +1,7 @@
+import re
 from pathlib import Path
 
+from ftfy import fix_text
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import RDF, RDFS, DCTERMS, SKOS, FOAF, OWL
 from chunking import split_long_chunks
@@ -37,11 +39,26 @@ def _all(graph, subject, predicate):
     return list(graph.objects(subject, predicate))
 
 
+# UTF-8 text that was read as Windows-1252 somewhere before the TTL was
+# written: "Earthâ€™s", "2Â°C", "CÃ´te". The IAS, LDR and VA files have it.
+GARBLED = re.compile(r"â€|Â|Ã")
+
+
+def repair_text(text: str) -> str:
+    """Undo garbled encoding, leaving correct text untouched."""
+    if not GARBLED.search(text):
+        return text
+    # A closing ” whose last byte was lost: ftfy cannot rebuild it.
+    text = text.replace("â€\ufffd", "”")
+    return fix_text(text, uncurl_quotes=False, fix_latin_ligatures=False,
+                    fix_character_width=False, normalization="NFC")
+
+
 def _text(value) -> str:
     if value is None:
         return ""
     if _is_literal(value):
-        return str(value).strip()
+        return repair_text(str(value)).strip()
     return str(value).rstrip("/").rsplit("/", 1)[-1]
 
 

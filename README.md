@@ -326,6 +326,7 @@ For each class and file it reports:
 | `below 100%` | Share of the items that have a property the ontology lists. Confidence levels, expert roles, DOIs and optional links are partial by nature and only shown with `--all`. | `foaf:Person: 90` / `skos:prefLabel 0%`: SUA's experts have no name label |
 | `not in ontology` | Properties the file uses that the ontology does not list | `ipbes:hasCategory` on GA1 and BBA knowledge gaps |
 | `not indexed` | Items the loader leaves out, usually because they have no text or name | `LDR18-boxSPM1`: an illustration with neither caption nor description |
+| `garbled text` | Values whose encoding was garbled before the TTL was written (`Earthâ€™s`, `2Â°C`). The loader repairs them (`repair_text`, using ftfy), but the conversion should be fixed. | IAS, LDR and VA |
 
 Fix what matters in the source TTL (or its conversion), or in `ttl_loader.py` when the data is valid but read the wrong way. Then check the countries with `ttl_index.py --dry-run` and index.
 

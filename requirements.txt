@@ -16,6 +16,8 @@ httpx==0.28.1
 # Parsing
 pymupdf==1.28.2
 rdflib==7.6.0
+# Repairs garbled text in TTL files (ttl_loader.repair_text)
+ftfy==6.3.1
 
 # Answer cache (Redis, or in-memory without REDIS_URL)
 aiocache==0.12.3

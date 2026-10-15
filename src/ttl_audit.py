@@ -13,7 +13,9 @@ reports:
     are only shown with --all;
   * properties the file uses that the ontology does not list;
   * items the indexer leaves out, found by running ttl_loader on the file
-    (e.g. experts without a name, messages without text).
+    (e.g. experts without a name, messages without text);
+  * text with garbled encoding ("Earthâ€™s"), which the loader repairs but
+    which should be fixed in the conversion.
 
 Country values are checked separately: ttl_index.py --dry-run.
 Run it on new or updated TTL files before indexing them.
@@ -31,7 +33,7 @@ import rdflib
 from rdflib import RDF
 
 from settings import PROJECT_ROOT, TTL_DIR
-from ttl_loader import parse_ttl_file
+from ttl_loader import GARBLED, parse_ttl_file
 
 ONTOLOGY = PROJECT_ROOT / "docs" / "IPBES_Ontology_v06.ttl"
 
@@ -97,6 +99,10 @@ def audit_file(path: Path, expected: dict[str, set[str]], show_all: bool) -> lis
         loaded[chunk["chunk_type"]].add(chunk["eId"])
 
     lines = [f"\n### {path.name}"]
+    garbled = sum(1 for o in graph.objects() if isinstance(o, rdflib.Literal)
+                  and GARBLED.search(str(o)))
+    if garbled:
+        lines.append(f"  garbled text: {garbled} values (repaired when indexed)")
     for cls, properties in expected.items():
         items = [s for s, c in graph.subject_objects(RDF.type) if short(c) == cls]
         if not items:
