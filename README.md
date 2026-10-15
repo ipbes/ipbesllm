@@ -80,13 +80,13 @@ ipbesllm/
 │   └── xml/
 │       └── *.xml
 ├── dist/
-│   └── ipbes-data.zip                      # Holds the search database and the two RDF files and should be uploaded to Streamlit. Built using src/data_bundle.py
+│   └── ipbes-data.zip                    # Holds the search database and the two RDF files and should be uploaded to Azure Blob for it to be seen by Streamlit. Built using src/data_bundle.py.  
 │
 ├── src/
 │   ├── __pycache__/
 │   │   └── *.pyc
 │   ├── static/
-│   │   └── background.jpg                            # Background image for Streamlit app
+│   │   └── background.jpg                # Background image for Streamlit app
 │   ├── app.py                            # Streamlit chat app (TTL + XML; PDF in developer mode)
 │   ├── cache.py                          # Answer/retrieval cache (Redis, or in-memory)
 │   ├── chunking.py                       # Splits oversized TTL chunks
