@@ -6,6 +6,7 @@ from collections import defaultdict
 from chromadb.errors import NotFoundError
 from loguru import logger
 
+from assessment_catalogue import catalogue_block
 from cache import CACHE_VERSION, cache, make_key
 from rag_utils import (
     EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat,
@@ -19,7 +20,7 @@ from settings import CHROMA_DIR
 COLLECTION_NAME = "xml_documents"
 
 # Part of the answer cache key: bump when the prompt changes.
-PROMPT_VERSION = "2"
+PROMPT_VERSION = "3"
 ANSWER_TTL = 60 * 60 * 6      # 6 hours
 
 # Each matching paragraph also brings the NEIGHBOURS paragraphs before and
@@ -261,6 +262,11 @@ Question:
 Context:
 {context}
 {truncation_note}
+{catalogue_block()}
+
+For which assessments exist or were approved, use the reference list above,
+cited as [Reference list].
+
 Answer the question clearly.
 
 At the end provide:
@@ -303,7 +309,7 @@ async def generate_answer_cached(question: str, results, answer_stream=None) -> 
         LLM_MODEL,
         NUM_CTX,
         question.strip(),
-        make_key("xml:ctx", context),
+        make_key("xml:ctx", context, catalogue_block()),
     )
 
     hit = await cache.get(key)

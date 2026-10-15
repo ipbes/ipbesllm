@@ -24,10 +24,11 @@ from cache import CACHE_VERSION, cache, make_key
 from rag_utils import (
     LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat, concat_results,
 )
+from assessment_catalogue import catalogue_block
 from thesaurus_helper import get_thesaurus
 
 # Part of the answer cache key: bump when the prompt changes.
-PROMPT_VERSION = "2"
+PROMPT_VERSION = "3"
 ANSWER_TTL = 60 * 60 * 6      # 6 hours
 
 # Plenary passages per question; xml_rag adds the neighbouring paragraphs.
@@ -185,6 +186,8 @@ Answer the question using ONLY the numbered sources below.
 - Note where the sources differ, or where the assessments or the Plenary
   reports say nothing on the question.
 - Do not invent facts, dates, names, numbers, decisions or rules.
+- For which assessments exist or were approved, use the reference list
+  below, cited as [Reference list].
 - If the answer is not in the sources, say "I cannot determine that from the
   supplied documents."
 
@@ -193,7 +196,8 @@ Question:
 
 Sources (assessments first, then Plenary reports; best match first):
 {context}
-{truncation_note}{extras}"""
+{truncation_note}{extras}
+{catalogue_block()}"""
 
     return chat(
         model=LLM_MODEL,
@@ -225,7 +229,8 @@ async def generate_answer_cached(question: str, results, answer_stream=None) -> 
         LLM_MODEL,
         NUM_CTX,
         question.strip(),
-        make_key("combined:ctx", context, glossary, definitions),
+        make_key("combined:ctx", context, glossary, definitions,
+                 catalogue_block()),
     )
 
     hit = await cache.get(key)
