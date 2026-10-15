@@ -35,7 +35,7 @@ THESAURUS_RERANK_ALPHA = float(os.getenv("THESAURUS_RERANK_ALPHA", "0.25"))
 RERANK_OVERFETCH = max(1, int(os.getenv("PDF_RERANK_OVERFETCH", "3")))
 
 # Part of the cache keys: bump when retrieval or prompts change.
-RETRIEVAL_VERSION = "3"
+RETRIEVAL_VERSION = "4"
 PROMPT_VERSION = "3"
 
 

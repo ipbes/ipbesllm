@@ -255,8 +255,9 @@ The app sends each question one of three ways:
 
 ### Assessments (TTL and PDF)
 
-- **One search per assessment.** Each assessment is searched separately (3 chunks each by default) and the results are interleaved by rank, so the largest assessment cannot crowd out the others. If the question names an assessment ("What does the LDR assessment say about pollution?"), only that one is searched. For PDFs, the assessment comes from the file name (`ga1_report.pdf` is GA1).
+- **One search per assessment.** Each assessment is searched separately (3 chunks each by default) and the results are interleaved by rank, so the largest assessment cannot crowd out the others. If the question names assessments, by code or by name ("the LDR assessment", "the global and IAS assessments"), only those are searched; a topic alone ("invasive alien species") still searches them all. For PDFs, the assessment comes from the file name (`ga1_report.pdf` is GA1).
 - **List questions** fetch every chunk of that type (up to 100 per assessment), sorted by identifier, and the prompt asks for all of them.
+- **Knowledge gaps** are listed as on [IBOK](https://ibok.ipbes.net/en/kg): a heading per assessment (year, title, number of gaps), newest first, then a table of #, identifier, category and description. The tables are built from the data, so counts and descriptions are exact; the model only chooses which gaps answer the question (all, those of named assessments, or those on a topic). Categories come from `ipbes:hasCategory` in the TTL, which only some files have.
 - **Experts by country.** "Experts from Kenya" or "from East Africa" filters experts by country code. Regions come from the geography RDF.
 - **Search text.** Words that describe the whole corpus ("IPBES", "assessments", "what do … say about") are removed before searching, because they match every chunk and drown out the topic. The model still gets the question as asked.
 - **Thesaurus.** Concepts named in the question add synonyms and neighbouring terms to the search, re-rank the results, and put their definitions into the prompt ("Authoritative IPBES definitions").

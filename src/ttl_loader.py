@@ -210,7 +210,10 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         subchapter_uris: list,
         extra_meta: dict | None = None,
         country_override: str | None = None,
+        fields: dict | None = None,
     ):
+        """Add a chunk. `extra_meta` adds "Key: value" lines to its text;
+        `fields` overrides or adds metadata fields."""
         nonlocal chunk_index
 
         body = (body or "").strip()
@@ -273,6 +276,7 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
                 "xpath": str(subject),
                 "identifier": _text(_first(graph, subject, DCTERMS.identifier)),
                 "qualifier": _qualifier(graph, subject),
+                **(fields or {}),
             }
         )
 
@@ -397,6 +401,13 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         description = _text(
             _first(graph, kg, URIRef(IPBES + "hasDescription"))
         )
+        # The gap's own ID (GA119-1, IAS23-0) identifies it; some files put
+        # it in dcterms:identifier, others put the report sections there.
+        kg_id = _local_name(kg)
+        category = _text(_first(graph, kg, URIRef(IPBES + "hasCategory")))
+        sections = ", ".join(sorted({
+            _text(v) for v in _all(graph, kg, DCTERMS.identifier)
+        } - {"", kg_id}))
 
         emit(
             subject=kg,
@@ -405,10 +416,11 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             body=description,
             subchapter_uris=[],
             extra_meta={
-                "Identifier": _text(
-                    _first(graph, kg, DCTERMS.identifier)
-                ),
+                "Identifier": kg_id,
+                "Category": category,
+                "Sections": sections,
             },
+            fields={"identifier": kg_id, "category": category},
         )
 
         # -----------------------------------------------------------------

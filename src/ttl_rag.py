@@ -11,7 +11,8 @@ from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key
 # infer_country_names / canonical_country are re-exported for app.py.
 from geo import canonical_country, country_code_for_label, infer_country_names
 from rag_utils import (
-    EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, chroma_client,
+    EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat,
+    chroma_client,
     concat_results,
     embed_query, empty_results, interleave_results, named_assessments,
     select_results, strip_corpus_words,
@@ -42,8 +43,15 @@ MAX_COUNTRY_FILTER = 100
 
 # Part of the cache keys: bump when retrieval or prompts change so stale
 # entries are never served after a code change.
-RETRIEVAL_VERSION = "4"
-PROMPT_VERSION = "4"
+RETRIEVAL_VERSION = "5"
+PROMPT_VERSION = "8"
+
+# List questions (all knowledge gaps, key messages, experts ...) need far
+# more than the Ollama limit (MAX_CONTEXT_CHARS, sized for an 8 GB machine):
+# all 220 knowledge gaps take about 56,000 characters.
+TTL_MAX_CONTEXT_CHARS = int(os.getenv(
+    "TTL_MAX_CONTEXT_CHARS", 80_000 if USE_AZURE else MAX_CONTEXT_CHARS
+))
 
 
 # ---------------------------------------------------------------------------
@@ -396,8 +404,17 @@ def _identifier_sort_key(identifier: str):
     return (identifier or "", 0)
 
 
+def _gap_sort_key(m: dict):
+    """Knowledge gaps as IBOK lists them: newest assessment first, then by
+    the gap's number (GA119-2 before GA119-10)."""
+    year = int(m["date"]) if str(m.get("date", "")).isdigit() else 0
+    number = re.search(r"(\d+)$", m.get("identifier", ""))
+    return (-year, m.get("assessment", ""), int(number.group(1)) if number else 0)
+
+
 def _reorder_by_identifier(results):
-    """Sort by (assessment, identifier) so assessments are not interleaved."""
+    """Sort by (assessment, identifier) so assessments are not interleaved;
+    knowledge gaps by _gap_sort_key."""
     docs = results["documents"][0]
     metas = results["metadatas"][0]
     dists = results["distances"][0]
@@ -406,8 +423,9 @@ def _reorder_by_identifier(results):
     order = sorted(
         range(len(docs)),
         key=lambda i: (
-            metas[i].get("assessment", ""),
-            _identifier_sort_key(metas[i].get("identifier", "")),
+            _gap_sort_key(metas[i]) if metas[i].get("chunk_type") == "kg" else
+            (metas[i].get("assessment", ""),
+             _identifier_sort_key(metas[i].get("identifier", "")))
         ),
     )
 
@@ -441,6 +459,8 @@ def format_chunk(document: str, m: dict) -> str:
         prefix_parts.append(f"type={m['chunk_type']}")
     if m.get("qualifier"):
         prefix_parts.append(f"qualifier={m['qualifier']}")
+    if m.get("category"):
+        prefix_parts.append(f"category={m['category']}")
     if m.get("assessment"):
         prefix_parts.append(f"assessment={m['assessment']}")
     country = _country_text(m)
@@ -452,7 +472,7 @@ def format_chunk(document: str, m: dict) -> str:
     return " ".join(prefix_parts) + "\n" + body
 
 
-def _build_context(results, max_chars: int = MAX_CONTEXT_CHARS) -> tuple[str, int]:
+def _build_context(results, max_chars: int = TTL_MAX_CONTEXT_CHARS) -> tuple[str, int]:
     """Return (context text, number of chunks included).
 
     Chunks are added in order until `max_chars` would be exceeded; the first
@@ -549,6 +569,86 @@ def _build_task(
     )
 
 
+def _select_gaps(question: str, results) -> list[int]:
+    """Positions of the retrieved knowledge gaps that answer the question.
+    The model only picks identifiers; on any failure, all gaps are kept."""
+    metadatas = results["metadatas"][0]
+    lines = "\n".join(
+        f"{m.get('identifier')} | {m.get('assessment')} | "
+        f"{m.get('category') or '-'} | "
+        f"{' '.join(document.split(chr(10) * 2, 1)[-1].split())}"
+        for document, m in zip(results["documents"][0], metadatas)
+    )
+    prompt = f"""Question: {question}
+
+Knowledge gaps (identifier | assessment | category | description):
+{lines}
+
+Which of these knowledge gaps answer the question? Reply with JSON only,
+in one of these forms:
+- all of them (the question asks for all knowledge gaps): {{"all": true}}
+- all those of some assessments: {{"assessments": ["<assessment>", ...]}}
+- otherwise the gaps that answer it: {{"ids": ["<identifier>", ...]}}"""
+    try:
+        reply = chat(model=LLM_MODEL,
+                     messages=[{"role": "user", "content": prompt}])
+        choice = json.loads(re.search(r"\{.*\}", reply, re.S).group(0))
+        if choice.get("all"):
+            return list(range(len(metadatas)))
+        if choice.get("assessments"):
+            codes = {c.upper() for c in choice["assessments"]}
+            chosen = [i for i, m in enumerate(metadatas)
+                      if str(m.get("assessment", "")).upper() in codes]
+        else:
+            wanted = set(choice.get("ids", []))
+            chosen = [i for i, m in enumerate(metadatas)
+                      if m.get("identifier") in wanted]
+        return chosen or list(range(len(metadatas)))
+    except Exception as exc:  # noqa: BLE001
+        logger.warning(f"Knowledge-gap selection failed ({exc}); listing all.")
+        return list(range(len(metadatas)))
+
+
+def _gap_tables(results, chosen: list[int]) -> str:
+    """The chosen knowledge gaps as IBOK lists them: a heading per
+    assessment (year, title, count), then # | Identifier | Category |
+    Description, numbered within each assessment."""
+    documents, metadatas = results["documents"][0], results["metadatas"][0]
+    groups: dict[str, list[int]] = {}
+    for i in chosen:                    # results are already in IBOK order
+        groups.setdefault(metadatas[i].get("assessment", "?"), []).append(i)
+
+    def short_title(title: str) -> str:
+        title = re.sub(r"^The ", "", title)
+        title = re.sub(r" of the Intergovernmental Science-Policy Platform on "
+                       r"Biodiversity and Ecosystem Services", "", title)
+        return title[:1].upper() + title[1:]
+
+    def cell(text: str) -> str:
+        return re.sub(r"\s+", " ", text).replace("|", "\\|").strip()
+
+    total = len(documents)
+    assessments = f"{len(groups)} assessment{'s' if len(groups) != 1 else ''}"
+    intro = (f"{len(chosen)} knowledge gaps in {assessments}:"
+             if len(chosen) == total else
+             f"{len(chosen)} of the {total} knowledge gaps in the assessments "
+             f"relate to the question:")
+    parts = [intro]
+    for code, positions in groups.items():
+        first = metadatas[positions[0]]
+        count = f"{len(positions)} gap{'s' if len(positions) != 1 else ''}"
+        parts.append(f"\n### {first.get('date', '')} – {code}: "
+                     f"{short_title(first.get('title', ''))} ({count})\n")
+        parts.append("| # | Identifier | Category | Description |")
+        parts.append("|---|---|---|---|")
+        for n, i in enumerate(positions, 1):
+            m = metadatas[i]
+            description = documents[i].split("\n\n", 1)[-1]
+            parts.append(f"| {n} | {m.get('identifier', '')} | "
+                         f"{cell(m.get('category') or '–')} | {cell(description)} |")
+    return "\n".join(parts)
+
+
 def generate_answer(
     question: str,
     results,
@@ -556,13 +656,22 @@ def generate_answer(
     country_names: set[str] | None = None,
     answer_stream=None,
 ) -> str:
+    if chunk_type == "kg":
+        # Structured data: the tables are built here, exactly as stored, so
+        # counts, years and descriptions cannot be miscopied. The model only
+        # chooses which gaps answer the question.
+        answer = _gap_tables(results, _select_gaps(question, results))
+        if answer_stream is not None:
+            answer_stream.put(answer)
+        return answer
+
     # Thesaurus re-ranking happens in retrieve(), within each assessment.
     context, used = _build_context(results)
     total = len(results["documents"][0])
     truncation_note = ""
     if used < total:
         logger.warning(f"Context capped at {used} of {total} retrieved chunks "
-                       f"(RAG_MAX_CONTEXT_CHARS={MAX_CONTEXT_CHARS}).")
+                       f"(TTL_MAX_CONTEXT_CHARS={TTL_MAX_CONTEXT_CHARS}).")
         truncation_note = (
             f"\nNOTE: the context limit was reached, so only the first {used} "
             f"of {total} retrieved chunks are shown above. Do not claim the "

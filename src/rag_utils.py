@@ -410,10 +410,40 @@ def strip_corpus_words(question: str) -> str:
     return cleaned if len(cleaned) >= 3 else question
 
 
+# Assessments named in words: only when followed by "assessment", so that a
+# topic ("invasive alien species") still searches every assessment.
+_ASSESSMENT_NAMES = {
+    "GA1": r"global",
+    "IAS": r"invasive alien species|invasive species|IAS",
+    "LDR": r"land degradation(?: and restoration)?",
+    "SUA": r"sustainable use(?: of wild species)?",
+    "VA": r"values?|valuation",
+    "TCA": r"transformative change",
+    "BBA": r"business(?: and biodiversity)?",
+    "PPA": r"pollinat\w*",
+    "SCM": r"scenarios(?: and models)?",
+}
+
+
+_ANY_NAME = "|".join(f"(?:{name})" for name in _ASSESSMENT_NAMES.values())
+# One or more names joined by "and", "or", "&" or commas, then
+# "assessment(s)": "the global and IAS assessments".
+_NAMED_RUN = re.compile(
+    rf"\b(?:{_ANY_NAME})(?:\s*(?:,|and|or|&)\s*(?:the\s+)?(?:{_ANY_NAME}))*"
+    rf"\s+assessments?\b",
+    re.IGNORECASE,
+)
+
+
 def named_assessments(question: str, available: list[str]) -> list[str]:
-    """Assessment ids (GA1, IAS, LDR ...) the question names as words."""
+    """Assessment ids (GA1, IAS, LDR ...) the question names: as the id
+    ("the LDR assessment") or by name ("the global assessment", "the global
+    and IAS assessments")."""
     words = {w.upper() for w in re.findall(r"\w+", question)}
-    return [a for a in available if a.upper() in words]
+    runs = " ".join(match.group(0) for match in _NAMED_RUN.finditer(question))
+    by_name = {code for code, name in _ASSESSMENT_NAMES.items()
+               if re.search(rf"\b(?:{name})\b", runs, re.I)}
+    return [a for a in available if a.upper() in words or a in by_name]
 
 
 def empty_results() -> dict:

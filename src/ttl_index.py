@@ -63,7 +63,7 @@ _COUNTRY_SEP_RE = re.compile(r"\s*[;/]\s*")
 _META_FIELDS = (
     "source_file", "chunk_type", "document_type", "title", "date", "language",
     "subtype", "number", "division", "subdivision", "paragraph", "eId",
-    "xpath", "identifier", "qualifier", "assessment",
+    "xpath", "identifier", "qualifier", "assessment", "category",
 )
 
 
