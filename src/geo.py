@@ -15,12 +15,15 @@ _graph = None
 # Explicit colloquial aliases absent from, or inconsistently represented in, RDF.
 # Each alias resolves to an RDF-backed ISO alpha-3 code; no concepts are fabricated.
 _COUNTRY_ALIASES = {
+    "america": "USA",
+    "australian": "AUS",
     "bolivia": "BOL", 
     "britain": "GBR", 
     "cote d'ivoire": "CIV", 
     "german": "DEU", 
     "great britain": "GBR",
     "iran": "IRN",
+    "italia": "ITA",
     "ivory coast": "CIV",
     "laos": "LAO",
     "moldova": "MDA",

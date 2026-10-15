@@ -69,9 +69,12 @@ _META_FIELDS = (
 
 def assessment_id_from_path(path: Path) -> str:
     """
-    GA1_v09.ttl -> "GA1", 
+    BBA_v01.ttl -> "BBA", 
+    GA1_v11.ttl -> "GA1", 
     IAS_v04.ttl -> "IAS", 
     LDR_v01.ttl -> "LDR",
+    PPA_v01.ttl -> "PPA", 
+    SCM_v01.ttl -> "SCM", 
     SUA_v02.ttl -> "SUA",
     TCA_v01.ttl -> "TCA",
     VA_v04.ttl -> "VA".
