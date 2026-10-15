@@ -4,7 +4,7 @@ A Retrieval-Augmented Generation (RAG) application for exploring and comparing I
 
 It is a tool and is not meant to replace reading the PDF files, which remain the source of truth for quotes, page numbers and provenance. It builds on the work of converting the assessments and Plenary reports into machine-readable formats with mapped semantic relations.
 
-The project is an evaluation platform for comparing retrieval and answer generation across PDF, XML and RDF/TTL representations of IPBES knowledge. This will help build a chat function for IPBES data and guide the allocation of resources.
+The project is an evaluation platform for comparing and improving retrieval and answer generation across PDF, XML and RDF/TTL representations of IPBES knowledge. 
 
 ## Contents
 
@@ -37,7 +37,7 @@ The project is an evaluation platform for comparing retrieval and answer generat
 | **PDF** | Assessment reports and SPMs (GA1, IAS, LDR) | Text extracted with PyMuPDF, chunked, then embedded | `pdf_documents` |
 | **RDF** | IPBES thesaurus and geography | Used for query expansion, definitions and country matching; the thesaurus is also embedded | `ipbes_thesaurus` |
 
-The collections are kept separate, which keeps them comparable for analysis. The app searches the TTL and XML collections together, so users do not have to know where an answer is stored (see [How questions are answered](#how-questions-are-answered)).
+The collections are kept separate, which keeps them comparable for analysis. The app searches the TTL and XML collections together by default, so users do not have to know where an answer is stored (see [How questions are answered](#how-questions-are-answered)).
 
 ### Models
 
@@ -131,6 +131,7 @@ Some files may be added or renamed as the project develops. The important separa
 | Location | Holds |
 |---|---|
 | `data/` | Source documents |
+| `docs/` | Guidance documents e.g. ontology |
 | `src/` | Application and RAG code |
 | `chroma/` | Vector database, plus the index manifests the RAG code reads |
 | Redis | Cached retrievals and answers (in-memory when `REDIS_URL` is not set) |
@@ -238,8 +239,6 @@ Paths to `chroma/` and `data/` are resolved from the project root (`src/settings
 - **Ratings.** 👍/👎 under each answer adds a row to `ratings.csv` (see [Answer ratings](#answer-ratings)).
 - **Developer mode** (sidebar toggle). Choose a single source (PDF, TTL or XML) instead of the combined search, set the number of chunks, and see the models, the route taken, distances, metadata, timings and cache status.
 - **Stop.** Stopping a question, asking a new one or reloading the page cancels the request to the model.
-
-Open WebUI is not needed: the Streamlit app is the interface. To use Open WebUI as a general chat front end for Ollama, install it in its own environment or with Docker, not in this one.
 
 ---
 
@@ -669,15 +668,16 @@ If the correct table is retrieved but the answer is still wrong, check whether t
 
 ## Contributing and colleague testing
 
-When testing a new version, please report:
+The best way to report issues is by using 👍/👎 in the app. You could also report issues by sending specific feedback. When doing this, please send a screenshot or report the following:
 
 1. The exact question.
-2. Which corpus was searched: the app's default (assessments and Plenary reports together), or PDF, XML or TTL in developer mode.
-3. The answer returned.
-4. Whether the answer appears correct.
-5. Whether the cited source supports the answer.
-6. Any unexpected retrieval results.
-7. Approximate response time.
+3. Which corpus was searched: the app's default (assessments and Plenary reports together), or PDF, XML or TTL in developer mode.
+4. The answer returned.
+5. Whether the answer appears correct.
+6. Whether the cited source supports the answer.
+7. Any unexpected retrieval results.
+8. Approximate response time.
+9. Any error message available
 
 Example:
 
@@ -703,24 +703,27 @@ This information is particularly useful for improving chunking, retrieval, promp
 | Ollama (offline fallback) | Working |
 | PDF extraction, embeddings and RAG | Working |
 | XML parsing, embeddings and RAG | Working |
-| XML table-aware retrieval | Being improved |
+| XML table-aware retrieval | Working |
 | XML sessions, neighbouring paragraphs and decision names | Working |
 | TTL parsing, embeddings and RAG (9 assessments) | Working |
 | Combined TTL + XML search for the app | Working |
+| Answer cache | Working (in-memory, or Redis via `REDIS_URL`) |
+| Streamlit app (IBOK Chat) - Chat over TTL + XML; single sources in developer mode | Working |
+| Store ratings in Azure Blob Storage)  | Working |
 | Test/compare results | In progress |
 | Helper for countries (`ipbes-geo.rdf`, `geo.py`) | In progress |
 | Helper for the thesaurus (`ipbes-thesaurus.rdf`, `thesaurus_helper.py`) | In progress |
+| Colleague testing | In progress |
 | Helper for deliverables | Next |
 | Helper for meetings | Next |
 | Helper for experts | Next |
-| Answer cache | Working (in-memory, or Redis via `REDIS_URL`) |
-| Streamlit app (IBOK Chat) | Chat over TTL + XML; single sources in developer mode |
-| Streamlit Community Cloud | Set up (data bundle and ratings in Azure Blob Storage) |
 | Docker deployment | Planned |
-| Colleague testing | Next deployment stage |
 | Architecture diagrams | Later stage |
+| Security testing | Later stage |
 | OICT approval | Later stage |
 | Azure deployment | Later stage |
+| Entra ID| Later stage |
+| CloudFlare | Later stage |
 
 ---
 
