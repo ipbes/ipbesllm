@@ -90,6 +90,7 @@ ipbesllm/
 │   ├── ttl/*.ttl                # e.g. GA1_v11.ttl: the assessment is the name before "_v"
 │   └── xml/*.xml                # Plenary reports, e.g. 2013-1.xml
 ├── dist/ipbes-data.zip          # Data bundle for the deployed app (built by data_bundle.py)
+├── docs/IPBES_Ontology_v06.ttl  # IPBES report ontology: the structure of the TTL files
 ├── feedback/ratings.csv         # Answer ratings, when not stored in Azure
 ├── tests/comparison_<run>.csv   # Written by pdf_ttl_compare.py (not in git)
 ├── src/
@@ -105,6 +106,7 @@ ipbesllm/
 │   ├── rdf_index.py             # Index the thesaurus concept profiles into Chroma
 │   ├── pdf_loader.py            # PDF text extraction and chunking
 │   ├── ttl_loader.py            # TTL parsing into chunks
+│   ├── ttl_audit.py             # Check TTL files against the ontology
 │   ├── xml_loader.py            # Akoma Ntoso parsing into chunks
 │   ├── chunking.py              # Splits oversized TTL chunks
 │   ├── rag_utils.py             # Models, embeddings, Chroma client, batching helpers
@@ -280,6 +282,22 @@ Each pipeline can also be used from the command line: index, inspect the retriev
 
 Place Turtle files in `data/ttl/`. The assessment is the file name before `_v` (`GA1_v11.ttl` is GA1); keep one version of each assessment in the folder.
 
+The files follow the IPBES report ontology in [`docs/IPBES_Ontology_v06.ttl`](docs/IPBES_Ontology_v06.ttl), which lists, for each class, the properties an item should have:
+
+| Class | Chunk type | Main properties read |
+|---|---|---|
+| `ipbes:KeyMessage` | `key` | `skos:prefLabel`, `hasDescription`, `dcterms:identifier`, confidence level |
+| `ipbes:BackgroundMessage` | `bgm` | its description plus the text of its sub-messages, confidence level |
+| `ipbes:SubMessage` | `subm` | `hasDescription`, `dcterms:identifier`, confidence level |
+| `ipbes:KnowledgeGap` | `kg` | `hasDescription`, `hasCategory` (not in the ontology; only GA1 and BBA have it); the gap's own ID (`GA119-1`) is its identifier, and `dcterms:identifier` holds the related sections |
+| `ipbes:Chapter` | `chapter` | `skos:prefLabel`, `dcterms:identifier`; its authors (`foaf:Person`) as text |
+| `ipbes:SubChapter` | `sch` | `skos:prefLabel`, `dcterms:identifier`, `hasDescription` |
+| `ipbes:Illustration` | `il` | `dcterms:identifier`, `skos:prefLabel` (caption) and `hasDescription` |
+| `foaf:Person` | `person` | `skos:prefLabel` (or `foaf:firstName` + `foaf:lastName`), `ipbes:country`, roles (`ca`, `cl`, `cs`, `fl`, `la`, `re`) |
+| `ipbes:Reference` | `ref` | usually skipped (`--skip-types ref`) |
+
+The confidence level comes from `hasWellestablished`, `hasEstablishedIncomplete`, `hasUnresolved` or `hasInconclusive`. Items with no text are skipped, except experts, who are kept with "not recorded" when they have no country or role.
+
 | Task | Command |
 |---|---|
 | Index (incremental: only new or changed chunks are embedded) | `PYTHONPATH=src python src/ttl_index.py --skip-types ref` |
@@ -291,9 +309,29 @@ Place Turtle files in `data/ttl/`. The assessment is the file name before `_v` (
 
 `--skip-types ref` leaves out the bibliographic references (about 33,000 chunks), which are rarely useful for questions. The current index is built without them.
 
+#### Checking TTL files
+
+Run the audit on new or updated TTL files before indexing them. It compares each file with the ontology in `docs/IPBES_Ontology_v06.ttl`, and runs the loader to find what the indexer would leave out. It changes nothing.
+
+```bash
+PYTHONPATH=src python src/ttl_audit.py                        # every file in data/ttl/
+PYTHONPATH=src python src/ttl_audit.py data/ttl/SUA_v02.ttl   # some files
+PYTHONPATH=src python src/ttl_audit.py --all                  # also properties partial by nature
+```
+
+For each class and file it reports:
+
+| Line | Meaning | Example |
+|---|---|---|
+| `below 100%` | Share of the items that have a property the ontology lists. Confidence levels, expert roles, DOIs and optional links are partial by nature and only shown with `--all`. | `foaf:Person: 90` / `skos:prefLabel 0%`: SUA's experts have no name label |
+| `not in ontology` | Properties the file uses that the ontology does not list | `ipbes:hasCategory` on GA1 and BBA knowledge gaps |
+| `not indexed` | Items the loader leaves out, usually because they have no text or name | `LDR18-boxSPM1`: an illustration with neither caption nor description |
+
+Fix what matters in the source TTL (or its conversion), or in `ttl_loader.py` when the data is valid but read the wrong way. Then check the countries with `ttl_index.py --dry-run` and index.
+
 #### Country values
 
-Expert countries are matched to ISO codes with the geography RDF. Several countries in one value are split on `;`, `/` or `,` ("Argentina, Spain"); a person can also have several country values (nationality and residence), and all are kept. Colloquial names ("UK", "Russia", "Italia", "Australian" …) are listed in `_COUNTRY_ALIASES` in `src/geo.py`.
+Expert countries are matched to ISO codes with the geography RDF. Several countries in one value are split on `;`, `/` or `,` ("Argentina, Spain"); a person can also have several country values (nationality and residence), and all are kept. Colloquial names, nations of the United Kingdom and known misspellings in the source files ("UK", "Scotland", "Italia", "Australian", "Tunesia" …) are listed in `_COUNTRY_ALIASES` in `src/geo.py`.
 
 Indexing stops when a country value cannot be resolved (`STRICT_COUNTRY_RESOLUTION` in `ttl_index.py`) and lists the values. Fix them in the source TTL, or add an alias to `geo.py`, and run the check again (`--dry-run`) until it passes.
 

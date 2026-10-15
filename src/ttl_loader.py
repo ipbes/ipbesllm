@@ -54,7 +54,7 @@ def _local_name(uri) -> str:
 def _qualifier(graph, subject) -> str:
     """
     IPBES evidence qualifier for a message: 'well established',
-    'established but incomplete', or 'unresolved'.
+    'established but incomplete', 'unresolved' or 'inconclusive'.
     """
     if _first(graph, subject, URIRef(IPBES + "hasWellestablished")):
         return "well established"
@@ -62,6 +62,8 @@ def _qualifier(graph, subject) -> str:
         return "established but incomplete"
     if _first(graph, subject, URIRef(IPBES + "hasUnresolved")):
         return "unresolved"
+    if _first(graph, subject, URIRef(IPBES + "hasInconclusive")):
+        return "inconclusive"
     return ""
 
 
@@ -494,15 +496,18 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
     for il in graph.subjects(RDF.type, il_type):
         ident = _text(_first(graph, il, DCTERMS.identifier))
         caption = _text(_first(graph, il, SKOS.prefLabel))
+        # Some files (BBA, SCM) have only a description, no caption.
+        description = _text(_first(graph, il, URIRef(IPBES + "hasDescription")))
+        body = "\n\n".join(part for part in (caption, description) if part)
 
-        if not caption:
+        if not body:
             continue
 
         emit(
             subject=il,
             chunk_type="il",
             heading=ident,
-            body=caption,
+            body=body,
             subchapter_uris=[],
             extra_meta={},
         )
@@ -538,7 +543,13 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
     # -----------------------------------------------------------------
 
     for person in graph.subjects(RDF.type, FOAF.Person):
-        name = _text(_first(graph, person, SKOS.prefLabel))
+        # Some files give only first and last names (SUA has no prefLabel).
+        name = _text(_first(graph, person, SKOS.prefLabel)) or " ".join(
+            part for part in (
+                _text(_first(graph, person, FOAF.firstName)),
+                _text(_first(graph, person, FOAF.lastName)),
+            ) if part
+        )
         if not name:
             continue
 
@@ -567,6 +578,9 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
             body_parts.append(f"Country: {country}")
         if roles:
             body_parts.append("Roles:\n" + "\n".join(f"- {r}" for r in roles))
+        if not body_parts:
+            # Still an expert of the assessment: an empty body would drop it.
+            body_parts.append("Country and roles: not recorded")
 
         body = "\n".join(body_parts)
 
