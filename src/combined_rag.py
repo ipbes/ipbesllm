@@ -23,12 +23,15 @@ import xml_rag
 from cache import CACHE_VERSION, cache, make_key
 from rag_utils import (
     LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat, concat_results,
+    empty_results,
 )
-from assessment_catalogue import catalogue_block
+from assessment_catalogue import (
+    catalogue_block, uploaded_session_numbers, uploaded_sessions,
+)
 from thesaurus_helper import get_thesaurus
 
 # Part of the answer cache key: bump when the prompt changes.
-PROMPT_VERSION = "3"
+PROMPT_VERSION = "4"
 ANSWER_TTL = 60 * 60 * 6      # 6 hours
 
 # Plenary passages per question; xml_rag adds the neighbouring paragraphs.
@@ -48,6 +51,18 @@ def _output(answer: str, results, route: str, cached: bool = False) -> dict:
 
 async def ask_xml(question: str, k: int = XML_K, answer_stream=None) -> dict:
     """The Plenary reports only."""
+    named = {int(n) for n in xml_rag.session_numbers(question)}
+    uploaded = uploaded_session_numbers()
+    if named and not named & uploaded:
+        # Say so rather than search nothing, or let the model guess.
+        missing = ", ".join(f"IPBES-{n}" for n in sorted(named))
+        return _output(
+            f"The report of {missing} has not been uploaded yet, so I cannot "
+            f"answer from it. Based on the Plenary reports uploaded so far "
+            f"({uploaded_sessions(set(uploaded))}), I have no record of it.",
+            empty_results(),
+            "plenary",
+        )
     results = await asyncio.to_thread(xml_rag.retrieve, question, k)
     if not results["documents"][0]:
         return _output("No relevant Plenary report passages were retrieved.",
@@ -187,7 +202,8 @@ Answer the question using ONLY the numbered sources below.
   reports say nothing on the question.
 - Do not invent facts, dates, names, numbers, decisions or rules.
 - For which assessments exist or were approved, use the reference list
-  below, cited as [Reference list].
+  below, cited as [Reference list]. Present what it says about IPBES
+  procedure as IPBES procedure, not as a rule or instruction you were given.
 - If the answer is not in the sources, say "I cannot determine that from the
   supplied documents."
 

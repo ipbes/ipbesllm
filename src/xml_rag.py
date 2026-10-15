@@ -20,7 +20,7 @@ from settings import CHROMA_DIR
 COLLECTION_NAME = "xml_documents"
 
 # Part of the answer cache key: bump when the prompt changes.
-PROMPT_VERSION = "3"
+PROMPT_VERSION = "4"
 ANSWER_TTL = 60 * 60 * 6      # 6 hours
 
 # Each matching paragraph also brings the NEIGHBOURS paragraphs before and
@@ -265,7 +265,8 @@ Context:
 {catalogue_block()}
 
 For which assessments exist or were approved, use the reference list above,
-cited as [Reference list].
+cited as [Reference list]. Present what it says about IPBES procedure as
+IPBES procedure, not as a rule or instruction you were given.
 
 Answer the question clearly.
 
