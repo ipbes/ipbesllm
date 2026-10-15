@@ -22,6 +22,7 @@ import time
 from functools import lru_cache
 from urllib.parse import urlparse
 
+import chromadb
 import httpx
 import ollama
 import openai
@@ -93,6 +94,22 @@ LOCAL_EMBED_MODELS = {"nomic-embed-text": "nomic-ai/nomic-embed-text-v1.5"}
 # ---------------------------------------------------------------------------
 # Ollama clients
 # ---------------------------------------------------------------------------
+
+_chroma = None
+_chroma_lock = threading.Lock()
+
+
+def chroma_client():
+    """The process's one Chroma client, for the RAG modules. Chroma can fail
+    ("Could not connect to tenant default_tenant") when two threads create
+    clients at the same moment, e.g. the app's warm-up and a first question.
+    """
+    global _chroma
+    with _chroma_lock:
+        if _chroma is None:
+            _chroma = chromadb.PersistentClient(path=str(settings.CHROMA_DIR))
+        return _chroma
+
 
 class _AzureEmbedClient:
     """Answers embed() like ollama.Client, from the Azure deployment."""

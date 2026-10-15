@@ -2,7 +2,6 @@ import asyncio
 import os
 from pathlib import Path
 
-import chromadb
 from chromadb.errors import NotFoundError
 from loguru import logger
 
@@ -11,6 +10,7 @@ from cache import CACHE_VERSION, cache, make_key
 from geo import infer_country_names  # noqa: F401
 from rag_utils import (
     EMBED_MODEL, GET_PAGE, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat,
+    chroma_client,
     embed_query, interleave_results, named_assessments, select_results,
     strip_corpus_words,
 )
@@ -64,7 +64,7 @@ def _get_collection():
             _check_manifest()
 
     if _STATE["collection"] is None:
-        client = chromadb.PersistentClient(path=CHROMA_DIR)
+        client = chroma_client()
         try:
             # No embedding function: queries are embedded by embed_query and
             # passed as vectors, so the collection never embeds anything.

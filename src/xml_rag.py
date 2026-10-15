@@ -3,14 +3,13 @@ import os
 import re
 from collections import defaultdict
 
-import chromadb
 from chromadb.errors import NotFoundError
 from loguru import logger
 
 from cache import CACHE_VERSION, cache, make_key
 from rag_utils import (
     EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat,
-    embed_query,
+    chroma_client, embed_query,
 )
 from settings import CHROMA_DIR
 
@@ -20,7 +19,7 @@ from settings import CHROMA_DIR
 COLLECTION_NAME = "xml_documents"
 
 # Part of the answer cache key: bump when the prompt changes.
-PROMPT_VERSION = "1"
+PROMPT_VERSION = "2"
 ANSWER_TTL = 60 * 60 * 6      # 6 hours
 
 # Each matching paragraph also brings the NEIGHBOURS paragraphs before and
@@ -80,9 +79,7 @@ def retrieve(
     k: int = 10,
 ):
 
-    client = chromadb.PersistentClient(
-        path=CHROMA_DIR
-    )
+    client = chroma_client()
 
     # No embedding function: the question is embedded by embed_query
     # (rag_utils: OLLAMA_URL, OLLAMA_EMBED_MODEL, timeout and retries).
@@ -234,6 +231,7 @@ Use ONLY the supplied context.
 
 The XML contains structural information such as:
 - document
+- the decision or annex a passage is part of ("Part of")
 - section
 - subsection
 - paragraph
@@ -269,6 +267,7 @@ At the end provide:
 
 Sources:
 - document
+- decision or annex ("Part of"), if any
 - section/subsection
 - paragraph or table row
 - Akoma Ntoso location

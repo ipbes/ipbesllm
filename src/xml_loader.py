@@ -207,6 +207,36 @@ def get_frbr_metadata(root: ET.Element) -> dict:
     return metadata
 
 
+_DECISION_HEADING = re.compile(r"\bdecision\b|^IPBES-\d", re.IGNORECASE)
+
+
+def attachment_context(element: ET.Element, parent_map: dict) -> str:
+    """The headings of the attachments (decisions, annexes) that contain
+    `element`, outermost first: "Decision IPBES-3/4: Communications ...";
+    "" in the main body of the report.
+
+    It starts at the innermost decision: some files nest one decision in
+    another, and the outer "Annex" heading says nothing.
+    """
+    headings = []
+    ancestor = parent_map.get(element)
+    while ancestor is not None:
+        if local_name(ancestor.tag) == "attachment":
+            heading = first_child(ancestor, "heading")
+            text = element_text(heading, parent_map) if heading is not None else ""
+            if text:
+                headings.append(text)
+        ancestor = parent_map.get(ancestor)
+    headings.reverse()
+
+    decisions = [i for i, h in enumerate(headings) if _DECISION_HEADING.search(h)]
+    if decisions:
+        headings = headings[decisions[-1]:]
+    elif len(headings) > 1 and headings[0].casefold() == "annex":
+        headings = headings[1:]
+    return " › ".join(headings)
+
+
 def get_heading_context(element: ET.Element, parent_map: dict):
     """
     Walk upward through the XML tree and collect the most recent
@@ -659,6 +689,7 @@ def parse_akn_file(xml_path: str) -> list[dict]:
             if subdivisions
             else ""
         )
+        part_of = attachment_context(paragraph, parent_map)
 
         context_lines = []
 
@@ -666,6 +697,9 @@ def parse_akn_file(xml_path: str) -> list[dict]:
             context_lines.append(
                 f"Document: {document_metadata['title']}"
             )
+
+        if part_of:
+            context_lines.append(f"Part of: {part_of}")
 
         if document_metadata["date"]:
             context_lines.append(
@@ -715,6 +749,7 @@ def parse_akn_file(xml_path: str) -> list[dict]:
                 "paragraph": paragraph_number,
                 "eId": e_id,
                 "xpath": xpath,
+                "part_of": part_of,
             }
         )
 
@@ -767,10 +802,12 @@ def parse_akn_file(xml_path: str) -> list[dict]:
 
         section = divisions[-1] if divisions else ""
         subsection = subdivisions[-1] if subdivisions else ""
+        part_of = attachment_context(element, parent_map)
 
         chunk_text = "\n".join(
             part
             for part in [
+                f"Part of: {part_of}" if part_of else "",
                 f"Section: {section}" if section else "",
                 f"Subsection: {subsection}" if subsection else "",
                 "",
@@ -802,6 +839,7 @@ def parse_akn_file(xml_path: str) -> list[dict]:
                 "paragraph": "",
                 "eId": element.attrib.get("eId", ""),
                 "xpath": xpath,
+                "part_of": part_of,
             }
         )
 
@@ -827,6 +865,7 @@ def parse_akn_file(xml_path: str) -> list[dict]:
         )
 
         grid = table_grid(table, parent_map)
+        part_of = attachment_context(table, parent_map)
 
         if not grid:
             continue
@@ -895,6 +934,9 @@ def parse_akn_file(xml_path: str) -> list[dict]:
                     f"Document: "
                     f"{document_metadata['title']}"
                 )
+
+            if part_of:
+                context_lines.append(f"Part of: {part_of}")
 
             if document_metadata["date"]:
                 context_lines.append(
@@ -1001,6 +1043,8 @@ def parse_akn_file(xml_path: str) -> list[dict]:
 
                     "table_title":
                         table_context["table_title"],
+
+                    "part_of": part_of,
                 }
             )
 

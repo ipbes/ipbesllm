@@ -258,7 +258,9 @@ def source_title(source: str, number: int, metadata: dict) -> str:
         return (f"{number}. [{metadata.get('assessment', '?')}] {name} — "
                 f"page {metadata.get('page', '?')}")
     if source == "XML":
-        return (f"{number}. {metadata.get('title') or metadata.get('source_file', 'Unknown file')}"
+        name = (metadata.get("part_of") or metadata.get("title")
+                or metadata.get("source_file", "Unknown file"))
+        return (f"{number}. {name}"
                 f" — {metadata.get('division') or metadata.get('eId', '?')}")
     return (f"{number}. [{metadata.get('assessment', '?')}] "
             f"{metadata.get('identifier', 'No identifier')} — "
@@ -270,7 +272,7 @@ METADATA_KEYS = {
             "chunk_index", "chunk_total", "country"],
     "XML": ["source_file", "document_type", "title", "date", "division",
             "subdivision", "paragraph", "table_title", "table_row", "eId", "xpath",
-            "neighbour_of"],
+            "neighbour_of", "part_of"],
     "TTL": ["identifier", "chunk_type", "qualifier", "assessment", "country",
             "eId", "division", "subdivision", "xpath"],
 }

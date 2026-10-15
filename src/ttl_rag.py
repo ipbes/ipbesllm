@@ -4,7 +4,6 @@ import os
 import re
 from pathlib import Path
 
-import chromadb
 from chromadb.errors import NotFoundError
 from loguru import logger
 
@@ -12,7 +11,8 @@ from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key
 # infer_country_names / canonical_country are re-exported for app.py.
 from geo import canonical_country, country_code_for_label, infer_country_names
 from rag_utils import (
-    EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, concat_results,
+    EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat, chroma_client,
+    concat_results,
     embed_query, empty_results, interleave_results, named_assessments,
     select_results, strip_corpus_words,
 )
@@ -72,7 +72,7 @@ def _sync_index_state() -> None:
 def _get_collection():
     _sync_index_state()
     if _STATE["collection"] is None:
-        client = chromadb.PersistentClient(path=CHROMA_DIR)
+        client = chroma_client()
         try:
             # No embedding function: queries are embedded by embed_query and
             # passed as vectors, so the collection never embeds anything.

@@ -27,7 +27,7 @@ from rag_utils import (
 from thesaurus_helper import get_thesaurus
 
 # Part of the answer cache key: bump when the prompt changes.
-PROMPT_VERSION = "1"
+PROMPT_VERSION = "2"
 ANSWER_TTL = 60 * 60 * 6      # 6 hours
 
 # Plenary passages per question; xml_rag adds the neighbouring paragraphs.
@@ -178,7 +178,8 @@ the IPBES Plenary.
 Answer the question using ONLY the numbered sources below.
 - Cite the sources you use by number, like [3], and say where each point
   comes from: the assessment (e.g. GA1, IAS) or the Plenary report (which
-  session, section and paragraph).
+  session, decision if the passage is "Part of" one, section and
+  paragraph).
 - Preserve any qualifier (well established / established but incomplete /
   unresolved) verbatim.
 - Note where the sources differ, or where the assessments or the Plenary

@@ -5,6 +5,9 @@ Read, Add, Create and Write permissions), rows are appended to the append
 blob RATINGS_BLOB in that container, so they survive restarts of a hosted
 app: Streamlit Community Cloud keeps no files. Download it from the portal.
 Otherwise rows go to feedback/ratings.csv in the project.
+
+Both files start with a UTF-8 byte order mark: without it Excel reads the
+CSV as Windows-1252 and shows “ as â€œ.
 """
 from __future__ import annotations
 
@@ -19,6 +22,8 @@ from settings import PROJECT_ROOT
 FEEDBACK_CONTAINER_URL = os.getenv("FEEDBACK_CONTAINER_URL", "")
 RATINGS_BLOB = "ratings.csv"
 LOCAL_PATH = PROJECT_ROOT / "feedback" / RATINGS_BLOB
+
+BOM = "\ufeff"
 
 FIELDS = ["timestamp", "rating", "question", "answer", "source", "route",
           "model", "sources"]
@@ -42,7 +47,7 @@ def _ratings_blob():
     try:
         # Only if missing: never truncates existing ratings.
         blob.create_append_blob(if_none_match="*")
-        blob.append_block(_csv_line(FIELDS))
+        blob.append_block(BOM.encode("utf-8") + _csv_line(FIELDS))
     except ResourceExistsError:
         pass
     return blob
@@ -69,5 +74,6 @@ def save_rating(rating: str, question: str, answer: str, source: str,
     with LOCAL_PATH.open("a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         if new_file:
+            f.write(BOM)
             writer.writerow(FIELDS)
         writer.writerow(values)

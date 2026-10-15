@@ -64,6 +64,7 @@ def build_metadata(chunk: dict) -> dict:
         "xpath": chunk["xpath"],
         "table_row": str(chunk.get("table_row", "")),
         "table_title": chunk.get("table_title", ""),
+        "part_of": chunk.get("part_of", ""),
     }
     return with_fingerprints(md, chunk)
 
