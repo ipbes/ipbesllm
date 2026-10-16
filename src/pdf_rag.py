@@ -1,5 +1,6 @@
 import asyncio
 import os
+import re
 from pathlib import Path
 
 from chromadb.errors import NotFoundError
@@ -15,6 +16,7 @@ from rag_utils import (
     strip_corpus_words,
 )
 from thesaurus_helper import get_thesaurus
+from xml_rag import session_numbers
 from settings import CHROMA_DIR
 
 
@@ -36,8 +38,8 @@ RERANK_OVERFETCH = max(1, int(os.getenv("PDF_RERANK_OVERFETCH", "3")))
 
 
 # Part of the cache keys: bump when retrieval or prompts change.
-RETRIEVAL_VERSION = "5"
-PROMPT_VERSION = "6"
+RETRIEVAL_VERSION = "6"
+PROMPT_VERSION = "7"
 
 
 # ---------------------------------------------------------------------------
@@ -85,9 +87,31 @@ def _get_collection():
     return _STATE["collection"]
 
 
+# Plenary session reports are named <year>-<session>.pdf (2013-1.pdf), like
+# the XML reports; they form one group, PLENARY, searched alongside the
+# assessments.
+_PLENARY_FILE = re.compile(r"^(\d{4})-(\d+)$")
+PLENARY = "PLENARY"
+
+
+def _session(source_file: str) -> str | None:
+    """2016-4.pdf -> "4"; None for an assessment file."""
+    match = _PLENARY_FILE.match(Path(source_file).stem)
+    return match.group(2) if match else None
+
+
 def _assessment_id(source_file: str) -> str:
-    """ga1_report.pdf -> GA1 (the part of the file name before the first _)."""
+    """ga1_report.pdf -> GA1 (the part of the file name before the first _);
+    a Plenary report -> PLENARY."""
+    if _session(source_file):
+        return PLENARY
     return Path(source_file).stem.split("_")[0].upper()
+
+
+def _source_label(source_file: str) -> str:
+    """What a chunk is from, for the prompt and the app: GA1, Plenary IPBES-4."""
+    session = _session(source_file)
+    return f"Plenary IPBES-{session}" if session else _assessment_id(source_file)
 
 
 def _assessment_files() -> dict[str, list[str]]:
@@ -166,10 +190,16 @@ def retrieve(
     vector = list(embed_query(search_text or question))
 
     groups = _assessment_files() if per_assessment else {}
-    chosen = named_assessments(question, list(groups)) or list(groups)
+    sessions = session_numbers(question)
+    if sessions and PLENARY in groups:
+        # A named session: only its report.
+        chosen = [PLENARY]
+        groups = {PLENARY: [f for f in groups[PLENARY] if _session(f) in sessions]}
+    else:
+        chosen = named_assessments(question, list(groups)) or list(groups)
     # Reference lists (about a third of a report) only when asked for.
     body = None if ASKS_FOR_REFERENCES.search(question) else {"section": {"$ne": "references"}}
-    files = [{"source_file": {"$in": groups[a]}} for a in chosen]
+    files = [{"source_file": {"$in": groups[a]}} for a in chosen if groups[a]]
     wheres = [{"$and": [f, body]} if body else f for f in files] or [body]
 
     parts = []
@@ -191,7 +221,7 @@ def retrieve(
 
     results = interleave_results(parts)
     for m in results["metadatas"][0]:
-        m.setdefault("assessment", _assessment_id(m.get("source_file", "")))
+        m.setdefault("assessment", _source_label(m.get("source_file", "")))
     return results
 
 
@@ -202,8 +232,9 @@ def retrieve(
 def _build_task(question: str, country_names: set[str]) -> str:
     return (
         "Answer the user's question using ONLY the retrieved chunks below.\n"
-        "Say which assessment each point comes from, and note where "
-        "assessments differ or one says nothing.\n"
+        "Say which document each point comes from (an assessment such as "
+        "GA1, or a Plenary report such as Plenary IPBES-4), and note where "
+        "they differ or one says nothing.\n"
         "If the answer is not present, say "
         "'I cannot determine that from the supplied documents.'"
     )
@@ -232,7 +263,8 @@ def _build_context(results, max_chars: int = MAX_CONTEXT_CHARS) -> tuple[str, in
         metadata = results["metadatas"][0][i]
         part = (
             f"SOURCE {i + 1}\n"
-            f"Assessment: {metadata.get('assessment', '')}\n"
+            f"{'Plenary report' if metadata.get('assessment', '').startswith('Plenary') else 'Assessment'}: "
+            f"{metadata.get('assessment', '')}\n"
             f"File: {metadata.get('source_file', '')}\n"
             f"Title: {metadata.get('title', '')}\n"
             f"Page: {_page_label(metadata)}\n"
@@ -289,7 +321,8 @@ def generate_answer(
     task = _build_task(question, country_names or set())
 
     prompt = f"""
-You are answering questions about an organization's documents.
+You are answering questions about IPBES documents: assessment reports and
+the reports of the sessions of the IPBES Plenary.
 
 {task}
 

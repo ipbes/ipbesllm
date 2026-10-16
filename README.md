@@ -369,7 +369,7 @@ It produces three chunk types:
 
 ### PDF
 
-Place PDF files in `data/pdf/`, named `<assessment>_report.pdf` and `<assessment>_spm.pdf` (e.g. `bba_report.pdf`): the assessment is the part of the name before the first `_`, and must match the TTL code (BBA, GA1, IAS …) so that questions naming an assessment find its PDFs. The indexer extracts the text with PyMuPDF, cleans it, creates chunks, embeds them with the configured embedding model and stores them in Chroma (`pdf_loader.py`):
+Place PDF files in `data/pdf/`, named `<assessment>_report.pdf` and `<assessment>_spm.pdf` (e.g. `bba_report.pdf`): the assessment is the part of the name before the first `_`, and must match the TTL code (BBA, GA1, IAS …) so that questions naming an assessment find its PDFs. Plenary session reports are named `<year>-<session>.pdf` (`2013-1.pdf`), like the XML reports. They form one group, "Plenary", searched alongside the assessments: a question that names a session (IPBES-1, "first session", #IPBES1) searches only that session's report, and one that mentions "the Plenary" searches only the session reports. Sources from them are labelled by session, e.g. "Plenary IPBES-4". The indexer extracts the text with PyMuPDF, cleans it, creates chunks, embeds them with the configured embedding model and stores them in Chroma (`pdf_loader.py`):
 
 - **Running headers and footers** are removed: lines that recur at the top or bottom of many pages ("THE GLOBAL ASSESSMENT REPORT ON BIODIVERSITY …", chapter titles), and bare page numbers.
 - **Words split at a line end** are joined ("biodi-versity"), unless the document uses the hyphenated form elsewhere or never the joined one, so compounds such as "decision-making" keep their hyphen.
