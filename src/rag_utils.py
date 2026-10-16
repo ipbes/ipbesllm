@@ -164,10 +164,18 @@ def _azure_base_url(endpoint: str) -> str:
     return endpoint + "/"
 
 
+# Seconds to wait for Azure's reply. The client default (600s, 5 retries)
+# let a connection dropped while the machine slept or went offline block
+# for about an hour; long answers take up to about 3 minutes.
+AZURE_TIMEOUT = float(os.getenv("AZURE_OPENAI_TIMEOUT", "300"))
+AZURE_RETRIES = 2
+
+
 @lru_cache(maxsize=1)
 def azure_client():
     return openai.OpenAI(base_url=_azure_base_url(AZURE_OPENAI_ENDPOINT),
-                         api_key=AZURE_OPENAI_API_KEY, max_retries=MAX_RETRIES)
+                         api_key=AZURE_OPENAI_API_KEY, max_retries=AZURE_RETRIES,
+                         timeout=httpx.Timeout(AZURE_TIMEOUT, connect=10))
 
 
 class GenerationCancelled(Exception):
