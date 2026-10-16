@@ -353,6 +353,9 @@ SKIP_STYLES: set[str] = set()
 _TYPED_NUMBER = re.compile(
     r"^[\t ]*(\(?[0-9]{1,3}[.)]|\([a-zA-Z]{1,4}\)|[a-z]{1,2}\)|[IVXLC]{1,6}\.|[A-Z]\.|[0-9]{1,2}\.[0-9]{1,2}\.?)"
     r"(?:\t+| {2,})")
+# Draft alternatives in negotiated texts: "[2bis.", "[2bis alt", "3ter."
+# (IPBES-1 rules of procedure), followed by a single space.
+_BIS_NUMBER = re.compile(r"^[\t ]*(\[?\d{1,3}\s?(?:bis|ter|quater)(?:\s+alt)?\.?)(?=\s)")
 _HEADING_NUMBER = re.compile(r"^[\t ]*([IVXLC]{1,6}\.?|[A-Z]\.|[0-9]{1,2}(?:\.[0-9]{1,2})*\.?)\t+")
 _ROMAN_ONLY = re.compile(r"^[IVXL]{1,6}\.?$")
 
@@ -503,7 +506,8 @@ def _paragraph_block(spans: list[Span], style: str, number) -> "Block | None":
         b.num, b.fmt, b.ilvl = number
         b.auto = True
     else:
-        m = (_HEADING_NUMBER if b.kind == "heading" else _TYPED_NUMBER).match(raw)
+        m = (_HEADING_NUMBER if b.kind == "heading" else _TYPED_NUMBER).match(raw) \
+            or (_BIS_NUMBER.match(raw) if b.kind == "para" else None)
         if m:
             b.num, prefix = m.group(1), m.end()
             b.fmt = _typed_format(b.num)
@@ -514,6 +518,8 @@ def _paragraph_block(spans: list[Span], style: str, number) -> "Block | None":
 
 
 def _typed_format(num: str) -> str:
+    if re.search(r"\d\s?(?:bis|ter|quater)", num):
+        return "decimal"
     core = num.strip("().")
     if core.isdigit() or re.fullmatch(r"[0-9.]+", core):
         return "decimal"
@@ -928,10 +934,12 @@ def _is_paragraph_number(b: Block, bld: Builder) -> bool:
     following agenda: 1. Opening of the session ...")."""
     if b.fmt != "decimal" or b.ilvl > 0:
         return False
-    m = re.match(r"\(?(\d+)", b.num)
+    m = re.match(r"[(\[]?(\d+)", b.num)
     if not m:
         return False
     n = int(m.group(1))
+    if re.search(r"bis|ter|quater", b.num):
+        return True                     # "[2bis." after paragraph 2
     if bld.para is None:
         return True
     # The next item of an open list ("10." after item "9." of an agenda
@@ -1091,12 +1099,14 @@ class Writer:
                 self.note_number += 1
                 n = sum(1 for _ in parent.iter(akn("authorialNote"))) + 1
                 note_id = f"{eid}__authorialNote_{n}"
-                note = etree.SubElement(parent, akn("authorialNote"), marker=str(self.note_number),
+                # In <sup>, as in every reference file.
+                sup = etree.SubElement(parent, akn("sup"))
+                note = etree.SubElement(sup, akn("authorialNote"), marker=str(self.note_number),
                                         placement="bottom", eId=note_id)
                 for k, para in enumerate(s.note, 1):
                     p = etree.SubElement(note, akn("p"), eId=f"{note_id}__p_{k}")
                     self.inline(p, para, f"{note_id}__p_{k}")
-                last = note
+                last = sup
                 continue
             if not (s.bold or s.italic or s.underline or s.vert):
                 add_text(s.text)
