@@ -36,7 +36,7 @@ RERANK_OVERFETCH = max(1, int(os.getenv("PDF_RERANK_OVERFETCH", "3")))
 
 # Part of the cache keys: bump when retrieval or prompts change.
 RETRIEVAL_VERSION = "4"
-PROMPT_VERSION = "3"
+PROMPT_VERSION = "4"
 
 
 # ---------------------------------------------------------------------------
@@ -205,6 +205,15 @@ def _build_task(question: str, country_names: set[str]) -> str:
     )
 
 
+def _page_label(metadata: dict) -> str:
+    """ "1089 of 1148 (printed page 1026)": the PDF page opens the file at
+    the right place, the printed page is the one to quote."""
+    label = f"{metadata.get('page', '')} of {metadata.get('page_count', '')}"
+    if metadata.get("printed_page"):
+        label += f" (printed page {metadata['printed_page']})"
+    return label
+
+
 def _build_context(results, max_chars: int = MAX_CONTEXT_CHARS) -> tuple[str, int]:
     """Return (context text, number of chunks included).
 
@@ -222,7 +231,7 @@ def _build_context(results, max_chars: int = MAX_CONTEXT_CHARS) -> tuple[str, in
             f"Assessment: {metadata.get('assessment', '')}\n"
             f"File: {metadata.get('source_file', '')}\n"
             f"Title: {metadata.get('title', '')}\n"
-            f"Page: {metadata.get('page', '')} of {metadata.get('page_count', '')}\n"
+            f"Page: {_page_label(metadata)}\n"
             f"Chunk: {metadata.get('chunk_index', '')} of "
             f"{metadata.get('chunk_total', '')}\n\n"
             f"{document}"
@@ -290,7 +299,8 @@ Context:
 {truncation_note}{extras}
 Answer the question clearly.
 
-At the end, list the source pages you relied on.
+At the end, list the source pages you relied on, giving the printed page
+number where one is shown.
 """
 
     return chat(

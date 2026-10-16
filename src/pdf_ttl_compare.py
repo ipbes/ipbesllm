@@ -78,9 +78,10 @@ async def run_pdf(question: str) -> tuple[str, str]:
     sources = []
     for i, m in enumerate(results["metadatas"][0], start=1):
         d = results["distances"][0][i - 1]
+        printed = f" (printed {m['printed_page']})" if m.get("printed_page") else ""
         sources.append(
             f"{i}. {m.get('source_file', '?')} "
-            f"p{m.get('page', '?')} "
+            f"p{m.get('page', '?')}{printed} "
             f"(d={d:.3f})"
         )
 

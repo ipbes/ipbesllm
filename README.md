@@ -34,7 +34,7 @@ The project is an evaluation platform for comparing and improving retrieval and 
 |---|---|---|---|
 | **TTL** (RDF/Turtle) | Assessments: GA1, IAS, LDR, SUA, TCA, VA, BBA, PPA, SCM | Parsed with RDFLib into typed chunks (key messages, chapters, sub-chapters, experts, figures, knowledge gaps …), then embedded | `ttl_documents` |
 | **XML** (Akoma Ntoso / LegalDocML) | Plenary session reports IPBES-1 to IPBES-8, with their decisions | Parsed into structured paragraphs and table rows, then embedded | `xml_documents` |
-| **PDF** | Assessment reports and SPMs (GA1, IAS, LDR) | Text extracted with PyMuPDF, chunked, then embedded | `pdf_documents` |
+| **PDF** | Assessment reports and SPMs of the same assessments in TTL folder | Text extracted with PyMuPDF, chunked, then embedded | `pdf_documents` |
 | **RDF** | IPBES thesaurus and geography | Used for query expansion, definitions and country matching; the thesaurus is also embedded | `ipbes_thesaurus` |
 
 The collections are kept separate, which keeps them comparable for analysis. The app searches the TTL and XML collections together by default, so users do not have to know where an answer is stored (see [How questions are answered](#how-questions-are-answered)).
@@ -85,7 +85,7 @@ ipbesllm/
 ├── .env                         # Local settings and secrets (never committed)
 ├── chroma/                      # Chroma vector database and index manifests (not in git)
 ├── data/                        # Source documents (not in git; add locally)
-│   ├── pdf/*.pdf
+│   ├── pdf/*.pdf                # <assessment>_report.pdf, <assessment>_spm.pdf
 │   ├── rdf/*.rdf                # ipbes-thesaurus.rdf, ipbes-geo.rdf
 │   ├── ttl/*.ttl                # e.g. GA1_v11.ttl: the assessment is the name before "_v"
 │   └── xml/*.xml                # Plenary reports, e.g. 2013-1.xml
@@ -376,7 +376,15 @@ It produces three chunk types:
 
 ### PDF
 
-Place PDF files in `data/pdf/`. The indexer extracts the text, creates chunks, embeds them with the configured embedding model and stores them in Chroma.
+Place PDF files in `data/pdf/`, named `<assessment>_report.pdf` and `<assessment>_spm.pdf` (e.g. `bba_report.pdf`): the assessment is the part of the name before the first `_`, and must match the TTL code (BBA, GA1, IAS …) so that questions naming an assessment find its PDFs. The indexer extracts the text with PyMuPDF, cleans it, creates chunks, embeds them with the configured embedding model and stores them in Chroma (`pdf_loader.py`):
+
+- **Running headers and footers** are removed: lines that recur at the top or bottom of many pages ("THE GLOBAL ASSESSMENT REPORT ON BIODIVERSITY …", chapter titles), and bare page numbers.
+- **Words split at a line end** are joined ("biodi-versity"), unless the document uses the hyphenated form elsewhere or never the joined one, so compounds such as "decision-making" keep their hyphen.
+- **Chunks are whole sentences**, up to 2,000 characters with about 300 characters of overlap, and stay within one page, so a chunk's page is exact.
+- **Printed page numbers** are stored next to the PDF page: reports have front matter, so the printed page differs (GA1 report: printed page = PDF page − 63). Answers and the source list cite both, e.g. "PDF page 1089 (printed p. 1026)": the PDF page opens the file at the right place, the printed page is the one to quote.
+- **File fingerprint:** each chunk and the manifest (`chroma/pdf_index.json`) record the PDF's SHA-256, showing which version of a file an answer came from.
+
+The cleaning follows `pdf_index_diana.py`, a sentence index of a PDF used for checking quotes.
 
 | Task | Command |
 |---|---|

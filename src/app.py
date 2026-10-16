@@ -263,8 +263,10 @@ def source_title(source: str, number: int, metadata: dict) -> str:
     """Card title; `number` matches "SOURCE n" in the prompt."""
     if source == "PDF":
         name = metadata.get("title") or metadata.get("source_file", "Unknown file")
-        return (f"{number}. [{metadata.get('assessment', '?')}] {name} — "
-                f"page {metadata.get('page', '?')}")
+        page = f"PDF page {metadata.get('page', '?')}"
+        if metadata.get("printed_page"):
+            page += f" (printed p. {metadata['printed_page']})"
+        return f"{number}. [{metadata.get('assessment', '?')}] {name} — {page}"
     if source == "XML":
         name = (metadata.get("part_of") or metadata.get("title")
                 or metadata.get("source_file", "Unknown file"))
@@ -276,8 +278,8 @@ def source_title(source: str, number: int, metadata: dict) -> str:
 
 
 METADATA_KEYS = {
-    "PDF": ["assessment", "source_file", "title", "page", "page_count",
-            "chunk_index", "chunk_total", "country"],
+    "PDF": ["assessment", "source_file", "title", "page", "printed_page",
+            "page_count", "chunk_index", "chunk_total", "file_sha256"],
     "XML": ["source_file", "document_type", "title", "date", "division",
             "subdivision", "paragraph", "table_title", "table_row", "eId", "xpath",
             "neighbour_of", "part_of"],

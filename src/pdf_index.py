@@ -57,7 +57,10 @@ def build_metadata(chunk: dict) -> dict:
         "chunk_index": chunk["chunk_index"],
         "chunk_total": chunk["chunk_total"],
         "total_chunks": chunk["total_chunks"],
+        "file_sha256": chunk["file_sha256"],
     }
+    if chunk.get("printed_page") is not None:   # Chroma rejects None
+        md["printed_page"] = chunk["printed_page"]
     return with_fingerprints(md, chunk)
 
 
@@ -104,7 +107,8 @@ def load_chunks() -> tuple[list[dict], list[str]]:
     return chunks, empty
 
 
-def write_manifest(complete: bool, chunk_count: int, files: int) -> None:
+def write_manifest(complete: bool, chunk_count: int, files: dict[str, str]) -> None:
+    """`files`: file name -> SHA-256 prefix, showing which PDFs were indexed."""
     MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST_PATH.write_text(json.dumps({
         "collection": COLLECTION_NAME,
@@ -144,8 +148,8 @@ def main(argv=None) -> None:
     print(f"Current directory: {Path.cwd()}")
     chunks, empty_files = load_chunks()
     total_chars = sum(len(c["text"]) for c in chunks)
-    files = len({c["source_file"] for c in chunks})
-    print(f"\nTotal chunks: {len(chunks)}  ({total_chars:,} chars) from {files} file(s)")
+    files = {c["source_file"]: c["file_sha256"] for c in chunks}
+    print(f"\nTotal chunks: {len(chunks)}  ({total_chars:,} chars) from {len(files)} file(s)")
     if empty_files:
         print(f"WARNING: no extractable text in {empty_files} "
               "(scanned/image-based? they are not indexed)")
