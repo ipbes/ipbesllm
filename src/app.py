@@ -428,7 +428,7 @@ with st.sidebar:
     with st.expander("About"):
         st.markdown(
             "Answers questions from machine readable versions of IPBES assessments (BBA, GA1, IAS, LDR, PPA, SCM, SUA, TCA, VA) and the reports of "
-            "the IPBES Plenary meeting reports and decisions (IPBES 1 to IPBES 8), using only the retrieved text, and "
+            "the IPBES Plenary meeting reports and decisions (IPBES 1 to IPBES 12), using only the retrieved text, and "
             "lists the sources it used. "
             "Each question is answered on its own: earlier questions are not "
             "taken into account.\n\n"
@@ -481,7 +481,7 @@ for index, message in enumerate(st.session_state.messages):
             render_answer(index, message, developer)
 
 
-question = st.chat_input("Ask a question about IPBES assessments (BBA, GA1, IAS, LDR, PPA, SCM, SUA, TCA, VA) and Plenary sessions (IPBES 1 to IPBES 8)")
+question = st.chat_input("Ask a question about IPBES assessments (BBA, GA1, IAS, LDR, PPA, SCM, SUA, TCA, VA) and Plenary sessions (IPBES 1 to IPBES 12)")
 
 # A new "Search in" choice applies to the next question; offer to ask the
 # last one again there, rather than leaving its old answer looking current.
