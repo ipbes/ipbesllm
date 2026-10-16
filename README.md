@@ -127,7 +127,6 @@ Some files may be added or renamed as the project develops. The important separa
 | `docs/` | Guidance documents e.g. ontology |
 | `src/` | Application and RAG code |
 | `chroma/` | Vector database, plus the index manifests the RAG code reads |
-| Redis | Cached retrievals and answers (in-memory when `REDIS_URL` is not set) |
 
 ---
 
