@@ -54,10 +54,30 @@ st.markdown(
     [data-testid="stApp"] {
         background: PAGE_BACKGROUND;
     }
-    [data-testid="stHeader"],
     [data-testid="stBottom"],
     [data-testid="stBottom"] > div {
         background: transparent;
+    }
+    /* Streamlit's top bar lies over the page. Give it the page colour so
+       content visibly slides under it, and let clicks through everywhere
+       except its own buttons: otherwise it silently blocks whatever is
+       scrolled beneath it, such as the arrow of an open "Sources". */
+    [data-testid="stHeader"] {
+        background: HEADER_BACKGROUND;
+    }
+    [data-testid="stHeader"],
+    [data-testid="stHeader"] * {
+        pointer-events: none;
+    }
+    [data-testid="stHeader"] button,
+    [data-testid="stHeader"] a,
+    [data-testid="stHeader"] [role="button"] {
+        pointer-events: auto;
+    }
+    /* The question box: a solid black outline so it stands out. */
+    [data-testid="stChatInput"] > div {
+        border: 2px solid #000000 !important;
+        background: #ffffff;
     }
     /* At least 2rem of background on each side, so the panel never runs
        into the (also light) sidebar. */
@@ -76,7 +96,9 @@ st.markdown(
         background: rgba(255, 255, 255, 0.90);
     }
     </style>
-    """.replace("PAGE_BACKGROUND", PAGE_BACKGROUND),
+    """.replace("PAGE_BACKGROUND", PAGE_BACKGROUND)
+       .replace("HEADER_BACKGROUND",
+                "transparent" if PAGE_BACKGROUND.startswith("url") else PAGE_BACKGROUND),
     unsafe_allow_html=True,
 )
 
