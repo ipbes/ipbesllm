@@ -363,7 +363,7 @@ It produces three chunk types:
 |---|---|
 | Index (incremental) | `PYTHONPATH=src python src/xml_index.py` |
 | Wipe and start over (after changing `xml_loader.py`) | `PYTHONPATH=src python src/xml_index.py --rebuild` |
-| Parser regression tests (no files in `data/` needed) | `PYTHONPATH=src python -m pytest src/test_xml_loader.py` |
+| Parser regression tests (no files in `data/` needed) | `PYTHONPATH=src python -m pytest src/xml_test_loader.py` |
 | Inspect the chunks of your files | `PYTHONPATH=src python src/xml_test.py` |
 | Inspect retrieval | `PYTHONPATH=src python src/xml_query.py` |
 | Ask a question | `PYTHONPATH=src python src/xml_rag.py` |
