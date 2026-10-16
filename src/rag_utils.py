@@ -455,6 +455,16 @@ ASKS_FOR_REFERENCES = re.compile(
 )
 
 
+# The Chair of IPBES (of the Platform, or of the Plenary in the early
+# reports), elected by the Plenary: answered from the meeting reports, not
+# to be confused with the co-chairs of an assessment.
+IPBES_CHAIR = re.compile(
+    r"\bchair(?:person|man|woman)?\s+of\s+(?:the\s+)?(?:IPBES|Platform|Plenary)\b"
+    r"|\bIPBES[\s-]+chair(?:person|man|woman)?\b",
+    re.IGNORECASE,
+)
+
+
 def empty_results() -> dict:
     return {"ids": [[]], "documents": [[]], "metadatas": [[]], "distances": [[]]}
 

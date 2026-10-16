@@ -92,7 +92,7 @@ ipbesllm/
 ├── dist/ipbes-data.zip          # Data bundle for the deployed app (built by data_bundle.py)
 ├── docs/*                       # Supporting documentation e.g. IPBES ontology: the structure of the TTL files
 ├── feedback/ratings.csv         # Answer ratings, when not stored in Azure
-├── tests/comparison_<run>.csv   # Written by pdf_ttl_compare.py (not in git)
+├── tests/comparison_<run>.csv   # Written by pdf_ttl_compare.py, one row per question per assessment/meeting (not in git)
 ├── src/
 │   ├── app.py                   # IBOK Chat (Streamlit)
 │   ├── static/*                 # Static assets e.g. images
@@ -244,6 +244,7 @@ The app sends each question one of three ways:
 | Question | Searched | Example |
 |---|---|---|
 | Names a Plenary session | That session's report only, with the XML prompt | "Who was elected chair at IPBES-1?" |
+| Asks about the Chair of IPBES ("Chair of IPBES", "IPBES Chair", "Chair of the Platform", "IPBES chairperson") | The Plenary reports, with the XML prompt; without a named session, the answer lists every Chair elected (IPBES-1, IPBES-4, IPBES-7). This is not the co-chair of an assessment, which goes to the assessments | "Who was elected as Chair of IPBES?" |
 | A list question the TTL data answers completely: key messages, background messages, sub-messages, chapters, sub-chapters, knowledge gaps, figures, references, experts | The assessments only, with the TTL list prompts | "What are the chapters of the BBA assessment?" |
 | Anything else | Assessments and Plenary reports together; one answer that says where each point comes from | "What do IPBES documents say about invasive alien species?" |
 
@@ -252,7 +253,7 @@ The app sends each question one of three ways:
 - **One search per assessment.** Each assessment is searched separately (3 chunks each by default) and the results are interleaved by rank, so the largest assessment cannot crowd out the others. If the question names assessments, by code or by name ("the LDR assessment", "the global and IAS assessments"), only those are searched; a topic alone ("invasive alien species") still searches them all. For PDFs, the assessment comes from the file name (`ga1_report.pdf` is GA1).
 - **List questions** fetch every chunk of that type (up to 100 per assessment), sorted by identifier, and the prompt asks for all of them.
 - **Knowledge gaps** are listed as on [IBOK](https://ibok.ipbes.net/en/kg): a heading per assessment (year, title, number of gaps), newest first, then a table of #, identifier, category and description. The tables are built from the data, so counts and descriptions are exact; the model only chooses which gaps answer the question (all, those of named assessments, or those on a topic). Categories come from `ipbes:hasCategory` in the TTL, which only some files have.
-- **Experts by country.** "Experts from Kenya" or "from East Africa" filters experts by country code. Regions come from the geography RDF.
+- **Experts by country.** "Experts from Kenya" or "from East Africa" filters experts by country code. Regions come from the geography RDF. A region name matches its subregion ("East Africa" is "East Africa and adjacent islands", 13 countries), and the longest match wins ("East Africa", not all of Africa). ISO codes and two-letter names ("UK", "US") count only in capitals, so ordinary words such as "are" or "can" are not read as countries.
 - **Experts and authors** are listed as a table per assessment: **Name | Country | Role | Chapter**, ordered by role (co-chairs, coordinating lead authors, lead authors, review editors, fellows, contributing authors), then chapter and name. The model only reads the question and returns filters (assessments, roles, chapters, names) or asks for a narrative; the table is built from the index itself, so lists are complete and names cannot be miscopied. Questions that need a narrative ("What was Sandra Díaz's role in the global assessment?") get a written answer. Role names are recognised too ("review editors", "co-chairs", "fellows"). Some experts have no role in the data (196 in TCA, 19 in SCM) and show "–".
 - **Search text.** Words that describe the whole corpus ("IPBES", "assessments", "what do … say about") are removed before searching, because they match every chunk and drown out the topic. The model still gets the question as asked.
 - **Thesaurus.** Concepts named in the question add synonyms and neighbouring terms to the search, re-rank the results, and put their definitions into the prompt ("Authoritative IPBES definitions").
@@ -531,10 +532,19 @@ The goal is not only to produce an answer, but to understand how representation 
 
 ### Comparing PDF and TTL
 
-`src/pdf_ttl_compare.py` runs its question list through both pipelines and writes one row per question to `tests/comparison_<run_id>.csv`, as each question finishes:
+`src/pdf_ttl_compare.py` runs its question list through both pipelines and writes one row per question **per assessment or meeting** to `tests/comparison_<run_id>.csv` (UTF-8, opens in Excel), as each row finishes:
+
+- Assessment questions get one row per assessment (or only the assessments the question names), comparing the PDF answer with the TTL answer for that assessment.
+- Meeting questions (naming a session, "Plenary", "meeting", or the Chair of IPBES) get one row per uploaded session, comparing the PDF meeting report with the XML report.
+
+Columns: `timestamp, run_id, question_no, question, scope_type` (assessment/meeting)`, scope` (GA1, IPBES-4 …)`, asked` (the question as sent, e.g. "… (Answer for the GA1 assessment only.)")`, pdf_response, pdf_sources, other_source` (TTL or XML)`, other_response, other_sources`.
+
+A full run is long (about 220 rows), so it can be run in parts; each part gets its own file:
 
 ```bash
-PYTHONPATH=src python src/pdf_ttl_compare.py
+PYTHONPATH=src python src/pdf_ttl_compare.py                          # everything
+PYTHONPATH=src python src/pdf_ttl_compare.py --questions 1-5,8        # some questions
+PYTHONPATH=src python src/pdf_ttl_compare.py --scopes GA1,IAS,IPBES-4 # some assessments/meetings
 ```
 
 With Redis (`REDIS_URL`), answers are cached across runs, so a rerun skips questions already answered with the same model and context.
@@ -553,6 +563,7 @@ These are useful for testing retrieval and source attribution.
 - What was the in-kind contribution for Germany in 2012?
 - What is the status of in-kind contributions to IPBES?
 - Who was elected chair at IPBES-1?
+- Who was elected as Chair of IPBES? (all Chairs, by session)
 - What cash contribution did Germany make in 2012?
 - What sections are included in the report?
 - What was discussed under the institutional arrangements section?

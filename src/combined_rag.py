@@ -22,8 +22,8 @@ import ttl_rag
 import xml_rag
 from cache import CACHE_VERSION, cache, make_key
 from rag_utils import (
-    LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat, concat_results,
-    empty_results,
+    IPBES_CHAIR, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat,
+    concat_results, empty_results,
 )
 from assessment_catalogue import (
     catalogue_block, uploaded_session_numbers, uploaded_sessions,
@@ -110,7 +110,7 @@ async def ask(question: str, k: int = 3, xml_k: int = XML_K,
 
     `k` is per assessment, `xml_k` in total for the Plenary reports.
     """
-    if xml_rag.session_numbers(question):
+    if xml_rag.session_numbers(question) or IPBES_CHAIR.search(question):
         return await ask_xml(question, xml_k, answer_stream)
     plan = ttl_rag.plan_query(question, k)
     if plan["chunk_type"]:

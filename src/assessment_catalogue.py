@@ -15,6 +15,11 @@ question poorly. The list is built from the data instead:
     approvals are also quoted from the report itself ("The Plenary approved
     the summary for policymakers of ..."), with any conditions.
 
+  * the Chairs of IPBES the Plenary elected, from the Bureau elections in
+    the Plenary reports ("Chair: Mr. Robert T. Watson (United Kingdom ...)"),
+    so that questions about the IPBES Chair are not confused with the
+    co-chairs of assessments.
+
 Both are read once per process; restart the app after re-indexing.
 """
 from __future__ import annotations
@@ -129,6 +134,29 @@ def uploaded_session_numbers() -> frozenset[int]:
     return frozenset(int(m["number"]) for m in metadatas if m.get("number"))
 
 
+# "Chair: Mr. Zakri Abdul Hamid (Malaysia)" in a Bureau election list; not
+# "Vice-Chair:" or "Alternate to Vice-Chair:".
+_ELECTED_CHAIR = re.compile(
+    r"(?<!Vice-)(?<!Vice )\bChair:\s*(?:(?:Mr|Ms|Mrs|Dr)\.\s*)?([^():*;]+?)\s*\(([^)]+)\)"
+)
+
+
+def _elected_chairs() -> list[tuple[int, str, str, str, str]]:
+    """[(session, year, where, name, country)] of the Chairs of IPBES in the
+    Bureau elections of the uploaded Plenary reports."""
+    got = chroma_client().get_collection("xml_documents").get(
+        include=["documents", "metadatas"])
+    found = set()
+    for document, m in zip(got["documents"], got["metadatas"]):
+        for match in _ELECTED_CHAIR.finditer(_body(document)):
+            where = "report" if not m.get("part_of") else m["part_of"].split(" › ")[-1]
+            if m.get("paragraph"):
+                where += f", para. {m['paragraph'].rstrip('.')}"
+            found.add((int(m.get("number") or 0), (m.get("date") or "")[:4], where,
+                       match.group(1).strip(), match.group(2).strip()))
+    return sorted(found)
+
+
 def uploaded_sessions(sessions: set[int]) -> str:
     """ "IPBES-1 to IPBES-8", or a list when some are missing."""
     ordered = sorted(sessions)
@@ -183,4 +211,16 @@ def catalogue_block() -> str:
             lines.append(f"IPBES-{session} ({entries[0][2]}):")
             lines += [f"- [{STAGES[index][0]}] {where}: \"{wording}\""
                       for _, index, _, where, wording in entries]
+    chairs = _elected_chairs()
+    if chairs:
+        lines += [
+            "",
+            "Chair of IPBES: the Chair of the Platform (called Chair of the "
+            "Plenary in early reports), elected by the Plenary as part of its "
+            "Bureau. This is not the co-chair of an assessment. Chairs elected "
+            "in the uploaded reports, in order; a Chair serves until the next "
+            "one is elected:",
+        ]
+        lines += [f"- IPBES-{session} ({year}), {where}: {name} ({country})"
+                  for session, year, where, name, country in chairs]
     return "\n".join(lines)

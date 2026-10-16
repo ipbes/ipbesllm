@@ -204,18 +204,28 @@ def country_codes_for_region(label: str) -> set[str]:
 
 
 def _region_mentions(question: str):
+    """Regions the question names, longest name first. A region named inside
+    a longer match ("Africa" in "East Africa") does not count; "East Africa"
+    names the region "East Africa and adjacent islands"."""
     q = _clean(question).casefold()
     matches = []
     for collection, labels in _collections():
+        spans = []
         for label in labels:
-            variants = { _clean(label).casefold(), _strip_parenthetical(label).casefold() }
-            found = [v for v in variants if len(v) >= 3 and
-                     re.search(rf"(?<!\w){re.escape(v)}(?!\w)", q)]
-            if found:
-                matches.append((max(map(len, found)), collection))
-                break
-    matches.sort(key=lambda item: item[0], reverse=True)
-    return [collection for _, collection in matches]
+            variants = {_clean(label).casefold(), _strip_parenthetical(label).casefold()}
+            variants |= {re.sub(r"\s+and adjacent islands$", "", v) for v in variants}
+            for v in variants:
+                if len(v) >= 3:
+                    spans += [m.span() for m in re.finditer(rf"(?<!\w){re.escape(v)}(?!\w)", q)]
+        if spans:
+            start, end = max(spans, key=lambda s: s[1] - s[0])
+            matches.append((start, end, collection))
+    matches.sort(key=lambda m: m[1] - m[0], reverse=True)
+    kept = []
+    for start, end, collection in matches:
+        if not any(s <= start and end <= e for s, e, _ in kept):
+            kept.append((start, end, collection))
+    return [collection for _, _, collection in kept]
 
 
 def infer_country_names(question: str) -> set[str]:
@@ -225,10 +235,17 @@ def infer_country_names(question: str) -> set[str]:
     codes = set()
     for collection in _region_mentions(question):
         codes.update(_expand(collection))
-    by_label, _ = _country_index()
+    by_label, by_code = _country_index()
     for label, code in sorted(by_label.items(), key=lambda item: len(item[0]), reverse=True):
-        if len(label) >= 3 and re.search(rf"(?<!\w){re.escape(label)}(?!\w)",
-                                         question, re.IGNORECASE):
+        if len(label) < 2:
+            continue
+        if len(label) == 2 or label.upper() in by_code:
+            # A code or two-letter name ("UK") counts only in capitals:
+            # otherwise "are", "and", "can", "us" would be ARE, AND, CAN, USA.
+            found = re.search(rf"(?<!\w){re.escape(label.upper())}(?!\w)", question)
+        else:
+            found = re.search(rf"(?<!\w){re.escape(label)}(?!\w)", question, re.IGNORECASE)
+        if found:
             codes.add(code)
     return {name for code in codes if (name := country_label_for_code(code))}
 
