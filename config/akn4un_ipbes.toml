@@ -1,0 +1,69 @@
+# Settings for docx_to_akn.py: the values that belong to one organization.
+#
+# This file is for IPBES Plenary reports, with the same metadata as the
+# reports in data/xml (made in Indigo, indigo-unep.indigo.ipbes.net). To
+# convert another body's meeting reports, copy this file, change the values
+# and run:
+#
+#     python src/docx_to_akn.py --config config/akn4un_<body>.toml reports/*.docx
+#
+# Strings are TOML: use single quotes for regular expressions ('\d' as is).
+
+[identification]
+# <identification source="..."> and <references source="...">
+source = "#UNEP"
+# <FRBRauthor href="..."> (empty in the Indigo files)
+author_href = ""
+# <FRBRcountry>, and the first part of every IRI: /akn/<country>/...
+country = "un-ipbes"
+# IRI: /akn/<country>/<doc_type>/<subtype>/<actor>/<first day>/<session>
+doc_type = "debatereport"
+subtype = "report"
+actor = "plenary"
+language = "eng"
+# Added to the manifestation IRIs. "" as in the Indigo files; the AKN4UN
+# guidelines (part 1, 6.1.3) use ".xml".
+manifestation_extension = ""
+# Also record the document symbol (IPBES/5/15) as <FRBRalias name="symbol">
+# (not in the Indigo files; the symbol is in <preface> either way).
+symbol_alias = false
+
+[organization]
+# <TLCOrganization> in <references>
+eId = "UNEP"
+href = "https://indigo-unep.indigo.ipbes.net"
+showAs = "UNEP"
+
+[document]
+# <debateReport name="...">
+name = "debateReport"
+# Acronym in decision symbols: IPBES-5/1, Decision IPBES/1/2, IPBES 4-4.
+body = "IPBES"
+# Document symbol on the cover page, e.g. IPBES/5/15.
+symbol = '\bIPBES/\d+/\d+(?:/[A-Za-z0-9.]+)*'
+# Year and session from the file name, e.g. 2017-5.docx.
+file_name = '^(\d{4})-(\d+)'
+# Title when the report has none on its cover; {ordinal} is "fifth" etc.
+title = "Report of the Plenary of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services on the work of its {ordinal} session"
+
+[doc_names]
+# <doc name="..."> of each kind of attachment; also the component names in
+# the IRIs (!annexure_1/annexure_2/appendix_1). Indigo uses "annexure" for
+# decisions too.
+annex = "annexure"
+decision = "annexure"
+appendix = "appendix"
+
+[styles]
+# Word paragraph styles of the UN templates.
+# Headings and their level (1: I., 2: A., 3: 1.). A numbered heading takes
+# its level from its number; the style gives the level of unnumbered ones.
+headings = { "CH1" = 1, "CH2" = 2, "CH3" = 3, "CH4" = 4, "H1" = 3, "H23" = 4, "_ H _Ch" = 1, "_ H_1" = 2, "_ H_2/3" = 3, "_ H_4" = 4, "_ H_5" = 4, "Heading 1" = 1, "Heading 2" = 2, "Heading 3" = 3, "Heading 4" = 4 }
+# Cover page title lines.
+titles = ["AA_Title", "BB_Title"]
+# Start of an annex ("Annex", "Annex II to decision ...").
+annex_headers = ["ZZ_Anx_header"]
+# Title under an annex header.
+annex_titles = ["ZZ_Anx_title"]
+# Left out.
+skip = ["A_Spacer"]
