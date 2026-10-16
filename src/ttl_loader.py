@@ -537,7 +537,9 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
 
     for ref in graph.subjects(RDF.type, ref_type):
         doi = _text(_first(graph, ref, URIRef(IPBES + "hasDoi")))
-        zotero = _text(_first(graph, ref, OWL.sameAs))
+        # The full URL: _text() would keep only its last segment.
+        same_as = _first(graph, ref, OWL.sameAs)
+        zotero = str(same_as).strip() if same_as is not None else ""
 
         body = f"DOI: {doi}" if doi else ""
         if zotero:

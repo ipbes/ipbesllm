@@ -44,7 +44,7 @@ MAX_COUNTRY_FILTER = 100
 # Part of the cache keys: bump when retrieval or prompts change so stale
 # entries are never served after a code change.
 RETRIEVAL_VERSION = "6"
-PROMPT_VERSION = "9"
+PROMPT_VERSION = "10"
 
 # List questions (all knowledge gaps, key messages, experts ...) need far
 # more than the Ollama limit (MAX_CONTEXT_CHARS, sized for an 8 GB machine):
@@ -632,10 +632,20 @@ def _reference_tables(results) -> str:
     then # | Section | DOI | Zotero. Built from the data, so no DOI can be
     invented; the TTL data has no titles or authors for references."""
     documents, metadatas = results["documents"][0], results["metadatas"][0]
+
+    def section(i: int) -> str:
+        m = metadatas[i]
+        return (m.get("subdivision") or m.get("division") or "–").split(" | ")[0]
+
+    # Newest assessment first; within one, sections in order of relevance
+    # (the first appearance of each in the results, which are by rank).
+    first_seen = {}
+    for i in range(len(documents)):
+        first_seen.setdefault(section(i), i)
     order = sorted(range(len(documents)), key=lambda i: (
         -int(metadatas[i]["date"]) if str(metadatas[i].get("date", "")).isdigit() else 0,
         metadatas[i].get("assessment", ""),
-        metadatas[i].get("subdivision") or metadatas[i].get("division") or "",
+        first_seen[section(i)], i,
     ))
     groups: dict[str, list[int]] = {}
     for i in order:
@@ -652,12 +662,11 @@ def _reference_tables(results) -> str:
         parts.append("| # | Section | DOI | Zotero |")
         parts.append("|---|---|---|---|")
         for n, i in enumerate(positions, 1):
-            m, text = metadatas[i], documents[i]
-            section = (m.get("subdivision") or m.get("division") or "–").split(" | ")[0]
+            text = documents[i]
             doi = re.search(r"^DOI: (\S+)", text, re.M)
             zotero = re.search(r"^Zotero: (\S+)", text, re.M)
             parts.append(
-                f"| {n} | {_cell(section)} | "
+                f"| {n} | {_cell(section(i))} | "
                 + (f"[{doi.group(1)}](https://doi.org/{doi.group(1)})" if doi else "–")
                 + " | " + (f"[link]({zotero.group(1)})" if zotero else "–") + " |"
             )

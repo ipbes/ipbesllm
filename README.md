@@ -113,9 +113,8 @@ ipbesllm/
 │   ├── data_bundle.py           # Packs chroma/ and the RDF for the deployed app
 │   ├── settings.py              # Project paths; loads .env
 │   ├── pdf_ttl_compare.py       # Runs a question set through PDF and TTL
-│   ├── rdf_graph.py             # Thesaurus RAG (hybrid vector + graph)
-│   ├── test_xml_loader.py       # Regression tests for the XML parser (pytest)
-│   └── *_test.py, xml_test_chunks.py, diagnose_chunks.py, ...   # Sanity checks and diagnostics
+│   ├── rdf_graph.py             # Thesaurus RAG (hybrid vector + graph)    
+│   └── *_test.py, xml_test_chunks.py, xml_test_loader.py, diagnose_chunks.py, ...   # Regression tests  and diagnostics
 ├── README.md
 └── requirements.txt
 ```
