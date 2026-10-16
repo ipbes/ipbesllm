@@ -1,4 +1,5 @@
-"""Check the quotations in an answer against the text the model was given.
+"""Check the quotations and DOIs in an answer against the text the model
+was given.
 
 Quotations are how an answer claims "the source says exactly this", so a
 quotation that is not in the sources is a red flag. As in
@@ -7,6 +8,9 @@ only, so line breaks, punctuation, markdown and typographic quotes do not
 matter, and a second pass ignores in-text citations ("(Díaz et al., 2019)",
 "{2.1.3}"), which answers often leave out. A quotation with "..." or "…" is
 checked part by part; "[...]" insertions are ignored.
+
+DOIs are checked the same way: an invented DOI looks as authoritative as an
+invented quotation.
 """
 from __future__ import annotations
 
@@ -19,6 +23,7 @@ CITATION = re.compile(
 # A quotation long enough to be a claim about the source's wording.
 QUOTATION = re.compile(r"[“\"]([^”\"\n]{30,1500})[”\"]")
 MIN_PART = 12   # letters and digits in a part worth checking
+DOI = re.compile(r"\b10\.\d{4,9}/[^\s\"“”<>|\]\)]+")
 
 
 def _letters(text: str) -> str:
@@ -41,4 +46,13 @@ def check_quotes(answer: str, sources: list[str]) -> tuple[list[str], list[str]]
                  or _letters(CITATION.sub(" ", p)) in without_citations
                  for p in parts)
         (found if ok else missing).append(quotation)
+    return found, missing
+
+
+def check_dois(answer: str, sources: list[str]) -> tuple[list[str], list[str]]:
+    """(DOIs in the answer found in the sources, DOIs not found)."""
+    known = " ".join(sources).lower()
+    found, missing = [], []
+    for doi in dict.fromkeys(m.group(0).rstrip(".,;:") for m in DOI.finditer(answer)):
+        (found if doi.lower() in known else missing).append(doi)
     return found, missing

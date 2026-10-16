@@ -102,6 +102,7 @@ ipbesllm/
 │   ├── <format>_rag.py          # PDF/TTL/XML retrieval and answers
 │   ├── combined_rag.py          # One search over TTL and XML, for the app
 │   ├── ttl_audit.py             # Check TTL files against the ontology
+│   ├── quote_check.py           # Checks an answer's quotations and DOIs against its sources
 │   ├── chunking.py              # Splits oversized TTL chunks
 │   ├── rag_utils.py             # Models, embeddings, Chroma client, batching helpers
 │   ├── thesaurus_helper.py      # Query expansion, re-ranking and definitions from the thesaurus
@@ -232,6 +233,7 @@ Paths to `chroma/` and `data/` are resolved from the project root (`src/settings
 - **Ratings.** 👍/👎 under each answer adds a row to `ratings.csv` (see [Answer ratings](#answer-ratings)).
 - **Developer mode** (sidebar toggle). Choose a single source (PDF, TTL or XML) instead of the combined search, set the number of chunks, and see the models, the route taken, distances, metadata, timings and cache status.
 - **Stop.** Stopping a question, asking a new one or reloading the page cancels the request to the model.
+- **Quote and DOI check.** Every quotation (30 characters or more) and every DOI in an answer is checked against the text the model was given: the retrieved passages, the reference list and the thesaurus definitions (`quote_check.py`). Quotations are compared on letters and digits only, ignoring in-text citations. Those found are counted under the answer; any not found are listed in a warning, to check before using them. This applies to every source and route.
 
 ---
 
@@ -286,20 +288,20 @@ The files follow the IPBES report ontology in [`docs/IPBES_Ontology_v06.ttl`](do
 | `ipbes:SubChapter` | `sch` | `skos:prefLabel`, `dcterms:identifier`, `hasDescription` |
 | `ipbes:Illustration` | `il` | `dcterms:identifier`, `skos:prefLabel` (caption) and `hasDescription` |
 | `foaf:Person` | `person` | `skos:prefLabel` (or `foaf:firstName` + `foaf:lastName`), `ipbes:country`, roles (`ca`, `cl`, `cs`, `fl`, `la`, `re`) |
-| `ipbes:Reference` | `ref` | usually skipped (`--skip-types ref`) |
+| `ipbes:Reference` | `ref` | `hasDoi`, `owl:sameAs` (Zotero), and the chapter and sub-chapter citing it; there are no titles or authors |
 
 The confidence level comes from `hasWellestablished`, `hasEstablishedIncomplete`, `hasUnresolved` or `hasInconclusive`. Items with no text are skipped, except experts, who are kept with "not recorded" when they have no country or role.
 
 | Task | Command |
 |---|---|
-| Index (incremental: only new or changed chunks are embedded) | `PYTHONPATH=src python src/ttl_index.py --skip-types ref` |
-| Check only: parse and validate, nothing written | `PYTHONPATH=src python src/ttl_index.py --dry-run --skip-types ref` |
-| Wipe and start over | `PYTHONPATH=src python src/ttl_index.py --rebuild --skip-types ref` |
+| Index (incremental: only new or changed chunks are embedded) | `PYTHONPATH=src python src/ttl_index.py` |
+| Check only: parse and validate, nothing written | `PYTHONPATH=src python src/ttl_index.py --dry-run` |
+| Wipe and start over | `PYTHONPATH=src python src/ttl_index.py --rebuild` |
 | Inspect retrieval | `PYTHONPATH=src python src/ttl_query.py` |
 | Ask a question | `PYTHONPATH=src python src/ttl_rag.py` |
 | Sanity checks | `PYTHONPATH=src python src/ttl_test.py` |
 
-`--skip-types ref` leaves out the bibliographic references (about 33,000 chunks), which are rarely useful for questions. The current index is built without them.
+The references (about 33,500 chunks) are indexed but left out of every search unless a question asks for references, citations or a bibliography ("in reference to" does not count; the same rule applies to the PDF reference lists). Such a question gets a table of the references cited in the sections closest to it, per assessment, with DOI and Zotero links, built from the data so that no DOI can be invented. `--skip-types ref` still leaves them out of the index altogether.
 
 #### Checking TTL files
 
@@ -374,7 +376,8 @@ Place PDF files in `data/pdf/`, named `<assessment>_report.pdf` and `<assessment
 - **Running headers and footers** are removed: lines that recur at the top or bottom of many pages ("THE GLOBAL ASSESSMENT REPORT ON BIODIVERSITY …", chapter titles), and bare page numbers.
 - **Words split at a line end** are joined ("biodi-versity"), unless the document uses the hyphenated form elsewhere or never the joined one, so compounds such as "decision-making" keep their hyphen.
 - **Chunks are whole sentences**, up to 2,000 characters with about 300 characters of overlap, and stay within one page, so a chunk's page is exact.
-- **Printed page numbers** are stored next to the PDF page: reports have front matter, so the printed page differs (GA1 report: printed page = PDF page − 63). Answers and the source list cite both, e.g. "PDF page 1089 (printed p. 1026)": the PDF page opens the file at the right place, the printed page is the one to quote.
+- **Reference lists** are tagged `section: references`: pages with at least 15 years and 3 DOIs or URLs, or, for older reports without DOIs (SCM, PPA), at least 8 lines starting with an author entry. They are about a third of a report's text, so PDF search leaves them out unless the question asks for references, citations or a bibliography.
+- **Printed page numbers** are stored next to the PDF page: reports have front matter, so the printed page differs (GA1 report: printed page = PDF page − 63). Answers and the source list cite both, e.g. "printed p. 1026 (PDF p. 1089)": the PDF page opens the file at the right place, the printed page is the one to quote. The offset is detected from the page numbers printed on the pages; the indexer lists each file's offset and how it was found (`auto`, `given`, `unknown`, or `CHECK` when a given offset disagrees with the pages). Set offsets that are unknown or wrong in `PAGE_OFFSETS` in `pdf_loader.py`.
 - **File fingerprint:** each chunk and the manifest (`chroma/pdf_index.json`) record the PDF's SHA-256, showing which version of a file an answer came from.
 
 | Task | Command |
@@ -400,7 +403,7 @@ Questions are embedded with the current embedding model, so every collection mus
 
 ```bash
 PYTHONPATH=src python src/xml_index.py --rebuild
-PYTHONPATH=src python src/ttl_index.py --rebuild --skip-types ref
+PYTHONPATH=src python src/ttl_index.py --rebuild
 PYTHONPATH=src python src/rdf_index.py
 PYTHONPATH=src python src/pdf_index.py --rebuild
 ```

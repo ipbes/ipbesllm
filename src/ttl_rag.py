@@ -11,7 +11,7 @@ from cache import CACHE_VERSION, PIPELINE_ID, cache, make_key
 # infer_country_names / canonical_country are re-exported for app.py.
 from geo import canonical_country, country_code_for_label, infer_country_names
 from rag_utils import (
-    EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat,
+    ASKS_FOR_REFERENCES, EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat,
     chroma_client,
     concat_results,
     embed_query, empty_results, interleave_results, named_assessments,
@@ -43,8 +43,8 @@ MAX_COUNTRY_FILTER = 100
 
 # Part of the cache keys: bump when retrieval or prompts change so stale
 # entries are never served after a code change.
-RETRIEVAL_VERSION = "5"
-PROMPT_VERSION = "8"
+RETRIEVAL_VERSION = "6"
+PROMPT_VERSION = "9"
 
 # List questions (all knowledge gaps, key messages, experts ...) need far
 # more than the Ollama limit (MAX_CONTEXT_CHARS, sized for an 8 GB machine):
@@ -209,6 +209,9 @@ def _build_where(
     clauses = []
     if chunk_type:
         clauses.append({"chunk_type": chunk_type})
+    else:
+        # References (DOI and Zotero links only) unless asked for.
+        clauses.append({"chunk_type": {"$ne": "ref"}})
     if country_codes:
         conds = [{f"country_{c}": True} for c in sorted(country_codes)]
         clauses.append(conds[0] if len(conds) == 1 else {"$or": conds})
@@ -351,6 +354,8 @@ def plan_query(question: str, k: int = 5) -> dict:
         }
     if country_names:
         k = 200
+    elif chunk_type == "ref":
+        k = 30          # the references of the best-matching sections
     elif chunk_type:
         k = 100
     return {
@@ -378,7 +383,7 @@ def _infer_chunk_type(question: str) -> str | None:
         return "bgm"
     if "illustration" in q or "figure" in q:
         return "il"
-    if "reference" in q or "citation" in q:
+    if ASKS_FOR_REFERENCES.search(question):
         return "ref"
     if "author" in q or "person" in q or "expert" in q:
         return "person"
@@ -609,6 +614,56 @@ in one of these forms:
         return list(range(len(metadatas)))
 
 
+def _short_title(title: str) -> str:
+    """An assessment title without "The" and the Platform's full name."""
+    title = re.sub(r"^The ", "", title)
+    title = re.sub(r" of the Intergovernmental Science-Policy Platform on "
+                   r"Biodiversity and Ecosystem Services", "", title)
+    return title[:1].upper() + title[1:]
+
+
+def _cell(text: str) -> str:
+    """Text for a markdown table cell."""
+    return re.sub(r"\s+", " ", text).replace("|", "\\|").strip()
+
+
+def _reference_tables(results) -> str:
+    """The retrieved references, a heading per assessment (newest first),
+    then # | Section | DOI | Zotero. Built from the data, so no DOI can be
+    invented; the TTL data has no titles or authors for references."""
+    documents, metadatas = results["documents"][0], results["metadatas"][0]
+    order = sorted(range(len(documents)), key=lambda i: (
+        -int(metadatas[i]["date"]) if str(metadatas[i].get("date", "")).isdigit() else 0,
+        metadatas[i].get("assessment", ""),
+        metadatas[i].get("subdivision") or metadatas[i].get("division") or "",
+    ))
+    groups: dict[str, list[int]] = {}
+    for i in order:
+        groups.setdefault(metadatas[i].get("assessment", "?"), []).append(i)
+
+    parts = [f"{len(documents)} references cited in the sections closest to the "
+             f"question. The assessment data gives each reference's DOI and "
+             f"Zotero link, not its title or authors."]
+    for code, positions in groups.items():
+        first = metadatas[positions[0]]
+        count = f"{len(positions)} reference{'s' if len(positions) != 1 else ''}"
+        parts.append(f"\n### {first.get('date', '')} – {code}: "
+                     f"{_short_title(first.get('title', ''))} ({count})\n")
+        parts.append("| # | Section | DOI | Zotero |")
+        parts.append("|---|---|---|---|")
+        for n, i in enumerate(positions, 1):
+            m, text = metadatas[i], documents[i]
+            section = (m.get("subdivision") or m.get("division") or "–").split(" | ")[0]
+            doi = re.search(r"^DOI: (\S+)", text, re.M)
+            zotero = re.search(r"^Zotero: (\S+)", text, re.M)
+            parts.append(
+                f"| {n} | {_cell(section)} | "
+                + (f"[{doi.group(1)}](https://doi.org/{doi.group(1)})" if doi else "–")
+                + " | " + (f"[link]({zotero.group(1)})" if zotero else "–") + " |"
+            )
+    return "\n".join(parts)
+
+
 def _gap_tables(results, chosen: list[int]) -> str:
     """The chosen knowledge gaps as IBOK lists them: a heading per
     assessment (year, title, count), then # | Identifier | Category |
@@ -618,14 +673,6 @@ def _gap_tables(results, chosen: list[int]) -> str:
     for i in chosen:                    # results are already in IBOK order
         groups.setdefault(metadatas[i].get("assessment", "?"), []).append(i)
 
-    def short_title(title: str) -> str:
-        title = re.sub(r"^The ", "", title)
-        title = re.sub(r" of the Intergovernmental Science-Policy Platform on "
-                       r"Biodiversity and Ecosystem Services", "", title)
-        return title[:1].upper() + title[1:]
-
-    def cell(text: str) -> str:
-        return re.sub(r"\s+", " ", text).replace("|", "\\|").strip()
 
     total = len(documents)
     assessments = f"{len(groups)} assessment{'s' if len(groups) != 1 else ''}"
@@ -638,14 +685,14 @@ def _gap_tables(results, chosen: list[int]) -> str:
         first = metadatas[positions[0]]
         count = f"{len(positions)} gap{'s' if len(positions) != 1 else ''}"
         parts.append(f"\n### {first.get('date', '')} – {code}: "
-                     f"{short_title(first.get('title', ''))} ({count})\n")
+                     f"{_short_title(first.get('title', ''))} ({count})\n")
         parts.append("| # | Identifier | Category | Description |")
         parts.append("|---|---|---|---|")
         for n, i in enumerate(positions, 1):
             m = metadatas[i]
             description = documents[i].split("\n\n", 1)[-1]
             parts.append(f"| {n} | {m.get('identifier', '')} | "
-                         f"{cell(m.get('category') or '–')} | {cell(description)} |")
+                         f"{_cell(m.get('category') or '–')} | {_cell(description)} |")
     return "\n".join(parts)
 
 
@@ -656,6 +703,12 @@ def generate_answer(
     country_names: set[str] | None = None,
     answer_stream=None,
 ) -> str:
+    if chunk_type == "ref":
+        answer = _reference_tables(results)
+        if answer_stream is not None:
+            answer_stream.put(answer)
+        return answer
+
     if chunk_type == "kg":
         # Structured data: the tables are built here, exactly as stored, so
         # counts, years and descriptions cannot be miscopied. The model only

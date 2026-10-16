@@ -1,6 +1,5 @@
 import asyncio
 import os
-import re
 from pathlib import Path
 
 from chromadb.errors import NotFoundError
@@ -10,7 +9,7 @@ from cache import CACHE_VERSION, cache, make_key
 # infer_country_names is re-exported for app.py.
 from geo import infer_country_names  # noqa: F401
 from rag_utils import (
-    EMBED_MODEL, GET_PAGE, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat,
+    ASKS_FOR_REFERENCES, EMBED_MODEL, GET_PAGE, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, chat,
     chroma_client,
     embed_query, interleave_results, named_assessments, select_results,
     strip_corpus_words,
@@ -35,11 +34,6 @@ ANSWER_TTL = 60 * 60 * 6      # 6 hours
 THESAURUS_RERANK_ALPHA = float(os.getenv("THESAURUS_RERANK_ALPHA", "0.25"))
 RERANK_OVERFETCH = max(1, int(os.getenv("PDF_RERANK_OVERFETCH", "3")))
 
-# Questions that want the reference lists, which are otherwise left out.
-ASKS_FOR_REFERENCES = re.compile(
-    r"\b(?:references?|citations?|cited|bibliograph\w*)\b",
-    re.IGNORECASE,
-)
 
 # Part of the cache keys: bump when retrieval or prompts change.
 RETRIEVAL_VERSION = "5"

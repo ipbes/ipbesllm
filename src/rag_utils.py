@@ -446,6 +446,15 @@ def named_assessments(question: str, available: list[str]) -> list[str]:
     return [a for a in available if a.upper() in words or a in by_name]
 
 
+# Questions that ask for reference lists, which PDF and TTL search otherwise
+# leave out. "In/with reference to ..." is not one.
+ASKS_FOR_REFERENCES = re.compile(
+    r"(?<!in )(?<!with )\breferences?\b(?! to)|\bcit(?:e|es|ed|ing|ations?)\b"
+    r"|\bbibliograph\w*",
+    re.IGNORECASE,
+)
+
+
 def empty_results() -> dict:
     return {"ids": [[]], "documents": [[]], "metadatas": [[]], "distances": [[]]}
 

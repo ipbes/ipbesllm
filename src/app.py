@@ -30,7 +30,7 @@ from rag_utils import (
 from data_bundle import ensure_data
 from assessment_catalogue import catalogue_block
 from feedback_store import save_rating
-from quote_check import check_quotes
+from quote_check import check_dois, check_quotes
 from thesaurus_helper import get_thesaurus
 
 
@@ -348,25 +348,30 @@ def quote_report(question: str, output: dict) -> dict:
     given: the retrieved passages, the reference list and the thesaurus."""
     documents = output["results"]["documents"][0]
     glossary, definitions = combined_rag._thesaurus_blocks(question, output["results"])
-    found, missing = check_quotes(
-        output["answer"], documents + [catalogue_block(), glossary, definitions]
-    )
-    return {"found": len(found), "missing": missing}
+    sources = documents + [catalogue_block(), glossary, definitions]
+    found, missing = check_quotes(output["answer"], sources)
+    dois_found, dois_missing = check_dois(output["answer"], sources)
+    return {"found": len(found), "missing": missing,
+            "dois_found": len(dois_found), "dois_missing": dois_missing}
 
 
 def render_answer(index: int, message: dict, developer: bool):
     st.markdown(message["content"])
     quotes = message.get("quotes") or {}
-    if quotes.get("missing"):
-        listed = "\n".join(f"- “{q}”" for q in quotes["missing"])
+    unverified = ([f"- “{q}”" for q in quotes.get("missing", [])]
+                  + [f"- DOI {d}" for d in quotes.get("dois_missing", [])])
+    if unverified:
         st.warning("Not found word for word in the sources; check before "
-                   f"quoting:\n{listed}", icon=":material/format_quote:")
+                   "using:\n" + "\n".join(unverified),
+                   icon=":material/format_quote:")
     if message.get("results") is not None:
         render_sources(message["source"], message["results"], developer)
     details = [SOURCES[message["source"]]]
-    if quotes.get("found"):
-        details.append(f"{quotes['found']} quote{'s' if quotes['found'] != 1 else ''} "
-                       f"checked against the sources")
+    checked = [f"{n} {label}{'s' if n != 1 else ''}"
+               for n, label in ((quotes.get("found", 0), "quote"),
+                                (quotes.get("dois_found", 0), "DOI")) if n]
+    if checked:
+        details.append(" and ".join(checked) + " checked against the sources")
     if developer:
         if message.get("route"):
             details.append(f"route: {message['route']}")
