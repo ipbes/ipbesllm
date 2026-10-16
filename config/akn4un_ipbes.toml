@@ -46,6 +46,12 @@ file_name = '^(\d{4})-(\d+)'
 # Title when the report has none on its cover; {ordinal} is "fifth" etc.
 title = "Report of the Plenary of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services on the work of its {ordinal} session"
 
+[text]
+# Double quotation marks: "straight" turns “ and ” into " (as in most of the
+# reference files); "keep" leaves them as in the Word file. Apostrophes (’)
+# are kept either way, as in the reference files.
+double_quotes = "straight"
+
 [doc_names]
 # <doc name="..."> of each kind of attachment; also the component names in
 # the IRIs (!annexure_1/annexure_2/appendix_1). Indigo uses "annexure" for

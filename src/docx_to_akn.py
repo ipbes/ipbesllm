@@ -69,6 +69,8 @@ def akn(tag: str) -> str:
 # ---------------------------------------------------------------------------
 
 PAGE_BREAK = "\f"
+# [text] double_quotes = "straight": “The Future We Want” -> "The Future We Want"
+_STRAIGHT_QUOTES = str.maketrans({"\u201c": '"', "\u201d": '"', "\u201e": '"'})
 
 # Non-breaking hyphens (U+2011) become "-", so "IPBES-5/1" matches searches.
 _CHAR_MAP = str.maketrans({"‑": "-", "­": "", "​": ""})
@@ -132,8 +134,9 @@ def spans_of(p_el, footnotes: dict | None = None) -> list[Span]:
                 note = footnotes.get(child.get(w("id")))
                 if note:
                     spans.append(Span("", note=note))
+    quotes = _STRAIGHT_QUOTES if CONFIG.get("text", {}).get("double_quotes") == "straight" else {}
     for s in spans:
-        s.text = s.text.translate(_CHAR_MAP)
+        s.text = s.text.translate(_CHAR_MAP).translate(quotes)
     return spans
 
 
@@ -718,7 +721,11 @@ def _list_rank(b: Block, previous_letter: str | None) -> float:
         fmt = "lowerLetter" if previous_letter and ord(core) == ord(previous_letter) + 1 else "lowerRoman"
         b.fmt = fmt
     rank = _FMT_RANK.get(fmt, 2)
-    return rank + 4 * b.ilvl if b.auto else rank
+    # The format decides: 1. contains (a) contains (i). Word's list level
+    # only orders items of the same format (1. then 1.1), since items from
+    # different lists have unrelated levels (agenda "2." at level 3, its
+    # "(a)" at level 1).
+    return rank + 0.1 * b.ilvl if b.auto else rank
 
 
 def build(blocks: list[Block]) -> Builder:
@@ -785,6 +792,18 @@ def build(blocks: list[Block]) -> Builder:
 
         # Headings. An unnumbered heading straight before another heading
         # contains it ("Executive summary" over "A. Rationale").
+        # A table title: "Table 1" (num) and its title (heading), in a
+        # heading or table title style, in bold, or just before a table.
+        tm = _TABLE_TITLE.match(text) if b.kind in ("para", "heading") and not b.num else None
+        if tm and len(text) < 250 and not text.endswith(".") and (
+                b.kind == "heading" or b.style == "Title_table" or b.bold_line
+                or any(x.kind == "table" for x in blocks[i + 1:i + 3])):
+            raw = plain(b.spans)
+            cut = len(raw) - len(raw.lstrip()) + len(re.match(r"\s*Table\s+\S+?\.?(?=\s|$)", raw).group(0))
+            bld.open_table_section(norm(tm.group(1)), strip_spans(b.spans, cut))
+            i += 1
+            continue
+
         # A section number alone on its line in a heading style ("VIII"),
         # then the title: one heading, as in decisions.
         if b.kind == "heading" and not b.num and _ROMAN_ONLY.match(text) and nxt is not None \
@@ -817,15 +836,6 @@ def build(blocks: list[Block]) -> Builder:
             bld.open_heading(1, text, nxt.spans)
             i += 2
             continue
-        # A table title: "Table 1" (num) and its title (heading).
-        tm = _TABLE_TITLE.match(text) if b.kind == "para" and not b.num else None
-        if tm and (b.style in ("Title_table",) or b.bold_line):
-            raw = plain(b.spans)
-            cut = len(raw) - len(raw.lstrip()) + len(re.match(r"\s*Table\s+\S+?\.?(?=\s|$)", raw).group(0))
-            bld.open_table_section(norm(tm.group(1)), strip_spans(b.spans, cut))
-            i += 1
-            continue
-
         # Headings typed as bold paragraphs, in older reports: numbered
         # ("1.1 Governance structures", "II. Initial ...") or not ("Rule 25").
         bold_heading = _bold_heading(b)
