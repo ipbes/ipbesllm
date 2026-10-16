@@ -1,5 +1,6 @@
 import asyncio
 import os
+import re
 from pathlib import Path
 
 from chromadb.errors import NotFoundError
@@ -34,9 +35,15 @@ ANSWER_TTL = 60 * 60 * 6      # 6 hours
 THESAURUS_RERANK_ALPHA = float(os.getenv("THESAURUS_RERANK_ALPHA", "0.25"))
 RERANK_OVERFETCH = max(1, int(os.getenv("PDF_RERANK_OVERFETCH", "3")))
 
+# Questions that want the reference lists, which are otherwise left out.
+ASKS_FOR_REFERENCES = re.compile(
+    r"\b(?:references?|citations?|cited|bibliograph\w*)\b",
+    re.IGNORECASE,
+)
+
 # Part of the cache keys: bump when retrieval or prompts change.
-RETRIEVAL_VERSION = "4"
-PROMPT_VERSION = "4"
+RETRIEVAL_VERSION = "5"
+PROMPT_VERSION = "6"
 
 
 # ---------------------------------------------------------------------------
@@ -166,7 +173,10 @@ def retrieve(
 
     groups = _assessment_files() if per_assessment else {}
     chosen = named_assessments(question, list(groups)) or list(groups)
-    wheres = [{"source_file": {"$in": groups[a]}} for a in chosen] or [None]
+    # Reference lists (about a third of a report) only when asked for.
+    body = None if ASKS_FOR_REFERENCES.search(question) else {"section": {"$ne": "references"}}
+    files = [{"source_file": {"$in": groups[a]}} for a in chosen]
+    wheres = [{"$and": [f, body]} if body else f for f in files] or [body]
 
     parts = []
     for where in wheres:
@@ -299,8 +309,9 @@ Context:
 {truncation_note}{extras}
 Answer the question clearly.
 
-At the end, list the source pages you relied on, giving the printed page
-number where one is shown.
+At the end, list the source pages you relied on, one per line, each as
+"<file>, printed p. N (PDF p. M)" when a printed page is shown, otherwise
+"<file>, PDF p. M".
 """
 
     return chat(

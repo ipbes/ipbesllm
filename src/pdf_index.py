@@ -58,6 +58,7 @@ def build_metadata(chunk: dict) -> dict:
         "chunk_total": chunk["chunk_total"],
         "total_chunks": chunk["total_chunks"],
         "file_sha256": chunk["file_sha256"],
+        "section": chunk["section"],
     }
     if chunk.get("printed_page") is not None:   # Chroma rejects None
         md["printed_page"] = chunk["printed_page"]
@@ -107,8 +108,36 @@ def load_chunks() -> tuple[list[dict], list[str]]:
     return chunks, empty
 
 
-def write_manifest(complete: bool, chunk_count: int, files: dict[str, str]) -> None:
-    """`files`: file name -> SHA-256 prefix, showing which PDFs were indexed."""
+def file_summary(chunks: list[dict]) -> dict[str, dict]:
+    """Per file: SHA-256 prefix (which version was indexed), the printed
+    page offset and how it was found, and chunk counts."""
+    files: dict[str, dict] = {}
+    for c in chunks:
+        f = files.setdefault(c["source_file"], {
+            "sha256": c["file_sha256"], "page_offset": c["page_offset"],
+            "page_offset_note": c["page_offset_note"],
+            "chunks": 0, "reference_chunks": 0,
+        })
+        f["chunks"] += 1
+        f["reference_chunks"] += c["section"] == "references"
+    return files
+
+
+def print_file_summary(files: dict[str, dict]) -> None:
+    print(f"\n{'File':22} {'chunks':>7} {'refs':>6}  page offset")
+    for name, f in sorted(files.items()):
+        offset = "-" if f["page_offset"] is None else f"{f['page_offset']:+d}"
+        print(f"{name:22} {f['chunks']:7} {f['reference_chunks']:6}  "
+              f"{offset} ({f['page_offset_note']})")
+    unclear = [n for n, f in files.items() if f["page_offset"] is None
+               or "CHECK" in f["page_offset_note"]]
+    if unclear:
+        print(f"Printed pages unknown or to check for {unclear}: set them in "
+              f"PAGE_OFFSETS in pdf_loader.py.")
+
+
+def write_manifest(complete: bool, chunk_count: int, files: dict[str, dict]) -> None:
+    """`files`: file_summary(), showing which PDFs were indexed and how."""
     MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST_PATH.write_text(json.dumps({
         "collection": COLLECTION_NAME,
@@ -148,8 +177,9 @@ def main(argv=None) -> None:
     print(f"Current directory: {Path.cwd()}")
     chunks, empty_files = load_chunks()
     total_chars = sum(len(c["text"]) for c in chunks)
-    files = {c["source_file"]: c["file_sha256"] for c in chunks}
+    files = file_summary(chunks)
     print(f"\nTotal chunks: {len(chunks)}  ({total_chars:,} chars) from {len(files)} file(s)")
+    print_file_summary(files)
     if empty_files:
         print(f"WARNING: no extractable text in {empty_files} "
               "(scanned/image-based? they are not indexed)")
@@ -231,9 +261,6 @@ def main(argv=None) -> None:
     print("=" * 60)
     print(f"Collection: {COLLECTION_NAME}")
     print(f"Total in collection: {collection.count()} (expected {len(chunks)})")
-    print("Chunks per file:")
-    for name, n in sorted(Counter(c["source_file"] for c in chunks).items()):
-        print(f"  {name}: {n}")
 
 
 if __name__ == "__main__":

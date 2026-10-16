@@ -90,24 +90,18 @@ ipbesllm/
 │   ├── ttl/*.ttl                # e.g. GA1_v11.ttl: the assessment is the name before "_v"
 │   └── xml/*.xml                # Plenary reports, e.g. 2013-1.xml
 ├── dist/ipbes-data.zip          # Data bundle for the deployed app (built by data_bundle.py)
-├── docs/IPBES_Ontology_v06.ttl  # IPBES report ontology: the structure of the TTL files
+├── docs/*                       # Supporting documentation e.g. IPBES ontology: the structure of the TTL files
 ├── feedback/ratings.csv         # Answer ratings, when not stored in Azure
 ├── tests/comparison_<run>.csv   # Written by pdf_ttl_compare.py (not in git)
 ├── src/
 │   ├── app.py                   # IBOK Chat (Streamlit)
-│   ├── static/background.jpg    # App background
+│   ├── static/*                 # Static assets e.g. images
+│   ├── <format>_index.py        # Index PDF/RDF/TTL/XML into Chroma
+│   ├── <format>_loader.py       # PDF /TTL/XML text extraction/parsing and chunking
+│   ├── <format>_query.py        # Retrieval only, without an answer (pdf, ttl, xml, rdf)
+│   ├── <format>_rag.py          # PDF/TTL/XML retrieval and answers
 │   ├── combined_rag.py          # One search over TTL and XML, for the app
-│   ├── pdf_rag.py               # PDF retrieval and answers
-│   ├── ttl_rag.py               # TTL retrieval and answers
-│   ├── xml_rag.py               # XML retrieval and answers
-│   ├── pdf_index.py             # Index PDFs into Chroma
-│   ├── ttl_index.py             # Index TTL files into Chroma
-│   ├── xml_index.py             # Index XML files into Chroma
-│   ├── rdf_index.py             # Index the thesaurus concept profiles into Chroma
-│   ├── pdf_loader.py            # PDF text extraction and chunking
-│   ├── ttl_loader.py            # TTL parsing into chunks
 │   ├── ttl_audit.py             # Check TTL files against the ontology
-│   ├── xml_loader.py            # Akoma Ntoso parsing into chunks
 │   ├── chunking.py              # Splits oversized TTL chunks
 │   ├── rag_utils.py             # Models, embeddings, Chroma client, batching helpers
 │   ├── thesaurus_helper.py      # Query expansion, re-ranking and definitions from the thesaurus
@@ -118,8 +112,7 @@ ipbesllm/
 │   ├── data_bundle.py           # Packs chroma/ and the RDF for the deployed app
 │   ├── settings.py              # Project paths; loads .env
 │   ├── pdf_ttl_compare.py       # Runs a question set through PDF and TTL
-│   ├── *_query.py               # Retrieval only, without an answer (pdf, ttl, xml, rdf)
-│   ├── rdf_rag.py, rdf_graph.py, rdf_loader.py   # Thesaurus RAG (hybrid vector + graph)
+│   ├── rdf_graph.py             # Thesaurus RAG (hybrid vector + graph)
 │   ├── test_xml_loader.py       # Regression tests for the XML parser (pytest)
 │   └── *_test.py, xml_test_chunks.py, diagnose_chunks.py, ...   # Sanity checks and diagnostics
 ├── README.md
@@ -383,8 +376,6 @@ Place PDF files in `data/pdf/`, named `<assessment>_report.pdf` and `<assessment
 - **Chunks are whole sentences**, up to 2,000 characters with about 300 characters of overlap, and stay within one page, so a chunk's page is exact.
 - **Printed page numbers** are stored next to the PDF page: reports have front matter, so the printed page differs (GA1 report: printed page = PDF page − 63). Answers and the source list cite both, e.g. "PDF page 1089 (printed p. 1026)": the PDF page opens the file at the right place, the printed page is the one to quote.
 - **File fingerprint:** each chunk and the manifest (`chroma/pdf_index.json`) record the PDF's SHA-256, showing which version of a file an answer came from.
-
-The cleaning follows `pdf_index_diana.py`, a sentence index of a PDF used for checking quotes.
 
 | Task | Command |
 |---|---|

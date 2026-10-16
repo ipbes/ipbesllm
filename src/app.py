@@ -28,7 +28,9 @@ from rag_utils import (
     embed_query,
 )
 from data_bundle import ensure_data
+from assessment_catalogue import catalogue_block
 from feedback_store import save_rating
+from quote_check import check_quotes
 from thesaurus_helper import get_thesaurus
 
 
@@ -341,11 +343,30 @@ def save_feedback(index: int):
         st.toast("Sorry, your rating could not be saved.")
 
 
+def quote_report(question: str, output: dict) -> dict:
+    """The answer's quotations checked against all the text the model was
+    given: the retrieved passages, the reference list and the thesaurus."""
+    documents = output["results"]["documents"][0]
+    glossary, definitions = combined_rag._thesaurus_blocks(question, output["results"])
+    found, missing = check_quotes(
+        output["answer"], documents + [catalogue_block(), glossary, definitions]
+    )
+    return {"found": len(found), "missing": missing}
+
+
 def render_answer(index: int, message: dict, developer: bool):
     st.markdown(message["content"])
+    quotes = message.get("quotes") or {}
+    if quotes.get("missing"):
+        listed = "\n".join(f"- “{q}”" for q in quotes["missing"])
+        st.warning("Not found word for word in the sources; check before "
+                   f"quoting:\n{listed}", icon=":material/format_quote:")
     if message.get("results") is not None:
         render_sources(message["source"], message["results"], developer)
     details = [SOURCES[message["source"]]]
+    if quotes.get("found"):
+        details.append(f"{quotes['found']} quote{'s' if quotes['found'] != 1 else ''} "
+                       f"checked against the sources")
     if developer:
         if message.get("route"):
             details.append(f"route: {message['route']}")
@@ -479,7 +500,8 @@ if question and question.strip():
             output = run_streamed(run, question, k, SOURCES[source])
             message.update(content=output["answer"], results=output["results"],
                            cached=output["cached"], seconds=output["seconds"],
-                           route=output.get("route"))
+                           route=output.get("route"),
+                           quotes=quote_report(question, output))
         except Exception as exc:  # noqa: BLE001
             logger.exception("Query failed")
             message.update(content=f"Sorry, the query failed: {exc}", results=None)

@@ -11,6 +11,12 @@ the sentence index used for checking quotes):
     ("decision-making" keeps its hyphen);
   * lines are joined into running text.
 
+Pages that are reference lists get section "references", every other page
+"body": at least 15 years and 3 DOIs or URLs (as in ipbes_clean_v2.py), or,
+for older reports whose references have no DOIs (SCM, PPA), at least 8
+lines starting with an author entry ("Tiebout, H. M.") and 8 years;
+retrieval leaves the references out unless a question asks for them.
+
 Chunks are made of whole sentences, up to `chunk_size` characters with about
 `overlap` characters of overlap, and stay within one page, so a chunk's page
 is exact. Each chunk also has the printed page number, from the offset
@@ -33,6 +39,24 @@ SENTENCE_END = re.compile(r'(?<=[.!?])["”’)]*\s+(?=[A-Z“"(\[])')
 PAGE_NUMBER = re.compile(r"\d{1,4}")
 # Lines at the top or bottom of a page that may be running headers/footers.
 EDGE_LINES = 3
+
+# Printed page minus PDF page, for files where automatic detection fails or
+# is wrong; e.g. {"nex_ch5.pdf": 358}. The indexer reports, for every file,
+# the offset used and how it was found.
+PAGE_OFFSETS: dict[str, int] = {}
+
+_YEAR = re.compile(r"\b(?:19|20)\d{2}\b")
+_LINK = re.compile(r"doi|https?://", re.IGNORECASE)
+# A line starting a reference: "Surname, A. B." or "Two Names, A.".
+_ENTRY = re.compile(r"^[A-Z][A-Za-z'’\-]+(?: [A-Z][A-Za-z'’\-]+)?,\s+(?:[A-Z]\.\s?-?){1,4}",
+                    re.MULTILINE)
+
+
+def is_reference_page(text: str) -> bool:
+    """A page of a reference list (see the module docstring)."""
+    years = len(_YEAR.findall(text))
+    return ((years >= 15 and len(_LINK.findall(text)) >= 3)
+            or (years >= 8 and len(_ENTRY.findall(text)) >= 8))
 
 
 def file_sha256(path: Path) -> str:
@@ -61,6 +85,18 @@ def _printed_page_offset(pages: list[list[str]]) -> int | None:
         return None
     offset, count = votes.most_common(1)[0]
     return offset if count >= 5 and count / sum(votes.values()) >= 0.6 else None
+
+
+def page_offset(pages: list[list[str]], file_name: str) -> tuple[int | None, str]:
+    """(offset, how it was found): "auto", "given", "unknown", or "given, auto-detected N: CHECK"
+    when PAGE_OFFSETS disagrees with the pages."""
+    auto = _printed_page_offset(pages)
+    given = PAGE_OFFSETS.get(file_name)
+    if given is None:
+        return auto, "auto" if auto is not None else "unknown"
+    if auto is None or auto == given:
+        return given, "given"
+    return given, f"given, auto-detected {auto}: CHECK"
 
 
 def _running_lines(pages: list[list[str]]) -> set[str]:
@@ -171,6 +207,9 @@ def extract_pdf_chunks(
       - chunk_total   (number of chunks on this page)
       - total_chunks  (number of chunks across the whole document)
       - file_sha256   (first 16 hex digits of the PDF's SHA-256)
+      - section       ("references" on reference-list pages, else "body")
+      - page_offset, page_offset_note  (printed minus PDF page, and how it
+        was found; not stored in Chroma, reported by the indexer)
 
     Raises:
         ValueError: if `overlap` is not strictly less than `chunk_size`.
@@ -195,7 +234,8 @@ def extract_pdf_chunks(
             for n in range(page_count)
         ]
 
-    offset = _printed_page_offset(pages)
+    offset, offset_note = page_offset(pages, path.name)
+    references = [is_reference_page("\n".join(lines)) for lines in pages]
     sha = file_sha256(path)[:16]
     per_page = [_chunk_page(text, chunk_size, overlap) if text else []
                 for text in _clean_pages(pages)]
@@ -217,5 +257,8 @@ def extract_pdf_chunks(
                 "chunk_total": len(page_chunks),
                 "total_chunks": total_chunks,
                 "file_sha256": sha,
+                "section": "references" if references[page_number - 1] else "body",
+                "page_offset": offset,
+                "page_offset_note": offset_note,
             })
     return chunks
