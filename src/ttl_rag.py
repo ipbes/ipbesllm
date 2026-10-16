@@ -44,7 +44,7 @@ MAX_COUNTRY_FILTER = 100
 # Part of the cache keys: bump when retrieval or prompts change so stale
 # entries are never served after a code change.
 RETRIEVAL_VERSION = "6"
-PROMPT_VERSION = "10"
+PROMPT_VERSION = "12"
 
 # List questions (all knowledge gaps, key messages, experts ...) need far
 # more than the Ollama limit (MAX_CONTEXT_CHARS, sized for an 8 GB machine):
@@ -75,6 +75,7 @@ def _sync_index_state() -> None:
     stamp = _index_stamp()
     if _STATE["stamp"] != stamp:
         _STATE.update(stamp=stamp, collection=None, assessments=None)
+        _STATE.pop("chapter_titles", None)
 
 
 def _get_collection():
@@ -385,7 +386,8 @@ def _infer_chunk_type(question: str) -> str | None:
         return "il"
     if ASKS_FOR_REFERENCES.search(question):
         return "ref"
-    if "author" in q or "person" in q or "expert" in q:
+    if ("author" in q or "person" in q or "expert" in q
+            or "review editor" in q or "co-chair" in q or "fellow" in q):
         return "person"
     if "subchapter" in q or "sub-chapter" in q:
         return "sch"
@@ -673,6 +675,147 @@ def _reference_tables(results) -> str:
     return "\n".join(parts)
 
 
+# ---------------------------------------------------------------------------
+# Experts as a table
+# ---------------------------------------------------------------------------
+
+ROLE_ORDER = ["Co-chair", "Coordinating Lead Author", "Lead Author",
+              "Review Editor", "Fellow", "Contributing Author"]
+# "- Lead Author in GA119-ch2.1": a role and where it is held. The files
+# write the place differently: "GA119-ch2.1", "SCM16-chch8", "BBA26 Chapter
+# 3", "SUA22-SPM", or just "TCA24" for co-chairs.
+_ROLE_LINE = re.compile(
+    r"^- (.+?)\s+in\s+([A-Z]+\d+\S*(?:\s+Chapter\s+\S+)?)\s*$", re.MULTILINE
+)
+_ROLES = {role.casefold(): role for role in ROLE_ORDER}
+MAX_EXPERT_ROWS = 500
+
+
+def _chapter_key(text: str) -> str:
+    """A chapter number in one form: "GA119-ch2.1", "2-1" -> "2-1";
+    "SCM16-chch01", "BBA26 Chapter 1", "01" -> "1"; none ("TCA24") -> ""."""
+    text = re.sub(r"^[A-Z]+\d+", "", text.strip())     # the report code
+    return "-".join(str(int(n)) for n in re.findall(r"\d+", text))
+
+
+def _chapter_titles() -> dict[tuple[str, str], str]:
+    """(assessment, chapter key) -> "02 Title" from the chapter chunks."""
+    if "chapter_titles" not in _STATE:
+        got = _get_collection().get(where={"chunk_type": "chapter"},
+                                    include=["documents", "metadatas"])
+        titles = {}
+        for document, m in zip(got["documents"], got["metadatas"]):
+            heading = re.search(r"^Heading: (.+)$", document, re.MULTILINE)
+            titles[(m.get("assessment", ""), _chapter_key(m.get("identifier", "")))] = (
+                heading.group(1).strip() if heading else m.get("identifier", ""))
+        _STATE["chapter_titles"] = titles
+    return _STATE["chapter_titles"]
+
+
+def _expert_rows(documents, metadatas) -> list[dict]:
+    """One row per expert and role: assessment, name, country, role, chapter."""
+    titles = _chapter_titles()
+    rows = []
+    for document, m in zip(documents, metadatas):
+        name = re.search(r"^Heading: (.+)$", document, re.MULTILINE)
+        base = {
+            "assessment": m.get("assessment", ""), "date": m.get("date", ""),
+            "title": m.get("title", ""),
+            "name": name.group(1).strip() if name else m.get("eId", ""),
+            "country": m.get("country_names") or m.get("country_raw") or "–",
+        }
+        roles = _ROLE_LINE.findall(document)
+        for role, code in roles or [("–", "")]:
+            role = re.sub(r"\s+", " ", role).strip()
+            role = _ROLES.get(role.casefold(), role)    # "Lead author" -> "Lead Author"
+            key = _chapter_key(code)
+            rows.append({**base, "role": role, "chapter_key": key,
+                         "chapter": titles.get((base["assessment"], key)) or key or "–"})
+    return rows
+
+
+def _select_experts(question: str, assessments: list[str]) -> dict:
+    """How to answer an expert question: {"format": "narrative"}, or a table
+    filtered by assessments, roles, chapters and names (each optional). The
+    model only reads the question; it never lists experts itself."""
+    chapters = "\n".join(f"{a} chapter {k}: {t}"
+                         for (a, k), t in sorted(_chapter_titles().items())
+                         if a in assessments)
+    prompt = f"""Question: {question}
+
+Assessments: {", ".join(assessments)}
+Roles: {", ".join(ROLE_ORDER)}
+Chapters:
+{chapters}
+
+The answer lists IPBES experts as a table (name, country, role, chapter),
+unless the question needs a narrative (e.g. it asks about one person's
+work or background, or to explain or compare). Reply with JSON only:
+{{"format": "narrative"}} or
+{{"format": "table", "assessments": [...], "roles": [...], "chapters": [...], "names": [...]}}
+where each list narrows the table and is left out (or empty) when the
+question does not restrict it. Chapters are given as "<assessment> <chapter>",
+e.g. "VA 4"."""
+    try:
+        reply = chat(model=LLM_MODEL, messages=[{"role": "user", "content": prompt}])
+        return json.loads(re.search(r"\{.*\}", reply, re.S).group(0))
+    except Exception as exc:  # noqa: BLE001
+        logger.warning(f"Expert question format failed ({exc}); using a table.")
+        return {"format": "table"}
+
+
+def _expert_table(question: str, results, country_names, choice: dict) -> str:
+    """The experts the choice selects, from the index itself (not only the
+    retrieved ones, so lists are complete), as a table per assessment."""
+    retrieved = sorted({m.get("assessment", "") for m in results["metadatas"][0]})
+    wanted = {a.upper() for a in choice.get("assessments") or []}
+    assessments = [a for a in retrieved if not wanted or a.upper() in wanted] or retrieved
+    codes = _country_codes(country_names)
+    documents, metadatas = [], []
+    for assessment in assessments:
+        got = _get_collection().get(where=_build_where("person", codes, assessment),
+                                    include=["documents", "metadatas"])
+        documents += got["documents"]
+        metadatas += got["metadatas"]
+
+    roles = {r.casefold() for r in choice.get("roles") or []}
+    chapters = {(c.split()[0].upper(), _chapter_key(c.split(maxsplit=1)[-1]))
+                for c in choice.get("chapters") or [] if c.split()}
+    names = [n.casefold() for n in choice.get("names") or []]
+    rows = [
+        r for r in _expert_rows(documents, metadatas)
+        if (not roles or r["role"].casefold() in roles)
+        and (not chapters or (r["assessment"], r["chapter_key"]) in chapters)
+        and (not names or any(n in r["name"].casefold() for n in names))
+    ]
+    rank = {role: i for i, role in enumerate(ROLE_ORDER)}
+    rows.sort(key=lambda r: (
+        -int(r["date"]) if str(r["date"]).isdigit() else 0, r["assessment"],
+        rank.get(r["role"], len(ROLE_ORDER)),
+        [int(n) for n in r["chapter_key"].split("-") if n], r["name"],
+    ))
+    if not rows:
+        return "No experts in the assessment data match the question."
+
+    shown = rows[:MAX_EXPERT_ROWS]
+    people = len({(r["assessment"], r["name"]) for r in rows})
+    parts = [f"{people} experts ({len(rows)} roles):" if len(rows) == len(shown) else
+             f"{people} experts ({len(rows)} roles); the first {len(shown)} roles "
+             f"are listed. Name an assessment, role, chapter or country to narrow "
+             f"the list."]
+    for assessment in dict.fromkeys(r["assessment"] for r in shown):
+        group = [r for r in shown if r["assessment"] == assessment]
+        first = group[0]
+        parts.append(f"\n### {first['date']} – {assessment}: "
+                     f"{_short_title(first['title'])}\n")
+        parts.append("| # | Name | Country | Role | Chapter |")
+        parts.append("|---|---|---|---|---|")
+        parts += [f"| {n} | {_cell(r['name'])} | {_cell(r['country'])} | "
+                  f"{_cell(r['role'])} | {_cell(r['chapter'])} |"
+                  for n, r in enumerate(group, 1)]
+    return "\n".join(parts)
+
+
 def _gap_tables(results, chosen: list[int]) -> str:
     """The chosen knowledge gaps as IBOK lists them: a heading per
     assessment (year, title, count), then # | Identifier | Category |
@@ -712,6 +855,16 @@ def generate_answer(
     country_names: set[str] | None = None,
     answer_stream=None,
 ) -> str:
+    if chunk_type == "person":
+        assessments = sorted({m.get("assessment", "") for m in results["metadatas"][0]})
+        choice = _select_experts(question, assessments)
+        if choice.get("format") != "narrative":
+            answer = _expert_table(question, results, country_names, choice)
+            if answer_stream is not None:
+                answer_stream.put(answer)
+            return answer
+        # A narrative answer: written by the model below.
+
     if chunk_type == "ref":
         answer = _reference_tables(results)
         if answer_stream is not None:
