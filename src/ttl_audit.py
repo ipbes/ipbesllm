@@ -37,6 +37,7 @@ import functools
 import glob
 import io
 import re
+import unicodedata
 from pathlib import Path
 
 import rdflib
@@ -200,12 +201,17 @@ def quality_checks(graph: rdflib.Graph) -> list[tuple[str, int, str]]:
         [name(p) for p in people
          if not str(" ".join(map(str, props[p].get("skos:prefLabel", [])))).strip()
          and name(p)])
+    def letters(text: str) -> str:
+        """Lower-case letters only, without accents: "Díaz" == "diaz"."""
+        text = unicodedata.normalize("NFKD", text)
+        return "".join(c for c in text.casefold() if c.isalpha())
+
     def missing_surname(person) -> bool:
         label = " ".join(str(o) for o in props[person].get("skos:prefLabel", [])).strip()
         last = " ".join(str(o) for o in props[person].get("foaf:lastName", [])).strip()
-        return bool(label and last) and last.casefold() not in label.casefold()
+        return bool(label and last) and letters(last) not in letters(label)
 
-    add("expert labels without the last name (foaf:lastName)",
+    add("expert labels that do not contain the last name (foaf:lastName)",
         [f"{name(p)} (last name: {' '.join(map(str, props[p].get('foaf:lastName', [])))})"
          for p in people if missing_surname(p)])
     add("experts without a role",
