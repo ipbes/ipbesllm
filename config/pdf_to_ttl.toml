@@ -46,3 +46,10 @@ report_id = "TCA24"
 year = 2024
 alt_label = "IPBES Transformative Change Assessment"
 zotero_group = 4589462
+
+[assessments.NXS]
+pdf = "data/pdf/nxs_report.pdf"
+report_id = "NXS24"
+year = 2024
+alt_label = "IPBES Nexus Assessment"
+zotero_group = 4596166
