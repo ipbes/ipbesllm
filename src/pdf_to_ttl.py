@@ -1111,8 +1111,7 @@ def name_match(a: str, b: str) -> str:
         return "close"
     if last_same and (set(ta) <= set(tb) or set(tb) <= set(ta)):
         return "close"              # "Margaret (Peggy) Smith" / "Peggy Smith"
-    if last_same and ta[0][0] == tb[0][0] and (ta[0].startswith(tb[0][:2]) or tb[0].startswith(ta[0][:2])
-                                               or ta[0][-2:] == tb[0][-2:]):
+    if last_same and ta[0][0] == tb[0][0] and (ta[0][:3] == tb[0][:3] or ta[0][-3:] == tb[0][-3:]):
         return "close"              # Steve / Stephen, Pippa / Philippa, Gabi / Gabriella
     if first_same and difflib.SequenceMatcher(None, ta[-1], tb[-1]).ratio() >= 0.8 and len(ta[-1]) > 4:
         return "close"              # Rawlins / Rowlins
@@ -1244,7 +1243,9 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
                 m = re.match(r"^(.*)\s*\(([^()]*)\)\s*$", entry)      # the last (...) holds the countries
                 name, ctext = (m.group(1), m.group(2)) if m else (entry, "")
                 name = re.sub(r"\s+", " ", name).strip()
-                p = find(name)
+                # The same person may be printed differently in two chapters
+                # ("Laura Pereira", "Laura M. Pereira"); reported as a variant.
+                p = find(name, f"the chapter {ch.number} page")
                 if p is None:
                     first, last = _split_name(name, surnames)
                     p = Person(name, first, last)

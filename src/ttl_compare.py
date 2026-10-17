@@ -110,11 +110,19 @@ class TTL:
 def pair(cls: str, a: TTL, b: TTL) -> tuple[list[tuple[str, str]], list[str], list[str]]:
     ka, kb = a.items[cls], b.items[cls]
     if cls == "Person":
-        pairs, left = [], dict(kb)
-        only_a = []
+        # Exact names first, over the whole list, so that a close match
+        # (another "J. Liu") cannot take someone's exact partner.
+        pairs, left, rest = [], dict(kb), []
         for name in ka:
-            hit = next((n for n in left if name_match(name, n) == "same"), None) or \
-                  next((n for n in left if name_match(name, n) == "close"), None)
+            hit = next((n for n in left if name_match(name, n) == "same"), None)
+            if hit:
+                pairs.append((name, hit))
+                del left[hit]
+            else:
+                rest.append(name)
+        only_a = []
+        for name in rest:
+            hit = next((n for n in left if name_match(name, n) == "close"), None)
             if hit:
                 pairs.append((name, hit))
                 del left[hit]
