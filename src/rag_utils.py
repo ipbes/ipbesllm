@@ -430,6 +430,7 @@ _ASSESSMENT_NAMES = {
     "BBA": r"business(?: and biodiversity)?",
     "PPA": r"pollinat\w*",
     "SCM": r"scenarios(?: and models)?",
+    "NXS": r"nexus|interlinkages",
 }
 
 

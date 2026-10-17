@@ -32,7 +32,7 @@ The project is an evaluation platform for comparing and improving retrieval and 
 
 | Format | Content | Processing | Chroma collection |
 |---|---|---|---|
-| **TTL** (RDF/Turtle) | Assessments: GA1, IAS, LDR, SUA, TCA, VA, BBA, PPA, SCM | Parsed with RDFLib into typed chunks (key messages, chapters, sub-chapters, experts, figures, knowledge gaps …), then embedded | `ttl_documents` |
+| **TTL** (RDF/Turtle) | Assessments: GA1, IAS, LDR, SUA, TCA, VA, BBA, PPA, SCM, and NXS (converted from its PDF by `pdf_to_ttl.py`) | Parsed with RDFLib into typed chunks (key messages, chapters, sub-chapters, experts, figures, knowledge gaps …), then embedded | `ttl_documents` |
 | **XML** (Akoma Ntoso / LegalDocML) | Plenary session reports IPBES-1 to IPBES-8, with their decisions | Parsed into structured paragraphs and table rows, then embedded | `xml_documents` |
 | **PDF** | Assessment reports (each includes its SPM) of the same assessments as the TTL folder, and Plenary session reports | Text extracted with PyMuPDF, chunked, then embedded | `pdf_documents` |
 | **RDF** | IPBES thesaurus and geography | Used for query expansion, definitions and country matching; the thesaurus is also embedded | `ipbes_thesaurus` |
@@ -783,18 +783,20 @@ This information is particularly useful for improving chunking, retrieval, promp
 | XML parsing, embeddings and RAG | Working |
 | XML table-aware retrieval | Working |
 | XML sessions, neighbouring paragraphs and decision names | Working |
-| TTL parsing, embeddings and RAG (9 assessments) | Working |
+| TTL parsing, embeddings and RAG | Working |
 | Combined TTL + XML search for the app | Working |
 | Answer cache | Working (in-memory, or Redis via `REDIS_URL`) |
 | Streamlit app (IBOK Chat) - Chat over TTL + XML; single sources in developer mode | Working |
 | Store ratings in Azure Blob Storage)  | Working |
+| Helper for experts | Working |
+| PDF to TTL conversion workflow | In progress |
 | Test/compare results | In progress |
-| Helper for countries (`ipbes-geo.rdf`, `geo.py`) | In progress |
-| Helper for the thesaurus (`ipbes-thesaurus.rdf`, `thesaurus_helper.py`) | In progress |
+| Helper for countries (`ipbes-geo.rdf`, `geo.py`) | Working |
+| Helper for the thesaurus (`ipbes-thesaurus.rdf`, `thesaurus_helper.py`) | Working |
 | Colleague testing | In progress |
 | Helper for deliverables | Next |
 | Helper for meetings | Next |
-| Helper for experts | Next |
+
 | Docker deployment | Planned |
 | Architecture diagrams | Later stage |
 | Security testing | Later stage |

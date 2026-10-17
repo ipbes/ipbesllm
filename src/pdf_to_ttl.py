@@ -75,7 +75,10 @@ DEFAULT_OUT = ROOT / "data" / "pdf_compare"     # + /<assessment>
 # The accent colour of headings, links and cross-references differs by
 # assessment (BBA teal 0x0F8575, IAS red 0xC72127); read_lines() sets it.
 ACCENT = 0x0F8575
-GREY = 0x58595B
+def grey(color: int) -> bool:
+    """The mid-grey of footnotes and running headers (0x58595B, 0x575756 ...)."""
+    r, g, b = (color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF
+    return all(0x48 <= c <= 0x70 for c in (r, g, b)) and max(r, g, b) - min(r, g, b) < 0x10
 WHITE = 0xFFFFFF
 def dark(color: int) -> bool:
     """Black or near-black text (0x231F20, 0x3C3C3B ...), not the mid-grey
@@ -166,7 +169,7 @@ def line_role(line: Line) -> str:
         if m.bold and _near(m.size, 10.0) and CAPTION_START.match(line.text):
             return "caption"
         return "other"
-    if line.y0 < 62 and m.size <= 7.6 and (m.color == GREY or dark(m.color)):
+    if line.y0 < 62 and m.size <= 7.6 and (grey(m.color) or dark(m.color)):
         return "header"
     if line.y0 > 790 or line.x0 < 45:
         return "folio"
@@ -188,7 +191,7 @@ def line_role(line: Line) -> str:
         return "body"
     if _near(m.size, 7.5) and (dark(m.color) or m.color == ACCENT) and "Roman" not in m.font:
         return "small"
-    if 6.2 <= m.size <= 6.95 and (m.color == GREY or (not dark(m.color) and m.color != WHITE and (
+    if 6.2 <= m.size <= 6.95 and (grey(m.color) or (not dark(m.color) and m.color != WHITE and (
             re.match(r"^\s*\d{1,3}\.\s", line.text) or _URL_TEXT.search(line.text)))):
         return "footnote"       # grey, or a numbered or linked footnote in a colour (IAS)
     return "other"
@@ -203,7 +206,7 @@ def accent_color(doc: pymupdf.Document) -> int:
             for l in b.get("lines", []):
                 for s in l["spans"]:
                     if s["text"].strip() and (_near(s["size"], 15.6) or _near(s["size"], 12.7)) \
-                            and s["color"] not in (WHITE, GREY) and not dark(s["color"]):
+                            and s["color"] != WHITE and not grey(s["color"]) and not dark(s["color"]):
                         count[s["color"]] += len(s["text"])
     return count.most_common(1)[0][0] if count else ACCENT
 
@@ -486,6 +489,7 @@ class Chapter:
     unnumbered: list[Section] = field(default_factory=list)       # "KNOWLEDGE GAPS" before 5.1
     sections: list[Section] = field(default_factory=list)
     references: list[RefEntry] = field(default_factory=list)
+    parted: bool = False    # in parts 5.0, 5.1 ... with their own sections 5.1.1 (NXS chapter 5)
 
 
 @dataclass
@@ -574,6 +578,21 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 box, legend_of = existing, None
             continue
 
+        # A part of a chapter ("Chapter 5.1", NXS) starts on a page with its title.
+        mpart = re.fullmatch(r"Chapter (\d{1,2})\.(\d{1,2})", text.strip()) if p.role == "other" else None
+        if mpart and chapter and int(mpart.group(1)) == chapter.number:
+            title_para = next((q for q in paras[i + 1:i + 6] if q.page == p.page and q.role == "title"
+                               and q.text.upper() != "TABLE OF CONTENTS"), None)
+            number = f"{mpart.group(1)}.{mpart.group(2)}"
+            if title_para and not any(s_.number == number for s_ in chapter.sections):
+                chapter.parted = True
+                title = re.sub(r"\s+", " ", title_para.text).strip()
+                title = re.sub(r"(?<=[A-Za-z])\d+$", "", title).capitalize()     # footnote mark "...USE1"
+                section = Section(number, rep.outline.get(number, title), p.page)
+                chapter.sections.append(section)
+                mode, unnumbered, box, legend_of = "chapter", None, None, None
+            continue
+
         if p.role == "other" and re.fullmatch(r"Chapter \d{1,2}", text.strip()) and _chapter_start(text, p, doc):
             p.role = "title"        # the chapter number, printed as "Chapter 3"
 
@@ -619,6 +638,10 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
 
         if p.role == "caption":
             kind, number, title = _caption(text)
+            if kind and chapter and chapter.parted and not number.startswith("SPM"):
+                m3 = re.match(r"^(\d{1,2})\s+(.*)$", title)       # "Table 5 1 2  Title"
+                if m3:
+                    number, title = f"{number}.{m3.group(1)}", m3.group(2)
             if not kind or not re.match(r"[\w“\"‘(]", title) or title.startswith(")"):
                 continue
             spm = number.startswith("SPM")
@@ -683,6 +706,9 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 continue
             number, title = m.groups()
             mode, unnumbered = "chapter", None
+            if chapter.parted and number.count(".") == 2 and not (section and number.startswith(section.number + ".")):
+                rep.problems.append(f"p{p.page}: heading {number} outside its part")
+                continue
             if number.count(".") == 1:
                 section = Section(number, rep.outline.get(number, title), p.page)
                 chapter.sections.append(section)
@@ -708,6 +734,11 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 rest = p.rest if p.lead else ""
                 if rest:
                     message.paras.append(rest)
+            elif message and not message.paras and p.lead and not message.headline.rstrip().endswith(_TERMINAL):
+                # The headline goes on in another column or after a footnote (NXS).
+                message.headline = f"{message.headline} {p.lead}"
+                if p.rest:
+                    message.paras.append(p.rest)
             elif message:
                 _add_para(message.paras, text)
         elif mode == "bgm":
@@ -717,8 +748,18 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 rest = p.rest if p.lead else ""
                 if rest:
                     message.paras.append(rest)
+            elif message and not message.paras and p.lead and not message.headline.rstrip().endswith(_TERMINAL):
+                # The headline goes on in another column or after a footnote (NXS).
+                message.headline = f"{message.headline} {p.lead}"
+                if p.rest:
+                    message.paras.append(p.rest)
             elif message:
                 _add_para(message.paras, text)
+        elif mode == "exec" and chapter and chapter.parted and section is not None:
+            # A part's own executive summary opens its text.
+            if not section.paras:
+                section.paras.append("## Executive summary")
+            _add_para(section.paras, (f"{p.label}. " if re.fullmatch(r"\d{1,2}", p.label or "") else "") + text)
         elif mode == "exec" and chapter:
             if re.fullmatch(r"\d{1,2}", p.label or ""):
                 finding = Message(p.label, p.lead or text, p.page)
@@ -806,6 +847,8 @@ def _front_matter(doc: pymupdf.Document, rep: Report) -> None:
 
 
 ROLE_HEADINGS = {
+    # NXS chapter 5 lists both together; the experts list tells fellows apart.
+    "LEAD AUTHORS AND FELLOWS": "la+fl",
     "COORDINATING LEAD AUTHORS": "cl",
     "COORDINATING LEAD AUTHOR": "cl",
     "LEAD AUTHORS": "la",
@@ -861,7 +904,7 @@ def _chapter_page(doc: pymupdf.Document, page: int, chapter: Chapter, rep: Repor
         chapter.cite_as = cite
         d = re.search(r"(10\.\d{4,9}/\S+?)\.?(?:\s|$)", cite)
         chapter.doi = f"https://doi.org/{d.group(1)}" if d else ""
-        t = re.search(r"Chapter \d+:\s*(.+?)\s+In:", cite)
+        t = re.search(r"Chapter \d+[:.]\s*(.+?)\s+In:", cite)      # "Chapter 6:" or "Chapter 6."
         chapter.title = t.group(1).strip().rstrip(".") if t else ""
     if not chapter.doi:
         rep.problems.append(f"chapter {chapter.number}: no DOI on its first pages (p{page})")
@@ -949,13 +992,30 @@ def zotero_items(group: int, cache: Path, refresh: bool = False) -> list[dict]:
 
     if cache.exists() and not refresh:
         return json.loads(cache.read_text(encoding="utf-8"))
+    import time
+
     api = f"https://api.zotero.org/groups/{group}"
+
+    def get(client, url, params):
+        """GET with retries: the API sometimes answers 502 or times out."""
+        for attempt in range(6):
+            try:
+                r = client.get(url, params=params)
+                if r.status_code < 500 and r.status_code != 429:
+                    r.raise_for_status()
+                    return r
+                wait = int(r.headers.get("Retry-After", 0)) or 2 ** attempt
+            except httpx.TransportError:
+                wait = 2 ** attempt
+            time.sleep(wait)
+        r.raise_for_status()
+        return r
+
     with httpx.Client(timeout=60, headers={"Zotero-API-Version": "3"}) as client:
         collections = {}
         start = 0
         while True:
-            r = client.get(f"{api}/collections", params={"limit": 100, "start": start})
-            r.raise_for_status()
+            r = get(client, f"{api}/collections", {"limit": 100, "start": start})
             batch = r.json()
             collections.update({c["key"]: c["data"]["name"] for c in batch})
             start += len(batch)
@@ -963,8 +1023,7 @@ def zotero_items(group: int, cache: Path, refresh: bool = False) -> list[dict]:
                 break
         items, start = [], 0
         while True:
-            r = client.get(f"{api}/items/top", params={"limit": 100, "start": start, "format": "json"})
-            r.raise_for_status()
+            r = get(client, f"{api}/items/top", {"limit": 100, "start": start, "format": "json"})
             batch = r.json()
             for it in batch:
                 data = it["data"]
@@ -1187,17 +1246,22 @@ ANNEX_ROLES = {"coordinating lead author": "cl", "lead author": "la", "fellow": 
                "contributing author": "ca", "review editor": "re", "chair": "cs", "co-chair": "cs"}
 
 
-def _annex_role(lines: list[str]) -> tuple[str, int]:
-    """The role among a person's lines, allowing a cut-off ('Lead Autho')."""
-    best = ("", -1)
+def _annex_role(lines: list[str]) -> tuple[list[str], int]:
+    """The role(s) among a person's lines: 'Lead Author', a cut-off 'Lead Autho',
+    'Coordinating Lead Author / Lead Author' (NXS), or a role run into the
+    affiliation ('Review EditorETH Zurich'). ([codes], line index)"""
     for i, line in enumerate(lines):
-        low = line.lower().strip()
-        for text, code in ANNEX_ROLES.items():
-            if low == text or (len(low) >= 6 and text.startswith(low) and len(low) >= len(text) - 2):
-                if len(text) > len(best[0]):
-                    best = (code, i)
-                    return code, i
-    return best
+        codes = []
+        for part in line.split("/"):
+            low = part.lower().strip()
+            for text, code in sorted(ANNEX_ROLES.items(), key=lambda kv: -len(kv[0])):
+                if low == text or (len(low) >= 6 and text.startswith(low) and len(low) >= len(text) - 2) \
+                        or (low.startswith(text) and part.strip()[len(text):len(text) + 1].isupper()):
+                    codes.append(code)
+                    break
+        if codes and (len(codes) == len(line.split("/")) or len(codes) == 1 and "/" not in line):
+            return codes, i
+    return [], -1
 
 
 def _chapter_codes(cfg: dict, log: Log) -> set[str]:
@@ -1220,6 +1284,7 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
     import csv
 
     people: list[Person] = []
+    la_or_fl: set[tuple[str, int]] = set()      # (name, chapter) under "LEAD AUTHORS AND FELLOWS"
 
     def find(name: str, source: str = "") -> Person | None:
         found = [(p, name_match(p.name, name)) for p in people]
@@ -1237,6 +1302,10 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
     for ch in rep.chapters:
         surnames = _citation_surnames(ch.cite_as)
         for role, entries in ch.authors.items():
+            if role == "la+fl":
+                role = "la"
+                for entry in entries:
+                    la_or_fl.add((re.sub(r"\s*\(.*$", "", entry).strip(), ch.number))
             if role not in ROLE_NAMES:
                 continue
             for entry in entries:
@@ -1273,9 +1342,11 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
     # The author annex: checks names, roles and countries; adds full names.
     # The annex listing authors (Annex III in BBA, IV in IAS).
     annex, pages = next(((k, v) for k, v in rep.annex_pages.items() if "LIST OF AUTHORS" in k), ("", []))
-    annex = " ".join(annex.split()[:2]).title().replace("Iii", "III").replace("Iv", "IV") or "Annex"
+    words = annex.split()[:2]
+    annex = f"Annex {words[1]}" if len(words) == 2 else "Annex"        # "Annex III", "Annex II"
     for a in read_annex_people(doc, pages):
-        code, i = _annex_role(a["lines"])
+        codes, i = _annex_role(a["lines"])
+        code = codes[0] if codes else ""
         rest = [x for j, x in enumerate(a["lines"]) if j != i]
         # The country is the last line(s); the affiliation comes before.
         ctext, aff = "", rest
@@ -1290,7 +1361,7 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
         where = f"{annex} p{a['page']}, {a['name']}"
         if not code:
             log.add("people", f"{where}: no role ({' | '.join(a['lines'])})")
-        elif code == "la" and not any(r.lower() in ("lead author",) for r in a["lines"]):
+        elif codes == ["la"] and a["lines"][i].strip().lower() != "lead author":
             log.add("people", f"{where}: role printed as '{a['lines'][i]}'")
         p = find(a["name"], annex)
         if p is None:
@@ -1298,8 +1369,15 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
                               f"chapter pages; left out")
             continue
         p.full_name = a["name"]
-        if code and chapter and (code, chapter) not in p.roles:
-            log.add("people", f"{p.name}: {ROLE_NAMES.get(code)} of chapter {chapter} in {annex}, but "
+        if codes == ["fl"] and chapter and ("la", chapter) in p.roles and \
+                any(name_match(n, p.name) for n, c in la_or_fl if c == chapter):
+            # Under "Lead authors and fellows" on the chapter page; a fellow here.
+            p.roles[p.roles.index(("la", chapter))] = ("fl", chapter)
+            log.add("people", f"{p.name}: listed under 'Lead authors and fellows' in chapter {chapter}; "
+                              f"a fellow in {annex}")
+        if codes and chapter and not any((c, chapter) in p.roles for c in codes):
+            log.add("people", f"{p.name}: {' / '.join(ROLE_NAMES[c] for c in codes)} of chapter {chapter} "
+                              f"in {annex}, but "
                               + ", ".join(f"{ROLE_NAMES[r]} of chapter {c}" if c else ROLE_NAMES[r]
                                           for r, c in p.roles) + " on the chapter page")
         ac = countries.codes(ctext, where) if ctext else []
@@ -1354,6 +1432,11 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
             words, n = p.name.split(), len(row["Last name"].split())
             if 0 < n < len(words) and _tokens(" ".join(words[-n:])) == _tokens(row["Last name"]):
                 p.first, p.last = " ".join(words[:-n]), " ".join(words[-n:])
+            if role == "fl" and chm and ("la", int(chm.group(1))) in p.roles and \
+                    any(name_match(n, p.name) for n, c in la_or_fl if c == int(chm.group(1))):
+                p.roles[p.roles.index(("la", int(chm.group(1))))] = ("fl", int(chm.group(1)))
+                log.add("people", f"{p.name}: listed under 'Lead authors and fellows' in chapter "
+                                  f"{chm.group(1)}; a fellow in the experts list")
             if role and role != "cs" and chm:
                 if (role, int(chm.group(1))) not in p.roles:
                     log.add("people", f"{p.name}: {row['Role']} of chapter {chm.group(1)} in the experts list, "
@@ -1469,6 +1552,35 @@ def read_gaps(doc: pymupdf.Document, rep: Report, log: Log) -> list[Gap]:
             else:
                 cells.append([y0, y0, t])
         cats = [(y, re.sub(r"^\d+\.\s*", "", t).strip()) for y, _, t in cells]
+        # A traceability column to the right (NXS): each "{" starts a row.
+        trace = sorted((y0, t) for x0, y0, t, sp in lines if x0 > desc_x + 150 and not sp.bold
+                       and _near(sp.size, 7.0, 0.3) and sp.color != WHITE)
+        if any(t.startswith("{") for _, t in trace):
+            rows: list[list] = []          # [y, traceability, description]
+            for y0, t in trace:
+                if t.startswith("{") or not rows:
+                    rows.append([y0, t, ""])
+                else:
+                    rows[-1][1] += " " + t
+            for y0, t in desc:
+                row = [r for r in rows if r[0] <= y0 + 2]
+                if row:
+                    row[-1][2] = f"{row[-1][2]} {t}".strip()
+                elif cur or gaps:
+                    cur = f"{cur} {t}".strip()       # a row continued from the previous page
+            for y, tr, text in rows:
+                above = [c for yc, c in cats if yc <= y + 2]
+                if above:
+                    category = above[-1]
+                if cur and gaps:
+                    gaps[-1].text = f"{gaps[-1].text} {cur}".strip()
+                    cur = ""
+                tm = re.search(r"\{([^{}]*)\}", tr)
+                gaps.append(Gap(len(gaps) + 1, category, text.strip(), tm.group(1).strip() if tm else tr.strip("{} ")))
+            if cur and gaps:
+                gaps[-1].text = f"{gaps[-1].text} {cur}".strip()
+                cur = ""
+            continue
         row_start = None
         for y0, t in desc:
             if not cur:
@@ -1664,7 +1776,7 @@ def check_glossary(paras: list[Para], rep: Report, log: Log, thesaurus: Path) ->
         if p.page in pages and p.role == "small":
             m = re.match(r"^([^:]{2,90}):\s", p.text)
             if m and not re.search(r"\(\d{4}", m.group(1)):
-                terms.append(m.group(1).strip())
+                terms.append(m.group(1).strip().lstrip("•·-– ").strip())
     if not terms or not thesaurus.exists():
         return len(terms), 0
     g = Graph()
@@ -1702,7 +1814,7 @@ CONFIDENCE = {
 }
 _CONFIDENCE = re.compile(r"\((well[ -]established|established but incomplete|unresolved|inconclusive)\)",
                          re.IGNORECASE)
-_ILL_MENTION = re.compile(r"\b(Figures?|Tables?|Box(?:es)?)\s+(SPM\s?\.?\s?[A-Z]?\d+|\d+\.\d+)", re.IGNORECASE)
+_ILL_MENTION = re.compile(r"\b(Figures?|Tables?|Box(?:es)?)\s+(SPM\s?\.?\s?[A-Z]?\d+|\d+\.\d+(?:\.\d+)?)", re.IGNORECASE)
 _KIND = {"figure": "Figure", "figures": "Figure", "table": "Table", "tables": "Table", "box": "Box", "boxes": "Box"}
 
 
@@ -1801,7 +1913,7 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
         subs, ills = [], []
         parts = []
         for part in re.split(r"\s*[,;]\s*", trace):
-            nums = part.split()
+            nums = [n.rstrip(".") for n in part.split()]
             if len(nums) > 1 and all(re.fullmatch(r"\d{1,2}(?:\.\d+)+", n) for n in nums):
                 log.add("traceability", f"{where}: '{part}' has no comma between sections in the PDF")
                 parts += nums
@@ -1819,7 +1931,7 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
                 else:
                     log.add("traceability", f"{where}: '{part}' is not a figure, table or box of the report")
                 continue
-            if plural and re.fullmatch(r"\d{1,2}\.\d{1,2}", part):
+            if plural and re.fullmatch(r"\d{1,2}\.\d{1,2}(?:\.\d{1,2})?", part):
                 key = _ill_key(plural, part)
                 if key in il_uri:
                     ills.append(il_uri[key])
