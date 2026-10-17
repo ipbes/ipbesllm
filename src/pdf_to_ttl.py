@@ -77,7 +77,10 @@ DEFAULT_OUT = ROOT / "data" / "pdf_compare"     # + /<assessment>
 ACCENT = 0x0F8575
 GREY = 0x58595B
 WHITE = 0xFFFFFF
-DARK = {0x231F20, 0x030404, 0x404041, 0x000000}
+def dark(color: int) -> bool:
+    """Black or near-black text (0x231F20, 0x3C3C3B ...), not the mid-grey
+    of footnotes and running headers (0x58595B)."""
+    return all(((color >> shift) & 0xFF) < 0x48 for shift in (16, 8, 0))
 
 _LIGATURES = str.maketrans({"ﬁ": "fi", "ﬂ": "fl", "ﬀ": "ff", "ﬃ": "ffi", "ﬄ": "ffl",
                             " ": " ", "\t": " ", " ": " ", " ": " ",
@@ -163,7 +166,7 @@ def line_role(line: Line) -> str:
         if m.bold and _near(m.size, 10.0) and CAPTION_START.match(line.text):
             return "caption"
         return "other"
-    if line.y0 < 62 and m.size <= 7.6 and m.color in (GREY, *DARK):
+    if line.y0 < 62 and m.size <= 7.6 and (m.color == GREY or dark(m.color)):
         return "header"
     if line.y0 > 790 or line.x0 < 45:
         return "folio"
@@ -177,13 +180,15 @@ def line_role(line: Line) -> str:
         return "h3"
     if _near(m.size, 10.7) and "Hv" in m.font:
         return "h4"
-    if _near(m.size, 10.0) and m.bold and m.color in DARK:
+    if _near(m.size, 10.0) and m.bold and dark(m.color):
         return "caption"
-    if _near(m.size, 8.5, 0.3) and (m.color in DARK or m.color == ACCENT):
+    if _near(m.size, 9.0) and m.bold and "DIN" in m.font and dark(m.color):
+        return "h5"             # a heading inside a box (TCA Box SPM 9)
+    if _near(m.size, 8.5, 0.3) and (dark(m.color) or m.color == ACCENT):
         return "body"
-    if _near(m.size, 7.5) and (m.color in DARK or m.color == ACCENT) and "Roman" not in m.font:
+    if _near(m.size, 7.5) and (dark(m.color) or m.color == ACCENT) and "Roman" not in m.font:
         return "small"
-    if 6.2 <= m.size <= 6.95 and (m.color == GREY or (m.color not in DARK and m.color != WHITE and (
+    if 6.2 <= m.size <= 6.95 and (m.color == GREY or (not dark(m.color) and m.color != WHITE and (
             re.match(r"^\s*\d{1,3}\.\s", line.text) or _URL_TEXT.search(line.text)))):
         return "footnote"       # grey, or a numbered or linked footnote in a colour (IAS)
     return "other"
@@ -198,7 +203,7 @@ def accent_color(doc: pymupdf.Document) -> int:
             for l in b.get("lines", []):
                 for s in l["spans"]:
                     if s["text"].strip() and (_near(s["size"], 15.6) or _near(s["size"], 12.7)) \
-                            and s["color"] not in (WHITE, GREY, *DARK):
+                            and s["color"] not in (WHITE, GREY) and not dark(s["color"]):
                         count[s["color"]] += len(s["text"])
     return count.most_common(1)[0][0] if count else ACCENT
 
@@ -650,6 +655,11 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 _add_para(box.legend, text)
             continue
 
+        if p.role == "h5":
+            if box is not None:
+                box.legend.append("## " + text)
+            continue
+
         if p.role in ("h2", "h3", "h4"):
             box = legend_of = None
             if mode in ("km", "bgm"):
@@ -721,6 +731,17 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             target = section or unnumbered
             if target is not None:
                 _add_para(target.paras, text)
+    # Gaps in the numbering of figures, tables and boxes ("Figure SPM 14" after 12).
+    seen: dict[tuple[str, str], list[int]] = {}
+    for il in rep.illustrations:
+        m = re.fullmatch(r"(SPM\.|\d+\.)(\d+)", il.number)
+        if m:
+            seen.setdefault((il.kind, m.group(1)), []).append(int(m.group(2)))
+    for (kind, prefix), nums in seen.items():
+        missing = sorted(set(range(1, max(nums) + 1)) - set(nums))
+        if missing:
+            rep.problems.append(f"{kind} {prefix}{', '.join(map(str, missing))} not in the report, "
+                                f"though {kind} {prefix}{max(nums)} is")
     return rep
 
 
@@ -770,16 +791,18 @@ def _front_matter(doc: pymupdf.Document, rep: Report) -> None:
         m = re.search(r"SUGGESTED CITATION\s*\n(.*?)(?:\n\s*\n|$)", text, re.S)
         if m and not rep.title:
             cite = re.sub(r"\s+", " ", m.group(1))
-            t = re.match(r"IPBES \(\d{4}\)\.\s*(.+?)\.\s+[A-Z][\w-]+,? [A-Z]\.", cite)
+            t = re.match(r"IPBES \(\d{4}\)\.\s*(.+?)\.\s+[A-Z][\w’'-]+,? [A-Z]\.", cite)
             rep.title = t.group(1) if t else ""
             d = re.search(r"(10\.\d{4,9}/[^\s]+?)\.?(?:\s|$)", cite)
             rep.doi = f"https://doi.org/{d.group(1)}" if d else ""
         if "Edited by:" in text and not rep.editors:
             block = text.split("Edited by:", 1)[1]
-            for m2 in re.finditer(r"\n\s*([^\n]+?)\s*\n\s*([^\n]+?)\s*\n\s*Assessment Co-chair", block,
-                                  re.IGNORECASE):
-                name, aff = m2.group(1).strip(), m2.group(2).strip()
-                rep.editors.append((name, aff))
+            # Name, then one or more affiliation lines, then "Assessment Co-Chair".
+            chunks = re.split(r"\n\s*Assessment Co-?chair\s*(?=\n)", block, flags=re.IGNORECASE)
+            for chunk in chunks[:-1]:
+                lines = [x.strip() for x in chunk.split("\n") if x.strip()]
+                if lines:
+                    rep.editors.append((lines[0], " ".join(lines[1:])))
 
 
 ROLE_HEADINGS = {
@@ -850,7 +873,8 @@ def _split_people(text: str) -> list[str]:
     text = text.rstrip(". ")
     if "(" not in text:
         return [n.strip() for n in text.split(",") if n.strip()]
-    return [m.group(0).strip(" ,") for m in re.finditer(r"[^,()]+\([^()]*\)", text)]
+    # A name may hold a nickname: "Margaret (Peggy) Smith (Canada)".
+    return [m.group(0).strip(" ,") for m in re.finditer(r"[^,()]+(?:\([^()]*\)[^,()]+)?\([^()]*\)", text)]
 
 
 # ---------------------------------------------------------------------------
@@ -1085,6 +1109,8 @@ def name_match(a: str, b: str) -> str:
     last_same = ta[-1] == tb[-1] or "".join(ta[-2:]) == "".join(tb[-2:])
     if first_same and (last_same or set(ta) <= set(tb) or set(tb) <= set(ta)):
         return "close"
+    if last_same and (set(ta) <= set(tb) or set(tb) <= set(ta)):
+        return "close"              # "Margaret (Peggy) Smith" / "Peggy Smith"
     if last_same and ta[0][0] == tb[0][0] and (ta[0].startswith(tb[0][:2]) or tb[0].startswith(ta[0][:2])
                                                or ta[0][-2:] == tb[0][-2:]):
         return "close"              # Steve / Stephen, Pippa / Philippa, Gabi / Gabriella
@@ -1215,7 +1241,7 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
             if role not in ROLE_NAMES:
                 continue
             for entry in entries:
-                m = re.match(r"^(.*?)\s*\((.*)\)\s*$", entry)
+                m = re.match(r"^(.*)\s*\(([^()]*)\)\s*$", entry)      # the last (...) holds the countries
                 name, ctext = (m.group(1), m.group(2)) if m else (entry, "")
                 name = re.sub(r"\s+", " ", name).strip()
                 p = find(name)
@@ -1323,10 +1349,10 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
             # is the same person and the printed name contains its last name.
             # The experts list splits first and last names: use the split when
             # the printed name ends with its last name.
-            lt, nt = _tokens(row["Last name"]), _tokens(p.name)
-            if lt and nt[-len(lt):] == lt and len(lt) < len(nt):
-                words = p.name.split()
-                p.first, p.last = " ".join(words[:-len(lt)]), " ".join(words[-len(lt):])
+            # Compare whole words: "Horcea-Milcu" and "O’Brien" are one word each.
+            words, n = p.name.split(), len(row["Last name"].split())
+            if 0 < n < len(words) and _tokens(" ".join(words[-n:])) == _tokens(row["Last name"]):
+                p.first, p.last = " ".join(words[:-n]), " ".join(words[-n:])
             if role and role != "cs" and chm:
                 if (role, int(chm.group(1))) not in p.roles:
                     log.add("people", f"{p.name}: {row['Role']} of chapter {chm.group(1)} in the experts list, "
@@ -1357,6 +1383,38 @@ class Gap:
     traceability: str
 
 
+def gaps_from_box(rep: Report, log: Log) -> list[Gap]:
+    """Knowledge gaps listed in an SPM box (TCA Box SPM 9): numbered items
+    under sub-headings (the categories). An item is cut into one gap per
+    {traceability} mark, as IBOK does; a mark opened with "(" by mistake is
+    read too, and reported."""
+    box = next((il for il in rep.illustrations if il.number.startswith("SPM") and il.kind == "Box"
+                and "knowledge gap" in il.title.lower()), None)
+    if box is None:
+        log.add("knowledge gaps", "no knowledge-gap table or box in the SPM")
+        return []
+    gaps, category = [], ""
+    for para in box.legend:
+        if para.startswith("## "):
+            category = para[3:].strip()
+            continue
+        m = re.match(r"^\d{1,2}\.\s+(.*)$", para)
+        if not m:
+            continue                # the box's introduction and conclusion
+        text, pos = m.group(1), 0
+        for mk in re.finditer(r"([{(])([^{}()]*)\}\s*\.?", text):
+            if mk.group(1) == "(":
+                log.add("knowledge gaps", f"Box {box.number}: '({mk.group(2)}}}' opened with '(' in the PDF")
+            seg = text[pos:mk.start()].strip()
+            if seg:
+                gaps.append(Gap(len(gaps) + 1, category, seg.rstrip(" ."), mk.group(2).strip()))
+            pos = mk.end()
+        rest = text[pos:].strip()
+        if rest and gaps:
+            log.add("knowledge gaps", f"Box {box.number}: text after the last traceability mark of an item: {rest[:80]}")
+    return gaps
+
+
 def read_gaps(doc: pymupdf.Document, rep: Report, log: Log) -> list[Gap]:
     """The SPM table of knowledge gaps. Layouts differ (BBA: categories white
     on colour; IAS: dark bold, icons on the right), so the table is read from
@@ -1365,8 +1423,7 @@ def read_gaps(doc: pymupdf.Document, rep: Report, log: Log) -> list[Gap]:
     gap ends with its {traceability}; a gap belongs to the category last
     printed above it (on this page or an earlier one)."""
     if not rep.gap_table_pages:
-        log.add("knowledge gaps", "no knowledge-gap table in the SPM")
-        return []
+        return gaps_from_box(rep, log)
     import collections
 
     def page_lines(pno: int) -> list[tuple[float, float, str, Span]]:
@@ -1838,7 +1895,8 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
         ch = 0 if il.number.startswith("SPM") else int(il.number.split(".")[0])
         add(s, DCTERMS.identifier, il.ident)
         add(s, SKOS.prefLabel, resolve_marks(il.title, ch, rep))
-        add(s, P("hasDescription"), resolve_marks("\n\n".join(il.legend), ch, rep))
+        add(s, P("hasDescription"), resolve_marks("\n\n".join(x[3:] if x.startswith("## ") else x
+                                                                for x in il.legend), ch, rep))
 
     # Background messages and their sub-messages
     km_of_sch: dict[URIRef, set[URIRef]] = {}
