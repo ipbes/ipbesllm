@@ -39,3 +39,10 @@ report_id = "IAS23"
 year = 2023
 alt_label = "IPBES Invasive Alien Species Assessment"
 zotero_group = 2352922
+
+[assessments.TCA]
+pdf = "data/pdf/tca_report.pdf"
+report_id = "TCA24"
+year = 2024
+alt_label = "IPBES Transformative Change Assessment"
+zotero_group = 4589462

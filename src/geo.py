@@ -43,6 +43,7 @@ _COUNTRY_ALIASES = {
     "tunesia": "TUN",
     "tanzania": "TZA",
     "the netherlands": "NLD",
+    "kingdom of the Netherlands": "NLD",
     "u.k.": "GBR",
     "u.s.": "USA",
     "u.s.a.": "USA",
