@@ -85,9 +85,13 @@ ipbesllm/
 ├── .env                         # Local settings and secrets (never committed)
 ├── chroma/                      # Chroma vector database and index manifests (not in git)
 ├── config/akn4un_ipbes.toml     # IPBES settings for docx_to_akn.py (metadata, decision symbols, Word styles)
+├── config/pdf_to_ttl.toml       # Per-assessment settings for pdf_to_ttl.py (PDF, report code, Zotero group) and the shared experts and chapters lists
 ├── data/                        # Source documents (not in git; add locally)
 │   ├── docx/*.docx              # Plenary reports in Word, e.g. 2024-11.docx (converted by docx_to_akn.py)
+│   ├── csv/ipbes_experts.csv    # Nominated experts of every assessment, with an Assessment column (IPBES export), for pdf_to_ttl.py
+│   ├── csv/ipbes_chapters.csv   # Chapter codes of each assessment, to check the experts list
 │   ├── pdf/*.pdf                # <assessment>_report.pdf (includes the SPM), <year>-<session>.pdf
+│   ├── pdf_compare/<A>/         # One folder per assessment: TTL from its PDF (pdf_to_ttl.py), logs, comparisons
 │   ├── rdf/*.rdf                # ipbes-thesaurus.rdf, ipbes-geo.rdf
 │   ├── ttl/*.ttl                # e.g. GA1_v11.ttl: the assessment is the name before "_v"
 │   ├── xml/*.xml                # Plenary reports, e.g. 2013-1.xml
@@ -106,6 +110,8 @@ ipbesllm/
 │   ├── <format>_rag.py          # PDF/TTL/XML retrieval and answers
 │   ├── combined_rag.py          # One search over TTL and XML, for the app
 │   ├── ttl_audit.py             # Check TTL files against the ontology
+│   ├── pdf_to_ttl.py            # Converts an assessment report (PDF) to TTL following the ontology
+│   ├── ttl_compare.py           # Compares two TTL files of an assessment, and their fidelity to the PDF
 │   ├── quote_check.py           # Checks an answer's quotations and DOIs against its sources
 │   ├── chunking.py              # Splits oversized TTL chunks
 │   ├── rag_utils.py             # Models, embeddings, Chroma client, batching helpers
@@ -329,6 +335,31 @@ For each class and file it reports:
 | `DATA QUALITY` | Findings to fix in the TTL conversion, each with a count and examples: garbled encoding (`Earthâ€™s`, repaired when indexed), invisible characters, identifiers padded with spaces, empty values, labels ending in a stray letter; knowledge gaps numbered from 0 or without a category; placeholder experts, experts without a name label or a role, labels that disagree with `foaf:lastName`, role text not in the form "Lead Author in GA119-ch2"; several countries in one value, non-standard or unknown country names; references without a DOI, malformed Zotero links, placeholder ORCID links | `knowledge gaps without a category (ipbes:hasCategory): 40` |
 
 Fix what matters in the source TTL (or its conversion), or in `ttl_loader.py` when the data is valid but read the wrong way. Then check the countries with `ttl_index.py --dry-run` and index.
+
+#### Converting assessment PDFs to TTL
+
+`src/pdf_to_ttl.py` makes the TTL of an assessment from its published report (`data/pdf/<a>_report.pdf`), following the ontology, as an alternative to the manual conversions in `data/ttl`. The settings that belong to one assessment (PDF, report code such as `BBA26`, year, Zotero group) are in `config/pdf_to_ttl.toml`, with the shared experts list (`data/csv/ipbes_experts.csv`, filtered by the Assessment column) and chapter codes (`data/csv/ipbes_chapters.csv`); everything else is read from the PDF.
+
+| Task | Command |
+|---|---|
+| Convert an assessment | `PYTHONPATH=src python src/pdf_to_ttl.py BBA` |
+| Download its Zotero library again | `PYTHONPATH=src python src/pdf_to_ttl.py BBA --refresh-zotero` |
+| Compare with the manual conversion, and both with the PDF | `PYTHONPATH=src python src/ttl_compare.py data/ttl/BBA_v01.ttl data/pdf_compare/BBA/BBA_pdf.ttl --pdf data/pdf/bba_report.pdf` |
+| Check the result against the ontology | `PYTHONPATH=src python src/ttl_audit.py data/pdf_compare/BBA/BBA_pdf.ttl` |
+
+It writes to one folder per assessment, `data/pdf_compare/<A>/` (`--out` for another):
+
+| File | Content |
+|---|---|
+| `<A>.md` | The report as read: messages, chapters, sections, captions, footnotes and reference lists, with page numbers. Everything in the TTL comes from here. |
+| `<A>_pdf.ttl` | The TTL |
+| `<A>_conversion.md` | What could not be read or matched, and where the sources disagree: names, roles and countries across the chapter pages, the author annex and the experts list; references without a Zotero item or printed twice; traceability marks with typos; glossary terms missing from the thesaurus |
+| `<A>_zotero.json` | The assessment's Zotero library, cached |
+| `<A>_compare.md`, `.csv` | From `ttl_compare.py`: items in one file only, property differences, and the share of each file's sentences found word for word in the PDF |
+
+How the report is read: the IPBES template's styles tell body text, headings, captions, legends and boxes, footnotes and labels apart (KM1, A1), and pages are read column by column. Key and background messages come from the SPM; a background message is cut into sub-messages at each `{traceability}` mark, linked to the sub-chapters it names. Sub-chapters (1.1, 1.2 ...) take their titles from the PDF outline and their text from the sections, without boxes, figures and footnote marks (footnotes follow under "Notes"). Every figure, table and box is an illustration (caption title as `skos:prefLabel`, legend or box text as `ipbes:hasDescription`). Knowledge gaps come from the SPM table, with category and traceability, numbered from 1. People and their roles come from each chapter's first page and the title page, checked against the author annex (Annex III or IV) and the experts list (which also gives ORCID iDs); countries are ISO alpha-3 codes from `ipbes-geo.rdf`. Each reference-list entry is matched to its Zotero item (DOI, else title, year and first author) for the item key in its URI, keeps its citation text, and links to the sub-chapters citing it.
+
+What it leaves out, because the ontology has no place for it: the chapters' executive summaries, unnumbered sections (chapter 5's "Knowledge gaps"), the SPM preface, the technical support unit.
 
 #### Country values
 

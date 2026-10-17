@@ -1,0 +1,41 @@
+# Settings for pdf_to_ttl.py: the values that belong to one assessment.
+#
+#     PYTHONPATH=src python src/pdf_to_ttl.py BBA
+#
+# Everything else (the report title, chapters, authors, DOIs, messages,
+# figures, knowledge gaps, references) is read from the PDF itself.
+
+[ontology]
+# The ipbes: prefix, with a trailing "/" as the data review recommends (L6):
+# classes and properties are http://ontology.ipbes.net/report/KeyMessage, not
+# .../reportKeyMessage. Ontology v06 and the files in data/ttl still use the
+# form without "/"; the loader and ttl_audit.py read both.
+namespace = "http://ontology.ipbes.net/report/"
+# Base of the item URIs: <base>ch/BBA26ch1, <base>person/Jones_Matt ...
+base = "http://ontology.ipbes.net/report/"
+
+[experts]
+# Nominated experts of every assessment (IPBES export), with an Assessment
+# column holding the code used below (BBA, IAS ...). Contributing authors are
+# not in it. An assessment can name its own file with experts_csv instead.
+csv = "data/csv/ipbes_experts.csv"
+# Chapter codes of each assessment ("business_biodiversity_chapter1"), to check
+# the Chapter column of the experts list.
+chapters_csv = "data/csv/ipbes_chapters.csv"
+
+[assessments.BBA]
+pdf = "data/pdf/bba_report.pdf"
+# The report's code in item URIs and role texts (BBA26-1.1, BBA26-ch1).
+report_id = "BBA26"
+year = 2026
+alt_label = "IPBES Business and Biodiversity Assessment"
+# Public Zotero group holding the assessment's references, one collection
+# per chapter ("Chapter 1" ...).
+zotero_group = 5081872
+
+[assessments.IAS]
+pdf = "data/pdf/ias_report.pdf"
+report_id = "IAS23"
+year = 2023
+alt_label = "IPBES Invasive Alien Species Assessment"
+zotero_group = 2352922
