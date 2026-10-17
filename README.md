@@ -34,7 +34,7 @@ The project is an evaluation platform for comparing and improving retrieval and 
 |---|---|---|---|
 | **TTL** (RDF/Turtle) | Assessments: GA1, IAS, LDR, SUA, TCA, VA, BBA, PPA, SCM | Parsed with RDFLib into typed chunks (key messages, chapters, sub-chapters, experts, figures, knowledge gaps …), then embedded | `ttl_documents` |
 | **XML** (Akoma Ntoso / LegalDocML) | Plenary session reports IPBES-1 to IPBES-8, with their decisions | Parsed into structured paragraphs and table rows, then embedded | `xml_documents` |
-| **PDF** | Assessment reports and SPMs of the same assessments in TTL folder | Text extracted with PyMuPDF, chunked, then embedded | `pdf_documents` |
+| **PDF** | Assessment reports (each includes its SPM) of the same assessments as the TTL folder, and Plenary session reports | Text extracted with PyMuPDF, chunked, then embedded | `pdf_documents` |
 | **RDF** | IPBES thesaurus and geography | Used for query expansion, definitions and country matching; the thesaurus is also embedded | `ipbes_thesaurus` |
 
 The collections are kept separate, which keeps them comparable for analysis. The app searches the TTL and XML collections together by default, so users do not have to know where an answer is stored (see [How questions are answered](#how-questions-are-answered)).
@@ -87,13 +87,13 @@ ipbesllm/
 ├── config/akn4un_ipbes.toml     # IPBES settings for docx_to_akn.py (metadata, decision symbols, Word styles)
 ├── data/                        # Source documents (not in git; add locally)
 │   ├── docx/*.docx              # Plenary reports in Word, e.g. 2024-11.docx (converted by docx_to_akn.py)
-│   ├── pdf/*.pdf                # <assessment>_report.pdf, <assessment>_spm.pdf
+│   ├── pdf/*.pdf                # <assessment>_report.pdf (includes the SPM), <year>-<session>.pdf
 │   ├── rdf/*.rdf                # ipbes-thesaurus.rdf, ipbes-geo.rdf
 │   ├── ttl/*.ttl                # e.g. GA1_v11.ttl: the assessment is the name before "_v"
 │   ├── xml/*.xml                # Plenary reports, e.g. 2013-1.xml
 │   └── xml_compare/*.xml        # Plenary reports converted from Word, to check against xml/
 ├── dist/ipbes-data.zip          # Data bundle for the deployed app (built by data_bundle.py)
-├── docs/*                       # Supporting documentation e.g. IPBES ontology: the structure of the TTL files
+├── docs/ontology/*.ttl          # IPBES report ontology: the structure of the TTL files (used by ttl_audit.py)
 ├── docs/akn/*.xsd               # Akoma Ntoso 3.0 schema (OASIS), for validating XML
 ├── feedback/ratings.csv         # Answer ratings, when not stored in Azure
 ├── tests/comparison_<run>.csv   # Written by pdf_ttl_compare.py, one row per question per assessment/meeting (not in git)
@@ -282,7 +282,7 @@ Each pipeline can also be used from the command line: index, inspect the retriev
 
 Place Turtle files in `data/ttl/`. The assessment is the file name before `_v` (`GA1_v11.ttl` is GA1); keep one version of each assessment in the folder.
 
-The files follow the IPBES report ontology in [`docs/IPBES_Ontology_v06.ttl`](docs/IPBES_Ontology_v06.ttl), which lists, for each class, the properties an item should have:
+The files follow the IPBES report ontology in [`docs/ontology/IPBES_Ontology_v06.ttl`](docs/ontology/IPBES_Ontology_v06.ttl), which lists, for each class, the properties an item should have:
 
 | Class | Chunk type | Main properties read |
 |---|---|---|
@@ -311,7 +311,7 @@ The references (about 33,500 chunks) are indexed but left out of every search un
 
 #### Checking TTL files
 
-Run the audit on new or updated TTL files before indexing them. It compares each file with the ontology in `docs/IPBES_Ontology_v06.ttl`, and runs the loader to find what the indexer would leave out. It changes nothing.
+Run the audit on new or updated TTL files before indexing them. It compares each file with the ontology in `docs/ontology/IPBES_Ontology_v06.ttl`, and runs the loader to find what the indexer would leave out. It changes nothing.
 
 ```bash
 PYTHONPATH=src python src/ttl_audit.py                        # every file in data/ttl/
@@ -406,7 +406,7 @@ To use converted reports in the app, copy them to `data/xml/` and run `xml_index
 
 ### PDF
 
-Place PDF files in `data/pdf/`, named `<assessment>_report.pdf` and `<assessment>_spm.pdf` (e.g. `bba_report.pdf`): the assessment is the part of the name before the first `_`, and must match the TTL code (BBA, GA1, IAS …) so that questions naming an assessment find its PDFs. Plenary session reports are named `<year>-<session>.pdf` (`2013-1.pdf`), like the XML reports. They form one group, "Plenary", searched alongside the assessments: a question that names a session (IPBES-1, "first session", #IPBES1) searches only that session's report, and one that mentions "the Plenary" searches only the session reports. Sources from them are labelled by session, e.g. "Plenary IPBES-4". The indexer extracts the text with PyMuPDF, cleans it, creates chunks, embeds them with the configured embedding model and stores them in Chroma (`pdf_loader.py`):
+Place PDF files in `data/pdf/`, named `<assessment>_report.pdf` (e.g. `bba_report.pdf`; the report includes the summary for policymakers, so no separate SPM file is needed): the assessment is the part of the name before the first `_`, and must match the TTL code (BBA, GA1, IAS …) so that questions naming an assessment find its PDFs. Plenary session reports are named `<year>-<session>.pdf` (`2013-1.pdf`), like the XML reports. They form one group, "Plenary", searched alongside the assessments: a question that names a session (IPBES-1, "first session", #IPBES1) searches only that session's report, and one that mentions "the Plenary" searches only the session reports. Sources from them are labelled by session, e.g. "Plenary IPBES-4". The indexer extracts the text with PyMuPDF, cleans it, creates chunks, embeds them with the configured embedding model and stores them in Chroma (`pdf_loader.py`):
 
 - **Running headers and footers** are removed: lines that recur at the top or bottom of many pages ("THE GLOBAL ASSESSMENT REPORT ON BIODIVERSITY …", chapter titles), and bare page numbers.
 - **Words split at a line end** are joined ("biodi-versity"), unless the document uses the hyphenated form elsewhere or never the joined one, so compounds such as "decision-making" keep their hyphen.

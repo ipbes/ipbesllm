@@ -84,6 +84,16 @@ FIELDNAMES = [
     "other_sources",
 ]
 CONCURRENT_SCOPES = 4
+# Excel's limit per cell; a longer field spills into extra rows on import.
+EXCEL_CELL_MAX = 32767
+
+
+def fit_cell(text: str) -> str:
+    """text, cut to fit an Excel cell, with a note saying how long it was."""
+    if len(text) <= EXCEL_CELL_MAX:
+        return text
+    note = f"\n\n[truncated for Excel: {len(text)} characters in full]"
+    return text[:EXCEL_CELL_MAX - len(note)] + note
 # A question about the Plenary's meetings rather than the assessments.
 MEETING_QUESTION = re.compile(r"\bplenary\b|\bmeetings?\b", re.IGNORECASE)
 
@@ -209,7 +219,7 @@ async def main(argv=None):
                     row[f"{key}_response"], row[f"{key}_sources"] = await pipeline(asked)
                 except Exception as e:  # noqa: BLE001
                     row[f"{key}_response"], row[f"{key}_sources"] = f"(error: {e})", ""
-        writer.writerow(row)
+        writer.writerow({k: fit_cell(str(v)) for k, v in row.items()})
         out_file.flush()
         done += 1
         print(f"[{done}/{len(jobs)}] Q{n} {scope}: {question[:60]}")

@@ -118,7 +118,7 @@ def _assessment_files() -> dict[str, list[str]]:
     """Assessment id -> the indexed PDF files of that assessment.
 
     The PDF index has no assessment field, so it comes from the file names
-    (ga1_report.pdf and ga1_spm.pdf are both GA1). Cached until re-indexing.
+    (ga1_report.pdf is GA1). Cached until re-indexing.
     """
     collection = _get_collection()
     if _STATE["assessments"] is None:

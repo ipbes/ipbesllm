@@ -4,7 +4,7 @@
     PYTHONPATH=src python src/ttl_audit.py data/ttl/SUA_v02.ttl   # some files
     PYTHONPATH=src python src/ttl_audit.py --all                  # every property
 
-For each class of the ontology (docs/IPBES_Ontology_v06.ttl) and each file it
+For each class of the ontology (docs/ontology/IPBES_Ontology_v06.ttl) and each file it
 reports:
 
   * the number of items, and the share of them that have each property the
@@ -48,7 +48,7 @@ from settings import PROJECT_ROOT, TTL_DIR
 from ttl_index import _resolve_countries
 from ttl_loader import GARBLED, parse_ttl_file
 
-ONTOLOGY = PROJECT_ROOT / "docs" / "IPBES_Ontology_v06.ttl"
+ONTOLOGY = PROJECT_ROOT / "docs" / "ontology" / "IPBES_Ontology_v06.ttl"
 
 _PREFIXES = [
     ("http://ontology.ipbes.net/report", "ipbes:"),
