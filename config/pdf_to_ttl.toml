@@ -53,3 +53,10 @@ report_id = "NXS24"
 year = 2024
 alt_label = "IPBES Nexus Assessment"
 zotero_group = 4596166
+
+[assessments.SUA]
+pdf = "data/pdf/sua_report.pdf"
+report_id = "SUA22"
+year = 2022
+alt_label = "IPBES Sustainable Use Assessment"
+zotero_group = 2345372
