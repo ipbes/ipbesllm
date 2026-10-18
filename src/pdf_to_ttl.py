@@ -177,6 +177,9 @@ def line_role(line: Line) -> str:
         return "title"
     if m.color == WHITE:
         return "other"
+    if CAPTION_START.match(line.text) and any(_near(s.size, 10.0) and dark(s.color) and (s.bold or "-Md" in s.font)
+                                              for s in words):
+        return "caption"        # title in medium weight, or a plain note after it (SUA Box 1.1, 4.20)
     if _near(m.size, 15.6) and m.color == ACCENT:
         return "h2"
     if _near(m.size, 12.7) and m.color == ACCENT:
@@ -287,6 +290,18 @@ def _join(prev: str, nxt: str, prev_link: bool, next_link: bool) -> str:
 
 
 def _is_link(s: Span) -> bool:
+    """A link broken at the end of a line: in the accent colour. Not a line of
+    words in that colour (SUA's key messages), which has spaces inside and
+    ends in one."""
+    t = s.text.strip()
+    words = bool(re.search(r"\s", t)) and s.text != s.text.rstrip() \
+        and not re.search(r"per cent\d|https?://|www\.|/", t)     # "%20" printed "per cent20" (NXS)
+    return s.color == ACCENT and not s.bold and not words
+
+
+def _accent(s: Span) -> bool:
+    """In the link colour: after a link's first part, its continuation, whatever
+    it holds ("FABLEDietBrief_cor per cent20 ...", NXS)."""
     return s.color == ACCENT and not s.bold
 
 
@@ -316,7 +331,9 @@ def build_paras(lines: list[Line]) -> list[Para]:
     labelled: dict[int, str] = {}
     for p in paras:
         if p.role == "other" and LABEL.fullmatch(p.text) and _white(p):
-            target = next((q for q in paras if q.page == p.page and q.role == "body"
+            # The text is a body paragraph, or a background message's headline
+            # in 10 pt (SUA).
+            target = next((q for q in paras if q.page == p.page and q.role in ("body", "caption")
                            and abs(q.y0 - p.y0) < 6 and 0 < q.x0 - p.x0 < 60), None)
             if target is not None:
                 labelled[id(target)] = p.text
@@ -329,7 +346,7 @@ def build_paras(lines: list[Line]) -> list[Para]:
             p.label = p.label or labelled[id(p)]
         if p.role == "caption" and not CAPTION_START.match(p.text):
             prev = out[-1] if out else None
-            if prev and prev.role == "caption" and prev.page == p.page:
+            if prev and prev.role == "caption" and prev.page == p.page and not p.label:
                 prev.text = f"{prev.text} {p.text}"
                 prev.lines += p.lines
                 continue
@@ -405,9 +422,9 @@ def _fill(p: Para) -> None:
         for s in parts:
             t = _span_text(s, p.role)
             if lead_end is None and t.strip() and not s.bold:
-                lead_end = len(_join(text, line_text, prev_link, _is_link(parts[0]))) if text else len(line_text)
+                lead_end = len(_join(text, line_text, prev_link, _accent(parts[0]))) if text else len(line_text)
             line_text += t
-        text = _join(text, line_text, prev_link, _is_link(parts[0])) if text else line_text
+        text = _join(text, line_text, prev_link, _accent(parts[0])) if text else line_text
         prev_link = _is_link(parts[-1])
     if lead_end is None:
         lead_end = len(text)
@@ -536,7 +553,8 @@ def _continues(prev: str, nxt: str) -> bool:
     if not prev:
         return False
     first = nxt.lstrip()[:1]
-    return first.islower() or not prev.rstrip().endswith(_TERMINAL) or prev.rstrip().endswith(",")
+    # A traceability mark ("{3.3.4.1}. Logging ...") never starts a paragraph.
+    return first.islower() or first == "{" or not prev.rstrip().endswith(_TERMINAL) or prev.rstrip().endswith(",")
 
 
 def _add_para(paras: list[str], text: str) -> None:
@@ -549,6 +567,7 @@ def _add_para(paras: list[str], text: str) -> None:
 def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
     rep = Report()
     _front_matter(doc, rep)
+    casing = word_casing(paras)
     for level, title, page in doc.get_toc():
         m = re.match(r"^\s*(\d{1,2}\.\d{1,2})\.?\s+(.+)$", re.sub(r"\s+", " ", title))
         if m:
@@ -563,6 +582,8 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
     legend_of: Illustration | None = None   # the figure or table whose legend may follow
     legend_end = (0, 0.0)               # page and bottom of its caption or legend so far
     unnumbered: Section | None = None
+    km_heading = ""                     # SUA: the heading of a group of key messages (A, B ...)
+    group_km: Message | None = None     # SUA: the key message whose intro may follow its title
 
     def footnote_chapter() -> int:
         return chapter.number if chapter else 0
@@ -605,6 +626,11 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 mode, message = "bgm", None
             elif t.startswith("APPENDIX") and mode in ("km", "bgm", "appendix"):
                 mode = "appendix"
+            elif mode in ("km", "bgm") and re.match(r"^[A-F]\.\s+\S", text):
+                # SUA: "A. Sustainable use of wild species is critical ..." opens
+                # the background messages of key message A.
+                mode, message, group = "bgm", None, text
+                group_km = next((k for k in rep.key_messages if k.ident == text[0]), None)
             elif _chapter_start(text, p, doc):
                 n = int(re.sub(r"\D", "", text))
                 if rep.chapter(n) is None:
@@ -618,6 +644,23 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 mode = "annex"
                 rep.annex_pages.setdefault(t.split("\n")[0], []).append(p.page)
             continue
+
+        if mode == "bgm" and p.role in ("other", "caption") and not CAPTION_START.match(text) \
+                and max(line.main.size for line in p.lines) >= 9.5:
+            m = re.match(r"^([A-F])\s?(\d{1,2})\s+(\S.*)$", text)
+            first = next((s for line in p.lines for s in line.spans if s.text.strip()), None)
+            if re.fullmatch(r"[A-F]\s?\d{1,2}", p.label or "") or (m and first and first.color == WHITE):
+                # SUA: a background message's headline, "A1" in white before it.
+                ident = p.label.replace(" ", "") if p.label else m.group(1) + m.group(2)
+                message = Message(f"{ident[0]}.{ident[1:]}", text if p.label else m.group(3), p.page,
+                                  group=group)
+                rep.background_messages.append(message)
+                group_km = None
+                continue
+            if group_km is not None and not group_km.paras and p.role == "other" \
+                    and _near(p.lines[0].main.size, 10.7) and p.lines[0].main.color == ACCENT:
+                group_km.paras.append(text)     # SUA: the key message's text, under its title
+                continue
 
         if mode == "annex":
             last = list(rep.annex_pages)[-1] if rep.annex_pages else ""
@@ -685,9 +728,13 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
 
         if p.role in ("h2", "h3", "h4"):
             box = legend_of = None
+            # Numbers printed with spaces: "4. 2. 1 Environmental drivers" (SUA chapter 4).
+            text = re.sub(r"^\d{1,2}(?:\.\s?\d{1,2}){1,4}(?=\.?\s)", lambda m_: m_.group(0).replace(" ", ""), text)
             if mode in ("km", "bgm"):
                 if mode == "bgm" and p.role == "h2":
                     group = text
+                if mode == "km" and p.role == "h3":
+                    km_heading = text
                 continue
             if mode not in ("chapter", "exec") or chapter is None:
                 continue
@@ -710,9 +757,11 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 rep.problems.append(f"p{p.page}: heading {number} outside its part")
                 continue
             if number.count(".") == 1:
+                if number not in rep.outline and title.isupper():
+                    title = sentence_case(title, casing)     # "1.1 INTRODUCTION" (SUA)
                 section = Section(number, rep.outline.get(number, title), p.page)
                 chapter.sections.append(section)
-                if number not in rep.outline:
+                if number not in rep.outline and rep.outline:
                     rep.problems.append(f"p{p.page}: section {number} not in the PDF outline; title as printed")
             elif section and number.startswith(section.number + "."):
                 section.paras.append(f"## {number} {title}")
@@ -727,6 +776,13 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
         legend_of = None
 
         if mode == "km":
+            mk = re.match(r"^([A-F])\.\d{1,2}\s", text)
+            if mk and km_heading and not p.label:
+                # SUA: key messages A to D, each a heading over its background
+                # messages' headlines (A.1, A.2 ...), which are read later.
+                if not any(k.ident == mk.group(1) for k in rep.key_messages):
+                    rep.key_messages.append(Message(mk.group(1), km_heading, p.page))
+                continue
             # KM1 (BBA) or KM-A1 (IAS)
             if re.fullmatch(r"KM\s?-?\s?[A-F]?\d{1,2}", p.label or ""):
                 message = Message(re.sub(r"\s", "", p.label), p.lead or text, p.page)
@@ -772,6 +828,9 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             target = section or unnumbered
             if target is not None:
                 _add_para(target.paras, text)
+    if not rep.outline and any(c.sections for c in rep.chapters):
+        rep.problems.append("the PDF outline has no sections: titles as printed, those in capitals "
+                            "in sentence case")
     # Gaps in the numbering of figures, tables and boxes ("Figure SPM 14" after 12).
     seen: dict[tuple[str, str], list[int]] = {}
     for il in rep.illustrations:
@@ -784,6 +843,43 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             rep.problems.append(f"{kind} {prefix}{', '.join(map(str, missing))} not in the report, "
                                 f"though {kind} {prefix}{max(nums)} is")
     return rep
+
+
+def word_casing(paras: list[Para]) -> dict[str, str]:
+    """Each word's usual form inside a sentence in the report's text
+    ('ipbes' -> 'IPBES', 'goals' -> 'goals'), to write a title printed in
+    capitals in sentence case."""
+    import collections
+    forms: dict[str, collections.Counter] = {}
+    phrases: collections.Counter = collections.Counter()
+    for p in paras:
+        if p.role != "body":
+            continue
+        # A word before a number ("Chapter 3", "Figure 2") is a name for it.
+        for m in re.finditer(r"(?<![.!?:]\s)(?<=\s)([A-Za-z][\w’'-]*)(?!\s+\d)", p.text):
+            w = m.group(1)
+            forms.setdefault(w.lower(), collections.Counter())[w] += 1
+        # Names of several words: "Sustainable Development Goals".
+        for m in re.finditer(r"(?<=\s)([A-Z][a-z]+(?:\s(?:of\s|and\s|for\s|on\s)?[A-Z][a-z]+)+)", p.text):
+            phrases[m.group(1)] += 1
+    casing = {k: c.most_common(1)[0][0] for k, c in forms.items()}
+    text = " ".join(p.text for p in paras if p.role == "body")
+    for phrase, n in phrases.items():
+        if n >= 3 and n > len(re.findall(rf"\b{re.escape(phrase)}\b", text, re.IGNORECASE)) - n:
+            casing[phrase.lower()] = phrase         # mostly written so
+    return casing
+
+
+def sentence_case(title: str, casing: dict[str, str]) -> str:
+    """'ASSESSING SUSTAINABLE USE: A ROADMAP' -> 'Assessing sustainable use: a roadmap'."""
+    def word(m: re.Match) -> str:
+        w = m.group(0)
+        form = casing.get(w.lower(), w.lower())
+        return form if form.lower() == w.lower() else w.lower()
+    out = re.sub(r"[A-Za-z][\w’'-]*", word, title.strip())
+    for key, form in sorted(((k, v) for k, v in casing.items() if " " in k), key=lambda kv: -len(kv[0])):
+        out = re.sub(rf"\b{re.escape(key)}\b", form, out, flags=re.IGNORECASE)
+    return out[:1].upper() + out[1:]
 
 
 def _chapter_start(text: str, p: Para, doc: pymupdf.Document) -> bool:
@@ -915,9 +1011,10 @@ def _split_people(text: str) -> list[str]:
     (the technical support unit) are split on commas."""
     text = text.rstrip(". ")
     if "(" not in text:
-        return [n.strip() for n in text.split(",") if n.strip()]
-    # A name may hold a nickname: "Margaret (Peggy) Smith (Canada)".
-    return [m.group(0).strip(" ,") for m in re.finditer(r"[^,()]+(?:\([^()]*\)[^,()]+)?\([^()]*\)", text)]
+        return [n.strip() for n in re.split(r"[,;]", text) if n.strip()]
+    # A name may hold a nickname: "Margaret (Peggy) Smith (Canada)". Names are
+    # separated by commas, now and then by semicolons (SUA chapter 4).
+    return [m.group(0).strip(" ,;") for m in re.finditer(r"[^,;()]+(?:\([^()]*\)[^,;()]+)?\([^()]*\)", text)]
 
 
 # ---------------------------------------------------------------------------
@@ -1186,12 +1283,40 @@ class Person:
     roles: list[tuple[str, int]] = field(default_factory=list)     # (cl, 1); co-chair: ("cs", 0)
     orcid: str = ""
     full_name: str = ""     # from the author annex, with middle names
+    seen: list[str] = field(default_factory=list)   # the name as printed in each source
+
+    def __post_init__(self):
+        self.seen.append(self.name)
 
     @property
     def slug(self) -> str:
         def clean(s):
             return re.sub(r"[^\w-]", "", s.replace(" ", ""))
         return f"{clean(self.last)}_{clean(self.first)}"
+
+
+def fix_typo(p: "Person", log: "Log") -> None:
+    """A name printed with a typo where it was first read ('Lusine Margayan' on
+    one chapter page, 'Margaryan' on the others, in the annex and the experts
+    list): the spelling most sources agree on is kept."""
+    import collections
+    import difflib
+
+    words = p.name.split()
+    counts = collections.Counter(re.sub(r"\s+", " ", n).strip() for n in p.seen)
+    for variant, n in counts.most_common():
+        other = variant.split()
+        if n <= counts[p.name] or len(other) != len(words):
+            continue
+        diff = [(a, b) for a, b in zip(words, other) if a != b]
+        if len(diff) == 1 and difflib.SequenceMatcher(None, *diff[0]).ratio() >= 0.8:
+            old, new = diff[0]
+            log.add("names", f"'{p.name}' written '{variant}' in {n} of {len(p.seen)} sources; "
+                             f"'{variant}' kept")
+            p.name = variant
+            p.first = re.sub(rf"\b{re.escape(old)}\b", new, p.first)
+            p.last = re.sub(rf"\b{re.escape(old)}\b", new, p.last)
+            return
 
 
 def _split_name(name: str, surnames: list[str]) -> tuple[str, str]:
@@ -1290,11 +1415,13 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
         found = [(p, name_match(p.name, name)) for p in people]
         for p, how in found:
             if how == "same":
+                p.seen.append(name)
                 return p
         for p, how in found:
             if how == "close":
                 if source:
                     log.add("names", f"'{p.name}' (chapter or title page) is '{name}' in {source}")
+                p.seen.append(name)
                 return p
         return None
 
@@ -1443,6 +1570,7 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
                                       "but " + ", ".join(f"{ROLE_NAMES[r]} of chapter {c}" if c else ROLE_NAMES[r]
                                                          for r, c in p.roles) + " in the report")
     for p in people:
+        fix_typo(p, log)
         if not p.countries:
             log.add("countries", f"{p.name}: no country")
         if " ".join(_tokens(p.last)) not in " ".join(_tokens(p.name)):
@@ -1535,9 +1663,16 @@ def read_gaps(doc: pymupdf.Document, rep: Report, log: Log) -> list[Gap]:
 
     gaps: list[Gap] = []
     category, cur = "", ""
+    # Pages with another table or figure: the gap table has ended (SUA: the
+    # definitions table of Appendix 3 follows in the same layout).
+    others = {il.page for il in rep.illustrations if il.page not in rep.gap_table_pages}
     for pno in range(start, min(start + 6, doc.page_count + 1)):
+        if pno > start and pno in others:
+            break
         lines = page_lines(pno)
-        desc = sorted((y0, t) for x0, y0, t, sp in lines if abs(x0 - desc_x) <= 4 and not sp.bold
+        # Lines continuing a bulleted gap are indented (SUA).
+        desc = sorted((y0, re.sub(r"^[•▪]\s*", "", t)) for x0, y0, t, sp in lines
+                      if desc_x - 4 <= x0 <= desc_x + 12 and not sp.bold
                       and sp.color != WHITE and _near(sp.size, 7.0, 0.3))
         if not desc:
             break
@@ -1774,8 +1909,20 @@ def check_glossary(paras: list[Para], rep: Report, log: Log, thesaurus: Path) ->
     terms = []
     for p in paras:
         if p.page in pages and p.role == "small":
+            # The term in bold before its definition ("Fossil fuel Fossil fuels
+            # are ...", SUA), else before a colon.
+            lead = p.lead.strip().rstrip(":").strip()
+            if lead.count("(") > lead.count(")"):
+                lead += ")"     # "(TEK" in bold, ")" not
             m = re.match(r"^([^:]{2,90}):\s", p.text)
-            if m and not re.search(r"\(\d{4}", m.group(1)):
+            if (m and m.group(1).startswith(lead) and len(m.group(1)) - len(lead) <= 3) \
+                    or p.text.lstrip()[:1] in "•▪":
+                lead = ""       # bold that stops short of the colon: "Circular econom" + "y:" (NXS);
+                                # a bulleted item inside a definition
+            if 2 <= len(lead) <= 90 and lead != p.text.strip() and re.search(r"[A-Za-z]{2}", lead) \
+                    and not re.search(r"\(\d{4}", lead):
+                terms.append(lead.lstrip("•·-– ").strip())
+            elif m and not re.search(r"\(\d{4}", m.group(1)):
                 terms.append(m.group(1).strip().lstrip("•·-– ").strip())
     if not terms or not thesaurus.exists():
         return len(terms), 0
@@ -2060,6 +2207,9 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
         # Background messages in braces, at the end (BBA) or anywhere (IAS).
         idents = [i for g_ in re.findall(r"\{([^{}]*)\}", k.headline) for i in re.split(r"\s*,\s*", g_)
                   if re.fullmatch(r"[A-F]\d{1,2}", i.strip())]
+        if not idents:
+            # SUA: key message A has background messages A.1, A.2 ...
+            idents = [b.ident for b in rep.background_messages if b.ident.startswith(f"{k.ident}.")]
         m = bool(idents)
         for ident in idents:
             if ident in bgm_uri:

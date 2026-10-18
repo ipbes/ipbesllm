@@ -10,7 +10,8 @@ it compares every property: texts (the same, differing only in spaces and
 punctuation, or different) and links (sub-chapters, references, people ...).
 
 With --pdf it also measures fidelity: the share of each file's sentences
-found word for word in the PDF (footnote numbers aside). This shows text
+found word for word in the PDF (footnote numbers aside; titles regardless
+of case, as a title printed in capitals is written in sentence case). This shows text
 that was changed in conversion, such as dropped commas or garbled characters.
 
 Writes <out>.md (summary and examples) and <out>.csv (every difference),
@@ -61,6 +62,26 @@ def loose(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", s.lower())
 
 
+def uri_key(cls: str, s) -> str:
+    """An item's key from its URI alone."""
+    if cls == "Illustration":
+        return re.sub(r"[\s.]", "", local(s).split("-", 1)[-1]).lower()
+    if cls == "Chapter":
+        return re.sub(r"\D", "", local(s).rsplit("ch", 1)[-1]).lstrip("0")
+    if cls in ("Reference", "Person"):
+        return local(s)
+    if cls == "Report":
+        return "report"
+    # BBA26-1.1, BBA26-KM1, BBA26-A1-SM0, BBA26-1: drop the report code.
+    return re.sub(r"\.$", "", local(s).split("-", 1)[-1].strip()).lower()
+
+
+# The path of each class in item URIs (http://ontology.ipbes.net/report/sch/BBA26-1.1).
+URI_PATHS = {"ch": "Chapter", "sch": "SubChapter", "key": "KeyMessage", "bgm": "BackgroundMessage",
+             "subm": "SubMessage", "il": "Illustration", "kg": "KnowledgeGap", "person": "Person",
+             "ref": "Reference"}
+
+
 class TTL:
     def __init__(self, path: Path):
         self.path = path
@@ -78,17 +99,9 @@ class TTL:
         if cls == "Person":
             return squash(self.text(s, SKOS.prefLabel) or
                           f"{self.text(s, FOAF.firstName)} {self.text(s, FOAF.lastName)}")
-        if cls == "Illustration":
-            ident = self.text(s, DCTERMS.identifier) or local(s).split("-", 1)[-1]
-            return re.sub(r"[\s.]", "", ident).lower()
-        if cls == "Chapter":
-            return re.sub(r"\D", "", local(s).rsplit("ch", 1)[-1]).lstrip("0")
-        if cls == "Reference":
-            return local(s)
-        if cls == "Report":
-            return "report"
-        # BBA26-1.1, BBA26-KM1, BBA26-A1-SM0, BBA26-1: drop the report code.
-        return re.sub(r"\.$", "", local(s).split("-", 1)[-1].strip()).lower()
+        if cls == "Illustration" and self.text(s, DCTERMS.identifier):
+            return re.sub(r"[\s.]", "", self.text(s, DCTERMS.identifier)).lower()
+        return uri_key(cls, s)
 
     def text(self, s, p) -> str:
         v = self.g.value(s, p)
@@ -131,6 +144,9 @@ def pair(cls: str, a: TTL, b: TTL) -> tuple[list[tuple[str, str]], list[str], li
         return pairs, only_a, list(left)
     if cls == "SubMessage":
         return pair_submessages(a, b)
+    if cls == "KnowledgeGap":
+        # By text: files number the gaps differently (from 0 or 1, in another order).
+        return pair_by_text(a, b, cls, list(a.items[cls]), list(b.items[cls]))
     both = [k for k in ka if k in kb]
     return [(k, k) for k in both], [k for k in ka if k not in kb], [k for k in kb if k not in ka]
 
@@ -146,22 +162,31 @@ def pair_submessages(a: TTL, b: TTL):
     ga, gb = by_bgm(a), by_bgm(b)
     pairs, only_a, only_b = [], [], []
     for bgm in sorted(set(ga) | set(gb)):
-        left = list(gb.get(bgm, []))
-        for ka in sorted(ga.get(bgm, []), key=lambda k: int(re.sub(r"\D", "", k.rsplit("sm", 1)[-1]) or 0)):
-            ta = loose(a.text(a.items["SubMessage"][ka], URIRef(a.ns + "hasDescription")))
-            best, score = None, 0.0
-            for kb in left:
-                tb = loose(b.text(b.items["SubMessage"][kb], URIRef(b.ns + "hasDescription")))
-                r = difflib.SequenceMatcher(None, ta, tb, autojunk=False).ratio() if ta and tb else 0
-                if r > score:
-                    best, score = kb, r
-            if best and score >= 0.6:
-                pairs.append((ka, best))
-                left.remove(best)
-            else:
-                only_a.append(ka)
-        only_b += left
+        p, oa, ob = pair_by_text(a, b, "SubMessage", ga.get(bgm, []), gb.get(bgm, []))
+        pairs += p
+        only_a += oa
+        only_b += ob
     return pairs, only_a, only_b
+
+
+def pair_by_text(a: TTL, b: TTL, cls: str, keys_a: list[str], keys_b: list[str]):
+    """Pair items by their description: each with the most similar one left
+    in the other file, if at least 60% alike."""
+    pairs, only_a, left = [], [], list(keys_b)
+    for ka in sorted(keys_a, key=lambda k: int(re.sub(r"\D", "", k.rsplit("sm", 1)[-1]) or 0)):
+        ta = loose(a.text(a.items[cls][ka], URIRef(a.ns + "hasDescription")))
+        best, score = None, 0.0
+        for kb in left:
+            tb = loose(b.text(b.items[cls][kb], URIRef(b.ns + "hasDescription")))
+            r = difflib.SequenceMatcher(None, ta, tb, autojunk=False).ratio() if ta and tb else 0
+            if r > score:
+                best, score = kb, r
+        if best and score >= 0.6:
+            pairs.append((ka, best))
+            left.remove(best)
+        else:
+            only_a.append(ka)
+    return pairs, only_a, left
 
 
 # ---------------------------------------------------------------------------
@@ -197,9 +222,20 @@ def compare(a: TTL, b: TTL, names=("manual", "PDF")):
                 idx[u] = f"{cls}:{k}"
         index[id(t)] = idx
 
+    dangling = {id(a): defaultdict(set), id(b): defaultdict(set)}    # file -> class -> URIs
+
     def vkey(o, t):
         if isinstance(o, URIRef):
-            return index[id(t)].get(o) or str(o).replace("http://zotero.org", "https://www.zotero.org")
+            if o in index[id(t)]:
+                return index[id(t)][o]
+            # A link to an item the file does not have (a typo in its URI):
+            # compared by the item it names, and reported.
+            m = re.search(r"/(" + "|".join(URI_PATHS) + r")/[^/]+$", str(o))
+            if m and str(o).startswith("http://ontology.ipbes.net/"):
+                cls_ = URI_PATHS[m.group(1)]
+                dangling[id(t)][cls_].add(str(o))
+                return f"{cls_}:{uri_key(cls_, o)}"
+            return str(o).replace("http://zotero.org", "https://www.zotero.org")
         return squash(o)
 
     for cls in CLASSES:
@@ -236,12 +272,13 @@ def compare(a: TTL, b: TTL, names=("manual", "PDF")):
                         rows.append((cls, ka, kb, prop, "spaces/punctuation", " ; ".join(sorted(sa_)),
                                      " ; ".join(sorted(sb_))))
                         continue
-                    prop_stats[prop]["different"] += 1
-                    rows.append((cls, ka, kb, prop, "different",
+                    kind = "different" if sa_ and sb_ else f"only in {names[0]}" if sa_ else f"only in {names[1]}"
+                    prop_stats[prop][kind] += 1
+                    rows.append((cls, ka, kb, prop, kind,
                                  " ; ".join(sorted(sa_ - sb_)), " ; ".join(sorted(sb_ - sa_))))
         summary.append((cls, len(a.items[cls]), len(b.items[cls]), len(pairs), len(only_a), len(only_b),
                         {p: dict(v) for p, v in prop_stats.items()}))
-    return summary, rows
+    return summary, rows, (dangling[id(a)], dangling[id(b)])
 
 
 # ---------------------------------------------------------------------------
@@ -266,6 +303,7 @@ def pdf_corpus(pdf: Path) -> str:
 def unbreak(text: str) -> str:
     """'decision- making' (a hyphen at the end of a block) as 'decision-making'."""
     text = re.sub(r"[⁰¹²³⁴⁵⁶⁷⁸⁹]", "", text)      # exponents (km²): the reference text has the plain base
+    text = re.sub(r"(?<=\d)\. (?=\d)", ".", text)     # section numbers printed "4. 2. 1" (SUA)
     return re.sub(r"(\w)[-‑] (?=\w)", r"\1-", text)
 
 
@@ -280,6 +318,7 @@ def sentences(text: str) -> list[str]:
 def fidelity(t: TTL, corpus: str) -> dict[tuple[str, str], tuple[int, int, list[str]]]:
     """{(class, property): (sentences found, sentences, examples not found)}"""
     out = {}
+    folded = corpus.casefold()      # titles printed in capitals (SUA) are written in sentence case
     for cls in CLASSES:
         if cls == "Reference":
             continue
@@ -293,7 +332,7 @@ def fidelity(t: TTL, corpus: str) -> dict[tuple[str, str], tuple[int, int, list[
                         if sent == "Notes":
                             continue
                         total += 1
-                        if unbreak(sent) in corpus:
+                        if unbreak(sent) in corpus or (prop == "prefLabel" and unbreak(sent).casefold() in folded):
                             found += 1
                         elif len(missing) < 400:
                             missing.append(sent)
@@ -306,7 +345,7 @@ def fidelity(t: TTL, corpus: str) -> dict[tuple[str, str], tuple[int, int, list[
 # Report
 # ---------------------------------------------------------------------------
 
-def write(summary, rows, fid, a: TTL, b: TTL, out: Path, names, corpus: str | None) -> None:
+def write(summary, rows, fid, a: TTL, b: TTL, out: Path, names, corpus: str | None, dangling=None) -> None:
     md = [f"# {a.path.name} and {b.path.name} compared", "",
           f"{names[0]}: `{a.path}`  ", f"{names[1]}: `{b.path}`", "",
           "## Items", "",
@@ -324,6 +363,15 @@ def write(summary, rows, fid, a: TTL, b: TTL, out: Path, names, corpus: str | No
             md.append(f"| {cls} | {prop} | {st.get('same', 0)} | {st.get('spaces/punctuation', 0)} | "
                       f"{st.get('different', 0)} | {st.get('only in ' + names[0], 0)} | "
                       f"{st.get('only in ' + names[1], 0)} |")
+    if dangling and any(dangling):
+        md += ["", "## Links to missing items", "",
+               "Links to an item the file does not have, such as a sub-chapter whose URI differs "
+               "(\"3.2.\" for \"3.2\"). Above they are compared by the item they name.", "",
+               "| File | Class | missing items | examples |", "|---|---|---:|---|"]
+        for label, d in zip(names, dangling):
+            for cls, uris in sorted(d.items(), key=lambda kv: CLASSES.index(kv[0])):
+                ex = ", ".join(f"`{u.rsplit('/', 2)[-2]}/{u.rsplit('/', 1)[-1]}`" for u in sorted(uris)[:3])
+                md.append(f"| {label} | {cls} | {len(uris)} | {ex} |")
     if fid:
         fa, fb = fid
         md += ["", "## Fidelity to the PDF", "",
@@ -376,14 +424,17 @@ def main(argv=None):
     args = ap.parse_args(argv)
     names = tuple(args.names.split(","))
     a, b = TTL(args.first), TTL(args.second)
-    summary, rows = compare(a, b, names)
+    summary, rows, dangling = compare(a, b, names)
     fid = None
     if args.pdf:
         corpus = pdf_corpus(args.pdf)
         fid = (fidelity(a, corpus), fidelity(b, corpus))
     out = args.out or args.second.with_name(args.second.stem.replace("_pdf", "") + "_compare")
-    write(summary, rows, fid, a, b, out, names, None)
+    write(summary, rows, fid, a, b, out, names, None, dangling)
     print(f"-> {out.with_suffix('.md')}, {out.with_suffix('.csv')}")
+    for label, d in zip(names, dangling):
+        for cls, uris in d.items():
+            print(f"  {label}: {len(uris)} links to missing {cls} items")
     for cls, na, nb, np_, oa, ob, _ in summary:
         print(f"  {cls:18} {names[0]} {na:5}  {names[1]} {nb:5}  paired {np_:5}  only {names[0]} {oa:4}  "
               f"only {names[1]} {ob:4}")
