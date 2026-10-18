@@ -1899,49 +1899,92 @@ def link_citations(rep: Report, refs: list[Ref], doc: pymupdf.Document, log: Log
 # Glossary: the report's Annex I against the IPBES thesaurus
 # ---------------------------------------------------------------------------
 
-def check_glossary(paras: list[Para], rep: Report, log: Log, thesaurus: Path) -> tuple[int, int]:
-    """Report the glossary terms of Annex I that the IPBES thesaurus does not
-    have (as a preferred or alternative English label). (terms, found)"""
+def glossary_entries(paras: list[Para], rep: Report) -> list[dict]:
+    """The glossary of Annex I: [{"term", "definition", "page"}], a definition
+    continued in the next column or page joined to it."""
+    pages = next((v for k, v in rep.annex_pages.items() if "GLOSSARY" in k and "REFERENCES" not in k), [])
+    entries: list[dict] = []
+    for p in paras:
+        if p.page in pages and p.role == "title" and "REFERENCES" in p.text.upper():
+            break           # the glossary's own reference list (NXS)
+        if not (p.page in pages and p.role == "small"):
+            continue
+        # The term in bold before its definition ("Fossil fuel Fossil fuels
+        # are ...", SUA), else before a colon.
+        lead = p.lead.strip().rstrip(":").strip()
+        if lead.count("(") > lead.count(")"):
+            lead += ")"     # "(TEK" in bold, ")" not
+        m = re.match(r"^([^:]{2,90}):\s", p.text)
+        if (m and m.group(1).startswith(lead) and len(m.group(1)) - len(lead) <= 3) \
+                or p.text.lstrip()[:1] in "•▪":
+            lead = ""       # bold that stops short of the colon: "Circular econom" + "y:" (NXS);
+                            # a bulleted item inside a definition
+        term, rest = "", ""
+        if 2 <= len(lead) <= 90 and lead != p.text.strip() and re.search(r"[A-Za-z]{2}", lead) \
+                and not re.search(r"\(\d{4}", lead):
+            term, rest = lead.lstrip("•·-– ").strip(), p.text[len(p.lead):]
+        elif m and not re.search(r"\(\d{4}", m.group(1)) and m.group(1).lstrip("•·-– ")[:1].isupper():
+            # (a lower-case start is a definition going on: "in the context of a scenario (Source: ...")
+            term, rest = m.group(1).strip().lstrip("•·-– ").strip(), p.text[m.end():]
+        if term:
+            entries.append({"term": term, "definition": rest.strip(" :.").strip() + ".", "page": p.page})
+        elif entries and len(p.text) > 1:
+            entries[-1]["definition"] = f"{entries[-1]['definition'].rstrip('.')} {p.text}".strip()
+    for e in entries:
+        e["definition"] = re.sub(r"\.\.$", ".", e["definition"])
+    return entries
+
+
+def term_key(text: str) -> str:
+    """A term for lookup: spaces and hyphens, plurals and -isation/-ization
+    aside ("World views" = "Worldviews", "Synergies" = "Synergy",
+    "Minimisation" = "Minimization")."""
+    def singular(w: str) -> str:
+        if len(w) > 4 and w.endswith("ies"):
+            return w[:-3] + "y"
+        if len(w) > 4 and w.endswith(("ses", "xes", "ches", "shes")):
+            return w[:-2]
+        if len(w) > 3 and w.endswith("s") and not w.endswith(("ss", "us", "is")):
+            return w[:-1]
+        return w
+    words = [singular(w) for w in _norm(text).split()]
+    return re.sub(r"is(ation|e|ed|ing)\b", r"iz\1", "".join(words))
+
+
+def thesaurus_labels(thesaurus: Path) -> set[str]:
+    """The English labels (preferred, alternative, hidden) of the IPBES thesaurus, normalized."""
     from rdflib import Graph
     from rdflib.namespace import SKOS
 
-    pages = next((v for k, v in rep.annex_pages.items() if "GLOSSARY" in k and "REFERENCES" not in k), [])
-    terms = []
-    for p in paras:
-        if p.page in pages and p.role == "small":
-            # The term in bold before its definition ("Fossil fuel Fossil fuels
-            # are ...", SUA), else before a colon.
-            lead = p.lead.strip().rstrip(":").strip()
-            if lead.count("(") > lead.count(")"):
-                lead += ")"     # "(TEK" in bold, ")" not
-            m = re.match(r"^([^:]{2,90}):\s", p.text)
-            if (m and m.group(1).startswith(lead) and len(m.group(1)) - len(lead) <= 3) \
-                    or p.text.lstrip()[:1] in "•▪":
-                lead = ""       # bold that stops short of the colon: "Circular econom" + "y:" (NXS);
-                                # a bulleted item inside a definition
-            if 2 <= len(lead) <= 90 and lead != p.text.strip() and re.search(r"[A-Za-z]{2}", lead) \
-                    and not re.search(r"\(\d{4}", lead):
-                terms.append(lead.lstrip("•·-– ").strip())
-            elif m and not re.search(r"\(\d{4}", m.group(1)):
-                terms.append(m.group(1).strip().lstrip("•·-– ").strip())
-    if not terms or not thesaurus.exists():
-        return len(terms), 0
     g = Graph()
     g.parse(thesaurus)
     labels = set()
     for prop in (SKOS.prefLabel, SKOS.altLabel, SKOS.hiddenLabel):
         for _, lab in g.subject_objects(prop):
             if getattr(lab, "language", None) in (None, "en"):
-                labels.add(_norm(str(lab)))
+                labels.add(term_key(str(lab)))
+    return labels
 
-    def known(term: str) -> bool:
-        variants = {term, re.sub(r"\s*\([^)]*\)", "", term), term.rstrip("s")}
-        variants |= {v.split(" or ")[0] for v in variants} | {x.strip() for v in list(variants) for x in v.split("/")}
-        return any(_norm(v) in labels for v in variants if v.strip())
 
+def in_thesaurus(term: str, labels: set[str]) -> bool:
+    """A term, or a plain form of it (no brackets, either of "X or Y", either
+    side of "/"), is a label of the thesaurus, as term_key() compares them."""
+    variants = {term, re.sub(r"\s*\([^)]*\)", "", term), term.rstrip("s")}
+    variants |= {x.strip() for v in list(variants) for x in v.split(" or ")}
+    variants |= {x.strip() for v in list(variants) for x in v.split("/")}
+    return any(term_key(v) in labels for v in variants if v.strip())
+
+
+def check_glossary(paras: list[Para], rep: Report, log: Log, thesaurus: Path) -> tuple[int, int]:
+    """Report the glossary terms of Annex I that the IPBES thesaurus does not
+    have (as a preferred or alternative English label). (terms, found)"""
+    terms = [e["term"] for e in glossary_entries(paras, rep)]
+    if not terms or not thesaurus.exists():
+        return len(terms), 0
+    labels = thesaurus_labels(thesaurus)
     found = 0
     for term in terms:
-        if known(term):
+        if in_thesaurus(term, labels):
             found += 1
         else:
             log.add("glossary", f"'{term}' (Annex I) is not in the IPBES thesaurus")
