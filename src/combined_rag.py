@@ -4,8 +4,9 @@ The collections stay separate (ttl_rag.py and xml_rag.py, for analysis);
 they are only searched together here.
 
 Each question takes one route:
-  plenary      it names a Plenary session ("IPBES-1", "first session"):
-               that session's report only, with xml_rag's prompt
+  plenary      it names a Plenary session ("IPBES-1", "first session"),
+               or "the next/last session" (the latest report): that
+               session's report only, with xml_rag's prompt
   assessments  a TTL list question (key messages, chapters, experts ...):
                the assessments only, with ttl_rag's prompt, which lists all
   both         anything else: both searched, one answer citing both
@@ -51,6 +52,7 @@ def _output(answer: str, results, route: str, cached: bool = False) -> dict:
 
 async def ask_xml(question: str, k: int = XML_K, answer_stream=None) -> dict:
     """The Plenary reports only."""
+    question = xml_rag.resolve_relative_sessions(question)
     named = {int(n) for n in xml_rag.session_numbers(question)}
     uploaded = uploaded_session_numbers()
     if named and not named & uploaded:
@@ -110,6 +112,8 @@ async def ask(question: str, k: int = 3, xml_k: int = XML_K,
 
     `k` is per assessment, `xml_k` in total for the Plenary reports.
     """
+    # "The next session" means the latest one's decision on future sessions.
+    question = xml_rag.resolve_relative_sessions(question)
     if xml_rag.session_numbers(question) or IPBES_CHAIR.search(question):
         return await ask_xml(question, xml_k, answer_stream)
     plan = ttl_rag.plan_query(question, k)

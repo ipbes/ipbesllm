@@ -6,6 +6,7 @@ import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from urllib.parse import urlsplit
 
 import streamlit as st
 from loguru import logger
@@ -29,7 +30,11 @@ from rag_utils import (
 )
 from data_bundle import ensure_data
 from assessment_catalogue import catalogue_block
-from feedback_store import save_rating
+from feedback_store import FEEDBACK_CONTAINER_URL, save_rating
+from history_store import (
+    delete_conversation, list_conversations, load_conversation, new_id,
+    save_conversation, title_for, user_folder,
+)
 from quote_check import check_dois, check_quotes
 from thesaurus_helper import get_thesaurus
 
@@ -95,6 +100,18 @@ st.markdown(
     [data-testid="stSidebar"] {
         background: rgba(255, 255, 255, 0.90);
     }
+    /* Sidebar rows read as a menu, as in ChatGPT: labels on the left,
+       one line, long conversation titles cut with an ellipsis. */
+    [data-testid="stSidebar"] button,
+    [data-testid="stSidebar"] button > div {
+        justify-content: flex-start;
+    }
+    [data-testid="stSidebar"] button p {
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     </style>
     """.replace("PAGE_BACKGROUND", PAGE_BACKGROUND)
        .replace("HEADER_BACKGROUND",
@@ -102,13 +119,15 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ALL is what users get; the single sources are for analysis (developer mode).
+# ALL is the default; the single sources are for analysis.
 SOURCES = {
     "ALL": "IPBES Assessments and Plenary Reports",
     "PDF": "Assessments and Plenary Reports (PDF text)",
     "TTL": "Assessments (TTL/RDF)",
     "XML": "Plenary Reports (XML)",
 }
+# For the "Search scope" row in the sidebar.
+SCOPE_LABELS = {"ALL": "All", "PDF": "PDF", "TTL": "TTL", "XML": "XML"}
 
 SUGGESTED_QUESTIONS = {
     "assessments": [
@@ -341,13 +360,19 @@ def render_sources(source: str, results, developer: bool):
             st.divider()
 
 
+def feedback_key(index: int) -> str:
+    return f"feedback_{st.session_state.conversation_id}_{index}"
+
+
 def save_feedback(index: int):
     """Store the rating of answer `index` (feedback_store: Azure Blob when
     FEEDBACK_CONTAINER_URL is set, otherwise feedback/ratings.csv)."""
     message = st.session_state.messages[index]
-    rating = st.session_state.get(f"feedback_{index}")
+    rating = st.session_state.get(feedback_key(index))
     if rating is None:
         return
+    message["rating"] = rating
+    remember_conversation()
     results = message.get("results") or {"documents": [[]]}
     try:
         save_rating(
@@ -403,7 +428,7 @@ def render_answer(index: int, message: dict, developer: bool):
         if message.get("cached"):
             details.append("from cache")
     st.caption(" · ".join(details))
-    st.feedback("thumbs", key=f"feedback_{index}",
+    st.feedback("thumbs", key=feedback_key(index), default=message.get("rating"),
                 on_change=save_feedback, args=(index,))
 
 
@@ -411,20 +436,181 @@ def render_answer(index: int, message: dict, developer: bool):
 # Page
 # ---------------------------------------------------------------------------
 
-if "messages" not in st.session_state:
+LOCAL_HOSTS = {"localhost", "127.0.0.1", "::1"}
+
+
+def history_folder() -> str | None:
+    """Where this user's conversations are kept, or None to keep them for
+    this session only: a hosted app that does not say who the viewer is
+    must not show everyone the same history. Run locally (no storage
+    container, or opened on localhost), there is one user."""
+    try:
+        email = st.user.get("email")
+    except Exception:  # noqa: BLE001
+        email = None
+    if email:
+        return user_folder(email)
+    try:
+        host = urlsplit(st.context.url).hostname
+    except Exception:  # noqa: BLE001
+        host = None
+    if not FEEDBACK_CONTAINER_URL or host in LOCAL_HOSTS:
+        return user_folder("local")
+    return None
+
+
+def remember_conversation():
+    """Save the current conversation and put it at the top of the list."""
+    state = st.session_state
+    messages = state.messages
+    if not any(m["role"] == "assistant" for m in messages):
+        return
+    if state.conversation_id is None:
+        state.conversation_id = new_id()
+    if state.history_folder is None:
+        state.session_conversations[state.conversation_id] = list(messages)
+        state.conversations = [
+            {"id": state.conversation_id, "title": title_for(messages[0]["content"])}
+        ] + [c for c in state.conversations if c["id"] != state.conversation_id]
+        return
+    try:
+        state.conversations = save_conversation(
+            state.history_folder, state.conversation_id, messages)
+    except Exception:  # noqa: BLE001
+        logger.exception("Could not save the conversation")
+        st.toast("Sorry, this conversation could not be saved.")
+
+
+def start_conversation():
     st.session_state.messages = []
-if "suggestion_seed" not in st.session_state:
+    st.session_state.conversation_id = None
     st.session_state.suggestion_seed = random.random()
 
+
+def open_conversation(conversation_id: str):
+    state = st.session_state
+    try:
+        if state.history_folder is None:
+            messages = state.session_conversations[conversation_id]
+        else:
+            messages = load_conversation(state.history_folder, conversation_id)
+    except Exception:  # noqa: BLE001
+        logger.exception("Could not load the conversation")
+        st.toast("Sorry, this conversation could not be opened.")
+        return
+    state.messages = list(messages)
+    state.conversation_id = conversation_id
+
+
+def forget_conversation(conversation_id: str):
+    state = st.session_state
+    if state.history_folder is None:
+        state.session_conversations.pop(conversation_id, None)
+        state.conversations = [c for c in state.conversations
+                               if c["id"] != conversation_id]
+    else:
+        try:
+            state.conversations = delete_conversation(
+                state.history_folder, conversation_id)
+        except Exception:  # noqa: BLE001
+            logger.exception("Could not delete the conversation")
+            st.toast("Sorry, this conversation could not be deleted.")
+            return
+    if state.conversation_id == conversation_id:
+        start_conversation()
+
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+    st.session_state.conversation_id = None
+    st.session_state.suggestion_seed = random.random()
+    st.session_state.history_folder = history_folder()
+    st.session_state.session_conversations = {}
+    st.session_state.conversations = []
+    if st.session_state.history_folder:
+        try:
+            st.session_state.conversations = list_conversations(
+                st.session_state.history_folder)
+        except Exception:  # noqa: BLE001
+            logger.exception("Could not read the conversation list")
+
+# The name as a wordmark, top left: dark in the open sidebar, white on the
+# page colour when the sidebar is closed.
+st.logo(str(SRC_DIR / "static" / "ibok-chat-dark.svg"), size="large",
+        icon_image=str(SRC_DIR / "static" / "ibok-chat-light.svg"))
+
 with st.sidebar:
-    st.image(str(SRC_DIR / "static" / "ipbes-logo.png"), width=220)
-    st.title("IBOK Chat")
+    st.button("New conversation", icon=":material/edit_square:", type="tertiary",
+              use_container_width=True, on_click=start_conversation)
 
-    if st.button("New conversation", icon=":material/add:",
-                 use_container_width=True):
-        st.session_state.messages = []
-        st.rerun()
+    source = st.session_state.get("source", "ALL")
+    with st.popover(f"Search scope · {SCOPE_LABELS[source]}",
+                    icon=":material/travel_explore:", type="tertiary",
+                    use_container_width=True):
+        source = st.selectbox(
+            "Search in",
+            list(SOURCES),
+            format_func=SOURCES.get,
+            key="source",
+            help=(
+                "All: the assessments (TTL) and the Plenary reports (XML), "
+                "routed per question. The single sources are for analysis."
+            ),
+        )
 
+    # PDF, TTL and ALL search each assessment for k chunks; XML takes k in
+    # total, and its paragraphs are short, so it needs a larger k (ALL uses
+    # combined_rag.XML_K for the Plenary reports). One setting per source.
+    k_key = f"k_{source}"
+    k = st.session_state.get(k_key, 12 if source == "XML" else 3)
+    with st.popover(f"Chunks · {k}", icon=":material/segment:", type="tertiary",
+                    use_container_width=True):
+        k = st.slider(
+            "Chunks per assessment (XML: chunks in total)",
+            min_value=1,
+            max_value=20,
+            value=k,
+            key=k_key,
+            help=(
+                "Each assessment is searched separately, or "
+                "only the ones the question names. For TTL, key-message, "
+                "person and country questions use larger limits to list "
+                "everything. More chunks make a longer prompt and a slower "
+                "answer."
+            ),
+        )
+
+    # For information only: the models are set by the deployment.
+    pipeline = {"PDF": pdf_rag, "TTL": ttl_rag, "XML": xml_rag}.get(source, ttl_rag)
+    with st.popover("Model", icon=":material/memory:", type="tertiary",
+                    use_container_width=True):
+        st.caption("Answers" + (" (Azure OpenAI)" if USE_AZURE else " (Ollama)"))
+        st.code(pipeline.LLM_MODEL)
+        st.caption("Embeddings")
+        st.code(pipeline.EMBED_MODEL)
+    developer = st.toggle("Developer mode",
+                          help="Show routes, timings and chunk metadata.")
+
+    st.caption(":material/history: Recent conversations")
+    if not st.session_state.conversations:
+        st.caption("Your conversations will appear here.")
+    for conversation in st.session_state.conversations:
+        current = conversation["id"] == st.session_state.conversation_id
+        title_column, delete_column = st.columns(
+            [0.85, 0.15], gap=None, vertical_alignment="center")
+        title_column.button(
+            conversation["title"], key=f"open_{conversation['id']}",
+            type="secondary" if current else "tertiary",
+            help=conversation["title"], use_container_width=True,
+            on_click=open_conversation, args=(conversation["id"],))
+        delete_column.button(
+            "", icon=":material/delete:", key=f"delete_{conversation['id']}",
+            type="tertiary", help="Delete this conversation",
+            on_click=forget_conversation, args=(conversation["id"],))
+    if st.session_state.history_folder is None:
+        st.caption("Kept until you close or reload the page.")
+
+    st.divider()
     with st.expander("About"):
         st.markdown(
             "Answers questions from machine readable versions of IPBES assessments (BBA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) and the reports of "
@@ -434,43 +620,6 @@ with st.sidebar:
             "taken into account.\n\n"
             "This is a pilot reseach aid. Please refer to original documents from www.ipbes.net for authoriative documents and citations."
         )
-
-    developer = st.toggle("Developer mode",
-                          help="Show retrieval settings, models and metadata.")
-    source = "ALL"
-    if developer:
-        source = st.selectbox(
-            "Search in",
-            list(SOURCES),
-            format_func=SOURCES.get,
-            help=(
-                "All: the assessments (TTL) and the Plenary reports (XML), "
-                "routed per question. The single sources are for analysis."
-            ),
-        )
-    # PDF, TTL and ALL search each assessment for k chunks; XML takes k in
-    # total, and its paragraphs are short, so it needs a larger k (ALL uses
-    # combined_rag.XML_K for the Plenary reports).
-    k = 12 if source == "XML" else 3
-    if developer:
-        k = st.slider(
-            "Chunks per assessment (XML: chunks in total)",
-            min_value=1,
-            max_value=20,
-            value=k,
-            help=(
-                "Each assessment is searched separately, or "
-                "only the ones the question names. For TTL, key-message, "
-                "person and country questions use larger limits to list "
-                "everything. More chunks make a longer prompt and a slower "
-                "answer."
-            ),
-        )
-        pipeline = {"PDF": pdf_rag, "TTL": ttl_rag, "XML": xml_rag}.get(source, ttl_rag)
-        st.caption("LLM model" + (" (Azure OpenAI)" if USE_AZURE else " (Ollama)"))
-        st.code(pipeline.LLM_MODEL)
-        st.caption("Embedding model")
-        st.code(pipeline.EMBED_MODEL)
 
 
 for index, message in enumerate(st.session_state.messages):
@@ -525,7 +674,11 @@ if question and question.strip():
                    "model": LLM_MODEL}
         try:
             output = run_streamed(run, question, k, SOURCES[source])
-            message.update(content=output["answer"], results=output["results"],
+            # Only what render_sources shows, so saved conversations stay small.
+            results = {key: output["results"].get(key)
+                       for key in ("documents", "metadatas", "distances")
+                       if key in output["results"]}
+            message.update(content=output["answer"], results=results,
                            cached=output["cached"], seconds=output["seconds"],
                            route=output.get("route"),
                            quotes=quote_report(question, output))
@@ -536,6 +689,7 @@ if question and question.strip():
             message.update(content=str(exc), results=None)
 
     st.session_state.messages.append(message)
+    remember_conversation()
     st.rerun()
 
 st.caption(

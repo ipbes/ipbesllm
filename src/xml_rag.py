@@ -6,7 +6,7 @@ from collections import defaultdict
 from chromadb.errors import NotFoundError
 from loguru import logger
 
-from assessment_catalogue import catalogue_block
+from assessment_catalogue import catalogue_block, uploaded_session_numbers
 from cache import CACHE_VERSION, cache, make_key
 from rag_utils import (
     EMBED_MODEL, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat,
@@ -72,6 +72,41 @@ def _spell_out_sessions(question: str) -> str:
     return _IPBES_SESSION.sub(spell, question)
 
 
+# "The next session", "the last session": no number, so they are taken to
+# mean the latest session with a report. What the next session will be was
+# decided there, in its decision (and report section) on future sessions.
+_SESSION_WORDS = r"\s+(?:(?:IPBES|plenary)\s+)?(?:sessions?|meetings?|plenary)\b"
+_NEXT_SESSION = re.compile(r"\b(?:next|upcoming|forthcoming|future)" + _SESSION_WORDS,
+                           re.IGNORECASE)
+_LATEST_SESSION = re.compile(r"\b(?:last|latest|most\s+recent|previous)" + _SESSION_WORDS,
+                             re.IGNORECASE)
+# The decision on future sessions ("Organization of the Plenary and dates
+# and venues of future sessions", from IPBES-9) and the report section on
+# them ("Provisional agenda, date and venue of future sessions" ...).
+_FUTURE_SESSIONS = re.compile(r"future sessions|date and venue|dates and venues",
+                              re.IGNORECASE)
+_DECISION_SYMBOL = re.compile(r"^Decision (IPBES-\d+/\d+)")
+
+
+def resolve_relative_sessions(question: str) -> str:
+    """The question with the session that "the next session" or "the last
+    session" means added, e.g. "... (The latest session with a report is
+    IPBES-12; what it decided about future sessions.)". Unchanged when it
+    names a session, or names none."""
+    if session_numbers(question):
+        return question
+    asks_next = _NEXT_SESSION.search(question)
+    if not (asks_next or _LATEST_SESSION.search(question)):
+        return question
+    sessions = uploaded_session_numbers()
+    if not sessions:
+        return question
+    note = f"The latest session with a report is IPBES-{max(sessions)}"
+    if asks_next:
+        note += "; what it decided about future sessions"
+    return f"{question} ({note}.)"
+
+
 _PARAGRAPH_XPATH = re.compile(r"^(.*/paragraph)\[(\d+)\]$")
 
 
@@ -102,7 +137,71 @@ def retrieve(
         where={"number": {"$in": sorted(sessions)}} if sessions else None,
         include=["documents", "metadatas", "distances"],
     )
-    return _with_neighbours(collection, results)
+    results = _with_neighbours(collection, results)
+    if sessions and (_NEXT_SESSION.search(question)
+                     or _FUTURE_SESSIONS.search(question)):
+        results = _with_future_sessions(collection, results, sessions)
+    return results
+
+
+def _with_future_sessions(collection, results, sessions: set[str]):
+    """Put first, whole and in document order, what the sessions decided
+    about future sessions: the decision (with its annexes, such as the
+    next session's provisional agenda) and the report's section on them.
+    Searched by similarity, these lose to agenda headings worded the same
+    in every report, and the operative paragraphs ("Decides that the
+    thirteenth session ...") are left out."""
+    got = collection.get(where={"number": {"$in": sorted(sessions)}},
+                         include=["documents", "metadatas"])
+    decisions = {match.group(1)
+                 for m in got["metadatas"]
+                 if _FUTURE_SESSIONS.search(m.get("part_of") or "")
+                 and (match := _DECISION_SYMBOL.match(m["part_of"]))}
+
+    def wanted(m: dict) -> bool:
+        part_of = m.get("part_of") or ""
+        if part_of:
+            return any(part_of.startswith(f"Decision {symbol}:")
+                       or part_of.endswith(f"to decision {symbol}")
+                       for symbol in decisions)
+        return bool(_FUTURE_SESSIONS.search(m.get("division") or ""))
+
+    rows = sorted(
+        (row for row in zip(got["ids"], got["documents"], got["metadatas"])
+         if wanted(row[2])),
+        # The decision, then its annexes, then the report's section.
+        key=lambda row: (row[2].get("source_file", ""),
+                         _part_rank(row[2].get("part_of") or ""),
+                         _xpath_key(row[2].get("xpath", ""))),
+    )
+    if not rows:
+        return results
+    first = {id_ for id_, _, _ in rows}
+    out = {"ids": [], "documents": [], "metadatas": [], "distances": []}
+    for id_, document, metadata in rows:
+        out["ids"].append(id_)
+        out["documents"].append(document)
+        out["metadatas"].append(metadata)
+        out["distances"].append(0.0)
+    for i, id_ in enumerate(results["ids"][0]):
+        if id_ not in first:
+            for key in out:
+                out[key].append(results[key][0][i])
+    return {key: [value] for key, value in out.items()}
+
+
+def _part_rank(part_of: str) -> tuple:
+    """Decision first, then "Annex I to decision ...", "Annex II ...", then
+    the main report (no part_of)."""
+    if part_of.startswith("Decision "):
+        return (0, "")
+    return (1, part_of) if part_of else (2, "")
+
+
+def _xpath_key(xpath: str) -> list:
+    """Sort key putting paragraph[2] before paragraph[10]."""
+    return [int(part) if part.isdigit() else part
+            for part in re.split(r"(\d+)", xpath)]
 
 
 def _with_neighbours(collection, results):

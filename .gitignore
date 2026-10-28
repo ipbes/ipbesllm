@@ -16,7 +16,8 @@ src/test.py
 .env
 tests/
 *.log
-# Generated: data bundle, run logs, answer ratings
+# Generated: data bundle, run logs, answer ratings, chat history
 dist/
 compare.log
 feedback/
+history/

@@ -100,6 +100,7 @@ ipbesllm/
 ├── docs/ontology/*.ttl          # IPBES report ontology: the structure of the TTL files (used by ttl_audit.py)
 ├── docs/akn/*.xsd               # Akoma Ntoso 3.0 schema (OASIS), for validating XML
 ├── feedback/ratings.csv         # Answer ratings, when not stored in Azure
+├── history/                     # Chat history, when not stored in Azure
 ├── tests/comparison_<run>.csv   # Written by pdf_ttl_compare.py, one row per question per assessment/meeting (not in git)
 ├── src/
 │   ├── app.py                   # IBOK Chat (Streamlit)
@@ -120,6 +121,7 @@ ipbesllm/
 │   ├── geo.py                   # Country and region lookup (ipbes-geo.rdf)
 │   ├── cache.py                 # Answer and retrieval cache (Redis or in-memory)
 │   ├── feedback_store.py        # Answer ratings (Azure Blob or a local CSV)
+│   ├── history_store.py         # Chat history per user (Azure Blob or local files)
 │   ├── data_bundle.py           # Packs chroma/ and the RDF for the deployed app
 │   ├── settings.py              # Project paths; loads .env
 │   ├── pdf_ttl_compare.py       # Runs a question set through PDF and TTL
@@ -241,7 +243,7 @@ Paths to `chroma/` and `data/` are resolved from the project root (`src/settings
 
 - **Chat.** Users ask in a chat box or pick a suggested question. Answers stream in as they are written and cite their sources by number, e.g. [3], matching the numbered list under "Sources". Each question is answered on its own; earlier questions are not taken into account.
 - **Ratings.** 👍/👎 under each answer adds a row to `ratings.csv` (see [Answer ratings](#answer-ratings)).
-- **Developer mode** (sidebar toggle). Choose a single source (PDF, TTL or XML) instead of the combined search, set the number of chunks, and see the models, the route taken, distances, metadata, timings and cache status.
+- **Sidebar.** New conversation; **Search scope** (the combined search, or a single source: PDF, TTL or XML); **Chunks** (how many are retrieved); **Model** (the answer and embedding models, for information: they are set by the deployment); **Developer mode**, to see the route taken, distances, metadata, timings and cache status; and **Recent conversations**, to reopen or delete earlier ones (see [Chat history](#chat-history)).
 - **Stop.** Stopping a question, asking a new one or reloading the page cancels the request to the model.
 - **Quote and DOI check.** Every quotation (30 characters or more) and every DOI in an answer is checked against the text the model was given: the retrieved passages, the reference list and the thesaurus definitions (`quote_check.py`). Quotations are compared on letters and digits only, ignoring in-text citations. Those found are counted under the answer; any not found are listed in a warning, to check before using them. This applies to every source and route.
 
@@ -256,6 +258,7 @@ The app sends each question one of three ways:
 | Question | Searched | Example |
 |---|---|---|
 | Names a Plenary session | That session's report only, with the XML prompt | "Who was elected chair at IPBES-1?" |
+| Asks about the next or last session ("next session", "upcoming plenary", "latest session") | The latest uploaded report (IPBES-12), as if named; for the next session, with its decision on future sessions in full (see Sessions below) | "What was decided about the next sessions of the Plenary?" |
 | Asks about the Chair of IPBES ("Chair of IPBES", "IPBES Chair", "Chair of the Platform", "IPBES chairperson") | The Plenary reports, with the XML prompt; without a named session, the answer lists every Chair elected (IPBES-1, IPBES-4, IPBES-7). This is not the co-chair of an assessment, which goes to the assessments | "Who was elected as Chair of IPBES?" |
 | A list question the TTL data answers completely: key messages, background messages, sub-messages, chapters, sub-chapters, knowledge gaps, figures, references, experts | The assessments only, with the TTL list prompts | "What are the chapters of the BBA assessment?" |
 | Anything else | Assessments and Plenary reports together; one answer that says where each point comes from | "What do IPBES documents say about invasive alien species?" |
@@ -274,7 +277,7 @@ The app sends each question one of three ways:
 
 ### Plenary reports (XML)
 
-- **Sessions.** "IPBES-1", "IPBES 1", "IPBES1", "#IPBES1", "first session", "1st session" and "session 1" all name the first session. A named session limits the search to its report, and the wording is rewritten as the reports phrase it ("the first session of the Plenary").
+- **Sessions.** "IPBES-1", "IPBES 1", "IPBES1", "#IPBES1", "first session", "1st session" and "session 1" all name the first session. A named session limits the search to its report, and the wording is rewritten as the reports phrase it ("the first session of the Plenary"). "The next session" and "the last session" name no number, so they are taken to mean the latest session with a report; the next session is what that one decided. A question about the next session, or about future sessions or their dates and venues in a named session, gets that session's decision on future sessions (from IPBES-9: "Organization of the Plenary and dates and venues of future sessions"), with its annexes (the provisional agendas), and the report's section on the item, whole and first: searched by similarity, the agenda headings worded the same in every report win over the operative paragraphs.
 - **Neighbouring paragraphs.** 12 passages are retrieved, and each brings the paragraph before and after it in the same section. A paragraph that is mostly a list (e.g. the officers elected) matches questions poorly, but the one next to it often matches well.
 - **Decisions.** Passages inside a decision or annex carry its name ("Part of: Decision IPBES-3/4: Communications, stakeholder engagement and strategic partnership"), so the search, the model and the source list can identify the decision.
 
@@ -584,6 +587,10 @@ Community Cloud keeps no files across restarts, so ratings are stored in Azure B
 
 Columns: timestamp (UTC), rating, question, answer, source, route, model and number of sources. The file starts with a UTF-8 byte order mark so that Excel shows accented characters and quotes correctly.
 
+### Chat history
+
+Each viewer's conversations are listed under **Recent conversations** in the sidebar (the 50 most recent). Viewers are told apart by the e-mail address Community Cloud gives for a private app (`st.user.email`). The conversations are stored in the same container as the ratings, under `history/<hash of the address>/`: `index.json` lists them and `<id>.json` holds each one's questions, answers, sources and ratings. The same SAS URL works: no List permission is needed. Without `FEEDBACK_CONTAINER_URL`, they go to `history/` in the project. A hosted app that does not give the address keeps conversations for the browser session only, so viewers never see each other's.
+
 ---
 
 ## Evaluation
@@ -723,7 +730,7 @@ The app still has the previous data bundle. Check that the new `ipbes-data.zip` 
 
 ### Answers say the information cannot be determined
 
-First inspect the retrieved sources: turn on developer mode in the app, or run `xml_query.py`, `ttl_query.py` or `pdf_query.py`. A good answer needs all three:
+First inspect the retrieved sources: turn on developer mode in the app and open **Sources** under the answer, or run `xml_query.py`, `ttl_query.py` or `pdf_query.py`. A good answer needs all three:
 
 ```text
 Correct document retrieved
@@ -749,7 +756,7 @@ If the correct table is retrieved but the answer is still wrong, check whether t
 The best way to report issues is by using 👍/👎 in the app. You could also report issues by sending specific feedback. When doing this, please send a screenshot or report the following:
 
 1. The exact question.
-3. Which corpus was searched: the app's default (assessments and Plenary reports together), or PDF, XML or TTL in developer mode.
+3. Which corpus was searched: the app's default (assessments and Plenary reports together), or PDF, XML or TTL (**Search scope** in the sidebar).
 4. The answer returned.
 5. Whether the answer appears correct.
 6. Whether the cited source supports the answer.
@@ -786,7 +793,7 @@ This information is particularly useful for improving chunking, retrieval, promp
 | TTL parsing, embeddings and RAG | Working |
 | Combined TTL + XML search for the app | Working |
 | Answer cache | Working (in-memory, or Redis via `REDIS_URL`) |
-| Streamlit app (IBOK Chat) - Chat over TTL + XML; single sources in developer mode | Working |
+| Streamlit app (IBOK Chat) - Chat over TTL + XML; single sources under Search scope | Working |
 | Store ratings in Azure Blob Storage)  | Working |
 | Helper for experts | Working |
 | PDF to TTL conversion workflow | In progress |
