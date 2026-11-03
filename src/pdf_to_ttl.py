@@ -1117,7 +1117,7 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
     # "... the financial sector, Indigenous Peoples ..." in the citation).
     letters = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())
     for c in rep.chapters:
-        printed = re.sub(r"(?<=[A-Za-z?!.)])\d+$", "", c.printed_title).strip()      # a footnote mark: "...?1"
+        printed = re.sub(r"(?<=[A-Za-z?!.)])\d+(?:,\d+)*$", "", c.printed_title).strip()  # marks: "...?1", "...PEOPLE1,2"
         if printed and c.title and letters(printed) != letters(c.title) and not c.part_titles:
             rep.problems.append(f"chapter {c.number}: title printed '{printed}', but '{c.title}' in its "
                                 f"citation; the printed one kept")
