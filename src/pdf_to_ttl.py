@@ -199,8 +199,10 @@ def line_role(line: Line) -> str:
         return "title"
     if m.color == WHITE:
         return "other"
-    if CAPTION_START.match(line.text) and any(_near(s.size, 10.0) and dark(s.color) and (s.bold or "-Md" in s.font)
-                                              for s in words):
+    if CAPTION_START.match(line.text) and (
+            any(_near(s.size, 10.0) and dark(s.color) and (s.bold or "-Md" in s.font) for s in words)
+            # a small label, then the title in 10 pt of any weight (ECA Table SPM 1)
+            or (words[0].size <= 8.2 and any(9.5 <= s.size <= 10.6 and dark(s.color) for s in words))):
         return "caption"        # title in medium weight, or a plain note after it (SUA Box 1.1, 4.20)
     # Reports of 2016-2019 (LDR, PPA, SCM, the regional assessments, GA1)
     # print headings larger (17.5-18 pt and 12.7-13 pt), each chapter in its
@@ -238,6 +240,8 @@ def line_role(line: Line) -> str:
         return "footnote"       # grey, or a numbered or linked footnote in a colour (IAS)
     if 6.2 <= m.size <= 6.95 and neutral(m.color) and re.match(r"^\s*\d{1,3}\.\s", line.text):
         return "footnote"       # numbered, in a darker grey (0x3C3C3B, ECA chapter 2)
+    if 6.95 < m.size <= 7.1 and grey(m.color) and line.y0 > 600 and re.match(r"^\s*\d{1,3}\.\s", line.text):
+        return "footnote"       # 7 pt at the foot of the page (PPA, 0x706F6F)
     return "other"
 
 
@@ -277,7 +281,56 @@ def read_lines(doc: pymupdf.Document) -> list[Line]:
                         and line.main.color == prev.main.color and not re.match(r"^\s*(?:\*|\d{1,3}\.\s)", line.text):
                     line.role = "footnote"  # a footnote's next line (its link, ECA)
                 lines.append(line)
+    _join_caption_labels(lines)
     return lines
+
+
+_CAPTION_LABEL = re.compile(r"(Figure|Table|Box)(\s+SPM)?(?:\s*([A-Z]?\d{1,2}(?:\s*[.\s]\s*\d{1,2})?))?")
+
+
+def _join_caption_labels(lines: list[Line]) -> None:
+    """Captions printed as a small label, "Figure SPM" (7.5 pt), a number in a
+    circle, and the title in 10 pt to their right, in separate lines or text
+    blocks (ECA): joined into one caption line, "Figure SPM 4 Difference
+    between ..."; the number's and the title's own lines are dropped."""
+    by_page: dict[int, list[Line]] = {}
+    for line in lines:
+        by_page.setdefault(line.page, []).append(line)
+    for page_lines in by_page.values():
+        for label in page_lines:
+            m = _CAPTION_LABEL.fullmatch(label.text.strip())
+            if not m or label.main.size > 8.2 or not label.horizontal or label.role == "caption":
+                continue
+            number, number_line = m.group(3), None
+            if not number:
+                number_line = next((x for x in page_lines if x is not label and re.fullmatch(r"\d{1,2}", x.text.strip())
+                                    and abs(x.y0 - label.y0) < 4 and -2 <= x.x0 - label.x1 < 20), None)
+                number = number_line.text.strip() if number_line else ""
+            if not number:
+                continue
+            # The title: 10 pt lines to the right, from just above the label down.
+            right = sorted((x for x in page_lines if x is not label and x is not number_line
+                            and 9.5 <= x.main.size <= 10.6 and x.x0 > label.x1 - 2 and x.x0 - label.x1 < 60
+                            and label.y0 - 12 <= x.y0 <= label.y0 + 80 and x.horizontal), key=lambda x: x.y0)
+            title = []
+            for x in right:
+                if title and x.y0 - title[-1].y0 > 16:
+                    break               # the next paragraph
+                title.append(x)
+            if not title:
+                continue
+            kind = m.group(1)
+            number = re.sub(r"\s+", " ", number)
+            head = f"{kind} {'SPM ' if m.group(2) else ''}{number} "
+            font = title[0].main.font
+            label.spans = [Span(head, font, 10.0, title[0].main.color, True, False, False)] + \
+                [s_ for x in title for s_ in (x.spans + [Span(" ", font, 10.0, title[0].main.color,
+                                                               False, False, False)])]
+            label.x1 = max(x.x1 for x in title)
+            label.y1 = max(x.y1 for x in title)
+            label.role = "caption"
+            for x in title + ([number_line] if number_line else []):
+                x.role = "absorbed"
 
 
 # ---------------------------------------------------------------------------
@@ -313,10 +366,23 @@ FOOTNOTE_MARK = re.compile(r"\[\^(\d+)\]")
 _URLISH = re.compile(r"(https?://|www\.|doi\.org|/)\S*$")
 
 
-def _span_text(s: Span, role: str) -> str:
+_SUPERSCRIPT = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
+
+
+# What comes before an exponent, not a footnote mark: a unit (km², m³, ha⁻¹,
+# yr⁻¹, day⁻¹, t CO2 ...) or a power of ten (10⁶).
+_BEFORE_EXPONENT = re.compile(
+    r"(?:(?:\b|(?<=\d))(?:km|m|cm|mm|µm|ha|kg|g|Mg|Gg|Tg|Pg|t|Mt|Gt|kt|yr|year|day|d|h|s|l|L|kWh|MWh|GWh|J|W|ppm|"
+    r"CO2e?|CO₂e?|CH4|N2O|C|N|P|Gha|people/km)|\b10|\bx ?10|×10|× 10)\s?$")
+
+
+def _span_text(s: Span, role: str, before: str = "") -> str:
     t = s.text
-    # Footnote marks: superscript numbers in running text.
     if s.sup and role in ("body", "small", "caption") and re.fullmatch(r"\s*[\d,–-]+\s*", t):
+        # An exponent after a unit or "10": "km²", "ha⁻¹" (its minus kept), "10⁶".
+        if _BEFORE_EXPONENT.search(before) or re.match(r"\s*[–-]\s*\d", t):
+            return re.sub(r"[–-]", "⁻", t.strip()).translate(_SUPERSCRIPT)
+        # Footnote marks: superscript numbers in running text.
         return "".join(f"[^{n}]" for n in re.findall(r"\d+", t))
     return t
 
@@ -358,7 +424,7 @@ def build_paras(lines: list[Line]) -> list[Para]:
     paras: list[Para] = []
     cur: Para | None = None
     for line in lines:
-        if line.role in ("header", "folio"):
+        if line.role in ("header", "folio", "absorbed"):
             continue
         same = (cur is not None and cur.page == line.page and cur.lines[-1].block == line.block
                 and cur.role == line.role)
@@ -469,7 +535,7 @@ def _fill(p: Para) -> None:
             continue
         line_text = ""
         for s in parts:
-            t = _span_text(s, p.role)
+            t = _span_text(s, p.role, (text + " " + line_text)[-40:])
             if lead_end is None and t.strip() and not s.bold:
                 lead_end = len(_join(text, line_text, prev_link, _accent(parts[0]))) if text else len(line_text)
             line_text += t
@@ -561,6 +627,7 @@ class Chapter:
     section_words: bool = False     # "Section 1. ...", its sub-sections 1.1 ... (PPA chapter 4)
     part: str = ""          # GA1: the part being read, "2.1"; its sections 2.1.1 ... are the sub-chapters
     part_titles: list[str] = field(default_factory=list)
+    printed_title: str = ""         # the title on the chapter's first page, as printed (often in capitals)
 
 
 @dataclass
@@ -732,6 +799,11 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                     chapter = Chapter(n, page=p.page)
                     rep.chapters.append(chapter)
                     _chapter_page(doc, p.page, chapter, rep)
+                    # The title printed under the number, in the next title-size
+                    # paragraphs on the page ("CREATING AN ENABLING ...").
+                    chapter.printed_title = re.sub(r"\s+", " ", " ".join(
+                        q.text for q in paras[i + 1:i + 8] if q.page == p.page and q.role == "title"
+                        and not re.fullmatch(r"(?:chapter\s*)?\d{1,2}(?:\.\d)?\.?", q.text.strip(), re.I))).strip()
                 elif "." in number and number != chapter.part:
                     # GA1: chapter 2 in parts 2.1, 2.2, 2.3, each with its own
                     # first page and authors.
@@ -1040,6 +1112,16 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             target = section or unnumbered
             if target is not None:
                 _add_para(target.paras, text)
+    # The title printed on the chapter's page wins over its citation's when they
+    # differ (BBA chapter 6: "... the financial system and other actors" printed,
+    # "... the financial sector, Indigenous Peoples ..." in the citation).
+    letters = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())
+    for c in rep.chapters:
+        printed = re.sub(r"(?<=[A-Za-z?!.)])\d+$", "", c.printed_title).strip()      # a footnote mark: "...?1"
+        if printed and c.title and letters(printed) != letters(c.title) and not c.part_titles:
+            rep.problems.append(f"chapter {c.number}: title printed '{printed}', but '{c.title}' in its "
+                                f"citation; the printed one kept")
+            c.title = sentence_case(printed, casing) if printed.isupper() else printed
     for c in rep.chapters:
         if len(c.part_titles) > 1:
             shared = re.split(r"\s*[–-]\s*", c.part_titles[0])[0]
@@ -2793,8 +2875,9 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
         add(s, P("hasDescription"), gap.text)
         add(s, P("hasCategory"), gap.category)
         add(s, P("traceability"), gap.traceability)
-        for part in re.split(r"\s*,\s*", gap.traceability):
-            add(s, DCTERMS.identifier, part)
+        # The gap's own identifier, as its URI and the manual conversions
+        # (BBA_v01, GA1_v11, NXS_v01): "BBA26-1"; its sections are in traceability.
+        add(s, DCTERMS.identifier, f"{rid}-{gap.number}")
         subs, ills = section_links(gap.traceability, f"knowledge gap {gap.number}")
         for u in subs:
             add(s, P("SubChapter"), u)

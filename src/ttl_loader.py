@@ -420,12 +420,14 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         description = _text(
             _first(graph, kg, URIRef(IPBES + "hasDescription"))
         )
-        # The gap's own ID (GA119-1, IAS23-0) identifies it; some files put
-        # it in dcterms:identifier, others put the report sections there.
+        # The gap's own ID (GA119-1, IAS23-0) identifies it, and is its
+        # dcterms:identifier in the newer files, whose sections are in
+        # ipbes:traceability; the older files put the sections in
+        # dcterms:identifier instead.
         kg_id = _local_name(kg)
         category = _text(_first(graph, kg, URIRef(IPBES + "hasCategory")))
-        sections = ", ".join(sorted({
-            _text(v) for v in _all(graph, kg, DCTERMS.identifier)
+        sections = _text(_first(graph, kg, URIRef(IPBES + "traceability"))) or ", ".join(sorted({
+            _text(v).strip() for v in _all(graph, kg, DCTERMS.identifier)
         } - {"", kg_id}))
 
         emit(

@@ -307,7 +307,7 @@ The files follow the IPBES report ontology in [`docs/ontology/IPBES_Ontology_v06
 | `ipbes:KeyMessage` | `key` | `skos:prefLabel`, `hasDescription`, `dcterms:identifier`, confidence level |
 | `ipbes:BackgroundMessage` | `bgm` | its description plus the text of its sub-messages, confidence level |
 | `ipbes:SubMessage` | `subm` | `hasDescription`, `dcterms:identifier`, confidence level |
-| `ipbes:KnowledgeGap` | `kg` | `hasDescription`, `hasCategory` (not in the ontology; only GA1 and BBA have it); the gap's own ID (`GA119-1`) is its identifier, and `dcterms:identifier` holds the related sections |
+| `ipbes:KnowledgeGap` | `kg` | `hasDescription`, `hasCategory` (not in the ontology; only GA1 and BBA have it); the gap's own ID (`GA119-1`) is its URI's name and its `dcterms:identifier`, as in the newer manual files (BBA, GA1, NXS); the related sections are in `ipbes:traceability` (the older manual files put them in `dcterms:identifier`, which is still read) |
 | `ipbes:Chapter` | `chapter` | `skos:prefLabel`, `dcterms:identifier`; its authors (`foaf:Person`) as text |
 | `ipbes:SubChapter` | `sch` | `skos:prefLabel`, `dcterms:identifier`, `hasDescription` |
 | `ipbes:Illustration` | `il` | `dcterms:identifier`, `skos:prefLabel` (caption) and `hasDescription` |
