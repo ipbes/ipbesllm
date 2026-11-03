@@ -63,10 +63,17 @@ def loose(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", s.lower())
 
 
+def ill_key(ident: str) -> str:
+    """ "Figure SPM.1", "FigureSPM.1", "Box 6.5" -> "figurespm.1", "box6.5": the
+    dots kept, so that Figure 1.11 and Figure 11.1 stay apart."""
+    key = re.sub(r"\s", "", ident).lower()
+    return re.sub(r"spm(?=[a-z]?\d)", "spm.", key)
+
+
 def uri_key(cls: str, s) -> str:
     """An item's key from its URI alone."""
     if cls == "Illustration":
-        return re.sub(r"[\s.]", "", local(s).split("-", 1)[-1]).lower()
+        return ill_key(local(s).split("-", 1)[-1])
     if cls == "Chapter":
         # "ch2-1" is 2.1 (GA1's chapter 2 in parts, manual), not 21; "ch01" is 1.
         tail = re.sub(r"[^\d.]", "", local(s).rsplit("ch", 1)[-1].replace("-", "."))
@@ -103,7 +110,7 @@ class TTL:
             return squash(self.text(s, SKOS.prefLabel) or
                           f"{self.text(s, FOAF.firstName)} {self.text(s, FOAF.lastName)}")
         if cls == "Illustration" and self.text(s, DCTERMS.identifier):
-            return re.sub(r"[\s.]", "", self.text(s, DCTERMS.identifier)).lower()
+            return ill_key(self.text(s, DCTERMS.identifier))
         return uri_key(cls, s)
 
     def text(self, s, p) -> str:

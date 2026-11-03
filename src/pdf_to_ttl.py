@@ -278,6 +278,10 @@ def read_lines(doc: pymupdf.Document) -> list[Line]:
                 if prev and prev.role == "h4b" and line.role != "h4b" and (prev.page, prev.block) == (pno, bno) \
                         and _near(line.main.size, prev.main.size) and line.main.font == prev.main.font:
                     line.role = "h4b"       # the heading's second line
+                if prev and prev.role == "body" and line.role == "other" and prev.page == pno \
+                        and line.main.color == prev.main.color and _near(line.main.size, prev.main.size) \
+                        and line.main.bold == prev.main.bold and 0 <= line.y0 - prev.y1 < 6:
+                    line.role = "body"      # a coloured headline's short last line (ECA C4: "incomplete) {4.3.1 ...}.")
                 if prev and prev.role == "footnote" and line.role != "footnote" \
                         and (prev.page, prev.block) == (pno, bno) and _near(line.main.size, prev.main.size) \
                         and line.main.color == prev.main.color and not re.match(r"^\s*(?:\*|\d{1,3}\.\s)", line.text):
