@@ -431,6 +431,10 @@ _ASSESSMENT_NAMES = {
     "PPA": r"pollinat\w*",
     "SCM": r"scenarios(?: and models)?",
     "NXS": r"nexus|interlinkages",
+    "AFA": r"africa|african",
+    "AMA": r"americas",
+    "APA": r"asia[- ]pacific|asia and the pacific",
+    "ECA": r"europe(?: and central asia)?|europe-central asia",
 }
 
 

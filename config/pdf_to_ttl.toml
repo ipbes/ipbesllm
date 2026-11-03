@@ -60,3 +60,106 @@ report_id = "SUA22"
 year = 2022
 alt_label = "IPBES Sustainable Use Assessment"
 zotero_group = 2344805
+
+[assessments.GA1]
+pdf = "data/pdf/ga1_report.pdf"
+report_id = "GA119"
+year = 2019
+alt_label = "IPBES Global Assessment Report on Biodiversity and Ecosystem Services"
+zotero_group = 2333077
+# For the conversion report (conversion_report.py)
+notes = [
+    "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
+    "Chapter 2 is printed in three parts (2.1, 2.2, 2.3), each with its own first page and reference list. It is one chapter here, with the parts' sections (2.1.1, 2.2.1 ...) as its sub-chapters; the manual conversion made each part a chapter (2-1, 2-2, 2-3).",
+]
+
+[assessments.LDR]
+pdf = "data/pdf/ldr_report.pdf"
+report_id = "LDR18"
+year = 2018
+alt_label = "IPBES Land Degradation and Restoration Assessment"
+zotero_group = 2333076
+# For the conversion report (conversion_report.py)
+notes = [
+    "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
+]
+
+[assessments.PPA]
+pdf = "data/pdf/ppa_report.pdf"
+report_id = "PPA16"
+year = 2016
+alt_label = "IPBES Pollinators, Pollination and Food Production Assessment"
+zotero_group = 2333088
+# For the conversion report (conversion_report.py)
+notes = [
+    "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
+    "The background messages are not numbered in the report; they are numbered here in the order printed, 1, 2 ..., as in the manual conversion.",
+]
+
+[assessments.SCM]
+pdf = "data/pdf/scm_report.pdf"
+report_id = "SCM16"
+year = 2016
+alt_label = "IPBES Scenarios and Models of Biodiversity and Ecosystem Services Assessment"
+zotero_group = 2333079
+# For the conversion report (conversion_report.py)
+notes = [
+    "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
+    "The key messages are the three high-level messages; the background messages are the key findings under them (1.1 ... 3.6).",
+]
+
+[assessments.VA]
+pdf = "data/pdf/va_report.pdf"
+report_id = "VA22"
+year = 2022
+alt_label = "IPBES Values Assessment"
+zotero_group = 2345372
+
+# The regional assessments (2018). No earlier TTL of them exists.
+[assessments.AFA]
+pdf = "data/pdf/afa_report.pdf"
+report_id = "AFA18"
+year = 2018
+alt_label = "IPBES Regional Assessment for Africa"
+zotero_group = 2333070
+# For the conversion report (conversion_report.py)
+notes = [
+    "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
+    "The report has no knowledge-gap table: no knowledge gaps is expected.",
+]
+
+[assessments.AMA]
+pdf = "data/pdf/ama_report.pdf"
+report_id = "AMA18"
+year = 2018
+alt_label = "IPBES Regional Assessment for the Americas"
+zotero_group = 2333011
+# For the conversion report (conversion_report.py)
+notes = [
+    "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
+    "The report has no knowledge-gap table: no knowledge gaps is expected.",
+]
+
+[assessments.APA]
+pdf = "data/pdf/apa_report.pdf"
+report_id = "APA18"
+year = 2018
+alt_label = "IPBES Regional Assessment for Asia and the Pacific"
+zotero_group = 2333075
+# For the conversion report (conversion_report.py)
+notes = [
+    "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
+    "The report has no knowledge-gap table: no knowledge gaps is expected.",
+]
+
+[assessments.ECA]
+pdf = "data/pdf/eca_report.pdf"
+report_id = "ECA18"
+year = 2018
+alt_label = "IPBES Regional Assessment for Europe and Central Asia"
+zotero_group = 2345951
+# For the conversion report (conversion_report.py)
+notes = [
+    "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
+    "The key messages are not numbered in the report: each group (A to E) is one key message, its statements the text, linked to the background messages A1, A2 ... as in the manual conversion.",
+]

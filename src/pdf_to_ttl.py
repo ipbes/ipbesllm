@@ -84,6 +84,17 @@ def dark(color: int) -> bool:
     """Black or near-black text (0x231F20, 0x3C3C3B ...), not the mid-grey
     of footnotes and running headers (0x58595B)."""
     return all(((color >> shift) & 0xFF) < 0x48 for shift in (16, 8, 0))
+def coloured(color: int) -> bool:
+    """A chapter's colour (headings in the reports of 2016-2019): neither
+    white, grey nor black."""
+    return color != WHITE and not grey(color) and not dark(color)
+
+
+def _spaced_number(text: str) -> str:
+    """ "1. 3. 4 Title" -> "1.3.4 Title": section numbers printed with spaces
+    (AFA, SUA chapter 4)."""
+    return re.sub(r"^\d{1,2}(?:\.\s?\d{1,2}){1,4}(?=\.?\s)", lambda m: m.group(0).replace(" ", ""),
+                  text.strip())
 
 _LIGATURES = str.maketrans({"ﬁ": "fi", "ﬂ": "fl", "ﬀ": "ff", "ﬃ": "ffi", "ﬄ": "ffl",
                             " ": " ", "\t": " ", " ": " ", " ": " ",
@@ -180,20 +191,37 @@ def line_role(line: Line) -> str:
     if CAPTION_START.match(line.text) and any(_near(s.size, 10.0) and dark(s.color) and (s.bold or "-Md" in s.font)
                                               for s in words):
         return "caption"        # title in medium weight, or a plain note after it (SUA Box 1.1, 4.20)
-    if _near(m.size, 15.6) and m.color == ACCENT:
+    # Reports of 2016-2019 (LDR, PPA, SCM, the regional assessments, GA1)
+    # print headings larger (17.5-18 pt and 12.7-13 pt), each chapter in its
+    # own colour, and the levels below in black (10.7-11 pt, 10 pt).
+    accent = m.color == ACCENT or coloured(m.color)
+    if (_near(m.size, 15.6) or 17.2 <= m.size <= 18.7) and accent:
         return "h2"
-    if _near(m.size, 12.7) and m.color == ACCENT:
+    if 12.4 <= m.size <= 13.2 and accent:
         return "h3"
     if _near(m.size, 10.7) and "Hv" in m.font:
         return "h4"
+    heavy = any(k in m.font for k in ("Hv", "Blk", "Black")) or m.bold
+    # The deeper levels ("h4b") are only marked in the text: they can sit in
+    # one column while a box goes on in the other (IAS Box 6.18), so unlike
+    # the other headings they do not end the box.
+    if 10.4 <= m.size <= 11.2 and heavy and dark(m.color) and SECTION_NUMBER.match(_spaced_number(line.text)):
+        return "h4b"
+    if _near(m.size, 10.0) and m.bold and dark(m.color) \
+            and re.match(r"^\d{1,2}(?:\.\s?\d{1,2}){3,4}\.?\s", line.text):
+        return "h4b"            # 1.3.4.1.1 (AFA, PPA); not a caption
     if _near(m.size, 10.0) and m.bold and dark(m.color):
         return "caption"
     if _near(m.size, 9.0) and m.bold and "DIN" in m.font and dark(m.color):
         return "h5"             # a heading inside a box (TCA Box SPM 9)
     if _near(m.size, 8.5, 0.3) and (dark(m.color) or m.color == ACCENT):
         return "body"
+    if _near(m.size, 8.5, 0.3) and coloured(m.color) and heavy and line.x1 - line.x0 > 150:
+        return "body"           # a background message's headline in colour (LDR); not a figure label
     if _near(m.size, 7.5) and (dark(m.color) or m.color == ACCENT) and "Roman" not in m.font:
         return "small"
+    if _near(m.size, 7.8, 0.15) and (dark(m.color) or grey(m.color)) and "Roman" not in m.font:
+        return "small"          # reference lists and captions in PPA (grey-green 0x5D6155)
     if 6.2 <= m.size <= 6.95 and (grey(m.color) or (not dark(m.color) and m.color != WHITE and (
             re.match(r"^\s*\d{1,3}\.\s", line.text) or _URL_TEXT.search(line.text)))):
         return "footnote"       # grey, or a numbered or linked footnote in a colour (IAS)
@@ -227,6 +255,10 @@ def read_lines(doc: pymupdf.Document) -> list[Line]:
                 line = Line(pno, bno, l["bbox"][0], l["bbox"][1], l["bbox"][2], l["bbox"][3], spans,
                             horizontal=abs(l["dir"][0] - 1) < 0.01)
                 line.role = line_role(line)
+                prev = lines[-1] if lines else None
+                if prev and prev.role == "h4b" and line.role != "h4b" and (prev.page, prev.block) == (pno, bno) \
+                        and _near(line.main.size, prev.main.size) and line.main.font == prev.main.font:
+                    line.role = "h4b"       # the heading's second line
                 lines.append(line)
     return lines
 
@@ -454,6 +486,7 @@ class Section:
     title: str
     page: int
     paras: list[str] = field(default_factory=list)   # "## 1.1.1 Title" lines for sub-headings
+    heading_pages: dict[str, int] = field(default_factory=dict)     # "1.1.1" -> page of its heading
 
     @property
     def chapter(self) -> int:
@@ -482,6 +515,7 @@ class Message:
     page: int
     paras: list[str] = field(default_factory=list)
     group: str = ""     # background messages: "A. Understanding the relationship ..."
+    label_printed: bool = False     # its number was printed (not counted, as in PPA)
 
     @property
     def text(self) -> str:
@@ -507,6 +541,9 @@ class Chapter:
     sections: list[Section] = field(default_factory=list)
     references: list[RefEntry] = field(default_factory=list)
     parted: bool = False    # in parts 5.0, 5.1 ... with their own sections 5.1.1 (NXS chapter 5)
+    section_words: bool = False     # "Section 1. ...", its sub-sections 1.1 ... (PPA chapter 4)
+    part: str = ""          # GA1: the part being read, "2.1"; its sections 2.1.1 ... are the sub-chapters
+    part_titles: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -530,6 +567,10 @@ class Report:
 
 SECTION_NUMBER = re.compile(r"^(\d{1,2}(?:\.\d{1,2}){1,4})\.?\s+(.*)$")
 _TERMINAL = tuple(".:;?!)”\"]}’")
+
+
+# A caption's label alone, in white (PPA): "FIGURE 1.1", "TABLE SPM. 2".
+_WHITE_CAPTION = re.compile(r"(FIGURE|TABLE|BOX)\s+(SPM\.?\s?\d{1,2}|\d{1,2}\s?\.\s?\d{1,2})")
 
 
 def _caption(text: str) -> tuple[str, str, str]:
@@ -573,6 +614,9 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
         if m:
             rep.outline[m.group(1)] = m.group(2).strip()
 
+    # The chapters' reference lists, from the outline: LDR prints no title over them.
+    ref_pages = {page for _, title, page in doc.get_toc() if title.strip().upper() == "REFERENCES"}
+
     mode = "front"          # front, km, bgm, appendix, chapter, exec, refs, annex
     chapter: Chapter | None = None
     section: Section | None = None
@@ -588,8 +632,37 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
     def footnote_chapter() -> int:
         return chapter.number if chapter else 0
 
+    skip: set[int] = set()      # paragraphs already read with the one before
+    last_heading = (0, 0.0)     # page and bottom of the last section heading
+
     for i, p in enumerate(paras):
+        if id(p) in skip:
+            continue
         text = p.text
+
+        # PPA: "FIGURE 1.1" in white on a colour, its title in the line under it.
+        mc = _WHITE_CAPTION.fullmatch(text.strip()) if p.role == "other" and _white(p) else None
+        first_line = p.lines[0]
+        ml = _WHITE_CAPTION.fullmatch(first_line.text.strip()) if p.role == "other" and len(p.lines) > 1 \
+            and all(s_.color == WHITE for s_ in first_line.spans if s_.text.strip()) else None
+        if ml:
+            # The label and its title read as one paragraph.
+            number = re.sub(r"SPM\.\s*", "SPM ", ml.group(2))
+            rest = " ".join(line.text.strip() for line in p.lines[1:])
+            text = f"{ml.group(1).title()} {number} {rest}"
+            p.role = "caption"
+        elif mc:
+            # The title: the paragraph just under the label, at its left edge.
+            below = [q for q in paras[max(0, i - 40):i + 40] if q.page == p.page and q is not p
+                     and q.role in ("small", "other", "body") and 0 < q.y0 - p.y0 < 50
+                     and abs(q.x0 - p.x0) < 12 and not _white(q) and id(q) not in skip]
+            nxt = min(below, key=lambda q: q.y0) if below else None
+            if nxt:
+                skip.add(id(nxt))
+                p.lines = p.lines + nxt.lines
+                number = re.sub(r"SPM\.\s*", "SPM ", mc.group(2))
+                text = f"{mc.group(1).title()} {number} {nxt.text}"
+                p.role = "caption"
 
         # "Box 2 1" alone: a box, figure or table continued on another page.
         kind, number, title = _caption(text)
@@ -614,15 +687,20 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 mode, unnumbered, box, legend_of = "chapter", None, None, None
             continue
 
-        if p.role == "other" and re.fullmatch(r"Chapter \d{1,2}", text.strip()) and _chapter_start(text, p, doc):
-            p.role = "title"        # the chapter number, printed as "Chapter 3"
+        if p.role == "other" and re.fullmatch(r"Chapter \d{1,2}", text.strip(), re.IGNORECASE) \
+                and _chapter_start(text, p, doc):
+            p.role = "title"        # the chapter number, printed as "Chapter 3" ("CHAPTER 3", 2016-2019)
 
         if p.role == "title":
             t = text.upper()
             box = legend_of = None
             if t == "KEY MESSAGES":
                 mode, message = "km", None
-            elif t in ("BACKGROUND MESSAGES", "BACKGROUND"):
+            elif t == "KEY FINDINGS":
+                # SCM: high-level messages "1) ...", each over its key findings 1.1, 1.2 ...
+                mode, message = "bgm", None
+            elif t.replace("-", "") in ("BACKGROUND MESSAGES", "BACKGROUND", "BACKGROUND TO THE KEY MESSAGES"):
+                # "BACK-GROUND" on a cover page (PPA, whose section has no other title)
                 mode, message = "bgm", None
             elif t.startswith("APPENDIX") and mode in ("km", "bgm", "appendix"):
                 mode = "appendix"
@@ -631,12 +709,24 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 # the background messages of key message A.
                 mode, message, group = "bgm", None, text
                 group_km = next((k for k in rep.key_messages if k.ident == text[0]), None)
-            elif _chapter_start(text, p, doc):
-                n = int(re.sub(r"\D", "", text))
+            elif number := _chapter_start(text, p, doc):
+                n = int(number.split(".")[0])
                 if rep.chapter(n) is None:
                     chapter = Chapter(n, page=p.page)
                     rep.chapters.append(chapter)
                     _chapter_page(doc, p.page, chapter, rep)
+                elif "." in number and number != chapter.part:
+                    # GA1: chapter 2 in parts 2.1, 2.2, 2.3, each with its own
+                    # first page and authors.
+                    part = Chapter(n)
+                    _chapter_page(doc, p.page, part, rep)
+                    for role, names in part.authors.items():
+                        chapter.authors[role] = chapter.authors.get(role, []) + names
+                    chapter.part_titles.append(part.title)
+                if "." in number:
+                    chapter.part = number
+                    if not chapter.part_titles:
+                        chapter.part_titles.append(chapter.title)
                 mode, section, unnumbered = "chapter", None, None
             elif t == "REFERENCES" and chapter:
                 mode = "refs"
@@ -654,6 +744,7 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 ident = p.label.replace(" ", "") if p.label else m.group(1) + m.group(2)
                 message = Message(f"{ident[0]}.{ident[1:]}", text if p.label else m.group(3), p.page,
                                   group=group)
+                message.label_printed = True
                 rep.background_messages.append(message)
                 group_km = None
                 continue
@@ -662,8 +753,25 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 group_km.paras.append(text)     # SUA: the key message's text, under its title
                 continue
 
+        if mode == "bgm" and text.isupper() and p.role not in ("title", "footnote"):
+            mh = re.match(r"^(\d)\)\s+(.+)$", text)
+            if mh:
+                # SCM: a high-level message, in capitals: the key message over
+                # the key findings numbered after it (1.1, 1.2 ...).
+                message = Message(mh.group(1), mh.group(2), p.page)
+                rep.key_messages.append(message)
+                continue
+            if message is not None and message in rep.key_messages and not message.paras:
+                message.headline += " " + text      # its next lines
+                continue
+
         if mode == "annex":
             last = list(rep.annex_pages)[-1] if rep.annex_pages else ""
+            if re.fullmatch(r"ANNEX [IVX]+", last) and p.role in ("h2", "h3") \
+                    and p.page == rep.annex_pages[last][0]:
+                # "ANNEX III", then "List of authors and review editors" under it (2016-2019).
+                rep.annex_pages[f"{last}: {text.upper()}"] = rep.annex_pages.pop(last)
+                continue
             if last and p.page not in rep.annex_pages[last]:
                 rep.annex_pages[last].append(p.page)
             continue
@@ -704,14 +812,19 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 rep.gap_table_pages.append(p.page)
             continue
 
+        if p.role == "small" and mode in ("chapter", "exec") and chapter and p.page in ref_pages \
+                and _REF_START.match(text) and (_AUTHOR_START.match(text) or _ORG_START.match(text)):
+            mode = "refs"           # the list starts without a title (LDR)
+
         if p.role == "small":
             if mode == "refs":
-                if chapter.references and _ref_continues(chapter.references[-1].text, text):
-                    chapter.references[-1].text = _join(chapter.references[-1].text, text,
-                                                        True, True) if _URLISH.search(chapter.references[-1].text) \
-                        else chapter.references[-1].text + " " + text
-                else:
-                    chapter.references.append(RefEntry(text, p.page))
+                for piece in _ref_pieces(p):
+                    if chapter.references and _ref_continues(chapter.references[-1].text, piece):
+                        chapter.references[-1].text = _join(chapter.references[-1].text, piece,
+                                                            True, True) if _URLISH.search(chapter.references[-1].text) \
+                            else chapter.references[-1].text + " " + piece
+                    else:
+                        chapter.references.append(RefEntry(piece, p.page))
             elif legend_of and legend_end[0] == p.page and -2 < p.y0 - legend_end[1] < 30:
                 # A legend sits right under its caption.
                 _add_para(legend_of.legend, text)
@@ -726,8 +839,11 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 box.legend.append("## " + text)
             continue
 
-        if p.role in ("h2", "h3", "h4"):
-            box = legend_of = None
+        if p.role in ("h2", "h3", "h4", "h4b"):
+            if p.role != "h4b":
+                box = legend_of = None
+            else:
+                p.role = "h4"
             # Numbers printed with spaces: "4. 2. 1 Environmental drivers" (SUA chapter 4).
             text = re.sub(r"^\d{1,2}(?:\.\s?\d{1,2}){1,4}(?=\.?\s)", lambda m_: m_.group(0).replace(" ", ""), text)
             if mode in ("km", "bgm"):
@@ -738,7 +854,29 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 continue
             if mode not in ("chapter", "exec") or chapter is None:
                 continue
+            # PPA chapter 4: "Section 1. Nature and significance ..." is 4.1, and
+            # its sub-sections are printed without the chapter: "1.1" is 4.1.1.
+            msec = re.match(r"^Section (\d{1,2})\.?\s+(.+)$", text, re.IGNORECASE)
+            if msec and p.role in ("h2", "h3"):
+                chapter.section_words = True
+                number = f"{chapter.number}.{msec.group(1)}"
+                title = next((re.sub(r"^Section \d+\.?\s*", "", re.sub(r"\s+", " ", t_)).strip()
+                              for _, t_, pg in doc.get_toc()
+                              if re.match(rf"^Section {msec.group(1)}\b", t_.strip(), re.IGNORECASE)), "")
+                section = Section(number, title or sentence_case(msec.group(2), casing), p.page)
+                chapter.sections.append(section)
+                mode, unnumbered = "chapter", None
+                last_heading = (p.page, p.y1)
+                continue
+            if chapter.section_words and section and re.match(r"^\d{1,2}\.\d", text) \
+                    and not text.startswith(section.number + "."):
+                text = f"{chapter.number}.{text}"
             m = SECTION_NUMBER.match(text)
+            if p.role == "h2" and not m and last_heading[0] == p.page and -8 <= p.y0 - last_heading[1] < 25:
+                last_heading = (p.page, p.y1)
+                continue        # the heading's next lines, in another block (PPA chapter 4)
+            if p.role == "h2":
+                last_heading = (p.page, p.y1)
             if p.role == "h2" and not m:
                 if text.upper() == "EXECUTIVE SUMMARY":
                     mode = "exec"
@@ -756,6 +894,19 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             if chapter.parted and number.count(".") == 2 and not (section and number.startswith(section.number + ".")):
                 rep.problems.append(f"p{p.page}: heading {number} outside its part")
                 continue
+            if chapter.part:
+                # GA1 chapter 2: "2.1.1" is a sub-chapter, "2.1.1.1" a heading in it.
+                if number.count(".") == 2 and number.startswith(chapter.part + "."):
+                    if title.isupper():
+                        title = sentence_case(title, casing)
+                    section = Section(number, title, p.page)
+                    chapter.sections.append(section)
+                elif section and number.startswith(section.number + "."):
+                    section.paras.append(f"## {number} {title}")
+                    section.heading_pages[number] = p.page
+                elif number != chapter.part:
+                    rep.problems.append(f"p{p.page}: heading {number} outside part {chapter.part}")
+                continue
             if number.count(".") == 1:
                 if number not in rep.outline and title.isupper():
                     title = sentence_case(title, casing)     # "1.1 INTRODUCTION" (SUA)
@@ -765,6 +916,7 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                     rep.problems.append(f"p{p.page}: section {number} not in the PDF outline; title as printed")
             elif section and number.startswith(section.number + "."):
                 section.paras.append(f"## {number} {title}")
+                section.heading_pages[number] = p.page
             else:
                 rep.problems.append(f"p{p.page}: heading {number} outside its section")
             continue
@@ -783,13 +935,27 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 if not any(k.ident == mk.group(1) for k in rep.key_messages):
                     rep.key_messages.append(Message(mk.group(1), km_heading, p.page))
                 continue
-            # KM1 (BBA) or KM-A1 (IAS)
-            if re.fullmatch(r"KM\s?-?\s?[A-F]?\d{1,2}", p.label or ""):
+            # KM1 (BBA), KM-A1 (IAS), A1 (LDR, whose background messages are
+            # numbered 1, 2 ...) or 1 (PPA)
+            group_letter = re.match(r"^([A-F])\.\s", km_heading)
+            if re.fullmatch(r"KM\s?-?\s?[A-F]?\d{1,2}|[A-F]\s?\d{1,2}|\d{1,2}", p.label or ""):
                 message = Message(re.sub(r"\s", "", p.label), p.lead or text, p.page)
+                message.label_printed = True
                 rep.key_messages.append(message)
                 rest = p.rest if p.lead else ""
                 if rest:
                     message.paras.append(rest)
+            elif not p.label and p.lead and group_letter and text.startswith(p.lead) \
+                    and not any(k.label_printed for k in rep.key_messages):
+                # ECA: no labels. Each group (A. A PRECIOUS ASSET ...) is a key
+                # message, its bold statements the text, as the background
+                # messages A1, A2 ... follow the groups.
+                letter = group_letter.group(1)
+                message = next((k for k in rep.key_messages if k.ident == letter), None)
+                if message is None:
+                    message = Message(letter, km_heading[3:].strip(), p.page)
+                    rep.key_messages.append(message)
+                _add_para(message.paras, text)
             elif message and not message.paras and p.lead and not message.headline.rstrip().endswith(_TERMINAL):
                 # The headline goes on in another column or after a footnote (NXS).
                 message.headline = f"{message.headline} {p.lead}"
@@ -797,9 +963,29 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                     message.paras.append(p.rest)
             elif message:
                 _add_para(message.paras, text)
+        elif mode == "bgm" and (mk := re.match(r"^Key finding (\d{1,2}\.\d{1,2})\s*:\s*", text)):
+            # SCM: "Key finding 1.1 : Scenarios and models can ..."
+            lead = (p.lead or text)[mk.end():] if (p.lead or text).startswith(mk.group(0)) else p.lead or text
+            message = Message(mk.group(1), lead, p.page, group=rep.key_messages[-1].headline
+                              if rep.key_messages else "")
+            message.label_printed = True
+            rep.background_messages.append(message)
+            if p.lead and p.rest:
+                message.paras.append(p.rest)
         elif mode == "bgm":
-            if re.fullmatch(r"[A-F]\s?\d{1,2}", p.label or ""):
-                message = Message(p.label.replace(" ", ""), p.lead or text, p.page, group=group)
+            first = next((s_ for line in p.lines for s_ in line.spans if s_.text.strip()), None)
+            # Only in a report that prints no labels at all.
+            # A headline goes on after a column or page break: it starts in lower case
+            # ("recreational benefits ...", PPA); or it is printed twice (PPA 14).
+            unlabelled = (not p.label and p.lead and first is not None and coloured(first.color)
+                          and first.bold and not any(b.label_printed for b in rep.background_messages)
+                          and p.lead[:1].isupper()
+                          and not any(b.headline == p.lead for b in rep.background_messages))
+            if re.fullmatch(r"[A-F]\s?\d{1,2}|\d{1,2}", p.label or "") or unlabelled:
+                # PPA prints no numbers: its messages are numbered in order, 1, 2 ...
+                ident = p.label.replace(" ", "") if p.label else str(len(rep.background_messages) + 1)
+                message = Message(ident, p.lead or text, p.page, group=group)
+                message.label_printed = bool(p.label)
                 rep.background_messages.append(message)
                 rest = p.rest if p.lead else ""
                 if rest:
@@ -828,6 +1014,23 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             target = section or unnumbered
             if target is not None:
                 _add_para(target.paras, text)
+    for c in rep.chapters:
+        if len(c.part_titles) > 1:
+            shared = re.split(r"\s*[–-]\s*", c.part_titles[0])[0]
+            if all(t.startswith(shared) for t in c.part_titles):
+                c.title = shared       # GA1: "Status and trends – Drivers of change", "... – Nature"
+    _split_sections(rep, casing)
+    for k in rep.key_messages:
+        if k.headline.isupper():
+            k.headline = sentence_case(k.headline, casing)      # SCM's high-level messages
+    # A chapter whose citation gives no title ("..., 2016: Background to ...",
+    # PPA chapter 1): the title from the outline, "CHAPTER 1: BACKGROUND TO ...".
+    for c in rep.chapters:
+        if not c.title:
+            t = next((re.sub(r"\s+", " ", title).strip() for _, title, _ in doc.get_toc()
+                      if re.match(rf"^CHAPTER\s+{c.number}\s*[:.]", title, re.IGNORECASE)), "")
+            t = re.sub(r"^CHAPTER\s+\d+\s*[:.]\s*", "", t, flags=re.IGNORECASE)
+            c.title = sentence_case(t, casing) if t.isupper() else t
     if not rep.outline and any(c.sections for c in rep.chapters):
         rep.problems.append("the PDF outline has no sections: titles as printed, those in capitals "
                             "in sentence case")
@@ -843,6 +1046,34 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             rep.problems.append(f"{kind} {prefix}{', '.join(map(str, missing))} not in the report, "
                                 f"though {kind} {prefix}{max(nums)} is")
     return rep
+
+
+def _split_sections(rep: Report, casing: dict[str, str]) -> None:
+    """Every numbered section a sub-chapter of its own, as the manual
+    conversions do: 3.1.1 out of 3.1's text, with the text printed under its
+    heading; 3.1 keeps only its own text (none if 3.1.1 follows its heading).
+    The numbers give the hierarchy."""
+    for c in rep.chapters:
+        out: list[Section] = []
+        seen: dict[str, Section] = {}
+        for sec in c.sections:
+            cur = Section(sec.number, sec.title, sec.page)
+            out.append(cur)
+            seen[cur.number] = cur
+            for para in sec.paras:
+                m = re.match(r"^## (\d{1,2}(?:\.\d{1,2})+)\s+(.*)$", para)
+                if not m:
+                    cur.paras.append(para)
+                elif m.group(1) in seen:
+                    rep.problems.append(f"heading {m.group(1)} printed twice; its text joins the first")
+                    cur = seen[m.group(1)]
+                else:
+                    title = m.group(2).strip()
+                    cur = Section(m.group(1), sentence_case(title, casing) if title.isupper() else title,
+                                  sec.heading_pages.get(m.group(1), cur.page))
+                    out.append(cur)
+                    seen[cur.number] = cur
+        c.sections = out
 
 
 def word_casing(paras: list[Para]) -> dict[str, str]:
@@ -882,18 +1113,62 @@ def sentence_case(title: str, casing: dict[str, str]) -> str:
     return out[:1].upper() + out[1:]
 
 
-def _chapter_start(text: str, p: Para, doc: pymupdf.Document) -> bool:
-    """'3' or 'Chapter 3' on a chapter's first page, which (or the next) has
-    the chapter's citation."""
-    if not re.fullmatch(r"(?:Chapter )?\d{1,2}", text.strip()):
-        return False
-    return any("SHOULD BE CITED AS" in doc[q - 1].get_text()
-               for q in (p.page, p.page + 1) if q <= doc.page_count)
+def _chapter_start(text: str, p: Para, doc: pymupdf.Document) -> str:
+    """The chapter number, '3' (or a part of one, '2.1', GA1), from '3' or
+    'Chapter 3' on a chapter's first page, which (or the next) has the
+    chapter's citation; '' if this is not one. The number can share its text
+    block with the title (GA1: '3 ASSESSING PROGRESS ...'): its first line."""
+    pattern = r"(?:Chapter )?(\d{1,2}(?:\.\d)?)\.?"
+    m = re.fullmatch(pattern, text.strip(), re.IGNORECASE)
+    if not m and p.lines and p.lines[0].main.size >= 100:
+        m = re.fullmatch(pattern, p.lines[0].text.strip(), re.IGNORECASE)
+    if not m:
+        return ""
+    # "This chapter should be cited as:" in the reports of 2016-2019.
+    cited = any("SHOULD BE CITED AS" in doc[q - 1].get_text().upper()
+                for q in (p.page, p.page + 1) if q <= doc.page_count)
+    return m.group(1) if cited else ""
 
 
+# The year in brackets, "(2020a)", or bare: "Nielsen. 2007. Do ..." (PPA chapter 2),
+# "Veenman, S., 2013: Coping ..." (SCM).
+_BARE_YEAR = r"(?<=[.,]\s)(?:1[6-9]|20)\d\d[a-z]?[.:](?=\s|$)"
 _REF_START = re.compile(
-    r"^[^\s(](?:[^()]|\([^()]{0,1000}\)){0,1500}?\((?:(?:1[6-9]|20)\d\d[a-z]?|n\.d\.?[a-z]?|in press|forthcoming)[^)]{0,40}\)",
+    r"^[^\s(](?:[^()]|\([^()]{0,1000}\)){0,1500}?(?:\((?:(?:1[6-9]|20)\d\d[a-z]?|n\.d\.?[a-z]?|in press|forthcoming)[^)]{0,40}\)"
+    r"|" + _BARE_YEAR + ")",
     re.IGNORECASE)
+
+
+def _bibliography_entry_ends(prev: str, nxt: str) -> bool:
+    """Notes-and-bibliography style (GA1 chapter 2): the year comes late, "Nature
+    459 (May 1, 2009): 185–92. https://doi.org/...". An entry ending with its
+    link, or with a full stop after a year, is complete when the next text
+    starts with an author: "Assefa, Engdawork, and ...". Not in author-date
+    entries, whose year in brackets comes first ("Smith, J. (2021). ... In J.
+    Bebbington, C." / "Larrinaga, B. ... (Eds)")."""
+    return bool(_CHICAGO_AUTHOR.match(nxt)) and not re.search(r"\((?:1[6-9]|20)\d\d", prev) \
+        and bool(re.search(r"(?:https?://|doi\.org/)\S+$", prev)
+                 or (prev.endswith(".") and re.search(r"\b(?:1[6-9]|20)\d\d\b", prev)))
+
+
+def _ref_pieces(p: Para) -> list[str]:
+    """A reference-list paragraph, cut where a new entry starts inside it: GA1
+    chapter 2 prints a column of entries as one text block. Most paragraphs
+    are one entry, or the part of one."""
+    if len(p.lines) < 2:
+        return [p.text]
+    pieces = [""]
+    for line in p.lines:
+        t = re.sub(r"\s+", " ", line.text).strip()
+        if not t:
+            continue
+        if pieces[-1] and _bibliography_entry_ends(pieces[-1], t):
+            pieces.append(t)
+        else:
+            pieces[-1] = _join(pieces[-1], t, False, False) if pieces[-1] else t
+    if len(pieces) == 1:
+        return [p.text]         # as read with its spans (links, hyphens)
+    return [x for x in pieces if x]
 
 
 def _ref_continues(prev: str, nxt: str) -> bool:
@@ -901,6 +1176,8 @@ def _ref_continues(prev: str, nxt: str) -> bool:
     break across columns and pages anywhere, even inside the author list."""
     if nxt.startswith(("http", "www.", "doi", "/")) or nxt[:1] in ",;:.&)–" or nxt[:1].isdigit():
         return True
+    if _bibliography_entry_ends(prev, nxt):
+        return False
     if not _YEAR.search(prev):
         return True             # the previous entry has not reached its year yet
     strong = bool(_REF_START.match(nxt) and not _INITIALS_START.match(nxt)
@@ -913,7 +1190,9 @@ def _ref_continues(prev: str, nxt: str) -> bool:
     return not (_REF_START.match(nxt) and not _INITIALS_START.match(nxt) or _AUTHOR_START.match(nxt))
 
 
-_YEAR = re.compile(r"\((?:(?:1[6-9]|20)\d\d[a-z]?|n\.d\.?[a-z]?|in press|forthcoming)", re.IGNORECASE)
+# "Assefa, Engdawork," / "Armbrust, E. Virginia." / "Food and Agriculture Organization."
+_CHICAGO_AUTHOR = re.compile(r"^[A-Z][\w’'-]+(?:\s(?:de|van|von|da|del|der|la|le)?\s?[A-Z][\w’'-]+)?,\s[A-Z][\w’'.-]*(?:\s[A-Z][\w’'.-]*)?[,.]\s")
+_YEAR = re.compile(r"\((?:(?:1[6-9]|20)\d\d[a-z]?|n\.d\.?[a-z]?|in press|forthcoming)|" + _BARE_YEAR, re.IGNORECASE)
 # "Bull, J. W., ..." or "IPBES (with ..."
 _AUTHOR_START = re.compile(r"^(?:[A-Za-z][^\s,()]*(?:\s[^\s,()]+){0,3},\s(?:[A-Z]\.|[A-Z][a-z]{0,3}\.)|[A-Z][\w-]*\s\(with\b)")
 # "FAO. (2018a)." or "European Commission. (2019)."
@@ -969,8 +1248,9 @@ def _page_text(page: pymupdf.Page) -> str:
             if not spans:
                 continue
             m = max(spans, key=lambda x: len(x.text))
-            if m.size < 6.75 or m.size > 9:
-                continue            # footnotes (6.5 pt) and titles; the lists are 7 pt
+            if m.size < 6.75 or m.size > 10.5:
+                continue            # footnotes (6.5 pt) and titles; the lists are 7-8 pt, their
+                                    # headings 10 pt in the reports of 2016-2019
             out.append("".join(x.text for x in spans if not (x.sup and x.text.strip().isdigit())))
     return "\n".join(out)
 
@@ -979,28 +1259,35 @@ def _chapter_page(doc: pymupdf.Document, page: int, chapter: Chapter, rep: Repor
     """Authors, citation and DOI from the chapter's first page (and the next,
     when the lists or the citation continue there)."""
     text = _page_text(doc[page - 1])
-    if "SHOULD BE CITED AS" not in text and page < doc.page_count:
+    if "SHOULD BE CITED AS" not in text.upper() and page < doc.page_count:
         text += "\n" + _page_text(doc[page])
     text = text.translate(_LIGATURES)
     # The map disclaimer on the second page can sit inside an author list.
     text = re.sub(r"Disclaimer on maps.*?represented therein\.?", "", text, flags=re.S)
     heads = "|".join(sorted(map(re.escape, ROLE_HEADINGS), key=len, reverse=True))
     # "REVIEW EDITORS 2:": a footnote number may follow the heading.
-    parts = re.split(rf"\n\s*({heads})\s*\d*\s*:\s*\n", "\n" + text)
+    # "Coordinating Lead Authors:" in the reports of 2016-2019, without the colon in AFA.
+    parts = re.split(rf"\n\s*({heads})\s*\d*\s*:?\s*\n", "\n" + text, flags=re.IGNORECASE)
     for head, body in zip(parts[1::2], parts[2::2]):
-        body = re.split(r"THIS CHAPTER SHOULD BE CITED AS|\nChapter \d+\n", body)[0]
+        body = re.split(r"THIS CHAPTER SHOULD BE CITED AS|\nChapter \d+\n", body, flags=re.IGNORECASE)[0]
         body = re.sub(r"\n\s*\d+\s*\n", "\n", body)        # stray footnote numbers
-        chapter.authors[ROLE_HEADINGS[head]] = _split_people(re.sub(r"\s+", " ", body).strip())
+        role = ROLE_HEADINGS[re.sub(r"\s+", " ", head).upper()]
+        chapter.authors[role] = _split_people(re.sub(r"\s+", " ", body).strip())
     # The citation ends with the DOI, which may be broken after a "/".
     m = re.search(r"THIS CHAPTER SHOULD BE CITED AS:\s*(.*?(?:DOI:\s*)?https?://doi\.org/(?:\S*/[ \t]*\n\s*\S+|\S+))",
-                  text, re.S)
+                  text, re.S | re.IGNORECASE)
+    if not m:
+        # Without a DOI (2016-2019): the citation ends with its pages, "pp.1-51."
+        m = re.search(r"THIS CHAPTER SHOULD BE CITED AS:\s*(.*?pp\.\s*[\dxvi]+\s*[-–]\s*[\dxvi]+\.?)",
+                      text, re.S | re.IGNORECASE)
     if m:
         cite = re.sub(r"(doi\.org/\S*/)\s+", r"\1", m.group(1))
         cite = re.sub(r"\s+", " ", cite).strip()
         chapter.cite_as = cite
         d = re.search(r"(10\.\d{4,9}/\S+?)\.?(?:\s|$)", cite)
         chapter.doi = f"https://doi.org/{d.group(1)}" if d else ""
-        t = re.search(r"Chapter \d+[:.]\s*(.+?)\s+In:", cite)      # "Chapter 6:" or "Chapter 6."
+        # "Chapter 6:" or "Chapter 6.", then "In:" (or "In IPBES (2018)", LDR)
+        t = re.search(r"Chapter \d+[:.]\s*(.+?)\s+In:?\s", cite)
         chapter.title = t.group(1).strip().rstrip(".") if t else ""
     if not chapter.doi:
         rep.problems.append(f"chapter {chapter.number}: no DOI on its first pages (p{page})")
@@ -1014,7 +1301,21 @@ def _split_people(text: str) -> list[str]:
         return [n.strip() for n in re.split(r"[,;]", text) if n.strip()]
     # A name may hold a nickname: "Margaret (Peggy) Smith (Canada)". Names are
     # separated by commas, now and then by semicolons (SUA chapter 4).
-    return [m.group(0).strip(" ,;") for m in re.finditer(r"[^,;()]+(?:\([^()]*\)[^,;()]+)?\([^()]*\)", text)]
+    # A country can hold brackets itself: "(Iran (Islamic Republic of))" (APA).
+    entries = [m.group(0).strip(" ,;") for m in
+               re.finditer(r"[^,;()]+(?:\([^()]*\)[^,;()]+)?\((?:[^()]|\([^()]*\))*\)", text)]
+    # A first bracket holding a country is not a nickname: a comma is missing
+    # between two people, "Philip Ivey (South Africa) Patrice Bigombe Logo
+    # (Cameroon)" (AFA chapter 4).
+    import geo
+    out = []
+    for e in entries:
+        m = re.match(r"^([^()]+\(([^()]*)\))\s+([^()]+\(.*\))$", e)
+        if m and all(geo.country_code_for_label(x.strip()) for x in re.split(r"[/,;]", m.group(2)) if x.strip()):
+            out += [m.group(1).strip(), m.group(3).strip()]
+        else:
+            out.append(e)
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -1166,6 +1467,13 @@ class Countries:
         self.geo = geo
         self.log = log
 
+    def _rdf_name(self, name: str, code: str) -> bool:
+        """Whether `name` is one of the RDF's labels for `code`, brackets aside."""
+        _, by_code = self.geo._country_index()
+        concept = by_code.get(code)
+        keys = {self.geo._key(lab) for lab in self.geo._labels(concept)} if concept is not None else set()
+        return self.geo._key(name) in keys
+
     def code(self, name: str, where: str) -> str:
         name = name.strip().strip(".").strip()
         name = name.replace("[", "(").replace("]", ")")     # "Netherlands [Kingdom of the]" (IAS)
@@ -1179,16 +1487,21 @@ class Countries:
         alias = self.geo._COUNTRY_ALIASES.get(re.sub(r"\s+", " ", name.lower()))
         for t in tries:
             code = self.geo.country_code_for_label(t)
-            if code and not (alias and code == alias and self.geo._COUNTRY_ALIASES.get(t.lower())):
+            # A name that is only an alias ("UK") is reported below; the RDF's own
+            # short names ("Iran" for "Iran (Islamic Republic of)") are not.
+            if code and not (alias and code == alias and self.geo._COUNTRY_ALIASES.get(t.lower())
+                             and not self._rdf_name(t, code)):
                 return code
         if alias:
             self.log.add("countries", f"{where}: '{name}' is not a country name in ipbes-geo.rdf; "
                                       f"read as {alias}")
             return alias
-        if re.fullmatch(r"[A-Z]{2,}", name):
-            self.log.add("countries", f"{where}: '{name}' is an organization, not a country; left out")
+        if re.fullmatch(r"[A-Z]{2,}(?:[\s-][A-Z]{2,}){0,3}", name):      # "FAO", "GEO BON"
+            self.log.add("countries", f"{where}: '{name}' is an organization, not a country; "
+                                      f"not used as a country (the person is kept)")
         else:
-            self.log.add("countries", f"{where}: country '{name}' not found in ipbes-geo.rdf; left out")
+            self.log.add("countries", f"{where}: country '{name}' not found in ipbes-geo.rdf; "
+                                      f"not used as a country (the person is kept)")
         return ""
 
     def resolves(self, text: str) -> bool:
@@ -1199,14 +1512,22 @@ class Countries:
         return bool(parts) and all(quiet.code(x, "") and not quiet.log.items for x in parts)
 
     def codes(self, text: str, where: str) -> list[str]:
-        """'Plurinational State of Bolivia / Germany', 'India, United States of America'."""
+        """'Plurinational State of Bolivia / Germany', 'India, United States of America',
+        'Bolivia and USA' (AMA; but 'Trinidad and Tobago' is one country)."""
         out = []
         for part in re.split(r"\s*[/,;]\s*", text):
             part = re.sub(r"^the\s+", "", part.strip(), flags=re.IGNORECASE)
-            if part:
-                code = self.code(part, where)
-                if code and code not in out:
-                    out.append(code)
+            pieces = re.split(r"\s+and\s+", part)
+            if len(pieces) > 1 and not self.geo.country_code_for_label(part) \
+                    and all(self.geo.country_code_for_label(x) for x in pieces):
+                parts = pieces
+            else:
+                parts = [part]
+            for piece in parts:
+                if piece:
+                    code = self.code(piece, where)
+                    if code and code not in out:
+                        out.append(code)
         return out
 
 
@@ -1249,6 +1570,20 @@ def _tokens(name: str) -> list[str]:
     return re.sub(r"[^a-z ]+", " ", s.replace("-", " ")).split()
 
 
+# Short forms of first names whose first three letters differ from the full
+# name's (Steve / Stephen are matched by those): "Mike Murray-Hudson" is
+# "Michael Alan Murray-Hudson" (GA1).
+_SHORT_FORMS = {
+    "mike": "michael", "mick": "michael", "bill": "william", "will": "william", "bob": "robert",
+    "rob": "robert", "bert": "robert", "dick": "richard", "rick": "richard", "ted": "edward",
+    "ned": "edward", "jim": "james", "jack": "john", "peggy": "margaret", "meg": "margaret",
+    "maggie": "margaret", "liz": "elizabeth", "beth": "elizabeth", "betty": "elizabeth",
+    "sandy": "alexander", "sasha": "alexander", "tony": "anthony", "hank": "henry",
+    "harry": "henry", "chuck": "charles", "polly": "mary", "molly": "mary", "kate": "katherine",
+    "kathy": "katherine", "sally": "sarah", "jenny": "jennifer", "nancy": "anne",
+}
+
+
 def name_match(a: str, b: str) -> str:
     """How two printed names match: "same", "close" (middle names, initials,
     particles, a short form or a one-letter typo differ), or ""."""
@@ -1267,6 +1602,14 @@ def name_match(a: str, b: str) -> str:
         return "close"
     if last_same and (set(ta) <= set(tb) or set(tb) <= set(ta)):
         return "close"              # "Margaret (Peggy) Smith" / "Peggy Smith"
+
+    def covered(x: list[str], y: list[str]) -> bool:
+        """Each word of x in y, or an initial of a word of y."""
+        return all(t in y or (len(t) == 1 and any(u.startswith(t) for u in y)) for t in x)
+    if last_same and (covered(ta, tb) or covered(tb, ta)):
+        return "close"              # "William W. L. Cheung" / "Wai Lung (William) Cheung"
+    if last_same and _SHORT_FORMS.get(ta[0], ta[0]) == _SHORT_FORMS.get(tb[0], tb[0]):
+        return "close"              # Mike / Michael
     if last_same and ta[0][0] == tb[0][0] and (ta[0][:3] == tb[0][:3] or ta[0][-3:] == tb[0][-3:]):
         return "close"              # Steve / Stephen, Pippa / Philippa, Gabi / Gabriella
     if first_same and difflib.SequenceMatcher(None, ta[-1], tb[-1]).ratio() >= 0.8 and len(ta[-1]) > 4:
@@ -1359,6 +1702,11 @@ def read_annex_people(doc: pymupdf.Document, pages: list[int]) -> list[dict]:
                 m = spans[0]
                 if _near(m.size, 11.0) and "Hv" in m.font:
                     group, cur = text, None
+                elif _near(m.size, 7.5) and m.bold and cur is not None and not cur["lines"] \
+                        and cur["page"] == pno:
+                    # The name goes on in the next line: "Ramón de la Concepción
+                    # Pichs-" / "Madruga" (GA1 Annex III).
+                    cur["name"] = _join(cur["name"], text, False, False)
                 elif _near(m.size, 7.5) and m.bold:
                     cur = {"name": text, "lines": [], "group": group, "page": pno}
                     people.append(cur)
@@ -1404,6 +1752,21 @@ def _chapter_codes(cfg: dict, log: Log) -> set[str]:
         return {r["Name"].strip() for r in csv.DictReader(f) if r["Abbreviation"].strip() == cfg["code"]}
 
 
+def _orcid(value: str) -> str:
+    """The ORCID iD in a spreadsheet value ("0000-0002-1825-0097", or as a
+    link), if its form and its check digit (ISO 7064 MOD 11-2) are right;
+    else ''."""
+    m = re.fullmatch(r"(?:https?://orcid\.org/)?(\d{4}-\d{4}-\d{4}-\d{3}[\dX])", value.strip())
+    if not m:
+        return ""
+    digits = m.group(1).replace("-", "")
+    total = 0
+    for d in digits[:15]:
+        total = (total + int(d)) * 2
+    check = (12 - total % 11) % 11
+    return m.group(1) if digits[15] == ("X" if check == 10 else str(check)) else ""
+
+
 def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Countries,
                  log: Log) -> list[Person]:
     import csv
@@ -1436,7 +1799,9 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
             if role not in ROLE_NAMES:
                 continue
             for entry in entries:
-                m = re.match(r"^(.*)\s*\(([^()]*)\)\s*$", entry)      # the last (...) holds the countries
+                # The last (...) holds the countries, which may hold brackets
+                # themselves: "Mahdi Kolahi (Iran (Islamic Republic of))" (APA).
+                m = re.match(r"^(.*?)\s*\(((?:[^()]|\([^()]*\))*)\)\s*$", entry)
                 name, ctext = (m.group(1), m.group(2)) if m else (entry, "")
                 name = re.sub(r"\s+", " ", name).strip()
                 # The same person may be printed differently in two chapters
@@ -1532,9 +1897,26 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
             if not rows:
                 log.add("people", f"experts list {path.name}: no experts for {cfg['code']}")
         chapters = _chapter_codes(cfg, log)
+        # The two lists name chapters differently ("regional_assessments_chapter 3"
+        # in the experts list, "africa_chapter3" in the chapters list): compare the numbers.
+        numbers = {m.group(1) for c in chapters if (m := re.search(r"chapter\s?(\d+)$", c))}
+        # An ORCID iD given to two different people (not two spellings of one
+        # name) is wrong for at least one of them: left out for both.
+        holders: dict[str, list[str]] = {}
+        for row in rows:
+            iid = _orcid(row["ORCID Identifier"])
+            name = f"{row['First Name'].strip()} {row['Last name'].strip()}"
+            if iid and not any(name_match(name, h) for h in holders.get(iid, [])):
+                holders.setdefault(iid, []).append(name)
+        shared = {iid: names for iid, names in holders.items() if len(names) > 1}
+        for iid, names in shared.items():
+            log.add("people", f"experts list: ORCID {iid} is given to {' and '.join(names)}; "
+                              f"left out for both, the experts are kept")
         for row in rows:
             code = row["Chapter"].strip()
-            if chapters and "chapter" in code.lower() and code not in chapters:
+            n = re.search(r"chapter\s?(\d+)$", code)
+            if chapters and "chapter" in code.lower() and code not in chapters \
+                    and not (n and n.group(1) in numbers):
                 log.add("people", f"experts list: chapter '{code}' ({row['First Name']} {row['Last name']}) "
                                   f"is not a chapter of {cfg['code']} in {Path(cfg['chapters_csv']).name}")
             full = f"{row['First Name'].strip()} {row['Last name'].strip()}"
@@ -1547,10 +1929,28 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
                                       f"on the chapter pages or the title page")
                 continue
             orcid = row["ORCID Identifier"].strip()
-            if re.fullmatch(r"\d{4}-\d{4}-\d{4}-\d{3}[\dX]", orcid):
-                p.orcid = orcid
-            elif orcid:
-                log.add("people", f"experts list: {full}: ORCID '{orcid}' is not valid; left out")
+            iid = _orcid(orcid)
+            if iid and iid not in shared:
+                p.orcid = iid
+            elif orcid and not iid:
+                log.add("people", f"experts list: {full}: ORCID '{orcid}' is not valid; the expert is kept "
+                                  f"without an ORCID iD")
+            # What the report does not give, from the experts list; the
+            # report's own values always win.
+            if not p.countries:
+                for nat in (row.get("Nationality 1", ""), row.get("Nationality 2", "")):
+                    for c in countries.codes(nat, f"experts list, {full}") if nat.strip() else []:
+                        if c not in p.countries:
+                            p.countries.append(c)
+                if p.countries:
+                    log.add("countries", f"{p.name}: no country in the report; {', '.join(p.countries)} "
+                                         f"from the experts list")
+            if not p.roles and role:
+                chapter_no = 0 if role == "cs" else int(chm.group(1)) if chm else None
+                if chapter_no is not None and (role == "cs" or rep.chapter(chapter_no)):
+                    p.roles.append((role, chapter_no))
+                    log.add("people", f"{p.name}: no role in the report; {row['Role']}"
+                                      + (f" of chapter {chapter_no}" if chapter_no else "") + " from the experts list")
             # Names: the experts list splits first and last name; use it when it
             # is the same person and the printed name contains its last name.
             # The experts list splits first and last names: use the split when
@@ -1572,7 +1972,7 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
     for p in people:
         fix_typo(p, log)
         if not p.countries:
-            log.add("countries", f"{p.name}: no country")
+            log.add("countries", f"{p.name}: no country in the report or the experts list; kept without one")
         if " ".join(_tokens(p.last)) not in " ".join(_tokens(p.name)):
             log.add("names", f"{p.name}: last name '{p.last}' is not in the name")
     slugs = {}
@@ -1609,6 +2009,26 @@ def gaps_from_box(rep: Report, log: Log) -> list[Gap]:
     for para in box.legend:
         if para.startswith("## "):
             category = para[3:].strip()
+            continue
+        # ECA Box SPM 5: one gap per bullet, "• Gaps in our understanding of
+        # X: ...", its lead the category, its {marks} the traceability. The box
+        # stays an illustration as well.
+        mb = re.match(r"^[•▪●]\s*(.*)$", para)
+        if mb:
+            lead, _, rest = mb.group(1).partition(":")
+            if not rest:
+                lead, rest = category, mb.group(1)
+            marks = re.findall(r"\{([^{}]*)\}", rest)
+            desc = re.sub(r"\s*\{[^{}]*\}", "", rest).strip()
+            gaps.append(Gap(len(gaps) + 1, lead.strip(), desc, ", ".join(dict.fromkeys(m_.strip() for m_ in marks))))
+            continue
+        if gaps and gaps[-1].text and not gaps[-1].text.endswith(_TERMINAL) and not para[:1].isdigit():
+            # A bullet going on in the next column.
+            marks = re.findall(r"\{([^{}]*)\}", para)
+            more = re.sub(r"\s*\{[^{}]*\}", "", para).strip()
+            gaps[-1].text = f"{gaps[-1].text} {more}"
+            if marks:
+                gaps[-1].traceability = ", ".join(dict.fromkeys(x for x in [gaps[-1].traceability] + marks if x))
             continue
         m = re.match(r"^\d{1,2}\.\s+(.*)$", para)
         if not m:
@@ -1716,6 +2136,22 @@ def read_gaps(doc: pymupdf.Document, rep: Report, log: Log) -> list[Gap]:
                 gaps[-1].text = f"{gaps[-1].text} {cur}".strip()
                 cur = ""
             continue
+        if not any("{" in t for _, t in desc):
+            # No traceability marks (LDR Table SPM 3): a gap ends where the
+            # next line is further down than the spacing of a gap's lines.
+            rows: list[list] = []          # [y of first line, y of last line, text]
+            for y0, t in desc:
+                if rows and y0 - rows[-1][1] < 13:
+                    rows[-1][1] = y0
+                    rows[-1][2] = _join(rows[-1][2], t, False, False)
+                else:
+                    rows.append([y0, y0, t])
+            for y, _, text in rows:
+                above = [c for yc, c in cats if yc <= y + 2]
+                if above:
+                    category = above[-1]
+                gaps.append(Gap(len(gaps) + 1, category, text.strip(), ""))
+            continue
         row_start = None
         for y0, t in desc:
             if not cur:
@@ -1759,8 +2195,9 @@ class Ref:
 def _ref_fields(r: Ref) -> None:
     m = _REF_START.match(r.text)
     head = m.group(0) if m else r.text[:200]
-    y = re.search(r"\(((?:1[6-9]|20)\d\d[a-z]?|n\.d\.?[a-z]?|in press|forthcoming)", head, re.IGNORECASE)
-    r.year = y.group(1).replace("n.d.", "n.d").rstrip(".") if y else ""
+    y = re.search(r"\(((?:1[6-9]|20)\d\d[a-z]?|n\.d\.?[a-z]?|in press|forthcoming)"
+                  r"|(?<=[.,]\s)((?:1[6-9]|20)\d\d[a-z]?)[.:](?=\s|$)", head, re.IGNORECASE)
+    r.year = (y.group(1) or y.group(2)).replace("n.d.", "n.d").rstrip(".") if y else ""
     authors = head[:y.start()] if y else head
     first = re.split(r",|\.\s|\.$|\s\(", authors.strip(), 1)[0]
     r.first_author = _norm(first)
@@ -1772,7 +2209,14 @@ def match_zotero(refs: list[Ref], items: list[dict], log: Log) -> None:
     for it in items:
         if it["doi"]:
             by_doi.setdefault(it["doi"].lower(), []).append(it)
-    titles = [(it, _norm(it["title"])) for it in items if len(_norm(it["title"])) >= 8]
+    # Titles compared without spaces: older PDFs print "30years", "doi. org" (LDR).
+    titles = [(it, _norm(it["title"]).replace(" ", "")) for it in items if len(_norm(it["title"])) >= 8]
+
+    def author_agrees(c: dict, first: str) -> bool:
+        """The first author among the item's creators, also as the second word
+        of a name with a particle ("Aarde, R. Van" is "van Aarde")."""
+        return not c["creators"] or any(first.split()[:1] and first.split()[0] in _norm(x).split()
+                                        for x in c["creators"] if _norm(x))
 
     def pick(cands: list[dict], chapter: int) -> dict | None:
         if not cands:
@@ -1781,7 +2225,7 @@ def match_zotero(refs: list[Ref], items: list[dict], log: Log) -> None:
         return (own or cands)[0]
 
     for r in refs:
-        ntext = _norm(r.text)
+        ntext = _norm(r.text).replace(" ", "")
         year = r.year[:4]
         cands = by_doi.get(r.doi.lower(), []) if r.doi else []
         how = "DOI"
@@ -1790,14 +2234,24 @@ def match_zotero(refs: list[Ref], items: list[dict], log: Log) -> None:
             cands = [it for it, t in titles if t in ntext and (not year.isdigit() or year in it["date"])]
             if not cands:
                 # Titles differ in small ways ("&" for "and", subtitles): compare the start.
-                cands = [it for it, t in titles if len(t) > 25 and t[:40] in ntext
+                # (34 letters without spaces: what 40 characters were with them)
+                cands = [it for it, t in titles if len(t) > 22 and t[:34] in ntext
                          and (not year.isdigit() or year in it["date"])]
                 how = "title start"
+            if not cands and year.isdigit() and r.first_author:
+                # The year one off between the PDF and Zotero (LDR: 2013 / 2014),
+                # with the whole title and the first author the same.
+                near = {str(int(year) - 1), str(int(year) + 1)}
+                cands = [it for it, t in titles if len(t) >= 30 and t in ntext
+                         and any(y in it["date"] for y in near) and author_agrees(it, r.first_author)]
+                how = "title, year one off"
+                if cands:
+                    log.add("references", f"chapter {r.chapter} p{r.page}: year {r.year} in the PDF, "
+                                          f"{cands[0]['date']} in Zotero ({cands[0]['key']}): {r.text[:100]}")
         # The first author must be among the item's creators (Zotero lists a
         # book's editors before a chapter's authors).
         if cands and r.first_author:
-            agree = [c for c in cands if not c["creators"] or
-                     any(_norm(x).split()[:1] == r.first_author.split()[:1] for x in c["creators"] if _norm(x))]
+            agree = [c for c in cands if author_agrees(c, r.first_author)]
             if agree:
                 cands = agree
             elif how != "DOI":
@@ -1872,7 +2326,7 @@ def link_citations(rep: Report, refs: list[Ref], doc: pymupdf.Document, log: Log
                     r.sections.add(number)
 
         # Tables and figures: the pages each section is printed on.
-        refs_start = min((r.page for r in chrefs), default=10 ** 6)
+        refs_start = min((r.page for r in chrefs), default=doc.page_count + 1)
         spans = []
         for i, sec in enumerate(ch.sections):
             end = ch.sections[i + 1].page if i + 1 < len(ch.sections) else refs_start - 1
@@ -2127,12 +2581,16 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
                     ills.append(il_uri[key])
                     continue
             plural = None
-            # "5.2.2.1.a": a lettered paragraph of section 5.2.
-            m = re.match(r"^(\d{1,2}\.\d{1,2})(?:\.\d+)*(?:\.?[a-z]|\s?\(\d+\))?$", part)
+            # "5.2.2.1.a": a lettered paragraph of section 5.2.2.1. Linked to
+            # the most specific sub-chapter there is: 5.2.2.1, else 5.2.2 ...
+            m = re.match(r"^(\d{1,2}(?:\.\d+)+)(?:\.?[a-z]|\s?\(\d+\))?$", part)
             if m:
-                if m.group(1) in sch_uri:
-                    if sch_uri[m.group(1)] not in subs:
-                        subs.append(sch_uri[m.group(1)])
+                levels = m.group(1).split(".")
+                hit = next((".".join(levels[:n]) for n in range(len(levels), 1, -1)
+                            if ".".join(levels[:n]) in sch_uri), None)
+                if hit:
+                    if sch_uri[hit] not in subs:
+                        subs.append(sch_uri[hit])
                 else:
                     log.add("traceability", f"{where}: section '{part}' does not exist")
             elif part and not re.fullmatch(r"[A-F]\d{1,2}|KM-?[A-F]?\d{1,2}", part):
@@ -2168,6 +2626,7 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
         add(s, P("hasDoi"), c.doi.replace("https://doi.org/", ""))
 
     # Sub-chapters
+    summaries: list[str] = []
     for c in rep.chapters:
         for sec in c.sections:
             s = sch_uri[sec.number]
@@ -2188,8 +2647,12 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
             log.add("structure", f"chapter {c.number}: unnumbered section '{u.title}' (p{u.page}) is not a "
                                  f"sub-chapter; not in the TTL")
         if c.executive_summary:
-            log.add("structure", f"chapter {c.number}: executive summary ({len(c.executive_summary)} findings) "
-                                 "not in the TTL: the ontology has no place for it")
+            summaries.append(f"chapter {c.number}, {len(c.executive_summary)} findings")
+
+    # Every chapter's executive summary is left out: one line for all.
+    if summaries:
+        log.add("structure", "executive summaries not in the TTL, as the ontology has no place for them ("
+                             + "; ".join(summaries) + ")")
 
     # Illustrations
     for il in rep.illustrations:
@@ -2252,7 +2715,11 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
                   if re.fullmatch(r"[A-F]\d{1,2}", i.strip())]
         if not idents:
             # SUA: key message A has background messages A.1, A.2 ...
-            idents = [b.ident for b in rep.background_messages if b.ident.startswith(f"{k.ident}.")]
+            # (ECA: key message A has A1, A2 ...; SCM: 1 has 1.1, 1.2 ...,
+            # whose dot is needed, as PPA numbers both kinds 1, 2 ...)
+            own = (rf"{re.escape(k.ident)}\.\d{{1,2}}" if k.ident.isdigit()
+                   else rf"{re.escape(k.ident)}\.?\d{{1,2}}")
+            idents = [b.ident for b in rep.background_messages if re.fullmatch(own, b.ident)]
         m = bool(idents)
         for ident in idents:
             if ident in bgm_uri:
@@ -2351,18 +2818,104 @@ def load_config(path: Path, assessment: str) -> tuple[dict, dict]:
     return cfg, conf["ontology"]
 
 
+# The log's lines, by kind: (topic, pattern, group heading, line without what
+# the heading says). Lines whose pattern names a chapter are grouped by chapter
+# too. Lines matching no pattern go under "Other".
+_LOG_GROUPS = [
+    ("references", r"^chapter (?P<ch>\d+) (?P<p>p\d+): no Zotero item for: (?P<t>.*)$",
+     "No Zotero item", "{p}: {t}"),
+    ("references", r"^chapter (?P<ch>\d+) (?P<p>p\d+): year (?P<t>.*)$",
+     "Year differs between the PDF and Zotero (matched)", "{p}: year {t}"),
+    ("references", r"^chapter (?P<ch>\d+): (?P<t>\S+) matched outside the chapter's Zotero collection (?P<u>.*)$",
+     "Matched outside the chapter's Zotero collection", "{t} {u}"),
+    ("references", r"^chapter (?P<ch>\d+): one Zotero item (?P<t>.*)$",
+     "One Zotero item for two entries", "{t}"),
+    ("citations", r"^chapter (?P<ch>\d+): not cited in any section \(perhaps only in the executive summary\): (?P<t>.*)$",
+     "Not cited in any section (perhaps only in the executive summary, a table or a figure)", "{t}"),
+    ("people", r"^experts list: (?P<t>.*) is not on the chapter pages or the title page$",
+     "In the experts list, not in the report", "{t}"),
+    ("people", r"^experts list: (?P<t>.*ORCID.*)$", "ORCID iDs in the experts list", "{t}"),
+    ("people", r"^experts list: chapter (?P<t>.*)$", "Chapter codes in the experts list", "chapter {t}"),
+    ("people", r"^(?P<t>Annex [IVX]+ p\d+, .*): not on the chapter pages; left out$",
+     "In the author annex, not on the chapter pages (left out)", "{t}"),
+    ("people", r"^(?P<t>Annex [IVX]+ p\d+, .*: no role .*)$", "Author annex: no role", "{t}"),
+    ("people", r"^(?P<t>Annex [IVX]+ p\d+, .*: role printed as .*)$", "Author annex: role misprinted", "{t}"),
+    ("people", r"^(?P<t>.* in the experts list, but .* in the report)$",
+     "Roles: the experts list and the report differ", "{t}"),
+    ("people", r"^(?P<t>.* in Annex [IVX]+, but .*)$", "Roles: the author annex and the chapter pages differ", "{t}"),
+    ("people", r"^(?P<t>.*): no role in the report; (?P<u>.*) from the experts list$",
+     "Roles taken from the experts list", "{t}: {u}"),
+    ("people", r"^(?P<t>.*listed under 'Lead authors and fellows'.*)$", "Fellows among the lead authors", "{t}"),
+    ("countries", r"^(?P<t>.*): '(?P<n>.*)' is not a country name in ipbes-geo\.rdf; read as (?P<c>\w+)$",
+     "Country names not as in ipbes-geo.rdf (read anyway)", "{t}: '{n}' read as {c}"),
+    ("countries", r"^(?P<t>.*): '(?P<n>.*)' is an organization, not a country; .*$",
+     "Organizations given as countries (the person is kept)", "{t}: '{n}'"),
+    ("countries", r"^(?P<t>.*): country '(?P<n>.*)' not found in ipbes-geo\.rdf; .*$",
+     "Countries not found in ipbes-geo.rdf (the person is kept)", "{t}: '{n}'"),
+    ("countries", r"^(?P<t>.* in Annex [IVX]+, .* on the chapter page)$",
+     "Countries: the author annex and the chapter page differ", "{t}"),
+    ("countries", r"^(?P<t>.*): no country in the report; (?P<u>.*) from the experts list$",
+     "Countries taken from the experts list", "{t}: {u}"),
+    ("countries", r"^(?P<t>.*): no country in the report or the experts list; kept without one$",
+     "No country in the report or the experts list (the person is kept)", "{t}"),
+    ("names", r"^(?P<t>.*\(chapter or title page\) is .*)$", "Name variants across sources", "{t}"),
+    ("names", r"^(?P<t>.* written .* sources; .* kept)$", "Spelling corrected by majority", "{t}"),
+    ("names", r"^(?P<t>.*: last name .* is not in the name)$", "Last names", "{t}"),
+    ("traceability", r"^(?P<t>.*) closed with '\)' in the PDF$", "Marks closed with ')'", "{t}"),
+    ("traceability", r"^(?P<t>.*) has no comma between sections in the PDF$", "Sections without a comma", "{t}"),
+    ("traceability", r"^(?P<t>.*) is not a figure, table or box of the report$", "Figures, tables or boxes that do not exist", "{t}"),
+    ("traceability", r"^(?P<t>.*): section '(?P<n>.*)' does not exist$", "Sections that do not exist", "{t}: {n}"),
+    ("traceability", r"^(?P<t>.*) not understood$", "Not understood", "{t}"),
+    ("messages", r"^(?P<t>.*): no background messages in its headline$",
+     "Key messages without background messages", "{t}"),
+    ("messages", r"^(?P<t>.*): text after the last traceability mark became (?P<u>.*)$",
+     "Text after the last traceability mark", "{t}: {u}"),
+    ("messages", r"^(?P<t>.*): no traceability marks in its text; .*$",
+     "Background messages without traceability marks", "{t}"),
+    ("structure", r"^chapter (?P<ch>\d+): unnumbered section (?P<t>.*)$", "Unnumbered sections (not in the TTL)",
+     "{t}"),
+]
+_LOG_GROUPS = [(topic, re.compile(rx), head, fmt) for topic, rx, head, fmt in _LOG_GROUPS]
+
+
+def _log_lines(key: str, items: list[str]) -> list[str]:
+    """A topic's lines under "### kind" (and "#### Chapter n") headings."""
+    groups: dict[str, dict[str, list[str]]] = {}
+    for item in items:
+        for topic, rx, head, fmt in _LOG_GROUPS:
+            m = rx.match(item) if topic == key else None
+            if m:
+                fields = m.groupdict()
+                chapter = f"Chapter {fields['ch']}" if fields.get("ch") else ""
+                groups.setdefault(head, {}).setdefault(chapter, []).append(fmt.format(**fields))
+                break
+        else:
+            groups.setdefault("Other", {}).setdefault("", []).append(item)
+    if list(groups) == ["Other"]:
+        return [f"- {x}" for x in items] + [""]
+    out = []
+    for head, by_chapter in sorted(groups.items(), key=lambda kv: kv[0] == "Other"):
+        out += [f"### {head} ({sum(len(v) for v in by_chapter.values())})", ""]
+        for chapter, lines in sorted(by_chapter.items(), key=lambda kv: int(re.sub(r"\D", "", kv[0]) or 0)):
+            if chapter and len(by_chapter) > 1:
+                out += [f"#### {chapter} ({len(lines)})", ""]
+            elif chapter:
+                lines = [f"{chapter.lower()}: {x}" for x in lines]
+            out += [f"- {x}" for x in lines] + [""]
+    return out
+
+
 def write_log(log: Log, rep: Report, counts: dict, path: Path, name: str) -> None:
     out = [f"# {name}: conversion log", "",
            "What the conversion could not read or match, and where the sources disagree.",
            "Each line names its source; nothing here was guessed silently.", "",
            "| Item | Count |", "|---|---:|"]
     out += [f"| {k} | {v} |" for k, v in counts.items()] + [""]
+    # The references last: their lists are by far the longest.
     topics = {
         "people": "People: roles and presence across the chapter pages, the author annex and the experts list",
         "names": "Names: the same person written differently",
         "countries": "Countries",
-        "references": "References and Zotero",
-        "citations": "References not found cited in a section",
         "traceability": "Traceability marks",
         "messages": "Messages",
         "knowledge gaps": "Knowledge gaps",
@@ -2370,12 +2923,20 @@ def write_log(log: Log, rep: Report, counts: dict, path: Path, name: str) -> Non
         "glossary": "Glossary terms (Annex I) not in the IPBES thesaurus (ipbes-thesaurus.rdf)",
         "structure": "Structure",
     }
-    for key, title in topics.items():
-        items = log.items.get(key, [])
-        if items:
-            out += [f"## {title} ({len(items)})", ""] + [f"- {x}" for x in items] + [""]
+    references = {
+        "citations": "References not found cited in a section",
+        "references": "References and Zotero",
+    }
+
+    def add_topics(topics: dict[str, str]) -> None:
+        for key, title in topics.items():
+            items = log.items.get(key, [])
+            if items:
+                out.extend([f"## {title} ({len(items)})", ""] + _log_lines(key, items))
+    add_topics(topics)
     if rep.problems:
         out += ["## Reading the PDF", ""] + [f"- {p}" for p in rep.problems] + [""]
+    add_topics(references)
     path.write_text("\n".join(out), encoding="utf-8")
 
 

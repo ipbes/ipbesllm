@@ -1,7 +1,8 @@
-"""Compare two TTL files of the same assessment, item by item: a manual
-conversion (data/ttl) with one made from the PDF by pdf_to_ttl.py.
+"""Compare two TTL files of the same assessment, item by item: the manual
+conversion (data/ttl_original/<A>_v*.ttl) with the automatic one made from
+the PDF by pdf_to_ttl.py (data/ttl/<A>_v00.ttl, the file that is indexed).
 
-    PYTHONPATH=src python src/ttl_compare.py data/ttl/BBA_v01.ttl data/pdf_compare/BBA/BBA_pdf.ttl \\
+    PYTHONPATH=src python src/ttl_compare.py data/ttl_original/BBA_v01.ttl data/ttl/BBA_v00.ttl \\
         --pdf data/pdf/bba_report.pdf
 
 Items are paired by their identifiers (sub-chapter 1.1, key message KM1,
@@ -67,7 +68,9 @@ def uri_key(cls: str, s) -> str:
     if cls == "Illustration":
         return re.sub(r"[\s.]", "", local(s).split("-", 1)[-1]).lower()
     if cls == "Chapter":
-        return re.sub(r"\D", "", local(s).rsplit("ch", 1)[-1]).lstrip("0")
+        # "ch2-1" is 2.1 (GA1's chapter 2 in parts, manual), not 21; "ch01" is 1.
+        tail = re.sub(r"[^\d.]", "", local(s).rsplit("ch", 1)[-1].replace("-", "."))
+        return ".".join(part.lstrip("0") or "0" for part in tail.split(".") if part)
     if cls in ("Reference", "Person"):
         return local(s)
     if cls == "Report":
@@ -210,7 +213,31 @@ def first_difference(x: str, y: str, width: int = 60) -> str:
     return ""
 
 
-def compare(a: TTL, b: TTL, names=("manual", "PDF")):
+def within(cls: str, key: str, other: "TTL") -> str:
+    """Where an item without a partner is in the other file all the same: in a
+    chapter of which it is a part ("chapter 2" for GA1's chapter 2.1), or as a
+    heading in a sub-chapter's text ("a heading in 2.1.2" for 2.1.2.2); or,
+    the other way round, split into parts ("as 2.1, 2.2, 2.3"). '' if not."""
+    if cls not in ("Chapter", "SubChapter"):
+        return ""
+    items = other.items[cls]
+    parts = key.split(".")
+    for n in range(len(parts) - 1, 0, -1):
+        prefix = ".".join(parts[:n])
+        if prefix not in items:
+            continue
+        if cls == "Chapter":
+            return f"within chapter {prefix}"
+        text = " ".join(str(o) for o in other.g.objects(items[prefix], URIRef(other.ns + "hasDescription")))
+        if re.search(rf"(?m)^{re.escape(key)}\.?\s", text):
+            return f"a heading in {prefix}"
+        return ""
+    children = sorted((k for k in items if k.startswith(key + ".") and k.count(".") == key.count(".") + 1),
+                      key=lambda k: [int(x) for x in k.split(".") if x.isdigit()])
+    return f"as {', '.join(children)}" if children else ""
+
+
+def compare(a: TTL, b: TTL, names=("manual", "automatic")):
     rows = []          # (class, item a, item b, property, kind, value a, value b)
     summary = []
     # A reverse index for links, built once.
@@ -241,10 +268,16 @@ def compare(a: TTL, b: TTL, names=("manual", "PDF")):
     for cls in CLASSES:
         pairs, only_a, only_b = pair(cls, a, b)
         prop_stats = defaultdict(lambda: defaultdict(int))
+        # An item without a partner may still be in the other file, as part of
+        # an item there ("in automatic, a heading in 2.1.2"): not "only in".
+        found_a = {k: w for k in only_a if (w := within(cls, k, b))}
+        found_b = {k: w for k in only_b if (w := within(cls, k, a))}
         for k in only_a:
-            rows.append((cls, k, "", "", f"only in {names[0]}", "", ""))
+            rows.append((cls, k, "", "", f"in {names[1]}, {found_a[k]}" if k in found_a
+                         else f"only in {names[0]}", "", ""))
         for k in only_b:
-            rows.append((cls, "", k, "", f"only in {names[1]}", "", ""))
+            rows.append((cls, "", k, "", f"in {names[0]}, {found_b[k]}" if k in found_b
+                         else f"only in {names[1]}", "", ""))
         for ka, kb in pairs:
             sa, sb = a.items[cls][ka], b.items[cls][kb]
             pa, pb = a.props(sa), b.props(sb)
@@ -276,7 +309,8 @@ def compare(a: TTL, b: TTL, names=("manual", "PDF")):
                     prop_stats[prop][kind] += 1
                     rows.append((cls, ka, kb, prop, kind,
                                  " ; ".join(sorted(sa_ - sb_)), " ; ".join(sorted(sb_ - sa_))))
-        summary.append((cls, len(a.items[cls]), len(b.items[cls]), len(pairs), len(only_a), len(only_b),
+        summary.append((cls, len(a.items[cls]), len(b.items[cls]), len(pairs),
+                        len(only_a) - len(found_a), len(only_b) - len(found_b), len(found_a) + len(found_b),
                         {p: dict(v) for p, v in prop_stats.items()}))
     return summary, rows, (dangling[id(a)], dangling[id(b)])
 
@@ -349,10 +383,13 @@ def write(summary, rows, fid, a: TTL, b: TTL, out: Path, names, corpus: str | No
     md = [f"# {a.path.name} and {b.path.name} compared", "",
           f"{names[0]}: `{a.path}`  ", f"{names[1]}: `{b.path}`", "",
           "## Items", "",
-          f"| Class | {names[0]} | {names[1]} | paired | only {names[0]} | only {names[1]} |",
-          "|---|---:|---:|---:|---:|---:|"]
-    for cls, na, nb, np_, oa, ob, _ in summary:
-        md.append(f"| {cls} | {na} | {nb} | {np_} | {oa} | {ob} |")
+          f"| Class | {names[0]} | {names[1]} | paired | only {names[0]} | only {names[1]} | within the other file |",
+          "|---|---:|---:|---:|---:|---:|---:|"]
+    for cls, na, nb, np_, oa, ob, wi, _ in summary:
+        md.append(f"| {cls} | {na} | {nb} | {np_} | {oa} | {ob} | {wi} |")
+    md += ["", "\"Within the other file\": items without a partner that are there all the same, as part of "
+               "an item (GA1's chapter 2.1 in chapter 2; sub-section 2.1.2.2 as a heading in sub-chapter "
+               "2.1.2), or split into several; the CSV says where."]
     md += ["", "## Properties of paired items", "",
            "For each property of the items found in both files: how many are the same, differ only in "
            "spaces, punctuation or case, differ, or are in one file only.", "",
@@ -416,11 +453,13 @@ def write(summary, rows, fid, a: TTL, b: TTL, out: Path, names, corpus: str | No
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("first", type=Path, help="e.g. the manual conversion, data/ttl/BBA_v01.ttl")
-    ap.add_argument("second", type=Path, help="e.g. data/pdf_compare/BBA/BBA_pdf.ttl")
+    ap.add_argument("first", type=Path, help="the manual conversion, e.g. data/ttl_original/BBA_v01.ttl")
+    ap.add_argument("second", type=Path, help="the automatic conversion, e.g. data/ttl/BBA_v00.ttl")
     ap.add_argument("--pdf", type=Path, help="the report, to measure fidelity to its text")
-    ap.add_argument("--names", default="manual,PDF", help='labels of the two files (default "manual,PDF")')
-    ap.add_argument("--out", type=Path, help="report path without extension")
+    ap.add_argument("--names", default="manual,automatic",
+                    help='labels of the two files (default "manual,automatic")')
+    ap.add_argument("--out", type=Path,
+                    help="report path without extension (default: data/pdf_compare/<A>/<A>_compare)")
     args = ap.parse_args(argv)
     names = tuple(args.names.split(","))
     a, b = TTL(args.first), TTL(args.second)
@@ -429,15 +468,17 @@ def main(argv=None):
     if args.pdf:
         corpus = pdf_corpus(args.pdf)
         fid = (fidelity(a, corpus), fidelity(b, corpus))
-    out = args.out or args.second.with_name(args.second.stem.replace("_pdf", "") + "_compare")
+    # Next to the conversion's other files, not in data/ttl (which is indexed).
+    assessment = args.second.stem.split("_")[0]
+    out = args.out or Path(__file__).resolve().parent.parent / "data" / "pdf_compare" / assessment / f"{assessment}_compare"
     write(summary, rows, fid, a, b, out, names, None, dangling)
     print(f"-> {out.with_suffix('.md')}, {out.with_suffix('.csv')}")
     for label, d in zip(names, dangling):
         for cls, uris in d.items():
             print(f"  {label}: {len(uris)} links to missing {cls} items")
-    for cls, na, nb, np_, oa, ob, _ in summary:
+    for cls, na, nb, np_, oa, ob, wi, _ in summary:
         print(f"  {cls:18} {names[0]} {na:5}  {names[1]} {nb:5}  paired {np_:5}  only {names[0]} {oa:4}  "
-              f"only {names[1]} {ob:4}")
+              f"only {names[1]} {ob:4}  within the other {wi:4}")
 
 
 if __name__ == "__main__":

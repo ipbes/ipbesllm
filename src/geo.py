@@ -1,5 +1,6 @@
 """Country and region lookup backed by the IPBES geography RDF."""
 import re
+import unicodedata
 from functools import lru_cache
 from pathlib import Path
 
@@ -18,22 +19,30 @@ _COUNTRY_ALIASES = {
     "america": "USA",
     "australian": "AUS",
     "bolivia": "BOL",
+    "brasil": "BRA",
     "britain": "GBR",
+    "cameroun": "CMR",
     "cote d'ivoire": "CIV",
+    "cote d ivoire": "CIV",
     "england": "GBR",
     "german": "DEU",
     "great britain": "GBR",
     "iran": "IRN",
     "italia": "ITA",
     "ivory coast": "CIV",
+    "korea": "KOR",
     "laos": "LAO",
+    "menominee nation": "USA",
     "moldova": "MDA",
+    "morroco": "MAR",
     "mongalia": "MNG",
     "netherlands": "NLD",
+    "netherlands |kingdom of the": "NLD",
     "north korea": "PRK",
     "northern ireland": "GBR",
     "palestine": "PSE",
     "plurinational state of bolivia": "BOL",
+    "puerto rico": "USA",
     "rom": "ROU",
     "russia": "RUS",
     "singapoare": "SGP",
@@ -49,6 +58,7 @@ _COUNTRY_ALIASES = {
     "u.s.a.": "USA",
     "uk": "GBR",
     "united kingdom": "GBR",
+    "united kingdom of great britain and northen ireland": "GBR",
     "united states": "USA",
     "united states of america": "USA",
     "us": "USA",
@@ -77,7 +87,12 @@ def _strip_parenthetical(label: str) -> str:
 
 
 def _key(value: str) -> str:
-    return _strip_parenthetical(_clean(value)).casefold()
+    """Accents, apostrophes and hyphens aside: "Cote-d’Ivoire", "Côte d'Ivoire"
+    and "Cote divoire" are one key."""
+    text = unicodedata.normalize("NFKD", _strip_parenthetical(_clean(value)))
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    text = re.sub(r"[’'‘`]", "", text).replace("-", " ")
+    return _clean(text).casefold()
 
 
 def _labels(subject, predicates=(SKOS.prefLabel, SKOS.altLabel, SKOS.hiddenLabel)):
