@@ -165,6 +165,11 @@ def _link_span(s: Span) -> bool:
     return s.color == ACCENT and not s.bold and bool(_URL_TEXT.fullmatch(s.text.strip()))
 
 
+# A real link, for footnotes in a colour (IAS): not any "a.b", which figure
+# labels such as "1.3 Base conservation on diverse values" (TCA) also are.
+_FOOTNOTE_LINK = re.compile(r"https?://|www\.|doi\.org|\b[\w-]+\.(?:org|com|int|net|edu|gov)\b", re.IGNORECASE)
+
+
 def line_role(line: Line) -> str:
     # Judge a line by its text, not by a link in it.
     words = [s for s in line.spans if s.text.strip() and not _link_span(s)]
@@ -223,7 +228,7 @@ def line_role(line: Line) -> str:
     if _near(m.size, 7.8, 0.15) and (dark(m.color) or grey(m.color)) and "Roman" not in m.font:
         return "small"          # reference lists and captions in PPA (grey-green 0x5D6155)
     if 6.2 <= m.size <= 6.95 and (grey(m.color) or (not dark(m.color) and m.color != WHITE and (
-            re.match(r"^\s*\d{1,3}\.\s", line.text) or _URL_TEXT.search(line.text)))):
+            re.match(r"^\s*\d{1,3}\.\s", line.text) or _FOOTNOTE_LINK.search(line.text)))):
         return "footnote"       # grey, or a numbered or linked footnote in a colour (IAS)
     return "other"
 
