@@ -238,10 +238,12 @@ def line_role(line: Line) -> str:
     if 6.2 <= m.size <= 6.95 and (grey(m.color) or (not dark(m.color) and m.color != WHITE and (
             re.match(r"^\s*\d{1,3}\.\s", line.text) or _FOOTNOTE_LINK.search(line.text)))):
         return "footnote"       # grey, or a numbered or linked footnote in a colour (IAS)
-    if 6.2 <= m.size <= 6.95 and neutral(m.color) and re.match(r"^\s*\d{1,3}\.\s", line.text):
+    if 6.2 <= m.size <= 6.95 and neutral(m.color) and re.match(r"^\s*\d{1,3}\.?\s", line.text) and line.y0 > 500:
         return "footnote"       # numbered, in a darker grey (0x3C3C3B, ECA chapter 2)
-    if 6.95 < m.size <= 7.1 and grey(m.color) and line.y0 > 600 and re.match(r"^\s*\d{1,3}\.\s", line.text):
-        return "footnote"       # 7 pt at the foot of the page (PPA, 0x706F6F)
+    # (mid-page too when it holds a link: footnotes at the foot of a column, PPA chapter 5)
+    if 6.95 < m.size <= 7.1 and grey(m.color) and (line.y0 > 600 or _FOOTNOTE_LINK.search(line.text)) \
+            and re.match(r"^\s*\d{1,3}\.?\s", line.text):
+        return "footnote"       # 7 pt at the foot of the page (PPA, 0x706F6F), "15  http://..." without a full stop
     return "other"
 
 
@@ -423,15 +425,19 @@ def _accent(s: Span) -> bool:
 def build_paras(lines: list[Line]) -> list[Para]:
     paras: list[Para] = []
     cur: Para | None = None
+    fn_number = 0           # the number of the footnote being read
     for line in lines:
         if line.role in ("header", "folio", "absorbed"):
             continue
         same = (cur is not None and cur.page == line.page and cur.lines[-1].block == line.block
                 and cur.role == line.role)
-        # A footnote starts with its number: "7.\t This categorization..."
-        if same and line.role == "footnote" and re.match(r"^\d+\.\s", line.text) \
-                and line.x0 < cur.lines[-1].x0 - 3:
+        # A footnote starts with its number: "7.\t This categorization...", in a
+        # hanging indent, or not indented at all (VA): then it is the next number.
+        mnum = re.match(r"^\s*(\d{1,3})\.?\s", line.text) if line.role == "footnote" else None
+        if same and mnum and (line.x0 < cur.lines[-1].x0 - 3 or int(mnum.group(1)) == fn_number + 1):
             same = False
+        if mnum and (not same or not cur):
+            fn_number = int(mnum.group(1))
         if not same:
             cur = Para(line.role, line.page, line.x0, line.y0)
             paras.append(cur)
