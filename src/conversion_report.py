@@ -34,6 +34,7 @@ from pdf_to_ttl import DEFAULT_CONFIG, DEFAULT_OUT, ROOT
 ORIGINAL_DIR = ROOT / "data" / "ttl_original"     # manual conversions
 AUTOMATIC_DIR = ROOT / "data" / "ttl"               # automatic ones, <A>_v00.ttl, indexed
 EXAMPLES = 4        # examples per finding in section 5
+MAX_PAGES = 300     # a report longer than this has something that does not fit a page
 
 # The text classes whose fidelity the summary sums up.
 TEXT_PROPERTIES = {"hasDescription"}
@@ -42,12 +43,14 @@ TEXT_PROPERTIES = {"hasDescription"}
 ESSENTIAL = ["Chapters", "Sub-chapters", "Key messages", "People",
              "Reference entries in the PDF"]
 
+# Headings are spaced with padding, not margins: in PyMuPDF's layout a
+# heading's top margin at a page break makes the placing loop forever.
 CSS = """
 * { font-family: sans-serif; }
 body { font-size: 9.5pt; line-height: 1.35; color: #1f2328; }
 h1 { font-size: 19pt; margin: 0 0 4pt 0; color: #037473; }
-h2 { font-size: 12.5pt; margin: 14pt 0 4pt 0; color: #037473; }
-h3 { font-size: 10.5pt; margin: 8pt 0 3pt 0; }
+h2 { font-size: 12.5pt; margin: 0; padding: 14pt 0 4pt 0; color: #037473; }
+h3 { font-size: 10.5pt; margin: 0; padding: 8pt 0 3pt 0; }
 p { margin: 0 0 5pt 0; }
 .kicker { font-size: 8pt; color: #59636e; letter-spacing: 1pt; }
 .lede { font-size: 10.5pt; color: #3d444d; margin-bottom: 8pt; }
@@ -300,12 +303,18 @@ def render(body: str, path: Path, header: str) -> None:
     frame = page_rect + (54, 60, -54, -54)
     tmp = path.with_suffix(".tmp.pdf")
     writer = pymupdf.DocumentWriter(str(tmp))
-    more = True
+    more, pages = True, 0
     while more:
         device = writer.begin_page(page_rect)
-        more, _ = story.place(frame)
+        more, filled = story.place(frame)
         story.draw(device)
         writer.end_page()
+        pages += 1
+        if pages > MAX_PAGES:
+            writer.close()
+            tmp.unlink()
+            raise SystemExit(f"{path.name}: more than {MAX_PAGES} pages; something does not fit a page "
+                             f"(last filled area {filled})")
     writer.close()
 
     doc = pymupdf.open(tmp)

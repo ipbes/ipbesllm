@@ -84,6 +84,12 @@ def dark(color: int) -> bool:
     """Black or near-black text (0x231F20, 0x3C3C3B ...), not the mid-grey
     of footnotes and running headers (0x58595B)."""
     return all(((color >> shift) & 0xFF) < 0x48 for shift in (16, 8, 0))
+def neutral(color: int) -> bool:
+    """A grey from dark (0x303030) to mid (0x707070): footnotes in ECA."""
+    r, g, b = (color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF
+    return all(0x30 <= c <= 0x70 for c in (r, g, b)) and max(r, g, b) - min(r, g, b) < 0x10
+
+
 def coloured(color: int) -> bool:
     """A chapter's colour (headings in the reports of 2016-2019): neither
     white, grey nor black."""
@@ -230,6 +236,8 @@ def line_role(line: Line) -> str:
     if 6.2 <= m.size <= 6.95 and (grey(m.color) or (not dark(m.color) and m.color != WHITE and (
             re.match(r"^\s*\d{1,3}\.\s", line.text) or _FOOTNOTE_LINK.search(line.text)))):
         return "footnote"       # grey, or a numbered or linked footnote in a colour (IAS)
+    if 6.2 <= m.size <= 6.95 and neutral(m.color) and re.match(r"^\s*\d{1,3}\.\s", line.text):
+        return "footnote"       # numbered, in a darker grey (0x3C3C3B, ECA chapter 2)
     return "other"
 
 
@@ -264,6 +272,10 @@ def read_lines(doc: pymupdf.Document) -> list[Line]:
                 if prev and prev.role == "h4b" and line.role != "h4b" and (prev.page, prev.block) == (pno, bno) \
                         and _near(line.main.size, prev.main.size) and line.main.font == prev.main.font:
                     line.role = "h4b"       # the heading's second line
+                if prev and prev.role == "footnote" and line.role != "footnote" \
+                        and (prev.page, prev.block) == (pno, bno) and _near(line.main.size, prev.main.size) \
+                        and line.main.color == prev.main.color and not re.match(r"^\s*(?:\*|\d{1,3}\.\s)", line.text):
+                    line.role = "footnote"  # a footnote's next line (its link, ECA)
                 lines.append(line)
     return lines
 
@@ -786,8 +798,9 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             if m:
                 key = (footnote_chapter(), int(m.group(1)))
                 rep.footnotes[key] = Footnote(int(m.group(1)), m.group(2), p.page)
-            elif rep.footnotes:
-                # A footnote continued on the next page or column.
+            elif rep.footnotes and not re.match(r"^[*†‡§]", text):
+                # A footnote continued on the next page or column; not a note of
+                # its own marked "*" (ECA chapter 2), which no mark points to.
                 last = list(rep.footnotes)[-1]
                 rep.footnotes[last].text += " " + text
             continue
@@ -927,6 +940,14 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             continue
 
         if p.role != "body":
+            continue
+
+        # A heading of the box being read, in DIN Black at body size: "Evidence
+        # relevant in the context of the Aichi Biodiversity Targets" (ECA Box
+        # SPM 4), not text of the message the box sits in.
+        if box is not None and all("DIN" in s_.font and s_.bold for line in p.lines for s_ in line.spans
+                                   if s_.text.strip()):
+            box.legend.append("## " + text)
             continue
 
         # Body text
@@ -2467,6 +2488,25 @@ _ILL_MENTION = re.compile(r"\b(Figures?|Tables?|Box(?:es)?)\s+(SPM\s?\.?\s?[A-Z]
 _KIND = {"figure": "Figure", "figures": "Figure", "table": "Table", "tables": "Table", "box": "Box", "boxes": "Box"}
 
 
+def _expand_range(part: str) -> list[str]:
+    """A range in a traceability mark: "3.3.4.1–7" and "3.3.4.1–3.3.4.7" are
+    3.3.4.1, 3.3.4.2 ... 3.3.4.7 (ECA, also LDR, GA1, AMA). A range over
+    different parents ("3.2.1–3.4") is left as printed."""
+    # Of figures, tables or boxes too: "Boxes 4.21 – 4.24" (AMA).
+    mi = re.fullmatch(r"(Figures?|Tables?|Box(?:es)?)\s+(\d{1,2})\.(\d+)\s*[–-]\s*(?:(\d{1,2})\.)?(\d+)",
+                      part.strip(), re.IGNORECASE)
+    if mi and (not mi.group(4) or mi.group(4) == mi.group(2)) and 0 < int(mi.group(5)) - int(mi.group(3)) < 40:
+        kind = {"f": "Figure", "t": "Table", "b": "Box"}[mi.group(1)[0].lower()]
+        return [f"{kind} {mi.group(2)}.{n}" for n in range(int(mi.group(3)), int(mi.group(5)) + 1)]
+    m = re.fullmatch(r"(\d{1,2}(?:\.\d+)*)\.(\d+)\s*[–-]\s*(?:(\d{1,2}(?:\.\d+)*)\.)?(\d+)", part.strip())
+    if not m:
+        return [part]
+    head, first, head2, last = m.groups()
+    if head2 and head2 != head or not 0 < int(last) - int(first) < 40:
+        return [part]
+    return [f"{head}.{n}" for n in range(int(first), int(last) + 1)]
+
+
 def _ill_key(kind: str, number: str) -> str:
     """('Boxes', 'SPM 1') -> 'BOXSPM.1', the key of il_uri."""
     key = (_KIND[kind.lower()] + re.sub(r"\s", "", number)).upper()
@@ -2561,7 +2601,7 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
         (Table2.2). In '{Boxes 5.2, 5.8}' the numbers after a plural are boxes."""
         subs, ills = [], []
         parts = []
-        for part in re.split(r"\s*[,;]\s*", trace):
+        for part in (x for piece in re.split(r"\s*[,;]\s*", trace) for x in _expand_range(piece)):
             nums = [n.rstrip(".") for n in part.split()]
             if len(nums) > 1 and all(re.fullmatch(r"\d{1,2}(?:\.\d+)+", n) for n in nums):
                 log.add("traceability", f"{where}: '{part}' has no comma between sections in the PDF")
@@ -2701,7 +2741,11 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
                 bgm_sch[b.ident].add(u)
             for u in dict.fromkeys(ills + mentions(seg)):
                 add(sm, P("Illustration"), u)
-            if not trace and len(segments) > 1:
+            # Text after the last mark is reported, unless it is a paragraph of
+            # its own (ECA A1): an ordinary closing sentence, not a cut mark.
+            own_paragraph = any(clean(resolve_marks(para_, 0, rep)).strip().startswith(seg[:60])
+                                for para_ in b.paras)
+            if not trace and len(segments) > 1 and not own_paragraph:
                 log.add("messages", f"{b.ident}: text after the last traceability mark became "
                                     f"sub-message SM{i} without sections: {seg[:80]}")
 
