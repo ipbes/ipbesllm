@@ -238,10 +238,13 @@ def line_role(line: Line) -> str:
     if 6.2 <= m.size <= 6.95 and (grey(m.color) or (not dark(m.color) and m.color != WHITE and (
             re.match(r"^\s*\d{1,3}\.\s", line.text) or _FOOTNOTE_LINK.search(line.text)))):
         return "footnote"       # grey, or a numbered or linked footnote in a colour (IAS)
-    if 6.2 <= m.size <= 6.95 and neutral(m.color) and re.match(r"^\s*\d{1,3}\.?\s", line.text) and line.y0 > 500:
+    numbered = re.match(r"^\s*\d{1,3}\.?\s", line.text)
+    if 6.2 <= m.size <= 6.95 and numbered and words and grey(words[0].color):
+        return "footnote"       # the number grey, the text black (APA: "2. www.worldvaluessurvey.org")
+    if 6.2 <= m.size <= 6.95 and neutral(m.color) and numbered and line.y0 > 500:
         return "footnote"       # numbered, in a darker grey (0x3C3C3B, ECA chapter 2)
     # (mid-page too when it holds a link: footnotes at the foot of a column, PPA chapter 5)
-    if 6.95 < m.size <= 7.1 and grey(m.color) and (line.y0 > 600 or _FOOTNOTE_LINK.search(line.text)) \
+    if 6.95 < m.size <= 7.1 and grey(m.color) and (line.y0 > 400 or _FOOTNOTE_LINK.search(line.text)) \
             and re.match(r"^\s*\d{1,3}\.?\s", line.text):
         return "footnote"       # 7 pt at the foot of the page (PPA, 0x706F6F), "15  http://..." without a full stop
     return "other"
@@ -379,7 +382,7 @@ _SUPERSCRIPT = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
 # yr⁻¹, day⁻¹, t CO2 ...) or a power of ten (10⁶).
 _BEFORE_EXPONENT = re.compile(
     r"(?:(?:\b|(?<=\d))(?:km|m|cm|mm|µm|ha|kg|g|Mg|Gg|Tg|Pg|t|Mt|Gt|kt|yr|year|day|d|h|s|l|L|kWh|MWh|GWh|J|W|ppm|"
-    r"CO2e?|CO₂e?|CH4|N2O|C|N|P|Gha|people/km)|\b10|\bx ?10|×10|× 10)\s?$")
+    r"CO2e?|CO₂e?|CH4|N2O|C|N|P|Gha|people/km|R|r)|\b10|\bx ?10|×10|× 10)\s?$")      # R² (PPA), r² (SCM)
 
 
 def _span_text(s: Span, role: str, before: str = "") -> str:
