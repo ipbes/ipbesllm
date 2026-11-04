@@ -6,9 +6,11 @@ not have: candidates to add to the thesaurus, after checking.
 
 Each glossary is read from the PDF as pdf_to_ttl.py reads it, and each term is
 looked up in data/rdf/ipbes-thesaurus.rdf the same way (English preferred,
-alternative and hidden labels; case, accents, punctuation, spacing, plurals
-and -isation/-ization aside; also without brackets, either of "X or Y", either
-side of "/").
+alternative and hidden labels, with or without their brackets, as "Biomass
+(ecology)" is also "Biomass"; case, accents, punctuation, spacing, plurals and
+-isation/-ization aside; also without brackets, either of "X or Y", either side
+of "/"). A term whose definition is exactly one in the thesaurus is there under
+another label, and goes to data/csv/glossary_same_definition_as_thesaurus.csv.
 
 Writes data/csv/glossary_not_in_thesaurus.csv, one row per term:
 the term, the assessments whose glossary has it, its definition (each different
@@ -31,11 +33,12 @@ import pymupdf
 from rdflib import Graph
 from rdflib.namespace import SKOS
 
-from pdf_to_ttl import (DEFAULT_CONFIG, ROOT, _norm, build_paras, glossary_entries, in_thesaurus, parse,
-                        read_lines, thesaurus_labels)
+from pdf_to_ttl import (DEFAULT_CONFIG, ROOT, _norm, build_paras, definition_key, glossary_entries, in_thesaurus,
+                        parse, read_lines, thesaurus_definitions, thesaurus_labels)
 
 THESAURUS = ROOT / "data" / "rdf" / "ipbes-thesaurus.rdf"
 OUT = ROOT / "data" / "csv" / "glossary_not_in_thesaurus.csv"
+SAME_DEFINITION = ROOT / "data" / "csv" / "glossary_same_definition_as_thesaurus.csv"
 
 
 def english_labels(path: Path) -> dict[str, str]:
@@ -60,13 +63,21 @@ def main(argv=None):
 
     labels = thesaurus_labels(THESAURUS)
     written = english_labels(THESAURUS)
+    definitions = thesaurus_definitions(THESAURUS)
+    same: dict[str, dict] = {}                    # found only by their definition
     rows: dict[str, dict] = {}                    # normalized term -> row
     totals = {}
     for code in codes:
         doc = pymupdf.open(ROOT / cfg[code]["pdf"])
         paras = build_paras(read_lines(doc))
         entries = glossary_entries(paras, parse(doc, paras))
-        missing = [e for e in entries if not in_thesaurus(e["term"], labels)]
+        unlabelled = [e for e in entries if not in_thesaurus(e["term"], labels)]
+        missing = [e for e in unlabelled if definition_key(e["definition"]) not in definitions]
+        for e in unlabelled:
+            label = definitions.get(definition_key(e["definition"]))
+            if label:
+                row = same.setdefault(_norm(e["term"]), {"term": e["term"], "label": label, "in": []})
+                row["in"].append(f"{code} p{e['page']}")
         totals[code] = (len(entries), len(missing))
         print(f"{code}: {len(entries)} glossary terms, {len(missing)} not in the thesaurus", file=sys.stderr)
         for e in missing:
@@ -89,6 +100,12 @@ def main(argv=None):
             pages = "; ".join(f"{c} p{e['page']}" for c, es in row["in"].items() for e in es)
             w.writerow([row["term"], ", ".join(row["in"]), defs[:32000], pages,
                         "; ".join(written[c] for c in close), *kept.get(key, ("", ""))])
+    with SAME_DEFINITION.open("w", newline="", encoding="utf-8-sig") as f:
+        w = csv.writer(f)
+        w.writerow(["term in the glossary", "thesaurus label with the same definition", "pages"])
+        for _, row in sorted(same.items()):
+            w.writerow([row["term"], row["label"], "; ".join(row["in"])])
+    print(f"-> {SAME_DEFINITION}: {len(same)} terms under another label", file=sys.stderr)
     print(f"-> {args.out}: {len(rows)} terms (thesaurus file of "
           f"{date.fromtimestamp(THESAURUS.stat().st_mtime)})", file=sys.stderr)
     for code, (n, m) in totals.items():

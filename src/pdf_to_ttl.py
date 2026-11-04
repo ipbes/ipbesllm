@@ -2634,39 +2634,65 @@ def link_citations(rep: Report, refs: list[Ref], doc: pymupdf.Document, log: Log
 # ---------------------------------------------------------------------------
 
 def glossary_entries(paras: list[Para], rep: Report) -> list[dict]:
-    """The glossary of Annex I: [{"term", "definition", "page"}], a definition
-    continued in the next column or page joined to it."""
+    """The glossary of Annex I: [{"term", "definition", "page"}], line by line, as
+    the older reports print terms on their own lines with no space between entries.
+    A term is the bold at the start of a line, and may wrap; the rest is its definition."""
     pages = next((v for k, v in rep.annex_pages.items() if "GLOSSARY" in k and "REFERENCES" not in k), [])
     entries: list[dict] = []
+    in_term = False         # the entry so far is only a term: a bold next line goes on with it
     for p in paras:
         if p.page in pages and p.role == "title" and "REFERENCES" in p.text.upper():
             break           # the glossary's own reference list (NXS)
         if not (p.page in pages and p.role == "small"):
             continue
-        # The term in bold before its definition ("Fossil fuel Fossil fuels
-        # are ...", SUA), else before a colon.
-        lead = p.lead.strip().rstrip(":").strip()
-        if lead.count("(") > lead.count(")"):
-            lead += ")"     # "(TEK" in bold, ")" not
-        m = re.match(r"^([^:]{2,90}):\s", p.text)
-        if (m and m.group(1).startswith(lead) and len(m.group(1)) - len(lead) <= 3) \
-                or p.text.lstrip()[:1] in "•▪":
-            lead = ""       # bold that stops short of the colon: "Circular econom" + "y:" (NXS);
-                            # a bulleted item inside a definition
-        term, rest = "", ""
-        if 2 <= len(lead) <= 90 and lead != p.text.strip() and re.search(r"[A-Za-z]{2}", lead) \
-                and not re.search(r"\(\d{4}", lead):
-            term, rest = lead.lstrip("•·-– ").strip(), p.text[len(p.lead):]
-        elif m and not re.search(r"\(\d{4}", m.group(1)) and m.group(1).lstrip("•·-– ")[:1].isupper():
-            # (a lower-case start is a definition going on: "in the context of a scenario (Source: ...")
-            term, rest = m.group(1).strip().lstrip("•·-– ").strip(), p.text[m.end():]
-        if term:
-            entries.append({"term": term, "definition": rest.strip(" :.").strip() + ".", "page": p.page})
-        elif entries and len(p.text) > 1:
-            entries[-1]["definition"] = f"{entries[-1]['definition'].rstrip('.')} {p.text}".strip()
+        for line in p.lines:
+            spans = [s for s in line.spans if s.text and not s.sup]
+            text = re.sub(r"\s+", " ", "".join(s.text for s in spans)).strip()
+            if len(text) < 2:
+                continue    # the letters of the alphabet that head the groups
+            lead = ""
+            for s in spans:
+                if not s.bold and s.text.strip():
+                    break
+                lead += s.text
+            lead = re.sub(r"\s+", " ", lead).strip()
+            rest = text[len(lead):].strip() if text.startswith(lead) else text
+            if text[0] in "•▪·":
+                lead, rest = "", text        # a bulleted item inside a definition
+            last = entries[-1] if entries else None
+            if lead and re.fullmatch(r"(?:Glossary )?References:?", lead, re.IGNORECASE):
+                return _clean_glossary(entries)     # AFA's "Glossary References"
+            opens = bool(lead) and (in_term or lead[0].isupper() or lead[0].isdigit() or not last
+                                    or last["definition"].rstrip().endswith((".", ")", "]")))
+            if not opens or len(lead) > 120:
+                if last:
+                    last["definition"] = _join(last["definition"], text, False, False) if last["definition"] else text
+                in_term = False
+                continue
+            if in_term and last:
+                last["term"] = _join(last["term"], lead, False, False)
+            else:
+                entries.append({"term": lead, "definition": "", "page": p.page})
+            # Bold that stops short of the end of the term: "Land sparin" + "g", "(TEK" + ")".
+            short = re.match(r"^([a-z)]{1,2})(?=[\s:]|$)\s*:?\s*", rest)
+            if short and entries[-1]["term"][-1:].isalpha() or (short and short.group(1) == ")"):
+                entries[-1]["term"] += short.group(1)
+                rest = rest[short.end():]
+            entries[-1]["definition"] = rest.lstrip(": ").strip()
+            in_term = not rest
+    return _clean_glossary(entries)
+
+
+def _clean_glossary(entries: list[dict]) -> list[dict]:
+    out = []
     for e in entries:
-        e["definition"] = re.sub(r"\.\.$", ".", e["definition"])
-    return entries
+        term = e["term"].strip(" :•·-–").strip()
+        if term.count("(") > term.count(")"):
+            term += ")"
+        if not re.search(r"[A-Za-z]{2}", term):
+            continue
+        out.append({"term": term, "definition": e["definition"].strip(" :.").strip() + ".", "page": e["page"]})
+    return out
 
 
 def term_key(text: str) -> str:
@@ -2697,7 +2723,36 @@ def thesaurus_labels(thesaurus: Path) -> set[str]:
         for _, lab in g.subject_objects(prop):
             if getattr(lab, "language", None) in (None, "en"):
                 labels.add(term_key(str(lab)))
+                # The labels were rationalised: "Biomass (ecology)" is also "Biomass".
+                labels.add(term_key(re.sub(r"\s*\([^)]*\)", "", str(lab))))
     return labels
+
+
+def definition_key(text: str) -> str:
+    """A definition for comparison: its letters and digits, without its source
+    ("(Source: ga1)", "(IPBES core glossary, 2021)") or other closing brackets."""
+    text = re.sub(r"(?:\s*\([^()]*\)[\s.]*)+$", "", text)
+    return re.sub(r"[^a-z0-9]", "", text.lower())
+
+
+def thesaurus_definitions(thesaurus: Path) -> dict[str, str]:
+    """The English definitions of the IPBES thesaurus, by definition_key(): the
+    concept's preferred label. A definition is a node with its text in rdf:value."""
+    from rdflib import Graph, RDF, URIRef
+    from rdflib.namespace import SKOS
+
+    g = Graph()
+    g.parse(thesaurus)
+    out: dict[str, str] = {}
+    for concept, node in g.subject_objects(SKOS.definition):
+        values = [node] if not isinstance(node, URIRef) else list(g.objects(node, RDF.value))
+        label = next((str(x) for x in g.objects(concept, SKOS.prefLabel)
+                      if getattr(x, "language", None) in (None, "en")), "")
+        for v in values:
+            key = definition_key(str(v))
+            if getattr(v, "language", None) in (None, "en") and len(key) >= 20:
+                out.setdefault(key, label)
+    return out
 
 
 def in_thesaurus(term: str, labels: set[str]) -> bool:
@@ -2711,18 +2766,18 @@ def in_thesaurus(term: str, labels: set[str]) -> bool:
 
 def check_glossary(paras: list[Para], rep: Report, log: Log, thesaurus: Path) -> tuple[int, int]:
     """Report the glossary terms of Annex I that the IPBES thesaurus does not
-    have (as a preferred or alternative English label). (terms, found)"""
-    terms = [e["term"] for e in glossary_entries(paras, rep)]
-    if not terms or not thesaurus.exists():
-        return len(terms), 0
-    labels = thesaurus_labels(thesaurus)
+    have, as an English label or with the same definition. (terms, found)"""
+    entries = glossary_entries(paras, rep)
+    if not entries or not thesaurus.exists():
+        return len(entries), 0
+    labels, definitions = thesaurus_labels(thesaurus), thesaurus_definitions(thesaurus)
     found = 0
-    for term in terms:
-        if in_thesaurus(term, labels):
+    for e in entries:
+        if in_thesaurus(e["term"], labels) or definition_key(e["definition"]) in definitions:
             found += 1
         else:
-            log.add("glossary", f"'{term}' (Annex I) is not in the IPBES thesaurus")
-    return len(terms), found
+            log.add("glossary", f"'{e['term']}' (Annex I) is not in the IPBES thesaurus")
+    return len(entries), found
 
 
 # ---------------------------------------------------------------------------
