@@ -70,6 +70,10 @@ def ill_key(ident: str) -> str:
     return re.sub(r"spm(?=[a-z]?\d)", "spm.", key)
 
 
+# The levels of confidence before ontology v07, one property each.
+OLDER_LEVELS = {"hasWellestablished", "hasEstablishedIncomplete", "hasUnresolved", "hasInconclusive"}
+
+
 def uri_key(cls: str, s) -> str:
     """An item's key from its URI alone."""
     if cls == "Illustration":
@@ -122,7 +126,8 @@ class TTL:
         for p, o in self.g.predicate_objects(s):
             if p == RDF.type:
                 continue
-            out[pname(p, self.ns)].append(o)
+            name = pname(p, self.ns)
+            out["hasConfidenceLevel" if name in OLDER_LEVELS else name].append(o)
         return out
 
 

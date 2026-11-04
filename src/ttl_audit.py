@@ -4,7 +4,7 @@
     PYTHONPATH=src python src/ttl_audit.py data/ttl/SUA_v02.ttl   # some files
     PYTHONPATH=src python src/ttl_audit.py --all                  # every property
 
-For each class of the ontology (docs/ontology/IPBES_Ontology_v06.ttl) and each file it
+For each class of the ontology (docs/ontology/IPBES_Ontology_v07.ttl) and each file it
 reports:
 
   * the number of items, and the share of them that have each property the
@@ -48,7 +48,7 @@ from settings import PROJECT_ROOT, TTL_DIR
 from ttl_index import _resolve_countries
 from ttl_loader import GARBLED, parse_ttl_file
 
-ONTOLOGY = PROJECT_ROOT / "docs" / "ontology" / "IPBES_Ontology_v06.ttl"
+ONTOLOGY = PROJECT_ROOT / "docs" / "ontology" / "IPBES_Ontology_v07.ttl"
 
 _PREFIXES = [
     ("http://ontology.ipbes.net/report", "ipbes:"),
@@ -61,9 +61,8 @@ _PREFIXES = [
 # Properties an item normally has only some of: one confidence level per
 # message, some roles per expert, optional links and identifiers.
 PARTIAL_BY_NATURE = {
-    "ipbes:hasWellestablished", "ipbes:hasEstablishedIncomplete",
-    "ipbes:hasUnresolved", "ipbes:hasInconclusive",
-    "ipbes:ca", "ipbes:cl", "ipbes:cs", "ipbes:fl", "ipbes:la", "ipbes:re",
+    "ipbes:hasConfidenceLevel",
+    "ipbes:ca", "ipbes:cl", "ipbes:cs", "ipbes:fl", "ipbes:la", "ipbes:re", "ipbes:ts", "ipbes:mc",
     "ipbes:Illustration", "ipbes:hasDoi", "owl:sameAs",
     "ipbes:KeyMessage", "ipbes:Reference", "foaf:Person",
 }
@@ -102,12 +101,13 @@ def _local_name(uri) -> str:
     return str(uri).rstrip("/").rsplit("/", 1)[-1]
 
 
-ROLE_PROPERTIES = ["ipbes:cs", "ipbes:cl", "ipbes:la", "ipbes:re", "ipbes:fl", "ipbes:ca"]
+ROLE_PROPERTIES = ["ipbes:cs", "ipbes:ts", "ipbes:mc", "ipbes:cl", "ipbes:la", "ipbes:re", "ipbes:fl", "ipbes:ca"]
 # The usual form of a role value; co-chairs need no chapter.
 STANDARD_ROLE = re.compile(
     r"^(?:Coordinating Lead Author|Lead Author|Review Editor|Fellow|"
     r"Contributing Author) in [A-Z]+\d+-ch\d+(?:\.\d+)?$"
     r"|^Co-chair in [A-Z]+\d+(?:-ch\d+)?$"
+    r"|^(?:Technical Support Unit|Management Committee) in [A-Z]+\d+$"
 )
 INVISIBLE = re.compile("[\ufeff\u200b\u200c\u200d\u2060]")
 PLACEHOLDER_NAME = re.compile(r"first ?name|last ?name|^[_\-\s]*$", re.IGNORECASE)

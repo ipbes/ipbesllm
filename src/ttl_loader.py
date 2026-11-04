@@ -13,6 +13,8 @@ IPBES = "http://ontology.ipbes.net/report"
 # Person role properties (ipbes:ca, ipbes:la, ...) and their labels.
 _ROLE_LABELS = {
     "cs": "Co-chair",
+    "ts": "Technical Support Unit",
+    "mc": "Management Committee",
     "cl": "Coordinating Lead Author",
     "la": "Lead Author",
     "re": "Review Editor",
@@ -73,14 +75,15 @@ def _qualifier(graph, subject) -> str:
     IPBES evidence qualifier for a message: 'well established',
     'established but incomplete', 'unresolved' or 'inconclusive'.
     """
-    if _first(graph, subject, URIRef(IPBES + "hasWellestablished")):
-        return "well established"
-    if _first(graph, subject, URIRef(IPBES + "hasEstablishedIncomplete")):
-        return "established but incomplete"
-    if _first(graph, subject, URIRef(IPBES + "hasUnresolved")):
-        return "unresolved"
-    if _first(graph, subject, URIRef(IPBES + "hasInconclusive")):
-        return "inconclusive"
+    stated = {str(o).strip().lower() for o in graph.objects(subject, URIRef(IPBES + "hasConfidenceLevel"))}
+    # In this order, as an item can state several. Before ontology v07 (the
+    # manual files) each level had its own property.
+    for level, older in (("well established", "hasWellestablished"),
+                         ("established but incomplete", "hasEstablishedIncomplete"),
+                         ("unresolved", "hasUnresolved"),
+                         ("inconclusive", "hasInconclusive")):
+        if level in stated or _first(graph, subject, URIRef(IPBES + older)):
+            return level
     return ""
 
 

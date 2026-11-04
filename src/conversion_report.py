@@ -15,7 +15,8 @@ It is built from what the conversion wrote to data/pdf_compare/<A>/:
                       conversion exists
 
 and written as <A>_conversion_report.pdf next to them. Run pdf_to_ttl.py
-first. Every number comes from those files; nothing is written by hand.
+first. Every number comes from those files; nothing is written by hand. The
+properties of ontology v07 that the file does not use are found from the TTL.
 """
 from __future__ import annotations
 
@@ -28,11 +29,14 @@ import tomllib
 from pathlib import Path
 
 import pymupdf
+from rdflib import RDF, Graph, URIRef
 
 from pdf_to_ttl import DEFAULT_CONFIG, DEFAULT_OUT, ROOT
+from ttl_compare import OLDER_LEVELS
 
 ORIGINAL_DIR = ROOT / "data" / "ttl_original"     # manual conversions
 AUTOMATIC_DIR = ROOT / "data" / "ttl"               # automatic ones, <A>_v00.ttl, indexed
+ONTOLOGY = ROOT / "docs" / "ontology" / "IPBES_Ontology_v07.ttl"
 EXAMPLES = 4        # examples per finding in section 5
 MAX_PAGES = 300     # a report longer than this has something that does not fit a page
 
@@ -119,6 +123,33 @@ def run_compare(original: Path, ttl: Path, pdf: Path, out: Path) -> None:
     ttl_compare.main([str(original), str(ttl), "--pdf", str(pdf), "--out", str(out)])
 
 
+def _in_v07(uri) -> URIRef:
+    """A manual file's term in the ontology's form: reportKeyMessage to report/KeyMessage,
+    and its four properties for the levels of confidence to the one of v07."""
+    head, text = "http://ontology.ipbes.net/report", str(uri)
+    if not text.startswith(head):
+        return uri
+    term = text[len(head):].lstrip("/")
+    return URIRef(f"{head}/{'hasConfidenceLevel' if term in OLDER_LEVELS else term}")
+
+
+def unused_properties(ttl: Path, manual: Path | None) -> list[tuple[str, list[str], list[str]]]:
+    """For each class of the ontology: the properties it lists that no item in
+    the file has, and those of them that the manual conversion does have."""
+    onto, data = Graph().parse(ONTOLOGY), Graph().parse(ttl)
+    other = Graph().parse(manual) if manual else Graph()
+    def used(graph, cls, convert=lambda u: u):
+        items = {s for s, o in graph.subject_objects(RDF.type) if convert(o) == cls}
+        return {convert(p) for item in items for p in graph.predicates(item)}
+    rows = []
+    for template, cls in onto.subject_objects(RDF.type):
+        unused = {p for p in onto.predicates(template) if p != RDF.type} - used(data, cls)
+        if unused:
+            rows.append((onto.qname(cls), sorted(onto.qname(p) for p in unused),
+                         sorted(onto.qname(p) for p in unused & used(other, cls, _in_v07))))
+    return sorted(rows)
+
+
 def percent(found: int, total: int) -> str:
     """Whole percentages, but never rounded up to 100% or down to 0%."""
     if not total:
@@ -185,6 +216,7 @@ def build_html(assessment: str, cfg: dict, folder: Path, today: str) -> str:
         ["Source", f"{pdf.name} ({pages} pages)"],
         ["Report code", cfg.get("report_id", "")],
         ["Zotero group", cfg.get("zotero_group", "none")],
+        ["Ontology", f"IPBES report ontology, {ONTOLOGY.stem.rsplit('_', 1)[-1]}"],
         ["Output", f"data/pdf_compare/{assessment}/{ttl.name}"],
         ["Compared with", f"data/ttl_original/{original.name} (manual conversion)"
          if original else "nothing: there is no earlier conversion"],
@@ -234,6 +266,19 @@ def build_html(assessment: str, cfg: dict, folder: Path, today: str) -> str:
     # The log indents sub-counts ("  matched to Zotero").
     h.append(table(["Item", "Count"], [["– of which " + k.strip() if k.startswith(" ") else k, number(v)]
                                         for k, v in counts.items()]))
+    if ttl.exists() and (unused := unused_properties(ttl, original)):
+        h.append("<h3>Ontology properties not used</h3>")
+        h.append("<p>The ontology defines these properties, but no item in this file has them. Either the "
+                 "report has no such value, or it has one that the conversion does not yet read.</p>")
+        if original:
+            h.append("<p>Those the manual conversion does have, in the last column, are the ones to check "
+                     "first.</p>")
+            h.append(table(["Class", "Not used", "Of these, in the manual conversion"],
+                           [[cls, ", ".join(props), ", ".join(manual) or "–"] for cls, props, manual in unused],
+                           numeric_from=9))
+        else:
+            h.append(table(["Class", "Not used"], [[cls, ", ".join(props)] for cls, props, _ in unused],
+                           numeric_from=9))
 
     # 3 and 4. Against the manual conversion
     if tables:

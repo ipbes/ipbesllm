@@ -300,21 +300,21 @@ Each pipeline can also be used from the command line: index, inspect the retriev
 
 Place Turtle files in `data/ttl/`. The assessment is the file name before `_v` (`GA1_v00.ttl` is GA1); keep one version of each assessment in the folder. The app uses the automatic conversions made from the PDFs by `pdf_to_ttl.py` (see [Converting assessment PDFs to TTL](#converting-assessment-pdfs-to-ttl)), named `<A>_v00.ttl`; the manual conversions made earlier by a consultant (`GA1_v11.ttl`, `IAS_v04.ttl` ...) are kept in `data/ttl_original/`, not indexed, to compare the two (`ttl_compare.py`).
 
-The files follow the IPBES report ontology in [`docs/ontology/IPBES_Ontology_v06.ttl`](docs/ontology/IPBES_Ontology_v06.ttl), which lists, for each class, the properties an item should have:
+The files follow the IPBES report ontology in [`docs/ontology/IPBES_Ontology_v07.ttl`](docs/ontology/IPBES_Ontology_v07.ttl), which lists, for each class, the properties an item should have:
 
 | Class | Chunk type | Main properties read |
 |---|---|---|
 | `ipbes:KeyMessage` | `key` | `skos:prefLabel`, `hasDescription`, `dcterms:identifier`, confidence level |
 | `ipbes:BackgroundMessage` | `bgm` | its description plus the text of its sub-messages, confidence level |
 | `ipbes:SubMessage` | `subm` | `hasDescription`, `dcterms:identifier`, confidence level |
-| `ipbes:KnowledgeGap` | `kg` | `hasDescription`, `hasCategory` (not in the ontology; only GA1 and BBA have it); the gap's own ID (`GA119-1`) is its URI's name and its `dcterms:identifier`, as in the newer manual files (BBA, GA1, NXS); the related sections are in `ipbes:traceability` (the older manual files put them in `dcterms:identifier`, which is still read) |
+| `ipbes:KnowledgeGap` | `kg` | `hasDescription`, `hasCategory`; the gap's own ID (`GA119-1`) is its URI's name and its `dcterms:identifier`, as in the newer manual files (BBA, GA1, NXS); the related sections are in `ipbes:traceability` (the older manual files put them in `dcterms:identifier`, which is still read) |
 | `ipbes:Chapter` | `chapter` | `skos:prefLabel`, `dcterms:identifier`; its authors (`foaf:Person`) as text |
 | `ipbes:SubChapter` | `sch` | `skos:prefLabel`, `dcterms:identifier`, `hasDescription` |
 | `ipbes:Illustration` | `il` | `dcterms:identifier`, `skos:prefLabel` (caption) and `hasDescription` |
-| `foaf:Person` | `person` | `skos:prefLabel` (or `foaf:firstName` + `foaf:lastName`), `ipbes:country`, roles (`ca`, `cl`, `cs`, `fl`, `la`, `re`) |
+| `foaf:Person` | `person` | `skos:prefLabel` (or `foaf:firstName` + `foaf:lastName`), `ipbes:country`, roles (`ca`, `cl`, `cs`, `fl`, `la`, `re`, `ts`, `mc`) |
 | `ipbes:Reference` | `ref` | `hasDoi`, `owl:sameAs` (Zotero), and the chapter and sub-chapter citing it; there are no titles or authors |
 
-The confidence level comes from `hasWellestablished`, `hasEstablishedIncomplete`, `hasUnresolved` or `hasInconclusive`. Items with no text are skipped, except experts, who are kept with "not recorded" when they have no country or role.
+The confidence level comes from `hasConfidenceLevel`, whose value is `well established`, `established but incomplete`, `unresolved` or `inconclusive`; the manual files have the older `hasWellestablished`, `hasEstablishedIncomplete`, `hasUnresolved` and `hasInconclusive`, which are still read. Items with no text are skipped, except experts, who are kept with "not recorded" when they have no country or role.
 
 | Task | Command |
 |---|---|
@@ -329,7 +329,7 @@ The references (about 33,500 chunks) are indexed but left out of every search un
 
 #### Checking TTL files
 
-Run the audit on new or updated TTL files before indexing them. It compares each file with the ontology in `docs/ontology/IPBES_Ontology_v06.ttl`, and runs the loader to find what the indexer would leave out. It changes nothing.
+Run the audit on new or updated TTL files before indexing them. It compares each file with the ontology in `docs/ontology/IPBES_Ontology_v07.ttl`, and runs the loader to find what the indexer would leave out. It changes nothing.
 
 ```bash
 PYTHONPATH=src python src/ttl_audit.py                        # every file in data/ttl/
@@ -371,9 +371,13 @@ It writes to one folder per assessment, `data/pdf_compare/<A>/` (`--out` for ano
 | `<A>_compare.md`, `.csv` | From `ttl_compare.py`: the **manual** conversion (`data/ttl_original/<A>_v*.ttl`, by the consultant) against the **automatic** one (`data/ttl/<A>_v00.ttl`, the file that is indexed): items in one file only, and property differences, with a `manual` and an `automatic` column for the two values; the `.md` also gives the share of each file's sentences found word for word in the PDF |
 | `<A>_conversion_report.pdf` | From `conversion_report.py`,  the counts, the comparison with the manual conversion in `data/ttl_original/` and fidelity (`ttl_compare.py` is run first when there is one and its output is older than the TTL), and the points to check from the conversion log. A report with no chapters, messages, people or references says so: its layout was not recognised and the file must not be indexed |
 
-How the report is read: the IPBES template's styles tell body text, headings, captions, legends and boxes, footnotes and labels apart (KM1, A1), and pages are read column by column. Key and background messages come from the SPM; a background message is cut into sub-messages at each `{traceability}` mark, linked to the sub-chapters it names. Sub-chapters (1.1, 1.2 ...) take their titles from the PDF outline and their text from the sections, without boxes, figures and footnote marks (footnotes follow under "Notes"). Every figure, table and box is an illustration (caption title as `skos:prefLabel`, legend or box text as `ipbes:hasDescription`). Knowledge gaps come from the SPM table, with category and traceability, numbered from 1. People and their roles come from each chapter's first page and the title page, checked against the author annex (Annex III or IV) and the experts list (which also gives ORCID iDs); countries are ISO alpha-3 codes from `ipbes-geo.rdf`. Each reference-list entry is matched to its Zotero item (DOI, else title, year and first author) for the item key in its URI, keeps its citation text, and links to the sub-chapters citing it.
+How the report is read: the IPBES template's styles tell body text, headings, captions, legends and boxes, footnotes and labels apart (KM1, A1), and pages are read column by column. Key and background messages come from the SPM; a background message is cut into sub-messages of full sentences, guided by the levels of confidence: each states a level, the minimum, and carries its `{traceability}` marks if it has any (a sentence with no level joins its neighbour), linked to the sub-chapters they name. Sub-chapters (1.1, 1.2 ...) take their titles from the PDF outline and their text from the sections, without boxes, figures and footnote marks (footnotes follow under "Notes"). Every figure, table and box is an illustration (caption title as `skos:prefLabel`, legend or box text as `ipbes:hasDescription`). Knowledge gaps come from the SPM table, with category and traceability, numbered from 1. People and their roles come from each chapter's first page and the title page, checked against the author annex (Annex III or IV) and the experts list (which also gives ORCID iDs); countries are ISO alpha-3 codes from `ipbes-geo.rdf`. Each reference-list entry is matched to its Zotero item (DOI, else title, year and first author) for the item key in its URI, keeps its citation text, and links to the sub-chapters citing it.
 
 Reports of 2016-2019 (LDR, PPA, SCM, AFA, AMA, APA, ECA, GA1) use an older template, which is read too: headings larger and in each chapter's colour, role headings in mixed case ("Coordinating Lead Authors", with or without a colon), chapter citations without a DOI, reference lists without a title (found from the PDF outline) and with the year bare ("Nielsen. 2007.", "Veenman, S., 2013:"), knowledge-gap tables without traceability marks (a row per gap), and each report's own way of numbering its messages (LDR A1 and 1, 2 ...; PPA 1, 2 ... with unnumbered background messages; SCM's high-level messages and key findings 1.1; ECA's groups A to E; GA1's chapter 2 in parts 2.1 to 2.3). Their Zotero groups are incomplete, as some references were kept in Mendeley; AFA, AMA and APA have no knowledge gaps. Notes like these, per assessment, are in `config/pdf_to_ttl.toml` and appear in the conversion report.
+
+Knowledge gaps come from the report: an SPM table or box, or an appendix (GA1's Appendix 4). Where a report also discusses gaps in running text (VA, section 6.4.4; `gap_sections` in `config/pdf_to_ttl.toml`), one gap is extracted per paragraph of the sub-sections, after the listed ones: the sub-heading is the category, the traceability is the sub-section and the sections the paragraph cites, and a `skos:note` says it was extracted. IBOK is built from these TTL files, so it is used only to check the results, never as a source.
+
+Two links are derived, as the reports do not print them. A sub-chapter links to its parent with `ipbes:SubChapter`: the nearest section above it that exists (3.1.1 to 3.1); a top section has only its `ipbes:Chapter`. A knowledge gap links with `ipbes:BackgroundMessage` to each background message that has a sub-message tracing to one of the gap's own sections, so the link means "shares a section", and a gap whose report prints no sections has none (GA1, LDR).
 
 The converted files go to `data/ttl/` as `<A>_v00.ttl`, so as not to clash with the version numbers of the manual conversions (kept in `data/ttl_original/` for comparison).
 

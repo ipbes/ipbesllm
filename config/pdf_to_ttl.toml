@@ -5,11 +5,13 @@
 # Everything else (the report title, chapters, authors, DOIs, messages,
 # figures, knowledge gaps, references) is read from the PDF itself.
 
+# DOIs: `doi` and `chapter_dois` here are the reference, and win over what a report prints.
+
 [ontology]
 # The ipbes: prefix, with a trailing "/" as the data review recommends (L6):
 # classes and properties are http://ontology.ipbes.net/report/KeyMessage, not
-# .../reportKeyMessage. Ontology v06 and the files in data/ttl still use the
-# form without "/"; the loader and ttl_audit.py read both.
+# .../reportKeyMessage. Ontology v07 has this form; v06 and the manual files in
+# data/ttl_original use the form without "/". The loader and ttl_audit.py read both.
 namespace = "http://ontology.ipbes.net/report/"
 # Base of the item URIs: <base>ch/BBA26ch1, <base>person/Jones_Matt ...
 base = "http://ontology.ipbes.net/report/"
@@ -24,6 +26,7 @@ csv = "data/csv/ipbes_experts.csv"
 chapters_csv = "data/csv/ipbes_chapters.csv"
 
 [assessments.BBA]
+doi = "10.5281/zenodo.17185116"
 pdf = "data/pdf/bba_report.pdf"
 # The report's code in item URIs and role texts (BBA26-1.1, BBA26-ch1).
 report_id = "BBA26"
@@ -34,6 +37,7 @@ alt_label = "IPBES Business and Biodiversity Assessment"
 zotero_group = 5081872
 
 [assessments.IAS]
+doi = "10.5281/zenodo.7430682"
 pdf = "data/pdf/ias_report.pdf"
 report_id = "IAS23"
 year = 2023
@@ -41,6 +45,7 @@ alt_label = "IPBES Invasive Alien Species Assessment"
 zotero_group = 2352922
 
 [assessments.TCA]
+doi = "10.5281/zenodo.11382215"
 pdf = "data/pdf/tca_report.pdf"
 report_id = "TCA24"
 year = 2024
@@ -48,6 +53,7 @@ alt_label = "IPBES Transformative Change Assessment"
 zotero_group = 4589462
 
 [assessments.NXS]
+doi = "10.5281/zenodo.13850054"
 pdf = "data/pdf/nxs_report.pdf"
 report_id = "NXS24"
 year = 2024
@@ -55,13 +61,18 @@ alt_label = "IPBES Nexus Assessment"
 zotero_group = 4596166
 
 [assessments.SUA]
+doi = "10.5281/zenodo.6448567"
 pdf = "data/pdf/sua_report.pdf"
 report_id = "SUA22"
 year = 2022
 alt_label = "IPBES Sustainable Use Assessment"
 zotero_group = 2344805
+notes = [
+    "The printed report's DOI points to the SPM."
+]
 
 [assessments.GA1]
+doi = "10.5281/zenodo.3831673"
 pdf = "data/pdf/ga1_report.pdf"
 report_id = "GA119"
 year = 2019
@@ -69,11 +80,26 @@ alt_label = "IPBES Global Assessment Report on Biodiversity and Ecosystem Servic
 zotero_group = 2333077
 # For the conversion report (conversion_report.py)
 notes = [
+    "The report's DOI was created after it was published, so it is not printed in it; it is set in the conversion's configuration.",
     "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
     "Chapter 2 is printed in three parts (2.1, 2.2, 2.3), each with its own first page and reference list. It is one chapter here, with the parts' sections (2.1.1, 2.2.1 ...) as its sub-chapters; the manual conversion made each part a chapter (2-1, 2-2, 2-3).",
 ]
 
+# Not printed in the report. Chapter 2 is printed in three parts, each with its own.
+[assessments.GA1.chapter_dois]
+"1" = ["10.5281/zenodo.3831852"]
+"2" = ["10.5281/zenodo.3831881", "10.5281/zenodo.3832005", "10.5281/zenodo.3832035"]
+"3" = ["10.5281/zenodo.3832052"]
+"4" = ["10.5281/zenodo.3832073"]
+"5" = ["10.5281/zenodo.3832099"]
+"6" = ["10.5281/zenodo.3832107"]
+
+# The citation misprints "Ecosystem Service".
+[assessments.GA1.chapter_titles]
+"1" = "Assessing a planet in transformation: Rationale and approach of the IPBES Global Assessment on Biodiversity and Ecosystem Services"
+
 [assessments.LDR]
+doi = "10.5281/zenodo.3237392"
 pdf = "data/pdf/ldr_report.pdf"
 report_id = "LDR18"
 year = 2018
@@ -81,10 +107,12 @@ alt_label = "IPBES Land Degradation and Restoration Assessment"
 zotero_group = 2333076
 # For the conversion report (conversion_report.py)
 notes = [
+    "The report's DOI was created after it was published, so it is not printed in it; it is set in the conversion's configuration.",
     "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
 ]
 
 [assessments.PPA]
+doi = "10.5281/zenodo.3402856"
 pdf = "data/pdf/ppa_report.pdf"
 report_id = "PPA16"
 year = 2016
@@ -92,11 +120,13 @@ alt_label = "IPBES Pollinators, Pollination and Food Production Assessment"
 zotero_group = 2333088
 # For the conversion report (conversion_report.py)
 notes = [
+    "The report's DOI was created after it was published, so it is not printed in it; it is set in the conversion's configuration.",
     "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
     "The background messages are not numbered in the report; they are numbered here in the order printed, 1, 2 ..., as in the manual conversion.",
 ]
 
 [assessments.SCM]
+doi = "10.5281/zenodo.3235428"
 pdf = "data/pdf/scm_report.pdf"
 report_id = "SCM16"
 year = 2016
@@ -104,19 +134,29 @@ alt_label = "IPBES Scenarios and Models of Biodiversity and Ecosystem Services A
 zotero_group = 2333079
 # For the conversion report (conversion_report.py)
 notes = [
+    "The report's DOI was created after it was published, so it is not printed in it; it is set in the conversion's configuration.",
     "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
     "The key messages are the three high-level messages; the background messages are the key findings under them (1.1 ... 3.6).",
 ]
 
 [assessments.VA]
+doi = "10.5281/zenodo.6522522"
 pdf = "data/pdf/va_report.pdf"
 report_id = "VA22"
 year = 2022
 alt_label = "IPBES Values Assessment"
 zotero_group = 2345372
+# Knowledge gaps discussed in running text: one per paragraph of 6.4.4.1 ... 6.4.4.9,
+# after the report's own list (Table SPM 5).
+gap_sections = "6.4.4"
+# For the conversion report (conversion_report.py)
+notes = [
+    "Knowledge gaps: the report lists 8, in Table SPM 5 (gaps 1 to 8). The others are extracted systematically from section 6.4.4, where the report discusses gaps in running text under nine sub-headings: one gap per paragraph of 6.4.4.1 to 6.4.4.9, in the report's own words. The sub-heading is the category; the traceability is the sub-section and any section the paragraph cites, such as 5.2.2.3.1. Each carries a note (skos:note) saying it was extracted. A paragraph may hold more than one gap. The manual conversion and IBOK hold a different list, worded differently and not printed in the report, so these texts and numbers do not correspond to theirs.",
+]
 
 # The regional assessments (2018). No earlier TTL of them exists.
 [assessments.AFA]
+doi = "10.5281/zenodo.3236066"
 pdf = "data/pdf/afa_report.pdf"
 report_id = "AFA18"
 year = 2018
@@ -124,11 +164,13 @@ alt_label = "IPBES Regional Assessment for Africa"
 zotero_group = 2333070
 # For the conversion report (conversion_report.py)
 notes = [
+    "The report's DOI was created after it was published, so it is not printed in it; it is set in the conversion's configuration.",
     "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
     "The report has no knowledge-gap table: no knowledge gaps is expected.",
 ]
 
 [assessments.AMA]
+doi = "10.5281/zenodo.3236252"
 pdf = "data/pdf/ama_report.pdf"
 report_id = "AMA18"
 year = 2018
@@ -136,11 +178,13 @@ alt_label = "IPBES Regional Assessment for the Americas"
 zotero_group = 2333011
 # For the conversion report (conversion_report.py)
 notes = [
+    "The report's DOI was created after it was published, so it is not printed in it; it is set in the conversion's configuration.",
     "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
     "The report has no knowledge-gap table: no knowledge gaps is expected.",
 ]
 
 [assessments.APA]
+doi = "10.5281/zenodo.3237373"
 pdf = "data/pdf/apa_report.pdf"
 report_id = "APA18"
 year = 2018
@@ -148,11 +192,13 @@ alt_label = "IPBES Regional Assessment for Asia and the Pacific"
 zotero_group = 2333075
 # For the conversion report (conversion_report.py)
 notes = [
+    "The report's DOI was created after it was published, so it is not printed in it; it is set in the conversion's configuration.",
     "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
     "The report has no knowledge-gap table: no knowledge gaps is expected.",
 ]
 
 [assessments.ECA]
+doi = "10.5281/zenodo.3237428"
 pdf = "data/pdf/eca_report.pdf"
 report_id = "ECA18"
 year = 2018
@@ -160,6 +206,7 @@ alt_label = "IPBES Regional Assessment for Europe and Central Asia"
 zotero_group = 2345951
 # For the conversion report (conversion_report.py)
 notes = [
+    "The report's DOI was created after it was published, so it is not printed in it; it is set in the conversion's configuration.",
     "Some references of the 2016-2019 assessments were managed in Mendeley before IPBES moved to Zotero, so the Zotero group is incomplete: references without a Zotero item are expected.",
     "The key messages are not numbered in the report: each group (A to E) is one key message, its statements the text, linked to the background messages A1, A2 ... as in the manual conversion.",
 ]

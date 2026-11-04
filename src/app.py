@@ -631,7 +631,7 @@ for index, message in enumerate(st.session_state.messages):
             render_answer(index, message, developer)
 
 
-question = st.chat_input("Ask a question about IPBES assessments (AFA, AMA, APA, BBA, ECA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) and Plenary sessions (IPBES 1 to IPBES 12)")
+question = st.chat_input("Ask a question about approved IPBES assessments and from reports of Plenary sessions")
 
 # A new "Search in" choice applies to the next question; offer to ask the
 # last one again there, rather than leaving its old answer looking current.

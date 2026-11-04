@@ -1,0 +1,97 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ipbes: <http://ontology.ipbes.net/report/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<http://ontology.ipbes.net/report/il/> a ipbes:Illustration ;
+    ipbes:hasDescription "The text that further describes the content" ;
+    ipbes:hasDoi "The DOI number" ;
+    dcterms:identifier "The identifier of the chapter or sub-chapter or key message in the report" ;
+    owl:sameAs "Link to other resources such as zotero repository of the reference" ;
+    skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" .
+
+<http://ontology.ipbes.net/report/kg/> a ipbes:KnowledgeGap ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/> ;
+    ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/> ;
+    ipbes:hasCategory "The category of the knowledge gap, as printed in the report" ;
+    ipbes:hasDescription "The text that further describes each knowledge gap that is related to the subchapters mentioned in the text" ;
+    ipbes:traceability "The sections, figures, tables or boxes the report gives for the knowledge gap" ;
+    dcterms:identifier "The identifier of the knowledge gap: the report code and its number from 1, as in its URI (BBA26-1)" ;
+    skos:note "How the knowledge gap was obtained, when the report does not list it as a knowledge gap" .
+
+<http://ontology.ipbes.net/report/subm/> a ipbes:SubMessage ;
+    ipbes:Illustration "Link to class Illustration. Used for mentioned tables, figures or boxes in the sub-message" ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/> ;
+    ipbes:hasDescription "The text that further describes the content" ;
+    ipbes:hasConfidenceLevel "The level of confidence stated: well established, established but incomplete, unresolved or inconclusive. Repeated if several are stated" ;
+    dcterms:identifier "The sections, figures, tables or boxes the sub-message traces to in the report" .
+
+<http://ontology.ipbes.net/report/bgm/> a ipbes:BackgroundMessage ;
+    ipbes:Illustration "Link to class Illustration. Used for mentioned tables, figures or boxes in the background message" ;
+    ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:SubMessage "Link to the sub-messages used in each background message" ;
+    ipbes:hasDescription "The text that further describes the content" ;
+    ipbes:hasConfidenceLevel "The level of confidence stated: well established, established but incomplete, unresolved or inconclusive. Repeated if several are stated" ;
+    dcterms:identifier "The identifier of the chapter or sub-chapter or key message in the report" ;
+    skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" .
+
+<http://ontology.ipbes.net/report/key/> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/> ;
+    ipbes:Illustration "Link to class Illustration. Used for mentioned tables, figures or boxes in the key message" ;
+    ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:hasDescription "The text that further describes the content" ;
+    ipbes:hasConfidenceLevel "The level of confidence stated: well established, established but incomplete, unresolved or inconclusive. Repeated if several are stated" ;
+    dcterms:identifier "The identifier of the chapter or sub-chapter or key message in the report" ;
+    skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" .
+
+<http://ontology.ipbes.net/report/ref/> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/> ;
+    ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/> ;
+    ipbes:hasDescription "The text that further describes the content" ;
+    ipbes:hasDoi "The DOI number" ;
+    owl:sameAs "Link to other resources such as zotero repository of the reference" .
+
+<http://ontology.ipbes.net/report/person/> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/> ;
+    ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:ca "Contributing authors in the stated chapter and report" ;
+    ipbes:cl "Coordinating lead authors in the stated chapter and report" ;
+    ipbes:country "Country of the person as printed in the report (citizenship and affiliation), as an ISO 3166 alpha-3 code" ;
+    ipbes:cs "Co-chairs in the stated chapter and report" ;
+    ipbes:fl "Fellows in the stated chapter and report" ;
+    ipbes:la "Lead authors in the stated chapter and report" ;
+    ipbes:re "Review editors in the stated chapter and report" ;
+    ipbes:ts "Technical support unit members listed as editors of the stated report" ;
+    ipbes:mc "Management committee members (Bureau and Multidisciplinary Expert Panel) who guided the production of the stated report" ;
+    owl:sameAs "Link to other resources about the person such as ORCID" ;
+    skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" ;
+    foaf:firstName "First name of the person" ;
+    foaf:lastName "Family name of the person" .
+
+<http://ontology.ipbes.net/report/ch/> a ipbes:Chapter ;
+    ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:hasDoi "The DOI number" ;
+    dcterms:identifier "The identifier of the chapter or sub-chapter or key message in the report" ;
+    skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" ;
+    foaf:Person <http://ontology.ipbes.net/report/person/> .
+
+<http://ontology.ipbes.net/report/sch/> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/> ;
+    ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/> ;
+    ipbes:hasDescription "The text that further describes the content" ;
+    dcterms:identifier "The identifier of the chapter or sub-chapter or key message in the report" ;
+    skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" .
+
+<http://ontology.ipbes.net/report/> a ipbes:Report ;
+    ipbes:hasDoi "The DOI number" ;
+    ipbes:year "The publication year" ;
+    skos:altLabel "Alternative writing format or language of the preferred label" ;
+    skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" ;
+    foaf:Person <http://ontology.ipbes.net/report/person/> .
+
