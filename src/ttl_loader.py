@@ -469,6 +469,10 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         if authors:
             body = "Authors: " + "; ".join(authors)
 
+        summary = _text(_first(graph, ch, URIRef(IPBES + "hasDescription")))
+        if summary:
+            body = f"{body}\n\nExecutive summary\n{summary}".strip()
+
         # If there's no description and no authors, fall back to the
         # heading itself so the chunk is not dropped by emit()'s
         # "if not body: return" guard.

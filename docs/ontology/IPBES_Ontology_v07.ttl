@@ -73,6 +73,7 @@
 
 <http://ontology.ipbes.net/report/ch/> a ipbes:Chapter ;
     ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:hasDescription "The chapter's executive summary" ;
     ipbes:hasDoi "The DOI number" ;
     dcterms:identifier "The identifier of the chapter or sub-chapter or key message in the report" ;
     skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" ;

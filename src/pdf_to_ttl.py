@@ -989,7 +989,7 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             if p.role == "h2":
                 last_heading = (p.page, p.y1)
             if p.role == "h2" and not m:
-                if text.upper() == "EXECUTIVE SUMMARY":
+                if text.upper() in ("EXECUTIVE SUMMARY", "KEY FINDINGS"):       # SCM: "Key findings"
                     mode = "exec"
                 else:
                     mode = "chapter"
@@ -1127,8 +1127,14 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 chapter.executive_summary.append(finding)
                 if p.lead and p.rest:
                     finding.paras.append(p.rest)
-            elif chapter.executive_summary:
+            elif chapter.executive_summary and not (p.lead and not chapter.executive_summary[-1].ident):
                 _add_para(chapter.executive_summary[-1].paras, text)
+            else:
+                # Unnumbered findings (2016-2019, NXS), each with its bold lead or as a paragraph.
+                finding = Message("", p.lead or text, p.page)
+                chapter.executive_summary.append(finding)
+                if p.lead and p.rest:
+                    finding.paras.append(p.rest)
         elif mode == "chapter":
             target = section or unnumbered
             if target is not None:
@@ -1553,7 +1559,7 @@ def to_markdown(rep: Report, name: str) -> str:
             out.append(f"- {role}: {'; '.join(people)}")
         out += ["", f"Cite as: {ch.cite_as}", "", "### Executive summary", ""]
         for f in ch.executive_summary:
-            out += [f"{f.ident}. **{f.headline}** {f.text}", ""]
+            out += [(f"{f.ident}. " if f.ident else "") + f"**{f.headline}** {f.text}", ""]
         for sec in ch.unnumbered + ch.sections:
             out += [f"### {sec.number} {sec.title} (p{sec.page})".replace("###  ", "### "), ""]
             for para in sec.paras:
@@ -2954,7 +2960,6 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
             add(s, P("hasDoi"), doi.replace("https://doi.org/", ""))
 
     # Sub-chapters
-    summaries: list[str] = []
     for c in rep.chapters:
         for sec in c.sections:
             s = sch_uri[sec.number]
@@ -2981,13 +2986,16 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
         for u in c.unnumbered:
             log.add("structure", f"chapter {c.number}: unnumbered section '{u.title}' (p{u.page}) is not a "
                                  f"sub-chapter; not in the TTL")
+        # The executive summary is the chapter's description, finding by finding.
         if c.executive_summary:
-            summaries.append(f"chapter {c.number}, {len(c.executive_summary)} findings")
-
-    # Every chapter's executive summary is left out: one line for all.
-    if summaries:
-        log.add("structure", "executive summaries not in the TTL, as the ontology has no place for them ("
-                             + "; ".join(summaries) + ")")
+            body = "\n\n".join(" ".join([f"{f.ident}. {f.headline}" if f.ident else f.headline, *f.paras])
+                                 for f in c.executive_summary)
+            body = resolve_marks(body, c.number, rep, log, f"chapter {c.number} executive summary")
+            notes = [f"{n}. {rep.footnotes[(c.number, n)].text}"
+                     for n in dict.fromkeys(int(x) for x in FOOTNOTE_MARK.findall(body))]
+            if notes:
+                body += "\n\nNotes\n" + "\n".join(notes)
+            add(ch_uri[c.number], P("hasDescription"), body)
 
     # Illustrations
     for il in rep.illustrations:

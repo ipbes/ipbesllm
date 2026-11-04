@@ -11,9 +11,10 @@ and -isation/-ization aside; also without brackets, either of "X or Y", either
 side of "/").
 
 Writes data/csv/glossary_not_in_thesaurus.csv, one row per term:
-the term, the assessments whose glossary has it, the definition and page in
-each, and the closest thesaurus labels, which may be the same concept under
-another name. Rerun after the thesaurus is updated: terms added drop out.
+the term, the assessments whose glossary has it, its definition (each different
+one once), its page in each, and the closest thesaurus labels, which may be the
+same concept under another name. Rerun after the thesaurus is updated: terms
+added drop out, and what is in the "checked" and "note" columns stays with its term.
 """
 from __future__ import annotations
 
@@ -72,15 +73,22 @@ def main(argv=None):
             row = rows.setdefault(_norm(e["term"]), {"term": e["term"], "in": defaultdict(list)})
             row["in"][code].append(e)
 
+    # What was entered by hand stays with its term.
+    kept: dict[str, tuple[str, str]] = {}
+    if args.out.exists():
+        with args.out.open(newline="", encoding="utf-8-sig") as f:
+            kept = {_norm(r["term"]): (r.get("checked", ""), r.get("note", "")) for r in csv.DictReader(f)}
+
     with args.out.open("w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f)
         w.writerow(["term", "assessments", "definition", "pages", "closest thesaurus labels", "checked", "note"])
         for key, row in sorted(rows.items()):
             close = difflib.get_close_matches(key, list(written), n=3, cutoff=0.75)
-            defs = " || ".join(f"[{c}] {e['definition']}" for c, es in row["in"].items() for e in es)
+            # Each different definition once; the assessments and pages are in their own columns.
+            defs = " || ".join(dict.fromkeys(e["definition"] for es in row["in"].values() for e in es))
             pages = "; ".join(f"{c} p{e['page']}" for c, es in row["in"].items() for e in es)
             w.writerow([row["term"], ", ".join(row["in"]), defs[:32000], pages,
-                        "; ".join(written[c] for c in close), "", ""])
+                        "; ".join(written[c] for c in close), *kept.get(key, ("", ""))])
     print(f"-> {args.out}: {len(rows)} terms (thesaurus file of "
           f"{date.fromtimestamp(THESAURUS.stat().st_mtime)})", file=sys.stderr)
     for code, (n, m) in totals.items():

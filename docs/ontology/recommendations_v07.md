@@ -2,7 +2,7 @@
 
 **File:** `docs/ontology/IPBES_Ontology_v07.ttl`. These changes are proposed to the TSU on data for agreement. It recommends changes to v06.
 
-**Basis:** 14 assessment reports (AFA, AMA, APA, BBA, ECA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) were converted automatically from their published PDFs to TTL and checked against v06. The files use eight properties v06 does not define: three on knowledge gaps that came from the reports, two links derived during conversion (changes 8 and 9), a single property for levels of confidence (change 10) and two roles, for the technical support unit and the management committee (changes 11 and 12). No class is added or removed. 
+**Basis:** 14 assessment reports (AFA, AMA, APA, BBA, ECA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) were converted automatically from their published PDFs to TTL and checked against v06. The files use nine properties v06 does not define: three on knowledge gaps that came from the reports, two links derived during conversion (changes 8 and 9), a single property for levels of confidence (change 10) and two roles, for the technical support unit and the management committee (changes 11 and 12), and a description on chapters (change 13). No class is added or removed. 
 
 ## Summary of decisions requested
 
@@ -20,7 +20,8 @@
 | 10 | Replace the four level-of-confidence properties with `ipbes:hasConfidenceLevel` | Yes | Manual files and IBOK queries use the four old properties |
 | 11 | Add the role `ipbes:ts` to Person, for the technical support unit | Yes | None: addition |
 | 12 | Add the role `ipbes:mc` to Person, for the management committee | Yes | None: addition |
-| 13–15 | Questions for discussion | No | See below |
+| 13 | Add `ipbes:hasDescription` to Chapter, for its executive summary | Yes | None: addition |
+| 14–15 | Questions for discussion | No | See below |
 
 ## Changes in v07
 
@@ -127,11 +128,15 @@ The converted files have 18 of these values. BBA and TCA list none on the title 
 
 `ipbes:mc` records the members of the management committee listed on page 2 of each report, with values such as "Management Committee in PPA16". The earlier reports divide them into Bureau and Multidisciplinary Expert Panel, and the later ones list them together, so the one role covers both. They are also linked from the Report with `foaf:Person`.
 
-The converted files have 91 of these values. **Point to note:** the page gives names only, so most of these people have no country from it, and PPA gives initials only ("A. Báldi"). The same person can be written differently across reports ("Robert Watson", "Robert T. Watson", "R.T. Watson"), and so have different URIs.
+The members come from page 2 of each report and from the experts list, which gives their full names, countries and ORCID iDs. Anyone found in only one of the two is kept and noted in the conversion log.
+
+**Point to note:** the same person can be written differently across reports ("Robert Watson", "Robert T. Watson"), and so have different URIs.
+
+### 13. Chapters: the executive summary
+
+`ipbes:hasDescription` on a Chapter holds its executive summary, finding by finding, with its traceability marks and footnotes as printed. v06 has no place for it, so it was left out of the files, which lost text the reports give as each chapter's main findings.
 
 ## Questions for discussion (not in v07)
-
-**13. Executive summaries.** Chapters' executive summaries have no place in the ontology, so they are left out of the files. Should Chapter gain `ipbes:hasDescription` to hold them?
 
 **14. Chapters printed in parts.** GA1's chapter 2 is printed in parts 2.1, 2.2 and 2.3, each with its own authors and reference list. The automatic file has one chapter with sub-chapters 2.1.1 ...; the manual file has three chapters. Which should be the model?
 
