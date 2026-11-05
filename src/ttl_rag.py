@@ -386,6 +386,12 @@ def _infer_chunk_type(question: str) -> str | None:
         return "il"
     if ASKS_FOR_REFERENCES.search(question):
         return "ref"
+    # Only SCM prints guidance points, so plain "guidance" counts only when the
+    # question names it: elsewhere the word is general ("guidance on ...").
+    if ("guidance point" in q or "guidance for science and policy" in q
+            or "guidance for the platform" in q
+            or ("guidance" in q and named_assessments(question, ["SCM"]))):
+        return "guidance"
     if ("author" in q or "person" in q or "expert" in q
             or "review editor" in q or "co-chair" in q or "fellow" in q):
         return "person"
@@ -419,9 +425,17 @@ def _gap_sort_key(m: dict):
     return (-year, m.get("assessment", ""), int(number.group(1)) if number else 0)
 
 
+def _guidance_sort_key(m: dict):
+    """As printed: guidance points 1, 2 ..., then Platform guidance points 1, 2 ...
+    (SCM16-GP1, SCM16-PGP1)."""
+    identifier = m.get("identifier", "")
+    number = re.search(r"(\d+)$", identifier)
+    return (m.get("assessment", ""), "PGP" in identifier, int(number.group(1)) if number else 0)
+
+
 def _reorder_by_identifier(results):
     """Sort by (assessment, identifier) so assessments are not interleaved;
-    knowledge gaps by _gap_sort_key."""
+    knowledge gaps by _gap_sort_key, guidance points by _guidance_sort_key."""
     docs = results["documents"][0]
     metas = results["metadatas"][0]
     dists = results["distances"][0]
@@ -431,6 +445,7 @@ def _reorder_by_identifier(results):
         range(len(docs)),
         key=lambda i: (
             _gap_sort_key(metas[i]) if metas[i].get("chunk_type") == "kg" else
+            _guidance_sort_key(metas[i]) if metas[i].get("chunk_type") == "guidance" else
             (metas[i].get("assessment", ""),
              _identifier_sort_key(metas[i].get("identifier", "")))
         ),
@@ -531,6 +546,20 @@ def _build_task(
             "List ALL retrieved chapters, grouped by assessment, in the "
             "order given, with each chapter's number and title. Then answer "
             "anything else the question asks, using only these chunks.\n"
+        )
+
+    if chunk_type == "guidance":
+        return (
+            "The user is asking about the GUIDANCE POINTS of an IPBES assessment.\n"
+            "Every retrieved chunk below is a guidance point, with its label as the "
+            "heading and its section as the Category.\n"
+            "\n"
+            "If the question asks about one section (such as guidance to the Platform), "
+            "cover every point of that section and no other; otherwise cover every point, "
+            "grouped by section. If it asks about one point or topic, answer that, "
+            "using the points that concern it.\n"
+            "Keep the order given. Name each point by its label and say what it advises, "
+            "faithfully and without adding anything.\n"
         )
 
     if chunk_type == "person" and country_names:
