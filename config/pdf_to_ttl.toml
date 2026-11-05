@@ -7,6 +7,10 @@
 
 # DOIs: `doi` and `chapter_dois` here are the reference, and win over what a report prints.
 
+# ORCID iDs: the experts list is the verified source. `orcid_corrections` names
+# the people whose iD in the assessment's records was wrong, with that wrong iD;
+# their person record gets a skos:note saying so.
+
 [ontology]
 # The ipbes: prefix, with a trailing "/" as the data review recommends (L6):
 # classes and properties are http://ontology.ipbes.net/report/KeyMessage, not
@@ -52,6 +56,9 @@ year = 2024
 alt_label = "IPBES Transformative Change Assessment"
 zotero_group = 4589462
 
+[assessments.TCA.orcid_corrections]
+"Ambika Prasad Gautam" = "0000-0001-3705-0335"
+
 [assessments.NXS]
 doi = "10.5281/zenodo.13850054"
 pdf = "data/pdf/nxs_report.pdf"
@@ -59,6 +66,10 @@ report_id = "NXS24"
 year = 2024
 alt_label = "IPBES Nexus Assessment"
 zotero_group = 4596166
+
+[assessments.NXS.orcid_corrections]
+"Ganesh Raj Joshi" = "0000-0001-3705-0335"
+"Sebastián Aguiar" = "0000-0003-0702-3566"
 
 [assessments.SUA]
 doi = "10.5281/zenodo.6448567"
@@ -70,6 +81,10 @@ zotero_group = 2344805
 notes = [
     "The printed report's DOI points to the SPM."
 ]
+
+[assessments.SUA.orcid_corrections]
+"Vukan Lavadinović" = "0000-0003-4227-2584"
+"Lusine Margaryan" = "0000-0003-4227-2584"
 
 [assessments.GA1]
 doi = "10.5281/zenodo.3831673"
@@ -97,6 +112,9 @@ notes = [
 # The citation misprints "Ecosystem Service".
 [assessments.GA1.chapter_titles]
 "1" = "Assessing a planet in transformation: Rationale and approach of the IPBES Global Assessment on Biodiversity and Ecosystem Services"
+
+[assessments.GA1.orcid_corrections]
+"Ambika Prasad Gautam" = "0000-0001-3705-0335"
 
 [assessments.LDR]
 doi = "10.5281/zenodo.3237392"
@@ -155,6 +173,9 @@ notes = [
 ]
 
 # The regional assessments (2018). No earlier TTL of them exists.
+[assessments.VA.orcid_corrections]
+"Julian Zúñiga-Barragán" = "0000-0002-8210-5038"
+
 [assessments.AFA]
 doi = "10.5281/zenodo.3236066"
 pdf = "data/pdf/afa_report.pdf"

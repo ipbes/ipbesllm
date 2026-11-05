@@ -7642,6 +7642,7 @@ Marine assessment processes provide opportunities for management agencies, resea
     ipbes:country "NPL" ;
     ipbes:la "Lead Author in GA119-ch6" ;
     owl:sameAs <https://orcid.org/0000-0001-9800-0057> ;
+    skos:note "ORCID taken from the verified IPBES experts list; the assessment's records wrongly gave 0000-0001-3705-0335." ;
     skos:prefLabel "Ambika Prasad Gautam" ;
     foaf:firstName "Ambika Prasad" ;
     foaf:lastName "Gautam" .

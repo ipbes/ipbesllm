@@ -6909,6 +6909,8 @@ The One Health approach (H14) supports integrating biodiversity and food system 
     ipbes:Report ipbes:NXS24 ;
     ipbes:country "ARG" ;
     ipbes:la "Lead Author in NXS24-ch5" ;
+    owl:sameAs <https://orcid.org/0000-0002-3969-3508> ;
+    skos:note "ORCID taken from the verified IPBES experts list; the assessment's records wrongly gave 0000-0003-0702-3566." ;
     skos:prefLabel "Sebastián Aguiar" ;
     foaf:firstName "Sebastián" ;
     foaf:lastName "Aguiar" .
@@ -6949,6 +6951,7 @@ The One Health approach (H14) supports integrating biodiversity and food system 
     ipbes:Report ipbes:NXS24 ;
     ipbes:country "ARG" ;
     ipbes:la "Lead Author in NXS24-ch5" ;
+    owl:sameAs <https://orcid.org/0000-0003-0702-3566> ;
     skos:prefLabel "Virginia Alonso Roldán" ;
     foaf:firstName "Virginia" ;
     foaf:lastName "Alonso Roldán" .
@@ -7544,6 +7547,7 @@ The One Health approach (H14) supports integrating biodiversity and food system 
     ipbes:Report ipbes:NXS24 ;
     ipbes:country "NPL" ;
     ipbes:la "Lead Author in NXS24-ch5" ;
+    skos:note "No ORCID: the verified IPBES experts list has none for this person; the assessment's records wrongly gave 0000-0001-3705-0335." ;
     skos:prefLabel "Ganesh Raj Joshi" ;
     foaf:firstName "Ganesh Raj" ;
     foaf:lastName "Joshi" .

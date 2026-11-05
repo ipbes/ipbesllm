@@ -4930,6 +4930,7 @@ Some examples are summarized in Table 5. 4. covering the multidimensional aspect
     ipbes:country "SRB" ;
     ipbes:fl "Fellow in SUA22-ch2" ;
     owl:sameAs <https://orcid.org/0000-0002-8134-5849> ;
+    skos:note "ORCID taken from the verified IPBES experts list; the assessment's records wrongly gave 0000-0003-4227-2584." ;
     skos:prefLabel "Vukan Lavadinović" ;
     foaf:firstName "Vukan" ;
     foaf:lastName "Lavadinović" .
@@ -51373,6 +51374,7 @@ Atlantic bluefin tuna has been sustainably exploited for two millennia by tradit
         "SWE" ;
     ipbes:la "Lead Author in SUA22-ch2" ;
     owl:sameAs <https://orcid.org/0000-0002-1641-4123> ;
+    skos:note "ORCID taken from the verified IPBES experts list; the assessment's records wrongly gave 0000-0003-4227-2584." ;
     skos:prefLabel "Lusine Margaryan" ;
     foaf:firstName "Lusine" ;
     foaf:lastName "Margaryan" .

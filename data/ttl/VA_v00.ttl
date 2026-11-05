@@ -4654,6 +4654,7 @@ In such cases, dialogue and transparent deliberative approaches can help make ex
     ipbes:Report ipbes:VA22 ;
     ipbes:ca "Contributing Author in VA22-ch2" ;
     ipbes:country "COL" ;
+    skos:note "No ORCID: the verified IPBES experts list has none for this person; the assessment's records wrongly gave 0000-0002-8210-5038." ;
     skos:prefLabel "Julian Zúñiga-Barragán" ;
     foaf:firstName "Julian" ;
     foaf:lastName "Zúñiga-Barragán" .
@@ -31343,6 +31344,7 @@ Possibility to elicit values in diverse contexts Higher Lower but incomplete""" 
         "Contributing Author in VA22-ch4" ;
     ipbes:country "DEU" ;
     ipbes:la "Lead Author in VA22-ch5" ;
+    owl:sameAs <https://orcid.org/0000-0002-8210-5038> ;
     skos:prefLabel "Julian Rode" ;
     foaf:firstName "Julian" ;
     foaf:lastName "Rode" .

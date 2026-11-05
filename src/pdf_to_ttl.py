@@ -1827,6 +1827,7 @@ class Person:
     countries: list[str] = field(default_factory=list)
     roles: list[tuple[str, int]] = field(default_factory=list)     # (cl, 1); co-chair: ("cs", 0)
     orcid: str = ""
+    note: str = ""          # skos:note: the ORCID iD differs from the assessment's records
     full_name: str = ""     # from the author annex, with middle names
     seen: list[str] = field(default_factory=list)   # the name as printed in each source
 
@@ -2209,6 +2210,20 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
             if not any(name_match(name, n) for n in committee_rows):
                 log.add("people", f"{name}: on page 2 of the report as management committee, not in the experts list "
                                   f"with that role; kept")
+    # The assessment's records gave these people a wrong ORCID iD; the experts
+    # list is the verified one. Say so on the record.
+    for name, entered in cfg.get("orcid_corrections", {}).items():
+        p = next((q for q in people if name_match(name, q.name)), None)
+        if p is None:
+            log.add("people", f"orcid_corrections: {name} is not among the people of {cfg['code']}")
+        elif p.orcid == entered:
+            log.add("people", f"orcid_corrections: {name} still has {entered}, which is recorded as wrong")
+        elif p.orcid:
+            p.note = (f"ORCID taken from the verified IPBES experts list; "
+                      f"the assessment's records wrongly gave {entered}.")
+        else:
+            p.note = (f"No ORCID: the verified IPBES experts list has none for this person; "
+                      f"the assessment's records wrongly gave {entered}.")
     for p in people:
         fix_typo(p, log)
         if not p.countries:
@@ -3214,6 +3229,8 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
                 add(report, FOAF.Person, s)
         if p.orcid:
             add(s, OWL.sameAs, URIRef(f"https://orcid.org/{p.orcid}"))
+        if p.note:
+            add(s, SKOS.note, p.note)
 
     # References: one per Zotero item, with every chapter and section citing it.
     group = cfg.get("zotero_group")

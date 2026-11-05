@@ -2122,6 +2122,7 @@ National Governments, international organizations (e.g., the World Trade Organiz
     ipbes:country "NPL" ;
     ipbes:la "Lead Author in TCA24-ch2" ;
     owl:sameAs <https://orcid.org/0000-0001-9800-0057> ;
+    skos:note "ORCID taken from the verified IPBES experts list; the assessment's records wrongly gave 0000-0001-3705-0335." ;
     skos:prefLabel "Ambika P. Gautam" ;
     foaf:firstName "Ambika P." ;
     foaf:lastName "Gautam" .
