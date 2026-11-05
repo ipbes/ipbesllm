@@ -655,6 +655,8 @@ class Report:
     committee: list[str] = field(default_factory=list)            # the management committee, page 2
     key_messages: list[Message] = field(default_factory=list)
     background_messages: list[Message] = field(default_factory=list)
+    guidance: list[Message] = field(default_factory=list)         # SCM: "Guidance point 1" ..., group = its section
+    guidance_intro: dict[str, str] = field(default_factory=dict)  # section -> the text above its points
     illustrations: list[Illustration] = field(default_factory=list)
     chapters: list[Chapter] = field(default_factory=list)
     footnotes: dict[tuple[int, int], Footnote] = field(default_factory=dict)  # (chapter or 0, n)
@@ -719,7 +721,8 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
     # The chapters' reference lists, from the outline: LDR prints no title over them.
     ref_pages = {page for _, title, page in doc.get_toc() if title.strip().upper() == "REFERENCES"}
 
-    mode = "front"          # front, km, bgm, appendix, chapter, exec, refs, annex
+    mode = "front"          # front, km, bgm, guidance, appendix, chapter, exec, refs, annex
+    guidance_section = ""
     chapter: Chapter | None = None
     section: Section | None = None
     message: Message | None = None
@@ -806,7 +809,11 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             elif t.replace("-", "") in ("BACKGROUND MESSAGES", "BACKGROUND", "BACKGROUND TO THE KEY MESSAGES"):
                 # "BACK-GROUND" on a cover page (PPA, whose section has no other title)
                 mode, message = "bgm", None
-            elif t.startswith("APPENDIX") and mode in ("km", "bgm", "appendix"):
+            elif t.startswith("GUIDANCE FOR") and mode in ("bgm", "guidance"):
+                # SCM: "GUIDANCE FOR SCIENCE AND POLICY", after the last key finding.
+                mode, message = "guidance", None
+                guidance_section = re.sub(r"\s+", " ", text).capitalize().replace(" platform", " Platform")
+            elif t.startswith("APPENDIX") and mode in ("km", "bgm", "guidance", "appendix"):
                 mode = "appendix"
             elif mode in ("km", "bgm") and re.match(r"^[A-F]\.\s+\S", text):
                 # SUA: "A. Sustainable use of wild species is critical ..." opens
@@ -1115,6 +1122,24 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 if p.rest:
                     message.paras.append(p.rest)
             elif message:
+                _add_para(message.paras, text)
+        elif mode == "guidance":
+            # "Guidance point 1" is printed in a heavier font and read apart from
+            # its text, which is left starting with ": ". They count from 1 in each section.
+            if text.startswith(": "):
+                platform = "Platform" in guidance_section
+                n = sum(g.group == guidance_section for g in rep.guidance) + 1
+                message = Message(f"{'PGP' if platform else 'GP'}{n}",
+                                  f"{'Platform guidance' if platform else 'Guidance'} point {n}",
+                                  p.page, group=guidance_section)
+                message.label_printed = True
+                message.paras.append(text[2:])
+                rep.guidance.append(message)
+            elif message is None:
+                rep.guidance_intro[guidance_section] = text
+            elif min(abs(p.x0 - 71), abs(p.x0 - 304)) < 5:
+                # The text columns; a table between them has cells in body text
+                # (Table SPM. 4), which are not part of the guidance point.
                 _add_para(message.paras, text)
         elif mode == "exec" and chapter and chapter.parted and section is not None:
             # A part's own executive summary opens its text.
@@ -1547,6 +1572,17 @@ def to_markdown(rep: Report, name: str) -> str:
             out += [f"#### {group}", ""]
         out += [f"##### {bgm.ident} (p{bgm.page})", f"**{bgm.headline}**", ""]
         out += [x for para in bgm.paras for x in (para, "")]
+    if rep.guidance:
+        out += ["### Guidance", ""]
+        group = None
+        for g in rep.guidance:
+            if g.group != group:
+                group = g.group
+                out += [f"#### {group}", ""]
+                if rep.guidance_intro.get(group):
+                    out += [rep.guidance_intro[group], ""]
+            out += [f"##### {g.headline} (p{g.page})", ""]
+            out += [x for para in g.paras for x in (para, "")]
     out += ["### SPM figures and tables", ""]
     ills(True)
     fn0 = [f for (c, _), f in rep.footnotes.items() if c == 0]
@@ -3138,6 +3174,26 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
             for u in dict.fromkeys(ills + mentions(seg)):
                 add(sm, P("Illustration"), u)
 
+    # Guidance points (SCM)
+    for point in rep.guidance:
+        s = URIRef(f"{base}guidance/{rid}-{point.ident}")
+        add(s, RDF.type, P("Guidance"))
+        add(s, P("Report"), report)
+        add(s, DCTERMS.identifier, f"{rid}-{point.ident}")
+        add(s, SKOS.prefLabel, point.headline)
+        add(s, P("hasCategory"), point.group)
+        add(s, SKOS.note, rep.guidance_intro.get(point.group, ""))
+        text = resolve_marks("\n\n".join(point.paras), 0, rep)
+        add(s, P("hasDescription"), text)
+        segments = split_submessages([clean(resolve_marks(x, 0, rep)) for x in point.paras], point.ident, log)
+        trace = ", ".join(t for _, t in segments if t)
+        add(s, P("traceability"), trace)
+        subs, ills = section_links(trace, point.ident)
+        for u in subs:
+            add(s, P("SubChapter"), u)
+        for u in dict.fromkeys(ills + mentions(text)):
+            add(s, P("Illustration"), u)
+
     def section_letter(message: Message) -> str:
         m = re.match(r"([A-F])\.?\d*$", message.ident) or re.match(r"([A-F])\.\s", message.group)
         return m.group(1) if m else ""
@@ -3441,6 +3497,7 @@ def convert(assessment: str, config: Path = DEFAULT_CONFIG, out: Path | None = N
         "Background messages": len(rep.background_messages),
         "Figures, tables and boxes": len(rep.illustrations),
         "Knowledge gaps": len(gaps),
+        "Guidance points": len(rep.guidance),
         "People": len(people),
         "Reference entries in the PDF": len(refs),
         "  matched to Zotero": sum(1 for r in refs if r.zotero),

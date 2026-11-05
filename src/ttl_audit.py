@@ -70,7 +70,7 @@ PARTIAL_BY_NATURE = {
 # Ontology class -> the indexer's chunk type for it.
 CHUNK_TYPES = {
     "ipbes:KeyMessage": "key", "ipbes:BackgroundMessage": "bgm",
-    "ipbes:SubMessage": "subm", "ipbes:KnowledgeGap": "kg",
+    "ipbes:SubMessage": "subm", "ipbes:KnowledgeGap": "kg", "ipbes:Guidance": "guidance",
     "ipbes:Chapter": "chapter", "ipbes:SubChapter": "sch",
     "ipbes:Illustration": "il", "foaf:Person": "person",
     "ipbes:Reference": "ref",

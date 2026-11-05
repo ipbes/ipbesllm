@@ -322,11 +322,14 @@ The confidence level comes from `hasConfidenceLevel`, whose value is `well estab
 | Task | Command |
 |---|---|
 | Index (incremental: only new or changed chunks are embedded) | `PYTHONPATH=src python src/ttl_index.py` |
+| Index, and run again after a timeout until complete (log in `logs/ttl_index.log`) | `setsid nohup src/ttl_index_until_done.sh >/dev/null 2>&1 &` |
 | Check only: parse and validate, nothing written | `PYTHONPATH=src python src/ttl_index.py --dry-run` |
 | Wipe and start over | `PYTHONPATH=src python src/ttl_index.py --rebuild` |
 | Inspect retrieval | `PYTHONPATH=src python src/ttl_query.py` |
 | Ask a question | `PYTHONPATH=src python src/ttl_rag.py` |
 | Sanity checks | `PYTHONPATH=src python src/ttl_test.py` |
+
+The embedding model takes at most 8,192 tokens per chunk. A chunk over 20,000 characters (`MAX_CHUNK_CHARS` in `chunking.py`) is split into parts, each repeating the header, with `-p1`, `-p2` ... on its id; indexing and `--dry-run` stop if any chunk is still over the limit.
 
 The references (about 33,500 chunks) are indexed but left out of every search unless a question asks for references, citations or a bibliography ("in reference to" does not count; the same rule applies to the PDF reference lists). Such a question gets a table of the references cited in the sections closest to it, per assessment, with DOI and Zotero links, built from the data so that no DOI can be invented. `--skip-types ref` still leaves them out of the index altogether.
 

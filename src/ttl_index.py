@@ -34,6 +34,7 @@ from pathlib import Path
 
 import chromadb
 
+from chunking import MAX_CHUNK_CHARS, too_long
 from geo import canonical_country, country_code_for_label
 from rag_utils import (
     EMBED_MODEL, GET_PAGE, MAX_BATCH_CHARS, MAX_BATCH_ITEMS,
@@ -287,6 +288,15 @@ def main(argv=None) -> None:
                          "Nothing was changed.")
 
     check_scalar_metadata(chunks, build_metadata)
+
+    long_chunks = too_long(chunks)
+    if long_chunks:
+        for c in long_chunks[:20]:
+            print(f"  {len(c['text']):7,} chars  {c['chunk_id']}")
+        raise SystemExit(f"Aborting: {len(long_chunks)} chunk(s) over {MAX_CHUNK_CHARS:,} chars, "
+                         "which the embedding model could reject. Nothing was changed.")
+    print(f"Longest chunk: {max(len(c['text']) for c in chunks):,} chars "
+          f"(limit {MAX_CHUNK_CHARS:,})")
 
     if args.dry_run:
         n = sum(1 for _ in make_batches(chunks, args.max_items, args.max_chars))

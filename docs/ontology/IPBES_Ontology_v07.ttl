@@ -21,6 +21,17 @@
     dcterms:identifier "The identifier of the knowledge gap: the report code and its number from 1, as in its URI (BBA26-1)" ;
     skos:note "How the knowledge gap was obtained, when the report does not list it as a knowledge gap" .
 
+<http://ontology.ipbes.net/report/guidance/> a ipbes:Guidance ;
+    ipbes:Illustration "Link to class Illustration. Used for mentioned tables, figures or boxes in the guidance point" ;
+    ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/> ;
+    ipbes:hasCategory "The section of the report the guidance point is printed in, such as Guidance for science and policy" ;
+    ipbes:hasDescription "The text of the guidance point" ;
+    ipbes:traceability "The sections, figures, tables or boxes the report gives for the guidance point" ;
+    dcterms:identifier "The identifier of the guidance point: the report code and its label, as in its URI (SCM16-GP1, SCM16-PGP1)" ;
+    skos:note "The introduction printed above the section's guidance points, if any" ;
+    skos:prefLabel "The label printed in the report, such as Guidance point 1 or Platform guidance point 1" .
+
 <http://ontology.ipbes.net/report/subm/> a ipbes:SubMessage ;
     ipbes:Illustration "Link to class Illustration. Used for mentioned tables, figures or boxes in the sub-message" ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/> ;
@@ -68,6 +79,7 @@
     dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/> ;
     ipbes:mc "Management committee members (Bureau and Multidisciplinary Expert Panel) who guided the production of the stated report" ;
     owl:sameAs "Link to other resources about the person such as ORCID" ;
+    skos:note "Why the ORCID iD differs from the one in the assessment's records, when it was corrected against the verified IPBES experts list" ;
     skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" ;
     foaf:firstName "First name of the person" ;
     foaf:lastName "Family name of the person" .

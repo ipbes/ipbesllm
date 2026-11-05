@@ -36,7 +36,7 @@ from pdf_to_ttl import name_match
 from ttl_loader import _discover_ipbes_namespace
 
 CLASSES = ["Report", "Chapter", "SubChapter", "KeyMessage", "BackgroundMessage", "SubMessage",
-           "Illustration", "KnowledgeGap", "Person", "Reference"]
+           "Illustration", "KnowledgeGap", "Guidance", "Person", "Reference"]
 TEXT_PROPS = {"hasDescription", "prefLabel", "altLabel", "firstName", "lastName", "hasCategory"}
 
 
@@ -92,8 +92,8 @@ def uri_key(cls: str, s) -> str:
 
 # The path of each class in item URIs (http://ontology.ipbes.net/report/sch/BBA26-1.1).
 URI_PATHS = {"ch": "Chapter", "sch": "SubChapter", "key": "KeyMessage", "bgm": "BackgroundMessage",
-             "subm": "SubMessage", "il": "Illustration", "kg": "KnowledgeGap", "person": "Person",
-             "ref": "Reference"}
+             "subm": "SubMessage", "il": "Illustration", "kg": "KnowledgeGap", "guidance": "Guidance",
+             "person": "Person", "ref": "Reference"}
 
 
 class TTL:

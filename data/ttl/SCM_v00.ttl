@@ -4,6 +4,210 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
+<http://ontology.ipbes.net/report/guidance/SCM16-GP1> a ipbes:Guidance ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-2.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-2.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-4.3.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.1.2> ;
+    ipbes:hasCategory "Guidance for science and policy" ;
+    ipbes:hasDescription "Scientists and policy practitioners may want to ensure that the types of scenarios, models and decision-support tools employed are matched carefully to the needs of each particular policy or decision context. Particular attention should be paid to (i) the choice of drivers or policy options that determine the appropriate types of scenarios (e.g., exploratory, target seeking or policy screening); (ii) the impacts on nature and nature’s benefits that are of interest and that determine the types of models of impacts that should be mobilized; (iii) the diverse values that need to be addressed and that determine the appropriate methods for assessing those values; and (iv) the type of policy or decision-making process that is being supported and that determines the suitability of different assessment or decision-support tools (e.g., multi-criteria analysis and management strategy evaluation) {1.5, 2.2, 2.4, 3.2.2, 3.2.3.2, 3.5, 4.3.2, 6.1.2}." ;
+    ipbes:traceability "1.5, 2.2, 2.4, 3.2.2, 3.2.3.2, 3.5, 4.3.2, 6.1.2" ;
+    dcterms:identifier "SCM16-GP1" ;
+    skos:note "The following lessons from best practices for building greater understanding of, strengthening approaches to and making more effective use of scenarios and models were identified:" ;
+    skos:prefLabel "Guidance point 1" .
+
+<http://ontology.ipbes.net/report/guidance/SCM16-GP2> a ipbes:Guidance ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-2.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-2.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.1.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.6.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.6.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-8.4> ;
+    ipbes:hasCategory "Guidance for science and policy" ;
+    ipbes:hasDescription "The scientific community, policymakers and stakeholders may want to consider improving, and more widely applying, participatory scenario methods in order to enhance the relevancy and acceptance of scenarios for biodiversity and ecosystem services. This would include broadening the predominantly local-scale focus of participatory approaches to regional and global scales. Such an effort would facilitate the dialogue between scientific experts and stakeholders throughout the development and application of scenarios and models. Broadening participatory methods to regional and global scales poses significant challenges that will require greatly increased coordination of efforts between all actors involved in developing and applying scenarios and models at different scales {2.2, 2.3, 2.4, 2.6, 3.2.1.2, 7.4, 7.5, 7.6.2, 7.6.3, 8.4}." ;
+    ipbes:traceability "2.2, 2.3, 2.4, 2.6, 3.2.1.2, 7.4, 7.5, 7.6.2, 7.6.3, 8.4" ;
+    dcterms:identifier "SCM16-GP2" ;
+    skos:note "The following lessons from best practices for building greater understanding of, strengthening approaches to and making more effective use of scenarios and models were identified:" ;
+    skos:prefLabel "Guidance point 2" .
+
+<http://ontology.ipbes.net/report/guidance/SCM16-GP3> a ipbes:Guidance ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/SCM16-FigureSPM.8> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.2.2.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-1.6.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-4.2.3.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-4.3.1.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-8.3.1> ;
+    ipbes:hasCategory "Guidance for science and policy" ;
+    ipbes:hasDescription "The scientific community may want to give priority to addressing gaps in methods for modelling impacts of drivers and policy interventions on biodiversity and ecosystem services. These gaps are identified in chapter 8 of the assessment, with additional information about them provided in chapters 3-6. Work could focus on methods for linking inputs and outputs between major components of the scenarios and modelling chain, and on linking scenarios and models across spatial and temporal scales. High priority should also be given to encouraging and catalysing the development of models, and underpinning knowledge, that more explicitly link ecosystem services – and other benefits that people derive from nature – to biodiversity, as well as to ecosystem properties and processes. One means of achieving this would be to advance the development of integrated system-level approaches to linking scenarios and models of indirect drivers, direct drivers, nature, nature’s benefits to people and good quality of life to better account for important relationships and feedback between those components (figure SPM. 8). That could include encouraging and catalysing the extension of integrated assessment models, already being employed widely in other domains (e.g., climate, energy and agriculture), to better incorporate modelling of drivers and impacts of direct relevance to biodiversity and ecosystem services {1.2.2.1, 1.6.1, 3.2.3, 3.5, 4.2.3.4, 4.3.1.5, 6.2, 6.3, 8.3.1}." ;
+    ipbes:traceability "1.2.2.1, 1.6.1, 3.2.3, 3.5, 4.2.3.4, 4.3.1.5, 6.2, 6.3, 8.3.1" ;
+    dcterms:identifier "SCM16-GP3" ;
+    skos:note "The following lessons from best practices for building greater understanding of, strengthening approaches to and making more effective use of scenarios and models were identified:" ;
+    skos:prefLabel "Guidance point 3" .
+
+<http://ontology.ipbes.net/report/guidance/SCM16-GP4> a ipbes:Guidance ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.6.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-2.3.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-4.6.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.2.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-8.3.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-8.4.3> ;
+    ipbes:hasCategory "Guidance for science and policy" ;
+    ipbes:hasDescription "The scientific community may want to consider developing practical and effective approaches to evaluating and communicating levels of uncertainty associated with scenarios and models, as well as tools for applying those approaches to assessments and decision making. This would include setting standards for best practices, using model-data and model-model inter-comparisons to provide robust and transparent evaluations of uncertainty and encouraging new research into methods of measuring and communicating uncertainty and its impact on decision-making {1.6.3, 2.3.3, 3.5, 4.6.3, 6.5, 7.2.2, 8.3.3, 8.4.3}." ;
+    ipbes:traceability "1.6.3, 2.3.3, 3.5, 4.6.3, 6.5, 7.2.2, 8.3.3, 8.4.3" ;
+    dcterms:identifier "SCM16-GP4" ;
+    skos:note "The following lessons from best practices for building greater understanding of, strengthening approaches to and making more effective use of scenarios and models were identified:" ;
+    skos:prefLabel "Guidance point 4" .
+
+<http://ontology.ipbes.net/report/guidance/SCM16-GP5> a ipbes:Guidance ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.6.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.6.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-8.2> ;
+    ipbes:hasCategory "Guidance for science and policy" ;
+    ipbes:hasDescription "Data holders and institutions may want to consider improving the accessibility of well documented data sources and working in close collaboration with research and observation communities (including citizen science) and communities working on indicators to fill gaps in data collection and provision. In many cases, this will coincide with efforts to improve the collection of and access to data for quantifying status and trends. However, models and scenarios need additional types of data for development and testing that should be taken into account when developing or refining monitoring systems and data-sharing platforms {1.6.2, 2.6, 3.5, 6.3, 6.4, 7.3, 7.6.4, 8.2}." ;
+    ipbes:traceability "1.6.2, 2.6, 3.5, 6.3, 6.4, 7.3, 7.6.4, 8.2" ;
+    dcterms:identifier "SCM16-GP5" ;
+    skos:note "The following lessons from best practices for building greater understanding of, strengthening approaches to and making more effective use of scenarios and models were identified:" ;
+    skos:prefLabel "Guidance point 5" .
+
+<http://ontology.ipbes.net/report/guidance/SCM16-GP6> a ipbes:Guidance ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/SCM16-TableSPM.3> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
+        <http://ontology.ipbes.net/report/sch/SCM16-4.7>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.1.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.6.1> ;
+    ipbes:hasCategory "Guidance for science and policy" ;
+    ipbes:hasDescription "Human and technical capacity for scenario development and modelling may need to be enhanced, including through the promotion of open, transparent access to scenario and modelling tools, as well as to the data required for the development and testing of such scenario and modelling tools (table SPM. 3). This can be facilitated through a variety of mechanisms, including by (i) supporting training courses for scientists and decision makers; (ii) encouraging rigorous documentation of scenarios and models; (iii) encouraging the development of networks that provide opportunities for scientists from all regions to share knowledge, including through user forums, workshops, internships and collaborative projects; and (iv) using the catalogue of policy support tools developed by the Platform to promote open access to models and scenarios, where possible in multiple languages {2.6, 4.7, 7.1.1, 7.2, 7.6.1}." ;
+    ipbes:traceability "2.6, 4.7, 7.1.1, 7.2, 7.6.1" ;
+    dcterms:identifier "SCM16-GP6" ;
+    skos:note "The following lessons from best practices for building greater understanding of, strengthening approaches to and making more effective use of scenarios and models were identified:" ;
+    skos:prefLabel "Guidance point 6" .
+
+<http://ontology.ipbes.net/report/guidance/SCM16-PGP1> a ipbes:Guidance ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.5.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-8.4.2> ;
+    ipbes:hasCategory "Guidance for the Platform and its task forces and expert groups" ;
+    ipbes:hasDescription "Experts planning to employ scenarios and models in Platform thematic, regional and global assessments may want to consider maximizing the benefit derived from analysing and synthesizing results from existing applications of policy-relevant scenarios and models. Even where the timing of future Platform assessments, including the global assessment, allows for the development of new scenarios (see Platform guidance point 2) any such development needs to build on, and complement, the effective analysis and synthesis of existing scenarios and models. Experience from previous assessments on the global and regional scales suggests that the full cycle of new scenario development through to final analysis of impacts based on modelling requires several years of effort to generate results of sufficient rigour and credibility for the purposes of Platform assessments. Experts involved in regional and thematic assessments already under way should therefore focus on working closely with other relevant Platform deliverables and the wider scientific community to harness the power of new approaches to analysing and synthesizing best available exploratory, target-seeking and policy screening scenarios on the global, regional, national and local scales. The approaches adopted for the four regional assessments should be coherent enough to enable the collective contribution of results to the global assessment while still allowing for significant regional differences {1.5.1, 3.2.2, 3.2.3, 3.5, 8.4.2}." ;
+    ipbes:traceability "1.5.1, 3.2.2, 3.2.3, 3.5, 8.4.2" ;
+    dcterms:identifier "SCM16-PGP1" ;
+    skos:prefLabel "Platform guidance point 1" .
+
+<http://ontology.ipbes.net/report/guidance/SCM16-PGP2> a ipbes:Guidance ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/SCM16-FigureSPM.8>,
+        <http://ontology.ipbes.net/report/il/SCM16-TableSPM.4> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-4.7>,
+        <http://ontology.ipbes.net/report/sch/SCM16-8.4.2> ;
+    ipbes:hasCategory "Guidance for the Platform and its task forces and expert groups" ;
+    ipbes:hasDescription "The Platform may want to consider encouraging and working closely with the wider scientific community to develop a flexible and adaptable suite of multi-scaled scenarios specifically tailored to its objectives. This would mean adopting a relatively long-term strategic view of catalysing the development of scenarios that meet its needs and would involve working closely with the scientific community to articulate criteria guiding the development of new scenarios by that community. Table SPM. 4 summarizes several criteria that are important for the specific needs of the Platform (see also figure SPM. 8), many of which go well beyond the criteria underlying the current development of other scenarios such as the shared socioeconomic pathways being catalysed by the Intergovernmental Panel on Climate Change (box SPM. 2). The Platform would, however, benefit from close collaboration and coordination with regard to ongoing activities within the scientific community developing the shared socioeconomic pathways. The advantage of using the shared socioeconomic pathways as a common resource for the Platform and the Panel include saving of effort, increasing consistency and improving aspects of the pathways that would be of mutual benefit for the Platform and the Panel. Developing a full suite of interlinked scenarios as outlined in table SPM. 4 would require catalysing research on a variety of types of scenarios on multiple spatial and temporal scales. This should therefore be viewed as a long-term objective {3.5, 4.7, 8.4.2}." ;
+    ipbes:traceability "3.5, 4.7, 8.4.2" ;
+    dcterms:identifier "SCM16-PGP2" ;
+    skos:prefLabel "Platform guidance point 2" .
+
+<http://ontology.ipbes.net/report/guidance/SCM16-PGP3> a ipbes:Guidance ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.4.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.5.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.6.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.6.2> ;
+    ipbes:hasCategory "Guidance for the Platform and its task forces and expert groups" ;
+    ipbes:hasDescription "In order to overcome barriers to the use of scenarios and models, it is important that the Platform continue to support and facilitate capacity-building within the scientific community and among policymaking and decision-making practitioners. The Platform task force on capacity-building could play a vital role in achieving this by helping to build human and technical capacity, specifically targeting the skills needed for the development and use of scenarios and models. Such engagement should link, where appropriate, with relevant networks and forums that are already established within the scientific and practitioner communities. The Platform should also set high standards of transparency for all scenarios and models used in its assessments or promoted through the deliverable on policy support tools and methodologies {2.6, 3.2.2, 3.2.3, 3.5, 6.1, 7.2, 7.4.1, 7.5.4, 7.6.1, 7.6.2}." ;
+    ipbes:traceability "2.6, 3.2.2, 3.2.3, 3.5, 6.1, 7.2, 7.4.1, 7.5.4, 7.6.1, 7.6.2" ;
+    dcterms:identifier "SCM16-PGP3" ;
+    skos:prefLabel "Platform guidance point 3" .
+
+<http://ontology.ipbes.net/report/guidance/SCM16-PGP4> a ipbes:Guidance ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.4.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.4.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.5.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.6.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.6.5> ;
+    ipbes:hasCategory "Guidance for the Platform and its task forces and expert groups" ;
+    ipbes:hasDescription "Because of the highly technical nature of scenarios and models, it is preferable that all of the Platform deliverables involve experts with knowledge of the utility and limitations of scenarios, models and decision-support tools. This point can be addressed by encouraging the nomination and selection of experts familiar with scenarios and models, keeping in mind that expertise is needed across the various classes of models and scenarios. Owing to the diversity and often highly technical nature of scenarios and models, the Platform task forces and expert groups should also refer to the methodological assessment and the associated evolving guide on scenarios and models and should seek advice and support from relevant specialists involved in Platform deliverables, including the task force on knowledge, information and data. Due to the importance of indigenous and local knowledge to the objectives of the Platform, particular consideration should be given to mobilizing experts with experience in formulating and using scenarios and models that mobilize indigenous and local knowledge, including participatory approaches. Experts involved in Platform deliverables should work closely with the indigenous and local knowledge task force in implementing those approaches. Broader use of participatory scenario methods in work undertaken or promoted by the Platform is one potentially important pathway for improving the contribution of indigenous and local knowledge {2.6, 3.5, 6.1, 6.4, 7.4.3, 7.4.4, 7.5.4, 7.6.3, 7.6.5}." ;
+    ipbes:traceability "2.6, 3.5, 6.1, 6.4, 7.4.3, 7.4.4, 7.5.4, 7.6.3, 7.6.5" ;
+    dcterms:identifier "SCM16-PGP4" ;
+    skos:prefLabel "Platform guidance point 4" .
+
+<http://ontology.ipbes.net/report/guidance/SCM16-PGP5> a ipbes:Guidance ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.1.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-4.7>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.4>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.2.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-8.3.1.3> ;
+    ipbes:hasCategory "Guidance for the Platform and its task forces and expert groups" ;
+    ipbes:hasDescription "The Platform should consider putting in place mechanisms to help experts involved in Platform deliverables utilize scenarios and models and communicate results effectively. The experts involved in Platform assessments will need to critically analyse and synthesize scenarios and models operating on different scales, so they are likely to require assistance. Many experts involved in Platform deliverables will also need guidance in evaluating and communicating the capacities and limitations of scenarios and models employed in those activities, along with the types, sources and levels of uncertainty associated with resulting projections. To that end, the task force on knowledge, information and data and those involved in the ongoing work on the evolving guide for scenarios and models and other relevant deliverables should consider developing practical guidelines for evaluating and communicating capacities, limitations and uncertainties associated with scenarios and models {2.6, 3.2.1.1, 3.2.2, 3.2.3, 3.3, 3.4, 3.5, 4.7, 6.1, 6.3, 6.4, 6.5, 7.2.2, 8.3.1.3}." ;
+    ipbes:traceability "2.6, 3.2.1.1, 3.2.2, 3.2.3, 3.3, 3.4, 3.5, 4.7, 6.1, 6.3, 6.4, 6.5, 7.2.2, 8.3.1.3" ;
+    dcterms:identifier "SCM16-PGP5" ;
+    skos:prefLabel "Platform guidance point 5" .
+
+<http://ontology.ipbes.net/report/guidance/SCM16-PGP6> a ipbes:Guidance ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-2.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-2.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3>,
+        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
+        <http://ontology.ipbes.net/report/sch/SCM16-6.1>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.4.2>,
+        <http://ontology.ipbes.net/report/sch/SCM16-7.5.3> ;
+    ipbes:hasCategory "Guidance for the Platform and its task forces and expert groups" ;
+    ipbes:hasDescription "Scenarios and models can potentially be promoted through all Platform deliverables, so the implementation plans for deliverables should be reviewed to ensure that they reflect such potential. Effective use of scenarios and models in policy formulation and implementation will require embedding those approaches within decision-making processes across a wide range of institutional contexts and scales. The Platform can help to achieve this by complementing the use of scenarios and models in regional, global and thematic assessments with the promotion and facilitation of their uptake by other processes beyond the Platform through its task forces on capacity-building, indigenous and local knowledge, and knowledge, information and data, as well as its deliverable on policy support tools and methodologies and the evolving guide on scenarios and models {1.1, 2.1, 2.5, 3.2.2, 3.2.3, 3.5, 6.1, 7.4.2, 7.5.3}." ;
+    ipbes:traceability "1.1, 2.1, 2.5, 3.2.2, 3.2.3, 3.5, 6.1, 7.4.2, 7.5.3" ;
+    dcterms:identifier "SCM16-PGP6" ;
+    skos:prefLabel "Platform guidance point 6" .
+
 <http://ontology.ipbes.net/report/il/SCM16-Box1.1> a ipbes:Illustration ;
     ipbes:hasDescription """In 1992, governments worldwide agreed to work towards a more sustainable development that would eradicate poverty, halt climate change and conserve ecosystems.
 
@@ -1311,65 +1515,19 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     skos:prefLabel "There are large gaps in the availability of data for constructing and testing scenarios and models, and significant barriers to data sharing remain" .
 
 <http://ontology.ipbes.net/report/bgm/SCM16-3.6> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/SCM16-FigureSPM.8>,
-        <http://ontology.ipbes.net/report/il/SCM16-TableSPM.3>,
-        <http://ontology.ipbes.net/report/il/SCM16-TableSPM.4> ;
     ipbes:Report ipbes:SCM16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM0>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM1>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM10>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM11>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM12>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM13>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM14>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM15>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM16>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM17>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM2>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM3>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM4>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM5>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM6>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM7>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM8>,
-        <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM9> ;
-    ipbes:hasDescription """Building capacity requires the training of scientists and policy practitioners in the use of scenarios and models and improving access to data and user-friendly software for scenario analysis, modelling and decision-support tools. Rapidly growing online access to a wide range of data and modelling resources can support capacity building {2.6, 4.7, 5.6, 7.2, 7.6.1}. See guidance point 6 under “Guidance for science and policy”, and Platform guidance point 3 under “Guidance for the Platform and its task forces and expert groups”, for suggested actions addressing this finding.
-
-The following lessons from best practices for building greater understanding of, strengthening approaches to and making more effective use of scenarios and models were identified:
-
-: Scientists and policy practitioners may want to ensure that the types of scenarios, models and decision-support tools employed are matched carefully to the needs of each particular policy or decision context. Particular attention should be paid to (i) the choice of drivers or policy options that determine the appropriate types of scenarios (e.g., exploratory, target seeking or policy screening); (ii) the impacts on nature and nature’s benefits that are of interest and that determine the types of models of impacts that should be mobilized; (iii) the diverse values that need to be addressed and that determine the appropriate methods for assessing those values; and (iv) the type of policy or decision-making process that is being supported and that determines the suitability of different assessment or decision-support tools (e.g., multi-criteria analysis and management strategy evaluation) {1.5, 2.2, 2.4, 3.2.2, 3.2.3.2, 3.5, 4.3.2, 6.1.2}.
-
-: The scientific community, policymakers and stakeholders may want to consider improving, and more widely applying, participatory scenario methods in order to enhance the relevancy and acceptance of scenarios for biodiversity and ecosystem services. This would include broadening the predominantly local-scale focus of participatory approaches to regional and global scales. Such an effort would facilitate the dialogue between scientific experts and stakeholders throughout the development and application of scenarios and models. Broadening participatory methods to regional and global scales poses significant challenges that will require greatly increased coordination of efforts between all actors involved in developing and applying scenarios and models at different scales {2.2, 2.3, 2.4, 2.6, 3.2.1.2, 7.4, 7.5, 7.6.2, 7.6.3, 8.4}.
-
-: The scientific community may want to give priority to addressing gaps in methods for modelling impacts of drivers and policy interventions on biodiversity and ecosystem services. These gaps are identified in chapter 8 of the assessment, with additional information about them provided in chapters 3-6. Work could focus on methods for linking inputs and outputs between major components of the scenarios and modelling chain, and on linking scenarios and models across spatial and temporal scales. High priority should also be given to encouraging and catalysing the development of models, and underpinning knowledge, that more explicitly link ecosystem services – and other benefits that people derive from nature – to biodiversity, as well as to ecosystem properties and processes. One means of achieving this would be to advance the development of integrated system-level approaches to linking scenarios and models of indirect drivers, direct drivers, nature, nature’s benefits to people and good quality of life to better account for important relationships and feedback between those components (figure SPM. 8). That could include encouraging and catalysing the extension of integrated assessment models, already being employed widely in other domains (e.g., climate, energy and agriculture), to better incorporate modelling of drivers and impacts of direct relevance to biodiversity and ecosystem services {1.2.2.1, 1.6.1, 3.2.3, 3.5, 4.2.3.4, 4.3.1.5, 6.2, 6.3, 8.3.1}.
-
-: The scientific community may want to consider developing practical and effective approaches to evaluating and communicating levels of uncertainty associated with scenarios and models, as well as tools for applying those approaches to assessments and decision making. This would include setting standards for best practices, using model-data and model-model inter-comparisons to provide robust and transparent evaluations of uncertainty and encouraging new research into methods of measuring and communicating uncertainty and its impact on decision-making {1.6.3, 2.3.3, 3.5, 4.6.3, 6.5, 7.2.2, 8.3.3, 8.4.3}.
-
-: Data holders and institutions may want to consider improving the accessibility of well documented data sources and working in close collaboration with research and observation communities (including citizen science) and communities working on indicators to fill gaps in data collection and provision. In many cases, this will coincide with efforts to improve the collection of and access to data for quantifying status and trends. However, models and scenarios need additional types of data for development and testing that should be taken into account when developing or refining monitoring systems and data-sharing platforms {1.6.2, 2.6, 3.5, 6.3, 6.4, 7.3, 7.6.4, 8.2}.
-
-: Human and technical capacity for scenario development and modelling may need to be enhanced, including through the promotion of open, transparent access to scenario and modelling tools, as well as to the data required for the development and testing of such scenario and modelling tools (table SPM. 3). This can be facilitated through a variety of mechanisms, including by (i) supporting training courses for scientists and decision makers; (ii) encouraging rigorous documentation of scenarios and models; (iii) encouraging the development of networks that provide opportunities for scientists from all regions to share knowledge, including through user forums, workshops, internships and collaborative projects; and (iv) using the catalogue of policy support tools developed by the Platform to promote open access to models and scenarios, where possible in multiple languages {2.6, 4.7, 7.1.1, 7.2, 7.6.1}.
-
-: Experts planning to employ scenarios and models in Platform thematic, regional and global assessments may want to consider maximizing the benefit derived from analysing and synthesizing results from existing applications of policy-relevant scenarios and models. Even where the timing of future Platform assessments, including the global assessment, allows for the development of new scenarios (see Platform guidance point 2) any such development needs to build on, and complement, the effective analysis and synthesis of existing scenarios and models. Experience from previous assessments on the global and regional scales suggests that the full cycle of new scenario development through to final analysis of impacts based on modelling requires several years of effort to generate results of sufficient rigour and credibility for the purposes of Platform assessments. Experts involved in regional and thematic assessments already under way should therefore focus on working closely with other relevant Platform deliverables and the wider scientific community to harness the power of new approaches to analysing and synthesizing best available exploratory, target-seeking and policy screening scenarios on the global, regional, national and local scales. The approaches adopted for the four regional assessments should be coherent enough to enable the collective contribution of results to the global assessment while still allowing for significant regional differences {1.5.1, 3.2.2, 3.2.3, 3.5, 8.4.2}.
-
-: The Platform may want to consider encouraging and working closely with the wider scientific community to develop a flexible and adaptable suite of multi-scaled scenarios specifically tailored to its objectives. This would mean adopting a relatively long-term strategic view of catalysing the development of scenarios that meet its needs and would involve working closely with the scientific community to articulate criteria guiding the development of new scenarios by that community. Table SPM. 4 summarizes several criteria that are important for the specific needs of the Platform (see also figure SPM. 8), many of which go well beyond the criteria underlying the current development of other scenarios such as the shared socioeconomic pathways being catalysed by the Intergovernmental Panel on Climate Change (box SPM. 2). The Platform would, however, benefit from close collaboration and coordination with regard to ongoing activities within the scientific community developing the shared socioeconomic pathways. The advantage of using the shared socioeconomic pathways as a common resource for the Platform and the Panel include saving of effort, increasing consistency and improving aspects of the pathways that would be of mutual benefit for the Platform and the Panel. Developing a full suite of interlinked scenarios as outlined in table SPM. 4 would require catalysing research on a variety of types of scenarios on multiple spatial and temporal scales. This should therefore be viewed as a long-term objective {3.5, 4.7, 8.4.2}.
-
-: In order to overcome barriers to the use of scenarios and models, it is important that the Platform continue to support and facilitate capacity-building within the scientific community and among policymaking and decision-making practitioners. The Platform task force on capacity-building could play a vital role in achieving this by helping to build human and technical capacity, specifically targeting the skills needed for the development and use of scenarios and models. Such engagement should link, where appropriate, with relevant networks and forums that are already established within the scientific and practitioner communities. The Platform should also set high standards of transparency for all scenarios and models used in its assessments or promoted through the deliverable on policy support tools and methodologies {2.6, 3.2.2, 3.2.3, 3.5, 6.1, 7.2, 7.4.1, 7.5.4, 7.6.1, 7.6.2}.
-
-: Because of the highly technical nature of scenarios and models, it is preferable that all of the Platform deliverables involve experts with knowledge of the utility and limitations of scenarios, models and decision-support tools. This point can be addressed by encouraging the nomination and selection of experts familiar with scenarios and models, keeping in mind that expertise is needed across the various classes of models and scenarios. Owing to the diversity and often highly technical nature of scenarios and models, the Platform task forces and expert groups should also refer to the methodological assessment and the associated evolving guide on scenarios and models and should seek advice and support from relevant specialists involved in Platform deliverables, including the task force on knowledge, information and data. Due to the importance of indigenous and local knowledge to the objectives of the Platform, particular consideration should be given to mobilizing experts with experience in formulating and using scenarios and models that mobilize indigenous Different drivers of change operate on different spatial scales. The relative importance of drivers also varies greatly across localities, countries and regions. Including regional, national and local scales improves opportunities for capacity building.
-
-Decision-making often requires both short-term (c. 10 years or less) and long-term (multiple decades) perspectives. Most international environmental assessments have focused only on longer time scales.
-
-Exploratory, target-seeking and policy-screening scenarios address different phases of the policy cycle.
-
-Engaging actors in the development of scenarios contributes significantly to capacity-building in the science-policy interface and creates opportunities for engaging with indigenous and local knowledge.
-
-It is important to avoid duplication of efforts and over-mobilization of scientists and policy makers. Taking advantage of strong complementarities would be beneficial for all parties involved. and local knowledge, including participatory approaches. Experts involved in Platform deliverables should work closely with the indigenous and local knowledge task force in implementing those approaches. Broader use of participatory scenario methods in work undertaken or promoted by the Platform is one potentially important pathway for improving the contribution of indigenous and local knowledge {2.6, 3.5, 6.1, 6.4, 7.4.3, 7.4.4, 7.5.4, 7.6.3, 7.6.5}.
-
-: The Platform should consider putting in place mechanisms to help experts involved in Platform deliverables utilize scenarios and models and communicate results effectively. The experts involved in Platform assessments will need to critically analyse and synthesize scenarios and models operating on different scales, so they are likely to require assistance. Many experts involved in Platform deliverables will also need guidance in evaluating and communicating the capacities and limitations of scenarios and models employed in those activities, along with the types, sources and levels of uncertainty associated with resulting projections. To that end, the task force on knowledge, information and data and those involved in the ongoing work on the evolving guide for scenarios and models and other relevant deliverables should consider developing practical guidelines for evaluating and communicating capacities, limitations and uncertainties associated with scenarios and models {2.6, 3.2.1.1, 3.2.2, 3.2.3, 3.3, 3.4, 3.5, 4.7, 6.1, 6.3, 6.4, 6.5, 7.2.2, 8.3.1.3}.
-
-: Scenarios and models can potentially be promoted through all Platform deliverables, so the implementation plans for deliverables should be reviewed to ensure that they reflect such potential. Effective use of scenarios and models in policy formulation and implementation will require embedding those approaches within decision-making processes across a wide range of institutional contexts and scales. The Platform can help to achieve this by complementing the use of scenarios and models in regional, global and thematic assessments with the promotion and facilitation of their uptake by other processes beyond the Platform through its task forces on capacity-building, indigenous and local knowledge, and knowledge, information and data, as well as its deliverable on policy support tools and methodologies and the evolving guide on scenarios and models {1.1, 2.1, 2.5, 3.2.2, 3.2.3, 3.5, 6.1, 7.4.2, 7.5.3}.""" ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM0> ;
+    ipbes:hasDescription "Building capacity requires the training of scientists and policy practitioners in the use of scenarios and models and improving access to data and user-friendly software for scenario analysis, modelling and decision-support tools. Rapidly growing online access to a wide range of data and modelling resources can support capacity building {2.6, 4.7, 5.6, 7.2, 7.6.1}. See guidance point 6 under “Guidance for science and policy”, and Platform guidance point 3 under “Guidance for the Platform and its task forces and expert groups”, for suggested actions addressing this finding." ;
     dcterms:identifier "3.6" ;
     skos:prefLabel "Human and technical capacity to develop and use scenarios and models varies greatly between regions." .
+
+<http://ontology.ipbes.net/report/il/SCM16-TableSPM.3> a ipbes:Illustration ;
+    dcterms:identifier "TableSPM.3" ;
+    skos:prefLabel "Capacity-building requirements for the development and use of scenarios and models of biodiversity and ecosystem services. See chapter 7.1.1 and figure 7.1 for details." .
+
+<http://ontology.ipbes.net/report/il/SCM16-TableSPM.4> a ipbes:Illustration ;
+    dcterms:identifier "TableSPM.4" ;
+    skos:prefLabel "Important characteristics of scenarios that could be catalysed by IPBES in support of its activities. The framework for these scenarios might consist of a family of inter-related components rather than a single set of scenarios. These components could rely heavily on existing scenarios and scenarios being developed in other contexts, with a strong emphasis on participatory methods and on developing tools for creating and analysing linkages between spatial scales, across temporal scales and between different types of scenarios (i.e., exploratory vs. intervention scenarios) as outlined in Figure SPM. 8. See 3.2.1, 3.2.2 and 3.5 for further details." .
 
 <http://ontology.ipbes.net/report/person/AcebeyQuiroga_Sandra> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
@@ -9250,7 +9408,6 @@ This chapter emphasises quantitative approaches to measure and forecast biodiver
 
 <http://ontology.ipbes.net/report/sch/SCM16-8.3.1.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch8> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-8.3.1> ;
     ipbes:hasDescription """Research on many aspects of scenario analysis and biodiversity and ecosystem services modelling is progressing at a rapid rate. Many of the approaches reviewed in this report will be further developed in the near future; others may become obsolete. Therefore, there is a need to ensure – through ongoing updates and new evaluations – that the review of available policy-support tools and methodologies for scenario analysis and biodiversity and ecosystem services modelling continues to reflect best available science. Similarly, there is a need for the ongoing prioritisation of research needs. Some of the research and development directions and needs identified in this chapter will have already matured in the next few years, while others will not be pursued, or will be proven to be not beneficial.
@@ -9430,171 +9587,6 @@ This could be through the IPBES Expert Group on Scenarios and Modelling (Deliver
     ipbes:hasDescription "Building capacity requires the training of scientists and policy practitioners in the use of scenarios and models and improving access to data and user-friendly software for scenario analysis, modelling and decision-support tools. Rapidly growing online access to a wide range of data and modelling resources can support capacity building {2.6, 4.7, 5.6, 7.2, 7.6.1}. See guidance point 6 under “Guidance for science and policy”, and Platform guidance point 3 under “Guidance for the Platform and its task forces and expert groups”, for suggested actions addressing this finding." ;
     dcterms:identifier "2.6, 4.7, 5.6, 7.2, 7.6.1" .
 
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM1> a ipbes:SubMessage ;
-    ipbes:hasDescription "The following lessons from best practices for building greater understanding of, strengthening approaches to and making more effective use of scenarios and models were identified:" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM10> a ipbes:SubMessage ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.4.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.5.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.6.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.6.2> ;
-    ipbes:hasDescription ": In order to overcome barriers to the use of scenarios and models, it is important that the Platform continue to support and facilitate capacity-building within the scientific community and among policymaking and decision-making practitioners. The Platform task force on capacity-building could play a vital role in achieving this by helping to build human and technical capacity, specifically targeting the skills needed for the development and use of scenarios and models. Such engagement should link, where appropriate, with relevant networks and forums that are already established within the scientific and practitioner communities. The Platform should also set high standards of transparency for all scenarios and models used in its assessments or promoted through the deliverable on policy support tools and methodologies {2.6, 3.2.2, 3.2.3, 3.5, 6.1, 7.2, 7.4.1, 7.5.4, 7.6.1, 7.6.2}." ;
-    dcterms:identifier "2.6, 3.2.2, 3.2.3, 3.5, 6.1, 7.2, 7.4.1, 7.5.4, 7.6.1, 7.6.2" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM11> a ipbes:SubMessage ;
-    ipbes:hasDescription ": Because of the highly technical nature of scenarios and models, it is preferable that all of the Platform deliverables involve experts with knowledge of the utility and limitations of scenarios, models and decision-support tools. This point can be addressed by encouraging the nomination and selection of experts familiar with scenarios and models, keeping in mind that expertise is needed across the various classes of models and scenarios. Owing to the diversity and often highly technical nature of scenarios and models, the Platform task forces and expert groups should also refer to the methodological assessment and the associated evolving guide on scenarios and models and should seek advice and support from relevant specialists involved in Platform deliverables, including the task force on knowledge, information and data. Due to the importance of indigenous and local knowledge to the objectives of the Platform, particular consideration should be given to mobilizing experts with experience in formulating and using scenarios and models that mobilize indigenous Different drivers of change operate on different spatial scales. The relative importance of drivers also varies greatly across localities, countries and regions. Including regional, national and local scales improves opportunities for capacity building." .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM12> a ipbes:SubMessage ;
-    ipbes:hasDescription "Decision-making often requires both short-term (c. 10 years or less) and long-term (multiple decades) perspectives. Most international environmental assessments have focused only on longer time scales." .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM13> a ipbes:SubMessage ;
-    ipbes:hasDescription "Exploratory, target-seeking and policy-screening scenarios address different phases of the policy cycle." .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM14> a ipbes:SubMessage ;
-    ipbes:hasDescription "Engaging actors in the development of scenarios contributes significantly to capacity-building in the science-policy interface and creates opportunities for engaging with indigenous and local knowledge." .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM15> a ipbes:SubMessage ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.4.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.4.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.5.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.6.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.6.5> ;
-    ipbes:hasDescription "It is important to avoid duplication of efforts and over-mobilization of scientists and policy makers. Taking advantage of strong complementarities would be beneficial for all parties involved. and local knowledge, including participatory approaches. Experts involved in Platform deliverables should work closely with the indigenous and local knowledge task force in implementing those approaches. Broader use of participatory scenario methods in work undertaken or promoted by the Platform is one potentially important pathway for improving the contribution of indigenous and local knowledge {2.6, 3.5, 6.1, 6.4, 7.4.3, 7.4.4, 7.5.4, 7.6.3, 7.6.5}." ;
-    dcterms:identifier "2.6, 3.5, 6.1, 6.4, 7.4.3, 7.4.4, 7.5.4, 7.6.3, 7.6.5" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM16> a ipbes:SubMessage ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.1.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-4.7>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.2.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-8.3.1.3> ;
-    ipbes:hasDescription ": The Platform should consider putting in place mechanisms to help experts involved in Platform deliverables utilize scenarios and models and communicate results effectively. The experts involved in Platform assessments will need to critically analyse and synthesize scenarios and models operating on different scales, so they are likely to require assistance. Many experts involved in Platform deliverables will also need guidance in evaluating and communicating the capacities and limitations of scenarios and models employed in those activities, along with the types, sources and levels of uncertainty associated with resulting projections. To that end, the task force on knowledge, information and data and those involved in the ongoing work on the evolving guide for scenarios and models and other relevant deliverables should consider developing practical guidelines for evaluating and communicating capacities, limitations and uncertainties associated with scenarios and models {2.6, 3.2.1.1, 3.2.2, 3.2.3, 3.3, 3.4, 3.5, 4.7, 6.1, 6.3, 6.4, 6.5, 7.2.2, 8.3.1.3}." ;
-    dcterms:identifier "2.6, 3.2.1.1, 3.2.2, 3.2.3, 3.3, 3.4, 3.5, 4.7, 6.1, 6.3, 6.4, 6.5, 7.2.2, 8.3.1.3" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM17> a ipbes:SubMessage ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-2.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-2.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.4.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.5.3> ;
-    ipbes:hasDescription ": Scenarios and models can potentially be promoted through all Platform deliverables, so the implementation plans for deliverables should be reviewed to ensure that they reflect such potential. Effective use of scenarios and models in policy formulation and implementation will require embedding those approaches within decision-making processes across a wide range of institutional contexts and scales. The Platform can help to achieve this by complementing the use of scenarios and models in regional, global and thematic assessments with the promotion and facilitation of their uptake by other processes beyond the Platform through its task forces on capacity-building, indigenous and local knowledge, and knowledge, information and data, as well as its deliverable on policy support tools and methodologies and the evolving guide on scenarios and models {1.1, 2.1, 2.5, 3.2.2, 3.2.3, 3.5, 6.1, 7.4.2, 7.5.3}." ;
-    dcterms:identifier "1.1, 2.1, 2.5, 3.2.2, 3.2.3, 3.5, 6.1, 7.4.2, 7.5.3" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM2> a ipbes:SubMessage ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-2.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-2.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-4.3.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.1.2> ;
-    ipbes:hasDescription ": Scientists and policy practitioners may want to ensure that the types of scenarios, models and decision-support tools employed are matched carefully to the needs of each particular policy or decision context. Particular attention should be paid to (i) the choice of drivers or policy options that determine the appropriate types of scenarios (e.g., exploratory, target seeking or policy screening); (ii) the impacts on nature and nature’s benefits that are of interest and that determine the types of models of impacts that should be mobilized; (iii) the diverse values that need to be addressed and that determine the appropriate methods for assessing those values; and (iv) the type of policy or decision-making process that is being supported and that determines the suitability of different assessment or decision-support tools (e.g., multi-criteria analysis and management strategy evaluation) {1.5, 2.2, 2.4, 3.2.2, 3.2.3.2, 3.5, 4.3.2, 6.1.2}." ;
-    dcterms:identifier "1.5, 2.2, 2.4, 3.2.2, 3.2.3.2, 3.5, 4.3.2, 6.1.2" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM3> a ipbes:SubMessage ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-2.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-2.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.1.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.6.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.6.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-8.4> ;
-    ipbes:hasDescription ": The scientific community, policymakers and stakeholders may want to consider improving, and more widely applying, participatory scenario methods in order to enhance the relevancy and acceptance of scenarios for biodiversity and ecosystem services. This would include broadening the predominantly local-scale focus of participatory approaches to regional and global scales. Such an effort would facilitate the dialogue between scientific experts and stakeholders throughout the development and application of scenarios and models. Broadening participatory methods to regional and global scales poses significant challenges that will require greatly increased coordination of efforts between all actors involved in developing and applying scenarios and models at different scales {2.2, 2.3, 2.4, 2.6, 3.2.1.2, 7.4, 7.5, 7.6.2, 7.6.3, 8.4}." ;
-    dcterms:identifier "2.2, 2.3, 2.4, 2.6, 3.2.1.2, 7.4, 7.5, 7.6.2, 7.6.3, 8.4" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM4> a ipbes:SubMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/SCM16-FigureSPM.8> ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.2.2.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-1.6.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-4.2.3.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-4.3.1.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-8.3.1> ;
-    ipbes:hasDescription ": The scientific community may want to give priority to addressing gaps in methods for modelling impacts of drivers and policy interventions on biodiversity and ecosystem services. These gaps are identified in chapter 8 of the assessment, with additional information about them provided in chapters 3-6. Work could focus on methods for linking inputs and outputs between major components of the scenarios and modelling chain, and on linking scenarios and models across spatial and temporal scales. High priority should also be given to encouraging and catalysing the development of models, and underpinning knowledge, that more explicitly link ecosystem services – and other benefits that people derive from nature – to biodiversity, as well as to ecosystem properties and processes. One means of achieving this would be to advance the development of integrated system-level approaches to linking scenarios and models of indirect drivers, direct drivers, nature, nature’s benefits to people and good quality of life to better account for important relationships and feedback between those components (figure SPM. 8). That could include encouraging and catalysing the extension of integrated assessment models, already being employed widely in other domains (e.g., climate, energy and agriculture), to better incorporate modelling of drivers and impacts of direct relevance to biodiversity and ecosystem services {1.2.2.1, 1.6.1, 3.2.3, 3.5, 4.2.3.4, 4.3.1.5, 6.2, 6.3, 8.3.1}." ;
-    dcterms:identifier "1.2.2.1, 1.6.1, 3.2.3, 3.5, 4.2.3.4, 4.3.1.5, 6.2, 6.3, 8.3.1" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM5> a ipbes:SubMessage ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.6.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-2.3.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-4.6.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.2.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-8.3.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-8.4.3> ;
-    ipbes:hasDescription ": The scientific community may want to consider developing practical and effective approaches to evaluating and communicating levels of uncertainty associated with scenarios and models, as well as tools for applying those approaches to assessments and decision making. This would include setting standards for best practices, using model-data and model-model inter-comparisons to provide robust and transparent evaluations of uncertainty and encouraging new research into methods of measuring and communicating uncertainty and its impact on decision-making {1.6.3, 2.3.3, 3.5, 4.6.3, 6.5, 7.2.2, 8.3.3, 8.4.3}." ;
-    dcterms:identifier "1.6.3, 2.3.3, 3.5, 4.6.3, 6.5, 7.2.2, 8.3.3, 8.4.3" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM6> a ipbes:SubMessage ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.6.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-6.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.6.4>,
-        <http://ontology.ipbes.net/report/sch/SCM16-8.2> ;
-    ipbes:hasDescription ": Data holders and institutions may want to consider improving the accessibility of well documented data sources and working in close collaboration with research and observation communities (including citizen science) and communities working on indicators to fill gaps in data collection and provision. In many cases, this will coincide with efforts to improve the collection of and access to data for quantifying status and trends. However, models and scenarios need additional types of data for development and testing that should be taken into account when developing or refining monitoring systems and data-sharing platforms {1.6.2, 2.6, 3.5, 6.3, 6.4, 7.3, 7.6.4, 8.2}." ;
-    dcterms:identifier "1.6.2, 2.6, 3.5, 6.3, 6.4, 7.3, 7.6.4, 8.2" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM7> a ipbes:SubMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/SCM16-TableSPM.3> ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.6>,
-        <http://ontology.ipbes.net/report/sch/SCM16-4.7>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.1.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-7.6.1> ;
-    ipbes:hasDescription ": Human and technical capacity for scenario development and modelling may need to be enhanced, including through the promotion of open, transparent access to scenario and modelling tools, as well as to the data required for the development and testing of such scenario and modelling tools (table SPM. 3). This can be facilitated through a variety of mechanisms, including by (i) supporting training courses for scientists and decision makers; (ii) encouraging rigorous documentation of scenarios and models; (iii) encouraging the development of networks that provide opportunities for scientists from all regions to share knowledge, including through user forums, workshops, internships and collaborative projects; and (iv) using the catalogue of policy support tools developed by the Platform to promote open access to models and scenarios, where possible in multiple languages {2.6, 4.7, 7.1.1, 7.2, 7.6.1}." ;
-    dcterms:identifier "2.6, 4.7, 7.1.1, 7.2, 7.6.1" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM8> a ipbes:SubMessage ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-1.5.1>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.2>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.2.3>,
-        <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-8.4.2> ;
-    ipbes:hasDescription ": Experts planning to employ scenarios and models in Platform thematic, regional and global assessments may want to consider maximizing the benefit derived from analysing and synthesizing results from existing applications of policy-relevant scenarios and models. Even where the timing of future Platform assessments, including the global assessment, allows for the development of new scenarios (see Platform guidance point 2) any such development needs to build on, and complement, the effective analysis and synthesis of existing scenarios and models. Experience from previous assessments on the global and regional scales suggests that the full cycle of new scenario development through to final analysis of impacts based on modelling requires several years of effort to generate results of sufficient rigour and credibility for the purposes of Platform assessments. Experts involved in regional and thematic assessments already under way should therefore focus on working closely with other relevant Platform deliverables and the wider scientific community to harness the power of new approaches to analysing and synthesizing best available exploratory, target-seeking and policy screening scenarios on the global, regional, national and local scales. The approaches adopted for the four regional assessments should be coherent enough to enable the collective contribution of results to the global assessment while still allowing for significant regional differences {1.5.1, 3.2.2, 3.2.3, 3.5, 8.4.2}." ;
-    dcterms:identifier "1.5.1, 3.2.2, 3.2.3, 3.5, 8.4.2" .
-
-<http://ontology.ipbes.net/report/subm/SCM16-3.6-SM9> a ipbes:SubMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/SCM16-FigureSPM.8>,
-        <http://ontology.ipbes.net/report/il/SCM16-TableSPM.4> ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-3.5>,
-        <http://ontology.ipbes.net/report/sch/SCM16-4.7>,
-        <http://ontology.ipbes.net/report/sch/SCM16-8.4.2> ;
-    ipbes:hasDescription ": The Platform may want to consider encouraging and working closely with the wider scientific community to develop a flexible and adaptable suite of multi-scaled scenarios specifically tailored to its objectives. This would mean adopting a relatively long-term strategic view of catalysing the development of scenarios that meet its needs and would involve working closely with the scientific community to articulate criteria guiding the development of new scenarios by that community. Table SPM. 4 summarizes several criteria that are important for the specific needs of the Platform (see also figure SPM. 8), many of which go well beyond the criteria underlying the current development of other scenarios such as the shared socioeconomic pathways being catalysed by the Intergovernmental Panel on Climate Change (box SPM. 2). The Platform would, however, benefit from close collaboration and coordination with regard to ongoing activities within the scientific community developing the shared socioeconomic pathways. The advantage of using the shared socioeconomic pathways as a common resource for the Platform and the Panel include saving of effort, increasing consistency and improving aspects of the pathways that would be of mutual benefit for the Platform and the Panel. Developing a full suite of interlinked scenarios as outlined in table SPM. 4 would require catalysing research on a variety of types of scenarios on multiple spatial and temporal scales. This should therefore be viewed as a long-term objective {3.5, 4.7, 8.4.2}." ;
-    dcterms:identifier "3.5, 4.7, 8.4.2" .
-
 <http://ontology.ipbes.net/report/il/SCM16-BoxSPM.1> a ipbes:Illustration ;
     dcterms:identifier "BoxSPM.1" ;
     skos:prefLabel "Bolivia’s National Programme of Conservation and Sustainable Utilization (PNCASL) for the customary harvest and conservation of caiman (Caiman yacare) illustrates a case study of successful integration of indigenous and local knowledge into biodiversity models to inform policy options. Previously, harvest quotas were estimated based on broad scale estimates of relative abundance from scientific surveys, with substantial variation between regions. Following increasing engagement of local communities in PNCASL, new biological, socio-economic and cultural indicators of species health and abundance were developed and trialled. One of the first trials took place in the Indigenous Territory and National Park Isiboro Sécure (TIPNIS), where traditional knowledge on the status of caiman was incorporated into the development of robust indicators to inform resource quotas for customary harvest in this protected area. Traditional resource users participated in workshops where they defined concepts, harmonized criteria and conceptualized traditional knowledge of caiman habitats and territories into spatial" .
@@ -9620,6 +9612,10 @@ This could be through the IPBES Expert Group on Scenarios and Modelling (Deliver
     dcterms:identifier "FigureSPM.7" ;
     skos:prefLabel "An example of spatial bias in the availability of biodiversity data. The map depicts the spatial distribution of species records currently accessible through the Global Biodiversity Information Facility. Colours indicate the number of species records per 30 arcminute (approximately 50 km) grid cell. These data are frequently used for model development and testing. Source: www.gbif.org. See 7.3.1 and figure 7.3 in chapter 7 for details and discussion." .
 
+<http://ontology.ipbes.net/report/il/SCM16-FigureSPM.8> a ipbes:Illustration ;
+    dcterms:identifier "FigureSPM.8" ;
+    skos:prefLabel "Linking scenarios and models in four key dimensions: system components, scenario types, spatial scales and temporal scales, with the thick grey arrows indicating linkages within each dimension. Panel A illustrates linkages between scenarios and models across the different components of the conceptual framework (thick grey arrows) as well as between their sub-components (thin blue arrows; for example linking biodiversity with ecosystem function sub-components of nature). Panel B shows ways in which different types of scenarios, such as exploratory and intervention scenarios, can be linked. Panel C indicates linkages across spatial scales from local to global. Panel D illustrates the linking of the past, the present and several time horizons in the future (dashed lines indicate a range of exploratory scenarios). Two or more of these dimensions of linkages can be used in combination (e.g., linking different types of scenarios across spatial scales). See chapter 6.2 and figure 6.1 for details." .
+
 <http://ontology.ipbes.net/report/il/SCM16-TableSPM.1> a ipbes:Illustration ;
     ipbes:hasDescription "(For full list, see table 1.1, chapter 1.)" ;
     dcterms:identifier "TableSPM.1" ;
@@ -9628,14 +9624,6 @@ This could be through the IPBES Expert Group on Scenarios and Modelling (Deliver
 <http://ontology.ipbes.net/report/il/SCM16-TableSPM.2> a ipbes:Illustration ;
     dcterms:identifier "TableSPM.2" ;
     skos:prefLabel "Illustrative and non-exhaustive examples of major models of ecosystem services, highlighting differences in important model attributes and therefore the need for care in choosing an appropriate solution in any given context. “Dynamic” models are capable of projecting changes in ecosystem services over time, while “static” models provide a snapshot of the status of ecosystem services at one point in time. See chapter 5 for detailed descriptions of these models, discussion of additional models and references." .
-
-<http://ontology.ipbes.net/report/il/SCM16-TableSPM.3> a ipbes:Illustration ;
-    dcterms:identifier "TableSPM.3" ;
-    skos:prefLabel "Capacity-building requirements for the development and use of scenarios and models of biodiversity and ecosystem services. See chapter 7.1.1 and figure 7.1 for details." .
-
-<http://ontology.ipbes.net/report/il/SCM16-TableSPM.4> a ipbes:Illustration ;
-    dcterms:identifier "TableSPM.4" ;
-    skos:prefLabel "Important characteristics of scenarios that could be catalysed by IPBES in support of its activities. The framework for these scenarios might consist of a family of inter-related components rather than a single set of scenarios. These components could rely heavily on existing scenarios and scenarios being developed in other contexts, with a strong emphasis on participatory methods and on developing tools for creating and analysing linkages between spatial scales, across temporal scales and between different types of scenarios (i.e., exploratory vs. intervention scenarios) as outlined in Figure SPM. 8. See 3.2.1, 3.2.2 and 3.5 for further details." .
 
 <http://ontology.ipbes.net/report/person/Alkemade_Rob> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch1> ;
@@ -11252,7 +11240,6 @@ One way of reducing uncertainty is to use multi-model ensembles (averages/weight
 
 <http://ontology.ipbes.net/report/sch/SCM16-6.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch6> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/N673JAIG> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:hasDescription """Models or scenarios developed for different spatial and temporal scales, domains and elements (i.e. the elements of the IPBES framework, see also Figure 6.1) can be linked or harmonised using several approaches (Table 6.1). Linking takes place by feeding using the outputs of one model as input to another model, which can be done iteratively (two-way or tight coupling) or off-line (one-way or loose coupling). Models and scenarios can also be linked qualitatively (e.g. through narratives or description of storylines descriptions). Models and scenarios that describe different elements may also be combined quantitatively or qualitatively to provide a more holistic assessment, as done by Integrated Assessment Models (IAMs), and, more generally, integrated environmental modelling Laniak et al., 2013).
@@ -11269,7 +11256,6 @@ Benchmarking is not applicable to scenarios because these are by definition alte
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.1.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/SCM16-ch7-1138> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-7.1> ;
@@ -11299,7 +11285,6 @@ Building confidence and trust in models and modelled outputs is a challenge as f
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.5.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/KQTQG2VE> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-7.5> ;
@@ -11328,8 +11313,7 @@ Initiate the development of a set of biodiversity and ecosystem services indicat
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.6.5> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-7.6> ;
     ipbes:hasDescription """To achieve the effective integration of traditional knowledge and socio-ecological feedback into models and scenarios for biodiversity and ecosystem services, IPBES could:
@@ -11350,10 +11334,6 @@ Develop policy-relevant scenarios backed by rigorous scientific data and local k
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-8.2> ;
     dcterms:identifier "8.2.3" ;
     skos:prefLabel "Facilitating data access for model calibration and validation" .
-
-<http://ontology.ipbes.net/report/il/SCM16-FigureSPM.8> a ipbes:Illustration ;
-    dcterms:identifier "FigureSPM.8" ;
-    skos:prefLabel "Linking scenarios and models in four key dimensions: system components, scenario types, spatial scales and temporal scales, with the thick grey arrows indicating linkages within each dimension. Panel A illustrates linkages between scenarios and models across the different components of the conceptual framework (thick grey arrows) as well as between their sub-components (thin blue arrows; for example linking biodiversity with ecosystem function sub-components of nature). Panel B shows ways in which different types of scenarios, such as exploratory and intervention scenarios, can be linked. Panel C indicates linkages across spatial scales from local to global. Panel D illustrates the linking of the past, the present and several time horizons in the future (dashed lines indicate a range of exploratory scenarios). Two or more of these dimensions of linkages can be used in combination (e.g., linking different types of scenarios across spatial scales). See chapter 6.2 and figure 6.1 for details." .
 
 <http://ontology.ipbes.net/report/ref/2333079/items/248B7QNC> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4>,
@@ -11695,7 +11675,6 @@ For example, good practice guidance for GHG accounting in the land-use sector ha
 
 <http://ontology.ipbes.net/report/sch/SCM16-4.6.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/ANE62CDT>,
         <http://ontology.ipbes.net/report/ref/2333079/items/HJ4AF55V> ;
     ipbes:Report ipbes:SCM16 ;
@@ -11778,8 +11757,7 @@ Use the lessons learned from previous global and regional assessments to define 
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.6.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-7.6> ;
     ipbes:hasDescription """IPBES could:
@@ -11800,8 +11778,7 @@ Provide funds, in cooperation with other international and regional donors, to s
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.6.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-7.6> ;
     ipbes:hasDescription """IPBES could:
@@ -12144,7 +12121,6 @@ A number of capacity-building strategies can result in an increased capacity to 
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.4.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/S4F4G62P>,
         <http://ontology.ipbes.net/report/ref/2333079/items/TKN4QRKL>,
         <http://ontology.ipbes.net/report/ref/SCM16-ch7-1096> ;
@@ -12164,8 +12140,7 @@ The key steps towards mainstreaming scenarios and modelling into the science-pol
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.5.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/SCM16-ch7-1103> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-7.5> ;
@@ -12296,7 +12271,6 @@ Research on cognitive bias and prospect theory (behavioural economic theory that
 
 <http://ontology.ipbes.net/report/sch/SCM16-1.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch1> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/VA4BVJKK> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:hasDescription """Throughout this assessment, and in most Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES) activities, the term ‘models’ usually, but not exclusively, refers to quantitative descriptions of relationships i) between indirect drivers and direct drivers, ii) between direct drivers and nature (including biodiversity and ecosystems), and iii) between nature and nature’s benefits to people (including ecosystem services). Each of these relationships is discussed in more detail later in this chapter.
@@ -12412,8 +12386,7 @@ Scientific uncertainty is an unavoidable outcome of the very nature of models be
 
 <http://ontology.ipbes.net/report/sch/SCM16-2.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Report ipbes:SCM16 ;
     dcterms:identifier "2.2" ;
     skos:prefLabel "Decision-making context" .
@@ -12629,7 +12602,6 @@ Most research of this type is included in the basic science research carried out
 
 <http://ontology.ipbes.net/report/sch/SCM16-1.5.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch1> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/6UISJRXT>,
         <http://ontology.ipbes.net/report/ref/2333079/items/HNANJZDD>,
         <http://ontology.ipbes.net/report/ref/SCM16-ch1-18>,
@@ -12687,7 +12659,6 @@ The following sections review a sample of decision-support methods that occupy d
 
 <http://ontology.ipbes.net/report/sch/SCM16-3.2.1.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/633SRLUQ>,
         <http://ontology.ipbes.net/report/ref/2333079/items/8SDMQTSP>,
         <http://ontology.ipbes.net/report/ref/2333079/items/N2GC2N47>,
@@ -12730,8 +12701,7 @@ However, the term ‘business-as-usual’ may be misleading in the policymaking 
 <http://ontology.ipbes.net/report/sch/SCM16-4.3.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-1>,
-        <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+        <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-4.3> ;
     dcterms:identifier "4.3.2" ;
@@ -12810,7 +12780,6 @@ Furthermore, the tools that do exist to explore the dynamics of ecosystem servic
 
 <http://ontology.ipbes.net/report/sch/SCM16-6.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch6> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Report ipbes:SCM16 ;
     dcterms:identifier "6.1" ;
     skos:prefLabel "Importance of linking and harmonising models and scenarios" .
@@ -12917,8 +12886,7 @@ With an understanding of historical differences and similarities in capacity for
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.5> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:hasDescription "Scenarios can prove to be useful tools for indigenous and local communities across the globe as they can encompass indigenous and local perspectives of natural systems from a much broader perspective than the biophysical or economic perspectives commonly used in many models. Combining scenarios with modelling can also be an effective tool for decision makers in terms of providing a long-term vision to support decisions. For example, each of the scenarios mentioned in Figure 7.4 could be further processed using InVEST or any other such model to project the outcomes over the long term." ;
     dcterms:identifier "7.5" ;
@@ -13170,8 +13138,7 @@ The development and interpretation of scenarios requires the explicit acknowledg
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/93AQNSS9> ;
     ipbes:Report ipbes:SCM16 ;
     dcterms:identifier "7.4" ;
@@ -13217,8 +13184,7 @@ It links to Chapter 3 by identifying types of scenarios required to underpin dec
 
 <http://ontology.ipbes.net/report/sch/SCM16-2.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/4GENYTCK>,
         <http://ontology.ipbes.net/report/ref/2333079/items/RWUF58U2>,
         <http://ontology.ipbes.net/report/ref/SCM16-ch2-314> ;
@@ -13265,8 +13231,7 @@ Ex-post assessments can be based on the straightforward monitoring of variables 
 
 <http://ontology.ipbes.net/report/sch/SCM16-3.2.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-1>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-1> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-3.2> ;
     ipbes:hasDescription "Many typologies of modelling tools of indirect and direct drivers and their interactions are possible. Modelling tools can for example be categorised depending on their qualitative or quantitative nature, whether the underlying phenomenon can be represented by structural equations or driver processes are captured by data-driven approaches, and whether the model is of a deterministic or stochastic nature. Such broad typologies can typically be further broken down into sub-categories. For example, a distinction is made among structural models between simulation models and normative target-seeking models. Among the latter, classical economic models typically maximise a welfare function or minimise costs. If such models cover the entire economy they are referred to as general equilibrium models, while partial equilibrium models cover a specific sector in greater detail. Such economic models can be constructed for comparative static analysis to analyse the introduction of new drivers such as policy shocks or for dynamic assessments to analyse solution pathways." ;
@@ -13339,8 +13304,7 @@ As for model complexity, input data requirements should be balanced against data
 
 <http://ontology.ipbes.net/report/sch/SCM16-2.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-1>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-1> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/2MC8VD9J>,
         <http://ontology.ipbes.net/report/ref/2333079/items/AWISL2IM>,
         <http://ontology.ipbes.net/report/ref/SCM16-ch2-111>,
@@ -13376,8 +13340,7 @@ Heuristics are often used for decision optimisation problems that cannot, for a 
 
 <http://ontology.ipbes.net/report/sch/SCM16-3.2.3.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/8PI4UFYK>,
         <http://ontology.ipbes.net/report/ref/2333079/items/PEADS9TJ>,
         <http://ontology.ipbes.net/report/ref/2333079/items/QZTCL9RP>,
@@ -13500,7 +13463,6 @@ Most modelling tools have been developed to aid decision making in situations th
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.4.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/4SWWJEZB>,
         <http://ontology.ipbes.net/report/ref/2333079/items/5RN877HN>,
         <http://ontology.ipbes.net/report/ref/2333079/items/L8PI28PS>,
@@ -13591,8 +13553,7 @@ Lastly, those who are involved in constructing and maintaining web interfaces an
 
 <http://ontology.ipbes.net/report/sch/SCM16-1.5> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch1> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/A2TEVMCF>,
         <http://ontology.ipbes.net/report/ref/2333079/items/IQ2VJJM5>,
         <http://ontology.ipbes.net/report/ref/2333079/items/MUS5W9GW>,
@@ -14110,8 +14071,7 @@ For regional applications, regionally-tested downscaled global models or region-
 
 <http://ontology.ipbes.net/report/sch/SCM16-8.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch8> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-1>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-1> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/4LWYKVTS>,
         <http://ontology.ipbes.net/report/ref/2333079/items/6ITYIN6I>,
         <http://ontology.ipbes.net/report/ref/2333079/items/6KLLT2PR>,
@@ -14196,8 +14156,7 @@ A number of guidebooks on how to conduct social-ecological scenario planning pro
 
 <http://ontology.ipbes.net/report/sch/SCM16-6.1.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch6> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/248B7QNC>,
         <http://ontology.ipbes.net/report/ref/2333079/items/2DCBU4SP>,
         <http://ontology.ipbes.net/report/ref/2333079/items/5JJ7QZD2>,
@@ -14225,7 +14184,6 @@ Standardising inputs and output metrics and components included in models is lik
 
 <http://ontology.ipbes.net/report/sch/SCM16-6.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch6> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/D3DKGVKF>,
         <http://ontology.ipbes.net/report/ref/2333079/items/F267P548>,
         <http://ontology.ipbes.net/report/ref/2333079/items/IHSINARD>,
@@ -14258,8 +14216,7 @@ Biodiversity datasets were used to establish the fact that governments missed th
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.4.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/AT5VSSKY>,
         <http://ontology.ipbes.net/report/ref/2333079/items/LIHENIGB>,
         <http://ontology.ipbes.net/report/ref/2333079/items/MVDFUXKD>,
@@ -14311,8 +14268,7 @@ Modelling can provide a process-based alternative to the use of composite indica
 
 <http://ontology.ipbes.net/report/sch/SCM16-2.5> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-1>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-1> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/5EYUGSUR>,
         <http://ontology.ipbes.net/report/ref/2333079/items/5JJ7QZD2>,
         <http://ontology.ipbes.net/report/ref/2333079/items/9SU85ZWE>,
@@ -14451,8 +14407,7 @@ Due in part to their highly interlinked and amorphous character, sociocultural v
 
 <http://ontology.ipbes.net/report/sch/SCM16-8.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch8> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/4KIKU9GV>,
         <http://ontology.ipbes.net/report/ref/2333079/items/536HTBH5>,
         <http://ontology.ipbes.net/report/ref/2333079/items/CQ9H6R4V>,
@@ -14529,8 +14484,7 @@ An ecosystem services approach is also inherently multi-scale, as ecosystem serv
 
 <http://ontology.ipbes.net/report/sch/SCM16-7.4.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/6AI9QJSH>,
         <http://ontology.ipbes.net/report/ref/2333079/items/7J6Y5IKK>,
         <http://ontology.ipbes.net/report/ref/2333079/items/7VEZNUXT>,
@@ -14610,8 +14564,7 @@ A variety of modelling approaches may often be available for addressing a partic
 
 <http://ontology.ipbes.net/report/sch/SCM16-3.2.1.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/2E5A2KTK>,
         <http://ontology.ipbes.net/report/ref/2333079/items/8ADEIFY9>,
         <http://ontology.ipbes.net/report/ref/2333079/items/BLGDDISH>,
@@ -14746,8 +14699,7 @@ Five broad groups of issues are relevant to the access to and incorporation of d
 
 <http://ontology.ipbes.net/report/sch/SCM16-3.2.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/64WEVKD9>,
         <http://ontology.ipbes.net/report/ref/2333079/items/7J6Y5IKK>,
         <http://ontology.ipbes.net/report/ref/2333079/items/8ADEIFY9>,
@@ -14997,8 +14949,7 @@ Local communities and indigenous peoples have a wealth of traditional knowledge 
 
 <http://ontology.ipbes.net/report/sch/SCM16-2.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2>,
-        <http://ontology.ipbes.net/report/key/SCM16-3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SCM16-2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/2MC8VD9J>,
         <http://ontology.ipbes.net/report/ref/2333079/items/4GENYTCK>,
         <http://ontology.ipbes.net/report/ref/2333079/items/4HPCBZQE>,
@@ -15772,16 +15723,6 @@ Plastic pieces also serve as long-lasting vectors of transport across marine env
     dcterms:identifier "3.4.3" ;
     skos:prefLabel "Pollution" .
 
-<http://ontology.ipbes.net/report/key/SCM16-2> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/SCM16-2.1>,
-        <http://ontology.ipbes.net/report/bgm/SCM16-2.2>,
-        <http://ontology.ipbes.net/report/bgm/SCM16-2.3>,
-        <http://ontology.ipbes.net/report/bgm/SCM16-2.4>,
-        <http://ontology.ipbes.net/report/bgm/SCM16-2.5> ;
-    ipbes:Report ipbes:SCM16 ;
-    dcterms:identifier "2" ;
-    skos:prefLabel "Many relevant methods and tools are available, but they should be matched carefully with the needs of any given assessment or decision-support activity and applied with care, taking into account the uncertainties and unpredictability associated with model-based projections." .
-
 <http://ontology.ipbes.net/report/key/SCM16-3> a ipbes:KeyMessage ;
     ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/SCM16-3.1>,
         <http://ontology.ipbes.net/report/bgm/SCM16-3.2>,
@@ -15792,6 +15733,16 @@ Plastic pieces also serve as long-lasting vectors of transport across marine env
     ipbes:Report ipbes:SCM16 ;
     dcterms:identifier "3" ;
     skos:prefLabel "Appropriate planning, investment and capacity-building, among other efforts, could overcome significant remaining challenges in developing and applying scenarios and models." .
+
+<http://ontology.ipbes.net/report/key/SCM16-2> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/SCM16-2.1>,
+        <http://ontology.ipbes.net/report/bgm/SCM16-2.2>,
+        <http://ontology.ipbes.net/report/bgm/SCM16-2.3>,
+        <http://ontology.ipbes.net/report/bgm/SCM16-2.4>,
+        <http://ontology.ipbes.net/report/bgm/SCM16-2.5> ;
+    ipbes:Report ipbes:SCM16 ;
+    dcterms:identifier "2" ;
+    skos:prefLabel "Many relevant methods and tools are available, but they should be matched carefully with the needs of any given assessment or decision-support activity and applied with care, taking into account the uncertainties and unpredictability associated with model-based projections." .
 
 <http://ontology.ipbes.net/report/sch/SCM16-2.3.2.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;

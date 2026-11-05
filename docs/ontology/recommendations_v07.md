@@ -22,7 +22,9 @@
 | 12 | Add the role `ipbes:mc` to Person, for the management committee | Yes | None: addition |
 | 13 | Add `ipbes:hasDescription` to Chapter, for its executive summary | Yes | None: addition |
 | 14 | Add `dcterms:isReplacedBy` to Person, for merged URIs | Yes | None: addition; published URIs keep working |
-| 15–16 | Questions for discussion | No | See below |
+| 15 | Add `skos:note` to Person, for corrected ORCID iDs | Yes | None: addition |
+| 16 | Add the class `ipbes:Guidance`, for guidance sections in a summary for policymakers | Yes | None: addition |
+| 17–18 | Questions for discussion | No | See below |
 
 ## Changes in v07
 
@@ -143,11 +145,21 @@ When records turn out to be the same person, they are merged under one URI. The 
 
 Merging follows reviewed rules: records with different ORCID iDs are never merged, and a shared ORCID iD alone is never a reason to merge.
 
+### 15. Person: a note on a corrected ORCID iD
+
+Some assessments entered one ORCID iD for several people. The IPBES experts list is the verified source. `skos:note` on a Person says what the assessment's records gave, when the iD now differs from it or was removed. It is used on 7 person records (GA1, NXS, SUA, TCA, VA). A person who rightly holds the iD gets no note.
+
+### 16. A class for guidance points
+
+The summary for policymakers of the scenarios and models assessment (SCM) ends with two sections: "Guidance for science and policy" (guidance points 1 to 6) and "Guidance for the Platform and its task forces and expert groups" (Platform guidance points 1 to 6). They are neither key messages nor background messages, and v06 has no place for them, so they were left out of the manual file and their text would otherwise be lost, although the key findings point to them ("See guidance point 3").
+
+`ipbes:Guidance` follows `ipbes:KnowledgeGap`: `hasCategory` holds the section, `hasDescription` the text, `traceability` and `SubChapter` what the report cites. `skos:prefLabel` holds the printed label and `dcterms:identifier` the report code with it (`SCM16-GP1`, `SCM16-PGP1`). `skos:note` holds the sentence printed above the first section's points. SCM is the only one of the 14 reports with such points, but the class is not specific to it.
+
 ## Questions for discussion (not in v07)
 
-**15. Chapters printed in parts.** GA1's chapter 2 is printed in parts 2.1, 2.2 and 2.3, each with its own authors and reference list. The automatic file has one chapter with sub-chapters 2.1.1 ...; the manual file has three chapters. Which should be the model?
+**17. Chapters printed in parts.** GA1's chapter 2 is printed in parts 2.1, 2.2 and 2.3, each with its own authors and reference list. The automatic file has one chapter with sub-chapters 2.1.1 ...; the manual file has three chapters. Which should be the model?
 
-**16. Properties defined but unused in the converted files.**
+**18. Properties defined but unused in the converted files.**
 
 | Property | Note |
 |---|---|
