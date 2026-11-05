@@ -308,9 +308,10 @@ The files follow the IPBES report ontology in [`docs/ontology/IPBES_Ontology_v07
 | Class | Chunk type | Main properties read |
 |---|---|---|
 | `ipbes:KeyMessage` | `key` | `skos:prefLabel`, `hasDescription`, `dcterms:identifier`, confidence level |
-| `ipbes:BackgroundMessage` | `bgm` | its description plus the text of its sub-messages, confidence level |
+| `ipbes:BackgroundMessage` | `bgm` | `skos:prefLabel` (its headline), its description plus any sub-message text not already in it, confidence level |
 | `ipbes:SubMessage` | `subm` | `hasDescription`, `dcterms:identifier`, confidence level |
 | `ipbes:KnowledgeGap` | `kg` | `hasDescription`, `hasCategory`; the gap's own ID (`GA119-1`) is its URI's name and its `dcterms:identifier`, as in the newer manual files (BBA, GA1, NXS); the related sections are in `ipbes:traceability` (the older manual files put them in `dcterms:identifier`, which is still read) |
+| `ipbes:Guidance` | `guidance` | `skos:prefLabel`, `hasDescription`, `hasCategory`, `skos:note`, `dcterms:identifier` (SCM only) |
 | `ipbes:Chapter` | `chapter` | `skos:prefLabel`, `dcterms:identifier`; its authors (`foaf:Person`) as text; its executive summary (`hasDescription`) |
 | `ipbes:SubChapter` | `sch` | `skos:prefLabel`, `dcterms:identifier`, `hasDescription` |
 | `ipbes:Illustration` | `il` | `dcterms:identifier`, `skos:prefLabel` (caption) and `hasDescription` |

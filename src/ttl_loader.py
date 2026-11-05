@@ -322,12 +322,17 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
 
         sm_bodies = []
         subchapters = []
+        # The automatic files hold a message's whole text in its description and
+        # again, sentence by sentence, in its sub-messages: add only what is new.
+        # Each sub-message also has its own chunk.
+        words_of = lambda text: re.sub(r"\W+", "", text).lower()
+        in_description = words_of(description)
 
         for sm in sm_uris:
             sm_desc = _text(
                 _first(graph, sm, URIRef(IPBES + "hasDescription"))
             )
-            if sm_desc:
+            if sm_desc and words_of(sm_desc) not in in_description:
                 sm_bodies.append(f"[{_local_name(sm)}] {sm_desc}")
 
             subchapters.extend(_subchapter_uris(graph, sm))
@@ -341,9 +346,10 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         emit(
             subject=bgm,
             chunk_type="bgm",
-            heading="",
-            body=combined,
-            subchapter_uris=subchapters,
+            heading=_text(_first(graph, bgm, SKOS.prefLabel)),
+            # A message printed as a headline alone (LDR) is still a chunk.
+            body=combined or _text(_first(graph, bgm, SKOS.prefLabel)),
+            subchapter_uris=list(dict.fromkeys(subchapters)),
             extra_meta={
                 "Identifier": _text(
                     _first(graph, bgm, DCTERMS.identifier)
@@ -445,6 +451,26 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
                 "Sections": sections,
             },
             fields={"identifier": kg_id, "category": category},
+        )
+
+    # -----------------------------------------------------------------
+    # Guidance — the guidance points of a summary for policymakers (SCM)
+    # -----------------------------------------------------------------
+
+    for point in graph.subjects(RDF.type, URIRef(IPBES + "Guidance")):
+        category = _text(_first(graph, point, URIRef(IPBES + "hasCategory")))
+        emit(
+            subject=point,
+            chunk_type="guidance",
+            heading=_text(_first(graph, point, SKOS.prefLabel)),
+            body=_text(_first(graph, point, URIRef(IPBES + "hasDescription"))),
+            subchapter_uris=_subchapter_uris(graph, point),
+            extra_meta={
+                "Identifier": _text(_first(graph, point, DCTERMS.identifier)),
+                "Category": category,
+                "Introduction": _text(_first(graph, point, SKOS.note)),
+            },
+            fields={"category": category},
         )
 
         # -----------------------------------------------------------------
