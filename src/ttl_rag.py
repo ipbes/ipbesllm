@@ -44,7 +44,7 @@ MAX_COUNTRY_FILTER = 100
 # Part of the cache keys: bump when retrieval or prompts change so stale
 # entries are never served after a code change.
 RETRIEVAL_VERSION = "6"
-PROMPT_VERSION = "12"
+PROMPT_VERSION = "13"
 
 # List questions (all knowledge gaps, key messages, experts ...) need far
 # more than the Ollama limit (MAX_CONTEXT_CHARS, sized for an 8 GB machine):
@@ -558,8 +558,11 @@ def _build_task(
             "cover every point of that section and no other; otherwise cover every point, "
             "grouped by section. If it asks about one point or topic, answer that, "
             "using the points that concern it.\n"
-            "Keep the order given. Name each point by its label and say what it advises, "
-            "faithfully and without adding anything.\n"
+            "Keep the order given. Give each point's label, then its text word for word.\n"
+            "\n"
+            "CRITICAL:\n"
+            "- Do NOT summarise, shorten or rephrase a point.\n"
+            "- Keep its examples, lists and section references in braces as printed.\n"
         )
 
     if chunk_type == "person" and country_names:
