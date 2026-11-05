@@ -3402,15 +3402,17 @@ Since the late 1990s, ecological research has mostly quantified the negative imp
     foaf:firstName "Laura" ;
     foaf:lastName "Dee" .
 
-<http://ontology.ipbes.net/report/person/Diaz-de-Leon_Antonio> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Díaz-de-León_Antonio> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/AMA18ch6> ;
     ipbes:Report ipbes:AMA18 ;
     ipbes:cl "Coordinating Lead Author in AMA18-ch6" ;
     ipbes:country "MEX" ;
     owl:sameAs <https://orcid.org/0000-0002-1801-7033> ;
-    skos:prefLabel "Antonio Diaz-de-Leon" ;
+    skos:prefLabel "Antonio Díaz-de-León" ;
     foaf:firstName "Antonio" ;
-    foaf:lastName "Diaz-de-Leon" .
+    foaf:lastName "Díaz-de-León" .
+
+<http://ontology.ipbes.net/report/person/Diaz-de-Leon_Antonio> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Díaz-de-León_Antonio> .
 
 <http://ontology.ipbes.net/report/person/Dirzo_Rodolfo> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/AMA18ch1> ;
@@ -3596,16 +3598,18 @@ Since the late 1990s, ecological research has mostly quantified the negative imp
     foaf:firstName "Floyd" ;
     foaf:lastName "Homer" .
 
-<http://ontology.ipbes.net/report/person/Jaffe_Rodolfo> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Jaffé_Rodolfo> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/AMA18ch3> ;
     ipbes:Report ipbes:AMA18 ;
     ipbes:country "BRA",
         "VEN" ;
     ipbes:fl "Fellow in AMA18-ch3" ;
     owl:sameAs <https://orcid.org/0000-0002-2101-5282> ;
-    skos:prefLabel "Rodolfo Jaffe" ;
+    skos:prefLabel "Rodolfo Jaffé" ;
     foaf:firstName "Rodolfo" ;
-    foaf:lastName "Jaffe" .
+    foaf:lastName "Jaffé" .
+
+<http://ontology.ipbes.net/report/person/Jaffe_Rodolfo> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Jaffé_Rodolfo> .
 
 <http://ontology.ipbes.net/report/person/Joly_Carlos> a foaf:Person ;
     ipbes:Report ipbes:AMA18 ;
@@ -3775,15 +3779,17 @@ Since the late 1990s, ecological research has mostly quantified the negative imp
     foaf:firstName "Rodrigo" ;
     foaf:lastName "Medellín" .
 
-<http://ontology.ipbes.net/report/person/Metzger_Jean-Paul> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Metzger_JeanPaul> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/AMA18ch3> ;
     ipbes:Report ipbes:AMA18 ;
     ipbes:country "BRA" ;
     ipbes:la "Lead Author in AMA18-ch3" ;
     owl:sameAs <https://orcid.org/0000-0002-0087-5240> ;
-    skos:prefLabel "Jean-Paul Metzger" ;
-    foaf:firstName "Jean-Paul" ;
+    skos:prefLabel "Jean Paul Metzger" ;
+    foaf:firstName "Jean Paul" ;
     foaf:lastName "Metzger" .
+
+<http://ontology.ipbes.net/report/person/Metzger_Jean-Paul> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Metzger_JeanPaul> .
 
 <http://ontology.ipbes.net/report/person/Mora_Arturo> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/AMA18ch3> ;
@@ -3868,15 +3874,17 @@ Since the late 1990s, ecological research has mostly quantified the negative imp
     foaf:firstName "Brenda" ;
     foaf:lastName "Parlee" .
 
-<http://ontology.ipbes.net/report/person/Pauchard_Anibal> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Pauchard_Aníbal> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/AMA18ch4> ;
     ipbes:Report ipbes:AMA18 ;
     ipbes:country "CHL" ;
     ipbes:la "Lead Author in AMA18-ch4" ;
     owl:sameAs <https://orcid.org/0000-0003-1284-3163> ;
-    skos:prefLabel "Anibal Pauchard" ;
-    foaf:firstName "Anibal" ;
+    skos:prefLabel "Aníbal Pauchard" ;
+    foaf:firstName "Aníbal" ;
     foaf:lastName "Pauchard" .
+
+<http://ontology.ipbes.net/report/person/Pauchard_Anibal> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Pauchard_Aníbal> .
 
 <http://ontology.ipbes.net/report/person/Pedrana_Julieta> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/AMA18ch3> ;
@@ -3916,14 +3924,16 @@ Since the late 1990s, ecological research has mostly quantified the negative imp
     foaf:firstName "Judith A." ;
     foaf:lastName "Perlinger" .
 
-<http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramon> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramón> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/AMA18ch4> ;
     ipbes:Report ipbes:AMA18 ;
     ipbes:country "CUB" ;
     ipbes:la "Lead Author in AMA18-ch4" ;
-    skos:prefLabel "Ramon Pichs-Madruga" ;
-    foaf:firstName "Ramon" ;
+    skos:prefLabel "Ramón Pichs-Madruga" ;
+    foaf:firstName "Ramón" ;
     foaf:lastName "Pichs-Madruga" .
+
+<http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramon> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramón> .
 
 <http://ontology.ipbes.net/report/person/Piñeiro_Gervasio> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/AMA18ch3> ;
@@ -28138,16 +28148,18 @@ The Union of South American Nations (UNASUR): mechanism for the convergence of p
     foaf:firstName "Kate" ;
     foaf:lastName "Brauman" .
 
-<http://ontology.ipbes.net/report/person/Brondizio_EduardoS> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Brondízio_EduardoS> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/AMA18ch3>,
         <http://ontology.ipbes.net/report/ch/AMA18ch5> ;
     ipbes:Report ipbes:AMA18 ;
     ipbes:ca "Contributing Author in AMA18-ch3",
         "Contributing Author in AMA18-ch5" ;
     ipbes:country "BRA" ;
-    skos:prefLabel "Eduardo S. Brondizio" ;
+    skos:prefLabel "Eduardo S. Brondízio" ;
     foaf:firstName "Eduardo S." ;
-    foaf:lastName "Brondizio" .
+    foaf:lastName "Brondízio" .
+
+<http://ontology.ipbes.net/report/person/Brondizio_EduardoS> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Brondízio_EduardoS> .
 
 <http://ontology.ipbes.net/report/person/Byrnes_Jarrett> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/AMA18ch3>,
@@ -41870,7 +41882,7 @@ In air samples from the Cauca valley of Colombia, higher persistent organic poll
         <http://ontology.ipbes.net/report/person/Barker_Keith>,
         <http://ontology.ipbes.net/report/person/Bradley_Darcy>,
         <http://ontology.ipbes.net/report/person/Brauman_Kate>,
-        <http://ontology.ipbes.net/report/person/Brondizio_EduardoS>,
+        <http://ontology.ipbes.net/report/person/Brondízio_EduardoS>,
         <http://ontology.ipbes.net/report/person/Byrnes_Jarrett>,
         <http://ontology.ipbes.net/report/person/Caldwell_Chris>,
         <http://ontology.ipbes.net/report/person/Carnaval_AnaCarolina>,
@@ -41951,7 +41963,7 @@ In air samples from the Cauca valley of Colombia, higher persistent organic poll
     dcterms:identifier "06" ;
     skos:prefLabel "Options for governance and decision-making across scales and sectors" ;
     foaf:Person <http://ontology.ipbes.net/report/person/B_MarinaRosales>,
-        <http://ontology.ipbes.net/report/person/Diaz-de-Leon_Antonio>,
+        <http://ontology.ipbes.net/report/person/Díaz-de-León_Antonio>,
         <http://ontology.ipbes.net/report/person/Farinaci_JulianaS>,
         <http://ontology.ipbes.net/report/person/Fonseca_GustavoAB>,
         <http://ontology.ipbes.net/report/person/Garcia_Keisha>,
@@ -42049,9 +42061,9 @@ In air samples from the Cauca valley of Colombia, higher persistent organic poll
         <http://ontology.ipbes.net/report/person/McGuire_David>,
         <http://ontology.ipbes.net/report/person/Muller-Karger_Frank>,
         <http://ontology.ipbes.net/report/person/Nahuelhual_Laura>,
-        <http://ontology.ipbes.net/report/person/Pauchard_Anibal>,
+        <http://ontology.ipbes.net/report/person/Pauchard_Aníbal>,
         <http://ontology.ipbes.net/report/person/Perlinger_JudithA>,
-        <http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramon>,
+        <http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramón>,
         <http://ontology.ipbes.net/report/person/Queiroz_HelderLima>,
         <http://ontology.ipbes.net/report/person/Reis_CarlaRG>,
         <http://ontology.ipbes.net/report/person/Revenga_Carmen>,
@@ -42110,7 +42122,7 @@ In air samples from the Cauca valley of Colombia, higher persistent organic poll
         <http://ontology.ipbes.net/report/person/Belnap_Jayne>,
         <http://ontology.ipbes.net/report/person/Bradley_Darcy>,
         <http://ontology.ipbes.net/report/person/Brauman_Kate>,
-        <http://ontology.ipbes.net/report/person/Brondizio_EduardoS>,
+        <http://ontology.ipbes.net/report/person/Brondízio_EduardoS>,
         <http://ontology.ipbes.net/report/person/Byrnes_Jarrett>,
         <http://ontology.ipbes.net/report/person/Caldwell_Chris>,
         <http://ontology.ipbes.net/report/person/Casas_Alejandro>,
@@ -42133,7 +42145,7 @@ In air samples from the Cauca valley of Colombia, higher persistent organic poll
         <http://ontology.ipbes.net/report/person/Gobin_Judith>,
         <http://ontology.ipbes.net/report/person/Grignon_Jeff>,
         <http://ontology.ipbes.net/report/person/Isbell_Forest>,
-        <http://ontology.ipbes.net/report/person/Jaffe_Rodolfo>,
+        <http://ontology.ipbes.net/report/person/Jaffé_Rodolfo>,
         <http://ontology.ipbes.net/report/person/Jansa_Sharon>,
         <http://ontology.ipbes.net/report/person/Keeley_Jon>,
         <http://ontology.ipbes.net/report/person/Kennedy_Christina>,
@@ -42148,7 +42160,7 @@ In air samples from the Cauca valley of Colombia, higher persistent organic poll
         <http://ontology.ipbes.net/report/person/Mejía_DianaRamírez->,
         <http://ontology.ipbes.net/report/person/Melnychuk_Mike>,
         <http://ontology.ipbes.net/report/person/Messier_Christian>,
-        <http://ontology.ipbes.net/report/person/Metzger_Jean-Paul>,
+        <http://ontology.ipbes.net/report/person/Metzger_JeanPaul>,
         <http://ontology.ipbes.net/report/person/Mora_Arturo>,
         <http://ontology.ipbes.net/report/person/Moreno-Calles_AnaIsabel>,
         <http://ontology.ipbes.net/report/person/Nelson_Mark>,

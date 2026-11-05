@@ -2,12 +2,12 @@
 """Clean person and chapter links in the assessment .ttl files.
 
 Safe to run repeatedly: on data that is already clean it changes nothing. Re-run it
-after re-exporting any .ttl file, then reload the data (see README, "Cleaning person
-data"). It only edits files under ipbes-resource/files/, never Fuseki.
+after re-exporting any .ttl file (see README, "Cleaning person data"). It only edits
+the .ttl files, never Fuseki.
 
-    python3 ipbes-scripts/clean-person-data.py              # dry run, writes nothing
-    python3 ipbes-scripts/clean-person-data.py --verbose    # also list every merge
-    python3 ipbes-scripts/clean-person-data.py --apply      # write the changes
+    python3 src/clean_person_data.py              # dry run, writes nothing
+    python3 src/clean_person_data.py --verbose    # also list every merge
+    python3 src/clean_person_data.py --apply      # write the changes
 
 It does three things:
 
@@ -149,7 +149,7 @@ def names_match(broken, candidate):
 
 
 def chapter_key(iri):
-    """2-1, 2.1 and Ch2.1 compare equal, as in ReportController::fetchChapterContributors."""
+    """2-1, 2.1 and Ch2.1 compare equal."""
     tail = re.sub(r'^.*ch', '', iri.rsplit('/', 1)[1])
     return re.sub(r'[^0-9]+', '.', tail).strip('.')
 
@@ -439,7 +439,7 @@ def main():
         for path in paths:
             if path.name in changed:
                 path.write_text(texts[path.name], encoding='utf-8', newline='')
-        print('\nWritten. Next: review `git diff`, then `make load-data`.')
+        print('\nWritten.')
     else:
         print('\nDry run: nothing written. Re-run with --apply to write.')
 

@@ -64,7 +64,7 @@ PARTIAL_BY_NATURE = {
     "ipbes:hasConfidenceLevel",
     "ipbes:ca", "ipbes:cl", "ipbes:cs", "ipbes:fl", "ipbes:la", "ipbes:re", "ipbes:ts", "ipbes:mc",
     "ipbes:Illustration", "ipbes:hasDoi", "owl:sameAs",
-    "ipbes:KeyMessage", "ipbes:Reference", "foaf:Person",
+    "ipbes:KeyMessage", "ipbes:Reference", "foaf:Person", "dcterms:isReplacedBy",
 }
 
 # Ontology class -> the indexer's chunk type for it.

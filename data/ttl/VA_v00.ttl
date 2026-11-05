@@ -3149,14 +3149,16 @@ In such cases, dialogue and transparent deliberative approaches can help make ex
     foaf:firstName "Joshua" ;
     foaf:lastName "Farley" .
 
-<http://ontology.ipbes.net/report/person/Fernandez-Llamazares_Alvaro> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Fernández-Llamazares_Álvaro> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch3> ;
     ipbes:Report ipbes:VA22 ;
     ipbes:ca "Contributing Author in VA22-ch3" ;
     ipbes:country "ESP" ;
-    skos:prefLabel "Alvaro Fernandez-Llamazares" ;
-    foaf:firstName "Alvaro" ;
-    foaf:lastName "Fernandez-Llamazares" .
+    skos:prefLabel "Álvaro Fernández-Llamazares" ;
+    foaf:firstName "Álvaro" ;
+    foaf:lastName "Fernández-Llamazares" .
+
+<http://ontology.ipbes.net/report/person/Fernandez-Llamazares_Alvaro> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Fernández-Llamazares_Álvaro> .
 
 <http://ontology.ipbes.net/report/person/Fidler_RobertY> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch4> ;
@@ -3725,14 +3727,16 @@ In such cases, dialogue and transparent deliberative approaches can help make ex
     foaf:firstName "Jorge" ;
     foaf:lastName "Llopis" .
 
-<http://ontology.ipbes.net/report/person/Mallen_IsabelRuiz> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Ruiz-Mallen_Isabel> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
     ipbes:Report ipbes:VA22 ;
     ipbes:ca "Contributing Author in VA22-ch5" ;
     ipbes:country "ESP" ;
-    skos:prefLabel "Isabel Ruiz Mallen" ;
-    foaf:firstName "Isabel Ruiz" ;
-    foaf:lastName "Mallen" .
+    skos:prefLabel "Isabel Ruiz-Mallen" ;
+    foaf:firstName "Isabel" ;
+    foaf:lastName "Ruiz-Mallen" .
+
+<http://ontology.ipbes.net/report/person/Mallen_IsabelRuiz> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Ruiz-Mallen_Isabel> .
 
 <http://ontology.ipbes.net/report/person/Mandel_KingaMagdolna> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch2> ;
@@ -3753,14 +3757,16 @@ In such cases, dialogue and transparent deliberative approaches can help make ex
     foaf:firstName "Melissa" ;
     foaf:lastName "Marselle" .
 
-<http://ontology.ipbes.net/report/person/Martin-Lopez_Berta> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Martín-López_Berta> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch3> ;
     ipbes:Report ipbes:VA22 ;
     ipbes:ca "Contributing Author in VA22-ch3" ;
     ipbes:country "ESP" ;
-    skos:prefLabel "Berta Martin-Lopez" ;
+    skos:prefLabel "Berta Martín-López" ;
     foaf:firstName "Berta" ;
-    foaf:lastName "Martin-Lopez" .
+    foaf:lastName "Martín-López" .
+
+<http://ontology.ipbes.net/report/person/Martin-Lopez_Berta> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Martín-López_Berta> .
 
 <http://ontology.ipbes.net/report/person/Marton-Lefevre_Julia> a foaf:Person ;
     ipbes:Report ipbes:VA22 ;
@@ -4049,14 +4055,16 @@ In such cases, dialogue and transparent deliberative approaches can help make ex
     foaf:firstName "Jessica" ;
     foaf:lastName "Perritt" .
 
-<http://ontology.ipbes.net/report/person/Proenca_Vânia> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Proença_Vânia> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
     ipbes:Report ipbes:VA22 ;
     ipbes:ca "Contributing Author in VA22-ch5" ;
     ipbes:country "PRT" ;
-    skos:prefLabel "Vânia Proenca" ;
+    skos:prefLabel "Vânia Proença" ;
     foaf:firstName "Vânia" ;
-    foaf:lastName "Proenca" .
+    foaf:lastName "Proença" .
+
+<http://ontology.ipbes.net/report/person/Proenca_Vânia> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Proença_Vânia> .
 
 <http://ontology.ipbes.net/report/person/Prox_Lauren> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch2> ;
@@ -25984,16 +25992,18 @@ Collaborations between researchers, practitioners and indigenous peoples and loc
     foaf:firstName "Adrian" ;
     foaf:lastName "Martin" .
 
-<http://ontology.ipbes.net/report/person/Martin_FernandoSantos> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Santos-Martín_Fernando> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch3>,
         <http://ontology.ipbes.net/report/ch/VA22ch5> ;
     ipbes:Report ipbes:VA22 ;
     ipbes:ca "Contributing Author in VA22-ch3",
         "Contributing Author in VA22-ch5" ;
     ipbes:country "ESP" ;
-    skos:prefLabel "Fernando Santos Martin" ;
-    foaf:firstName "Fernando Santos" ;
-    foaf:lastName "Martin" .
+    skos:prefLabel "Fernando Santos-Martín" ;
+    foaf:firstName "Fernando" ;
+    foaf:lastName "Santos-Martín" .
+
+<http://ontology.ipbes.net/report/person/Martin_FernandoSantos> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Santos-Martín_Fernando> .
 
 <http://ontology.ipbes.net/report/person/Merçon_Juliana> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch1>,
@@ -26212,7 +26222,7 @@ Collaborations between researchers, practitioners and indigenous peoples and loc
     foaf:firstName "Luciana" ;
     foaf:lastName "Porter-Bolland" .
 
-<http://ontology.ipbes.net/report/person/Poufoun_JonasNgouhouo> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Ngouhouo-Poufoun_Jonas> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch1>,
         <http://ontology.ipbes.net/report/ch/VA22ch3> ;
     ipbes:Report ipbes:VA22 ;
@@ -26221,9 +26231,11 @@ Collaborations between researchers, practitioners and indigenous peoples and loc
         "FRA" ;
     ipbes:la "Lead Author in VA22-ch3" ;
     owl:sameAs <https://orcid.org/0000-0002-5538-3665> ;
-    skos:prefLabel "Jonas Ngouhouo Poufoun" ;
-    foaf:firstName "Jonas Ngouhouo" ;
-    foaf:lastName "Poufoun" .
+    skos:prefLabel "Jonas Ngouhouo-Poufoun" ;
+    foaf:firstName "Jonas" ;
+    foaf:lastName "Ngouhouo-Poufoun" .
+
+<http://ontology.ipbes.net/report/person/Poufoun_JonasNgouhouo> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Ngouhouo-Poufoun_Jonas> .
 
 <http://ontology.ipbes.net/report/person/Quaas_Martin> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch1>,
@@ -40337,7 +40349,7 @@ There are still many gaps in knowledge. While more studies have appeared in rece
         <http://ontology.ipbes.net/report/person/Pascual_Unai>,
         <http://ontology.ipbes.net/report/person/Pawlowska-Mainville_Agnieszka>,
         <http://ontology.ipbes.net/report/person/Porter-Bolland_Luciana>,
-        <http://ontology.ipbes.net/report/person/Poufoun_JonasNgouhouo>,
+        <http://ontology.ipbes.net/report/person/Ngouhouo-Poufoun_Jonas>,
         <http://ontology.ipbes.net/report/person/Quaas_Martin>,
         <http://ontology.ipbes.net/report/person/Raymond_Christopher>,
         <http://ontology.ipbes.net/report/person/Rode_Julian>,
@@ -40437,11 +40449,11 @@ Notes
         <http://ontology.ipbes.net/report/person/Krug_Rainer>,
         <http://ontology.ipbes.net/report/person/Kumar_Ritesh>,
         <http://ontology.ipbes.net/report/person/Lavorel_Sandra>,
-        <http://ontology.ipbes.net/report/person/Mallen_IsabelRuiz>,
+        <http://ontology.ipbes.net/report/person/Ruiz-Mallen_Isabel>,
         <http://ontology.ipbes.net/report/person/Mannetti_Lelani>,
         <http://ontology.ipbes.net/report/person/Marselle_Melissa>,
         <http://ontology.ipbes.net/report/person/Martin_Adrian>,
-        <http://ontology.ipbes.net/report/person/Martin_FernandoSantos>,
+        <http://ontology.ipbes.net/report/person/Santos-Martín_Fernando>,
         <http://ontology.ipbes.net/report/person/Martínez_FranciscoXavier>,
         <http://ontology.ipbes.net/report/person/Merçon_Juliana>,
         <http://ontology.ipbes.net/report/person/Meya_Jasper>,
@@ -40454,7 +40466,7 @@ Notes
         <http://ontology.ipbes.net/report/person/Okereke_Chuks>,
         <http://ontology.ipbes.net/report/person/Olsson_GunillaAlmered>,
         <http://ontology.ipbes.net/report/person/Pereira_Laura>,
-        <http://ontology.ipbes.net/report/person/Proenca_Vânia>,
+        <http://ontology.ipbes.net/report/person/Proença_Vânia>,
         <http://ontology.ipbes.net/report/person/Quaas_Martin>,
         <http://ontology.ipbes.net/report/person/Ravera_Federica>,
         <http://ontology.ipbes.net/report/person/Rode_Julian>,
@@ -40533,7 +40545,7 @@ The evidence base of this chapter consists of systematic in-depth reviews, topic
         <http://ontology.ipbes.net/report/person/Drakou_Evangelia>,
         <http://ontology.ipbes.net/report/person/Elias_JuanCusanero>,
         <http://ontology.ipbes.net/report/person/Farley_Joshua>,
-        <http://ontology.ipbes.net/report/person/Fernandez-Llamazares_Alvaro>,
+        <http://ontology.ipbes.net/report/person/Fernández-Llamazares_Álvaro>,
         <http://ontology.ipbes.net/report/person/Filippelli_Raphael>,
         <http://ontology.ipbes.net/report/person/Filyushkina_Anna>,
         <http://ontology.ipbes.net/report/person/Freitag_Jeanne>,
@@ -40561,8 +40573,8 @@ The evidence base of this chapter consists of systematic in-depth reviews, topic
         <http://ontology.ipbes.net/report/person/Larsen_Freja>,
         <http://ontology.ipbes.net/report/person/Lee_Heera>,
         <http://ontology.ipbes.net/report/person/Lewis_Jerome>,
-        <http://ontology.ipbes.net/report/person/Martin-Lopez_Berta>,
-        <http://ontology.ipbes.net/report/person/Martin_FernandoSantos>,
+        <http://ontology.ipbes.net/report/person/Martín-López_Berta>,
+        <http://ontology.ipbes.net/report/person/Santos-Martín_Fernando>,
         <http://ontology.ipbes.net/report/person/Montassir_Errachid>,
         <http://ontology.ipbes.net/report/person/Mukherjee_Nibedita>,
         <http://ontology.ipbes.net/report/person/Muradian_Roldan>,
@@ -40575,7 +40587,7 @@ The evidence base of this chapter consists of systematic in-depth reviews, topic
         <http://ontology.ipbes.net/report/person/Olsen_SørenBøye>,
         <http://ontology.ipbes.net/report/person/Palomo_Ignacio>,
         <http://ontology.ipbes.net/report/person/Pandit_Ram>,
-        <http://ontology.ipbes.net/report/person/Poufoun_JonasNgouhouo>,
+        <http://ontology.ipbes.net/report/person/Ngouhouo-Poufoun_Jonas>,
         <http://ontology.ipbes.net/report/person/Raez_Ernesto>,
         <http://ontology.ipbes.net/report/person/Salazar_JuanFrancisco>,
         <http://ontology.ipbes.net/report/person/Samorai_JohnLengoisa>,

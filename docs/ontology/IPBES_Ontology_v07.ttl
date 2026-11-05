@@ -65,6 +65,7 @@
     ipbes:la "Lead authors in the stated chapter and report" ;
     ipbes:re "Review editors in the stated chapter and report" ;
     ipbes:ts "Technical support unit members listed as editors of the stated report" ;
+    dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/> ;
     ipbes:mc "Management committee members (Bureau and Multidisciplinary Expert Panel) who guided the production of the stated report" ;
     owl:sameAs "Link to other resources about the person such as ORCID" ;
     skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" ;

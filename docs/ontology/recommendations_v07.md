@@ -2,7 +2,7 @@
 
 **File:** `docs/ontology/IPBES_Ontology_v07.ttl`. These changes are proposed to the TSU on data for agreement. It recommends changes to v06.
 
-**Basis:** 14 assessment reports (AFA, AMA, APA, BBA, ECA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) were converted automatically from their published PDFs to TTL and checked against v06. The files use nine properties v06 does not define: three on knowledge gaps that came from the reports, two links derived during conversion (changes 8 and 9), a single property for levels of confidence (change 10) and two roles, for the technical support unit and the management committee (changes 11 and 12), and a description on chapters (change 13). No class is added or removed. 
+**Basis:** 14 assessment reports (AFA, AMA, APA, BBA, ECA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) were converted automatically from their published PDFs to TTL and checked against v06. The files use ten properties v06 does not define: three on knowledge gaps that came from the reports, two links derived during conversion (changes 8 and 9), a single property for levels of confidence (change 10) and two roles, for the technical support unit and the management committee (changes 11 and 12), a description on chapters (change 13) and a link from a merged person's old URI to the current one (change 14). No class is added or removed. 
 
 ## Summary of decisions requested
 
@@ -21,7 +21,8 @@
 | 11 | Add the role `ipbes:ts` to Person, for the technical support unit | Yes | None: addition |
 | 12 | Add the role `ipbes:mc` to Person, for the management committee | Yes | None: addition |
 | 13 | Add `ipbes:hasDescription` to Chapter, for its executive summary | Yes | None: addition |
-| 14–15 | Questions for discussion | No | See below |
+| 14 | Add `dcterms:isReplacedBy` to Person, for merged URIs | Yes | None: addition; published URIs keep working |
+| 15–16 | Questions for discussion | No | See below |
 
 ## Changes in v07
 
@@ -136,11 +137,17 @@ The members come from page 2 of each report and from the experts list, which giv
 
 `ipbes:hasDescription` on a Chapter holds its executive summary, finding by finding, with its traceability marks and footnotes as printed. v06 has no place for it, so it was left out of the files, which lost text the reports give as each chapter's main findings.
 
+### 14. Person: URIs that are merged
+
+When records turn out to be the same person, they are merged under one URI. The old URI stays, with only `dcterms:isReplacedBy` pointing to the URI that survives, so anything that already cites the old URI can still be resolved. A retired URI is no longer typed as a Person.
+
+Merging follows reviewed rules: records with different ORCID iDs are never merged, and a shared ORCID iD alone is never a reason to merge.
+
 ## Questions for discussion (not in v07)
 
-**14. Chapters printed in parts.** GA1's chapter 2 is printed in parts 2.1, 2.2 and 2.3, each with its own authors and reference list. The automatic file has one chapter with sub-chapters 2.1.1 ...; the manual file has three chapters. Which should be the model?
+**15. Chapters printed in parts.** GA1's chapter 2 is printed in parts 2.1, 2.2 and 2.3, each with its own authors and reference list. The automatic file has one chapter with sub-chapters 2.1.1 ...; the manual file has three chapters. Which should be the model?
 
-**15. Properties defined but unused in the converted files.**
+**16. Properties defined but unused in the converted files.**
 
 | Property | Note |
 |---|---|

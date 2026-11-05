@@ -6829,14 +6829,16 @@ Marine assessment processes provide opportunities for management agencies, resea
     foaf:firstName "Alpina" ;
     foaf:lastName "Begossi" .
 
-<http://ontology.ipbes.net/report/person/Bellard_Celine> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Bellard_Céline> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
     ipbes:Report ipbes:GA119 ;
     ipbes:ca "Contributing Author in GA119-ch4" ;
     ipbes:country "FRA" ;
-    skos:prefLabel "Celine Bellard" ;
-    foaf:firstName "Celine" ;
+    skos:prefLabel "Céline Bellard" ;
+    foaf:firstName "Céline" ;
     foaf:lastName "Bellard" .
+
+<http://ontology.ipbes.net/report/person/Bellard_Celine> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Bellard_Céline> .
 
 <http://ontology.ipbes.net/report/person/Benessaiah_Karina> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2> ;
@@ -7079,14 +7081,16 @@ Marine assessment processes provide opportunities for management agencies, resea
     foaf:firstName "Julia" ;
     foaf:lastName "Carabias" .
 
-<http://ontology.ipbes.net/report/person/Carino_Joji> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Cariño_Joji> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
     ipbes:Report ipbes:GA119 ;
     ipbes:ca "Contributing Author in GA119-ch3" ;
     ipbes:country "PHL" ;
-    skos:prefLabel "Joji Carino" ;
+    skos:prefLabel "Joji Cariño" ;
     foaf:firstName "Joji" ;
-    foaf:lastName "Carino" .
+    foaf:lastName "Cariño" .
+
+<http://ontology.ipbes.net/report/person/Carino_Joji> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Cariño_Joji> .
 
 <http://ontology.ipbes.net/report/person/CarneirodaCunha_Manuela> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch1> ;
@@ -7440,12 +7444,14 @@ Marine assessment processes provide opportunities for management agencies, resea
     foaf:firstName "Kyle" ;
     foaf:lastName "Elliott" .
 
-<http://ontology.ipbes.net/report/person/Erpul_Gunay> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Erpul_Günay> a foaf:Person ;
     ipbes:Report ipbes:GA119 ;
     ipbes:mc "Management Committee in GA119" ;
-    skos:prefLabel "Gunay Erpul" ;
-    foaf:firstName "Gunay" ;
+    skos:prefLabel "Günay Erpul" ;
+    foaf:firstName "Günay" ;
     foaf:lastName "Erpul" .
+
+<http://ontology.ipbes.net/report/person/Erpul_Gunay> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Erpul_Günay> .
 
 <http://ontology.ipbes.net/report/person/Esler_Karen> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch5> ;
@@ -7993,15 +7999,17 @@ Marine assessment processes provide opportunities for management agencies, resea
     foaf:firstName "John E." ;
     foaf:lastName "Hobbie" .
 
-<http://ontology.ipbes.net/report/person/Horcea-Milcu_AndraIoana> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Horcea-Milcu_Andra-Ioana> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
     ipbes:Report ipbes:GA119 ;
     ipbes:country "ROU" ;
     ipbes:la "Lead Author in GA119-ch4" ;
     owl:sameAs <https://orcid.org/0000-0003-1757-6615> ;
-    skos:prefLabel "Andra Ioana Horcea-Milcu" ;
-    foaf:firstName "Andra Ioana" ;
+    skos:prefLabel "Andra-Ioana Horcea-Milcu" ;
+    foaf:firstName "Andra-Ioana" ;
     foaf:lastName "Horcea-Milcu" .
+
+<http://ontology.ipbes.net/report/person/Horcea-Milcu_AndraIoana> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Horcea-Milcu_Andra-Ioana> .
 
 <http://ontology.ipbes.net/report/person/Horgan_Finbarr> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2> ;
@@ -8308,14 +8316,16 @@ Marine assessment processes provide opportunities for management agencies, resea
     foaf:firstName "Alla" ;
     foaf:lastName "Khosrovyan" .
 
-<http://ontology.ipbes.net/report/person/Kim_HyeJin> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Kim_Hyejin> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
     ipbes:Report ipbes:GA119 ;
     ipbes:ca "Contributing Author in GA119-ch4" ;
     ipbes:country "DEU" ;
-    skos:prefLabel "HyeJin Kim" ;
-    foaf:firstName "HyeJin" ;
+    skos:prefLabel "Hyejin Kim" ;
+    foaf:firstName "Hyejin" ;
     foaf:lastName "Kim" .
+
+<http://ontology.ipbes.net/report/person/Kim_HyeJin> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Kim_Hyejin> .
 
 <http://ontology.ipbes.net/report/person/Kindlmann_Pavel> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
@@ -8554,14 +8564,16 @@ Marine assessment processes provide opportunities for management agencies, resea
     foaf:firstName "Elodie" ;
     foaf:lastName "Le Gal" .
 
-<http://ontology.ipbes.net/report/person/Leclere_David> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Leclère_David> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch5> ;
     ipbes:Report ipbes:GA119 ;
     ipbes:ca "Contributing Author in GA119-ch5" ;
     ipbes:country "FRA" ;
-    skos:prefLabel "David Leclere" ;
+    skos:prefLabel "David Leclère" ;
     foaf:firstName "David" ;
-    foaf:lastName "Leclere" .
+    foaf:lastName "Leclère" .
+
+<http://ontology.ipbes.net/report/person/Leclere_David> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Leclère_David> .
 
 <http://ontology.ipbes.net/report/person/Leigh_ChristopherBarrington-> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch5> ;
@@ -8692,15 +8704,17 @@ Marine assessment processes provide opportunities for management agencies, resea
     foaf:firstName "Abigail J." ;
     foaf:lastName "Lynch" .
 
-<http://ontology.ipbes.net/report/person/López_BertaMartín-> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Martín-López_Berta> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch1> ;
     ipbes:Report ipbes:GA119 ;
     ipbes:ca "Contributing Author in GA119-ch1" ;
     ipbes:country "DEU",
         "ESP" ;
-    skos:prefLabel "Berta Martín- López" ;
-    foaf:firstName "Berta Martín-" ;
-    foaf:lastName "López" .
+    skos:prefLabel "Berta Martín-López" ;
+    foaf:firstName "Berta" ;
+    foaf:lastName "Martín-López" .
+
+<http://ontology.ipbes.net/report/person/López_BertaMartín-> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Martín-López_Berta> .
 
 <http://ontology.ipbes.net/report/person/Mace_Georgina> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch1> ;
@@ -9272,14 +9286,16 @@ Marine assessment processes provide opportunities for management agencies, resea
     foaf:firstName "Philip" ;
     foaf:lastName "Osano" .
 
-<http://ontology.ipbes.net/report/person/Osuna_VanesaRodriguez> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/RodríguezOsuna_Vanesa> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2> ;
     ipbes:Report ipbes:GA119 ;
     ipbes:ca "Contributing Author in GA119-ch2" ;
     ipbes:country "DEU" ;
-    skos:prefLabel "Vanesa Rodriguez Osuna" ;
-    foaf:firstName "Vanesa Rodriguez" ;
-    foaf:lastName "Osuna" .
+    skos:prefLabel "Vanesa Rodríguez Osuna" ;
+    foaf:firstName "Vanesa" ;
+    foaf:lastName "Rodríguez Osuna" .
+
+<http://ontology.ipbes.net/report/person/Osuna_VanesaRodriguez> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/RodríguezOsuna_Vanesa> .
 
 <http://ontology.ipbes.net/report/person/Pakhtigian_Emily> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2> ;
@@ -9356,14 +9372,16 @@ Marine assessment processes provide opportunities for management agencies, resea
     foaf:firstName "Alexander" ;
     foaf:lastName "Pfaff" .
 
-<http://ontology.ipbes.net/report/person/PichsMadruga_Ramon> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramón> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
     ipbes:Report ipbes:GA119 ;
     ipbes:country "CUB" ;
     ipbes:la "Lead Author in GA119-ch4" ;
-    skos:prefLabel "Ramon Pichs Madruga" ;
-    foaf:firstName "Ramon" ;
-    foaf:lastName "Pichs Madruga" .
+    skos:prefLabel "Ramón Pichs-Madruga" ;
+    foaf:firstName "Ramón" ;
+    foaf:lastName "Pichs-Madruga" .
+
+<http://ontology.ipbes.net/report/person/PichsMadruga_Ramon> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramón> .
 
 <http://ontology.ipbes.net/report/person/Plesník_Jan> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch6> ;
@@ -9684,14 +9702,16 @@ Marine assessment processes provide opportunities for management agencies, resea
     foaf:firstName "Mahesh" ;
     foaf:lastName "Sankaran" .
 
-<http://ontology.ipbes.net/report/person/Santos-Martin_Fernando> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Santos-Martín_Fernando> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
     ipbes:Report ipbes:GA119 ;
     ipbes:ca "Contributing Author in GA119-ch3" ;
     ipbes:country "ESP" ;
-    skos:prefLabel "Fernando Santos-Martin" ;
+    skos:prefLabel "Fernando Santos-Martín" ;
     foaf:firstName "Fernando" ;
-    foaf:lastName "Santos-Martin" .
+    foaf:lastName "Santos-Martín" .
+
+<http://ontology.ipbes.net/report/person/Santos-Martin_Fernando> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Santos-Martín_Fernando> .
 
 <http://ontology.ipbes.net/report/person/Sathyapalan_Jyothis> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
@@ -9937,14 +9957,16 @@ Marine assessment processes provide opportunities for management agencies, resea
     foaf:firstName "Isabel" ;
     foaf:lastName "Sousa Pinto" .
 
-<http://ontology.ipbes.net/report/person/Speranza_ChinweIfejika> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/IfejikaSperanza_Chinwe> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
     ipbes:Report ipbes:GA119 ;
     ipbes:ca "Contributing Author in GA119-ch3" ;
     ipbes:country "CHE" ;
     skos:prefLabel "Chinwe Ifejika Speranza" ;
-    foaf:firstName "Chinwe Ifejika" ;
-    foaf:lastName "Speranza" .
+    foaf:firstName "Chinwe" ;
+    foaf:lastName "Ifejika Speranza" .
+
+<http://ontology.ipbes.net/report/person/Speranza_ChinweIfejika> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/IfejikaSperanza_Chinwe> .
 
 <http://ontology.ipbes.net/report/person/Steenblik_Ronald> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch6> ;
@@ -84130,7 +84152,7 @@ Preserving biodiversity is valuable in part because it maintains future options 
         <http://ontology.ipbes.net/report/person/Hendry_Andrew>,
         <http://ontology.ipbes.net/report/person/Jaureguiberry_Pedro>,
         <http://ontology.ipbes.net/report/person/Liu_Jianguo>,
-        <http://ontology.ipbes.net/report/person/López_BertaMartín->,
+        <http://ontology.ipbes.net/report/person/Martín-López_Berta>,
         <http://ontology.ipbes.net/report/person/Mace_Georgina>,
         <http://ontology.ipbes.net/report/person/Martin_Adrian>,
         <http://ontology.ipbes.net/report/person/Midgley_GuyF>,
@@ -86332,7 +86354,7 @@ Notes
         <http://ontology.ipbes.net/report/person/Kok_Marcel>,
         <http://ontology.ipbes.net/report/person/Latawiec_Agnieszka>,
         <http://ontology.ipbes.net/report/person/Lazarova_Tanya>,
-        <http://ontology.ipbes.net/report/person/Leclere_David>,
+        <http://ontology.ipbes.net/report/person/Leclère_David>,
         <http://ontology.ipbes.net/report/person/Leigh_ChristopherBarrington->,
         <http://ontology.ipbes.net/report/person/Liu_Jianguo>,
         <http://ontology.ipbes.net/report/person/Mohamed_Assem>,
@@ -86401,7 +86423,7 @@ Notes
         <http://ontology.ipbes.net/report/person/Arneth_Almut>,
         <http://ontology.ipbes.net/report/person/Basher_Zeenatul>,
         <http://ontology.ipbes.net/report/person/Basu_Mrittika>,
-        <http://ontology.ipbes.net/report/person/Bellard_Celine>,
+        <http://ontology.ipbes.net/report/person/Bellard_Céline>,
         <http://ontology.ipbes.net/report/person/Boafo_YawAgyeman>,
         <http://ontology.ipbes.net/report/person/Bohensky_Erin>,
         <http://ontology.ipbes.net/report/person/Bopp_Laurent>,
@@ -86420,13 +86442,13 @@ Notes
         <http://ontology.ipbes.net/report/person/Hazen_Elliott>,
         <http://ontology.ipbes.net/report/person/Heinimann_Andreas>,
         <http://ontology.ipbes.net/report/person/Hendry_Andrew>,
-        <http://ontology.ipbes.net/report/person/Horcea-Milcu_AndraIoana>,
+        <http://ontology.ipbes.net/report/person/Horcea-Milcu_Andra-Ioana>,
         <http://ontology.ipbes.net/report/person/Hughes_RobertM>,
         <http://ontology.ipbes.net/report/person/Ibarrola_MaríaJosé>,
         <http://ontology.ipbes.net/report/person/Iles_David>,
         <http://ontology.ipbes.net/report/person/Jenouvrier_Stéphanie>,
         <http://ontology.ipbes.net/report/person/Kaplan_Jed>,
-        <http://ontology.ipbes.net/report/person/Kim_HyeJin>,
+        <http://ontology.ipbes.net/report/person/Kim_Hyejin>,
         <http://ontology.ipbes.net/report/person/Kindlmann_Pavel>,
         <http://ontology.ipbes.net/report/person/Kolb_Melanie>,
         <http://ontology.ipbes.net/report/person/Krause_Andreas>,
@@ -86442,7 +86464,7 @@ Notes
         <http://ontology.ipbes.net/report/person/Oberdorff_Thierry>,
         <http://ontology.ipbes.net/report/person/Osano_Philip>,
         <http://ontology.ipbes.net/report/person/Palomo_Ignacio>,
-        <http://ontology.ipbes.net/report/person/PichsMadruga_Ramon>,
+        <http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramón>,
         <http://ontology.ipbes.net/report/person/Pliscoff_Patricio>,
         <http://ontology.ipbes.net/report/person/Poloczanska_Elvira>,
         <http://ontology.ipbes.net/report/person/Pugh_Thomas>,
@@ -86627,7 +86649,7 @@ Notes
         <http://ontology.ipbes.net/report/person/Bussmann_Rainer>,
         <http://ontology.ipbes.net/report/person/Butchart_Stuart>,
         <http://ontology.ipbes.net/report/person/Calcagni_Fulvia>,
-        <http://ontology.ipbes.net/report/person/Carino_Joji>,
+        <http://ontology.ipbes.net/report/person/Cariño_Joji>,
         <http://ontology.ipbes.net/report/person/Chignell_Steve>,
         <http://ontology.ipbes.net/report/person/Czúcz_Bálint>,
         <http://ontology.ipbes.net/report/person/Diamond_Sara>,
@@ -86670,13 +86692,13 @@ Notes
         <http://ontology.ipbes.net/report/person/Ruiz-Mallen_Isabel>,
         <http://ontology.ipbes.net/report/person/Salpeteur_Matthieu>,
         <http://ontology.ipbes.net/report/person/Samakov_Aibek>,
-        <http://ontology.ipbes.net/report/person/Santos-Martin_Fernando>,
+        <http://ontology.ipbes.net/report/person/Santos-Martín_Fernando>,
         <http://ontology.ipbes.net/report/person/Saylor_Kirk>,
         <http://ontology.ipbes.net/report/person/Schaffartzik_Anke>,
         <http://ontology.ipbes.net/report/person/Selig_ElizabethR>,
         <http://ontology.ipbes.net/report/person/Singh_GopalS>,
         <http://ontology.ipbes.net/report/person/Sitas_Nadia>,
-        <http://ontology.ipbes.net/report/person/Speranza_ChinweIfejika>,
+        <http://ontology.ipbes.net/report/person/IfejikaSperanza_Chinwe>,
         <http://ontology.ipbes.net/report/person/Subramanian_SuneethaM>,
         <http://ontology.ipbes.net/report/person/Suich_Helen>,
         <http://ontology.ipbes.net/report/person/Tarkhnishvili_David>,
@@ -87002,7 +87024,7 @@ Notes
         <http://ontology.ipbes.net/report/person/Orgill_Jennifer>,
         <http://ontology.ipbes.net/report/person/Ortega_EmmanuelGonzález>,
         <http://ontology.ipbes.net/report/person/Ortíz_Victor>,
-        <http://ontology.ipbes.net/report/person/Osuna_VanesaRodriguez>,
+        <http://ontology.ipbes.net/report/person/RodríguezOsuna_Vanesa>,
         <http://ontology.ipbes.net/report/person/Pacheco_Diego>,
         <http://ontology.ipbes.net/report/person/Pakhtigian_Emily>,
         <http://ontology.ipbes.net/report/person/Palang_Hannes>,
@@ -87078,7 +87100,7 @@ ipbes:GA119 a ipbes:Report ;
         <http://ontology.ipbes.net/report/person/Demissew_SebsebeWoodmatas>,
         <http://ontology.ipbes.net/report/person/Dziba_Luthando>,
         <http://ontology.ipbes.net/report/person/Díaz_Sandra>,
-        <http://ontology.ipbes.net/report/person/Erpul_Gunay>,
+        <http://ontology.ipbes.net/report/person/Erpul_Günay>,
         <http://ontology.ipbes.net/report/person/Fazel_AsgharM>,
         <http://ontology.ipbes.net/report/person/Fischer_Markus>,
         <http://ontology.ipbes.net/report/person/Hernández_AnaMaria>,

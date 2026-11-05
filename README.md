@@ -121,6 +121,9 @@ ipbesllm/
 │   ├── ttl_audit.py             # Check TTL files against the ontology
 │   ├── pdf_to_ttl.py            # Converts an assessment report (PDF) to TTL following the ontology
 │   ├── conversion_report.py     # PDF report on a conversion
+│   ├── clean_person_data.py     # Cleans person and chapter links in the TTL files; run after converting
+│   ├── refresh_all.sh           # Converts all 14, refreshes data/ttl, cleans person data, writes the reports
+│   ├── glossary_gaps.py         # Lists glossary terms that are not in the IPBES thesaurus
 │   ├── ttl_compare.py           # Compares two TTL files of an assessment, and their fidelity to the PDF
 │   ├── quote_check.py           # Checks an answer's quotations and DOIs against its sources
 │   ├── chunking.py              # Splits oversized TTL chunks
@@ -383,6 +386,25 @@ The converted files go to `data/ttl/` as `<A>_v00.ttl`, so as not to clash with 
 
 What it leaves out, because the ontology has no place for it: unnumbered sections (chapter 5's "Knowledge gaps"), the SPM preface, the technical support unit.
 
+#### Cleaning person data
+
+`src/clean_person_data.py` cleans person and chapter links across every `.ttl` file in a folder (`data/ttl/` by default). It only edits the files. Run it after converting or re-exporting any file, and before indexing, because a new conversion overwrites its earlier cleaning. `src/refresh_all.sh` runs it for you, after converting all 14 assessments and before writing the reports:
+
+```bash
+python src/clean_person_data.py                        # dry run: reports, writes nothing
+python src/clean_person_data.py --verbose              # also lists every merge
+python src/clean_person_data.py --apply                # writes the changes
+python src/clean_person_data.py --dir path/to/folder   # another folder, as a dry run
+```
+
+It does three things, and running it again on clean data changes nothing:
+
+1. **Broken person URIs:** a chapter's `foaf:Person` link to a URI with no record (`Babai_Dniel` for `Babai_Dániel`) is repointed only if exactly one person in that file has a matching name and lists that chapter. Placeholders such as `Surname_Name` are removed.
+2. **Dangling chapter links:** a person's `ipbes:Chapter` value with no chapter record is repointed or removed, using the script's reviewed lists.
+3. **Duplicate people:** records with the same name, ignoring case, accents, punctuation and word order, are merged, including across assessments, along with the pairs in the reviewed lists `SAME_PERSON` and `SAME_PERSON_INITIALS`. Records with different ORCID iDs are never merged, and a shared ORCID iD alone is never a reason to merge. Each retired URI keeps `dcterms:isReplacedBy` pointing to the one that survives, so published URIs keep working.
+
+The report at the end also lists what it left alone: broken URIs it could not match, same names with different ORCID iDs, an ORCID iD on more than one person, and chapter links with no record. To change a decision, edit the reviewed lists at the top of the script rather than the `.ttl` files.
+
 #### Country values
 
 Expert countries are matched to ISO codes with the geography RDF. Several countries in one value are split on `;`, `/` or `,` ("Argentina, Spain"); a person can also have several country values (nationality and residence), and all are kept. Colloquial names, nations of the United Kingdom and known misspellings in the source files ("UK", "Scotland", "Italia", "Australian", "Tunesia" …) are listed in `_COUNTRY_ALIASES` in `src/geo.py`.
@@ -390,6 +412,14 @@ Expert countries are matched to ISO codes with the geography RDF. Several countr
 Indexing stops when a country value cannot be resolved (`STRICT_COUNTRY_RESOLUTION` in `ttl_index.py`) and lists the values. Fix them in the source TTL, or add an alias to `geo.py`, and run the check again (`--dry-run`) until it passes.
 
 #### Thesaurus
+
+To list the assessments' glossary terms that the thesaurus does not have, as candidates to add (about 10 minutes for all 14; run it without codes for the full list):
+
+```bash
+PYTHONPATH=src python src/glossary_gaps.py
+```
+
+A term counts as found if it matches an English label, with or without the label's brackets ("Biomass (ecology)" is also "Biomass"), or if its definition is exactly one in the thesaurus. `data/csv/glossary_not_in_thesaurus.csv` lists the terms not found, and keeps what is entered in its `checked` and `note` columns when it is regenerated. `data/csv/glossary_same_definition_as_thesaurus.csv` lists the terms found only by their definition, under another label, to check.
 
 Re-index the thesaurus whenever the IPBES thesaurus RDF changes:
 

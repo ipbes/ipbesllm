@@ -1901,14 +1901,16 @@ National Governments, international organizations (e.g., the World Trade Organiz
     foaf:firstName "Juan Martin" ;
     foaf:lastName "Dabezies" .
 
-<http://ontology.ipbes.net/report/person/DePosada_JuanaMarino> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/MariñoDePosada_Juana> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/TCA24ch5> ;
     ipbes:Report ipbes:TCA24 ;
     ipbes:ca "Contributing Author in TCA24-ch5" ;
     ipbes:country "COL" ;
-    skos:prefLabel "Juana Marino De Posada" ;
-    foaf:firstName "Juana Marino" ;
-    foaf:lastName "De Posada" .
+    skos:prefLabel "Juana Mariño De Posada" ;
+    foaf:firstName "Juana" ;
+    foaf:lastName "Mariño De Posada" .
+
+<http://ontology.ipbes.net/report/person/DePosada_JuanaMarino> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/MariñoDePosada_Juana> .
 
 <http://ontology.ipbes.net/report/person/Deluca_LauraM> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/TCA24ch1> ;
@@ -28954,7 +28956,7 @@ Notes
         <http://ontology.ipbes.net/report/person/Claudet_Joachim>,
         <http://ontology.ipbes.net/report/person/Currivan_Jude>,
         <http://ontology.ipbes.net/report/person/Dadvar_Maral>,
-        <http://ontology.ipbes.net/report/person/DePosada_JuanaMarino>,
+        <http://ontology.ipbes.net/report/person/MariñoDePosada_Juana>,
         <http://ontology.ipbes.net/report/person/Divecha_Simon>,
         <http://ontology.ipbes.net/report/person/Duker_Peter>,
         <http://ontology.ipbes.net/report/person/Forsyth_Tim>,

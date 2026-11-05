@@ -42436,7 +42436,7 @@ A number of broader estimates have looked at the agrifood system as a whole, inc
     foaf:firstName "Shabana" ;
     foaf:lastName "Khan" .
 
-<http://ontology.ipbes.net/report/person/Kim_HyeJin> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Kim_Hyejin> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/NXS24ch2>,
         <http://ontology.ipbes.net/report/ch/NXS24ch3> ;
     ipbes:Report ipbes:NXS24 ;
@@ -42444,9 +42444,11 @@ A number of broader estimates have looked at the agrifood system as a whole, inc
         "Contributing Author in NXS24-ch3" ;
     ipbes:country "GBR",
         "KOR" ;
-    skos:prefLabel "HyeJin Kim" ;
-    foaf:firstName "HyeJin" ;
+    skos:prefLabel "Hyejin Kim" ;
+    foaf:firstName "Hyejin" ;
     foaf:lastName "Kim" .
+
+<http://ontology.ipbes.net/report/person/Kim_HyeJin> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Kim_Hyejin> .
 
 <http://ontology.ipbes.net/report/person/Koltz_Amanda> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/NXS24ch5>,
@@ -68249,7 +68251,7 @@ Knowledge gaps include the need for more scenarios covering interactions between
         <http://ontology.ipbes.net/report/person/Hertz_Ashanapuri>,
         <http://ontology.ipbes.net/report/person/Holman_IanP>,
         <http://ontology.ipbes.net/report/person/Jung_Martin>,
-        <http://ontology.ipbes.net/report/person/Kim_HyeJin>,
+        <http://ontology.ipbes.net/report/person/Kim_Hyejin>,
         <http://ontology.ipbes.net/report/person/Klatt_Brian>,
         <http://ontology.ipbes.net/report/person/Koudelková_Magdaléna>,
         <http://ontology.ipbes.net/report/person/Kumar_Pankaj>,
@@ -68440,7 +68442,7 @@ Policy frameworks such as the Sustainable Development Goals, the Kunming-Montrea
         <http://ontology.ipbes.net/report/person/Hayman_DavidTS>,
         <http://ontology.ipbes.net/report/person/Howe_Caroline>,
         <http://ontology.ipbes.net/report/person/Hussain_Abid>,
-        <http://ontology.ipbes.net/report/person/Kim_HyeJin>,
+        <http://ontology.ipbes.net/report/person/Kim_Hyejin>,
         <http://ontology.ipbes.net/report/person/Levers_Christian>,
         <http://ontology.ipbes.net/report/person/Lorilla_RoxanneSuzette>,
         <http://ontology.ipbes.net/report/person/Maire_Eva>,

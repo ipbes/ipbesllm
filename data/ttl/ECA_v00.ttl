@@ -3692,14 +3692,16 @@ Trade-offs depend on scenario assumptions about lifestyle and consumption, which
     foaf:firstName "Martin" ;
     foaf:lastName "Forsius" .
 
-<http://ontology.ipbes.net/report/person/Frances_Lucy> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Lucy_Frances> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/ECA18ch4> ;
     ipbes:Report ipbes:ECA18 ;
     ipbes:ca "Contributing Author in ECA18-ch4" ;
     ipbes:country "IRL" ;
-    skos:prefLabel "Lucy Frances" ;
-    foaf:firstName "Lucy" ;
-    foaf:lastName "Frances" .
+    skos:prefLabel "Frances Lucy" ;
+    foaf:firstName "Frances" ;
+    foaf:lastName "Lucy" .
+
+<http://ontology.ipbes.net/report/person/Frances_Lucy> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Lucy_Frances> .
 
 <http://ontology.ipbes.net/report/person/Frantzeskaki_Niki> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/ECA18ch5> ;
@@ -4691,15 +4693,17 @@ Trade-offs depend on scenario assumptions about lifestyle and consumption, which
     foaf:firstName "Helen" ;
     foaf:lastName "Roy" .
 
-<http://ontology.ipbes.net/report/person/Rozas_ElisaOteros-> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Oteros-Rozas_Elisa> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/ECA18ch2> ;
     ipbes:Report ipbes:ECA18 ;
     ipbes:country "ESP" ;
     ipbes:la "Lead Author in ECA18-ch2" ;
     owl:sameAs <https://orcid.org/0000-0003-4313-3041> ;
-    skos:prefLabel "Elisa Oteros- Rozas" ;
-    foaf:firstName "Elisa Oteros-" ;
-    foaf:lastName "Rozas" .
+    skos:prefLabel "Elisa Oteros-Rozas" ;
+    foaf:firstName "Elisa" ;
+    foaf:lastName "Oteros-Rozas" .
+
+<http://ontology.ipbes.net/report/person/Rozas_ElisaOteros-> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Oteros-Rozas_Elisa> .
 
 <http://ontology.ipbes.net/report/person/Saarikoski_Heli> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/ECA18ch4> ;
@@ -52023,7 +52027,7 @@ Europe and Central Asia uses more renewable natural resources than are produced 
         <http://ontology.ipbes.net/report/person/Potts_SimonG>,
         <http://ontology.ipbes.net/report/person/Povilaityte-Petri_Vitalija>,
         <http://ontology.ipbes.net/report/person/Rossberg_AxelG>,
-        <http://ontology.ipbes.net/report/person/Rozas_ElisaOteros->,
+        <http://ontology.ipbes.net/report/person/Oteros-Rozas_Elisa>,
         <http://ontology.ipbes.net/report/person/Sauterel_JasminMena>,
         <http://ontology.ipbes.net/report/person/Schröter_Matthias>,
         <http://ontology.ipbes.net/report/person/Sievers-Glotzbach_Stefanie>,
@@ -52148,7 +52152,7 @@ In addition to immediate effects, the individual and combined effects of natural
         <http://ontology.ipbes.net/report/person/Elias_Victoria>,
         <http://ontology.ipbes.net/report/person/Eycott_AmyElizabeth>,
         <http://ontology.ipbes.net/report/person/Forsius_Martin>,
-        <http://ontology.ipbes.net/report/person/Frances_Lucy>,
+        <http://ontology.ipbes.net/report/person/Lucy_Frances>,
         <http://ontology.ipbes.net/report/person/Friberg_Nikolai>,
         <http://ontology.ipbes.net/report/person/Galil_Bella>,
         <http://ontology.ipbes.net/report/person/Genovesi_Piero>,

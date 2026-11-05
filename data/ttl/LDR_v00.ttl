@@ -3544,15 +3544,17 @@ LAND ABANDONMENT can be caused by changes in economic conditions, policies or po
     foaf:firstName "Toby Alan" ;
     foaf:lastName "Gardner" .
 
-<http://ontology.ipbes.net/report/person/Garza_CristinaMartinez> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Martínez-Garza_Cristina> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/LDR18ch4> ;
     ipbes:Report ipbes:LDR18 ;
     ipbes:country "MEX" ;
     ipbes:la "Lead Author in LDR18-ch4" ;
     owl:sameAs <https://orcid.org/0000-0002-9310-564X> ;
-    skos:prefLabel "Cristina Martinez Garza" ;
-    foaf:firstName "Cristina Martinez" ;
-    foaf:lastName "Garza" .
+    skos:prefLabel "Cristina Martínez-Garza" ;
+    foaf:firstName "Cristina" ;
+    foaf:lastName "Martínez-Garza" .
+
+<http://ontology.ipbes.net/report/person/Garza_CristinaMartinez> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Martínez-Garza_Cristina> .
 
 <http://ontology.ipbes.net/report/person/Gebremikael_MulubrhanBalehegn> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/LDR18ch7> ;
@@ -50181,7 +50183,7 @@ There is an urgent need for the development of appropriate degradation and resto
         <http://ontology.ipbes.net/report/person/Ellicot_Evan>,
         <http://ontology.ipbes.net/report/person/Eshel_Gil>,
         <http://ontology.ipbes.net/report/person/Fernandes_GeraldoWilson>,
-        <http://ontology.ipbes.net/report/person/Garza_CristinaMartinez>,
+        <http://ontology.ipbes.net/report/person/Martínez-Garza_Cristina>,
         <http://ontology.ipbes.net/report/person/Geissen_Violette>,
         <http://ontology.ipbes.net/report/person/Halme_Panu>,
         <http://ontology.ipbes.net/report/person/Harris_Jim>,

@@ -2591,14 +2591,16 @@ Specific policies relating to rewarding local knowledge, practices on conservati
     foaf:firstName "Aidin" ;
     foaf:lastName "Niamir" .
 
-<http://ontology.ipbes.net/report/person/Ning_Wu> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Wu_Ning> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch4> ;
     ipbes:Report ipbes:APA18 ;
     ipbes:cl "Coordinating Lead Author in APA18-ch4" ;
     ipbes:country "CHN" ;
-    skos:prefLabel "Wu Ning" ;
-    foaf:firstName "Wu" ;
-    foaf:lastName "Ning" .
+    skos:prefLabel "Ning Wu" ;
+    foaf:firstName "Ning" ;
+    foaf:lastName "Wu" .
+
+<http://ontology.ipbes.net/report/person/Ning_Wu> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Wu_Ning> .
 
 <http://ontology.ipbes.net/report/person/Okabe_Kimiko> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch6> ;
@@ -39152,7 +39154,7 @@ Strong, effective participatory governance can help alleviate the negative impac
         <http://ontology.ipbes.net/report/person/Kohli_Priyanka>,
         <http://ontology.ipbes.net/report/person/KumarapuramApadodharan_Subramanian>,
         <http://ontology.ipbes.net/report/person/Lin_Hsing-Juh>,
-        <http://ontology.ipbes.net/report/person/Ning_Wu>,
+        <http://ontology.ipbes.net/report/person/Wu_Ning>,
         <http://ontology.ipbes.net/report/person/Okubo_Satoru>,
         <http://ontology.ipbes.net/report/person/Onuma_Ayumi>,
         <http://ontology.ipbes.net/report/person/Pagad_Shyama>,

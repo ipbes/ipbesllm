@@ -2496,15 +2496,17 @@ Despite these advances, the availability of tools remains limited, and there are
     foaf:firstName "Jonty" ;
     foaf:lastName "Rawlins" .
 
-<http://ontology.ipbes.net/report/person/RodriguezOsuna_Vanesa> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/RodríguezOsuna_Vanesa> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1> ;
     ipbes:Report ipbes:BBA26 ;
     ipbes:cl "Coordinating Lead Author in BBA26-ch1" ;
     ipbes:country "BOL",
         "DEU" ;
-    skos:prefLabel "Vanesa Rodriguez Osuna" ;
+    skos:prefLabel "Vanesa Rodríguez Osuna" ;
     foaf:firstName "Vanesa" ;
-    foaf:lastName "Rodriguez Osuna" .
+    foaf:lastName "Rodríguez Osuna" .
+
+<http://ontology.ipbes.net/report/person/RodriguezOsuna_Vanesa> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/RodríguezOsuna_Vanesa> .
 
 <http://ontology.ipbes.net/report/person/Romero_Claudia> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch3> ;
@@ -25033,7 +25035,7 @@ Within businesses, organizational structures and cultures present additional bar
         <http://ontology.ipbes.net/report/person/McKenzie_Emily>,
         <http://ontology.ipbes.net/report/person/Perram_Anouska>,
         <http://ontology.ipbes.net/report/person/Priyadarshini_Priya>,
-        <http://ontology.ipbes.net/report/person/RodriguezOsuna_Vanesa>,
+        <http://ontology.ipbes.net/report/person/RodríguezOsuna_Vanesa>,
         <http://ontology.ipbes.net/report/person/Schultz_Lisen>,
         <http://ontology.ipbes.net/report/person/Shimshack_Jay>,
         <http://ontology.ipbes.net/report/person/Teren_Gabriella>,
