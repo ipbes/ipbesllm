@@ -2009,6 +2009,13 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
                 m = re.match(r"^(.*?)\s*\(((?:[^()]|\([^()]*\))*)\)\s*$", entry)
                 name, ctext = (m.group(1), m.group(2)) if m else (entry, "")
                 name = re.sub(r"\s+", " ", name).strip()
+                # Not part of the name: "and Madhu Verma", "CHAPTER SCIENTIST: Rainer Krug" (GA1).
+                name = re.sub(r"^(?:and\s+|chapter scientists?\s*:\s*)+", "", name, flags=re.IGNORECASE).strip()
+                # No name: nothing to make a person or a URI from ("etc.", AMA; empty, VA).
+                if not re.search(r"[^\W\d_]{2}", name) or re.fullmatch(r"et\.? al\.?|etc\.?", name, re.IGNORECASE):
+                    log.add("people", f"chapter {ch.number} page: '{entry}' under {ROLE_NAMES[role]} has no "
+                                      f"person's name; left out")
+                    continue
                 # The same person may be printed differently in two chapters
                 # ("Laura Pereira", "Laura M. Pereira"); reported as a variant.
                 p = find(name, f"the chapter {ch.number} page")
@@ -2640,7 +2647,7 @@ def glossary_entries(paras: list[Para], rep: Report) -> list[dict]:
     pages = next((v for k, v in rep.annex_pages.items() if "GLOSSARY" in k and "REFERENCES" not in k), [])
     entries: list[dict] = []
     in_term = False         # the entry so far is only a term: a bold next line goes on with it
-    not_terms = {"source", "sources", "note", "notes", "example", "examples", "see", "see also", "references"}
+    not_terms = {"source", "sources", "note", "notes", "example", "examples", "see", "see also", "references", "origin"}
     for p in paras:
         if p.page in pages and p.role == "title" and "REFERENCES" in p.text.upper():
             break           # the glossary's own reference list (NXS)
@@ -2696,7 +2703,7 @@ def glossary_entries(paras: list[Para], rep: Report) -> list[dict]:
             if bracket:
                 entries[-1]["term"] += " " + bracket.group(1)
                 rest = rest[bracket.end():]
-            short = re.match(r"^([a-z)]{1,2})(?=[\s:]|$)\s*:?\s*", rest)
+            short = re.match(r"^([a-z)])(?=:|$)\s*:?\s*", rest)
             if short and entries[-1]["term"][-1:].isalpha() or (short and short.group(1) == ")"):
                 entries[-1]["term"] += short.group(1)
                 rest = rest[short.end():]

@@ -5,7 +5,13 @@ env.bak
 __pycache__/
 .DS_Store
 chroma/
-data/
+data/csv/
+data/docx/
+data/pdf/
+data/pdf_compare/
+data/rdf/
+data/ttl_original/
+data/xml_compare/
 src/__pycache__/
 src/test.py
 *.sqlite3
