@@ -2640,12 +2640,13 @@ def glossary_entries(paras: list[Para], rep: Report) -> list[dict]:
     pages = next((v for k, v in rep.annex_pages.items() if "GLOSSARY" in k and "REFERENCES" not in k), [])
     entries: list[dict] = []
     in_term = False         # the entry so far is only a term: a bold next line goes on with it
+    not_terms = {"source", "sources", "note", "notes", "example", "examples", "see", "see also", "references"}
     for p in paras:
         if p.page in pages and p.role == "title" and "REFERENCES" in p.text.upper():
             break           # the glossary's own reference list (NXS)
         if not (p.page in pages and p.role == "small"):
             continue
-        for line in p.lines:
+        for n_line, line in enumerate(p.lines):
             spans = [s for s in line.spans if s.text and not s.sup]
             text = re.sub(r"\s+", " ", "".join(s.text for s in spans)).strip()
             if len(text) < 2:
@@ -2658,10 +2659,26 @@ def glossary_entries(paras: list[Para], rep: Report) -> list[dict]:
             lead = re.sub(r"\s+", " ", lead).strip()
             rest = text[len(lead):].strip() if text.startswith(lead) else text
             if text[0] in "•▪·":
-                lead, rest = "", text        # a bulleted item inside a definition
+                # A bulleted item: a sub-term if in bold (NXS, LDR), else part of the definition.
+                lead = lead.lstrip("•▪· ").strip()
+                rest = text[len(text) - len(rest):].strip() if lead else text
+                if lead:
+                    in_term = False
             last = entries[-1] if entries else None
-            if lead and re.fullmatch(r"(?:Glossary )?References:?", lead, re.IGNORECASE):
-                return _clean_glossary(entries)     # AFA's "Glossary References"
+            if lead and re.fullmatch(r"(?:Glossary )?References:?|IPBES/\d+/INF/\d+", lead, re.IGNORECASE):
+                return _clean_glossary(entries)     # the sources: AFA's "Glossary References", SCM's
+            if lead.lower().startswith("glossary"):
+                continue    # the running heading (PPA: "Glossary Lead Author")
+            # A term in plain text before a colon, often bulleted: "• Distributive justice: ..." (VA, NXS).
+            sub_term = re.match(r"^[•▪·\-–]?\s*([A-Z][^:]{1,70}):(?:\s+(.*))?$", text) if not lead else None
+            ended = bool(entries) and entries[-1]["definition"].rstrip().endswith((".", ")", "]"))
+            if sub_term and (text[0] in "•▪·" or n_line == 0 or ended) \
+                    and len(sub_term.group(1).split()) <= 8 and sub_term.group(1).lower() not in not_terms \
+                    and not re.search(r"\(\d{4}|source", sub_term.group(1), re.IGNORECASE) \
+                    and not re.match(r"(?:It|They|This|These|The|There|In|For|See)\b", sub_term.group(1)):
+                entries.append({"term": sub_term.group(1), "definition": sub_term.group(2) or "", "page": p.page})
+                in_term = False
+                continue
             opens = bool(lead) and (in_term or lead[0].isupper() or lead[0].isdigit() or not last
                                     or last["definition"].rstrip().endswith((".", ")", "]")))
             if not opens or len(lead) > 120:
@@ -2674,6 +2691,11 @@ def glossary_entries(paras: list[Para], rep: Report) -> list[dict]:
             else:
                 entries.append({"term": lead, "definition": "", "page": p.page})
             # Bold that stops short of the end of the term: "Land sparin" + "g", "(TEK" + ")".
+            # Or before a bracket: "Exploratory scenarios" + "(also known as ...):".
+            bracket = re.match(r"^(\([^()]{1,120}\))\s*:\s*", rest)
+            if bracket:
+                entries[-1]["term"] += " " + bracket.group(1)
+                rest = rest[bracket.end():]
             short = re.match(r"^([a-z)]{1,2})(?=[\s:]|$)\s*:?\s*", rest)
             if short and entries[-1]["term"][-1:].isalpha() or (short and short.group(1) == ")"):
                 entries[-1]["term"] += short.group(1)
