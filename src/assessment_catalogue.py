@@ -24,12 +24,15 @@ Both are read once per process; restart the app after re-indexing.
 """
 from __future__ import annotations
 
+import json
 import re
 from functools import lru_cache
+from pathlib import Path
 
 from loguru import logger
 
-from rag_utils import chroma_client
+from rag_utils import GET_PAGE, chroma_client
+from settings import CHROMA_DIR
 
 # The stages of an assessment, in order, and how decisions word them. The
 # first three use the present tense ("Approves"), which only decisions use,
@@ -81,31 +84,70 @@ def _body(document: str) -> str:
     return re.sub(r"\s+", " ", " ".join(lines)).strip()
 
 
+def _pages(collection, include: list[str]):
+    """Everything in a collection, GET_PAGE chunks at a time."""
+    offset = 0
+    while True:
+        page = collection.get(include=include, limit=GET_PAGE, offset=offset)
+        if not page["ids"]:
+            return
+        yield page
+        offset += len(page["ids"])
+
+
+def _manifest_codes() -> list[str]:
+    """The assessments ttl_index.py recorded ([] without a readable manifest)."""
+    try:
+        data = json.loads((Path(CHROMA_DIR) / "assessments.json").read_text())
+    except (OSError, json.JSONDecodeError):
+        return []
+    return list(data.get("assessments", []))
+
+
+def _xml_chunks() -> tuple[list[str], list[dict]]:
+    """(chunk texts without location lines, metadata) of the XML collection."""
+    collection = chroma_client().get_collection("xml_documents")
+    texts, metadatas = [], []
+    for page in _pages(collection, ["documents", "metadatas"]):
+        texts += [_body(d) for d in page["documents"]]
+        metadatas += page["metadatas"]
+    return texts, metadatas
+
+
 def _assessments() -> list[tuple[str, str, str]]:
-    """(code, title, year) of each assessment in the TTL collection."""
-    metadatas = chroma_client().get_collection("ttl_documents").get(
-        include=["metadatas"]
-    )["metadatas"]
+    """(code, title, year) of each assessment in the TTL collection.
+
+    One chunk per assessment in the manifest. Do not fetch the metadata of the
+    whole collection here: it peaked at 2.7 GB, the memory limit of Streamlit
+    Community Cloud. Without a manifest, scan the collection in pages."""
+    collection = chroma_client().get_collection("ttl_documents")
     found = {}
-    for m in metadatas:
-        if m.get("assessment") and m.get("title"):
-            found.setdefault(m["assessment"], (m["title"], m.get("date", "")))
+    codes = _manifest_codes()
+    for code in codes:
+        for m in collection.get(where={"assessment": code}, include=["metadatas"],
+                                limit=1)["metadatas"]:
+            if m.get("title"):
+                found[code] = (m["title"], m.get("date", ""))
+    if not codes or set(found) != set(codes):
+        found = {}
+        for page in _pages(collection, ["metadatas"]):
+            for m in page["metadatas"]:
+                if m.get("assessment") and m.get("title"):
+                    found.setdefault(m["assessment"], (m["title"], m.get("date", "")))
     return sorted(((code, title, year) for code, (title, year) in found.items()),
                   key=lambda item: (item[2], item[0]))
 
 
-def _decisions() -> tuple[list[tuple[int, int, str, str, str]], set[int]]:
+def _decisions(texts: list[str], metadatas: list[dict]
+               ) -> tuple[list[tuple[int, int, str, str, str]], set[int]]:
     """([(session, stage index, year, where, wording)], sessions uploaded);
     `where` is the decision, or "report", and the paragraph."""
-    collection = chroma_client().get_collection("xml_documents")
-    got = collection.get(include=["documents", "metadatas"])
-    texts = [_body(d) for d in got["documents"]]
     by_file: dict[str, list[tuple[str, str]]] = {}
-    for text, m in zip(texts, got["metadatas"]):
+    for text, m in zip(texts, metadatas):
         by_file.setdefault(m["source_file"], []).append((m["xpath"], text))
 
     found, sessions = set(), set()
-    for text, m in zip(texts, got["metadatas"]):
+    for text, m in zip(texts, metadatas):
         session = int(m.get("number") or 0)
         sessions.add(session)
         part_of = m.get("part_of") or ""
@@ -141,14 +183,13 @@ _ELECTED_CHAIR = re.compile(
 )
 
 
-def _elected_chairs() -> list[tuple[int, str, str, str, str]]:
+def _elected_chairs(texts: list[str], metadatas: list[dict]
+                    ) -> list[tuple[int, str, str, str, str]]:
     """[(session, year, where, name, country)] of the Chairs of IPBES in the
     Bureau elections of the uploaded Plenary reports."""
-    got = chroma_client().get_collection("xml_documents").get(
-        include=["documents", "metadatas"])
     found = set()
-    for document, m in zip(got["documents"], got["metadatas"]):
-        for match in _ELECTED_CHAIR.finditer(_body(document)):
+    for text, m in zip(texts, metadatas):
+        for match in _ELECTED_CHAIR.finditer(text):
             where = "report" if not m.get("part_of") else m["part_of"].split(" › ")[-1]
             if m.get("paragraph"):
                 where += f", para. {m['paragraph'].rstrip('.')}"
@@ -170,7 +211,8 @@ def catalogue_block() -> str:
     """The reference list as a prompt section ("" if it cannot be built)."""
     try:
         assessments = _assessments()
-        decisions, sessions = _decisions()
+        texts, metadatas = _xml_chunks()
+        decisions, sessions = _decisions(texts, metadatas)
     except Exception as exc:  # noqa: BLE001
         logger.warning(f"Assessment reference list unavailable: {exc}")
         return ""
@@ -211,7 +253,7 @@ def catalogue_block() -> str:
             lines.append(f"IPBES-{session} ({entries[0][2]}):")
             lines += [f"- [{STAGES[index][0]}] {where}: \"{wording}\""
                       for _, index, _, where, wording in entries]
-    chairs = _elected_chairs()
+    chairs = _elected_chairs(texts, metadatas)
     if chairs:
         lines += [
             "",

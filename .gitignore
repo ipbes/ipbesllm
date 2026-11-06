@@ -22,6 +22,7 @@ src/test.py
 .env
 tests/
 *.log
+*.gz
 # Generated: data bundle, run logs, answer ratings, chat history
 dist/
 compare.log
