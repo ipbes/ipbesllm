@@ -43,8 +43,8 @@ MAX_COUNTRY_FILTER = 100
 
 # Part of the cache keys: bump when retrieval or prompts change so stale
 # entries are never served after a code change.
-RETRIEVAL_VERSION = "6"
-PROMPT_VERSION = "13"
+RETRIEVAL_VERSION = "8"
+PROMPT_VERSION = "14"
 
 # List questions (all knowledge gaps, key messages, experts ...) need far
 # more than the Ollama limit (MAX_CONTEXT_CHARS, sized for an 8 GB machine):
@@ -335,7 +335,8 @@ def retrieve(
         return empty_results()
 
     merge = concat_results if chunk_type else interleave_results
-    return _annotate_metadata(merge(per_assessment_results))
+    results = _annotate_metadata(merge(per_assessment_results))
+    return _keep_numbered_chapters(results, question) if chunk_type == "chapter" else results
 
 
 def plan_query(question: str, k: int = 5) -> dict:
@@ -397,10 +398,66 @@ def _infer_chunk_type(question: str) -> str | None:
         return "person"
     if "subchapter" in q or "sub-chapter" in q:
         return "sch"
-    if "chapter" in q:            # after the sub-chapter test
+    if "chapter" in q and _is_chapter_question(question):   # after the sub-chapter test
         return "chapter"
 
     return None
+
+
+# Chapter chunks are long (a median of 14,000 characters, the executive summary
+# with the authors), and fetching them ignores the topic. So they only answer
+# questions about the chapters as such: lists of them, built from their titles,
+# or numbered chapters of a named assessment. A topic that merely mentions
+# chapters ("which chapters discuss pollinators?") is an ordinary search.
+_LISTS_CHAPTERS = re.compile(
+    r"\b(?:list|name|show|give)\b.*\bchapters?\b"
+    r"|\bwhat\s+(?:are|were)\s+(?:all\s+)?(?:the\s+)?(?:\w+\s+)?chapters?\b"
+    r"|\b(?:what|which|how\s+many)\s+chapters\b"
+    r"|\bnumber\s+of\s+chapters\b"
+    r"|\bchapter\s+(?:titles|names|headings)\b"
+    r"|\b(?:titles|names|headings)\s+of\s+(?:all\s+)?(?:the\s+)?chapters\b",
+    re.IGNORECASE,
+)
+# "On" is not a topic in "the assessment (report) on pollinators".
+_CHAPTER_TOPIC = re.compile(
+    r"(?<!assessment )(?<!assessments )(?<!report )(?<!reports )\bon\b"
+    r"|\b(?:about|regarding|concerning|discuss\w*|cover\w*|contain\w*|address\w*"
+    r"|mention\w*|deal\w*|say\w*|finding\w*|relat\w+|focus\w*)\b",
+    re.IGNORECASE,
+)
+_CHAPTER_NUMBERS = re.compile(
+    r"\bchapters?\s+(\d+(?:\.\d+)?(?:(?:\s*,\s*|\s*&\s*|\s+and\s+)\d+(?:\.\d+)?)*)",
+    re.IGNORECASE,
+)
+
+
+def _chapter_numbers(question: str) -> list[str]:
+    """The chapters a question numbers: "chapters 2.1 and 3" -> ["2", "3"].
+    Only whole chapters have chunks, so 2.1 means chapter 2."""
+    return [number.split(".")[0]
+            for match in _CHAPTER_NUMBERS.finditer(question)
+            for number in re.findall(r"\d+(?:\.\d+)?", match.group(1))]
+
+
+def _is_chapter_question(question: str) -> bool:
+    """Whether chapter chunks answer it (see above). A number means little
+    without an assessment, as every assessment has a chapter 1."""
+    if _chapter_numbers(question):
+        return bool(named_assessments(question, _get_assessments()))
+    return bool(_LISTS_CHAPTERS.search(question)
+                and not _CHAPTER_TOPIC.search(question))
+
+
+def _keep_numbered_chapters(results, question: str):
+    """Only the chunks of the chapters the question numbers (a long chapter
+    has several). All of them if it numbers none."""
+    numbers = _chapter_numbers(question)
+    if not numbers:
+        return results
+    return select_results(results, [
+        i for i, m in enumerate(results["metadatas"][0])
+        if _chapter_key(m.get("identifier", "")).split("-")[0] in numbers
+    ])
 
 
 # ---------------------------------------------------------------------------
@@ -540,12 +597,13 @@ def _build_task(
 
     if chunk_type == "chapter":
         return (
-            "The user is asking for the CHAPTERS of IPBES assessments.\n"
-            "Every retrieved chunk below is a Chapter.\n"
+            "The user is asking about specific CHAPTERS of an IPBES assessment.\n"
+            "Every retrieved chunk below is one of those chapters: its title, "
+            "authors and executive summary.\n"
             "\n"
-            "List ALL retrieved chapters, grouped by assessment, in the "
-            "order given, with each chapter's number and title. Then answer "
-            "anything else the question asks, using only these chunks.\n"
+            "Give each chapter's number and title, then answer the question "
+            "using only these chunks. If the answer is not present, say "
+            "'I cannot determine that from the supplied documents.'\n"
         )
 
     if chunk_type == "guidance":
@@ -601,8 +659,9 @@ def _build_task(
 
     return (
         "Answer the user's question using ONLY the retrieved chunks below.\n"
-        "Say which assessment (the assessment= field) each point comes from, "
-        "and note where assessments differ or one says nothing.\n"
+        "Say which assessment (the assessment= field) and section (the id= "
+        "field) each point comes from, and note where assessments differ or "
+        "one says nothing.\n"
         "If the answer is not present, say "
         "'I cannot determine that from the supplied documents.'"
     )
@@ -880,37 +939,73 @@ def _gap_tables(results, chosen: list[int]) -> str:
     return "\n".join(parts)
 
 
+def _chapter_tables(results) -> str:
+    """The chapters, a heading per assessment (newest first), then their titles
+    in order. Built from the data, so the list is complete, however long the
+    chapters are."""
+    documents, metadatas = results["documents"][0], results["metadatas"][0]
+    groups: dict[str, list[int]] = {}
+    for i, m in enumerate(metadatas):
+        groups.setdefault(m.get("assessment", "?"), []).append(i)
+
+    def year(code: str) -> int:
+        date = metadatas[groups[code][0]].get("date", "")
+        return int(date) if str(date).isdigit() else 0
+
+    def number(i: int) -> list[int]:
+        key = _chapter_key(metadatas[i].get("identifier", ""))
+        return [int(n) for n in key.split("-")] if key else []
+
+    def title(i: int) -> str:
+        heading = re.search(r"^Heading: (.+)$", documents[i], re.MULTILINE)
+        return heading.group(1).strip() if heading else metadatas[i].get("identifier", "")
+
+    parts = []
+    for code in sorted(groups, key=lambda c: (-year(c), c)):
+        # A long chapter has several chunks, all with its title.
+        titles = list(dict.fromkeys(title(i) for i in sorted(groups[code], key=number)))
+        first = metadatas[groups[code][0]]
+        parts.append(f"\n### {first.get('date', '')} – {code}: "
+                     f"{_short_title(first.get('title', ''))} ({len(titles)} chapters)\n")
+        parts += [f"- {t}" for t in titles]
+    return "\n".join(parts)
+
+
+def _table_answer(question: str, results, chunk_type: str | None,
+                  country_names: set[str] | None) -> str | None:
+    """An answer built from the data rather than written by the model, for the
+    question types that have one. It covers all the retrieved chunks."""
+    if chunk_type == "person":
+        assessments = sorted({m.get("assessment", "") for m in results["metadatas"][0]})
+        choice = _select_experts(question, assessments)
+        if choice.get("format") != "narrative":
+            return _expert_table(question, results, country_names, choice)
+        return None     # a narrative answer: written by the model
+    if chunk_type == "ref":
+        return _reference_tables(results)
+    if chunk_type == "kg":
+        # Structured data: the tables are built here, exactly as stored, so
+        # counts, years and descriptions cannot be miscopied. The model only
+        # chooses which gaps answer the question.
+        return _gap_tables(results, _select_gaps(question, results))
+    if chunk_type == "chapter" and not _chapter_numbers(question):
+        return _chapter_tables(results)
+    return None
+
+
 def generate_answer(
     question: str,
     results,
     chunk_type: str | None = None,
     country_names: set[str] | None = None,
     answer_stream=None,
-) -> str:
-    if chunk_type == "person":
-        assessments = sorted({m.get("assessment", "") for m in results["metadatas"][0]})
-        choice = _select_experts(question, assessments)
-        if choice.get("format") != "narrative":
-            answer = _expert_table(question, results, country_names, choice)
-            if answer_stream is not None:
-                answer_stream.put(answer)
-            return answer
-        # A narrative answer: written by the model below.
-
-    if chunk_type == "ref":
-        answer = _reference_tables(results)
+) -> tuple[str, int]:
+    """(the answer, the number of retrieved chunks it is based on)."""
+    table = _table_answer(question, results, chunk_type, country_names)
+    if table is not None:
         if answer_stream is not None:
-            answer_stream.put(answer)
-        return answer
-
-    if chunk_type == "kg":
-        # Structured data: the tables are built here, exactly as stored, so
-        # counts, years and descriptions cannot be miscopied. The model only
-        # chooses which gaps answer the question.
-        answer = _gap_tables(results, _select_gaps(question, results))
-        if answer_stream is not None:
-            answer_stream.put(answer)
-        return answer
+            answer_stream.put(table)
+        return table, len(results["documents"][0])
 
     # Thesaurus re-ranking happens in retrieve(), within each assessment.
     context, used = _build_context(results)
@@ -970,7 +1065,7 @@ Retrieved chunks{order_note}:
 {context}
 {truncation_note}{primary_block}{glossary_block}"""
 
-    return chat(
+    answer = chat(
         model=LLM_MODEL,
         messages=[
             {
@@ -995,6 +1090,7 @@ Retrieved chunks{order_note}:
         ],
         answer_stream=answer_stream,
     )
+    return answer, used
 
 # ---------------------------------------------------------------------------
 # Caching
@@ -1108,7 +1204,7 @@ async def generate_answer_cached(
         logger.debug(f"ttl answer HIT q={question[:50]!r}")
         return {**hit, "_cached": True}
 
-    answer = await anyio.to_thread.run_sync(
+    answer, used = await anyio.to_thread.run_sync(
         lambda: generate_answer(
             question,
             results,

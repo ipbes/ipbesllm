@@ -446,14 +446,25 @@ _NAMED_RUN = re.compile(
     rf"\s+assessments?\b",
     re.IGNORECASE,
 )
+# Or "assessment(s)" first: "the assessment on pollinators", "the assessment
+# report on the sustainable use of wild species". Not "global" here: "an
+# assessment of global trends" is not the global assessment.
+_NAME_AFTER = "|".join(f"(?:{name})" for code, name in _ASSESSMENT_NAMES.items()
+                       if code != "GA1")
+_NAMED_AFTER_RUN = re.compile(
+    rf"\bassessments?(?:\s+reports?)?\s+(?:on|of|for)\s+(?:the\s+)?(?:{_NAME_AFTER})\b"
+    rf"(?:\s*(?:,|and|or|&)\s*(?:the\s+)?(?:{_NAME_AFTER})\b)*",
+    re.IGNORECASE,
+)
 
 
 def named_assessments(question: str, available: list[str]) -> list[str]:
     """Assessment ids (GA1, IAS, LDR ...) the question names: as the id
     ("the LDR assessment") or by name ("the global assessment", "the global
-    and IAS assessments")."""
+    and IAS assessments", "the assessment on pollinators")."""
     words = {w.upper() for w in re.findall(r"\w+", question)}
-    runs = " ".join(match.group(0) for match in _NAMED_RUN.finditer(question))
+    runs = " ".join(match.group(0) for pattern in (_NAMED_RUN, _NAMED_AFTER_RUN)
+                    for match in pattern.finditer(question))
     by_name = {code for code, name in _ASSESSMENT_NAMES.items()
                if re.search(rf"\b(?:{name})\b", runs, re.I)}
     return [a for a in available if a.upper() in words or a in by_name]

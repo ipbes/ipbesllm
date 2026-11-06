@@ -284,6 +284,7 @@ def run_pdf(question: str, k: int, answer_stream=None):
         "answer": payload["answer"],
         "results": results,
         "cached": payload.get("_cached", False),
+        "context_chunks": payload.get("context_chunks"),
     }
 
 
@@ -377,7 +378,7 @@ def save_feedback(index: int):
     try:
         save_rating(
             rating="up" if rating == 1 else "down",
-            question=message["question"],
+            question=message.get("asked") or message["question"],
             answer=message["content"],
             source=message["source"],
             route=message.get("route"),
@@ -390,10 +391,20 @@ def save_feedback(index: int):
         st.toast("Sorry, your rating could not be saved.")
 
 
-def quote_report(question: str, output: dict) -> dict:
+def used_results(output: dict) -> dict:
+    """What render_sources shows: the chunks the answer is based on, which are
+    the first of those retrieved when the rest did not fit in the prompt."""
+    used = output.get("context_chunks")
+    return {key: [output["results"][key][0][:used]]
+            for key in ("documents", "metadatas", "distances")
+            if key in output["results"]}
+
+
+def quote_report(question: str, output: dict, results: dict) -> dict:
     """The answer's quotations checked against all the text the model was
-    given: the retrieved passages, the reference list and the thesaurus."""
-    documents = output["results"]["documents"][0]
+    given: the `results` it saw, the reference list and the thesaurus (whose
+    glossary is built from everything retrieved)."""
+    documents = results["documents"][0]
     glossary, definitions = combined_rag._thesaurus_blocks(question, output["results"])
     sources = documents + [catalogue_block(), glossary, definitions]
     found, missing = check_quotes(output["answer"], sources)
@@ -403,7 +414,17 @@ def quote_report(question: str, output: dict) -> dict:
 
 
 def render_answer(index: int, message: dict, developer: bool):
+    if message.get("asked"):
+        st.caption(f"Understood as: {message['asked']}")
     st.markdown(message["content"])
+    results = message.get("results")
+    used = len(results["documents"][0]) if results else 0
+    found = message.get("found", used)
+    if used < found:
+        st.warning(f"This answer is based on the first {used} of the {found} "
+                   "passages found, as the others did not fit. It may be "
+                   "incomplete: to cover more, ask about one assessment or a "
+                   "narrower topic.", icon=":material/rule:")
     quotes = message.get("quotes") or {}
     unverified = ([f"- “{q}”" for q in quotes.get("missing", [])]
                   + [f"- DOI {d}" for d in quotes.get("dois_missing", [])])
@@ -664,6 +685,7 @@ if not st.session_state.messages and not question:
 
 if question and question.strip():
     question = question.strip()
+    earlier = list(st.session_state.messages)
     st.session_state.messages.append({"role": "user", "content": question})
     with st.chat_message("user"):
         st.markdown(question)
@@ -674,15 +696,19 @@ if question and question.strip():
         message = {"role": "assistant", "source": source, "question": question,
                    "model": LLM_MODEL}
         try:
-            output = run_streamed(run, question, k, SOURCES[source])
+            with st.spinner("Reading the conversation…"):
+                asked = combined_rag.standalone_question(question, earlier)
+            if asked != question:
+                message["asked"] = asked
+                st.caption(f"Understood as: {asked}")
+            output = run_streamed(run, asked, k, SOURCES[source])
             # Only what render_sources shows, so saved conversations stay small.
-            results = {key: output["results"].get(key)
-                       for key in ("documents", "metadatas", "distances")
-                       if key in output["results"]}
+            results = used_results(output)
             message.update(content=output["answer"], results=results,
+                           found=len(output["results"]["documents"][0]),
                            cached=output["cached"], seconds=output["seconds"],
                            route=output.get("route"),
-                           quotes=quote_report(question, output))
+                           quotes=quote_report(asked, output, results))
         except Exception as exc:  # noqa: BLE001
             logger.exception("Query failed")
             message.update(content=f"Sorry, the query failed: {exc}", results=None)

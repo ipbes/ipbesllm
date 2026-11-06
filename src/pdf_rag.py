@@ -38,7 +38,7 @@ RERANK_OVERFETCH = max(1, int(os.getenv("PDF_RERANK_OVERFETCH", "3")))
 
 
 # Part of the cache keys: bump when retrieval or prompts change.
-RETRIEVAL_VERSION = "6"
+RETRIEVAL_VERSION = "7"
 PROMPT_VERSION = "7"
 
 

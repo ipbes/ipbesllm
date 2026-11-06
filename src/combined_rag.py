@@ -24,7 +24,7 @@ import xml_rag
 from cache import CACHE_VERSION, cache, make_key
 from rag_utils import (
     IPBES_CHAIR, LLM_MODEL, MAX_CONTEXT_CHARS, NUM_CTX, USE_AZURE, chat,
-    concat_results, empty_results,
+    concat_results, empty_results, select_results,
 )
 from assessment_catalogue import (
     catalogue_block, uploaded_session_numbers, uploaded_sessions,
@@ -32,7 +32,7 @@ from assessment_catalogue import (
 from thesaurus_helper import get_thesaurus
 
 # Part of the answer cache key: bump when the prompt changes.
-PROMPT_VERSION = "4"
+PROMPT_VERSION = "5"
 ANSWER_TTL = 60 * 60 * 6      # 6 hours
 
 # Plenary passages per question; xml_rag adds the neighbouring paragraphs.
@@ -45,9 +45,64 @@ COMBINED_MAX_CONTEXT_CHARS = int(os.getenv(
 ))
 
 
-def _output(answer: str, results, route: str, cached: bool = False) -> dict:
+# The part of the context kept for the Plenary reports when both kinds of
+# sources do not fit. What either side does not need goes to the other.
+PLENARY_SHARE = 1 / 3
+
+# A follow-up is rewritten from this many earlier messages (questions and
+# answers), with this much of each.
+FOLLOW_UP_MESSAGES = 6
+FOLLOW_UP_MESSAGE_CHARS = 1500
+
+
+def standalone_question(question: str, earlier: list[dict]) -> str:
+    """The question in a form that needs no conversation, as search and the
+    answer model see only one question ("Which sections cover these findings?").
+    `earlier` is the conversation so far ({"role", "content"}). The question
+    itself if there is none or the model cannot be reached."""
+    turns = [f"{m['role'].upper()}: {m['content'][:FOLLOW_UP_MESSAGE_CHARS]}"
+             for m in earlier[-FOLLOW_UP_MESSAGES:] if m.get("content")]
+    if not turns:
+        return question
+    separator = "\n\n"
+    try:
+        rewritten = chat(
+            model=LLM_MODEL,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You rewrite the latest message of a conversation about "
+                        "IPBES documents so that it can be understood on its own. "
+                        "Replace words that point back (this, these findings, it, "
+                        "that assessment) with what they refer to, naming the topic "
+                        "and any assessment or Plenary session meant. Change nothing "
+                        "else: keep the user's wording and request, write assessment "
+                        "codes (IAS, GA1) and session names (IPBES-4) as they are, do "
+                        "not expand them into full titles, and do not answer. If the "
+                        "message is a new question or already clear on its own, "
+                        "return it exactly as written, word for word, even if it is "
+                        "on another topic. Reply with the message only."
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": (f"Conversation:\n{separator.join(turns)}\n\n"
+                                f"Latest message:\n{question}"),
+                },
+            ],
+        ).strip()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning(f"Could not rewrite the follow-up: {exc}")
+        return question
+    return rewritten or question
+
+
+def _output(answer: str, results, route: str, cached: bool = False,
+            used: int | None = None) -> dict:
+    """`used`: how many of the results the answer is based on (None: all)."""
     return {"answer": answer, "results": results, "cached": cached,
-            "route": route}
+            "route": route, "context_chunks": used}
 
 
 async def ask_xml(question: str, k: int = XML_K, answer_stream=None) -> dict:
@@ -73,7 +128,7 @@ async def ask_xml(question: str, k: int = XML_K, answer_stream=None) -> dict:
         question, results, answer_stream=answer_stream
     )
     return _output(payload["answer"], results, "plenary",
-                   payload.get("_cached", False))
+                   payload.get("_cached", False), payload.get("context_chunks"))
 
 
 async def ask_ttl(question: str, k: int = 3, answer_stream=None,
@@ -103,7 +158,7 @@ async def ask_ttl(question: str, k: int = 3, answer_stream=None,
         answer_stream=answer_stream,
     )
     return _output(payload["answer"], results, "assessments",
-                   payload.get("_cached", False))
+                   payload.get("_cached", False), payload.get("context_chunks"))
 
 
 async def ask(question: str, k: int = 3, xml_k: int = XML_K,
@@ -125,38 +180,74 @@ async def ask(question: str, k: int = 3, xml_k: int = XML_K,
         question, k=plan["k"], per_assessment=plan["per_assessment"]
     )
     xml_results = await asyncio.to_thread(xml_rag.retrieve, question, xml_k)
-    results = concat_results([ttl_results, xml_results])
+    results = _share_context(ttl_results, xml_results)
     if not results["documents"][0]:
         return _output("No relevant passages were retrieved.", results, "both")
 
     payload = await generate_answer_cached(question, results, answer_stream)
     return _output(payload["answer"], results, "both",
-                   payload.get("_cached", False))
+                   payload.get("_cached", False), payload.get("context_chunks"))
 
 
 # ---------------------------------------------------------------------------
 # Answer from both kinds of sources
 # ---------------------------------------------------------------------------
 
+_SEPARATOR = "\n\n---\n\n"
+
+
+def _format_source(number: int, document: str, m: dict) -> str:
+    if m.get("source_type") == "xml":
+        return f"[{number}] PLENARY REPORT\n" + xml_rag.format_chunk(document, m)
+    return f"[{number}] ASSESSMENT " + ttl_rag.format_chunk(document, m)
+
+
 def _build_context(results, max_chars: int = COMBINED_MAX_CONTEXT_CHARS) -> tuple[str, int]:
     """Return (context text, number of chunks included), numbered [1], [2]
     ... in order, as the app numbers its source list."""
     parts: list[str] = []
     used = 0
-    separator = "\n\n---\n\n"
 
     for i, document in enumerate(results["documents"][0]):
-        m = results["metadatas"][0][i] or {}
-        if m.get("source_type") == "xml":
-            part = f"[{i + 1}] PLENARY REPORT\n" + xml_rag.format_chunk(document, m)
-        else:
-            part = f"[{i + 1}] ASSESSMENT " + ttl_rag.format_chunk(document, m)
-        if parts and used + len(separator) + len(part) > max_chars:
+        part = _format_source(i + 1, document, results["metadatas"][0][i] or {})
+        if parts and used + len(_SEPARATOR) + len(part) > max_chars:
             break
         parts.append(part)
-        used += len(separator) + len(part)
+        used += len(_SEPARATOR) + len(part)
 
-    return separator.join(parts), len(parts)
+    return _SEPARATOR.join(parts), len(parts)
+
+
+def _share_context(ttl_results, xml_results, max_chars: int = COMBINED_MAX_CONTEXT_CHARS):
+    """Both results, in the order _build_context should take them: the
+    assessment chunks that fit, then the Plenary ones that fit, then the rest.
+    Without this the assessments, coming first, can use the whole context and
+    an answer "from both" sees no Plenary report at all."""
+    def sizes(results) -> list[int]:
+        return [len(_format_source(1000, d, m or {})) + len(_SEPARATOR)
+                for d, m in zip(results["documents"][0], results["metadatas"][0])]
+
+    def fitting(chunk_sizes: list[int], budget: int) -> int:
+        """How many chunks, from the first, fit in `budget`."""
+        count = total = 0
+        for size in chunk_sizes:
+            total += size
+            if total > budget:
+                break
+            count += 1
+        return count
+
+    ttl_sizes, xml_sizes = sizes(ttl_results), sizes(xml_results)
+    xml_budget = min(sum(xml_sizes), int(max_chars * PLENARY_SHARE))
+    ttl_kept = fitting(ttl_sizes, max_chars - xml_budget)
+    xml_kept = fitting(xml_sizes, max_chars - sum(ttl_sizes[:ttl_kept]))
+
+    return concat_results([
+        select_results(ttl_results, list(range(ttl_kept))),
+        select_results(xml_results, list(range(xml_kept))),
+        select_results(ttl_results, list(range(ttl_kept, len(ttl_sizes)))),
+        select_results(xml_results, list(range(xml_kept, len(xml_sizes)))),
+    ])
 
 
 def _thesaurus_blocks(question: str, results) -> tuple[str, str]:
@@ -197,9 +288,9 @@ the IPBES Plenary.
 
 Answer the question using ONLY the numbered sources below.
 - Cite the sources you use by number, like [3], and say where each point
-  comes from: the assessment (e.g. GA1, IAS) or the Plenary report (which
-  session, decision if the passage is "Part of" one, section and
-  paragraph).
+  comes from: the assessment (e.g. GA1, IAS) and its section (the id= field)
+  or the Plenary report (which session, decision if the passage is "Part of"
+  one, section and paragraph).
 - Preserve any qualifier (well established / established but incomplete /
   unresolved) verbatim.
 - Note where the sources differ, or where the assessments or the Plenary
