@@ -2,7 +2,7 @@
 
 **File:** `docs/ontology/IPBES_Ontology_v07.ttl`. These changes are proposed to the TSU on data for agreement. It recommends changes to v06.
 
-**Basis:** 14 assessment reports (AFA, AMA, APA, BBA, ECA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) were converted automatically from their published PDFs to TTL and checked against v06. The files use ten properties v06 does not define: three on knowledge gaps that came from the reports, two links derived during conversion (changes 8 and 9), a single property for levels of confidence (change 10) and two roles, for the technical support unit and the management committee (changes 11 and 12), a description on chapters (change 13) and a link from a merged person's old URI to the current one (change 14). No class is added or removed. 
+**Basis:** 14 assessment reports (AFA, AMA, APA, BBA, ECA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) were converted automatically from their published PDFs to TTL and checked against v06. The files use ten properties v06 does not define: three on knowledge gaps that came from the reports, two links derived during conversion (changes 8 and 9), a single property for levels of confidence (change 10) and two roles, for the technical support unit and the management committee (changes 11 and 12), a description on chapters (change 13) and a link from a merged person's old URI to the current one (change 14). Classes are added for guidance points (change 16), figures and tables (change 17) and footnotes (change 18); none is removed. 
 
 ## Summary of decisions requested
 
@@ -24,7 +24,9 @@
 | 14 | Add `dcterms:isReplacedBy` to Person, for merged URIs | Yes | None: addition; published URIs keep working |
 | 15 | Add `skos:note` to Person, for corrected ORCID iDs | Yes | None: addition |
 | 16 | Add the class `ipbes:Guidance`, for guidance sections in a summary for policymakers | Yes | None: addition |
-| 17–18 | Questions for discussion | No | See below |
+| 17 | Add `ipbes:Figure` and `ipbes:Table` as subclasses of `ipbes:Illustration`, with a link to the sub-chapter and the Zenodo DOI | Yes | None: illustrations keep their URIs and their type |
+| 18 | Add the class `ipbes:Footnote` | Yes | None: addition; footnotes leave the sub-chapter text once converted |
+| 19–20 | Questions for discussion | No | See below |
 
 ## Changes in v07
 
@@ -155,15 +157,48 @@ The summary for policymakers of the scenarios and models assessment (SCM) ends w
 
 `ipbes:Guidance` follows `ipbes:KnowledgeGap`: `hasCategory` holds the section, `hasDescription` the text, `traceability` and `SubChapter` what the report cites. `skos:prefLabel` holds the printed label and `dcterms:identifier` the report code with it (`SCM16-GP1`, `SCM16-PGP1`). `skos:note` holds the sentence printed above the first section's points. SCM is the only one of the 14 reports with such points, but the class is not specific to it.
 
+### 17. Figures and tables as classes of their own
+
+`ipbes:Figure` and `ipbes:Table` are subclasses of `ipbes:Illustration`, so figures, tables and boxes can be listed and displayed separately. Boxes stay `ipbes:Illustration` only.
+
+**URIs do not change.** Figures and tables keep their `il/` URIs (`il/IAS23-Figure3.9`), so the links from messages and sub-messages, and anything that already cites them, keep working. Each is typed with both classes, `a ipbes:Figure, ipbes:Illustration`, because IBOK and other queries that use no reasoner would otherwise stop finding them as illustrations.
+
+Three properties of `ipbes:Illustration` are added or defined for this:
+
+| Property | Holds | Source |
+|---|---|---|
+| `ipbes:SubChapter` | The sub-chapter the item is printed in. None in a summary for policymakers | The conversion knows it but the files do not record it yet |
+| `ipbes:hasDoi` | The concept DOI of the Zenodo record holding the item's files, which resolves to the latest version (`10.5281/zenodo.8041593`). It identifies the chapter's record, not the single item | The records listed in `data/csv/figures_tables.csv`, and the sibling records of the other chapters |
+| `ipbes:hasDescription` | The caption's text after its title, from the caption file in the Zenodo package where there is one | Caption files exist for IAS and TCA; the PDF legend otherwise |
+
+`skos:prefLabel` keeps the title and `dcterms:identifier` the kind and number (`Figure3.9`, `TableSPM.A1`).
+
+**Images are not part of the ontology.** IBOK keeps the image files as a resource in GitHub and finds each one from the item's identifier, by the naming rule under Practices to confirm. No property points to a file.
+
+**Coverage:** of 2,389 figures and tables in the 14 reports, Zenodo has an SVG, JPEG or PNG for 320 (IAS, TCA, VA, SUA, BBA) and a PDF only for about 178. The others are only in the report PDFs.
+
+### 18. A class for footnotes
+
+`ipbes:Footnote` holds the footnotes, which the files now keep at the end of their sub-chapter's text under "Notes".
+
+| Property | Holds |
+|---|---|
+| `dcterms:identifier` | Footnote, its chapter and its number as printed: `Footnote1.12` is note 12 of chapter 1, `FootnoteSPM.3` note 3 of the summary for policymakers. Numbering restarts in each chapter |
+| `ipbes:hasDescription` | The text of the footnote |
+| `ipbes:SubChapter` | The sub-chapter it belongs to |
+| `ipbes:Report` | The report |
+
+The URI follows the illustrations: `fn/IAS23-Footnote1.12`. The 14 reports have about 570 numbered footnotes in their sub-chapters' "Notes", most in TCA (115), VA (88) and ECA (78).
+
 ## Questions for discussion (not in v07)
 
-**17. Chapters printed in parts.** GA1's chapter 2 is printed in parts 2.1, 2.2 and 2.3, each with its own authors and reference list. The automatic file has one chapter with sub-chapters 2.1.1 ...; the manual file has three chapters. Which should be the model?
+**19. Chapters printed in parts.** GA1's chapter 2 is printed in parts 2.1, 2.2 and 2.3, each with its own authors and reference list. The automatic file has one chapter with sub-chapters 2.1.1 ...; the manual file has three chapters. Which should be the model?
 
-**18. Properties defined but unused in the converted files.**
+**20. Properties defined but unused in the converted files.**
 
 | Property | Note |
 |---|---|
-| `hasDoi`, `owl:sameAs` on Illustration | Figures, tables and boxes have neither in the reports |
+| `owl:sameAs` on Illustration | Figures, tables and boxes have no other resource to link to. (`hasDoi` is now used for the Zenodo records, change 17) |
 | `hasConfidenceLevel` on KeyMessage | No key message headline states one in the form "(well established)" |
 
 Should these stay as optional?
@@ -174,5 +209,6 @@ These need no change to the ontology, but other producers of TTL files should fo
 
 - **Sub-messages** are made of full sentences. A new one starts at each sentence stating a level of confidence; a sentence without a level joins its neighbour. A level is the minimum, and an identifier is added where the report gives a traceability mark.
 - **Knowledge gaps** are numbered from 1, in the order printed.
+- **Image files** of figures and tables are named after the local name of the item's URI, so the image of `il/IAS23-Figure3.9` is `IAS23-Figure3.9.svg` and of `il/TCA24-FigureSPM.5` is `TCA24-FigureSPM.5.svg`: the URI alone finds the file. An item with several images adds `_1`, `_2` …, and a part printed in the source file's name adds its letter (`VA22-Table2.6_A.jpg`).
 - **DOIs** are the ones that resolve to the latest version, not those of a specific version. The DOIs of the 2016 to 2019 reports were created after publication and are not printed in them. The reviewed list is kept in the conversion's configuration.
 - **Key messages and background messages:** where a report prints which background messages support a key message, or numbers them under it, those are linked. AFA, AMA, APA, GA1, LDR and PPA print no such link, so a key message is linked to all the background messages of its section (A, B ...). In those reports the link means "same section", and through it a sub-chapter links to all of that section's key messages.

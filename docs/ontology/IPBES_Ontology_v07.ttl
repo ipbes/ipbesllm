@@ -2,14 +2,29 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix ipbes: <http://ontology.ipbes.net/report/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
+ipbes:Figure rdfs:subClassOf ipbes:Illustration .
+
+ipbes:Table rdfs:subClassOf ipbes:Illustration .
+
+# Figures and tables are typed with both their class and ipbes:Illustration
+# (a ipbes:Figure, ipbes:Illustration), so queries for illustrations that use
+# no reasoner still find them. Boxes stay ipbes:Illustration only.
 <http://ontology.ipbes.net/report/il/> a ipbes:Illustration ;
-    ipbes:hasDescription "The text that further describes the content" ;
-    ipbes:hasDoi "The DOI number" ;
-    dcterms:identifier "The identifier of the chapter or sub-chapter or key message in the report" ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/> ;
+    ipbes:hasDescription "The caption's text after its title: the legend of a figure or table, or the text of a box" ;
+    ipbes:hasDoi "The DOI of the Zenodo record holding the figure's or table's files, as its concept DOI, which resolves to the latest version" ;
+    dcterms:identifier "The kind and number of the illustration as printed, without spaces (Figure3.9, TableSPM.A1, Box2.4)" ;
     owl:sameAs "Link to other resources such as zotero repository of the reference" ;
-    skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" .
+    skos:prefLabel "The title of the figure, table or box as printed in its caption" .
+
+<http://ontology.ipbes.net/report/fn/> a ipbes:Footnote ;
+    ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/> ;
+    ipbes:hasDescription "The text of the footnote as printed" ;
+    dcterms:identifier "Footnote, its chapter and its number as printed, as in its URI: Footnote1.12 is note 12 of chapter 1, FootnoteSPM.3 note 3 of the summary for policymakers" .
 
 <http://ontology.ipbes.net/report/kg/> a ipbes:KnowledgeGap ;
     ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/> ;

@@ -27,12 +27,16 @@ What is read from where:
     experts list, which also gives ORCID iDs.
   * SubChapter (1.1, 1.2 ...): title (PDF outline), text of the section and
     its sub-sections, without boxes, figures, tables and footnote marks.
-    Footnotes follow the text under "Notes".
+  * Footnote: each footnote, linked to the sub-chapters citing it. Those in a
+    chapter's executive summary also follow it under "Notes".
   * KeyMessage, BackgroundMessage, SubMessage: the SPM. A background message
     is cut into sub-messages at each {traceability} mark, as in the other
     files; each sub-message links to the sub-chapters it cites.
   * Illustration: every figure, table and box: caption title as
-    skos:prefLabel, the legend (and a box's text) as ipbes:hasDescription.
+    skos:prefLabel, the legend (and a box's text) as ipbes:hasDescription,
+    the sub-chapter it is printed in. Figures and tables are also typed
+    ipbes:Figure or ipbes:Table, with the concept DOI of the Zenodo record
+    holding their files (config/figures_records.json) as ipbes:hasDoi.
   * KnowledgeGap: the SPM table of knowledge gaps, with category and
     traceability, numbered from 1 in table order (as on IBOK).
   * Reference: the chapters' reference lists. Each entry is matched to its
@@ -600,6 +604,7 @@ class Illustration:
     page: int
     legend: list[str] = field(default_factory=list)
     section: str = ""   # the section it is printed in (1.1), "" in the SPM
+    bbox: tuple[float, float, float, float] = ()    # the caption on its page (figures_clip.py)
 
     @property
     def ident(self) -> str:
@@ -920,7 +925,8 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             if existing:
                 rep.problems.append(f"p{p.page}: {kind} {number} captioned twice")
                 continue
-            ill = Illustration(kind, number, title, p.page, section=section.number if section else "")
+            ill = Illustration(kind, number, title, p.page, section=section.number if section else "",
+                               bbox=(p.x0, p.y0, p.x1, p.y1))
             rep.illustrations.append(ill)
             if kind == "Box":
                 box, legend_of = ill, None
@@ -3095,6 +3101,7 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
             add(s, P("hasDoi"), doi.replace("https://doi.org/", ""))
 
     # Sub-chapters
+    footnote_sch: dict[tuple[int, int], list[URIRef]] = {}
     for c in rep.chapters:
         for sec in c.sections:
             s = sch_uri[sec.number]
@@ -3112,11 +3119,9 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
             add(s, SKOS.prefLabel, sec.title)
             body = "\n\n".join(p[3:] if p.startswith("## ") else p for p in sec.paras)
             body = resolve_marks(body, c.number, rep, log, f"section {sec.number}")
-            notes = []
+            # Its footnotes are resources of their own (ipbes:Footnote), linked to it.
             for n in dict.fromkeys(int(x) for x in FOOTNOTE_MARK.findall(body)):
-                notes.append(f"{n}. {rep.footnotes[(c.number, n)].text}")
-            if notes:
-                body += "\n\nNotes\n" + "\n".join(notes)
+                footnote_sch.setdefault((c.number, n), []).append(s)
             add(s, P("hasDescription"), body)
         for u in c.unnumbered:
             log.add("structure", f"chapter {c.number}: unnumbered section '{u.title}' (p{u.page}) is not a "
@@ -3132,10 +3137,31 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
                 body += "\n\nNotes\n" + "\n".join(notes)
             add(ch_uri[c.number], P("hasDescription"), body)
 
-    # Illustrations
+    # Footnotes: one resource each, linked to the sub-chapters that cite it.
+    # Those cited only in an executive summary or the SPM have only the report.
+    for (chapter, n), fn in rep.footnotes.items():
+        ident = f"Footnote{'SPM' if chapter == 0 else chapter}.{n}"
+        s = URIRef(f"{base}fn/{rid}-{ident}")
+        add(s, RDF.type, P("Footnote"))
+        add(s, P("Report"), report)
+        add(s, DCTERMS.identifier, ident)
+        add(s, P("hasDescription"), fn.text)
+        for sch in footnote_sch.get((chapter, n), []):
+            add(s, P("SubChapter"), sch)
+
+    # Illustrations. Figures and tables are typed with their own class too, and
+    # get the concept DOI of the Zenodo record holding their files, if any.
+    from figures_fetch import item_dois
+    zenodo = item_dois(re.sub(r"\d+$", "", rid))
     for il in rep.illustrations:
         s = il_uri[il.ident.upper()]
         add(s, RDF.type, P("Illustration"))
+        if il.kind in ("Figure", "Table"):
+            add(s, RDF.type, P(il.kind))
+        if il.section in sch_uri:
+            add(s, P("SubChapter"), sch_uri[il.section])
+        if il.ident in zenodo:
+            add(s, P("hasDoi"), zenodo[il.ident])
         ch = 0 if il.number.startswith("SPM") else int(il.number.split(".")[0])
         add(s, DCTERMS.identifier, il.ident)
         add(s, SKOS.prefLabel, resolve_marks(il.title, ch, rep))

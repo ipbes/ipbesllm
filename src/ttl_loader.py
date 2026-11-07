@@ -525,10 +525,23 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
 
     sch_type = URIRef(IPBES + "SubChapter")
 
+    # Footnotes are resources of their own (ipbes:Footnote, ontology v07),
+    # linked to the sub-chapters citing them; they follow the text under
+    # "Notes", as the files used to write them.
+    notes: dict = {}
+    for fn in graph.subjects(RDF.type, URIRef(IPBES + "Footnote")):
+        number = re.search(r"(\d+)$", _text(_first(graph, fn, DCTERMS.identifier)))
+        text = _text(_first(graph, fn, URIRef(IPBES + "hasDescription")))
+        for sch in graph.objects(fn, URIRef(IPBES + "SubChapter")):
+            notes.setdefault(sch, []).append((int(number.group(1)) if number else 0, text))
+
     for sch in graph.subjects(RDF.type, sch_type):
         description = _text(
             _first(graph, sch, URIRef(IPBES + "hasDescription"))
         )
+        if sch in notes:
+            description += "\n\nNotes\n" + "\n".join(
+                f"{n}. {text}" for n, text in sorted(notes[sch], key=lambda x: x[0]))
 
         emit(
             subject=sch,
