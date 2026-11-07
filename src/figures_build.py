@@ -3,10 +3,10 @@ the spreadsheet that will enrich the TTL.
 
     python src/figures_build.py
 
-Writes figures/<local name of the TTL URI>.<ext>, so the image of
+Writes data/figures/<local name of the TTL URI>.<ext>, so the image of
 http://ontology.ipbes.net/report/il/TCA24-Figure1.10 is TCA24-Figure1.10.svg
 (several images of one item: _1, _2 ...; a part printed in the file name, as
-Table 2.6A: _A) and figures/figures_enrichment.xlsx. Only SVG, JPEG and PNG
+Table 2.6A: _A) and data/figures/figures_enrichment.xlsx. Only SVG, JPEG and PNG
 files are filed. Zips are read without unpacking them to disk, and nothing in
 them is run or rendered. hasDoi is the concept DOI of the Zenodo record, as in
 data/csv/figures_tables.csv.
@@ -28,13 +28,15 @@ from openpyxl.utils import get_column_letter
 
 from figures_fetch import RECORDS, ROOT, Item, local_path, parse_item, ttl_identifier
 
-OUT = ROOT / "figures"
+OUT = ROOT / "data" / "figures"
 WORKBOOK = OUT / "figures_enrichment.xlsx"
 CSV_LINKS = ROOT / "data" / "csv" / "figures_tables.csv"
 CSV_RESOLVED = ROOT / "config" / "figures_csv_records.json"
 IPBES = "http://ontology.ipbes.net/report/"
 IMAGE_EXTS = {".svg", ".jpg", ".jpeg", ".png"}
 MAX_MEMBER = 500_000_000    # bytes; larger members of a zip are reported, not read
+CLIPS_MANIFEST = ROOT / ".cache" / "clips" / "manifest.json"    # figures_clip.py
+CODES = "AFA AMA APA BBA ECA GA1 IAS LDR NXS PPA SCM SUA TCA VA".split()
 
 _LABEL = re.compile(
     r"^\s*(?:figure|fig\.?|table|box)\s+(?:spm[ .]*)?[A-Z]?\d*(?:\.\d+)*[A-Za-z]?\s*[.:\-–]?\s*",
@@ -140,7 +142,7 @@ def collect(records: list[dict]):
 
 
 def load_ttl(code: str) -> tuple[dict, dict, str]:
-    """({identifier: (uri, prefLabel, hasDescription)}, {section: uri}, report id)."""
+    """({identifier: (uri, prefLabel, hasDescription, hasDoi)}, {section: uri}, report id)."""
     graph = rdflib.Graph()
     graph.parse(ROOT / "data" / "ttl" / f"{code}_v00.ttl", format="turtle")
     items, sections = {}, {}
@@ -151,6 +153,7 @@ def load_ttl(code: str) -> tuple[dict, dict, str]:
             str(s),
             str(graph.value(s, rdflib.SKOS.prefLabel) or ""),
             str(graph.value(s, rdflib.URIRef(IPBES + "hasDescription")) or ""),
+            str(graph.value(s, rdflib.URIRef(IPBES + "hasDoi")) or ""),
         )
     for s in graph.subjects(rdflib.RDF.type, rdflib.URIRef(IPBES + "SubChapter")):
         ident = str(graph.value(s, rdflib.DCTERMS.identifier) or "")
@@ -210,7 +213,7 @@ def main() -> None:
         if doi:
             csv_dois[((row.get("Document Symbol") or "").strip(), "SPM" if part in ("0", "SPM") else part)].add(doi.group(0))
 
-    ttl = {code: load_ttl(code) for code in sorted({r["code"] for r in records})}
+    ttl = {code: load_ttl(code) for code in CODES}
     placement = {code: load_placement(code) for code in ttl}
 
     # Duplicates: one image bytes under one item, once.
@@ -223,7 +226,7 @@ def main() -> None:
                 unique.append(image)
         identifier = ttl_identifier(item)
         items, sections, report_id = ttl[item.code]
-        uri, label, description = items.get(identifier, ("", "", ""))
+        uri, label, description, _ = items.get(identifier, ("", "", "", ""))
         page, section = placement[item.code].get(identifier, ("", ""))
         caption, _, caption_member = captions.get(item, ("", "", ""))
         for number, image in enumerate(unique, 1):
@@ -248,17 +251,41 @@ def main() -> None:
             if not caption:
                 notes.append("no caption file in the package")
             enrichment.append([
-                item.code, item.kind, item.part, identifier, uri, f"figures/{name}", image["ext"].lstrip("."),
+                item.code, item.kind, item.part, identifier, uri, f"data/figures/{name}", image["ext"].lstrip("."),
                 len(image["data"]), f"https://doi.org/{record['conceptdoi']}", record["id"], record.get("license") or "",
                 image["package"], image["member"], section,
                 sections.get(section, ""), page, label, caption, caption_member, description,
-                "; ".join(notes),
+                "; ".join(notes), "Zenodo",
             ])
+
+    # Figures and tables with no Zenodo image, clipped from the report PDFs
+    # by figures_clip.py (which leaves out those with a Zenodo image).
+    have = {(row[0], row[3]) for row in enrichment}
+    clips = json.loads(CLIPS_MANIFEST.read_text()) if CLIPS_MANIFEST.exists() else {}
+    clipped = set()
+    for name, clip in sorted(clips.items()):
+        code, identifier = clip["code"], clip["ident"]
+        if not clip["file"] or (code, identifier) in have or code not in ttl:
+            continue
+        items, sections, report_id = ttl[code]
+        uri, label, description, doi = items.get(identifier, ("", "", "", ""))
+        _, section = placement[code].get(identifier, ("", ""))
+        data = (CLIPS_MANIFEST.parent / clip["file"]).read_bytes()
+        (OUT / clip["file"]).write_bytes(data)
+        clipped.add((code, identifier))
+        part = "SPM" if "SPM" in identifier else re.search(r"(\d+)\.", identifier).group(1)
+        notes = ["clipped from the report PDF: check it"] + clip["flags"]
+        enrichment.append([
+            code, clip["kind"], part, identifier, uri, f"data/figures/{clip['file']}", "png", len(data),
+            f"https://doi.org/{doi}" if doi else "", "", "", f"report PDF ({code})", f"page {clip['page']}",
+            section, sections.get(section, ""), clip["page"], label, "", "", description,
+            "; ".join(notes), "report PDF",
+        ])
 
     # Items with files in Zenodo but no image in the wanted formats.
     no_image = []
     for item in sorted(set(other) | set(records_of), key=lambda i: (i.code, i.part.zfill(3), i.kind, i.number, i.letter)):
-        if item in images:
+        if item in images or (item.code, ttl_identifier(item)) in clipped:
             continue
         identifier = ttl_identifier(item)
         record = records_of[item]
@@ -268,6 +295,18 @@ def main() -> None:
         no_image.append([item.code, item.kind, item.part, identifier,
                          ttl[item.code][0].get(identifier, ("",))[0], ", ".join(pdf_or_other),
                          f"https://doi.org/{record['conceptdoi']}", record["id"], section, caption])
+    # Items figures_clip.py could not clip either: to be clipped by hand.
+    listed = {(row[0], row[3]) for row in no_image}
+    for clip in clips.values():
+        code, identifier = clip["code"], clip["ident"]
+        if clip["file"] or (code, identifier) in listed or code not in ttl:
+            continue
+        uri, _, _, doi = ttl[code][0].get(identifier, ("", "", "", ""))
+        part = "SPM" if "SPM" in identifier else re.search(r"(\d+)\.", identifier).group(1)
+        no_image.append([code, clip["kind"], part, identifier, uri,
+                         f"not clipped from the report PDF (page {clip['page']}): {'; '.join(clip['flags'])}",
+                         f"https://doi.org/{doi}" if doi else "", "",
+                         placement[code].get(identifier, ("", ""))[1], ""])
 
     # Which record each row of figures_tables.csv points at.
     by_id = {r["id"]: r for r in records}
@@ -299,8 +338,9 @@ def main() -> None:
         ("IPBES figures and tables: data to enrich the TTL", True),
         ("", False),
         ("Sheets", True),
-        ("Enrichment: one row per image filed in figures/. This is the sheet to load.", False),
-        ("No image: items on Zenodo with no SVG, JPEG or PNG (PDF, Word, .ai or .indd only). Nothing filed.", False),
+        ("Enrichment: one row per image filed in data/figures/. This is the sheet to load. source says where the "
+         "image comes from: Zenodo, or the report PDF (clipped by figures_clip.py; check those, their flags are in notes).", False),
+        ("No image: items on Zenodo with no SVG, JPEG or PNG (PDF, Word, .ai or .indd only) that could not be clipped either.", False),
         ("Coverage: per assessment, what the TTL lists against what was filed. Counts are formulas.", False),
         ("CSV links: each row of data/csv/figures_tables.csv, and whether its DOI is the chapter it says.", False),
         ("Records: the Zenodo records used, and how each was found.", False),
@@ -331,14 +371,15 @@ def main() -> None:
         ("assessment", 11), ("class", 8), ("chapter", 8), ("ttl_identifier", 15), ("ttl_uri", 34), ("image_file", 28),
         ("format", 7), ("bytes", 10), ("zenodo_doi", 36), ("zenodo_record", 12), ("license", 10), ("package", 26),
         ("package_member", 26), ("subchapter", 10), ("subchapter_uri", 34), ("page", 6), ("ttl_prefLabel", 40),
-        ("hasDescription", 70), ("caption_file", 26), ("ttl_hasDescription", 50), ("notes", 34)], enrichment)
+        ("hasDescription", 70), ("caption_file", 26), ("ttl_hasDescription", 50), ("notes", 34),
+        ("source", 12)], enrichment)
     write_sheet(book, "No image", [
         ("assessment", 11), ("class", 8), ("chapter", 8), ("ttl_identifier", 15), ("ttl_uri", 34), ("formats_available", 16),
         ("zenodo_doi", 36), ("zenodo_record", 12), ("subchapter", 10), ("hasDescription", 70)], no_image)
 
     coverage = book.create_sheet("Coverage")
     headers = ["assessment", "class", "items_in_ttl", "images_filed", "items_with_image_in_ttl",
-               "with_caption", "no_image_on_zenodo"]
+               "with_caption", "no_image_on_zenodo", "from_zenodo", "clipped_from_pdf"]
     coverage.append(headers)
     row = 2
     counts = {}
@@ -352,10 +393,11 @@ def main() -> None:
             f'=COUNTIFS(Enrichment!$A:$A,$A{row},Enrichment!$B:$B,$B{row},Enrichment!$E:$E,"?*")',
             f'=COUNTIFS(Enrichment!$A:$A,$A{row},Enrichment!$B:$B,$B{row},Enrichment!$R:$R,"?*")',
             f"=COUNTIFS('No image'!$A:$A,$A{row},'No image'!$B:$B,$B{row})",
+            f'=COUNTIFS(Enrichment!$A:$A,$A{row},Enrichment!$B:$B,$B{row},Enrichment!$V:$V,"Zenodo")',
+            f'=COUNTIFS(Enrichment!$A:$A,$A{row},Enrichment!$B:$B,$B{row},Enrichment!$V:$V,"report PDF")',
         ])
         row += 1
-    coverage.append(["Total", "", f"=SUM(C2:C{row - 1})", f"=SUM(D2:D{row - 1})", f"=SUM(E2:E{row - 1})",
-                     f"=SUM(F2:F{row - 1})", f"=SUM(G2:G{row - 1})"])
+    coverage.append(["Total", ""] + [f"=SUM({c}2:{c}{row - 1})" for c in "CDEFGHI"])
     for r in coverage.iter_rows():
         for cell in r:
             cell.font = BODY

@@ -403,11 +403,15 @@ What it leaves out, because the ontology has no place for it: unnumbered section
 The IPBES deposits the figures and tables of some assessments on Zenodo, a record per chapter. `data/csv/figures_tables.csv` lists their DOIs; `config/figures_records.json` lists the records actually used (one per assessment and chapter: the CSV gives one DOI for several chapters, so the other chapters' records were found by title), with each record's concept DOI.
 
 ```bash
-python src/figures_fetch.py    # zips and loose SVG/JPEG/PNG into .cache/zenodo/ (1.8 GB), checksums verified
-python src/figures_build.py    # images into figures/, and figures/figures_enrichment.xlsx
+python src/figures_fetch.py                   # zips and loose SVG/JPEG/PNG into .cache/zenodo/ (1.8 GB), checksums verified
+PYTHONPATH=src python src/figures_clip.py --extract   # once: caption positions from the converter's parser (about 20 min)
+PYTHONPATH=src python src/figures_clip.py             # clip the figures and tables with no Zenodo image from data/pdf/
+python src/figures_build.py                   # all images into data/figures/, and data/figures/figures_enrichment.xlsx
 ```
 
-Each image is named after its item's URI, so the image of `il/IAS23-Figure3.9` is `figures/IAS23-Figure3.9.svg` (several images of one item: `_1`, `_2`; a printed part: `VA22-Table2.6_A.jpg`). The spreadsheet has a row per image with the TTL URI, the Zenodo DOI, the sub-chapter, and the caption from the package (IAS and TCA only) as `hasDescription`, and lists the items with only a PDF, Word or source file, and the CSV rows that point to another chapter's record. Zenodo has an image for 320 of the 2,389 figures and tables of the 14 reports (IAS, TCA, VA, SUA, BBA).
+Clipping only takes the figures and tables that have no image from Zenodo. From each caption (its position comes from the converter), it takes the side with the most graphics, up to the nearest running text, heading, footnote, legend or other caption, and renders that region as a PNG at 150 dpi. A figure with no graphics next to its caption is looked for on the facing page (NXS prints the caption at the top of the right-hand page and the figure on the left). Each clip is a PNG named like the Zenodo images; the spreadsheet marks them with source "report PDF" and notes any flag, and `.cache/clips/<A>_review.pdf` shows each one beside its page for review. The few it cannot clip are listed in the "No image" sheet.
+
+Each image is named after its item's URI, so the image of `il/IAS23-Figure3.9` is `data/figures/IAS23-Figure3.9.svg` (several images of one item: `_1`, `_2`; a printed part: `VA22-Table2.6_A.jpg`). The spreadsheet has a row per image with the TTL URI, the Zenodo DOI, the sub-chapter, and the caption from the package (IAS and TCA only) as `hasDescription`, and lists the items with only a PDF, Word or source file, and the CSV rows that point to another chapter's record. Zenodo has an image for 320 of the 2,389 figures and tables of the 14 reports (IAS, TCA, VA, SUA, BBA).
 
 #### Cleaning person data
 
