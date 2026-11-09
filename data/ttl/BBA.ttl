@@ -926,6 +926,50 @@ Another certification scheme based on the positive effect of businesses on biodi
     dcterms:identifier "Table6.3" ;
     skos:prefLabel "Knowledge gaps." .
 
+<http://ontology.ipbes.net/report/key/BBA26-KM-A> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/BBA26-A1>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-A2>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-A3>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-A4>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-A5>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-A6>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-A7>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-A8> ;
+    ipbes:Report ipbes:BBA26 ;
+    dcterms:identifier "A" ;
+    skos:prefLabel "Understanding the relationship between business and biodiversity" .
+
+<http://ontology.ipbes.net/report/key/BBA26-KM-B> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/BBA26-B1>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B10>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B11>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B12>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B13>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B2>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B3>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B4>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B5>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B6>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B7>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B8>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-B9> ;
+    ipbes:Report ipbes:BBA26 ;
+    dcterms:identifier "B" ;
+    skos:prefLabel "Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" .
+
+<http://ontology.ipbes.net/report/key/BBA26-KM-C> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/BBA26-C1>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-C2>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-C3>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-C4>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-C5>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-C6>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-C7>,
+        <http://ontology.ipbes.net/report/bgm/BBA26-C8> ;
+    ipbes:Report ipbes:BBA26 ;
+    dcterms:identifier "C" ;
+    skos:prefLabel "Measuring businesses’ impacts and dependencies on biodiversity and nature’s contributions to people" .
+
 <http://ontology.ipbes.net/report/kg/BBA26-1> a ipbes:KnowledgeGap ;
     ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/BBA26-A3>,
         <http://ontology.ipbes.net/report/bgm/BBA26-A5>,
@@ -2134,13 +2178,6 @@ Despite these advances, the availability of tools remains limited, and there are
     foaf:firstName "Steven" ;
     foaf:lastName "Allison" .
 
-<http://ontology.ipbes.net/report/person/Andrade_Germán> a foaf:Person ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:mc "Management Committee in BBA26" ;
-    skos:prefLabel "Germán Andrade" ;
-    foaf:firstName "Germán" ;
-    foaf:lastName "Andrade" .
-
 <http://ontology.ipbes.net/report/person/Ashman_Isabel> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch5> ;
     ipbes:Report ipbes:BBA26 ;
@@ -2470,25 +2507,6 @@ Despite these advances, the availability of tools remains limited, and there are
     foaf:firstName "Sasha" ;
     foaf:lastName "Gennet" .
 
-<http://ontology.ipbes.net/report/person/Gordon_Christopher> a foaf:Person ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:country "GBR",
-        "GHA" ;
-    ipbes:mc "Management Committee in BBA26" ;
-    owl:sameAs <https://orcid.org/0000-0003-2734-851X> ;
-    skos:prefLabel "Christopher Gordon" ;
-    foaf:firstName "Christopher" ;
-    foaf:lastName "Gordon" .
-
-<http://ontology.ipbes.net/report/person/Grigoryan_Erik> a foaf:Person ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:country "ARM" ;
-    ipbes:mc "Management Committee in BBA26" ;
-    owl:sameAs <https://orcid.org/0000-0002-8717-7698> ;
-    skos:prefLabel "Erik Grigoryan" ;
-    foaf:firstName "Erik" ;
-    foaf:lastName "Grigoryan" .
-
 <http://ontology.ipbes.net/report/person/Guillemin_InongeMukumbuta> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch6> ;
     ipbes:Report ipbes:BBA26 ;
@@ -2517,14 +2535,6 @@ Despite these advances, the availability of tools remains limited, and there are
     skos:prefLabel "Jacob Hochard" ;
     foaf:firstName "Jacob" ;
     foaf:lastName "Hochard" .
-
-<http://ontology.ipbes.net/report/person/Homer_Floyd> a foaf:Person ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:country "TTO" ;
-    ipbes:mc "Management Committee in BBA26" ;
-    skos:prefLabel "Floyd Homer" ;
-    foaf:firstName "Floyd" ;
-    foaf:lastName "Homer" .
 
 <http://ontology.ipbes.net/report/person/Horiuchi_Aya> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch3> ;
@@ -2598,6 +2608,7 @@ Despite these advances, the availability of tools remains limited, and there are
     ipbes:Report ipbes:BBA26 ;
     ipbes:country "GBR" ;
     ipbes:cs "Co-chair in BBA26" ;
+    ipbes:ed "Editor in BBA26" ;
     owl:sameAs <https://orcid.org/0000-0002-5690-4274> ;
     skos:prefLabel "Matt Jones" ;
     foaf:firstName "Matt" ;
@@ -2917,6 +2928,7 @@ Despite these advances, the availability of tools remains limited, and there are
     ipbes:Report ipbes:BBA26 ;
     ipbes:country "USA" ;
     ipbes:cs "Co-chair in BBA26" ;
+    ipbes:ed "Editor in BBA26" ;
     owl:sameAs <https://orcid.org/0000-0003-4934-2434> ;
     skos:prefLabel "Stephen Polasky" ;
     foaf:firstName "Stephen" ;
@@ -3017,6 +3029,7 @@ Despite these advances, the availability of tools remains limited, and there are
     ipbes:country "COL",
         "USA" ;
     ipbes:cs "Co-chair in BBA26" ;
+    ipbes:ed "Editor in BBA26" ;
     skos:prefLabel "Ximena Rueda" ;
     foaf:firstName "Ximena" ;
     foaf:lastName "Rueda" .
@@ -15410,36 +15423,6 @@ Location-based observations and participatory approaches are required to assess 
         <http://ontology.ipbes.net/report/il/BBA26-TableSPM.7> ;
     ipbes:hasDescription "Knowledge gaps in the measurement of business impacts and dependencies can be identified across five broad areas: (a) business-relevant data; (b) completeness of evidence; (c) applicability of methods; (d) data accessibility and transparency; and (e) adoption of methods (Table SPM.7). Addressing each of these knowledge gaps would significantly improve applicability by businesses and improve business accountability. In relation to the needs and shortcomings in data, uptake and methods identified in this assessment, a core set of gaps in knowledge and practice exist, including low adoption of methods in business action (C3), gaps in business location and activity data (C4), a lack of consistent scenarios for biodiversity (C5), a lack of actionable guidance for measuring dependencies (C6), and insufficient interweaving of Indigenous and local knowledge (C7). Addressing these knowledge gaps will require coordinated public and private investment. Furthermore, a balance between the scientific rigour of measurements and the affordability and applicability of methods by businesses is also required in order to support business actions effectively. Closing these knowledge gaps would allow methods to be applied to a wider set of decision contexts, increase consistency in comparisons across businesses, portfolios and countries, and enable further action by businesses and financial institutions (Table SPM.2)." .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-A1> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A1-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM7> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Biodiversity provides goods and services that are essential to the economy and business activities. For example, biodiversity provides raw materials and energy and regulates environmental conditions, including by modulating water flows to reduce flooding during wet seasons and by providing water during dry seasons. Biodiversity also underpins genetic diversity, which can inform research and innovation and contributes to science, education and cultural and spiritual values (well established) {2.2.1}. Despite its importance, the loss of biodiversity and nature’s contributions to people has accelerated since the industrial revolution due to rapid economic growth and changes in production and consumption patterns (well established) {1.1.2, 1.1.3}. Economic activity and global trade have increased at a faster pace than human population growth (well established) {1.1.2}. The transformative change assessment identified three underlying causes of biodiversity loss: disconnection from nature, concentration of power and wealth, and prioritization of short-term individual and material gains (well established) {1.1.4}. Business activities are shaped by and contribute to these socioeconomic trends and their underlying causes, often in complex and unpredictable ways (well established) {3.2.1}. The growing economy continues to contribute to the direct drivers of biodiversity loss (i.e., land-and sea-use change, unsustainable direct exploitation of organisms, climate change, pollution, and invasive alien species, among others), placing increasing pressure on biodiversity and nature’s contributions to people (well established) {1.1.4}. Measures of biodiversity and nature’s contributions to people have shown declines for decades (well established) {1.1.1, 1.1.2, 1.1.3, 1.1.4}. Since 1992, human-produced capital (e.g., buildings and machinery) that improves economic productivity has increased by approximately 100 per cent per capita on average, with wide disparities among countries, while stocks of natural capital (i.e., ecosystems and natural resources) have been reduced by nearly 40 per cent (well established) {1.1.2}." ;
-    dcterms:identifier "A1" ;
-    skos:prefLabel "Businesses depend on biodiversity, but business actions continue to drive declines in biodiversity and nature’s contributions to people (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/BBA26-A2> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A2-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM7> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "The loss of biodiversity and nature’s contributions to people, including stocks of natural resources, resulting from unsustainable use threatens the ability of businesses, local economies and entire sectors to function (well established) {1.2.9}. The first global assessment of biodiversity and ecosystem services shows that, while biodiversity and nature’s contributions to people are providing more food, energy and materials than at any other point in human history, doing so often comes at the expense of rapid biodiversity decline, diminished ecosystem function and reductions in many of nature’s contributions to people (well established) {1.1.2, 1.3}. Because biodiversity loss is driven in large part by economic activity and by systemic failures to internalize nature’s values, the resulting degradation of ecosystems generates physical risks for the very businesses and economic systems that depend on them (well established) {1.1.2, 1.3, 1.2.9}. This situation creates pervasive systemic risk that affects the stability of the financial system and the global economy (well established) {1.2.9}. Risks associated with biodiversity loss and ecosystem collapse, along with extreme weather events, critical changes to Earth systems, and natural resource shortages and pollution, are expected to be among the highest-ranked global risks over the next 10 years (well established) {1.4.2}. Climate- and biodiversity-related risks may interact to amplify social and economic impacts (well established) {1.4.2, 3.5.2}. Such risks affect some sectors directly (e.g., agriculture, tourism and insurance) and all sectors indirectly (established but incomplete) {2.5.1, 2.5.5}. Those risks may have disproportionate impacts on developing countries, whose economies are more reliant on biodiversity and have less technical and financial capacity to absorb shocks (well established) {1.2.9, 3.5.2}." ;
-    dcterms:identifier "A2" ;
-    skos:prefLabel "Biodiversity losses caused by economic activity put the future of businesses, the economy and global society at risk (well established)." .
-
 <http://ontology.ipbes.net/report/il/BBA26-FigureSPM.4> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:hasDoi "10.5281/zenodo.19702935" ;
@@ -17445,15 +17428,37 @@ The growth of international non-governmental organizations underscores the incre
     dcterms:identifier "6.2.1.4" ;
     skos:prefLabel "Indigenous Peoples and local communities" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-C8> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-TableSPM.2>,
-        <http://ontology.ipbes.net/report/il/BBA26-TableSPM.7> ;
+<http://ontology.ipbes.net/report/bgm/BBA26-A1> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C8-SM0> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A1-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A1-SM7> ;
+    ipbes:hasCategory "A. Understanding the relationship between business and biodiversity" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Knowledge gaps in the measurement of business impacts and dependencies can be identified across five broad areas: (a) business-relevant data; (b) completeness of evidence; (c) applicability of methods; (d) data accessibility and transparency; and (e) adoption of methods (Table SPM.7). Addressing each of these knowledge gaps would significantly improve applicability by businesses and improve business accountability. In relation to the needs and shortcomings in data, uptake and methods identified in this assessment, a core set of gaps in knowledge and practice exist, including low adoption of methods in business action (C3), gaps in business location and activity data (C4), a lack of consistent scenarios for biodiversity (C5), a lack of actionable guidance for measuring dependencies (C6), and insufficient interweaving of Indigenous and local knowledge (C7). Addressing these knowledge gaps will require coordinated public and private investment. Furthermore, a balance between the scientific rigour of measurements and the affordability and applicability of methods by businesses is also required in order to support business actions effectively. Closing these knowledge gaps would allow methods to be applied to a wider set of decision contexts, increase consistency in comparisons across businesses, portfolios and countries, and enable further action by businesses and financial institutions (Table SPM.2)." ;
-    dcterms:identifier "C8" ;
-    skos:prefLabel "Filling gaps in knowledge and its application can make the measurement of business impacts and dependencies on biodiversity more robust and relevant to decision-making (well established)." .
+    ipbes:hasDescription "Biodiversity provides goods and services that are essential to the economy and business activities. For example, biodiversity provides raw materials and energy and regulates environmental conditions, including by modulating water flows to reduce flooding during wet seasons and by providing water during dry seasons. Biodiversity also underpins genetic diversity, which can inform research and innovation and contributes to science, education and cultural and spiritual values (well established) {2.2.1}. Despite its importance, the loss of biodiversity and nature’s contributions to people has accelerated since the industrial revolution due to rapid economic growth and changes in production and consumption patterns (well established) {1.1.2, 1.1.3}. Economic activity and global trade have increased at a faster pace than human population growth (well established) {1.1.2}. The transformative change assessment identified three underlying causes of biodiversity loss: disconnection from nature, concentration of power and wealth, and prioritization of short-term individual and material gains (well established) {1.1.4}. Business activities are shaped by and contribute to these socioeconomic trends and their underlying causes, often in complex and unpredictable ways (well established) {3.2.1}. The growing economy continues to contribute to the direct drivers of biodiversity loss (i.e., land-and sea-use change, unsustainable direct exploitation of organisms, climate change, pollution, and invasive alien species, among others), placing increasing pressure on biodiversity and nature’s contributions to people (well established) {1.1.4}. Measures of biodiversity and nature’s contributions to people have shown declines for decades (well established) {1.1.1, 1.1.2, 1.1.3, 1.1.4}. Since 1992, human-produced capital (e.g., buildings and machinery) that improves economic productivity has increased by approximately 100 per cent per capita on average, with wide disparities among countries, while stocks of natural capital (i.e., ecosystems and natural resources) have been reduced by nearly 40 per cent (well established) {1.1.2}." ;
+    dcterms:identifier "A1" ;
+    skos:prefLabel "Businesses depend on biodiversity, but business actions continue to drive declines in biodiversity and nature’s contributions to people (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/BBA26-A2> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A2-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A2-SM7> ;
+    ipbes:hasCategory "A. Understanding the relationship between business and biodiversity" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "The loss of biodiversity and nature’s contributions to people, including stocks of natural resources, resulting from unsustainable use threatens the ability of businesses, local economies and entire sectors to function (well established) {1.2.9}. The first global assessment of biodiversity and ecosystem services shows that, while biodiversity and nature’s contributions to people are providing more food, energy and materials than at any other point in human history, doing so often comes at the expense of rapid biodiversity decline, diminished ecosystem function and reductions in many of nature’s contributions to people (well established) {1.1.2, 1.3}. Because biodiversity loss is driven in large part by economic activity and by systemic failures to internalize nature’s values, the resulting degradation of ecosystems generates physical risks for the very businesses and economic systems that depend on them (well established) {1.1.2, 1.3, 1.2.9}. This situation creates pervasive systemic risk that affects the stability of the financial system and the global economy (well established) {1.2.9}. Risks associated with biodiversity loss and ecosystem collapse, along with extreme weather events, critical changes to Earth systems, and natural resource shortages and pollution, are expected to be among the highest-ranked global risks over the next 10 years (well established) {1.4.2}. Climate- and biodiversity-related risks may interact to amplify social and economic impacts (well established) {1.4.2, 3.5.2}. Such risks affect some sectors directly (e.g., agriculture, tourism and insurance) and all sectors indirectly (established but incomplete) {2.5.1, 2.5.5}. Those risks may have disproportionate impacts on developing countries, whose economies are more reliant on biodiversity and have less technical and financial capacity to absorb shocks (well established) {1.2.9, 3.5.2}." ;
+    dcterms:identifier "A2" ;
+    skos:prefLabel "Biodiversity losses caused by economic activity put the future of businesses, the economy and global society at risk (well established)." .
 
 <http://ontology.ipbes.net/report/il/BBA26-TableSPM.2> a ipbes:Illustration,
         ipbes:Table ;
@@ -18353,24 +18358,16 @@ A plurality of modelling approaches, including input-output modelling and ecolog
     dcterms:identifier "6.3.4.4" ;
     skos:prefLabel "Innovation in modelling" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-B12> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/BBA26-C8> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-TableSPM.2>,
+        <http://ontology.ipbes.net/report/il/BBA26-TableSPM.7> ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B12-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B12-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B12-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B12-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B12-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B12-SM5> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C8-SM0> ;
+    ipbes:hasCategory "C. Measuring businesses’ impacts and dependencies on biodiversity and nature’s contributions to people" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """In addition to actions that apply to all businesses, financial institutions can play a pivotal role in fostering business transitions to align with biodiversity goals. The actions and their influence on biodiversity outcomes vary across financial institutions (i.e., lenders, investors and insurers), but all have a role in redirecting financial flows to support biodiversity outcomes. Through “financing green” and “greening finance” approaches, financial institutions can, respectively, shift capital flows towards business activities with positive impacts and away from businesses with negative impacts on biodiversity and nature’s contributions to people (established but incomplete) {5.6.4}.
-
-Financial institutions can establish and communicate the criteria for their decisions to lend to, invest in and insure businesses (well established) {5.6.1, 5.6.4}. Decisions taken on the basis of these criteria benefit from information provided by the specific and robust measurement and disclosure of impacts, dependencies, risks and opportunities (well established) {4.4.1, 4.4.2, 5.6.4}.
-
-Financial institutions can influence actions across their entire portfolio through capital allocation and stewardship strategies by engaging with clients to align practices with biodiversity targets, exercising voting rights and excluding or divesting from harmful activities (well established) {4.1.2, 4.4.1, 5.6.4}. Recognizing the need to support business activities, financial institutions can also engage with businesses to foster actions that improve performance or support the transition of their activities. This is particularly true for places and activities in which both upfront investments and risks are substantial, such as in small- and medium-sized enterprises working towards the conservation and sustainable use of biodiversity (well established) {6.4.3}.
-
-In addition to shifting financial flows away from negative activities, financial institutions can deploy instruments and strategies, such as blended finance, impact investing and green or sustainability-linked bonds, to provide capital to businesses engaged in conserving, restoring or sustainably using biodiversity. Financial institutions can also make contributions to initiatives such as the Global Biodiversity Framework Fund (established but incomplete) {5.6.4.5, 5.6.4.6, 5.6.4.7}.""" ;
-    dcterms:identifier "B12" ;
-    skos:prefLabel "Financial institutions can shift finance away from harmful activities and towards business activities with positive impacts on biodiversity (well established)." .
+    ipbes:hasDescription "Knowledge gaps in the measurement of business impacts and dependencies can be identified across five broad areas: (a) business-relevant data; (b) completeness of evidence; (c) applicability of methods; (d) data accessibility and transparency; and (e) adoption of methods (Table SPM.7). Addressing each of these knowledge gaps would significantly improve applicability by businesses and improve business accountability. In relation to the needs and shortcomings in data, uptake and methods identified in this assessment, a core set of gaps in knowledge and practice exist, including low adoption of methods in business action (C3), gaps in business location and activity data (C4), a lack of consistent scenarios for biodiversity (C5), a lack of actionable guidance for measuring dependencies (C6), and insufficient interweaving of Indigenous and local knowledge (C7). Addressing these knowledge gaps will require coordinated public and private investment. Furthermore, a balance between the scientific rigour of measurements and the affordability and applicability of methods by businesses is also required in order to support business actions effectively. Closing these knowledge gaps would allow methods to be applied to a wider set of decision contexts, increase consistency in comparisons across businesses, portfolios and countries, and enable further action by businesses and financial institutions (Table SPM.2)." ;
+    dcterms:identifier "C8" ;
+    skos:prefLabel "Filling gaps in knowledge and its application can make the measurement of business impacts and dependencies on biodiversity more robust and relevant to decision-making (well established)." .
 
 <http://ontology.ipbes.net/report/ref/5081872/items/25UI75CV> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1>,
@@ -18937,26 +18934,25 @@ Standard-setting bodies can guide sustainability accounting and reporting standa
     dcterms:identifier "6.3.3.2" ;
     skos:prefLabel "Awareness raising and certification" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-B6> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/BBA26-B12> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B6-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM7> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B12-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B12-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B12-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B12-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B12-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B12-SM5> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Governments and businesses can play a pivotal role in facilitating capacity-building (i.e., education, training programmes and public awareness campaigns) tailored to specific audiences and geographical contexts. They can also stimulate access to measurement tools and facilitate open-source and location-specific data on biodiversity (well established) {6.3.5.1}.
+    ipbes:hasDescription """In addition to actions that apply to all businesses, financial institutions can play a pivotal role in fostering business transitions to align with biodiversity goals. The actions and their influence on biodiversity outcomes vary across financial institutions (i.e., lenders, investors and insurers), but all have a role in redirecting financial flows to support biodiversity outcomes. Through “financing green” and “greening finance” approaches, financial institutions can, respectively, shift capital flows towards business activities with positive impacts and away from businesses with negative impacts on biodiversity and nature’s contributions to people (established but incomplete) {5.6.4}.
 
-Civil society and academic institutions can enhance capacity by fostering education and can provide diverse perspectives to bridge the gap between businesses, Governments and various groups, such as young people and Indigenous Peoples and local communities, to ensure mutual understanding and engagement (established but incomplete) {6.3.5.1, 6.3.5.2}. Public awareness campaigns aimed at consumers can provide information to support sustainable patterns of consumption (established but incomplete) {6.3.3}.
+Financial institutions can establish and communicate the criteria for their decisions to lend to, invest in and insure businesses (well established) {5.6.1, 5.6.4}. Decisions taken on the basis of these criteria benefit from information provided by the specific and robust measurement and disclosure of impacts, dependencies, risks and opportunities (well established) {4.4.1, 4.4.2, 5.6.4}.
 
-Financial actors and financial institutions can complement capacity-building efforts through technical assistance programmes, risk mitigation tools and fiscal instruments (established but incomplete) {6.3.5.1}. In addition, public development banks could lead by example, supporting strategies and planning initiatives that mainstream biodiversity considerations into financial policies and investments, effectively building the capacity of financial institutions and businesses to act sustainably (well established) {6.3.5.1}.
+Financial institutions can influence actions across their entire portfolio through capital allocation and stewardship strategies by engaging with clients to align practices with biodiversity targets, exercising voting rights and excluding or divesting from harmful activities (well established) {4.1.2, 4.4.1, 5.6.4}. Recognizing the need to support business activities, financial institutions can also engage with businesses to foster actions that improve performance or support the transition of their activities. This is particularly true for places and activities in which both upfront investments and risks are substantial, such as in small- and medium-sized enterprises working towards the conservation and sustainable use of biodiversity (well established) {6.4.3}.
 
-Education and capacity-building programmes for businesses, communities and civil society can be tailored to the needs, realities and knowledge systems of Indigenous Peoples and local communities (well established) {6.3.5.3}. Establishing such programmes can raise awareness of Indigenous and local knowledge and empower individuals and communities to engage in decision-making processes related to business activities (well established) {6.3.5.3}. Indigenous Peoples and local communities are vital actors with regard to intercultural competencies; businesses can therefore benefit from involving these communities in their training programmes (well established) {6.3.5.2}.""" ;
-    dcterms:identifier "B6" ;
-    skos:prefLabel "Enhanced capacity and knowledge across actors can support the measurement of impacts and dependencies by businesses and guide business actions (well established)." .
+In addition to shifting financial flows away from negative activities, financial institutions can deploy instruments and strategies, such as blended finance, impact investing and green or sustainability-linked bonds, to provide capital to businesses engaged in conserving, restoring or sustainably using biodiversity. Financial institutions can also make contributions to initiatives such as the Global Biodiversity Framework Fund (established but incomplete) {5.6.4.5, 5.6.4.6, 5.6.4.7}.""" ;
+    dcterms:identifier "B12" ;
+    skos:prefLabel "Financial institutions can shift finance away from harmful activities and towards business activities with positive impacts on biodiversity (well established)." .
 
 <http://ontology.ipbes.net/report/il/BBA26-TableSPM.4> a ipbes:Illustration,
         ipbes:Table ;
@@ -19280,57 +19276,27 @@ Investments needed to protect and restore biodiversity are typically long-term a
     dcterms:identifier "6.4.2" ;
     skos:prefLabel "Short-termism" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-A4> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/BBA26-B6> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A4-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM7> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B6-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B6-SM7> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Business dependencies can result from: (a) material inputs to processes and products, such as genetic resources, raw materials and energy; (b) regulation of the environmental conditions in which the businesses operate, such as modulation of water flows and control of erosion; and (c) non-material contributions, such as recreational, educational and spiritual, cultural and aesthetic values (well established) {2.2.1, 2.5.2, 2.5.4, 2.9}. Dependencies on material inputs can result in negative impacts on other actors and on the business itself when extraction exceeds levels of sustainable use (well established) {2.2.1}. In managing their dependencies, businesses have to navigate complex trade-offs and consider broader societal needs (established but incomplete) {2.8}. The magnitude of the dependence and the availability and stability of the supply of nature’s contributions to people determines the associated type and level of risk to the business (established but incomplete) {2.2.4, 2.5.5}. Dependencies are not always obvious; for example, while grocery stores and restaurants have little direct dependence on biodiversity, they are part of the agricultural value chain that begins with primary agricultural producers (well established) {2.2.1}. Similarly, waste management can depend on microbial communities for efficient solid waste processing (well established) {2.2.1}. Dependencies on biodiversity may span long distances (e.g., consumption of traded goods far from the place of production) and long periods of time (e.g., timber harvests) (well established) {2.2.1}. Many Indigenous Peoples and local communities and their businesses are especially dependent on biodiversity for their livelihoods and well-being. Upstream smallholder producers, including women and girls, may have limited capacity to absorb or adapt to negative impacts compared to businesses downstream in the value chain (established but incomplete) {1.2.3, 1.2.9, 2.2.4, 2.5.5, 2.7, 3.2.4}." ;
-    dcterms:identifier "A4" ;
-    skos:prefLabel "All businesses across all sectors depend on biodiversity and nature’s contributions to people (well established)." .
+    ipbes:hasDescription """Governments and businesses can play a pivotal role in facilitating capacity-building (i.e., education, training programmes and public awareness campaigns) tailored to specific audiences and geographical contexts. They can also stimulate access to measurement tools and facilitate open-source and location-specific data on biodiversity (well established) {6.3.5.1}.
 
-<http://ontology.ipbes.net/report/bgm/BBA26-A7> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A7-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A7-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A7-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A7-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A7-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A7-SM5> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Business impacts on biodiversity can negatively influence the interrelationships between people and nature, with potentially long-lasting economic, social and cultural implications (well established) {3.2.4}. Women and girls, young people, rural communities and Indigenous Peoples and local communities are especially susceptible to negative impacts from businesses (well established) {3.2.4, 3.4.4, 3.5.4}. There is growing recognition that, when assessing their impacts on nature, businesses should include social and human rights considerations {1.4.2}. Industrial development threatens approximately 60 per cent of Indigenous lands globally, and nearly one quarter of Indigenous territories are under high pressure from resource exploitation (established but incomplete) {2.7}. The same issues affect local communities {3.2.1}. Demand for minerals vital to the energy transition has elevated these risks, with mining projects frequently being developed in Indigenous and local territories (established but incomplete) {2.7}. Some businesses led by Indigenous Peoples and local communities share communal objectives and draw on place-based knowledge, characteristics that make them more likely to have positive impacts (established but incomplete) {1.2.3, 2.7.2}. Indigenous and local knowledge offers valuable lessons for businesses, including different ways of conceptualizing and understanding businesses, traditional practices, business principles and ways of operating. Community-based monitoring approaches that interweave Indigenous and local knowledge with scientific methods exist; however, uptake of these approaches by businesses is low (well established) {4.3.1}." ;
-    dcterms:identifier "A7" ;
-    skos:prefLabel "Business impacts on biodiversity and nature’s contributions to people have profound impacts on human health and well-being, particularly among Indigenous Peoples and local communities (well established)." .
+Civil society and academic institutions can enhance capacity by fostering education and can provide diverse perspectives to bridge the gap between businesses, Governments and various groups, such as young people and Indigenous Peoples and local communities, to ensure mutual understanding and engagement (established but incomplete) {6.3.5.1, 6.3.5.2}. Public awareness campaigns aimed at consumers can provide information to support sustainable patterns of consumption (established but incomplete) {6.3.3}.
 
-<http://ontology.ipbes.net/report/bgm/BBA26-C2> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-FigureSPM.6> ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C2-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C2-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C2-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C2-SM3> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "levels (Figure SPM.6). Location-based observations (including relevant maps and remote sensing) can inform biodiversity assessments at the operations level for all business purposes, often with existing data, but may require significant data gathering to inform decisions requiring greater geographical coverage (e.g., decisions that affect value chains, corporate strategies and portfolios) (well established) {4.4}. As a result, decisions at those levels often rely on aggregate metrics and proxies (well established) {4.4}. Bottom-up methods, such as location-based observations and participatory mapping and monitoring, that make use of primary data collection to populate a wide set of metrics and integrate local specificities can effectively represent the diverse values of nature (well established) {4.4}. Aggregate metrics, which are outputs of top-down model-based methods, are not appropriate for measuring changes in biodiversity outcomes at specific sites, for decisions affecting specific sites or for selecting specific investments (well established) {4.4}." ;
-    dcterms:identifier "C2" ;
-    skos:prefLabel "Methods exist to support all business decisions, and appropriate methods can be selected according to purpose and decision-making level (well established)." .
+Financial actors and financial institutions can complement capacity-building efforts through technical assistance programmes, risk mitigation tools and fiscal instruments (established but incomplete) {6.3.5.1}. In addition, public development banks could lead by example, supporting strategies and planning initiatives that mainstream biodiversity considerations into financial policies and investments, effectively building the capacity of financial institutions and businesses to act sustainably (well established) {6.3.5.1}.
 
-<http://ontology.ipbes.net/report/bgm/BBA26-C5> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C5-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C5-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C5-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C5-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C5-SM4> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "Scenarios offer an opportunity for businesses to plan for possible futures and gain information about potential risks and opportunities arising from changes in biodiversity and nature’s contributions to people (well established) {3.6.2, 4.2.4}. Uptake of scenario planning, however, remains low at all scales (well established) {4.2.4}. Information on likely future biodiversity trends and a variety of scenarios and models exist and could be used by financial institutions to take forward-looking decisions and predict future performance (well established) {2.2, 2.4.2, 2.5.5, 4.2.4}. Efforts to analyse short-term scenarios for extreme events, such as a complete loss of nature’s contributions to people, including ecosystem services, are addressed in stress testing by some central banks (established but incomplete) {2.5.5, 4.2.4}. Scenarios can also be used to analyse long-term systemic risks for the whole economy resulting from biodiversity decline, including tipping points and cascading effects (established but incomplete) {2.4.5}." ;
-    dcterms:identifier "C5" ;
-    skos:prefLabel "Consistent scenario planning with regard to impacts and dependencies on biodiversity and nature’s contributions to people can be used for coherent analysis of risks and opportunities (established but incomplete)." .
+Education and capacity-building programmes for businesses, communities and civil society can be tailored to the needs, realities and knowledge systems of Indigenous Peoples and local communities (well established) {6.3.5.3}. Establishing such programmes can raise awareness of Indigenous and local knowledge and empower individuals and communities to engage in decision-making processes related to business activities (well established) {6.3.5.3}. Indigenous Peoples and local communities are vital actors with regard to intercultural competencies; businesses can therefore benefit from involving these communities in their training programmes (well established) {6.3.5.2}.""" ;
+    dcterms:identifier "B6" ;
+    skos:prefLabel "Enhanced capacity and knowledge across actors can support the measurement of impacts and dependencies by businesses and guide business actions (well established)." .
 
 <http://ontology.ipbes.net/report/ref/5081872/items/3Q6ZYAKY> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1>,
@@ -19652,22 +19618,61 @@ Incoherent governmental actions exist, such as biodiversity-harmful incentives l
     dcterms:identifier "6.4.3" ;
     skos:prefLabel "Siloed or ineffective governance" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-A6> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/BBA26-A4> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A6-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM7>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM8>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM9> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A4-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A4-SM7> ;
+    ipbes:hasCategory "A. Understanding the relationship between business and biodiversity" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "The impacts of business on biodiversity can be negative or positive, direct or indirect (through the value chain), and can operate through a range of drivers that vary by location and sector, as well as within sectors (well established) {1.4.1, 3.2}. Business activities can affect all dimensions of biodiversity (e.g., genes, species and ecosystems) and nature’s contributions to people (i.e., material, non-material and regulating contributions) (well established) {3.2, 3.4}. Impacts from multiple businesses can have cumulative effects that can lead to ecological tipping points being crossed, causing potentially irreversible biodiversity loss with far‑reaching economic, social and ecological consequences (well established) {1.2.9}. The form, magnitude and reversibility of a business’s impacts vary according to the type, scale (spatial and temporal), magnitude, frequency, location and sector of its activities (well established) {3.2}. A business’s size does not always reflect the magnitude of its impacts (well established) {3.2}. To date, business impacts have been predominantly negative, and many positive outcomes claimed would be more accurately described as reductions in negative impacts (well established) {3.2, 3.5}. While existing methods do not yet provide a comprehensive and comparable attribution of impacts across all sectors, available estimates identify agriculture, forestry and fishing; electricity and energy; mining and quarrying; construction; and transportation and storage as sectors with relatively high quantified direct impacts (established but incomplete) {3.4}. Because the activities of primary sectors are driven by demand from other sectors, businesses and consumers further along the value chain also contribute to those impacts (well established) {3.2, 3.4}. Business impacts are frequently assessed using metrics of biodiversity, such as changes in forest cover or mean species abundance. These biodiversity metrics are not necessarily good proxies for the impact on nature’s contributions to people, including ecosystem services (well established) {3.2.1, 3.4}. Fewer studies include the impacts of businesses on nature’s contributions to people; as a result, the consequences of business activities for human well-being, including intergenerational impacts, are often ignored (well established) {3.3, 3.4}." ;
-    dcterms:identifier "A6" ;
-    skos:prefLabel "All businesses across all sectors have impacts on biodiversity and nature’s contributions to people, including through their value chains (well established)." .
+    ipbes:hasDescription "Business dependencies can result from: (a) material inputs to processes and products, such as genetic resources, raw materials and energy; (b) regulation of the environmental conditions in which the businesses operate, such as modulation of water flows and control of erosion; and (c) non-material contributions, such as recreational, educational and spiritual, cultural and aesthetic values (well established) {2.2.1, 2.5.2, 2.5.4, 2.9}. Dependencies on material inputs can result in negative impacts on other actors and on the business itself when extraction exceeds levels of sustainable use (well established) {2.2.1}. In managing their dependencies, businesses have to navigate complex trade-offs and consider broader societal needs (established but incomplete) {2.8}. The magnitude of the dependence and the availability and stability of the supply of nature’s contributions to people determines the associated type and level of risk to the business (established but incomplete) {2.2.4, 2.5.5}. Dependencies are not always obvious; for example, while grocery stores and restaurants have little direct dependence on biodiversity, they are part of the agricultural value chain that begins with primary agricultural producers (well established) {2.2.1}. Similarly, waste management can depend on microbial communities for efficient solid waste processing (well established) {2.2.1}. Dependencies on biodiversity may span long distances (e.g., consumption of traded goods far from the place of production) and long periods of time (e.g., timber harvests) (well established) {2.2.1}. Many Indigenous Peoples and local communities and their businesses are especially dependent on biodiversity for their livelihoods and well-being. Upstream smallholder producers, including women and girls, may have limited capacity to absorb or adapt to negative impacts compared to businesses downstream in the value chain (established but incomplete) {1.2.3, 1.2.9, 2.2.4, 2.5.5, 2.7, 3.2.4}." ;
+    dcterms:identifier "A4" ;
+    skos:prefLabel "All businesses across all sectors depend on biodiversity and nature’s contributions to people (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/BBA26-A7> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A7-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A7-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A7-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A7-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A7-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A7-SM5> ;
+    ipbes:hasCategory "A. Understanding the relationship between business and biodiversity" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Business impacts on biodiversity can negatively influence the interrelationships between people and nature, with potentially long-lasting economic, social and cultural implications (well established) {3.2.4}. Women and girls, young people, rural communities and Indigenous Peoples and local communities are especially susceptible to negative impacts from businesses (well established) {3.2.4, 3.4.4, 3.5.4}. There is growing recognition that, when assessing their impacts on nature, businesses should include social and human rights considerations {1.4.2}. Industrial development threatens approximately 60 per cent of Indigenous lands globally, and nearly one quarter of Indigenous territories are under high pressure from resource exploitation (established but incomplete) {2.7}. The same issues affect local communities {3.2.1}. Demand for minerals vital to the energy transition has elevated these risks, with mining projects frequently being developed in Indigenous and local territories (established but incomplete) {2.7}. Some businesses led by Indigenous Peoples and local communities share communal objectives and draw on place-based knowledge, characteristics that make them more likely to have positive impacts (established but incomplete) {1.2.3, 2.7.2}. Indigenous and local knowledge offers valuable lessons for businesses, including different ways of conceptualizing and understanding businesses, traditional practices, business principles and ways of operating. Community-based monitoring approaches that interweave Indigenous and local knowledge with scientific methods exist; however, uptake of these approaches by businesses is low (well established) {4.3.1}." ;
+    dcterms:identifier "A7" ;
+    skos:prefLabel "Business impacts on biodiversity and nature’s contributions to people have profound impacts on human health and well-being, particularly among Indigenous Peoples and local communities (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/BBA26-C2> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-FigureSPM.6> ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C2-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C2-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C2-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C2-SM3> ;
+    ipbes:hasCategory "C. Measuring businesses’ impacts and dependencies on biodiversity and nature’s contributions to people" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "levels (Figure SPM.6). Location-based observations (including relevant maps and remote sensing) can inform biodiversity assessments at the operations level for all business purposes, often with existing data, but may require significant data gathering to inform decisions requiring greater geographical coverage (e.g., decisions that affect value chains, corporate strategies and portfolios) (well established) {4.4}. As a result, decisions at those levels often rely on aggregate metrics and proxies (well established) {4.4}. Bottom-up methods, such as location-based observations and participatory mapping and monitoring, that make use of primary data collection to populate a wide set of metrics and integrate local specificities can effectively represent the diverse values of nature (well established) {4.4}. Aggregate metrics, which are outputs of top-down model-based methods, are not appropriate for measuring changes in biodiversity outcomes at specific sites, for decisions affecting specific sites or for selecting specific investments (well established) {4.4}." ;
+    dcterms:identifier "C2" ;
+    skos:prefLabel "Methods exist to support all business decisions, and appropriate methods can be selected according to purpose and decision-making level (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/BBA26-C5> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C5-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C5-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C5-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C5-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C5-SM4> ;
+    ipbes:hasCategory "C. Measuring businesses’ impacts and dependencies on biodiversity and nature’s contributions to people" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "Scenarios offer an opportunity for businesses to plan for possible futures and gain information about potential risks and opportunities arising from changes in biodiversity and nature’s contributions to people (well established) {3.6.2, 4.2.4}. Uptake of scenario planning, however, remains low at all scales (well established) {4.2.4}. Information on likely future biodiversity trends and a variety of scenarios and models exist and could be used by financial institutions to take forward-looking decisions and predict future performance (well established) {2.2, 2.4.2, 2.5.5, 4.2.4}. Efforts to analyse short-term scenarios for extreme events, such as a complete loss of nature’s contributions to people, including ecosystem services, are addressed in stress testing by some central banks (established but incomplete) {2.5.5, 4.2.4}. Scenarios can also be used to analyse long-term systemic risks for the whole economy resulting from biodiversity decline, including tipping points and cascading effects (established but incomplete) {2.4.5}." ;
+    dcterms:identifier "C5" ;
+    skos:prefLabel "Consistent scenario planning with regard to impacts and dependencies on biodiversity and nature’s contributions to people can be used for coherent analysis of risks and opportunities (established but incomplete)." .
 
 <http://ontology.ipbes.net/report/ref/5081872/items/SAQPUN96> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1>,
@@ -19911,6 +19916,24 @@ For example, Tony’s Chocolonely, a chocolate manufacturer, has awarded a ‘go
 While coordinating with governments could make it easier for businesses to shape corporate and financial behaviours toward greener outcomes, this could also lead to trade-offs between the primary mandates of price and financial stability and the goal of enabling an ecological transition over the medium term (Dafermos, 2021; Maurin et al., 2022; Oman et al., 2024). Moreover, actions may be more difficult to implement in developing countries, given the hierarchical nature of the international monetary and financial system. Indeed, the latter is characterized by a hierarchy of currencies, dominated by currencies from high-income countries, which makes it difficult for developing economies to attract the long-term funding they need to finance their ecological transition (Svartzman et al., 2023; Svartzman & Althouse, 2022), while often forcing them to resort to short-term, export-led strategies based on agricultural commodities and natural resources (Vernengo, 2016).""" ;
     dcterms:identifier "6.4.4" ;
     skos:prefLabel "Lack of political priority for biodiversity" .
+
+<http://ontology.ipbes.net/report/bgm/BBA26-A6> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A6-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM7>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM8>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A6-SM9> ;
+    ipbes:hasCategory "A. Understanding the relationship between business and biodiversity" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "The impacts of business on biodiversity can be negative or positive, direct or indirect (through the value chain), and can operate through a range of drivers that vary by location and sector, as well as within sectors (well established) {1.4.1, 3.2}. Business activities can affect all dimensions of biodiversity (e.g., genes, species and ecosystems) and nature’s contributions to people (i.e., material, non-material and regulating contributions) (well established) {3.2, 3.4}. Impacts from multiple businesses can have cumulative effects that can lead to ecological tipping points being crossed, causing potentially irreversible biodiversity loss with far‑reaching economic, social and ecological consequences (well established) {1.2.9}. The form, magnitude and reversibility of a business’s impacts vary according to the type, scale (spatial and temporal), magnitude, frequency, location and sector of its activities (well established) {3.2}. A business’s size does not always reflect the magnitude of its impacts (well established) {3.2}. To date, business impacts have been predominantly negative, and many positive outcomes claimed would be more accurately described as reductions in negative impacts (well established) {3.2, 3.5}. While existing methods do not yet provide a comprehensive and comparable attribution of impacts across all sectors, available estimates identify agriculture, forestry and fishing; electricity and energy; mining and quarrying; construction; and transportation and storage as sectors with relatively high quantified direct impacts (established but incomplete) {3.4}. Because the activities of primary sectors are driven by demand from other sectors, businesses and consumers further along the value chain also contribute to those impacts (well established) {3.2, 3.4}. Business impacts are frequently assessed using metrics of biodiversity, such as changes in forest cover or mean species abundance. These biodiversity metrics are not necessarily good proxies for the impact on nature’s contributions to people, including ecosystem services (well established) {3.2.1, 3.4}. Fewer studies include the impacts of businesses on nature’s contributions to people; as a result, the consequences of business activities for human well-being, including intergenerational impacts, are often ignored (well established) {3.3, 3.4}." ;
+    dcterms:identifier "A6" ;
+    skos:prefLabel "All businesses across all sectors have impacts on biodiversity and nature’s contributions to people, including through their value chains (well established)." .
 
 <http://ontology.ipbes.net/report/ref/5081872/items/98EFG7WU> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch3>,
@@ -20275,26 +20298,6 @@ The extent to which the impacts of the informal economy or illegal activities ar
     dcterms:identifier "6.2" ;
     skos:prefLabel "Actors" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-B11> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B11-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM7>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM8> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Businesses can use robust environmental and social impact assessments and management plans at ecologically meaningful scales to inform decisions on where to locate and how to manage operations. Those assessments can be supported by credible monitoring of both business actions and biodiversity outcomes within an adaptive management cycle (well established) {4.4, 5.6.2}. To deliver lasting outcomes on the ground, businesses can apply the mitigation hierarchy: first avoiding harm to biodiversity, then minimizing harm, restoring biodiversity, and offsetting residual impacts to achieve “no net loss” – and preferably a net gain – in biodiversity and nature’s contributions to people. Later-stage measures such as restoration and offsetting are typically more costly and uncertain, and less effective at returning biodiversity to baseline conditions, reinforcing the need to prioritize early-stage avoidance and minimization (well established) {5.6.2}. Although the mitigation hierarchy is recognized as leading practice, adoption remains incomplete, in part because many business activities and impacts fall outside regulatory requirements (well established) {5.6.2}. Very few operations have achieved “no net loss” or shown that they have the capacity to do so (well established) {5.6.2}. Monitoring requires sector-specific metrics linked to targets; yet reporting often lacks data for independent verification (well established) {5.6.2}. Analyses should also consider displacement (or “leakage”) of impacts, where actions at one operation shift pressures on biodiversity elsewhere (well established) {5.6.2}. In addition, opportunities at the operations level exist for businesses to go beyond impact mitigation to engage in landscape conservation, restoration and sustainable management (established but incomplete) {5.5, 5.7.1, 5.7.2}.
-
-Meaningful engagement of stakeholders and Indigenous Peoples and local communities before, throughout and after the closure of business activities is essential to building trust, aligning actions with local and national priorities and recognizing applicable rights (well established) {5.6.2.4}. For example, when establishing or significantly changing their activities, businesses should recognize and respect the free, prior and informed consent of Indigenous Peoples and local communities, along with their respective rights in accordance with national legislation.
-
-Indigenous and local knowledge can inform baselines and monitoring, recognize the multiple values of nature and improve the design of mitigation measures and business practices, with long-term socioeconomic and environmental benefits. However, such integration remains rare in practice (established but incomplete) {2.7.2, 3.3.1, 4.6.2, 5.6.2}.""" ;
-    dcterms:identifier "B11" ;
-    skos:prefLabel "Businesses can act at the operations level to address impacts and dependencies of their activities (well established)." .
-
 <http://ontology.ipbes.net/report/ref/5081872/items/Q5WZ9N8W> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1>,
         <http://ontology.ipbes.net/report/ch/BBA26ch5>,
@@ -20428,23 +20431,26 @@ Lack of common performance metrics: businesses often measure success through fin
     dcterms:identifier "6.4.1" ;
     skos:prefLabel "Misalignment of objectives between actors" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-B9> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/BBA26-B11> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B9-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM7>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM8> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B11-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM7>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B11-SM8> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Businesses can establish ambitious, outcome-oriented biodiversity commitments and targets and integrate them into corporate strategy (well established) {5.6.1}. Biodiversity targets are more effective when their development and implementation take into consideration a business’s impacts and dependencies on biodiversity and nature’s contributions to people, and when they are aligned with national and global biodiversity objectives (including the three objectives of the Convention on Biological Diversity, as well as the 2050 Vision for Biodiversity) (established but incomplete) {2.8, 5.6.1}. Businesses can also create and revise internal policies and standards, including on procurement, incentives, investment, access and benefit-sharing, product and service design and use, marketing, stakeholder engagement and grievance mechanisms, and management systems for biodiversity measurement, monitoring, reporting and disclosure. Policies can support corporate accountability more effectively when they are paired with accounting frameworks that integrate biodiversity, alongside standardized disclosure mechanisms for businesses to report their impacts, dependencies, risks and opportunities (established but incomplete) {4.6.1, 5.6.1, 5.7}. Effective delivery requires shifts in corporate governance and resourcing – which have typically prioritized financial returns and profit maximization for shareholders – towards purpose-oriented models that broaden accountability to other stakeholders. Those shifts depend on aligning shareholder and societal interests, providing appropriate incentives for directors and managers, and adequate resource allocation (established but incomplete) {5.6.1}. The adoption of innovations and new technologies that address business impacts and dependencies – in products, processes and services – can improve outcomes for biodiversity across operations and value chains. Examples include circular economy approaches focused on product durability and extension of product lifespans (well established) {5.6.1}. In addition, businesses can adopt policies to facilitate investment in biodiversity beyond their operations and value chains, including through high-integrity biodiversity credits. Finally, businesses can explore alternative business models that align with global biodiversity goals and targets and contribute towards a just and sustainable future. This can be done, for example, by shifting ownership to non-investor stakeholders, changing governance rights and decision-making power, or adopting legal forms that establish accountability for stakeholders (established but incomplete) {5.6.1}.
+    ipbes:hasDescription """Businesses can use robust environmental and social impact assessments and management plans at ecologically meaningful scales to inform decisions on where to locate and how to manage operations. Those assessments can be supported by credible monitoring of both business actions and biodiversity outcomes within an adaptive management cycle (well established) {4.4, 5.6.2}. To deliver lasting outcomes on the ground, businesses can apply the mitigation hierarchy: first avoiding harm to biodiversity, then minimizing harm, restoring biodiversity, and offsetting residual impacts to achieve “no net loss” – and preferably a net gain – in biodiversity and nature’s contributions to people. Later-stage measures such as restoration and offsetting are typically more costly and uncertain, and less effective at returning biodiversity to baseline conditions, reinforcing the need to prioritize early-stage avoidance and minimization (well established) {5.6.2}. Although the mitigation hierarchy is recognized as leading practice, adoption remains incomplete, in part because many business activities and impacts fall outside regulatory requirements (well established) {5.6.2}. Very few operations have achieved “no net loss” or shown that they have the capacity to do so (well established) {5.6.2}. Monitoring requires sector-specific metrics linked to targets; yet reporting often lacks data for independent verification (well established) {5.6.2}. Analyses should also consider displacement (or “leakage”) of impacts, where actions at one operation shift pressures on biodiversity elsewhere (well established) {5.6.2}. In addition, opportunities at the operations level exist for businesses to go beyond impact mitigation to engage in landscape conservation, restoration and sustainable management (established but incomplete) {5.5, 5.7.1, 5.7.2}.
 
-Corporate-level actions can benefit from being informed by data generated through the measurement of biodiversity and nature’s contributions to people (established but incomplete) {4.6.1, 5.6.1}. While such information can guide and improve outcomes, many corporate-level actions can also be implemented immediately, despite incomplete data, especially when designed and implemented through meaningful engagement with internal and external stakeholders (established but incomplete) {5.5, 5.6.1}. Such engagement supports knowledge acquisition, democratic environmental governance and improved corporate legitimacy. Engagement can build staff capacity and board-level environmental leadership, gather diverse perspectives on biodiversity values and actions, and provide input on strategy, target-setting and the assessment of impacts and dependencies. It can also establish requirements and commitments with regard to auditing, monitoring and performance assessment (established but incomplete) {2.8, 4.6.1, 5.5, 5.6.1}.""" ;
-    dcterms:identifier "B9" ;
-    skos:prefLabel "Corporate-level action sets directions, aligns governance and resources with ambitions and enables implementation and outcomes across operations and value chains (well established)." .
+Meaningful engagement of stakeholders and Indigenous Peoples and local communities before, throughout and after the closure of business activities is essential to building trust, aligning actions with local and national priorities and recognizing applicable rights (well established) {5.6.2.4}. For example, when establishing or significantly changing their activities, businesses should recognize and respect the free, prior and informed consent of Indigenous Peoples and local communities, along with their respective rights in accordance with national legislation.
+
+Indigenous and local knowledge can inform baselines and monitoring, recognize the multiple values of nature and improve the design of mitigation measures and business practices, with long-term socioeconomic and environmental benefits. However, such integration remains rare in practice (established but incomplete) {2.7.2, 3.3.1, 4.6.2, 5.6.2}.""" ;
+    dcterms:identifier "B11" ;
+    skos:prefLabel "Businesses can act at the operations level to address impacts and dependencies of their activities (well established)." .
 
 <http://ontology.ipbes.net/report/ref/5081872/items/DCHUX532> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1>,
@@ -20794,36 +20800,24 @@ While the differing objectives and power asymmetry among businesses and civil so
     dcterms:identifier "6.4.5" ;
     skos:prefLabel "Power asymmetry between actors" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-B10> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/BBA26-B9> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B10-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM7> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B9-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM7>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B9-SM8> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """For many businesses, especially those that rely on raw materials, significant impacts and dependencies on biodiversity and nature’s contributions to people accrue across value chains (well established) {2.2.3, 3.2.2}. Businesses can adopt approaches that emphasize integration across value chains and can collaborate with suppliers and customers (established but incomplete) {5.6.3}. Businesses can start by mapping value chains (considering actors and inputs) and improving traceability by linking products and materials to specific suppliers, locations and impacts. Doing so can help them to identify risks and prioritize actions, although mapping beyond direct suppliers often remains challenging (established but incomplete) {5.6.3}. Examples at the corporate and value chain levels exist, such as companies in the chocolate industry that have made advances in recording biodiversity dependencies to improve business decisions through full traceability of materials and improved supplier control mechanisms (established but incomplete) {5.6.3}.
+    ipbes:hasDescription """Businesses can establish ambitious, outcome-oriented biodiversity commitments and targets and integrate them into corporate strategy (well established) {5.6.1}. Biodiversity targets are more effective when their development and implementation take into consideration a business’s impacts and dependencies on biodiversity and nature’s contributions to people, and when they are aligned with national and global biodiversity objectives (including the three objectives of the Convention on Biological Diversity, as well as the 2050 Vision for Biodiversity) (established but incomplete) {2.8, 5.6.1}. Businesses can also create and revise internal policies and standards, including on procurement, incentives, investment, access and benefit-sharing, product and service design and use, marketing, stakeholder engagement and grievance mechanisms, and management systems for biodiversity measurement, monitoring, reporting and disclosure. Policies can support corporate accountability more effectively when they are paired with accounting frameworks that integrate biodiversity, alongside standardized disclosure mechanisms for businesses to report their impacts, dependencies, risks and opportunities (established but incomplete) {4.6.1, 5.6.1, 5.7}. Effective delivery requires shifts in corporate governance and resourcing – which have typically prioritized financial returns and profit maximization for shareholders – towards purpose-oriented models that broaden accountability to other stakeholders. Those shifts depend on aligning shareholder and societal interests, providing appropriate incentives for directors and managers, and adequate resource allocation (established but incomplete) {5.6.1}. The adoption of innovations and new technologies that address business impacts and dependencies – in products, processes and services – can improve outcomes for biodiversity across operations and value chains. Examples include circular economy approaches focused on product durability and extension of product lifespans (well established) {5.6.1}. In addition, businesses can adopt policies to facilitate investment in biodiversity beyond their operations and value chains, including through high-integrity biodiversity credits. Finally, businesses can explore alternative business models that align with global biodiversity goals and targets and contribute towards a just and sustainable future. This can be done, for example, by shifting ownership to non-investor stakeholders, changing governance rights and decision-making power, or adopting legal forms that establish accountability for stakeholders (established but incomplete) {5.6.1}.
 
-Once value chains are mapped, businesses can communicate expectations to suppliers, monitor performance and exercise due diligence, including addressing non-compliance (established but incomplete) {5.6.3}. Approaches that incentivize environmental performance and build long-term relationships and supplier capacity through training, knowledge exchange and innovation are often effective at improving outcomes and can be particularly critical for small businesses with limited resources (established but incomplete) {5.6.3, 5.7.3}. Effective value chain management requires businesses to go beyond procurement requirements, data collection and due diligence and engage in close, sustained collaboration and capacity-building with suppliers. This may include Indigenous Peoples and local communities, smallholder producers, and small and medium-sized enterprises, which often face limited institutional capacity and resources. Integrating communities into value-creation activities such as sourcing, production and distribution has been identified as a success factor in sustainable value chain management (established but incomplete) {5.6.3}. Consumer-facing strategies such as product labelling, education, incentives and post-purchase engagement can shape behaviour and improve transparency, but their effectiveness is constrained by consumer scepticism, certification costs and business models that rely on unsustainable consumption (established but incomplete) {5.6.3, 5.7).""" ;
-    dcterms:identifier "B10" ;
-    skos:prefLabel "Improving transparency, traceability and collaborative action in the value chain can help businesses to address impacts and dependencies (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/BBA26-C7> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C7-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM6> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "Indigenous Peoples and local communities hold extensive knowledge on biodiversity and its values, conservation, restoration and sustainable use (well established) {2.3.3, 2.3.7.1, 4.3.1}. There are examples of partnerships between businesses and Indigenous Peoples and local communities to develop new products and services that document and preserve Indigenous and local knowledge, share benefits fairly and equitably, and respect the rights of Indigenous Peoples and local communities, in accordance with national legislation (well established) {2.7.2}. However, those products and services have often not been recognized by profit-driven businesses (established but incomplete) {2.3.3, 2.7.1, 3.3.3, 4.3.1}. Approaches for measuring the impacts of business on biodiversity and nature’s contributions to people generally do not adequately measure impacts on Indigenous Peoples and local communities or interweave business knowledge with Indigenous and local knowledge (established but incomplete) {3.3.3, 4.3.1}. The fact that most approaches are based on anthropocentric world views and instrumental values, rather than biocentric or pluricentric world views, influences the interpretation of business impacts and dependencies (well established) {4.3.2}. To improve engagement with Indigenous Peoples and local communities, businesses should recognize and respect the free, prior and informed consent of Indigenous Peoples and local communities, along with their respective rights, in accordance with national legislation (established but incomplete) {2.3.3, 2.7.1, 4.3.1, 5.2.2}. Businesses can improve their approaches by learning from businesses of Indigenous Peoples and local communities that have business models with clear social and ecological benefits, and ways of working that respect reciprocal people-nature relationships {2.7.2, 4.3.1, 5.7.3}. Collaboration between academia and Indigenous Peoples and local communities can help to interweave Indigenous and local knowledge, where appropriate. While this is occurring in some places, it rarely informs business assessments (established but incomplete) {4.3.1, 5.7.3}." ;
-    dcterms:identifier "C7" ;
-    skos:prefLabel "Businesses can learn from Indigenous and local knowledge and fairly and equitably share benefits with Indigenous Peoples and local communities (established but incomplete)." .
+Corporate-level actions can benefit from being informed by data generated through the measurement of biodiversity and nature’s contributions to people (established but incomplete) {4.6.1, 5.6.1}. While such information can guide and improve outcomes, many corporate-level actions can also be implemented immediately, despite incomplete data, especially when designed and implemented through meaningful engagement with internal and external stakeholders (established but incomplete) {5.5, 5.6.1}. Such engagement supports knowledge acquisition, democratic environmental governance and improved corporate legitimacy. Engagement can build staff capacity and board-level environmental leadership, gather diverse perspectives on biodiversity values and actions, and provide input on strategy, target-setting and the assessment of impacts and dependencies. It can also establish requirements and commitments with regard to auditing, monitoring and performance assessment (established but incomplete) {2.8, 4.6.1, 5.5, 5.6.1}.""" ;
+    dcterms:identifier "B9" ;
+    skos:prefLabel "Corporate-level action sets directions, aligns governance and resources with ambitions and enables implementation and outcomes across operations and value chains (well established)." .
 
 <http://ontology.ipbes.net/report/sch/BBA26-2.7> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch2> ;
@@ -20904,28 +20898,38 @@ While businesses can control their own operations and influence the actions of t
     dcterms:identifier "6.3.3" ;
     skos:prefLabel "Norms and values" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-A3> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/BBA26-B10> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A3-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM10>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM11>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM7>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM8>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM9> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B10-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B10-SM7> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Business governance, strategies and structures have evolved in response to economic, financial, political and social systems that have commonly ignored or undervalued biodiversity, creating tension between business actions and the conservation and sustainable use of biodiversity (well established) {1.1.2, 1.1.4}. For example, time pressures on decision-making and timescales for investment returns and reporting by businesses – with emphasis on quarterly earnings and annual reporting – are shorter than many ecological processes, such as ecosystem regeneration (established but incomplete) {5.3.2}. As a result, the loss of biodiversity is not adequately internalized in business decision-making, making it difficult for businesses to justify action under traditional interpretations of fiduciary duty, which typically prioritize short-term shareholder returns (established but incomplete) {5.1}.
+    ipbes:hasDescription """For many businesses, especially those that rely on raw materials, significant impacts and dependencies on biodiversity and nature’s contributions to people accrue across value chains (well established) {2.2.3, 3.2.2}. Businesses can adopt approaches that emphasize integration across value chains and can collaborate with suppliers and customers (established but incomplete) {5.6.3}. Businesses can start by mapping value chains (considering actors and inputs) and improving traceability by linking products and materials to specific suppliers, locations and impacts. Doing so can help them to identify risks and prioritize actions, although mapping beyond direct suppliers often remains challenging (established but incomplete) {5.6.3}. Examples at the corporate and value chain levels exist, such as companies in the chocolate industry that have made advances in recording biodiversity dependencies to improve business decisions through full traceability of materials and improved supplier control mechanisms (established but incomplete) {5.6.3}.
 
-Markets fail to adequately price or value biodiversity and many of nature’s contributions to people, such as the filtration of pollutants, climate regulation and pollination (well established) {1.1.2}. Therefore, businesses bear little or no financial cost for negative impacts and may not generate revenue from positive impacts on biodiversity (well established) {1.1.2}. As a result, there are insufficient incentives for businesses to take action in order to conserve, restore or sustainably use biodiversity (well established) {1.1.2, 5.1, 5.3.2}.
+Once value chains are mapped, businesses can communicate expectations to suppliers, monitor performance and exercise due diligence, including addressing non-compliance (established but incomplete) {5.6.3}. Approaches that incentivize environmental performance and build long-term relationships and supplier capacity through training, knowledge exchange and innovation are often effective at improving outcomes and can be particularly critical for small businesses with limited resources (established but incomplete) {5.6.3, 5.7.3}. Effective value chain management requires businesses to go beyond procurement requirements, data collection and due diligence and engage in close, sustained collaboration and capacity-building with suppliers. This may include Indigenous Peoples and local communities, smallholder producers, and small and medium-sized enterprises, which often face limited institutional capacity and resources. Integrating communities into value-creation activities such as sourcing, production and distribution has been identified as a success factor in sustainable value chain management (established but incomplete) {5.6.3}. Consumer-facing strategies such as product labelling, education, incentives and post-purchase engagement can shape behaviour and improve transparency, but their effectiveness is constrained by consumer scepticism, certification costs and business models that rely on unsustainable consumption (established but incomplete) {5.6.3, 5.7).""" ;
+    dcterms:identifier "B10" ;
+    skos:prefLabel "Improving transparency, traceability and collaborative action in the value chain can help businesses to address impacts and dependencies (well established)." .
 
-Public policy can further accelerate biodiversity decline (well established) {5.3.2}. In 2023, global public and private financial flows with direct negative impacts on nature, including environmentally harmful public subsidies and private investment in high-impact sectors, were estimated at $7.3 trillion. Of that total, private finance accounted for around two thirds ($4.9 trillion), while public spending on environmentally harmful subsidies to economic sectors responsible for biodiversity loss and nature’s decline totalled approximately $2.4 trillion. There are considerable differences between business sectors. By contrast, only around $220 billion in public and private financial flows in 2023 were directed towards activities that contribute to the conservation and sustainable use of biodiversity (well established) {5.3.2}. Some subsidies are positive for biodiversity outcomes (well established) {1.1.2}. Far lower and fewer subsidies are provided to businesses for the conservation, restoration or sustainable use of biodiversity (well established) {5.3.2}. Public subsidies that support harmful activities and distort trade can have significant economic repercussions for all countries, especially for developing countries, and in some cases may have implications for the capacity of businesses to invest in sustainable activities and practices. Incorporating biodiversity considerations into trade policies is an important lever to create an enabling environment (established but incomplete) {1.1.2, 6.1.4}. Some business actions intended to conserve and sustainably use biodiversity and nature’s contributions to people, such as modes of sustainable production and consumption (e.g., waste reduction or circular economy approaches), can be profitable under the current conditions. This explains why some businesses already take some actions that have a positive impact on biodiversity (established but incomplete) {5.3.1}; however, those actions alone are not enough to halt and reverse the loss of biodiversity at a global scale (well established) {5.1, 5.2.2}.""" ;
-    dcterms:identifier "A3" ;
-    skos:prefLabel "Current conditions perpetuate business as usual and do not support the transformative change required to halt and reverse biodiversity loss (well established)." .
+<http://ontology.ipbes.net/report/bgm/BBA26-C7> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C7-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C7-SM6> ;
+    ipbes:hasCategory "C. Measuring businesses’ impacts and dependencies on biodiversity and nature’s contributions to people" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "Indigenous Peoples and local communities hold extensive knowledge on biodiversity and its values, conservation, restoration and sustainable use (well established) {2.3.3, 2.3.7.1, 4.3.1}. There are examples of partnerships between businesses and Indigenous Peoples and local communities to develop new products and services that document and preserve Indigenous and local knowledge, share benefits fairly and equitably, and respect the rights of Indigenous Peoples and local communities, in accordance with national legislation (well established) {2.7.2}. However, those products and services have often not been recognized by profit-driven businesses (established but incomplete) {2.3.3, 2.7.1, 3.3.3, 4.3.1}. Approaches for measuring the impacts of business on biodiversity and nature’s contributions to people generally do not adequately measure impacts on Indigenous Peoples and local communities or interweave business knowledge with Indigenous and local knowledge (established but incomplete) {3.3.3, 4.3.1}. The fact that most approaches are based on anthropocentric world views and instrumental values, rather than biocentric or pluricentric world views, influences the interpretation of business impacts and dependencies (well established) {4.3.2}. To improve engagement with Indigenous Peoples and local communities, businesses should recognize and respect the free, prior and informed consent of Indigenous Peoples and local communities, along with their respective rights, in accordance with national legislation (established but incomplete) {2.3.3, 2.7.1, 4.3.1, 5.2.2}. Businesses can improve their approaches by learning from businesses of Indigenous Peoples and local communities that have business models with clear social and ecological benefits, and ways of working that respect reciprocal people-nature relationships {2.7.2, 4.3.1, 5.7.3}. Collaboration between academia and Indigenous Peoples and local communities can help to interweave Indigenous and local knowledge, where appropriate. While this is occurring in some places, it rarely informs business assessments (established but incomplete) {4.3.1, 5.7.3}." ;
+    dcterms:identifier "C7" ;
+    skos:prefLabel "Businesses can learn from Indigenous and local knowledge and fairly and equitably share benefits with Indigenous Peoples and local communities (established but incomplete)." .
 
 <http://ontology.ipbes.net/report/ref/5081872/items/SWWEQNUI> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1>,
@@ -21252,20 +21256,29 @@ It is important to note that, although this chapter discusses the role of govern
     dcterms:identifier "6.2.1.2" ;
     skos:prefLabel "Financial system" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-B8> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-FigureSPM.5> ;
+<http://ontology.ipbes.net/report/bgm/BBA26-A3> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B8-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B8-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B8-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B8-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B8-SM4> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A3-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM10>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM11>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM7>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM8>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A3-SM9> ;
+    ipbes:hasCategory "A. Understanding the relationship between business and biodiversity" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Actions are needed by all businesses, including private financial institutions. Priorities differ according to a business’s size, sector, structure, relationship with biodiversity, location where outcomes can be achieved most effectively, and degree of control and influence over stakeholders (established but incomplete) {5.2, 5.6, 5.7}. Signalling to inspire others requires businesses to provide robust, transparent and credible reporting of actions and outcomes (well established) {5.7.4}.
+    ipbes:hasDescription """Business governance, strategies and structures have evolved in response to economic, financial, political and social systems that have commonly ignored or undervalued biodiversity, creating tension between business actions and the conservation and sustainable use of biodiversity (well established) {1.1.2, 1.1.4}. For example, time pressures on decision-making and timescales for investment returns and reporting by businesses – with emphasis on quarterly earnings and annual reporting – are shorter than many ecological processes, such as ecosystem regeneration (established but incomplete) {5.3.2}. As a result, the loss of biodiversity is not adequately internalized in business decision-making, making it difficult for businesses to justify action under traditional interpretations of fiduciary duty, which typically prioritize short-term shareholder returns (established but incomplete) {5.1}.
 
-Actions can be pursued across the four decision-making levels at which biodiversity impacts and dependencies are measured: corporate, operations, value chain and portfolio (well established) {5.5, 5.6, 5.7}. Close links exist between actions implemented across decision‑making levels; for example, targets set at the corporate level drive actions and outcomes at the operations and value chain levels (well established) {5.6, 5.7}. Across all decision-making levels, actions can be taken individually or collectively, including through partnerships (e.g., public-private partnerships) (established but incomplete) {5.7.2, 5.7.3} (Figure SPM.5).""" ;
-    dcterms:identifier "B8" ;
-    skos:prefLabel "Businesses can take actions to address their impacts and dependencies, contribute to an enabling environment and influence others (well established)." .
+Markets fail to adequately price or value biodiversity and many of nature’s contributions to people, such as the filtration of pollutants, climate regulation and pollination (well established) {1.1.2}. Therefore, businesses bear little or no financial cost for negative impacts and may not generate revenue from positive impacts on biodiversity (well established) {1.1.2}. As a result, there are insufficient incentives for businesses to take action in order to conserve, restore or sustainably use biodiversity (well established) {1.1.2, 5.1, 5.3.2}.
+
+Public policy can further accelerate biodiversity decline (well established) {5.3.2}. In 2023, global public and private financial flows with direct negative impacts on nature, including environmentally harmful public subsidies and private investment in high-impact sectors, were estimated at $7.3 trillion. Of that total, private finance accounted for around two thirds ($4.9 trillion), while public spending on environmentally harmful subsidies to economic sectors responsible for biodiversity loss and nature’s decline totalled approximately $2.4 trillion. There are considerable differences between business sectors. By contrast, only around $220 billion in public and private financial flows in 2023 were directed towards activities that contribute to the conservation and sustainable use of biodiversity (well established) {5.3.2}. Some subsidies are positive for biodiversity outcomes (well established) {1.1.2}. Far lower and fewer subsidies are provided to businesses for the conservation, restoration or sustainable use of biodiversity (well established) {5.3.2}. Public subsidies that support harmful activities and distort trade can have significant economic repercussions for all countries, especially for developing countries, and in some cases may have implications for the capacity of businesses to invest in sustainable activities and practices. Incorporating biodiversity considerations into trade policies is an important lever to create an enabling environment (established but incomplete) {1.1.2, 6.1.4}. Some business actions intended to conserve and sustainably use biodiversity and nature’s contributions to people, such as modes of sustainable production and consumption (e.g., waste reduction or circular economy approaches), can be profitable under the current conditions. This explains why some businesses already take some actions that have a positive impact on biodiversity (established but incomplete) {5.3.1}; however, those actions alone are not enough to halt and reverse the loss of biodiversity at a global scale (well established) {5.1, 5.2.2}.""" ;
+    dcterms:identifier "A3" ;
+    skos:prefLabel "Current conditions perpetuate business as usual and do not support the transformative change required to halt and reverse biodiversity loss (well established)." .
 
 <http://ontology.ipbes.net/report/sch/BBA26-2.5.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch2> ;
@@ -21397,61 +21410,21 @@ Moreover, the recognition of equal rights in relationships and the simultaneous 
     dcterms:identifier "6.3.3.1" ;
     skos:prefLabel "Inclusive decision-making and partnerships" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-B3> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/BBA26-B8> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-FigureSPM.5> ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B3-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM10>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM11>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM12>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM7>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM8>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM9> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B8-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B8-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B8-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B8-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B8-SM4> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Financial and economic instruments can help to align returns for businesses with positive outcomes for biodiversity and society (established but incomplete) {5.3.1, 6.1, 6.2, 6.3.2}. Alignment requires eliminating, phasing out or reforming the financial incentives underlying biodiversity loss and scaling up positive incentives for the conservation, restoration and sustainable use of biodiversity (well established) {5.3.2, 6.3.2}. Governments, central banks, financial regulators and supervisors, public development banks and international financial institutions can encourage financial institutions to allocate financial services (i.e., loans, investments, insurance policies) in ways that incentivize conservation and sustainable practices while discouraging harmful activities (well established) {5.6.4, 6.3.2}.
+    ipbes:hasDescription """Actions are needed by all businesses, including private financial institutions. Priorities differ according to a business’s size, sector, structure, relationship with biodiversity, location where outcomes can be achieved most effectively, and degree of control and influence over stakeholders (established but incomplete) {5.2, 5.6, 5.7}. Signalling to inspire others requires businesses to provide robust, transparent and credible reporting of actions and outcomes (well established) {5.7.4}.
 
-Governments can promote action through economic instruments such as taxes, subsidies, payments for ecosystem services, environmental markets, and multilateral benefit-sharing mechanisms such as the Cali Fund for the Fair and Equitable Sharing of Benefits from the Use of Digital Sequence Information on Genetic Resources (well established) {6.3.1, 6.3.2}. Governments can reform fiscal policies by eliminating, phasing out or reforming harmful subsidies and fostering positive incentives (well established) {6.3.2}. Public funding can be allocated to research on and monitoring of biodiversity and nature’s contributions to people, education and capacity-building, targeted actions for nature‑based solutions and/or ecosystem-based approaches, and the conservation, restoration and sustainable use of biodiversity (well established) {6.3.2}.
-
-Governments can promote, and financial institutions can implement, innovative instruments to finance biodiversity projects, such as green bonds, payments for ecosystem services, high-integrity biodiversity credit systems, conservation funds, and sustainability-linked loans, where appropriate (well established) {5.6.4, 6.3.2}. Central banks and supervisors can help to drive transparency with biodiversity-inclusive financial regulations and risk management (established but incomplete) {6.3.2}. Public development banks can promote investments in restoration projects through blended finance, while international financial institutions can provide technical assistance and conditional funding (established but incomplete) {6.3.2}. Individually and collaboratively, financial institutions have a pivotal role in mobilizing finance and reforming global and national financial systems to enable businesses to take transformative actions (established but incomplete) {5.6.4, 6.3.2}.
-
-Existing financial structures often disadvantage Indigenous Peoples and local communities, creating economic and social disparities (established but incomplete) {6.3.2.3}. Businesses can advocate for inclusive policies and the dismantling of financial barriers, which is essential for promoting economic equity (established but incomplete) {6.3.2.3}. Furthermore, businesses can embrace new economic models that align with the values of Indigenous Peoples and local communities (established but incomplete) {6.3.2.3}.""" ;
-    dcterms:identifier "B3" ;
-    skos:prefLabel "Effective economic and financial instruments can create incentives for businesses to consider the risks, opportunities, costs and benefits of their impacts and dependencies on biodiversity (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/BBA26-B4> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B4-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM10>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM11>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM12>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM13>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM14>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM15>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM16>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM7>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM8>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM9> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Social values, norms and culture help to determine acceptable business behaviours and play an important role in fostering transformative change (established but incomplete) {5.3, 6.1}. All actors play a vital role by fostering inclusivity and equity, thereby ensuring that Indigenous Peoples and local communities are involved in decision-making processes that respect free, prior and informed consent (established but incomplete) {5.2.2, 6.1, 6.2, 6.3.3}. Governments can promote ethical practices by regulating sustainability reporting, establishing standards, supporting compliance with access and benefit-sharing arrangements and providing incentives for businesses to adopt sustainable practices (established but incomplete) {5.3.1, 6.3.1, 6.3.3}.
-
-Civil society can promote shifts in social values and consumer behaviour through education and awareness-raising, advocacy, accountability and collaboration (established but incomplete) {6.2}. Advocacy campaigns can raise awareness, foster sustainable consumption habits and encourage businesses to align operations with biodiversity goals (established but incomplete) {6.3.3.2}. By facilitating partnerships, civil society ensures that environmental and societal needs are considered (established but incomplete) {6.3.3.1}. Civil society and non-governmental organizations can increase transparency and accountability (established but incomplete) {6.3.1}. Civil society also plays a key role in developing effective monitoring strategies and verification systems (established but incomplete) {6.3.4.1}. For example, campaigns can support widespread responsible business, lending and investment practices by pressuring financial institutions to improve their engagement strategies and avoid financing harmful activities (established but incomplete) {6.3.1, 6.3.3}. Businesses can use social signalling to influence consumer choices and social norms (established but incomplete) {5.4.4}. All actors have a role to play in promoting sufficiency and shifting away from unsustainable consumption patterns towards sustainable lifestyles and business models (established but incomplete) {5.6.1}.
-
-In many countries, mechanisms for Indigenous Peoples and local communities to overcome unequal power structures, engage in policy advocacy and participate fairly in business activities are currently insufficient to ensure that businesses follow the communities’ procedures of collective governance (established but incomplete) {5.3.2, 6.2, 6.3.3}. Businesses that depend on or impact biodiversity within the territories of Indigenous Peoples and local communities can adopt policies that guarantee that their decision-making processes are inclusive (established but incomplete) {5.6.1, 5.6.2, 6.3.3.1, 6.4.7}. Such mechanisms would allow the concerns of Indigenous Peoples and local communities in relation to potential business impacts and dependencies to be incorporated into business targets and strategies (established but incomplete) {2.7.2, 5.6.1, 6.3.3.1}.
-
-All stakeholders, including businesses, can benefit from aligning their operations with social values, norms and culture by respecting cultural traditions and emphasizing stewardship of biodiversity (established but incomplete) {5.3.1, 6.3.3}. Engaging with Indigenous Peoples and local communities allows businesses to interweave Indigenous and local knowledge into their operations, fostering mutual respect and supporting positive outcomes (established but incomplete) {6.3.3}. Partnerships with Indigenous Peoples and local communities can emphasize the relational values of nature and highlight the long-term impacts of current management decisions (established but incomplete) {5.7.3, 6.3.3.1}.""" ;
-    dcterms:identifier "B4" ;
-    skos:prefLabel "Social values and norms that shape consumer preferences and determine acceptable business behaviour can help to drive transformative change (well established)." .
+Actions can be pursued across the four decision-making levels at which biodiversity impacts and dependencies are measured: corporate, operations, value chain and portfolio (well established) {5.5, 5.6, 5.7}. Close links exist between actions implemented across decision‑making levels; for example, targets set at the corporate level drive actions and outcomes at the operations and value chain levels (well established) {5.6, 5.7}. Across all decision-making levels, actions can be taken individually or collectively, including through partnerships (e.g., public-private partnerships) (established but incomplete) {5.7.2, 5.7.3} (Figure SPM.5).""" ;
+    dcterms:identifier "B8" ;
+    skos:prefLabel "Businesses can take actions to address their impacts and dependencies, contribute to an enabling environment and influence others (well established)." .
 
 <http://ontology.ipbes.net/report/sch/BBA26-1.2.8.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1> ;
@@ -21749,6 +21722,64 @@ Civil society is also essential in generating data, knowledge and capacity as it
 Traditional knowledge systems, with deep-rooted cultural connections to their ecosystems developed over centuries, offer critical insights into sustainable resource management and intergenerational equity (Berkes et al., 2000; D. P. M. Lam et al., 2020; Parrotta et al., 2016; Tengö et al., 2014; Uprety et al., 2012). They often include adaptive strategies to cope with environmental changes that, when integrated into business strategies and regulatory frameworks, under free, prior and informed consent, can enhance long-term resilience over short-term gains in the face of climate change and other global challenges, increasing the number of solutions to halt and reverse biodiversity loss and prioritize sustainability and social equity (Granderson, 2017; Leonard et al., 2013; Nyong et al., 2007; Riedlinger & Berkes, 2001).""" ;
     dcterms:identifier "6.2.2.4" ;
     skos:prefLabel "Generating data, knowledge and capacity" .
+
+<http://ontology.ipbes.net/report/bgm/BBA26-B3> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B3-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM10>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM11>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM12>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM7>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM8>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B3-SM9> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription """Financial and economic instruments can help to align returns for businesses with positive outcomes for biodiversity and society (established but incomplete) {5.3.1, 6.1, 6.2, 6.3.2}. Alignment requires eliminating, phasing out or reforming the financial incentives underlying biodiversity loss and scaling up positive incentives for the conservation, restoration and sustainable use of biodiversity (well established) {5.3.2, 6.3.2}. Governments, central banks, financial regulators and supervisors, public development banks and international financial institutions can encourage financial institutions to allocate financial services (i.e., loans, investments, insurance policies) in ways that incentivize conservation and sustainable practices while discouraging harmful activities (well established) {5.6.4, 6.3.2}.
+
+Governments can promote action through economic instruments such as taxes, subsidies, payments for ecosystem services, environmental markets, and multilateral benefit-sharing mechanisms such as the Cali Fund for the Fair and Equitable Sharing of Benefits from the Use of Digital Sequence Information on Genetic Resources (well established) {6.3.1, 6.3.2}. Governments can reform fiscal policies by eliminating, phasing out or reforming harmful subsidies and fostering positive incentives (well established) {6.3.2}. Public funding can be allocated to research on and monitoring of biodiversity and nature’s contributions to people, education and capacity-building, targeted actions for nature‑based solutions and/or ecosystem-based approaches, and the conservation, restoration and sustainable use of biodiversity (well established) {6.3.2}.
+
+Governments can promote, and financial institutions can implement, innovative instruments to finance biodiversity projects, such as green bonds, payments for ecosystem services, high-integrity biodiversity credit systems, conservation funds, and sustainability-linked loans, where appropriate (well established) {5.6.4, 6.3.2}. Central banks and supervisors can help to drive transparency with biodiversity-inclusive financial regulations and risk management (established but incomplete) {6.3.2}. Public development banks can promote investments in restoration projects through blended finance, while international financial institutions can provide technical assistance and conditional funding (established but incomplete) {6.3.2}. Individually and collaboratively, financial institutions have a pivotal role in mobilizing finance and reforming global and national financial systems to enable businesses to take transformative actions (established but incomplete) {5.6.4, 6.3.2}.
+
+Existing financial structures often disadvantage Indigenous Peoples and local communities, creating economic and social disparities (established but incomplete) {6.3.2.3}. Businesses can advocate for inclusive policies and the dismantling of financial barriers, which is essential for promoting economic equity (established but incomplete) {6.3.2.3}. Furthermore, businesses can embrace new economic models that align with the values of Indigenous Peoples and local communities (established but incomplete) {6.3.2.3}.""" ;
+    dcterms:identifier "B3" ;
+    skos:prefLabel "Effective economic and financial instruments can create incentives for businesses to consider the risks, opportunities, costs and benefits of their impacts and dependencies on biodiversity (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/BBA26-B4> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B4-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM10>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM11>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM12>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM13>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM14>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM15>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM16>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM7>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM8>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B4-SM9> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription """Social values, norms and culture help to determine acceptable business behaviours and play an important role in fostering transformative change (established but incomplete) {5.3, 6.1}. All actors play a vital role by fostering inclusivity and equity, thereby ensuring that Indigenous Peoples and local communities are involved in decision-making processes that respect free, prior and informed consent (established but incomplete) {5.2.2, 6.1, 6.2, 6.3.3}. Governments can promote ethical practices by regulating sustainability reporting, establishing standards, supporting compliance with access and benefit-sharing arrangements and providing incentives for businesses to adopt sustainable practices (established but incomplete) {5.3.1, 6.3.1, 6.3.3}.
+
+Civil society can promote shifts in social values and consumer behaviour through education and awareness-raising, advocacy, accountability and collaboration (established but incomplete) {6.2}. Advocacy campaigns can raise awareness, foster sustainable consumption habits and encourage businesses to align operations with biodiversity goals (established but incomplete) {6.3.3.2}. By facilitating partnerships, civil society ensures that environmental and societal needs are considered (established but incomplete) {6.3.3.1}. Civil society and non-governmental organizations can increase transparency and accountability (established but incomplete) {6.3.1}. Civil society also plays a key role in developing effective monitoring strategies and verification systems (established but incomplete) {6.3.4.1}. For example, campaigns can support widespread responsible business, lending and investment practices by pressuring financial institutions to improve their engagement strategies and avoid financing harmful activities (established but incomplete) {6.3.1, 6.3.3}. Businesses can use social signalling to influence consumer choices and social norms (established but incomplete) {5.4.4}. All actors have a role to play in promoting sufficiency and shifting away from unsustainable consumption patterns towards sustainable lifestyles and business models (established but incomplete) {5.6.1}.
+
+In many countries, mechanisms for Indigenous Peoples and local communities to overcome unequal power structures, engage in policy advocacy and participate fairly in business activities are currently insufficient to ensure that businesses follow the communities’ procedures of collective governance (established but incomplete) {5.3.2, 6.2, 6.3.3}. Businesses that depend on or impact biodiversity within the territories of Indigenous Peoples and local communities can adopt policies that guarantee that their decision-making processes are inclusive (established but incomplete) {5.6.1, 5.6.2, 6.3.3.1, 6.4.7}. Such mechanisms would allow the concerns of Indigenous Peoples and local communities in relation to potential business impacts and dependencies to be incorporated into business targets and strategies (established but incomplete) {2.7.2, 5.6.1, 6.3.3.1}.
+
+All stakeholders, including businesses, can benefit from aligning their operations with social values, norms and culture by respecting cultural traditions and emphasizing stewardship of biodiversity (established but incomplete) {5.3.1, 6.3.3}. Engaging with Indigenous Peoples and local communities allows businesses to interweave Indigenous and local knowledge into their operations, fostering mutual respect and supporting positive outcomes (established but incomplete) {6.3.3}. Partnerships with Indigenous Peoples and local communities can emphasize the relational values of nature and highlight the long-term impacts of current management decisions (established but incomplete) {5.7.3, 6.3.3.1}.""" ;
+    dcterms:identifier "B4" ;
+    skos:prefLabel "Social values and norms that shape consumer preferences and determine acceptable business behaviour can help to drive transformative change (well established)." .
 
 <http://ontology.ipbes.net/report/sch/BBA26-2.7.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch2> ;
@@ -22132,24 +22163,6 @@ The role of actors in the financial system in implementing the three objectives 
     dcterms:identifier "6.2.2.1" ;
     skos:prefLabel "Translating international conventions and agreements to the national level" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-B1> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B1-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM6> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Current conditions are sufficient to drive some actions by some businesses, but they are not sufficient to achieve the transformative change necessary to halt and reverse biodiversity loss (established but incomplete) {5.1, 5.3.1, 6.1.3}. Businesses influence and are influenced by conditions created through policy, legal and regulatory frameworks, economic and financial systems, social values, norms and culture, technology and data, and capacity and knowledge (well established) {5.3, 5.7}. Changing these conditions, including through alternative models and measures of economic welfare, such as bioeconomy, circular economy, degrowth, post-growth, inclusive wealth and decoupling, can enable transformational action by businesses to address the underlying causes of biodiversity loss (well established) {5.3, 5.4, 5.6, 5.7, 6.1.2, 6.1.3}. Such an enabling environment can be created by accelerating, at all levels, individual and collaborative actions by Governments, financial institutions and other actors, and by businesses themselves, through a whole-of-government and whole-of-society approach (well established) {5.6, 5.7, 6.1.3, 6.1.4}.
-
-Along with changes in social values and norms, changes promoted by Governments through public policies and financial incentives could align what is considered financially material to businesses with what is considered material to biodiversity and society (well established) {5.3, 6.3}.
-
-Changes in conditions to create an enabling environment will impact businesses differently depending on their scale (i.e., size of business or footprint), structure, sector, maturity and relationship with biodiversity. Informal business sectors and small, medium-sized and micro-enterprises may be resource-constrained, requiring additional support to accomplish biodiversity-related objectives (established but incomplete) {5.3.2}. Businesses in developing countries face additional and specific challenges, such as structural barriers, fiscal and financial constraints, the influence of vested interests, a lack of institutional frameworks, technologies and technology transfer, and the need for capacity-building, undermining their capacity to invest in the technological development and educational initiatives needed to support transformative change (established but incomplete) {5.3.2, 6.1.5}.""" ;
-    dcterms:identifier "B1" ;
-    skos:prefLabel "Creating an enabling environment for transformative change requires collaborative action by Governments, financial actors, other actors and businesses themselves (well established)." .
-
 <http://ontology.ipbes.net/report/sch/BBA26-1.1.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/BBA26-KM1>,
@@ -22466,6 +22479,36 @@ To bridge the gap between traditional knowledge and modern tools, it is essentia
     dcterms:identifier "6.3.5.1" ;
     skos:prefLabel "Training, education and capacity-building" .
 
+<http://ontology.ipbes.net/report/bgm/BBA26-B1> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B1-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B1-SM6> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription """Current conditions are sufficient to drive some actions by some businesses, but they are not sufficient to achieve the transformative change necessary to halt and reverse biodiversity loss (established but incomplete) {5.1, 5.3.1, 6.1.3}. Businesses influence and are influenced by conditions created through policy, legal and regulatory frameworks, economic and financial systems, social values, norms and culture, technology and data, and capacity and knowledge (well established) {5.3, 5.7}. Changing these conditions, including through alternative models and measures of economic welfare, such as bioeconomy, circular economy, degrowth, post-growth, inclusive wealth and decoupling, can enable transformational action by businesses to address the underlying causes of biodiversity loss (well established) {5.3, 5.4, 5.6, 5.7, 6.1.2, 6.1.3}. Such an enabling environment can be created by accelerating, at all levels, individual and collaborative actions by Governments, financial institutions and other actors, and by businesses themselves, through a whole-of-government and whole-of-society approach (well established) {5.6, 5.7, 6.1.3, 6.1.4}.
+
+Along with changes in social values and norms, changes promoted by Governments through public policies and financial incentives could align what is considered financially material to businesses with what is considered material to biodiversity and society (well established) {5.3, 6.3}.
+
+Changes in conditions to create an enabling environment will impact businesses differently depending on their scale (i.e., size of business or footprint), structure, sector, maturity and relationship with biodiversity. Informal business sectors and small, medium-sized and micro-enterprises may be resource-constrained, requiring additional support to accomplish biodiversity-related objectives (established but incomplete) {5.3.2}. Businesses in developing countries face additional and specific challenges, such as structural barriers, fiscal and financial constraints, the influence of vested interests, a lack of institutional frameworks, technologies and technology transfer, and the need for capacity-building, undermining their capacity to invest in the technological development and educational initiatives needed to support transformative change (established but incomplete) {5.3.2, 6.1.5}.""" ;
+    dcterms:identifier "B1" ;
+    skos:prefLabel "Creating an enabling environment for transformative change requires collaborative action by Governments, financial actors, other actors and businesses themselves (well established)." .
+
+<http://ontology.ipbes.net/report/sch/BBA26-6.3.1> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch6> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/BBA26-KM10>,
+        <http://ontology.ipbes.net/report/key/BBA26-KM3>,
+        <http://ontology.ipbes.net/report/key/BBA26-KM8>,
+        <http://ontology.ipbes.net/report/key/BBA26-KM9> ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/BBA26-6.3> ;
+    dcterms:identifier "6.3.1" ;
+    skos:prefLabel "Legal and regulatory" .
+
 <http://ontology.ipbes.net/report/bgm/BBA26-A8> a ipbes:BackgroundMessage ;
     ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-FigureSPM.4> ;
     ipbes:Report ipbes:BBA26 ;
@@ -22479,6 +22522,7 @@ To bridge the gap between traditional knowledge and modern tools, it is essentia
         <http://ontology.ipbes.net/report/subm/BBA26-A8-SM7>,
         <http://ontology.ipbes.net/report/subm/BBA26-A8-SM8>,
         <http://ontology.ipbes.net/report/subm/BBA26-A8-SM9> ;
+    ipbes:hasCategory "A. Understanding the relationship between business and biodiversity" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription "Biodiversity loss creates risks for businesses that may be physical (e.g., flood damage to facilities), transitional (e.g., new regulations) and systemic (e.g., macroeconomic and financial shocks). These biodiversity-related risks can interact, creating larger risks for businesses (well established) (Figure SPM.4) {1.4.2, 3.5.2, 3.5.4}. Biodiversity-related risks can have legal and financial consequences for businesses and financial institutions (well established) {1.2.9}. The extent to which specific businesses are exposed to risks arising from their dependencies remains understudied (established but incomplete) {2.5.5}. Biodiversity-related opportunities can be created by avoiding harm to biodiversity, mitigating negative impacts, delivering positive impacts and managing dependencies sustainably, including through restoration, nature-based solutions and/or ecosystem‑based approaches (well established) {1.4.2, 2.2.4, 3.5.3}. For example, businesses may find opportunities to meet the demand for monitoring and reporting of biodiversity outcomes {3.5.3}. Such opportunities can be commercially viable and deliver positive outcomes for biodiversity and businesses and other stakeholders, such as the opportunities arising from sustainable land management, the value of which is projected to quadruple to $737 billion by 2050 (established but incomplete) {1.2.10}. When businesses avoid, reduce or otherwise mitigate biodiversity-related risks, the risks can turn into opportunities (well established) {3.5.3}. Addressing systemic risks and taking advantage of the significant opportunities that arise with transformative change require coordinated actions that go beyond what individual businesses have incentives or resources to accomplish alone (well established) {1.2.6, 5.7.3, 6.1.3}. The lack of quantitative assessments of opportunities contributes to low uptake of positive actions (established but incomplete) {3.4.3, 5.3.2}. With information and proper incentives, businesses can address biodiversity-related impacts, dependencies, risks and opportunities and contribute to positive outcomes (well established) {1.4.2, 3.5.2, 3.5.3, 3.5.4, 5.6.2, 5.6.3, 5.6.4, 5.7.1}. Understanding of risks and opportunities has increased with the publication of influential global reports, such as the first Global Assessment of Biodiversity and Ecosystem Services (2019), which have contributed to the recognition of the loss of biodiversity and nature’s contributions to people as a major risk to the global economy (well established) {1.1.2, 1.4.2, 2.4.5}." ;
     dcterms:identifier "A8" ;
@@ -22502,6 +22546,7 @@ To bridge the gap between traditional knowledge and modern tools, it is essentia
         <http://ontology.ipbes.net/report/subm/BBA26-B2-SM7>,
         <http://ontology.ipbes.net/report/subm/BBA26-B2-SM8>,
         <http://ontology.ipbes.net/report/subm/BBA26-B2-SM9> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription """Governments and financial actors establish the policy, legal and regulatory environment in which businesses operate, including mandatory rules (i.e., laws and regulations) and voluntary incentives for businesses to take actions that contribute to the conservation and sustainable use of biodiversity (well established) {6.1, 6.2.1, 6.2.2}. Financial institutions can support the implementation of these mandatory rules and voluntary incentives (well established) {5.3.1, 6.3.1}. Policies, laws and regulations designed in an equitable and inclusive manner, taking into account existing international obligations and differing capabilities and levels of development, while avoiding unintended impacts on livelihoods, are essential to supporting the conservation and sustainable use of biodiversity (well established) {6.3.1}. Lobbying, advocacy and engagement carried out by businesses, civil society, trade associations and Indigenous Peoples and local communities, along with electoral processes, can influence the policy, legal and regulatory environment (well established) {5.7.2, 6.3}.
 
@@ -22532,6 +22577,7 @@ Public disclosure of business impacts and dependencies can drive greater transpa
         <http://ontology.ipbes.net/report/subm/BBA26-C3-SM7>,
         <http://ontology.ipbes.net/report/subm/BBA26-C3-SM8>,
         <http://ontology.ipbes.net/report/subm/BBA26-C3-SM9> ;
+    ipbes:hasCategory "C. Measuring businesses’ impacts and dependencies on biodiversity and nature’s contributions to people" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription """While many methods of measuring impacts and dependencies are available, a lack of necessary internal capacity or financial resources may limit the ability of businesses to apply them, with implications for equity and participation across countries and actors (established but incomplete) {4.5.3, 5.3.2}. Business uptake may be limited by the perceived complexity of biodiversity and nature’s contributions to people, which cannot easily be measured by a single approach or metric, but requires a combination of multiple methods and metrics (established but incomplete) {4.5.3}.
 
@@ -22549,34 +22595,13 @@ High-profile dependency assessments at the portfolio level have been conducted b
         <http://ontology.ipbes.net/report/subm/BBA26-C6-SM3>,
         <http://ontology.ipbes.net/report/subm/BBA26-C6-SM4>,
         <http://ontology.ipbes.net/report/subm/BBA26-C6-SM5> ;
+    ipbes:hasCategory "C. Measuring businesses’ impacts and dependencies on biodiversity and nature’s contributions to people" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription """Many methods for measuring biodiversity and nature’s contributions to people could be applied to the assessment of business dependencies. Their uptake and inclusion in business-focused tools is limited, especially for nature’s contributions to people (well established) {4.5, 5.3.2, 5.4}.
 
 In contrast, many of the tools and associated guidance that are applicable to business could also be used to assess impacts (well established) {3.3.2, 4.5}. Some available methods provide high-level dependency assessments of businesses and financial portfolios based on industry average information (well established) {4.2.3, 4.4}. Such assessments have been applied to screen potentially material dependencies (established but incomplete) {4.5}. Methods and metrics that measure nature’s contributions to people by location could be used for dependency analyses of operations and value chains, especially in relation to material contributions; nevertheless, readily available methods for use by businesses are lacking for many non‑material and regulating contributions (well established) {4.2.2}. A need remains for approaches that can be easily applied across business operations, considering the location-specific availability and delivery of the full range of nature’s contributions to people (established but incomplete) {4.4}.""" ;
     dcterms:identifier "C6" ;
     skos:prefLabel "Actionable guidance is needed for measuring business dependencies on biodiversity and nature’s contributions to people (well established)." .
-
-<http://ontology.ipbes.net/report/sch/BBA26-6.3.1> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch6> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/BBA26-KM10>,
-        <http://ontology.ipbes.net/report/key/BBA26-KM3>,
-        <http://ontology.ipbes.net/report/key/BBA26-KM8>,
-        <http://ontology.ipbes.net/report/key/BBA26-KM9> ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/BBA26-6.3> ;
-    dcterms:identifier "6.3.1" ;
-    skos:prefLabel "Legal and regulatory" .
-
-<http://ontology.ipbes.net/report/bgm/BBA26-B13> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-TableSPM.4> ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B13-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B13-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B13-SM2> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Barriers to action exist for all groups of actors (Table SPM.4). These barriers do not affect all actors equally and may disproportionately affect small and medium-sized enterprises and financial institutions in developing countries (well established) {5.3.2, 5.4, 5.6}. Action is limited by systemic barriers such as profit-driven business models, as well as economic systems that measure progress in gross domestic product, weak policy incentives, limited access to financial resources, and data or knowledge gaps, including a lack of quantitative and comparable measurements of business impacts (well established) {3.6.3, 5.3.2}. Business-led initiatives have emerged to address some of these barriers, but they tend to focus on large companies and may emphasize disclosure over the need to deliver tangible biodiversity outcomes. Unclear and uncertain expectations from consumers, investors and Governments hinder consistent and credible business contributions to global biodiversity goals and targets (well established) {5.3.2}." ;
-    dcterms:identifier "B13" ;
-    skos:prefLabel "Barriers to businesses and others taking action persist, with considerable variation across national and sectoral contexts (well established)." .
 
 <http://ontology.ipbes.net/report/sch/BBA26-2.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch2> ;
@@ -22704,23 +22729,17 @@ Further, civil society can actively participate in policy discussions. They can 
     dcterms:identifier "6.3.1.3" ;
     skos:prefLabel "Participation, governance, and partnerships" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-B7> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/BBA26-B13> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-TableSPM.4> ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B7-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM7>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM8> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B13-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B13-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B13-SM2> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Transformative change requires action by all businesses (well established) {1.1.2, 5.1, 6.1.2, 6.1.4}. The responsibility of individual businesses to act can be determined by reference to globally agreed goals, national contexts (including policies, laws and regulations) and the impacts and dependencies of business on biodiversity. Globally agreed goals, such as Target 15 of the Kunming-Montreal Global Biodiversity Framework, include specific requirements for large and transnational businesses and financial institutions to act. Those requirements reflect the fact that responsibility is not evenly shared among businesses (established but incomplete) {5.2.2}. The current level of business action is insufficient for transformative change, in part because the enabling environment is missing (well established) {5.1, 6.1.5}. An effective enabling environment would set clear expectations about who must act, where action is required and at which locations, and which biodiversity outcomes need to be achieved {1.5, 6.3}. While these conditions are not yet fully in place, some businesses are taking incremental action, motivated by a range of factors (well established) {5.1, 5.5, 5.6}.
-
-Businesses’ motivations to act include intrinsic factors, such as moral norms, in their internal culture and leadership, and instrumental factors, such as attracting and retaining their workforce and the internal imperative to respond to their biodiversity-related risks and opportunities (established but incomplete) {5.3.1}. Whether such motivations exist depends on the socioecological context in which businesses operate (well established) {2.2.3, 2.2.4, 5.3}. Minor changes in context, such as changes in the cost of raw materials, the regulatory regime, the state of biodiversity or in the availability of or access to information, can change the motivations for business actions (established but incomplete) {5.3.1}. Transformative change under an appropriate enabling environment would align profitable business actions with what is good for biodiversity and society (well established) {1.5, 6.1.2, 6.1.3}. Creating this enabling environment would result in businesses and financial institutions being positive agents of change in transforming to a just and sustainable economic system (well established) {1.5, 5.3.2, 6.1.4}.""" ;
-    dcterms:identifier "B7" ;
-    skos:prefLabel "All businesses have a responsibility to act and can take further action within an enabling environment (well established)." .
+    ipbes:hasDescription "Barriers to action exist for all groups of actors (Table SPM.4). These barriers do not affect all actors equally and may disproportionately affect small and medium-sized enterprises and financial institutions in developing countries (well established) {5.3.2, 5.4, 5.6}. Action is limited by systemic barriers such as profit-driven business models, as well as economic systems that measure progress in gross domestic product, weak policy incentives, limited access to financial resources, and data or knowledge gaps, including a lack of quantitative and comparable measurements of business impacts (well established) {3.6.3, 5.3.2}. Business-led initiatives have emerged to address some of these barriers, but they tend to focus on large companies and may emphasize disclosure over the need to deliver tangible biodiversity outcomes. Unclear and uncertain expectations from consumers, investors and Governments hinder consistent and credible business contributions to global biodiversity goals and targets (well established) {5.3.2}." ;
+    dcterms:identifier "B13" ;
+    skos:prefLabel "Barriers to businesses and others taking action persist, with considerable variation across national and sectoral contexts (well established)." .
 
 <http://ontology.ipbes.net/report/sch/BBA26-2.7.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch2> ;
@@ -22810,45 +22829,24 @@ While these consumer-facing strategies can support biodiversity goals, they ofte
     dcterms:identifier "5.6.3.4" ;
     skos:prefLabel "Engaging with, educating and incentivizing action by customers, clients and consumers" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-C1> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-TableSPM.5>,
-        <http://ontology.ipbes.net/report/il/BBA26-TableSPM.6> ;
+<http://ontology.ipbes.net/report/bgm/BBA26-B7> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C1-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM10>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM11>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM12>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM13>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM14>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM15>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM16>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM17>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM18>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM19>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM20>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM7>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM8>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM9> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B7-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM7>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B7-SM8> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Different aspects of biodiversity and nature’s contributions to people require different metrics and methods of measurement: no single metric or method can be used to measure all impacts and dependencies across all sectors and locations (well established) {2.3, 2.4, 3.3, 4.1, 4.2, 4.4}. Methods vary in their ability to capture impacts and dependencies by location, within sectors and along the value chain, and to account for cumulative impacts (Table SPM.5) (well established) {2.3, 2.4, 3.3}. Methods can be grouped into categories of macro-scale environmental economic models, life-cycle approaches, spatial analysis, participatory mapping and monitoring, and location-based observations (well established) {2.3, 3.3, 4.2}. These approaches use different types of metrics for impacts and dependencies, including metrics for assessing the condition and significance of a location in terms of biodiversity (for both species and ecosystems) and metrics for assessing the potential and actual flow of nature’s contributions to people and human well-being, reflecting different values of nature (well established) {3.3, 4.2}. Monetary and quantitative and qualitative non-monetary valuation methods, including sociocultural valuation, can be applied in order to understand the consequences of impacts and dependencies for aspects of human well-being (well established) {2.3.4, 2.3.5, 3.3, 4.6.1}. Methods are frequently used in combination to improve the accuracy or extend the coverage of measurements (well established) {2.4.1, 3.3, 4.2.3}. The choice of methods and metrics used has implications for representing the diverse values of nature (well established) {2.3, 2.4, 3.3, 4.3.2, 4.6}.
+    ipbes:hasDescription """Transformative change requires action by all businesses (well established) {1.1.2, 5.1, 6.1.2, 6.1.4}. The responsibility of individual businesses to act can be determined by reference to globally agreed goals, national contexts (including policies, laws and regulations) and the impacts and dependencies of business on biodiversity. Globally agreed goals, such as Target 15 of the Kunming-Montreal Global Biodiversity Framework, include specific requirements for large and transnational businesses and financial institutions to act. Those requirements reflect the fact that responsibility is not evenly shared among businesses (established but incomplete) {5.2.2}. The current level of business action is insufficient for transformative change, in part because the enabling environment is missing (well established) {5.1, 6.1.5}. An effective enabling environment would set clear expectations about who must act, where action is required and at which locations, and which biodiversity outcomes need to be achieved {1.5, 6.3}. While these conditions are not yet fully in place, some businesses are taking incremental action, motivated by a range of factors (well established) {5.1, 5.5, 5.6}.
 
-Methods need to be selected carefully, ensuring their fitness for the individual business purpose for which they are being applied (established but incomplete) {4.2, 4.4}. Fitness for purpose depends on coverage, accuracy and responsiveness (well established) {2.3, 2.4, 3.3, 4.4}.
-
-The coverage of a method refers both to its geographical coverage and to the extent to which it includes impacts and dependencies on biodiversity and nature’s contributions to people (established but incomplete) {4.2.1}. To be considered fit for purpose, a method needs to cover all relevant pressure types and impacts and dependencies of a business on biodiversity and nature’s contributions to people at relevant geographical and temporal scales (established but incomplete) {4.2.1}.
-
-Accuracy is the degree to which results correctly describe what they are designed to measure (established but incomplete) {4.2.1}. The accuracy necessary for a method to be considered fit for purpose varies by application (established but incomplete) {4.2.1}. Many business decisions do not require highly accurate results, provided that the results are directionally correct (well established) {4.4}. For example, if a method provides adequate information on the relative biodiversity impacts of two raw materials, it can enable a decision on the choice of one material over the other. Methods based on modelling approaches (e.g., multi-regional input-output modelling, life-cycle approaches and spatial modelling) can sometimes provide a false sense of accuracy not supported by the level of detail of the underlying data or models; these shortcomings can be addressed by the use of data generated through bottom-up methods (e.g., location-based observations and participatory mapping and monitoring) (well established) {4.4}. Understanding the limitations of the results of different methods would assist decision makers in avoiding ill-informed or incorrect decisions (well established) {4.4}. Guidelines and capacity-building could help businesses to correctly interpret results from different methods, thereby ensuring that they adequately inform action (established but incomplete) {4.5}.
-
-Responsiveness is defined as the ability of a method to link business actions to changes in biodiversity or nature’s contributions to people (well established) {4.2}. Responsiveness is particularly important for tracking change in pressures as part of an impact assessment, or reliance on biodiversity as part of a dependency assessment, and for detecting changes over time in response to business activities or actions (well established) {4.4}. Attribution of observed changes in biodiversity or nature’s contributions to people to business activities should use baselines and counterfactuals, and account for time lags, indirect effects and variation in background conditions (well established) {4.2, 4.4, 5.2.1}.
-
-Determining the appropriate measurement approaches for different decision contexts requires consideration of the four main purposes of measuring biodiversity (Table SPM.6) alongside the four business decision-making""" ;
-    dcterms:identifier "C1" ;
-    skos:prefLabel "Many different methods and metrics are available. This diversity is needed to measure the impacts and dependencies of businesses on biodiversity and nature’s contributions to people (well established)." .
+Businesses’ motivations to act include intrinsic factors, such as moral norms, in their internal culture and leadership, and instrumental factors, such as attracting and retaining their workforce and the internal imperative to respond to their biodiversity-related risks and opportunities (established but incomplete) {5.3.1}. Whether such motivations exist depends on the socioecological context in which businesses operate (well established) {2.2.3, 2.2.4, 5.3}. Minor changes in context, such as changes in the cost of raw materials, the regulatory regime, the state of biodiversity or in the availability of or access to information, can change the motivations for business actions (established but incomplete) {5.3.1}. Transformative change under an appropriate enabling environment would align profitable business actions with what is good for biodiversity and society (well established) {1.5, 6.1.2, 6.1.3}. Creating this enabling environment would result in businesses and financial institutions being positive agents of change in transforming to a just and sustainable economic system (well established) {1.5, 5.3.2, 6.1.4}.""" ;
+    dcterms:identifier "B7" ;
+    skos:prefLabel "All businesses have a responsibility to act and can take further action within an enabling environment (well established)." .
 
 <http://ontology.ipbes.net/report/sch/BBA26-3.6.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch3> ;
@@ -22976,6 +22974,47 @@ Civil society plays a key role working with businesses to restore and sustain bi
     dcterms:identifier "6.3.2.1" ;
     skos:prefLabel "Mobilizing finance for biodiversity" .
 
+<http://ontology.ipbes.net/report/bgm/BBA26-C1> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-TableSPM.5>,
+        <http://ontology.ipbes.net/report/il/BBA26-TableSPM.6> ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C1-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM10>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM11>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM12>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM13>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM14>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM15>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM16>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM17>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM18>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM19>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM20>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM7>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM8>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C1-SM9> ;
+    ipbes:hasCategory "C. Measuring businesses’ impacts and dependencies on biodiversity and nature’s contributions to people" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription """Different aspects of biodiversity and nature’s contributions to people require different metrics and methods of measurement: no single metric or method can be used to measure all impacts and dependencies across all sectors and locations (well established) {2.3, 2.4, 3.3, 4.1, 4.2, 4.4}. Methods vary in their ability to capture impacts and dependencies by location, within sectors and along the value chain, and to account for cumulative impacts (Table SPM.5) (well established) {2.3, 2.4, 3.3}. Methods can be grouped into categories of macro-scale environmental economic models, life-cycle approaches, spatial analysis, participatory mapping and monitoring, and location-based observations (well established) {2.3, 3.3, 4.2}. These approaches use different types of metrics for impacts and dependencies, including metrics for assessing the condition and significance of a location in terms of biodiversity (for both species and ecosystems) and metrics for assessing the potential and actual flow of nature’s contributions to people and human well-being, reflecting different values of nature (well established) {3.3, 4.2}. Monetary and quantitative and qualitative non-monetary valuation methods, including sociocultural valuation, can be applied in order to understand the consequences of impacts and dependencies for aspects of human well-being (well established) {2.3.4, 2.3.5, 3.3, 4.6.1}. Methods are frequently used in combination to improve the accuracy or extend the coverage of measurements (well established) {2.4.1, 3.3, 4.2.3}. The choice of methods and metrics used has implications for representing the diverse values of nature (well established) {2.3, 2.4, 3.3, 4.3.2, 4.6}.
+
+Methods need to be selected carefully, ensuring their fitness for the individual business purpose for which they are being applied (established but incomplete) {4.2, 4.4}. Fitness for purpose depends on coverage, accuracy and responsiveness (well established) {2.3, 2.4, 3.3, 4.4}.
+
+The coverage of a method refers both to its geographical coverage and to the extent to which it includes impacts and dependencies on biodiversity and nature’s contributions to people (established but incomplete) {4.2.1}. To be considered fit for purpose, a method needs to cover all relevant pressure types and impacts and dependencies of a business on biodiversity and nature’s contributions to people at relevant geographical and temporal scales (established but incomplete) {4.2.1}.
+
+Accuracy is the degree to which results correctly describe what they are designed to measure (established but incomplete) {4.2.1}. The accuracy necessary for a method to be considered fit for purpose varies by application (established but incomplete) {4.2.1}. Many business decisions do not require highly accurate results, provided that the results are directionally correct (well established) {4.4}. For example, if a method provides adequate information on the relative biodiversity impacts of two raw materials, it can enable a decision on the choice of one material over the other. Methods based on modelling approaches (e.g., multi-regional input-output modelling, life-cycle approaches and spatial modelling) can sometimes provide a false sense of accuracy not supported by the level of detail of the underlying data or models; these shortcomings can be addressed by the use of data generated through bottom-up methods (e.g., location-based observations and participatory mapping and monitoring) (well established) {4.4}. Understanding the limitations of the results of different methods would assist decision makers in avoiding ill-informed or incorrect decisions (well established) {4.4}. Guidelines and capacity-building could help businesses to correctly interpret results from different methods, thereby ensuring that they adequately inform action (established but incomplete) {4.5}.
+
+Responsiveness is defined as the ability of a method to link business actions to changes in biodiversity or nature’s contributions to people (well established) {4.2}. Responsiveness is particularly important for tracking change in pressures as part of an impact assessment, or reliance on biodiversity as part of a dependency assessment, and for detecting changes over time in response to business activities or actions (well established) {4.4}. Attribution of observed changes in biodiversity or nature’s contributions to people to business activities should use baselines and counterfactuals, and account for time lags, indirect effects and variation in background conditions (well established) {4.2, 4.4, 5.2.1}.
+
+Determining the appropriate measurement approaches for different decision contexts requires consideration of the four main purposes of measuring biodiversity (Table SPM.6) alongside the four business decision-making""" ;
+    dcterms:identifier "C1" ;
+    skos:prefLabel "Many different methods and metrics are available. This diversity is needed to measure the impacts and dependencies of businesses on biodiversity and nature’s contributions to people (well established)." .
+
 <http://ontology.ipbes.net/report/sch/BBA26-2.5> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch2> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/BBA26-KM1>,
@@ -23043,20 +23082,6 @@ Future-based narratives enable further exploration of possible actions and pathw
 The options for action presented and discussed in Section 6.3 can contribute to the formulation of such narratives to create an enabling environment.""" ;
     dcterms:identifier "6.1.2" ;
     skos:prefLabel "Changes to create an enabling environment" .
-
-<http://ontology.ipbes.net/report/bgm/BBA26-A5> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A5-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM6> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Sectors with high and direct dependence on biodiversity, such as agriculture or extractive industries, tend to have financial incentives to consider and measure dependencies because they use or produce raw materials (well established) {2.5.1, 3.5}. There is relatively limited consideration of dependencies and associated risks in the value chain and for non-material and regulating contributions. Studies of business dependencies have focused mainly on biophysical data in directly dependent sectors such as agriculture, fisheries, pharmaceuticals and tourism and on readily apparent inputs such as pollination and water (established but incomplete) {2.5}. Fewer studies have translated dependencies into monetary valuation (established but incomplete) {2.3, 2.4}. Businesses may also be dependent on Indigenous and local knowledge and could learn from Indigenous Peoples and local communities and the ways in which their businesses conserve and sustainably use biodiversity (established but incomplete) {2.7}. In most regions of the world, there is less understanding of the magnitude of business dependencies than of business impacts (well established) {2.5, 3.4, 4.5.2}. More evidence is available for Europe, the Americas and Asia than for Africa and Oceania (established but incomplete) {2.8}. Better understanding of the magnitude of business impacts and dependencies and associated risks and opportunities could help to accelerate actions that benefit both businesses and biodiversity (established but incomplete) {2.6, 2.8, 5.3.2}." ;
-    dcterms:identifier "A5" ;
-    skos:prefLabel "Understanding of business dependencies on biodiversity and nature’s contributions to people across sectors and scales is incomplete and uneven (well established)." .
 
 <http://ontology.ipbes.net/report/sch/BBA26-5.6.2.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch5> ;
@@ -23199,27 +23224,20 @@ Mechanisms of know-how and technology transfer that focus on long-term cooperati
     dcterms:identifier "6.3.4.1" ;
     skos:prefLabel "Data collection and use" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-B5> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/BBA26-A5> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B5-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM10>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM4>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM5>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM6>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM7>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM8>,
-        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM9> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-A5-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-A5-SM6> ;
+    ipbes:hasCategory "A. Understanding the relationship between business and biodiversity" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Governments can conduct biodiversity monitoring and collect and provide access to robust biodiversity data, including by leveraging multiple available technologies such as Earth observation and artificial intelligence, while accounting for the methodological limitations of those technologies (established but incomplete) {1.5.4, 5.3.2, 6.3.4.1}. Within the legal frameworks in which they operate, Governments can also facilitate biodiversity monitoring and intelligence systems, such as the biodiversity forecasting toolkit implemented in New South Wales, Australia, or the biodiversity information system implemented in Malaysia (well established) {5.6.2, 6.3.4.3}. The leveraging of technology and sharing of data by Governments can support the implementation of multilateral agreements, such as the Convention on Biological Diversity (well established) {6.3.1}.
-
-Governments, businesses, financial institutions and other actors, such as academia and non‑governmental organizations, can collaborate to develop trusted and streamlined data governance and infrastructure that enable data-sharing across value chains and with financial institutions. In this context, businesses can play a catalytic role by making biodiversity data and tools publicly accessible as shared resources, including through pre-competitive collaboration on technology and data (established but incomplete) {5.7.2, 5.7.3, 6.1}. Businesses and financial institutions can generate, use and share data and leverage technology to support impact assessments, and they can generate and use models that integrate biodiversity and nature’s contributions to people into economic and financial approaches (established but incomplete) {5.6.4, 5.7, 6.3.4.4}. Standard-setting bodies can use data and technology to promote transparency and consistency across sectors and countries by guiding businesses to disclose biodiversity impacts, for example by developing comparable accounting methods and disclosure frameworks that reflect different ecological and regional contexts and go beyond profit and financial materiality (established but incomplete) {5.4, 5.7.3, 6.3.4.2}. Civil society can drive transparency through biodiversity monitoring and reporting. Campaigns and collaborations can raise awareness and combat misinformation while promoting responsible biodiversity practices through accessible data resources (established but incomplete) {6.3.4.1}. Many of these approaches are already being implemented through existing tools, initiatives and experiences (well established) {1.4.1, 5.6, 5.7, 6.3}.
-
-Indigenous Peoples’ and local communities’ deep-rooted knowledge of local ecosystems and the development of modern data collection and analysis tools can enable a dynamic system for monitoring biodiversity (established but incomplete) {6.2, 6.3.4.1}. Access to technology can also help Indigenous Peoples and local communities to monitor environmental changes, conduct environmental impact assessments of business activities on their territories, participate in the analysis of risks and opportunities and support greater accountability by asserting their rights and claims (established but incomplete) {6.2.2, 6.3.1, 6.3.2, 6.3.3, 6.3.4}. Civil society plays an important role in generating data, knowledge and capacity, for example through citizen-based approaches, recognized in some countries as citizen science (well established) {1.5.5 6.2.2.4}.""" ;
-    dcterms:identifier "B5" ;
-    skos:prefLabel "The generation, use and sharing of data and the leveraging of technology can create new opportunities for businesses to act (well established)." .
+    ipbes:hasDescription "Sectors with high and direct dependence on biodiversity, such as agriculture or extractive industries, tend to have financial incentives to consider and measure dependencies because they use or produce raw materials (well established) {2.5.1, 3.5}. There is relatively limited consideration of dependencies and associated risks in the value chain and for non-material and regulating contributions. Studies of business dependencies have focused mainly on biophysical data in directly dependent sectors such as agriculture, fisheries, pharmaceuticals and tourism and on readily apparent inputs such as pollination and water (established but incomplete) {2.5}. Fewer studies have translated dependencies into monetary valuation (established but incomplete) {2.3, 2.4}. Businesses may also be dependent on Indigenous and local knowledge and could learn from Indigenous Peoples and local communities and the ways in which their businesses conserve and sustainably use biodiversity (established but incomplete) {2.7}. In most regions of the world, there is less understanding of the magnitude of business dependencies than of business impacts (well established) {2.5, 3.4, 4.5.2}. More evidence is available for Europe, the Americas and Asia than for Africa and Oceania (established but incomplete) {2.8}. Better understanding of the magnitude of business impacts and dependencies and associated risks and opportunities could help to accelerate actions that benefit both businesses and biodiversity (established but incomplete) {2.6, 2.8, 5.3.2}." ;
+    dcterms:identifier "A5" ;
+    skos:prefLabel "Understanding of business dependencies on biodiversity and nature’s contributions to people across sectors and scales is incomplete and uneven (well established)." .
 
 <http://ontology.ipbes.net/report/sch/BBA26-1.5> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1> ;
@@ -23408,6 +23426,29 @@ Biodiversity offsetting is the final step in the mitigation hierarchy, reserved 
 For businesses, early and sustained planning to achieve no net loss or net gain outcomes at the level of operations is critical. Success depends on establishing strong governance arrangements, engaging relevant rights- and stakeholders from the outset, ensuring public disclosure of intended and actual outcomes, and applying an adaptive management approach. Notably, while these practices are essential to biodiversity offsetting, they are also critical for other mitigation measures yet are often underperformed or overlooked. Strengthening these foundational elements could improve the effectiveness and credibility of mitigation actions across the entire mitigation hierarchy (Ghijselinck et al., 2026).""" ;
     dcterms:identifier "5.6.2.2" ;
     skos:prefLabel "Applying the mitigation hierarchy to achieve no net loss of biodiversity or better" .
+
+<http://ontology.ipbes.net/report/bgm/BBA26-B5> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-B5-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM10>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM4>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM5>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM6>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM7>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM8>,
+        <http://ontology.ipbes.net/report/subm/BBA26-B5-SM9> ;
+    ipbes:hasCategory "B. Options for action by businesses, including financial institutions and other financial actors, and Governments and other actors" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription """Governments can conduct biodiversity monitoring and collect and provide access to robust biodiversity data, including by leveraging multiple available technologies such as Earth observation and artificial intelligence, while accounting for the methodological limitations of those technologies (established but incomplete) {1.5.4, 5.3.2, 6.3.4.1}. Within the legal frameworks in which they operate, Governments can also facilitate biodiversity monitoring and intelligence systems, such as the biodiversity forecasting toolkit implemented in New South Wales, Australia, or the biodiversity information system implemented in Malaysia (well established) {5.6.2, 6.3.4.3}. The leveraging of technology and sharing of data by Governments can support the implementation of multilateral agreements, such as the Convention on Biological Diversity (well established) {6.3.1}.
+
+Governments, businesses, financial institutions and other actors, such as academia and non‑governmental organizations, can collaborate to develop trusted and streamlined data governance and infrastructure that enable data-sharing across value chains and with financial institutions. In this context, businesses can play a catalytic role by making biodiversity data and tools publicly accessible as shared resources, including through pre-competitive collaboration on technology and data (established but incomplete) {5.7.2, 5.7.3, 6.1}. Businesses and financial institutions can generate, use and share data and leverage technology to support impact assessments, and they can generate and use models that integrate biodiversity and nature’s contributions to people into economic and financial approaches (established but incomplete) {5.6.4, 5.7, 6.3.4.4}. Standard-setting bodies can use data and technology to promote transparency and consistency across sectors and countries by guiding businesses to disclose biodiversity impacts, for example by developing comparable accounting methods and disclosure frameworks that reflect different ecological and regional contexts and go beyond profit and financial materiality (established but incomplete) {5.4, 5.7.3, 6.3.4.2}. Civil society can drive transparency through biodiversity monitoring and reporting. Campaigns and collaborations can raise awareness and combat misinformation while promoting responsible biodiversity practices through accessible data resources (established but incomplete) {6.3.4.1}. Many of these approaches are already being implemented through existing tools, initiatives and experiences (well established) {1.4.1, 5.6, 5.7, 6.3}.
+
+Indigenous Peoples’ and local communities’ deep-rooted knowledge of local ecosystems and the development of modern data collection and analysis tools can enable a dynamic system for monitoring biodiversity (established but incomplete) {6.2, 6.3.4.1}. Access to technology can also help Indigenous Peoples and local communities to monitor environmental changes, conduct environmental impact assessments of business activities on their territories, participate in the analysis of risks and opportunities and support greater accountability by asserting their rights and claims (established but incomplete) {6.2.2, 6.3.1, 6.3.2, 6.3.3, 6.3.4}. Civil society plays an important role in generating data, knowledge and capacity, for example through citizen-based approaches, recognized in some countries as citizen science (well established) {1.5.5 6.2.2.4}.""" ;
+    dcterms:identifier "B5" ;
+    skos:prefLabel "The generation, use and sharing of data and the leveraging of technology can create new opportunities for businesses to act (well established)." .
 
 <http://ontology.ipbes.net/report/sch/BBA26-1.4.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1> ;
@@ -23756,18 +23797,6 @@ Biodiversity loss has received limited attention in the supply chain management 
     dcterms:identifier "5.6.3" ;
     skos:prefLabel "Value chain: actions to influence suppliers and customers" .
 
-<http://ontology.ipbes.net/report/bgm/BBA26-C4> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:BBA26 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C4-SM0>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C4-SM1>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C4-SM2>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C4-SM3>,
-        <http://ontology.ipbes.net/report/subm/BBA26-C4-SM4> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Because the impacts and dependencies of businesses on biodiversity are site-specific, information on the location of business activities and assets and on sourcing locations is needed to accurately measure the impacts and dependencies of business operations and value chains (well established) {2.2, 2.3, 2.4, 3.2, 3.3, 4.3, 4.4, 4.5.1, 4.5.2}. While some data exist that can assist operations-level decision-making, there are gaps in the availability and accessibility of those data and information on the origin of input materials (including genetic resources) used by specific businesses, especially in value chains. The gaps are due to traceability limitations, as many resources are traded and exchanged multiple times along the value chain (well established) {2.3, 4.4.4, 5.3.2, 5.6.2, 5.6.3}. Such knowledge gaps present a significant barrier to efforts by businesses to understand the full scale of impacts along their value chains, reducing the visibility of risks and inhibiting action to support improved practices at specific locations (established but incomplete) {4.4.3, 5.3.2, 5.6.3, 5.6.4.2}. To go beyond screening and begin measuring outcomes, information on practices (e.g., agricultural practices, mining methods and manufacturing techniques) at specific sites is also needed (established but incomplete) {4.4}. Currently, information on locations and associated management practices is not commonly collected or reported (well established) {4.4, 4.5}." ;
-    dcterms:identifier "C4" ;
-    skos:prefLabel "Site-specific location and activity data are needed for operations and value chains to improve impact and dependency assessments (well established)." .
-
 <http://ontology.ipbes.net/report/sch/BBA26-1.2.9.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/5081872/items/3CDM8UHM>,
@@ -23886,6 +23915,19 @@ In some cases, organizations may wait for the nature-related risks or shocks to 
 In addition, decision-making at the microeconomic scale does not naturally lead to the common good at a broader scale. For example, a sound risk assessment conducted by a private insurance company indicating that a region is particularly vulnerable to physical hazards could lead the company to stop insuring activities and businesses in this region or increase the cost of insurance; while this would be an efficient decision at the microeconomic level, it would leave the region even more exposed to the costs of physical hazards at the macroeconomic level (Bolton et al., 2020; Dafermos, 2021; EIOPA, 2023). This underscores the limitations of self-regulation and regulation based on risk disclosure alone and the need for regulations that protect the public interest and promote an allocation of capital in line with environmental policies.""" ;
     dcterms:identifier "6.4.6" ;
     skos:prefLabel "Lack of recognition of Indigenous rights, and other applicable rights of local communities" .
+
+<http://ontology.ipbes.net/report/bgm/BBA26-C4> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/BBA26-C4-SM0>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C4-SM1>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C4-SM2>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C4-SM3>,
+        <http://ontology.ipbes.net/report/subm/BBA26-C4-SM4> ;
+    ipbes:hasCategory "C. Measuring businesses’ impacts and dependencies on biodiversity and nature’s contributions to people" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Because the impacts and dependencies of businesses on biodiversity are site-specific, information on the location of business activities and assets and on sourcing locations is needed to accurately measure the impacts and dependencies of business operations and value chains (well established) {2.2, 2.3, 2.4, 3.2, 3.3, 4.3, 4.4, 4.5.1, 4.5.2}. While some data exist that can assist operations-level decision-making, there are gaps in the availability and accessibility of those data and information on the origin of input materials (including genetic resources) used by specific businesses, especially in value chains. The gaps are due to traceability limitations, as many resources are traded and exchanged multiple times along the value chain (well established) {2.3, 4.4.4, 5.3.2, 5.6.2, 5.6.3}. Such knowledge gaps present a significant barrier to efforts by businesses to understand the full scale of impacts along their value chains, reducing the visibility of risks and inhibiting action to support improved practices at specific locations (established but incomplete) {4.4.3, 5.3.2, 5.6.3, 5.6.4.2}. To go beyond screening and begin measuring outcomes, information on practices (e.g., agricultural practices, mining methods and manufacturing techniques) at specific sites is also needed (established but incomplete) {4.4}. Currently, information on locations and associated management practices is not commonly collected or reported (well established) {4.4, 4.5}." ;
+    dcterms:identifier "C4" ;
+    skos:prefLabel "Site-specific location and activity data are needed for operations and value chains to improve impact and dependency assessments (well established)." .
 
 <http://ontology.ipbes.net/report/sch/BBA26-1.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/BBA26ch1> ;
@@ -25555,11 +25597,7 @@ ipbes:BBA26 a ipbes:Report ;
     ipbes:year "2026" ;
     skos:altLabel "IPBES Business and Biodiversity Assessment" ;
     skos:prefLabel "Methodological Assessment Report on the Impact and Dependence of Business on Biodiversity and Nature’s Contributions to People of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services" ;
-    foaf:Person <http://ontology.ipbes.net/report/person/Andrade_Germán>,
-        <http://ontology.ipbes.net/report/person/Gordon_Christopher>,
-        <http://ontology.ipbes.net/report/person/Grigoryan_Erik>,
-        <http://ontology.ipbes.net/report/person/Homer_Floyd>,
-        <http://ontology.ipbes.net/report/person/Jones_Matt>,
+    foaf:Person <http://ontology.ipbes.net/report/person/Jones_Matt>,
         <http://ontology.ipbes.net/report/person/Polasky_Stephen>,
         <http://ontology.ipbes.net/report/person/Rueda_Ximena> .
 

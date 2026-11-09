@@ -32,7 +32,7 @@ The project is an evaluation platform for comparing and improving retrieval and 
 
 | Format | Content | Processing | Chroma collection |
 |---|---|---|---|
-| **TTL** (RDF/Turtle) | Assessments: the global assessment (GA1); the thematic assessments IAS, LDR, NXS, PPA, SUA, TCA; the methodological assessments BBA, SCM, VA; and the regional assessments for Africa (AFA), the Americas (AMA), Asia and the Pacific (APA) and Europe and Central Asia (ECA). All are converted automatically from the published reports by `pdf_to_ttl.py` (`data/ttl/<A>_v00.ttl`); the earlier manual conversions are kept in `data/ttl_original/` for comparison | Parsed with RDFLib into typed chunks (key messages, chapters, sub-chapters, experts, figures, knowledge gaps …), then embedded | `ttl_documents` |
+| **TTL** (RDF/Turtle) | Assessments: the global assessment (GA1); the thematic assessments IAS, LDR, NXS, PPA, SUA, TCA; the methodological assessments BBA, SCM, VA; and the regional assessments for Africa (AFA), the Americas (AMA), Asia and the Pacific (APA) and Europe and Central Asia (ECA). All are converted automatically from the published reports by `pdf_to_ttl.py` (`data/ttl/<A>.ttl`); the earlier manual conversions are kept in `data/ttl_original/` for comparison | Parsed with RDFLib into typed chunks (key messages, chapters, sub-chapters, experts, figures, knowledge gaps …), then embedded | `ttl_documents` |
 | **XML** (Akoma Ntoso / LegalDocML) | Plenary session reports IPBES-1 to IPBES-8, with their decisions | Parsed into structured paragraphs and table rows, then embedded | `xml_documents` |
 | **PDF** | Assessment reports (each includes its SPM) of the same assessments as the TTL folder, and Plenary session reports | Text extracted with PyMuPDF, chunked, then embedded | `pdf_documents` |
 | **RDF** | IPBES thesaurus and geography | Used for query expansion, definitions and country matching; the thesaurus is also embedded | `ipbes_thesaurus` |
@@ -92,7 +92,7 @@ ipbesllm/
 │   ├── csv/ipbes_chapters.csv   # Chapter codes of each assessment, to check the experts list
 │   ├── pdf/*.pdf                # <assessment>_report.pdf (includes the SPM), <year>-<session>.pdf
 │   ├── pdf_compare/<A>/         # One folder per assessment, written by pdf_to_ttl.py, ttl_compare.py and conversion_report.py:
-│   │   ├── <A>_pdf.ttl          #   the TTL made from the PDF (copied to data/ttl/<A>_v00.ttl)
+│   │   ├── <A>_pdf.ttl          #   the TTL made from the PDF (copied to data/ttl/<A>.ttl)
 │   │   ├── <A>.md               #   the report as read from the PDF, with page numbers
 │   │   ├── <A>_conversion.md    #   what could not be read or matched, and where the sources disagree, by kind
 │   │   ├── <A>_zotero.json      #   the assessment's Zotero library, cached
@@ -100,7 +100,7 @@ ipbesllm/
 │   │   ├── <A>_conversion_report.pdf    # the conversion report, for the technical support unit
 │   │   └── <A>_conversion_report_pilot.pdf  # the first, hand-written reports (BBA, IAS, NXS, SUA, TCA)
 │   ├── rdf/*.rdf                # ipbes-thesaurus.rdf, ipbes-geo.rdf
-│   ├── ttl/*.ttl                # The assessments the app indexes: <A>_v00.ttl, converted from the PDFs by pdf_to_ttl.py
+│   ├── ttl/*.ttl                # The assessments the app indexes: <A>.ttl, converted from the PDFs by pdf_to_ttl.py
 │   ├── ttl_original/*.ttl       # The earlier manual conversions (e.g. GA1_v11.ttl), for comparison; not indexed
 │   ├── xml/*.xml                # Plenary reports, e.g. 2013-1.xml
 │   └── xml_compare/*.xml        # Plenary reports converted from Word, to check against xml/
@@ -308,7 +308,7 @@ Each pipeline can also be used from the command line: index, inspect the retriev
 
 ### TTL / RDF (assessments)
 
-Place Turtle files in `data/ttl/`. The assessment is the file name before `_v` (`GA1_v00.ttl` is GA1); keep one version of each assessment in the folder. The app uses the automatic conversions made from the PDFs by `pdf_to_ttl.py` (see [Converting assessment PDFs to TTL](#converting-assessment-pdfs-to-ttl)), named `<A>_v00.ttl`; the manual conversions made earlier by a consultant (`GA1_v11.ttl`, `IAS_v04.ttl` ...) are kept in `data/ttl_original/`, not indexed, to compare the two (`ttl_compare.py`).
+Place Turtle files in `data/ttl/`. The assessment is the file name, without a version suffix `_vNN` if there is one (`GA1.ttl` and `GA1_v11.ttl` are GA1); keep one file for each assessment in the folder. The app uses the automatic conversions made from the PDFs by `pdf_to_ttl.py` (see [Converting assessment PDFs to TTL](#converting-assessment-pdfs-to-ttl)), named `<A>.ttl`; the manual conversions made earlier by a consultant (`GA1_v11.ttl`, `IAS_v04.ttl` ...) are kept in `data/ttl_original/`, not indexed, to compare the two (`ttl_compare.py`).
 
 The files follow the IPBES report ontology in [`docs/ontology/IPBES_Ontology_v07.ttl`](docs/ontology/IPBES_Ontology_v07.ttl), which lists, for each class, the properties an item should have:
 
@@ -323,7 +323,7 @@ The files follow the IPBES report ontology in [`docs/ontology/IPBES_Ontology_v07
 | `ipbes:SubChapter` | `sch` | `skos:prefLabel`, `dcterms:identifier`, `hasDescription`; its footnotes (`ipbes:Footnote` linked to it) follow under "Notes" |
 | `ipbes:Illustration` | `il` | `dcterms:identifier`, `skos:prefLabel` (caption) and `hasDescription`. Figures and tables are also `ipbes:Figure` or `ipbes:Table`, with `ipbes:SubChapter` and the Zenodo `hasDoi` |
 | `ipbes:Footnote` | (in `sch`) | `dcterms:identifier` (`Footnote1.12`), `hasDescription`, `ipbes:SubChapter` |
-| `foaf:Person` | `person` | `skos:prefLabel` (or `foaf:firstName` + `foaf:lastName`), `ipbes:country`, roles (`ca`, `cl`, `cs`, `fl`, `la`, `re`, `ts`, `mc`) |
+| `foaf:Person` | `person` | `skos:prefLabel` (or `foaf:firstName` + `foaf:lastName`), `ipbes:country`, roles (`ca`, `cl`, `cs`, `fl`, `la`, `re`, `ts`, `ed`) |
 | `ipbes:Reference` | `ref` | `hasDoi`, `owl:sameAs` (Zotero), and the chapter and sub-chapter citing it; there are no titles or authors |
 
 The confidence level comes from `hasConfidenceLevel`, whose value is `well established`, `established but incomplete`, `unresolved` or `inconclusive`; the manual files have the older `hasWellestablished`, `hasEstablishedIncomplete`, `hasUnresolved` and `hasInconclusive`, which are still read. Items with no text are skipped, except experts, who are kept with "not recorded" when they have no country or role.
@@ -365,13 +365,13 @@ Fix what matters in the source TTL (or its conversion), or in `ttl_loader.py` wh
 
 #### Converting assessment PDFs to TTL
 
-`src/pdf_to_ttl.py` makes the TTL of an assessment from its published report (`data/pdf/<a>_report.pdf`), following the ontology. These automatic conversions are the files the app indexes (`data/ttl/<A>_v00.ttl`); they replace the manual conversions, kept in `data/ttl_original/` for comparison. The settings that belong to one assessment (PDF, report code such as `BBA26`, year, Zotero group) are in `config/pdf_to_ttl.toml`, with the shared experts list (`data/csv/ipbes_experts.csv`, filtered by the Assessment column) and chapter codes (`data/csv/ipbes_chapters.csv`); everything else is read from the PDF.
+`src/pdf_to_ttl.py` makes the TTL of an assessment from its published report (`data/pdf/<a>_report.pdf`), following the ontology. These automatic conversions are the files the app indexes (`data/ttl/<A>.ttl`); they replace the manual conversions, kept in `data/ttl_original/` for comparison. The settings that belong to one assessment (PDF, report code such as `BBA26`, year, Zotero group) are in `config/pdf_to_ttl.toml`, with the shared experts list (`data/csv/ipbes_experts.csv`, filtered by the Assessment column) and chapter codes (`data/csv/ipbes_chapters.csv`); everything else is read from the PDF.
 
 | Task | Command |
 |---|---|
 | Convert an assessment | `PYTHONPATH=src python src/pdf_to_ttl.py BBA` |
 | Download its Zotero library again | `PYTHONPATH=src python src/pdf_to_ttl.py BBA --refresh-zotero` |
-| Compare the manual conversion with the automatic one, and both with the PDF | `PYTHONPATH=src python src/ttl_compare.py data/ttl_original/BBA_v01.ttl data/ttl/BBA_v00.ttl --pdf data/pdf/bba_report.pdf` |
+| Compare the manual conversion with the automatic one, and both with the PDF | `PYTHONPATH=src python src/ttl_compare.py data/ttl_original/BBA_v01.ttl data/ttl/BBA.ttl --pdf data/pdf/bba_report.pdf` |
 | Check the result against the ontology | `PYTHONPATH=src python src/ttl_audit.py data/pdf_compare/BBA/BBA_pdf.ttl` |
 | Write the conversion report (PDF) | `PYTHONPATH=src python src/conversion_report.py BBA` (or `--all`) |
 
@@ -383,7 +383,7 @@ It writes to one folder per assessment, `data/pdf_compare/<A>/` (`--out` for ano
 | `<A>_pdf.ttl` | The TTL |
 | `<A>_conversion.md` | What could not be read or matched, and where the sources disagree: names, roles and countries across the chapter pages, the author annex and the experts list; references without a Zotero item or printed twice; traceability marks with typos; glossary terms missing from the thesaurus |
 | `<A>_zotero.json` | The assessment's Zotero library, cached |
-| `<A>_compare.md`, `.csv` | From `ttl_compare.py`: the **manual** conversion (`data/ttl_original/<A>_v*.ttl`, by the consultant) against the **automatic** one (`data/ttl/<A>_v00.ttl`, the file that is indexed): items in one file only, and property differences, with a `manual` and an `automatic` column for the two values; the `.md` also gives the share of each file's sentences found word for word in the PDF |
+| `<A>_compare.md`, `.csv` | From `ttl_compare.py`: the **manual** conversion (`data/ttl_original/<A>_v*.ttl`, by the consultant) against the **automatic** one (`data/ttl/<A>.ttl`, the file that is indexed): items in one file only, and property differences, with a `manual` and an `automatic` column for the two values; the `.md` also gives the share of each file's sentences found word for word in the PDF |
 | `<A>_conversion_report.pdf` | From `conversion_report.py`,  the counts, the comparison with the manual conversion in `data/ttl_original/` and fidelity (`ttl_compare.py` is run first when there is one and its output is older than the TTL), and the points to check from the conversion log. A report with no chapters, messages, people or references says so: its layout was not recognised and the file must not be indexed |
 
 How the report is read: the IPBES template's styles tell body text, headings, captions, legends and boxes, footnotes and labels apart (KM1, A1), and pages are read column by column. Key and background messages come from the SPM; a background message is cut into sub-messages of full sentences, guided by the levels of confidence: each states a level, the minimum, and carries its `{traceability}` marks if it has any (a sentence with no level joins its neighbour), linked to the sub-chapters they name. Sub-chapters (1.1, 1.2 ...) take their titles from the PDF outline and their text from the sections, without boxes, figures and footnote marks. Each footnote is an `ipbes:Footnote` (`fn/TCA24-Footnote1.3`: note 3 of chapter 1, `FootnoteSPM.n` in the SPM) linked to the sub-chapters citing it; those in an executive summary also follow it under "Notes". Every figure, table and box is an illustration (caption title as `skos:prefLabel`, legend or box text as `ipbes:hasDescription`, and the sub-chapter it is printed in); figures and tables are also typed `ipbes:Figure` or `ipbes:Table`, and those with files on Zenodo get the record's concept DOI as `ipbes:hasDoi` (`config/figures_records.json`, see Figures and tables below). Knowledge gaps come from the SPM table, with category and traceability, numbered from 1. People and their roles come from each chapter's first page and the title page, checked against the author annex (Annex III or IV) and the experts list (which also gives ORCID iDs); countries are ISO alpha-3 codes from `ipbes-geo.rdf`. Each reference-list entry is matched to its Zotero item (DOI, else title, year and first author) for the item key in its URI, keeps its citation text, and links to the sub-chapters citing it.
@@ -394,7 +394,7 @@ Knowledge gaps come from the report: an SPM table or box, or an appendix (GA1's 
 
 Two links are derived, as the reports do not print them. A sub-chapter links to its parent with `ipbes:SubChapter`: the nearest section above it that exists (3.1.1 to 3.1); a top section has only its `ipbes:Chapter`. A knowledge gap links with `ipbes:BackgroundMessage` to each background message that has a sub-message tracing to one of the gap's own sections, so the link means "shares a section", and a gap whose report prints no sections has none (GA1, LDR).
 
-The converted files go to `data/ttl/` as `<A>_v00.ttl`, so as not to clash with the version numbers of the manual conversions (kept in `data/ttl_original/` for comparison).
+The converted files go to `data/ttl/` as `<A>.ttl`, with no version number; the manual conversions keep theirs (`<A>_vNN.ttl`) in `data/ttl_original/`, for comparison.
 
 What it leaves out, because the ontology has no place for it: unnumbered sections (chapter 5's "Knowledge gaps"), the SPM preface, the technical support unit.
 

@@ -58,6 +58,7 @@ ipbes:Table rdfs:subClassOf ipbes:Illustration .
     ipbes:Illustration "Link to class Illustration. Used for mentioned tables, figures or boxes in the background message" ;
     ipbes:Report <http://ontology.ipbes.net/report/> ;
     ipbes:SubMessage "Link to the sub-messages used in each background message" ;
+    ipbes:hasCategory "The section of the summary for policymakers the background message is printed in, such as A. Past and current nexus interactions" ;
     ipbes:hasDescription "The text that further describes the content" ;
     ipbes:hasConfidenceLevel "The level of confidence stated: well established, established but incomplete, unresolved or inconclusive. Repeated if several are stated" ;
     dcterms:identifier "The identifier of the chapter or sub-chapter or key message in the report" ;
@@ -66,7 +67,9 @@ ipbes:Table rdfs:subClassOf ipbes:Illustration .
 <http://ontology.ipbes.net/report/key/> a ipbes:KeyMessage ;
     ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/> ;
     ipbes:Illustration "Link to class Illustration. Used for mentioned tables, figures or boxes in the key message" ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/> ;
     ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:hasCategory "The section of the summary for policymakers the key message is printed in, such as A. Past and current nexus interactions" ;
     ipbes:hasDescription "The text that further describes the content" ;
     ipbes:hasConfidenceLevel "The level of confidence stated: well established, established but incomplete, unresolved or inconclusive. Repeated if several are stated" ;
     dcterms:identifier "The identifier of the chapter or sub-chapter or key message in the report" ;
@@ -87,12 +90,12 @@ ipbes:Table rdfs:subClassOf ipbes:Illustration .
     ipbes:cl "Coordinating lead authors in the stated chapter and report" ;
     ipbes:country "Country of the person as printed in the report (citizenship and affiliation), as an ISO 3166 alpha-3 code" ;
     ipbes:cs "Co-chairs in the stated chapter and report" ;
+    ipbes:ed "Editors of the stated report, as listed under Edited by on its title page: the co-chairs, the technical support unit and, in some reports, members of the Multidisciplinary Expert Panel and other experts" ;
     ipbes:fl "Fellows in the stated chapter and report" ;
     ipbes:la "Lead authors in the stated chapter and report" ;
     ipbes:re "Review editors in the stated chapter and report" ;
     ipbes:ts "Technical support unit members listed as editors of the stated report" ;
     dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/> ;
-    ipbes:mc "Management committee members (Bureau and Multidisciplinary Expert Panel) who guided the production of the stated report" ;
     owl:sameAs "Link to other resources about the person such as ORCID" ;
     skos:note "Why the ORCID iD differs from the one in the assessment's records, when it was corrected against the verified IPBES experts list" ;
     skos:prefLabel "The label that is preferred to be used for a chapter, sub-chapter , report or person" ;

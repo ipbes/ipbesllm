@@ -14,7 +14,7 @@ IPBES = "http://ontology.ipbes.net/report"
 _ROLE_LABELS = {
     "cs": "Co-chair",
     "ts": "Technical Support Unit",
-    "mc": "Management Committee",
+    "ed": "Editor",
     "cl": "Coordinating Lead Author",
     "la": "Lead Author",
     "re": "Review Editor",
@@ -355,6 +355,7 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
                     _first(graph, bgm, DCTERMS.identifier)
                 ),
                 "Qualifier": _qualifier(graph, bgm),
+                "Section": _text(_first(graph, bgm, URIRef(IPBES + "hasCategory"))),
             },
         )
 
@@ -405,6 +406,13 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
         body = headline
         if description:
             body = f"{headline}\n\n{description}".strip()
+        # A section of the summary for policymakers (NXS24-KM-A) links to
+        # the key messages printed in it: list them under its heading.
+        parts = sorted(_all(graph, km, km_type), key=_local_name)
+        if parts:
+            body += "\n\n" + "\n".join(
+                f"- {_text(_first(graph, k, DCTERMS.identifier))}: "
+                f"{_text(_first(graph, k, SKOS.prefLabel))}" for k in parts)
 
         emit(
             subject=km,
@@ -416,6 +424,7 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
                 "Identifier": _text(
                     _first(graph, km, DCTERMS.identifier)
                 ),
+                "Section": _text(_first(graph, km, URIRef(IPBES + "hasCategory"))),
             },
         )
 

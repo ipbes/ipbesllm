@@ -144,7 +144,7 @@ def collect(records: list[dict]):
 def load_ttl(code: str) -> tuple[dict, dict, str]:
     """({identifier: (uri, prefLabel, hasDescription, hasDoi)}, {section: uri}, report id)."""
     graph = rdflib.Graph()
-    graph.parse(ROOT / "data" / "ttl" / f"{code}_v00.ttl", format="turtle")
+    graph.parse(ROOT / "data" / "ttl" / f"{code}.ttl", format="turtle")
     items, sections = {}, {}
     report_id = ""
     for s in graph.subjects(rdflib.RDF.type, rdflib.URIRef(IPBES + "Illustration")):

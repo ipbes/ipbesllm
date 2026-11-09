@@ -1626,6 +1626,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     ipbes:Illustration <http://ontology.ipbes.net/report/il/SCM16-FigureSPM.1> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-1.1-SM0> ;
+    ipbes:hasCategory "SCENARIOS AND MODELS CAN CONTRIBUTE SIGNIFICANTLY TO POLICY SUPPORT, EVEN THOUGH SEVERAL BARRIERS HAVE IMPEDED THEIR WIDESPREAD USE TO DATE" ;
     ipbes:hasDescription "(figure SPM. 1). Scenarios and models play complementary roles, with scenarios describing possible futures for drivers of change or policy interventions and models translating those scenarios into projected consequences for nature and nature’s benefits to people. The contributions of scenarios and models to policymaking and decision making are usually mediated by some form of assessment or decision-support process and are typically used in conjunction with knowledge from a broader, and often highly complex, social, economic and institutional context {1.2, 1.3, 1.4, 2.1, 2.5}." ;
     dcterms:identifier "1.1" ;
     skos:prefLabel "Scenarios and models can provide an effective means of addressing relationships between nature, nature’s benefits to people and good quality of life and can thereby add considerable value to the use of best available scientific, indigenous and local knowledge in assessments and decision support" .
@@ -1635,6 +1636,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
         <http://ontology.ipbes.net/report/il/SCM16-TableSPM.1> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-1.2-SM0> ;
+    ipbes:hasCategory "SCENARIOS AND MODELS CAN CONTRIBUTE SIGNIFICANTLY TO POLICY SUPPORT, EVEN THOUGH SEVERAL BARRIERS HAVE IMPEDED THEIR WIDESPREAD USE TO DATE" ;
     ipbes:hasDescription "“Exploratory scenarios” that examine a range of plausible futures, based on potential trajectories of drivers – either indirect (e.g., socio-political, economic and technological factors) or direct (e.g., habitat conversion and climate change) – can contribute significantly to high-level problem identification and agenda setting. Exploratory scenarios provide an important means of dealing with high levels of unpredictability, and therefore uncertainty, inherently associated with the future trajectory of many drivers. “Intervention scenarios” that evaluate alternative policy or management options – through either “target-seeking” or “policy-screening” analysis – can contribute significantly to policy design and implementation. To date, exploratory scenarios have been used most widely in assessments on the global, regional and national scales (figure SPM. 3, table SPM. 1), while intervention scenarios have been applied to decision-making mostly on the national and local scales" ;
     dcterms:identifier "1.2" ;
     skos:prefLabel "Different types of scenarios can play important roles in relation to the major phases of the policy cycle, which are (i) agenda setting, (ii) policy design, (iii) policy implementation and" .
@@ -1642,6 +1644,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
 <http://ontology.ipbes.net/report/bgm/SCM16-1.3> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-1.3-SM0> ;
+    ipbes:hasCategory "SCENARIOS AND MODELS CAN CONTRIBUTE SIGNIFICANTLY TO POLICY SUPPORT, EVEN THOUGH SEVERAL BARRIERS HAVE IMPEDED THEIR WIDESPREAD USE TO DATE" ;
     ipbes:hasDescription "assessment focuses on models addressing three main relationships: (i) models projecting effects of changes in indirect drivers, including policy interventions, on direct drivers; (ii) models projecting impacts of changes in direct drivers on nature (biodiversity and ecosystems); and (iii) models projecting consequences of changes in biodiversity and ecosystems for the benefits that people derive from nature (including ecosystem services). The contributions of these models will often be most effective if they are applied in combination. The above relationships can be modelled using three broad approaches: (a) correlative models, in which available empirical data are used to estimate values for parameters that do not necessarily have predefined ecological meaning and for which processes are implicit rather than explicit; (b) process-based models, in which relationships are described in terms of explicitly stated processes or mechanisms based on established scientific understanding and whose model parameters therefore have clear ecological interpretation defined beforehand; (c) expert-based models, in which the experience of experts and stakeholders, including local and indigenous knowledge holders, is used to describe relationships {1.2.2, 1.3.1, 3.2.3, 4, 5.4}." ;
     dcterms:identifier "1.3" ;
     skos:prefLabel "Models can provide a useful means of translating alternative scenarios of drivers or policy interventions into projected consequences for nature and nature’s benefits to" .
@@ -1649,6 +1652,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
 <http://ontology.ipbes.net/report/bgm/SCM16-1.4> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-1.4-SM0> ;
+    ipbes:hasCategory "SCENARIOS AND MODELS CAN CONTRIBUTE SIGNIFICANTLY TO POLICY SUPPORT, EVEN THOUGH SEVERAL BARRIERS HAVE IMPEDED THEIR WIDESPREAD USE TO DATE" ;
     ipbes:hasDescription "Those barriers include (i) a general lack of understanding among policymaking and decision-making practitioners about the benefits of and limits to the use of scenarios and models for assessment and decision support; (ii) a shortage of human and technical resources, as well as data, for developing and using scenarios and models in some regions; (iii) insufficient involvement of, and interactions between, scientists, stakeholders and policymakers in developing scenarios and models to assist policy design and implementation; (iv) lack of guidance in model choice and deficiencies in the transparency of development and documentation of scenarios and models; and (v) inadequate characterization of uncertainties derived from data constraints, problems in system understanding and representation or low system predictability {1.6, 2.6, 4.3.2, 4.6, 7.1.2, 8.2}. All of these barriers, and approaches to addressing them, are discussed in detail in subsequent key findings and guidance points." ;
     dcterms:identifier "1.4" ;
     skos:prefLabel "Several barriers have impeded widespread and productive use of scenarios and models of biodiversity and ecosystem services in policymaking and decision-making." .
@@ -1657,6 +1661,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     ipbes:Illustration <http://ontology.ipbes.net/report/il/SCM16-FigureSPM.5> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-2.1-SM0> ;
+    ipbes:hasCategory "MANY RELEVANT METHODS AND TOOLS ARE AVAILABLE, BUT THEY SHOULD BE MATCHED CAREFULLY WITH THE NEEDS OF ANY GIVEN ASSESSMENT OR DECISION-SUPPORT ACTIVITY AND APPLIED WITH CARE, TAKING INTO ACCOUNT THE UNCERTAINTIES AND UNPREDICTABILITY ASSOCIATED WITH MODEL-BASED PROJECTIONS" ;
     ipbes:hasDescription "(figure SPM. 5). Previous applications of scenarios and models that have contributed successfully to real policy outcomes have typically involved stakeholders starting at the initial phase of problem definition and have featured frequent exchanges between scientists and stakeholders throughout the process. This level of involvement has often been achieved most effectively through the use of participatory approaches {1.4.2, 2.4, 2.6, 3.2.1.2, 4.3.2, 5.5.3, 7.4, 7.5, 7.6.2, 8.4}. See guidance point 2 under “Guidance for science and policy” for suggested actions addressing this finding." ;
     dcterms:identifier "2.1" ;
     skos:prefLabel "Effective application and uptake of scenarios and models in policymaking and decision-making requires close involvement of policymakers, practitioners and other relevant stakeholders, including, where appropriate, holders of indigenous and local knowledge, throughout the entire process of scenario development and analysis" .
@@ -1664,6 +1669,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
 <http://ontology.ipbes.net/report/bgm/SCM16-2.2> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-2.2-SM0> ;
+    ipbes:hasCategory "MANY RELEVANT METHODS AND TOOLS ARE AVAILABLE, BUT THEY SHOULD BE MATCHED CAREFULLY WITH THE NEEDS OF ANY GIVEN ASSESSMENT OR DECISION-SUPPORT ACTIVITY AND APPLIED WITH CARE, TAKING INTO ACCOUNT THE UNCERTAINTIES AND UNPREDICTABILITY ASSOCIATED WITH MODEL-BASED PROJECTIONS" ;
     ipbes:hasDescription "No single combination of scenarios, models and decision-support tools can address all policy and decision contexts, so a variety of approaches is needed {1.5, 2.2, 2.3, 2.4, 3.2.2, 3.2.3.2, 3.5, 4.2, 4.3, 5.3, 6.1.2}. See guidance point 1 under “Guidance for science and policy” for suggested actions addressing this finding." ;
     dcterms:identifier "2.2" ;
     skos:prefLabel "Different policy and decision contexts often require the application of different types of scenarios, models and decision-support tools, so considerable care needs to be exercised in formulating an appropriate approach in any" .
@@ -1673,6 +1679,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
         <http://ontology.ipbes.net/report/il/SCM16-TableSPM.2> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-2.3-SM0> ;
+    ipbes:hasCategory "MANY RELEVANT METHODS AND TOOLS ARE AVAILABLE, BUT THEY SHOULD BE MATCHED CAREFULLY WITH THE NEEDS OF ANY GIVEN ASSESSMENT OR DECISION-SUPPORT ACTIVITY AND APPLIED WITH CARE, TAKING INTO ACCOUNT THE UNCERTAINTIES AND UNPREDICTABILITY ASSOCIATED WITH MODEL-BASED PROJECTIONS" ;
     ipbes:hasDescription "(figure SPM. 6; table SPM. 2). Assessment and decision-support activities, including those undertaken or facilitated by the Platform, will require short-term (ca. 5-10 years), medium-term and long-term (2050 and beyond) projections. Platform assessments will focus on regional and global scales, but should also build on knowledge from local-scale scenarios and models. The use of scenarios and models in assessments and decision support more broadly (beyond the Platform) requires applications at a wide range of spatial scales. Techniques for temporal and spatial scaling are available for linking across multiple scales, although substantial further improvement and testing of them is needed {1.5, 2.2, 2.4, 3.2.2, 3.2.3.2, 3.5, 4.2, 4.3, 5.4.6, 6.4.1, 8.4.2}. See guidance point 3 under “Guidance for science and policy”, and Platform guidance point 2 under “Guidance for the Platform and its task forces and expert groups”, for suggested actions addressing this finding." ;
     dcterms:identifier "2.3" ;
     skos:prefLabel "The spatial and temporal scales at which scenarios and models need to be applied also vary markedly between different policy and decision contexts. No single set of scenarios and models can address all pertinent spatial and temporal scales, and many applications will require linking of multiple scenarios and models dealing with drivers or proposed policy interventions operating at different scales" .
@@ -1681,6 +1688,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     ipbes:Illustration <http://ontology.ipbes.net/report/il/SCM16-BoxSPM.1> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-2.4-SM0> ;
+    ipbes:hasCategory "MANY RELEVANT METHODS AND TOOLS ARE AVAILABLE, BUT THEY SHOULD BE MATCHED CAREFULLY WITH THE NEEDS OF ANY GIVEN ASSESSMENT OR DECISION-SUPPORT ACTIVITY AND APPLIED WITH CARE, TAKING INTO ACCOUNT THE UNCERTAINTIES AND UNPREDICTABILITY ASSOCIATED WITH MODEL-BASED PROJECTIONS" ;
     ipbes:hasDescription "There are numerous examples of the successful mobilization of indigenous and local knowledge for scenario analysis and modelling, including scenarios and models based primarily on such knowledge (box SPM. 1). However, substantial efforts are needed to broaden the involvement of such knowledge. Improving mobilization of indigenous and local knowledge will require efforts on several fronts, including the development of appropriate indicators, mechanisms for accompanying knowledge holders, collection of such knowledge and its interpretation into forms that can be used in scenarios and models and translation into accessible languages {1.2.2.2, 1.6.2, 2.2.1, 4.2.3.1, 7.4.3, 7.4.4, 7.5.4, 7.6.3, 7.6.5}. See Platform guidance point 4 under “Guidance for the Platform and its task forces and expert groups” for suggested actions addressing this finding." ;
     dcterms:identifier "2.4" ;
     skos:prefLabel "Scenarios and models can benefit from the mobilization of indigenous and local knowledge because such knowledge can fill important information gaps at multiple scales and contribute to the successful application of scenarios and models to policy design and implementation." .
@@ -1688,6 +1696,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
 <http://ontology.ipbes.net/report/bgm/SCM16-2.5> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-2.5-SM0> ;
+    ipbes:hasCategory "MANY RELEVANT METHODS AND TOOLS ARE AVAILABLE, BUT THEY SHOULD BE MATCHED CAREFULLY WITH THE NEEDS OF ANY GIVEN ASSESSMENT OR DECISION-SUPPORT ACTIVITY AND APPLIED WITH CARE, TAKING INTO ACCOUNT THE UNCERTAINTIES AND UNPREDICTABILITY ASSOCIATED WITH MODEL-BASED PROJECTIONS" ;
     ipbes:hasDescription "weaknesses may depend on the specific decision-support context for which scenarios and models are being used and are related to aspects such as spatial and temporal extent, types of model inputs and outputs, flexibility and ease of use, among others. Uncertainty in scenarios and models arises from a variety of sources, including insufficient or erroneous data used to construct and test models; lack of understanding, or inadequate representation, of underlying processes; and low predictability of the system (e.g., random behaviour) {1.6, 2.3.3, 2.6, 4.3.2, 4.6, 5.4.6.6, 6.5, 8.4.3}. See guidance point 4 under “Guidance for science and policy”, and Platform guidance point 5 under “Guidance for the Platform and its task forces and expert groups”, for suggested actions addressing this finding." ;
     dcterms:identifier "2.5" ;
     skos:prefLabel "All scenarios and models have strengths and weaknesses, and it is therefore vital that their capacities and limitations be carefully evaluated and communicated in assessment and decision processes. Sources and levels of uncertainty should also be evaluated and" .
@@ -1695,6 +1704,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
 <http://ontology.ipbes.net/report/bgm/SCM16-3.1> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-3.1-SM0> ;
+    ipbes:hasCategory "APPROPRIATE PLANNING, INVESTMENT AND CAPACITY-BUILDING, AMONG OTHER EFFORTS, COULD OVERCOME SIGNIFICANT REMAINING CHALLENGES IN DEVELOPING AND APPLYING SCENARIOS AND MODELS" ;
     ipbes:hasDescription "See box SPM. 2 for further explanation of this finding, particularly in relation to the scenarios assessed by the Intergovernmental Panel on Climate Change and their derivatives {1.6.1, 3.4.2, 3.5, 8.4.2}. See Platform guidance point 2 under “Guidance for the Platform and its task forces and expert groups”, for suggested actions addressing this finding." ;
     dcterms:identifier "3.1" ;
     skos:prefLabel "Currently available scenarios, including those developed by previous global-scale assessments, do not fully address the needs of Platform assessments due to incomplete consideration of relevant drivers, policy goals and intervention options at appropriate temporal and spatial scales." .
@@ -1702,6 +1712,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
 <http://ontology.ipbes.net/report/bgm/SCM16-3.2> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-3.2-SM0> ;
+    ipbes:hasCategory "APPROPRIATE PLANNING, INVESTMENT AND CAPACITY-BUILDING, AMONG OTHER EFFORTS, COULD OVERCOME SIGNIFICANT REMAINING CHALLENGES IN DEVELOPING AND APPLYING SCENARIOS AND MODELS" ;
     ipbes:hasDescription "They include gaps in (i) models explicitly linking biodiversity to nature’s benefits to people (including ecosystem services) and good quality of life; (ii) models addressing ecological processes on temporal and spatial scales relevant to the needs of assessment and decision-support activities, including Platform assessments; and (iii) models anticipating, and thereby providing early warning of, ecological and socio-ecological breakpoints and regime shifts {1.6.1, 4.2, 4.3, 5.4, 8.3.1}. See guidance point 3 under “Guidance for science and policy” for suggested actions addressing this finding." ;
     dcterms:identifier "3.2" ;
     skos:prefLabel "There is a wide range of models available with which to assess impacts of scenarios of drivers and policy interventions on biodiversity and ecosystem services, but important gaps remain." .
@@ -1709,6 +1720,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
 <http://ontology.ipbes.net/report/bgm/SCM16-3.3> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-3.3-SM0> ;
+    ipbes:hasCategory "APPROPRIATE PLANNING, INVESTMENT AND CAPACITY-BUILDING, AMONG OTHER EFFORTS, COULD OVERCOME SIGNIFICANT REMAINING CHALLENGES IN DEVELOPING AND APPLYING SCENARIOS AND MODELS" ;
     ipbes:hasDescription "Links between biodiversity, ecosystem functioning and ecosystem services are only weakly accounted for in most assessments or in policy design and implementation. The same applies for links between ecosystem services and quality of life and integration across sectors. Given that, it is currently challenging to evaluate the full set of relationships and feedbacks set out in the Platform’s conceptual framework {1.2.2.1, 1.4.3, 4.2.3.4, 4.3.1.5, 4.4, 5.4, 6.3, 8.3.1.2}. See guidance point 3 under “Guidance for science and policy” for suggested actions addressing this finding." ;
     dcterms:identifier "3.3" ;
     skos:prefLabel "Scenarios and models of indirect drivers, direct drivers, nature, nature’s benefits to people and good quality of life need to be better linked in order to improve understanding and explanation of important relationships and feedbacks between components of coupled social-ecological systems." .
@@ -1716,6 +1728,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
 <http://ontology.ipbes.net/report/bgm/SCM16-3.4> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-3.4-SM0> ;
+    ipbes:hasCategory "APPROPRIATE PLANNING, INVESTMENT AND CAPACITY-BUILDING, AMONG OTHER EFFORTS, COULD OVERCOME SIGNIFICANT REMAINING CHALLENGES IN DEVELOPING AND APPLYING SCENARIOS AND MODELS" ;
     ipbes:hasDescription "While many studies provide a discussion of the strengths and weaknesses of their modelling approach, most studies do not provide a critical evaluation of the robustness of their findings by comparing their projections to fully independent data sets (i.e., data not used in model construction or calibration) or to other types of models. This greatly reduces the confidence that decision makers can and should have in projections from models {1.6.3, 2.3.3, 3.3, 3.4, 3.5, 4.6, 5.4, 6.5, 7.2.2, 8.3.3, 8.4.3}. See guidance point 4 under “Guidance for science and policy” for suggested actions addressing this finding." ;
     dcterms:identifier "3.4" ;
     skos:prefLabel "Uncertainty associated with models is often poorly evaluated and reported in published studies, which may lead to serious misconceptions – both overly optimistic and overly pessimistic – regarding the level of confidence with which results can be employed in assessment and decision-making activities." .
@@ -1724,6 +1737,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     ipbes:Illustration <http://ontology.ipbes.net/report/il/SCM16-FigureSPM.7> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-3.5-SM0> ;
+    ipbes:hasCategory "APPROPRIATE PLANNING, INVESTMENT AND CAPACITY-BUILDING, AMONG OTHER EFFORTS, COULD OVERCOME SIGNIFICANT REMAINING CHALLENGES IN DEVELOPING AND APPLYING SCENARIOS AND MODELS" ;
     ipbes:hasDescription "(figure SPM. 7). The spatial and temporal coverage and taxonomic spread of data on changes in biodiversity, ecosystems and ecosystem services is uneven. Similarly, there are large gaps in data for indirect and direct drivers, and there are often spatial and temporal mismatches between data on drivers and on biodiversity and ecosystem services. Much progress has been made in mobilizing existing data on biodiversity, ecosystem services and their drivers, but barriers to data sharing still need to be overcome and major gaps in the coverage of existing data filled {1.6.2, 2.6, 5.6, 7.3, 7.6.4, 8.2.1, 8.2.2}. See guidance point 5 under “Guidance for science and policy” for suggested actions addressing this finding." ;
     dcterms:identifier "3.5" ;
     skos:prefLabel "There are large gaps in the availability of data for constructing and testing scenarios and models, and significant barriers to data sharing remain" .
@@ -1731,6 +1745,7 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
 <http://ontology.ipbes.net/report/bgm/SCM16-3.6> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/SCM16-3.6-SM0> ;
+    ipbes:hasCategory "APPROPRIATE PLANNING, INVESTMENT AND CAPACITY-BUILDING, AMONG OTHER EFFORTS, COULD OVERCOME SIGNIFICANT REMAINING CHALLENGES IN DEVELOPING AND APPLYING SCENARIOS AND MODELS" ;
     ipbes:hasDescription "Building capacity requires the training of scientists and policy practitioners in the use of scenarios and models and improving access to data and user-friendly software for scenario analysis, modelling and decision-support tools. Rapidly growing online access to a wide range of data and modelling resources can support capacity building {2.6, 4.7, 5.6, 7.2, 7.6.1}. See guidance point 6 under “Guidance for science and policy”, and Platform guidance point 3 under “Guidance for the Platform and its task forces and expert groups”, for suggested actions addressing this finding." ;
     dcterms:identifier "3.6" ;
     skos:prefLabel "Human and technical capacity to develop and use scenarios and models varies greatly between regions." .
@@ -1754,34 +1769,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     skos:prefLabel "Sandra Acebey Quiroga" ;
     foaf:firstName "Sandra" ;
     foaf:lastName "Acebey Quiroga" .
-
-<http://ontology.ipbes.net/report/person/Acosta_LilibethA> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch2" ;
-    ipbes:country "DEU",
-        "PHL" ;
-    owl:sameAs <https://orcid.org/0000-0002-0733-3751> ;
-    skos:prefLabel "Lilibeth A. Acosta" ;
-    foaf:firstName "Lilibeth A." ;
-    foaf:lastName "Acosta" .
-
-<http://ontology.ipbes.net/report/person/Adhikari_JayRam> a foaf:Person ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:mc "Management Committee in SCM16" ;
-    skos:prefLabel "Jay Ram Adhikari" ;
-    foaf:firstName "Jay Ram" ;
-    foaf:lastName "Adhikari" .
-
-<http://ontology.ipbes.net/report/person/Akçakaya_HResit> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch8> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch8" ;
-    ipbes:country "TUR" ;
-    owl:sameAs <https://orcid.org/0000-0002-8679-5929> ;
-    skos:prefLabel "H. Resit Akçakaya" ;
-    foaf:firstName "H. Resit" ;
-    foaf:lastName "Akçakaya" .
 
 <http://ontology.ipbes.net/report/person/Anticamara_Jonathan> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch5> ;
@@ -1841,16 +1828,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     foaf:firstName "Zsófia" ;
     foaf:lastName "Benedek" .
 
-<http://ontology.ipbes.net/report/person/Brotons_Lluís> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch4" ;
-    ipbes:country "ESP" ;
-    owl:sameAs <https://orcid.org/0000-0002-4826-4457> ;
-    skos:prefLabel "Lluís Brotons" ;
-    foaf:firstName "Lluís" ;
-    foaf:lastName "Brotons" .
-
 <http://ontology.ipbes.net/report/person/Cantele_Matthew> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
     ipbes:Report ipbes:SCM16 ;
@@ -1906,15 +1883,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     skos:prefLabel "Purna B. Chhetri" ;
     foaf:firstName "Purna B." ;
     foaf:lastName "Chhetri" .
-
-<http://ontology.ipbes.net/report/person/Christensen_Villy> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch4" ;
-    ipbes:country "CAN" ;
-    skos:prefLabel "Villy Christensen" ;
-    foaf:firstName "Villy" ;
-    foaf:lastName "Christensen" .
 
 <http://ontology.ipbes.net/report/person/Chun_JungHwa> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
@@ -2017,16 +1985,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     foaf:firstName "Rosario" ;
     foaf:lastName "Gomez" .
 
-<http://ontology.ipbes.net/report/person/Harhash_KhaledAllam> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch7" ;
-    ipbes:country "EGY" ;
-    owl:sameAs <https://orcid.org/0000-0001-9107-3851> ;
-    skos:prefLabel "Khaled Allam Harhash" ;
-    foaf:firstName "Khaled Allam" ;
-    foaf:lastName "Harhash" .
-
 <http://ontology.ipbes.net/report/person/Hauck_Jennifer> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
     ipbes:Report ipbes:SCM16 ;
@@ -2084,16 +2042,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     foaf:firstName "Carlos" ;
     foaf:lastName "Joly" .
 
-<http://ontology.ipbes.net/report/person/Kabubo-Mariara_Jane> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch5> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch5" ;
-    ipbes:country "KEN" ;
-    owl:sameAs <https://orcid.org/0000-0001-7351-3024> ;
-    skos:prefLabel "Jane Kabubo-Mariara" ;
-    foaf:firstName "Jane" ;
-    foaf:lastName "Kabubo-Mariara" .
-
 <http://ontology.ipbes.net/report/person/Kellner_Klaus> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
     ipbes:Report ipbes:SCM16 ;
@@ -2122,16 +2070,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     skos:prefLabel "Grygoriy Kolomytsev" ;
     foaf:firstName "Grygoriy" ;
     foaf:lastName "Kolomytsev" .
-
-<http://ontology.ipbes.net/report/person/Lundquist_Carolyn> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch7" ;
-    ipbes:country "NZL" ;
-    owl:sameAs <https://orcid.org/0000-0002-2101-7237> ;
-    skos:prefLabel "Carolyn Lundquist" ;
-    foaf:firstName "Carolyn" ;
-    foaf:lastName "Lundquist" .
 
 <http://ontology.ipbes.net/report/person/Maury_Olivier> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
@@ -2170,15 +2108,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     skos:prefLabel "Jean Paul Metzger" ;
     foaf:firstName "Jean Paul" ;
     foaf:lastName "Metzger" .
-
-<http://ontology.ipbes.net/report/person/MohammadiFazel_Asghar> a foaf:Person ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:country "IRN" ;
-    ipbes:mc "Management Committee in SCM16" ;
-    owl:sameAs <https://orcid.org/0000-0001-7494-2357> ;
-    skos:prefLabel "Asghar Mohammadi Fazel" ;
-    foaf:firstName "Asghar" ;
-    foaf:lastName "Mohammadi Fazel" .
 
 <http://ontology.ipbes.net/report/person/MoraesR_Mónica> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch1> ;
@@ -2229,15 +2158,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     foaf:firstName "Stoyan" ;
     foaf:lastName "Nedkov" .
 
-<http://ontology.ipbes.net/report/person/Obersteiner_Michael> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch3" ;
-    ipbes:country "AUT" ;
-    skos:prefLabel "Michael Obersteiner" ;
-    foaf:firstName "Michael" ;
-    foaf:lastName "Obersteiner" .
-
 <http://ontology.ipbes.net/report/person/Onur_AliyeCeren> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
     ipbes:Report ipbes:SCM16 ;
@@ -2276,16 +2196,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     foaf:firstName "Maria Gabriela" ;
     foaf:lastName "Palomo" .
 
-<http://ontology.ipbes.net/report/person/Pereira_HenriqueM> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch8> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch8" ;
-    ipbes:country "DEU" ;
-    owl:sameAs <https://orcid.org/0000-0003-1043-1675> ;
-    skos:prefLabel "Henrique M. Pereira" ;
-    foaf:firstName "Henrique M." ;
-    foaf:lastName "Pereira" .
-
 <http://ontology.ipbes.net/report/person/Peri_PabloLuis> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
     ipbes:Report ipbes:SCM16 ;
@@ -2295,25 +2205,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     skos:prefLabel "Pablo Luis Peri" ;
     foaf:firstName "Pablo Luis" ;
     foaf:lastName "Peri" .
-
-<http://ontology.ipbes.net/report/person/Peterson_Garry> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch5> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch5" ;
-    ipbes:country "SWE" ;
-    owl:sameAs <https://orcid.org/0000-0003-0193-4182> ;
-    skos:prefLabel "Garry Peterson" ;
-    foaf:firstName "Garry" ;
-    foaf:lastName "Peterson" .
-
-<http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramón> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch3" ;
-    ipbes:country "CUB" ;
-    skos:prefLabel "Ramón Pichs-Madruga" ;
-    foaf:firstName "Ramón" ;
-    foaf:lastName "Pichs-Madruga" .
 
 <http://ontology.ipbes.net/report/person/Proença_Vânia> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
@@ -2363,15 +2254,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     foaf:firstName "Andriambolantsoa" ;
     foaf:lastName "Rasolohery" .
 
-<http://ontology.ipbes.net/report/person/Ravindranath_NH> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch4" ;
-    ipbes:country "IND" ;
-    skos:prefLabel "N. H. Ravindranath" ;
-    foaf:firstName "N. H." ;
-    foaf:lastName "Ravindranath" .
-
 <http://ontology.ipbes.net/report/person/Razafimpahanana_Andriamandimbisoa> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
     ipbes:Report ipbes:SCM16 ;
@@ -2390,16 +2272,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     skos:prefLabel "Sónia C. Ribeiro" ;
     foaf:firstName "Sónia C." ;
     foaf:lastName "Ribeiro" .
-
-<http://ontology.ipbes.net/report/person/Rondinini_Carlo> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch6> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch6" ;
-    ipbes:country "ITA" ;
-    owl:sameAs <https://orcid.org/0000-0002-6617-018X> ;
-    skos:prefLabel "Carlo Rondinini" ;
-    foaf:firstName "Carlo" ;
-    foaf:lastName "Rondinini" .
 
 <http://ontology.ipbes.net/report/person/Salihoglu_Baris> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
@@ -2578,16 +2450,6 @@ Other tools, such as Vensim, offer versions that are free for academic use or fr
     skos:prefLabel "Yi-Fu Wang" ;
     foaf:firstName "Yi-Fu" ;
     foaf:lastName "Wang" .
-
-<http://ontology.ipbes.net/report/person/Wintle_BrendanA> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch2" ;
-    ipbes:country "AUS" ;
-    owl:sameAs <https://orcid.org/0000-0002-4234-5950> ;
-    skos:prefLabel "Brendan A. Wintle" ;
-    foaf:firstName "Brendan A." ;
-    foaf:lastName "Wintle" .
 
 <http://ontology.ipbes.net/report/person/Yachi_Shigeo> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch8> ;
@@ -9837,15 +9699,50 @@ This could be through the IPBES Expert Group on Scenarios and Modelling (Deliver
     dcterms:identifier "TableSPM.2" ;
     skos:prefLabel "Illustrative and non-exhaustive examples of major models of ecosystem services, highlighting differences in important model attributes and therefore the need for care in choosing an appropriate solution in any given context. “Dynamic” models are capable of projecting changes in ecosystem services over time, while “static” models provide a snapshot of the status of ecosystem services at one point in time. See chapter 5 for detailed descriptions of these models, discussion of additional models and references." .
 
+<http://ontology.ipbes.net/report/person/Acosta_LilibethA> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch2" ;
+    ipbes:country "DEU",
+        "PHL" ;
+    ipbes:ed "Editor in SCM16" ;
+    owl:sameAs <https://orcid.org/0000-0002-0733-3751> ;
+    skos:prefLabel "Lilibeth A. Acosta" ;
+    foaf:firstName "Lilibeth A." ;
+    foaf:lastName "Acosta" .
+
+<http://ontology.ipbes.net/report/person/Akçakaya_Resit> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch8> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch8" ;
+    ipbes:country "TUR" ;
+    ipbes:ed "Editor in SCM16" ;
+    owl:sameAs <https://orcid.org/0000-0002-8679-5929> ;
+    skos:prefLabel "Resit Akçakaya" ;
+    foaf:firstName "Resit" ;
+    foaf:lastName "Akçakaya" .
+
 <http://ontology.ipbes.net/report/person/Alkemade_Rob> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch1> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:country "NLD" ;
+    ipbes:ed "Editor in SCM16" ;
     ipbes:la "Lead Author in SCM16-ch1" ;
     ipbes:ts "Technical Support Unit in SCM16" ;
     skos:prefLabel "Rob Alkemade" ;
     foaf:firstName "Rob" ;
     foaf:lastName "Alkemade" .
+
+<http://ontology.ipbes.net/report/person/Brotons_Lluís> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch4" ;
+    ipbes:country "ESP" ;
+    ipbes:ed "Editor in SCM16" ;
+    owl:sameAs <https://orcid.org/0000-0002-4826-4457> ;
+    skos:prefLabel "Lluís Brotons" ;
+    foaf:firstName "Lluís" ;
+    foaf:lastName "Brotons" .
 
 <http://ontology.ipbes.net/report/person/Burgess_Neil> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3>,
@@ -9859,17 +9756,15 @@ This could be through the IPBES Expert Group on Scenarios and Modelling (Deliver
     foaf:firstName "Neil" ;
     foaf:lastName "Burgess" .
 
-<http://ontology.ipbes.net/report/person/Cheung_William> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch5>,
-        <http://ontology.ipbes.net/report/ch/SCM16ch6> ;
+<http://ontology.ipbes.net/report/person/Christensen_Villy> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
     ipbes:Report ipbes:SCM16 ;
-    ipbes:ca "Contributing Author in SCM16-ch5" ;
-    ipbes:cl "Coordinating Lead Author in SCM16-ch6" ;
-    ipbes:country "CHN" ;
-    owl:sameAs <https://orcid.org/0000-0001-9998-0384> ;
-    skos:prefLabel "William Cheung" ;
-    foaf:firstName "William" ;
-    foaf:lastName "Cheung" .
+    ipbes:cl "Coordinating Lead Author in SCM16-ch4" ;
+    ipbes:country "CAN" ;
+    ipbes:ed "Editor in SCM16" ;
+    skos:prefLabel "Villy Christensen" ;
+    foaf:firstName "Villy" ;
+    foaf:lastName "Christensen" .
 
 <http://ontology.ipbes.net/report/person/Ferrier_Simon> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch1> ;
@@ -9877,6 +9772,7 @@ This could be through the IPBES Expert Group on Scenarios and Modelling (Deliver
     ipbes:cl "Coordinating Lead Author in SCM16-ch1" ;
     ipbes:country "AUS" ;
     ipbes:cs "Co-chair in SCM16" ;
+    ipbes:ed "Editor in SCM16" ;
     skos:prefLabel "Simon Ferrier" ;
     foaf:firstName "Simon" ;
     foaf:lastName "Ferrier" .
@@ -9893,16 +9789,49 @@ This could be through the IPBES Expert Group on Scenarios and Modelling (Deliver
     foaf:firstName "Beth" ;
     foaf:lastName "Fulton" .
 
+<http://ontology.ipbes.net/report/person/Harhash_KhaledAllam> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch7" ;
+    ipbes:country "EGY" ;
+    ipbes:ed "Editor in SCM16" ;
+    owl:sameAs <https://orcid.org/0000-0001-9107-3851> ;
+    skos:prefLabel "Khaled Allam Harhash" ;
+    foaf:firstName "Khaled Allam" ;
+    foaf:lastName "Harhash" .
+
+<http://ontology.ipbes.net/report/person/Kabubo-Mariara_Jane> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch5> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch5" ;
+    ipbes:country "KEN" ;
+    ipbes:ed "Editor in SCM16" ;
+    owl:sameAs <https://orcid.org/0000-0001-7351-3024> ;
+    skos:prefLabel "Jane Kabubo-Mariara" ;
+    foaf:firstName "Jane" ;
+    foaf:lastName "Kabubo-Mariara" .
+
 <http://ontology.ipbes.net/report/person/Leadley_Paul> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch1> ;
     ipbes:Report ipbes:SCM16 ;
     ipbes:country "FRA" ;
+    ipbes:ed "Editor in SCM16" ;
     ipbes:la "Lead Author in SCM16-ch1" ;
-    ipbes:mc "Management Committee in SCM16" ;
     owl:sameAs <https://orcid.org/0000-0002-8994-5507> ;
     skos:prefLabel "Paul Leadley" ;
     foaf:firstName "Paul" ;
     foaf:lastName "Leadley" .
+
+<http://ontology.ipbes.net/report/person/Lundquist_Carolyn> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch7> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch7" ;
+    ipbes:country "NZL" ;
+    ipbes:ed "Editor in SCM16" ;
+    owl:sameAs <https://orcid.org/0000-0002-2101-7237> ;
+    skos:prefLabel "Carolyn Lundquist" ;
+    foaf:firstName "Carolyn" ;
+    foaf:lastName "Lundquist" .
 
 <http://ontology.ipbes.net/report/person/Ninan_KaracheponeN> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch1> ;
@@ -9910,9 +9839,84 @@ This could be through the IPBES Expert Group on Scenarios and Modelling (Deliver
     ipbes:cl "Coordinating Lead Author in SCM16-ch1" ;
     ipbes:country "IND" ;
     ipbes:cs "Co-chair in SCM16" ;
+    ipbes:ed "Editor in SCM16" ;
     skos:prefLabel "Karachepone N. Ninan" ;
     foaf:firstName "Karachepone N." ;
     foaf:lastName "Ninan" .
+
+<http://ontology.ipbes.net/report/person/Obersteiner_Michael> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch3" ;
+    ipbes:country "AUT" ;
+    ipbes:ed "Editor in SCM16" ;
+    skos:prefLabel "Michael Obersteiner" ;
+    foaf:firstName "Michael" ;
+    foaf:lastName "Obersteiner" .
+
+<http://ontology.ipbes.net/report/person/Pereira_HenriqueM> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch8> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch8" ;
+    ipbes:country "DEU" ;
+    ipbes:ed "Editor in SCM16" ;
+    owl:sameAs <https://orcid.org/0000-0003-1043-1675> ;
+    skos:prefLabel "Henrique M. Pereira" ;
+    foaf:firstName "Henrique M." ;
+    foaf:lastName "Pereira" .
+
+<http://ontology.ipbes.net/report/person/Peterson_Garry> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch5> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch5" ;
+    ipbes:country "SWE" ;
+    ipbes:ed "Editor in SCM16" ;
+    owl:sameAs <https://orcid.org/0000-0003-0193-4182> ;
+    skos:prefLabel "Garry Peterson" ;
+    foaf:firstName "Garry" ;
+    foaf:lastName "Peterson" .
+
+<http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramón> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch3" ;
+    ipbes:country "CUB" ;
+    ipbes:ed "Editor in SCM16" ;
+    skos:prefLabel "Ramón Pichs-Madruga" ;
+    foaf:firstName "Ramón" ;
+    foaf:lastName "Pichs-Madruga" .
+
+<http://ontology.ipbes.net/report/person/Ravindranath_NijavalliH> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch4" ;
+    ipbes:country "IND" ;
+    ipbes:ed "Editor in SCM16" ;
+    skos:prefLabel "Nijavalli H. Ravindranath" ;
+    foaf:firstName "Nijavalli H." ;
+    foaf:lastName "Ravindranath" .
+
+<http://ontology.ipbes.net/report/person/Rondinini_Carlo> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch6> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch6" ;
+    ipbes:country "ITA" ;
+    ipbes:ed "Editor in SCM16" ;
+    owl:sameAs <https://orcid.org/0000-0002-6617-018X> ;
+    skos:prefLabel "Carlo Rondinini" ;
+    foaf:firstName "Carlo" ;
+    foaf:lastName "Rondinini" .
+
+<http://ontology.ipbes.net/report/person/Wintle_BrendanA> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch2" ;
+    ipbes:country "AUS" ;
+    ipbes:ed "Editor in SCM16" ;
+    owl:sameAs <https://orcid.org/0000-0002-4234-5950> ;
+    skos:prefLabel "Brendan A. Wintle" ;
+    foaf:firstName "Brendan A." ;
+    foaf:lastName "Wintle" .
 
 <http://ontology.ipbes.net/report/ref/2333079/items/2EQM2TSX> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch5>,
@@ -11542,6 +11546,19 @@ This chapter emphasises quantitative approaches to measure and forecast biodiver
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-8.2> ;
     dcterms:identifier "8.2.3" ;
     skos:prefLabel "Facilitating data access for model calibration and validation" .
+
+<http://ontology.ipbes.net/report/person/Cheung_William> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch5>,
+        <http://ontology.ipbes.net/report/ch/SCM16ch6> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:ca "Contributing Author in SCM16-ch5" ;
+    ipbes:cl "Coordinating Lead Author in SCM16-ch6" ;
+    ipbes:country "CHN" ;
+    ipbes:ed "Editor in SCM16" ;
+    owl:sameAs <https://orcid.org/0000-0001-9998-0384> ;
+    skos:prefLabel "William Cheung" ;
+    foaf:firstName "William" ;
+    foaf:lastName "Cheung" .
 
 <http://ontology.ipbes.net/report/ref/2333079/items/248B7QNC> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4>,
@@ -16211,7 +16228,7 @@ Scenarios can allow the effective use of data and models in decision making. Bot
 Scenarios can be improved through an iterative process that includes the steps of: engaging stakeholders, linking models to policy options, managing uncertainty, communicating the results and bringing scenario outcomes to policymaking. It is critical that assessments identify stakeholders relevant at the scale of the problem, including scientists, decision makers and people with indigenous and local knowledge (ILK), and engage them early on in the modelling and scenario analysis process (Section 8.4.1). Models and scenarios can improve the transparency of policymaking, by rendering the assumptions explicit and facilitating the comparison of multiple options (Section 8.4.2).""" ;
     dcterms:identifier "08" ;
     skos:prefLabel "Improving the rigour and usefulness of scenarios and models through ongoing evaluation and refinement" ;
-    foaf:Person <http://ontology.ipbes.net/report/person/Akçakaya_HResit>,
+    foaf:Person <http://ontology.ipbes.net/report/person/Akçakaya_Resit>,
         <http://ontology.ipbes.net/report/person/Burgess_Neil>,
         <http://ontology.ipbes.net/report/person/Canziani_GracielaAna>,
         <http://ontology.ipbes.net/report/person/Ellis_ErleC>,
@@ -16303,7 +16320,7 @@ Uncertainty in ecosystem dynamics is inherent in ecosystem modelling (Section 4.
         <http://ontology.ipbes.net/report/person/Peri_PabloLuis>,
         <http://ontology.ipbes.net/report/person/Proença_Vânia>,
         <http://ontology.ipbes.net/report/person/Rao_AnanyaS>,
-        <http://ontology.ipbes.net/report/person/Ravindranath_NH>,
+        <http://ontology.ipbes.net/report/person/Ravindranath_NijavalliH>,
         <http://ontology.ipbes.net/report/person/Salihoglu_Baris>,
         <http://ontology.ipbes.net/report/person/Titeux_Nicolas> .
 
@@ -16312,10 +16329,23 @@ ipbes:SCM16 a ipbes:Report ;
     ipbes:year "2016" ;
     skos:altLabel "IPBES Scenarios and Models of Biodiversity and Ecosystem Services Assessment" ;
     skos:prefLabel "The methodological assessment report on scenarios and models of biodiversity and ecosystem services" ;
-    foaf:Person <http://ontology.ipbes.net/report/person/Adhikari_JayRam>,
+    foaf:Person <http://ontology.ipbes.net/report/person/Acosta_LilibethA>,
+        <http://ontology.ipbes.net/report/person/Akçakaya_Resit>,
         <http://ontology.ipbes.net/report/person/Alkemade_Rob>,
+        <http://ontology.ipbes.net/report/person/Brotons_Lluís>,
+        <http://ontology.ipbes.net/report/person/Cheung_William>,
+        <http://ontology.ipbes.net/report/person/Christensen_Villy>,
         <http://ontology.ipbes.net/report/person/Ferrier_Simon>,
+        <http://ontology.ipbes.net/report/person/Harhash_KhaledAllam>,
+        <http://ontology.ipbes.net/report/person/Kabubo-Mariara_Jane>,
         <http://ontology.ipbes.net/report/person/Leadley_Paul>,
-        <http://ontology.ipbes.net/report/person/MohammadiFazel_Asghar>,
-        <http://ontology.ipbes.net/report/person/Ninan_KaracheponeN> .
+        <http://ontology.ipbes.net/report/person/Lundquist_Carolyn>,
+        <http://ontology.ipbes.net/report/person/Ninan_KaracheponeN>,
+        <http://ontology.ipbes.net/report/person/Obersteiner_Michael>,
+        <http://ontology.ipbes.net/report/person/Pereira_HenriqueM>,
+        <http://ontology.ipbes.net/report/person/Peterson_Garry>,
+        <http://ontology.ipbes.net/report/person/Pichs-Madruga_Ramón>,
+        <http://ontology.ipbes.net/report/person/Ravindranath_NijavalliH>,
+        <http://ontology.ipbes.net/report/person/Rondinini_Carlo>,
+        <http://ontology.ipbes.net/report/person/Wintle_BrendanA> .
 

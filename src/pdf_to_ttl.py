@@ -20,8 +20,9 @@ in config/pdf_to_ttl.toml. Each run writes, to data/pdf_compare/<A>/ (or --out):
 
 What is read from where:
   * Report: title and DOI (citation on page 2; the config's DOI wins, and is the
-    reference), management committee (page 2), co-chairs and technical support
-    unit (the editors, page 3).
+    reference), the editors (page 3, "Edited by:"): each is an editor (ipbes:ed),
+    co-chairs and the technical support unit also with their own role. The
+    management committee (page 2) is not recorded.
   * Chapter: number, title, DOI and authors by role (the chapter's first
     page); people's names and roles are checked against the author annex and the
     experts list, which also gives ORCID iDs.
@@ -657,7 +658,6 @@ class Report:
     doi: str = ""
     editors: list[tuple[str, str, str]] = field(default_factory=list)  # (name, "affiliation, country", role)
     editor_surnames: list[str] = field(default_factory=list)      # from the suggested citation
-    committee: list[str] = field(default_factory=list)            # the management committee, page 2
     key_messages: list[Message] = field(default_factory=list)
     background_messages: list[Message] = field(default_factory=list)
     guidance: list[Message] = field(default_factory=list)         # SCM: "Guidance point 1" ..., group = its section
@@ -972,7 +972,17 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             text = re.sub(r"^\d{1,2}(?:\.\s?\d{1,2}){1,4}(?=\.?\s)", lambda m_: m_.group(0).replace(" ", ""), text)
             if mode in ("km", "bgm"):
                 if mode == "bgm" and p.role == "h2":
-                    group = text
+                    # A heading going on after a footnote mark: "... transformative
+                    # changes¹⁵ across economic ..." (GA1 C), read after the first
+                    # messages under it, which move to the whole heading.
+                    if re.match(r"^[A-F]\.\s", group) and re.match(r"^\d{1,2}\s+[a-z]", text):
+                        whole = group + " " + re.sub(r"^\d{1,2}\s+", "", text)
+                        for b in rep.background_messages:
+                            if b.group == group:
+                                b.group = whole
+                        group = whole
+                    else:
+                        group = text
                 if mode == "km" and p.role == "h3":
                     km_heading = text
                 continue
@@ -1065,7 +1075,7 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 # SUA: key messages A to D, each a heading over its background
                 # messages' headlines (A.1, A.2 ...), which are read later.
                 if not any(k.ident == mk.group(1) for k in rep.key_messages):
-                    rep.key_messages.append(Message(mk.group(1), km_heading, p.page))
+                    rep.key_messages.append(Message(mk.group(1), km_heading, p.page, group=km_heading))
                 continue
             # KM1 (BBA), KM-A1 (IAS), A1 (LDR, whose background messages are
             # numbered 1, 2 ...) or 1 (PPA)
@@ -1085,7 +1095,7 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 letter = group_letter.group(1)
                 message = next((k for k in rep.key_messages if k.ident == letter), None)
                 if message is None:
-                    message = Message(letter, km_heading[3:].strip(), p.page)
+                    message = Message(letter, km_heading[3:].strip(), p.page, group=km_heading)
                     rep.key_messages.append(message)
                 _add_para(message.paras, text)
             elif message and not message.paras and p.lead and not message.headline.rstrip().endswith(_TERMINAL):
@@ -1399,37 +1409,22 @@ def _read_editors(block: str, rep: Report) -> None:
             name, aff = pending[0], pending[1:]
         found.append((re.sub(r"(?<=\w)- (?=\w)", "-", name), aff, role))
         pending = []
-    # Others (SCM's Multidisciplinary Expert Panel member) are in the management committee, page 2.
-    rep.editors += [(name, " ".join(aff), role) for name, aff, role in found if role]
-    # Whatever is left after the last role: SCM's other editors, by initials.
-    if any(re.match(r"[A-Z]\.\s?[A-Z]?", x) and "," in x for x in pending):
-        rep.problems.append("title page: other editors are listed without a role; no role recorded from this page")
-
-
-def _read_committee(text: str, rep: Report) -> None:
-    """The names after "MEMBERS OF THE MANAGEMENT COMMITTEE WHO PROVIDED GUIDANCE ...
-    ASSESSMENT", with "(Multidisciplinary Expert Panel)" and "(Bureau)" in the older reports."""
-    m = re.search(r"MANAGEMENT COMMITTEE\s+WHO PROVIDED.*?ASSESSMENT:?\s*\n(.*)", text, re.S)
-    if not m:
-        return
-    lines = []
-    for line in m.group(1).split("\n"):
-        line = line.strip()
-        if not line or line.isupper() or line.startswith(("This report", "©", "ISBN", "The designations")):
-            break
-        lines.append(line)
-        if line.endswith("."):
-            break
-    names = re.sub(r"\([^)]*\)", ",", re.sub(r"\s+", " ", " ".join(lines))).rstrip(". ")
-    names = [re.sub(r"^and\s+", "", n.strip()) for n in re.split(r"\s*[,;]\s*|\s+and\s+", names)]
-    rep.committee = [n for n in names if n]
+    # All are editors; co-chairs and the technical support unit also have their
+    # role. SCM's Multidisciplinary Expert Panel member has no other role here.
+    rep.editors += [(name, " ".join(aff), role) for name, aff, role in found]
+    # Whatever is left after the last role: SCM's other editors, by initials
+    # ("L. A. Acosta, H. R. Akçakaya, ... and B. A. Wintle"), with no role.
+    initials = " ".join(x for x in pending if re.match(r"(?:[A-Z]\.\s?)+\s*[A-Z]", x) and "," in x)
+    for name in re.split(r"\s*,\s*|\s+and\s+", initials):
+        if re.search(r"[^\W\d_]{2}", name):
+            rep.editors.append((name.strip(), "", ""))
 
 
 def _front_matter(doc: pymupdf.Document, rep: Report) -> None:
+    # The management committee on page 2 is not recorded: the editors on
+    # page 3 are, and include those of its members who edited the report.
     for pno in range(min(6, doc.page_count)):
         text = doc[pno].get_text()
-        if not rep.committee:
-            _read_committee(text, rep)
         m = re.search(r"SUGGESTED CITATION:?\s*\n(.*?)(?:\n\s*\n|$)", text, re.S)
         if m and not rep.title:
             cite = re.sub(r"\s+", " ", m.group(1))
@@ -1554,7 +1549,8 @@ def _split_people(text: str) -> list[str]:
 
 def to_markdown(rep: Report, name: str) -> str:
     out = [f"# {rep.title}", "", f"Read from {name}. DOI: {rep.doi}", ""]
-    out += [f"- {ROLE_NAMES[r]}: {n} ({a})" for n, a, r in rep.editors] + [""]
+    out += ["Edited by:"] + [f"- {n}" + (f", {ROLE_NAMES[r]}" if r else "") + (f" ({a})" if a else "")
+                              for n, a, r in rep.editors] + [""]
 
     def ills(spm: bool, chapter: int = 0):
         for il in rep.illustrations:
@@ -1568,7 +1564,7 @@ def to_markdown(rep: Report, name: str) -> str:
 
     out += ["## Summary for policymakers", "", "### Key messages", ""]
     for km in rep.key_messages:
-        out += [f"#### {km.ident} (p{km.page})", f"**{km.headline}**", ""]
+        out += [f"#### {km.ident} (p{km.page}{', in ' + km.group if km.group else ''})", f"**{km.headline}**", ""]
         out += [x for para in km.paras for x in (para, "")]
     out += ["### Background messages", ""]
     group = None
@@ -1793,7 +1789,7 @@ class Log:
 ROLE_NAMES = {
     "cs": "Co-chair",
     "ts": "Technical Support Unit",
-    "mc": "Management Committee",
+    "ed": "Editor",
     "cl": "Coordinating Lead Author",
     "la": "Lead Author",
     "fl": "Fellow",
@@ -1802,7 +1798,9 @@ ROLE_NAMES = {
 }
 _CSV_ROLES = {"chair": "cs", "chair - cla": "cs", "coordinating lead author": "cl", "lead author": "la", "fellow": "fl",
               "review editor": "re", "contributing author": "ca",
-              "mep task force/expert group member": "mc", "bureau task force/expert group member": "mc"}
+              # MEP and Bureau members ("mep task force/expert group member") have no
+              # role: those who edited the report are on its page 3.
+              }
 _PARTICLES = {"de", "da", "das", "do", "dos", "del", "della", "der", "den", "van", "von", "zu", "di",
               "du", "la", "le", "bin", "binti", "al", "el", "ten", "ter", "mc"}
 
@@ -1852,6 +1850,9 @@ def name_match(a: str, b: str) -> str:
         return all(t in y or (len(t) == 1 and any(u.startswith(t) for u in y)) for t in x)
     if last_same and (covered(ta, tb) or covered(tb, ta)):
         return "close"              # "William W. L. Cheung" / "Wai Lung (William) Cheung"
+    for x, y in ((ta, tb), (tb, ta)):
+        if last_same and all(len(t) == 1 for t in x[:-1]) and x[0] == y[0][:1]:
+            return "close"          # "W. W. L. Cheung" (SCM title page) / "William Cheung"
     if last_same and _SHORT_FORMS.get(ta[0], ta[0]) == _SHORT_FORMS.get(tb[0], tb[0]):
         return "close"              # Mike / Michael
     if last_same and ta[0][0] == tb[0][0] and (ta[0][:3] == tb[0][:3] or ta[0][-3:] == tb[0][-3:]):
@@ -2072,9 +2073,11 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
                 if (role, ch.number) not in p.roles:
                     p.roles.append((role, ch.number))
 
-    # Co-chairs and the technical support unit: the title page.
+    # The editors: the title page. Co-chairs and the technical support unit
+    # also have their own role; SCM lists other editors by initials, matched
+    # to the chapter authors.
     for name, aff, role in rep.editors:
-        p = find(name)
+        p = find(name, "the title page")
         if p is None:
             first, last = _split_name(name, rep.editor_surnames)
             p = Person(name, first, last)
@@ -2083,18 +2086,9 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
         for c in countries.codes(country, f"title page, {name}"):
             if c not in p.countries:
                 p.countries.append(c)
-        if (role, 0) not in p.roles:
-            p.roles.append((role, 0))
-
-    # The management committee: page 2, which gives names only.
-    for name in rep.committee:
-        p = find(name)
-        if p is None:
-            first, last = _split_name(name, [])
-            p = Person(name, first, last)
-            people.append(p)
-        if ("mc", 0) not in p.roles:
-            p.roles.append(("mc", 0))
+        for r in ([role] if role else []) + ["ed"]:
+            if (r, 0) not in p.roles:
+                p.roles.append((r, 0))
 
     # The author annex: checks names, roles and countries; adds full names.
     # The annex listing authors (Annex III in BBA, IV in IAS).
@@ -2177,7 +2171,6 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
         for iid, names in shared.items():
             log.add("people", f"experts list: ORCID {iid} is given to {' and '.join(names)}; "
                               f"left out for both, the experts are kept")
-        committee_rows: list[str] = []
         for row in rows:
             code = row["Chapter"].strip()
             n = re.search(r"chapter\s?(\d+)$", code)
@@ -2189,19 +2182,9 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
             role = _CSV_ROLES.get(row["Role"].strip().lower())
             chm = re.search(r"chapter\s*(\d+)", row["Chapter"], re.IGNORECASE)
             p = find(full, "the experts list")
-            if role == "mc":
-                # The management committee: page 2 and the experts list together.
-                committee_rows.append(full)
-                if p is None:
-                    p = Person(full, row["First Name"].strip(), row["Last name"].strip())
-                    people.append(p)
-                if not any(name_match(n, full) for n in rep.committee):
-                    log.add("people", f"experts list: {full} ({row['Role']}) is not on page 2 of the report; kept")
-                if re.match(r"[A-Z]\.", p.name):       # initials only on page 2 (PPA)
-                    p.name, p.first, p.last = full, row["First Name"].strip(), row["Last name"].strip()
-                if ("mc", 0) not in p.roles:
-                    p.roles.append(("mc", 0))
-                role = None
+            if p is not None and re.match(r"[A-Z]\.", p.name):
+                # Initials only on the title page (SCM's editors): the full name.
+                p.name, p.first, p.last = full, row["First Name"].strip(), row["Last name"].strip()
             if p is None:
                 if role:
                     log.add("people", f"experts list: {full} ({row['Role']}, {row['Chapter']}) is not "
@@ -2248,10 +2231,6 @@ def build_people(rep: Report, doc: pymupdf.Document, cfg: dict, countries: Count
                     log.add("people", f"{p.name}: {row['Role']} of chapter {chm.group(1)} in the experts list, "
                                       "but " + ", ".join(f"{ROLE_NAMES[r]} of chapter {c}" if c else ROLE_NAMES[r]
                                                          for r, c in p.roles) + " in the report")
-        for name in rep.committee:
-            if not any(name_match(name, n) for n in committee_rows):
-                log.add("people", f"{name}: on page 2 of the report as management committee, not in the experts list "
-                                  f"with that role; kept")
     # The assessment's records gave these people a wrong ORCID iD; the experts
     # list is the verified one. Say so on the record.
     for name, entered in cfg.get("orcid_corrections", {}).items():
@@ -3176,6 +3155,7 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
         add(s, RDF.type, P("BackgroundMessage"))
         add(s, P("Report"), report)
         add(s, DCTERMS.identifier, b.ident)
+        add(s, P("hasCategory"), b.group.rstrip("."))   # its section: "A. Past and current nexus interactions"
         add(s, SKOS.prefLabel, resolve_marks(b.headline, 0, rep))
         text = resolve_marks("\n\n".join(b.paras), 0, rep)
         add(s, P("hasDescription"), text)
@@ -3224,12 +3204,23 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
         m = re.match(r"([A-F])\.?\d*$", message.ident) or re.match(r"([A-F])\.\s", message.group)
         return m.group(1) if m else ""
 
+    # The sections' headings, as printed over the background messages: over
+    # the key messages they are in capitals in some reports (AFA, PPA) or carry
+    # a footnote mark (IAS "invasions8").
+    headings: dict[str, str] = {}
+    for m_ in rep.background_messages + rep.key_messages:
+        mh = re.match(r"([A-F])\.\s+(.+)$", m_.group)
+        if mh:
+            headings.setdefault(mh.group(1), mh.group(2).strip().rstrip("."))
+
     # Key messages
     for k in rep.key_messages:
         s = URIRef(f"{base}key/{rid}-{k.ident}")
         add(s, RDF.type, P("KeyMessage"))
         add(s, P("Report"), report)
         add(s, DCTERMS.identifier, k.ident)
+        letter = section_letter(k)
+        add(s, P("hasCategory"), f"{letter}. {headings[letter]}" if letter in headings and k.group else k.group)
         add(s, SKOS.prefLabel, resolve_marks(k.headline, 0, rep))
         text = resolve_marks("\n\n".join(k.paras), 0, rep)
         add(s, P("hasDescription"), text)
@@ -3264,6 +3255,26 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
     for sch, kms in km_of_sch.items():
         for km in kms:
             add(sch, P("KeyMessage"), km)
+
+    # The sections of the summary for policymakers ("A. Past and current nexus
+    # interactions"): a key message each, as in the manual files (NXS24-KM-A),
+    # linked to the key and background messages printed in it. ECA and SUA
+    # need none: their key messages A, B ... are the sections.
+    prefix = "KM-" if any(k.ident.startswith("KM") for k in rep.key_messages) else ""
+    for letter, heading in headings.items():
+        if any(k.ident == letter for k in rep.key_messages):
+            continue
+        s = URIRef(f"{base}key/{rid}-{prefix}{letter}")
+        add(s, RDF.type, P("KeyMessage"))
+        add(s, P("Report"), report)
+        add(s, DCTERMS.identifier, letter)
+        add(s, SKOS.prefLabel, heading)
+        for k in rep.key_messages:
+            if section_letter(k) == letter:
+                add(s, P("KeyMessage"), URIRef(f"{base}key/{rid}-{k.ident}"))
+        for b in rep.background_messages:
+            if section_letter(b) == letter:
+                add(s, P("BackgroundMessage"), bgm_uri[b.ident])
 
     # Knowledge gaps
     gaps_linked = 0

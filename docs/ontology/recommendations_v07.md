@@ -2,7 +2,7 @@
 
 **File:** `docs/ontology/IPBES_Ontology_v07.ttl`. These changes are proposed to the TSU on data for agreement. It recommends changes to v06.
 
-**Basis:** 14 assessment reports (AFA, AMA, APA, BBA, ECA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) were converted automatically from their published PDFs to TTL and checked against v06. The files use ten properties v06 does not define: three on knowledge gaps that came from the reports, two links derived during conversion (changes 8 and 9), a single property for levels of confidence (change 10) and two roles, for the technical support unit and the management committee (changes 11 and 12), a description on chapters (change 13) and a link from a merged person's old URI to the current one (change 14). Classes are added for guidance points (change 16), figures and tables (change 17) and footnotes (change 18); none is removed. 
+**Basis:** 14 assessment reports (AFA, AMA, APA, BBA, ECA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) were converted automatically from their published PDFs to TTL and checked against v06. The files use ten properties v06 does not define: three on knowledge gaps that came from the reports, two links derived during conversion (changes 8 and 9), a single property for levels of confidence (change 10) and two roles, for the technical support unit and the editors (changes 11 and 12), a description on chapters (change 13) and a link from a merged person's old URI to the current one (change 14). Classes are added for guidance points (change 16), figures and tables (change 17) and footnotes (change 18); none is removed. Key and background messages record the section of the summary for policymakers they are printed in, and each section is a key message linked to them (change 19). 
 
 ## Summary of decisions requested
 
@@ -19,14 +19,15 @@
 | 9 | Add `ipbes:BackgroundMessage` to KnowledgeGap | Yes | None: addition; the manual GA1 file already has it |
 | 10 | Replace the four level-of-confidence properties with `ipbes:hasConfidenceLevel` | Yes | Manual files and IBOK queries use the four old properties |
 | 11 | Add the role `ipbes:ts` to Person, for the technical support unit | Yes | None: addition |
-| 12 | Add the role `ipbes:mc` to Person, for the management committee | Yes | None: addition |
+| 12 | Add the role `ipbes:ed` to Person, for the editors on the title page | Yes | None: addition |
 | 13 | Add `ipbes:hasDescription` to Chapter, for its executive summary | Yes | None: addition |
 | 14 | Add `dcterms:isReplacedBy` to Person, for merged URIs | Yes | None: addition; published URIs keep working |
 | 15 | Add `skos:note` to Person, for corrected ORCID iDs | Yes | None: addition |
 | 16 | Add the class `ipbes:Guidance`, for guidance sections in a summary for policymakers | Yes | None: addition |
 | 17 | Add `ipbes:Figure` and `ipbes:Table` as subclasses of `ipbes:Illustration`, with a link to the sub-chapter and the Zenodo DOI | Yes | None: illustrations keep their URIs and their type |
 | 18 | Add the class `ipbes:Footnote` | Yes | None: addition; footnotes leave the sub-chapter text once converted |
-| 19–20 | Questions for discussion | No | See below |
+| 19 | Add `ipbes:hasCategory` to KeyMessage and BackgroundMessage, and `ipbes:KeyMessage` to KeyMessage, for the sections of the summary for policymakers | Yes | None: additions; the section key messages of the manual files (NXS24-KM-A) gain links |
+| 20–21 | Questions for discussion | No | See below |
 
 ## Changes in v07
 
@@ -127,13 +128,15 @@ In all, 154 of the 310 gaps are linked. A gap that cites many sections can link 
 
 The converted files have 18 of these values. BBA and TCA list none on the title page. The manual files do not record the technical support unit.
 
-**Other editors:** SCM's title page also lists other editors by initials, with no role. No role is recorded from that page for them.
+**Other editors:** SCM's title page also lists other editors, by initials and with no role. They are recorded as editors (change 12).
 
-### 12. Person: the management committee
+### 12. Person: the editors
 
-`ipbes:mc` records the members of the management committee listed on page 2 of each report, with values such as "Management Committee in PPA16". The earlier reports divide them into Bureau and Multidisciplinary Expert Panel, and the later ones list them together, so the one role covers both. They are also linked from the Report with `foaf:Person`.
+`ipbes:ed` records everyone listed under "Edited by:" on a report's title page (page 3), with values such as "Editor in NXS24". The editors are the co-chairs and the technical support unit, and in some reports also members of the Multidisciplinary Expert Panel and other experts: SCM lists 19, among them an expert panel member and 15 experts given by initials, who are matched to the chapter authors. Co-chairs and the technical support unit keep their own role (`cs`, `ts`) as well. Editors are also linked from the Report with `foaf:Person`.
 
-The members come from page 2 of each report and from the experts list, which gives their full names, countries and ORCID iDs. Anyone found in only one of the two is kept and noted in the conversion log.
+The converted files have 71 of these values. The manual files do not record the editors.
+
+**The management committee is not recorded.** An earlier draft of v07 had a role `ipbes:mc` for the management committee listed on page 2 (Bureau and Multidisciplinary Expert Panel). It is replaced by `ipbes:ed`: the committee guided the report but did not write it, and those of its members who edited the report are on page 3.
 
 **Point to note:** the same person can be written differently across reports ("Robert Watson", "Robert T. Watson"), and so have different URIs.
 
@@ -190,11 +193,27 @@ Three properties of `ipbes:Illustration` are added or defined for this:
 
 The URI follows the illustrations: `fn/IAS23-Footnote1.12`. The 14 reports have about 570 numbered footnotes in their sub-chapters' "Notes", most in TCA (115), VA (88) and ECA (78).
 
+### 19. Sections of the summary for policymakers
+
+The key and background messages of most summaries for policymakers are printed under lettered sections, such as "A. Past and current nexus interactions" and "B. Future nexus interactions" (NXS). The files did not record them, so a key message could not be found from its section.
+
+| Where | Property | Holds |
+|---|---|---|
+| KeyMessage, BackgroundMessage | `ipbes:hasCategory` | The section it is printed in, with its letter: "A. Past and current nexus interactions" |
+| KeyMessage (a section) | `ipbes:KeyMessage` | The key messages printed in the section |
+| KeyMessage (a section) | `ipbes:BackgroundMessage` | The background messages printed in the section |
+
+Each section is a key message, as in the manual files of IAS, NXS and TCA: `key/NXS24-KM-A`, with `dcterms:identifier` "A" and the heading as `skos:prefLabel`. Where the key messages are numbered KM1, KM-A1 …, the section's URI is `KM-` and its letter; otherwise the letter alone (`key/AFA18-A`). The section links down to its messages, as the Report and Chapter link to their people, so opening it lists them. The manual files have the sections but no such links.
+
+The converted files have 42 sections in 12 reports. ECA and SUA need none: their key messages A, B … are the sections. SCM has none. BBA and VA print their key messages without sections (each cites background messages from several), so their sections link to background messages only.
+
+**hasCategory** is already used on KnowledgeGap and Guidance for the heading an item is printed under, so no new property is needed.
+
 ## Questions for discussion (not in v07)
 
-**19. Chapters printed in parts.** GA1's chapter 2 is printed in parts 2.1, 2.2 and 2.3, each with its own authors and reference list. The automatic file has one chapter with sub-chapters 2.1.1 ...; the manual file has three chapters. Which should be the model?
+**20. Chapters printed in parts.** GA1's chapter 2 is printed in parts 2.1, 2.2 and 2.3, each with its own authors and reference list. The automatic file has one chapter with sub-chapters 2.1.1 ...; the manual file has three chapters. Which should be the model?
 
-**20. Properties defined but unused in the converted files.**
+**21. Properties defined but unused in the converted files.**
 
 | Property | Note |
 |---|---|

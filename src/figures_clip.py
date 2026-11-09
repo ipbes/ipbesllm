@@ -58,7 +58,7 @@ def missing_items(code: str, report_id: str) -> set[str]:
     import rdflib
 
     graph = rdflib.Graph()
-    graph.parse(ROOT / "data" / "ttl" / f"{code}_v00.ttl", format="turtle")
+    graph.parse(ROOT / "data" / "ttl" / f"{code}.ttl", format="turtle")
     manifest = OUT / "manifest.json"
     clipped = {v["file"] for v in json.loads(manifest.read_text()).values()} if manifest.exists() else set()
     have = {re.sub(r"(_[A-Z0-9]+)?\.(svg|jpg|png)$", "", f.name) for f in FIGURES.glob(f"{report_id}-*")

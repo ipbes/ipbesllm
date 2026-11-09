@@ -1,8 +1,8 @@
 """Compare two TTL files of the same assessment, item by item: the manual
 conversion (data/ttl_original/<A>_v*.ttl) with the automatic one made from
-the PDF by pdf_to_ttl.py (data/ttl/<A>_v00.ttl, the file that is indexed).
+the PDF by pdf_to_ttl.py (data/ttl/<A>.ttl, the file that is indexed).
 
-    PYTHONPATH=src python src/ttl_compare.py data/ttl_original/BBA_v01.ttl data/ttl/BBA_v00.ttl \\
+    PYTHONPATH=src python src/ttl_compare.py data/ttl_original/BBA_v01.ttl data/ttl/BBA.ttl \\
         --pdf data/pdf/bba_report.pdf
 
 Items are paired by their identifiers (sub-chapter 1.1, key message KM1,
@@ -466,7 +466,7 @@ def write(summary, rows, fid, a: TTL, b: TTL, out: Path, names, corpus: str | No
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("first", type=Path, help="the manual conversion, e.g. data/ttl_original/BBA_v01.ttl")
-    ap.add_argument("second", type=Path, help="the automatic conversion, e.g. data/ttl/BBA_v00.ttl")
+    ap.add_argument("second", type=Path, help="the automatic conversion, e.g. data/ttl/BBA.ttl")
     ap.add_argument("--pdf", type=Path, help="the report, to measure fidelity to its text")
     ap.add_argument("--names", default="manual,automatic",
                     help='labels of the two files (default "manual,automatic")')

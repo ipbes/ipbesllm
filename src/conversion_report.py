@@ -10,7 +10,7 @@ It is built from what the conversion wrote to data/pdf_compare/<A>/:
                       or where the report's own sources disagree
   <A>_compare.md      the comparison of the manual conversion
                       (data/ttl_original/<A>_v*.ttl) with the automatic one
-                      (data/ttl/<A>_v00.ttl), and the fidelity of both to
+                      (data/ttl/<A>.ttl), and the fidelity of both to
                       the PDF; made here with ttl_compare.py when a manual
                       conversion exists
 
@@ -35,7 +35,7 @@ from pdf_to_ttl import DEFAULT_CONFIG, DEFAULT_OUT, ROOT
 from ttl_compare import OLDER_LEVELS
 
 ORIGINAL_DIR = ROOT / "data" / "ttl_original"     # manual conversions
-AUTOMATIC_DIR = ROOT / "data" / "ttl"               # automatic ones, <A>_v00.ttl, indexed
+AUTOMATIC_DIR = ROOT / "data" / "ttl"               # automatic ones, <A>.ttl, indexed
 ONTOLOGY = ROOT / "docs" / "ontology" / "IPBES_Ontology_v07.ttl"
 EXAMPLES = 4        # examples per finding in section 5
 MAX_PAGES = 300     # a report longer than this has something that does not fit a page
@@ -326,7 +326,7 @@ def build_html(assessment: str, cfg: dict, folder: Path, today: str) -> str:
     commands = [f"PYTHONPATH=src python src/pdf_to_ttl.py {assessment}"]
     if original:
         commands.append(f"PYTHONPATH=src python src/ttl_compare.py data/ttl_original/{original.name} "
-                        f"data/ttl/{assessment}_v00.ttl --pdf {cfg['pdf']}")
+                        f"data/ttl/{assessment}.ttl --pdf {cfg['pdf']}")
     commands += [f"PYTHONPATH=src python src/ttl_audit.py data/pdf_compare/{assessment}/{ttl.name}",
                  f"PYTHONPATH=src python src/conversion_report.py {assessment}"]
     h.append("<br>".join(f"<code>{esc(cmd)}</code>" for cmd in commands) + "</p>")
@@ -383,8 +383,8 @@ def report(assessment: str, config: Path = DEFAULT_CONFIG, compare: bool = True)
         raise SystemExit(f"{assessment}: no {ttl.relative_to(ROOT)}; run pdf_to_ttl.py {assessment} first")
     original = original_ttl(assessment)
     compare_md = folder / f"{assessment}_compare.md"
-    # Compared: the file that is indexed, data/ttl/<A>_v00.ttl, when it is there.
-    automatic = AUTOMATIC_DIR / f"{assessment}_v00.ttl"
+    # Compared: the file that is indexed, data/ttl/<A>.ttl, when it is there.
+    automatic = AUTOMATIC_DIR / f"{assessment}.ttl"
     automatic = automatic if automatic.exists() else ttl
     if compare and original and (not compare_md.exists()
                                  or compare_md.stat().st_mtime < automatic.stat().st_mtime):

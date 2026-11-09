@@ -586,6 +586,83 @@ Recently a Memorandum of Understanding was signed between the Centre for Pollina
     dcterms:identifier "Table4.9" ;
     skos:prefLabel "Summary of estimates of the economic value of pollination services in 2015 US$" .
 
+<http://ontology.ipbes.net/report/key/PPA16-A> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/PPA16-1>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-10>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-11>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-2>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-3>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-4>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-5>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-6>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-7>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-8>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-9> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/PPA16-1>,
+        <http://ontology.ipbes.net/report/key/PPA16-2>,
+        <http://ontology.ipbes.net/report/key/PPA16-3>,
+        <http://ontology.ipbes.net/report/key/PPA16-4>,
+        <http://ontology.ipbes.net/report/key/PPA16-5>,
+        <http://ontology.ipbes.net/report/key/PPA16-6>,
+        <http://ontology.ipbes.net/report/key/PPA16-7>,
+        <http://ontology.ipbes.net/report/key/PPA16-8>,
+        <http://ontology.ipbes.net/report/key/PPA16-9> ;
+    ipbes:Report ipbes:PPA16 ;
+    dcterms:identifier "A" ;
+    skos:prefLabel "Values of pollinators and pollination" .
+
+<http://ontology.ipbes.net/report/key/PPA16-B> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/PPA16-12>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-13>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-14>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-15>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-16> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/PPA16-10>,
+        <http://ontology.ipbes.net/report/key/PPA16-11>,
+        <http://ontology.ipbes.net/report/key/PPA16-12>,
+        <http://ontology.ipbes.net/report/key/PPA16-13> ;
+    ipbes:Report ipbes:PPA16 ;
+    dcterms:identifier "B" ;
+    skos:prefLabel "Status and trends in pollinators, pollination and pollinator-dependent crops and wild plants" .
+
+<http://ontology.ipbes.net/report/key/PPA16-C> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/PPA16-17>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-18>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-19>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-20>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-21>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-22>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-23>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-24>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-25>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-26>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-27>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-28>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-29>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-30>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-31>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-32>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-33>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-34>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-35>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-36>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-37>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-38>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-39> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/PPA16-14>,
+        <http://ontology.ipbes.net/report/key/PPA16-15>,
+        <http://ontology.ipbes.net/report/key/PPA16-16>,
+        <http://ontology.ipbes.net/report/key/PPA16-17>,
+        <http://ontology.ipbes.net/report/key/PPA16-18>,
+        <http://ontology.ipbes.net/report/key/PPA16-19>,
+        <http://ontology.ipbes.net/report/key/PPA16-20>,
+        <http://ontology.ipbes.net/report/key/PPA16-21>,
+        <http://ontology.ipbes.net/report/key/PPA16-22>,
+        <http://ontology.ipbes.net/report/key/PPA16-23> ;
+    ipbes:Report ipbes:PPA16 ;
+    dcterms:identifier "C" ;
+    skos:prefLabel "Drivers of change, risks and opportunities and policy and management options" .
+
 <http://ontology.ipbes.net/report/ref/2333088/items/2S7WHDBS> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch6> ;
     ipbes:Report ipbes:PPA16 ;
@@ -2555,23 +2632,6 @@ The diversity of pollinators and pollination should be incorporated into a range
     foaf:firstName "Heidi" ;
     foaf:lastName "Ballard" .
 
-<http://ontology.ipbes.net/report/person/Bartuska_Ann> a foaf:Person ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:country "USA" ;
-    ipbes:mc "Management Committee in PPA16" ;
-    owl:sameAs <https://orcid.org/0000-0003-4109-1060> ;
-    skos:prefLabel "Ann Bartuska" ;
-    foaf:firstName "Ann" ;
-    foaf:lastName "Bartuska" .
-
-<http://ontology.ipbes.net/report/person/Baste_IvarAndreas> a foaf:Person ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:country "NOR" ;
-    ipbes:mc "Management Committee in PPA16" ;
-    skos:prefLabel "Ivar Andreas Baste" ;
-    foaf:firstName "Ivar Andreas" ;
-    foaf:lastName "Baste" .
-
 <http://ontology.ipbes.net/report/person/Bateman_IanJ> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch4> ;
     ipbes:Report ipbes:PPA16 ;
@@ -2685,15 +2745,6 @@ The diversity of pollinators and pollination should be incorporated into a range
     skos:prefLabel "Damayanti Buchori" ;
     foaf:firstName "Damayanti" ;
     foaf:lastName "Buchori" .
-
-<http://ontology.ipbes.net/report/person/Báldi_András> a foaf:Person ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:country "HUN" ;
-    ipbes:mc "Management Committee in PPA16" ;
-    owl:sameAs <https://orcid.org/0000-0001-6063-3721> ;
-    skos:prefLabel "András Báldi" ;
-    foaf:firstName "András" ;
-    foaf:lastName "Báldi" .
 
 <http://ontology.ipbes.net/report/person/Chantawannakul_Panuwan> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch2> ;
@@ -2840,6 +2891,7 @@ The diversity of pollinators and pollination should be incorporated into a range
     ipbes:Report ipbes:PPA16 ;
     ipbes:country "BRA" ;
     ipbes:cs "Co-chair in PPA16" ;
+    ipbes:ed "Editor in PPA16" ;
     owl:sameAs <https://orcid.org/0000-0002-1079-2158> ;
     skos:prefLabel "Vera Imperatriz-Fonseca" ;
     foaf:firstName "Vera" ;
@@ -3049,15 +3101,6 @@ The diversity of pollinators and pollination should be incorporated into a range
     foaf:firstName "Rodrigo" ;
     foaf:lastName "Medel" .
 
-<http://ontology.ipbes.net/report/person/Medellín_RodrigoAntonio> a foaf:Person ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:country "MEX" ;
-    ipbes:mc "Management Committee in PPA16" ;
-    owl:sameAs <https://orcid.org/0000-0002-4242-5344> ;
-    skos:prefLabel "Rodrigo Antonio Medellín" ;
-    foaf:firstName "Rodrigo Antonio" ;
-    foaf:lastName "Medellín" .
-
 <http://ontology.ipbes.net/report/person/MeléndezRamírez_Virginia> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch1> ;
     ipbes:Report ipbes:PPA16 ;
@@ -3099,19 +3142,11 @@ The diversity of pollinators and pollination should be incorporated into a range
 <http://ontology.ipbes.net/report/person/Ngo_HienT> a foaf:Person ;
     ipbes:Report ipbes:PPA16 ;
     ipbes:country "DEU" ;
+    ipbes:ed "Editor in PPA16" ;
     ipbes:ts "Technical Support Unit in PPA16" ;
     skos:prefLabel "Hien T. Ngo" ;
     foaf:firstName "Hien T." ;
     foaf:lastName "Ngo" .
-
-<http://ontology.ipbes.net/report/person/Oteng-Yeboah_Alfred> a foaf:Person ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:country "GHA" ;
-    ipbes:mc "Management Committee in PPA16" ;
-    owl:sameAs <https://orcid.org/0000-0002-9369-5758> ;
-    skos:prefLabel "Alfred Oteng-Yeboah" ;
-    foaf:firstName "Alfred" ;
-    foaf:lastName "Oteng-Yeboah" .
 
 <http://ontology.ipbes.net/report/person/Oteros-Rozas_Elisa> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch5> ;
@@ -3214,6 +3249,7 @@ The diversity of pollinators and pollination should be incorporated into a range
     ipbes:Report ipbes:PPA16 ;
     ipbes:country "GBR" ;
     ipbes:cs "Co-chair in PPA16" ;
+    ipbes:ed "Editor in PPA16" ;
     owl:sameAs <https://orcid.org/0000-0002-2045-980X> ;
     skos:prefLabel "Simon G. Potts" ;
     foaf:firstName "Simon G." ;
@@ -3432,21 +3468,6 @@ The diversity of pollinators and pollination should be incorporated into a range
     skos:prefLabel "Blandina Felipe Viana" ;
     foaf:firstName "Blandina Felipe" ;
     foaf:lastName "Viana" .
-
-<http://ontology.ipbes.net/report/person/Watson_RT> a foaf:Person ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:mc "Management Committee in PPA16" ;
-    skos:prefLabel "R.T. Watson" ;
-    foaf:firstName "R.T." ;
-    foaf:lastName "Watson" .
-
-<http://ontology.ipbes.net/report/person/Watson_Robert> a foaf:Person ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:country "GBR" ;
-    ipbes:mc "Management Committee in PPA16" ;
-    skos:prefLabel "Robert Watson" ;
-    foaf:firstName "Robert" ;
-    foaf:lastName "Watson" .
 
 <http://ontology.ipbes.net/report/person/Wiantoro_Sigit> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch1> ;
@@ -24514,62 +24535,6 @@ Given the emerging ability to identify areas of potential pollination deficit, v
     dcterms:identifier "6.5.1.7" ;
     skos:prefLabel "Vulnerability assessment" .
 
-<http://ontology.ipbes.net/report/bgm/PPA16-12> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.4> ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-12-SM0> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "The extent to which agriculture depends on pollinators varies greatly among crops, varieties and countries (figure SPM. 4). Animal pollination benefits have increased most in the Americas, the Mediterranean, the Middle East and East Asia, mainly due to their cultivation of a variety of fruit and seed crops {3.7.2, 3.7.3, 3.7.4, 3.8.3}." ;
-    dcterms:identifier "12" ;
-    skos:prefLabel "More food is produced every year and global agriculture’s reliance on pollinator-dependent crops has increased in volume by more than 300 per cent over the last five decades (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-13> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-13-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-13-SM1>,
-        <http://ontology.ipbes.net/report/subm/PPA16-13-SM2> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Yield per hectare of pollinator-dependent crops has increased less, and varies more year to year, than yield per hectare of pollinator-independent crops. While the drivers of this trend are not clear, studies of several crops at local scales show that production declines when pollinators decline. Furthermore, yields of many crops show local declines and lower stability when pollinator communities lack a variety of species (well established). A diverse pollinator community is more likely to provide stable, sufficient pollination than a less diverse community, as a result of pollinator species having different food preferences, foraging behaviour and activity patterns. Furthermore, studies at local scales show that crop production is higher in fields with diverse and abundant pollinator communities than in fields with less diverse pollinator communities. Wild pollinators, for some crops, contribute more to global crop production than do honey bees. Managed honey bees often cannot compensate fully for the loss of wild pollinators, can be less effective pollinators of many crops and cannot always be supplied in sufficient numbers to meet pollination demand in many countries (established but incomplete). However, certain wild pollinator species are dominant. It is estimated that 80 per cent of the pollination of global crops can be attributed to the activities of just 2 per cent of wild bee species. A diversity of pollination options, including both wild and managed species, is needed in most open field systems, where weather and environment can be unpredictable (established but incomplete) {3.7.2, 3.8.2, 3.8.3}." ;
-    dcterms:identifier "13" ;
-    skos:prefLabel "While global agriculture is becoming increasingly pollinator-dependent, yield growth and stability of pollinator-dependent crops are lower than those of pollinator-independent crops (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-14> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.5> ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-14-SM0> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "(figure SPM. 5). Colony losses may not always result in irreversible declines, as losses can be mitigated by beekeepers splitting colonies to recover or even exceed seasonal losses. The seasonal loss of western honey bees in Europe and North America varies strongly by country, state and province and by year, but in recent decades (at least since the widespread introduction of Varroa) has often been higher than the 10-15 per cent that was previously regarded as normal (established but incomplete). Data for other regions of the world is largely lacking {2.4.2.3, 2.4.2.4, 3.3.2, 3.3.3, 3.3.4, 3.3.5}." ;
-    dcterms:identifier "14" ;
-    skos:prefLabel "The number of managed western honey bee hives is increasing at the global scale, although seasonal colony loss is high in some European countries and in North America (well established)" .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-15> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-15-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-15-SM1>,
-        <http://ontology.ipbes.net/report/subm/PPA16-15-SM2>,
-        <http://ontology.ipbes.net/report/subm/PPA16-15-SM3>,
-        <http://ontology.ipbes.net/report/subm/PPA16-15-SM4>,
-        <http://ontology.ipbes.net/report/subm/PPA16-15-SM5>,
-        <http://ontology.ipbes.net/report/subm/PPA16-15-SM6>,
-        <http://ontology.ipbes.net/report/subm/PPA16-15-SM7>,
-        <http://ontology.ipbes.net/report/subm/PPA16-15-SM8> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription """At a regional level, declines in the diversity of bees and pollinator-dependent wild plants have been recorded in highly industrialized regions of the world, particularly Western Europe and Eastern North America, over the last century (well established). Some species have declined severely, such as Franklin’s bumble bee (Bombus franklini) in the western United States of America and the great yellow bumble bee (Bombus distinguendus) in Europe (well established). Trends for other species are unknown or are only known for a small part of the species’ distribution. Declines have also been recorded in other insect and vertebrate pollinator groups such as moths, hummingbirds and bats (established but incomplete). In some European countries, declining trends in insect pollinator diversity have slowed down or even stopped (established but incomplete). However, the reason(s) for this remain(s) unclear. In agricultural systems, the local abundance and diversity of wild bees have been found to decline strongly with distance from field margins and remnants of natural and semi natural habitat at scales of a few hundred metres (well established) {3.2.2, 3.2.3}.
-
-While global agriculture is becoming increasingly pollinator-dependent, yield growth and stability of pollinator-dependent crops are lower than those of pollinator-independent crops (well established). Yield per hectare of pollinator-dependent crops has increased less, and varies more year to year, than yield per hectare of pollinator-independent crops. While the drivers of this trend are not clear, studies of several crops at local scales show that production declines when pollinators decline. Furthermore, yields of many crops show local declines and lower stability when pollinator communities lack a variety of species (well established). A diverse pollinator community is more likely to provide stable, sufficient pollination than a less diverse community as a result of pollinator species having different food preferences, foraging behaviour and activity patterns. Furthermore, studies at local scales show that crop production is higher in fields with diverse and abundant pollinator communities than in fields with less diverse pollinator communities. Managed honey bees often cannot compensate fully for the loss of wild pollinators, can be less effective pollinators of many crops and cannot always be supplied in sufficient numbers to meet pollination demand in many countries (established but incomplete). However, certain wild pollinator species are dominant. It is estimated that 80 per cent of the pollination of global crops can be attributed to the activities of just 2 per cent of wild bee species. A diversity of pollination options, including both wild and managed species, is needed in most open field systems, where weather and environment can be unpredictable (established but incomplete) {3.7.2, 3.8.2, 3.8.3}.""" ;
-    dcterms:identifier "15" ;
-    skos:prefLabel "Many wild bees and butterflies have been declining in abundance, occurrence and diversity at local and regional scales in North-West Europe and North America (established but incomplete); data for other regions and pollinator groups are currently insufficient to draw general conclusions, although local declines have been reported." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-16> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.6> ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-16-SM0> ;
-    ipbes:hasConfidenceLevel "established but incomplete",
-        "well established" ;
-    ipbes:hasDescription "Recent European scale assessments indicate that 9 per cent of bees and 9 per cent of butterflies are threatened (figure SPM. 6B) and that populations are declining for 37 per cent of bees and 31 per cent of butterflies (excluding data deficient species). For the majority of European bees, data are insufficient to make IUCN assessments. At the national level, where Red Lists are available they show that the numbers of threatened species tend to be much higher than at the regional level. In contrast, crop pollinating bees are generally common species and rarely threatened species. Of 130 common crop pollinating bees, only 58 species have been assessed either in Europe or North America, of which only two species are threatened, two are near threatened, and 42 are not threatened (i.e., Least Concern IUCN risk category), and for 12 species data are insufficient for assessment. Of 57 species considered in a 2007 assessment of global crop pollination, only 10 species have been formally assessed, of which one bumble bee species is critically endangered. However, at least 10 other species, including three honey bee species, are known to be very common, although the health of honey bee colonies should also be considered {3.2.2, 3.2.3}." ;
-    dcterms:identifier "16" ;
-    skos:prefLabel "An objective evaluation of the status of a species is The International Union for Conservation of Nature (IUCN) Red List assessment. Global assessments are available for many vertebrate pollinators, e.g., per cent of vertebrate pollinators are threatened with global extinction (increasing to 30 per cent for island species) (established but incomplete), with a trend towards more extinctions (well established). Most insect pollinators have not been assessed at the global level (well established). Regional and national assessments of insect pollinators indicate high levels of threat, particularly for bees and butterflies (often more than 40 per cent of species threatened) (established but incomplete)." .
-
 <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.3> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:hasDescription """(B) Global map of pollination service to direct crop market output in terms of US$ per hectare of added production on a 5’ by 5’ latitude longitude grid. Benefits are given as US$ for the year 2000 and have been corrected for inflation (to the year 2009) and for purchasing power parities. Analyses used country-specific FAO-data on production prices and production quantities and on the pollination dependency ratio of the crops. Based on Lautenbach et al. (2012).
@@ -25844,6 +25809,67 @@ Interdisciplinary research that combines ecological, economic, social and psycho
 Finally, transdisciplinary work is essential to implement pollinator-supporting practices in real-world landscapes and support long-term yields of pollinator-dependent crops (Garibaldi et al., 2014). Developing farmer-researcher platforms or networks, helping researchers to interact with farmers and understand farmer problems, and assisting researchers to work within the complexity of on-farm research (e.g. http://aeix3dev.devcloud.acquia-sites.com), are key ways of finding practical answers in a context that involves the participation of farmers.""" ;
     dcterms:identifier "6.8.1" ;
     skos:prefLabel "Agricultural, agroforestry and horticultural practices" .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-12> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.4> ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-12-SM0> ;
+    ipbes:hasCategory "B. Status and trends in pollinators, pollination and pollinator-dependent crops and wild plants" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "The extent to which agriculture depends on pollinators varies greatly among crops, varieties and countries (figure SPM. 4). Animal pollination benefits have increased most in the Americas, the Mediterranean, the Middle East and East Asia, mainly due to their cultivation of a variety of fruit and seed crops {3.7.2, 3.7.3, 3.7.4, 3.8.3}." ;
+    dcterms:identifier "12" ;
+    skos:prefLabel "More food is produced every year and global agriculture’s reliance on pollinator-dependent crops has increased in volume by more than 300 per cent over the last five decades (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-13> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-13-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-13-SM1>,
+        <http://ontology.ipbes.net/report/subm/PPA16-13-SM2> ;
+    ipbes:hasCategory "B. Status and trends in pollinators, pollination and pollinator-dependent crops and wild plants" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Yield per hectare of pollinator-dependent crops has increased less, and varies more year to year, than yield per hectare of pollinator-independent crops. While the drivers of this trend are not clear, studies of several crops at local scales show that production declines when pollinators decline. Furthermore, yields of many crops show local declines and lower stability when pollinator communities lack a variety of species (well established). A diverse pollinator community is more likely to provide stable, sufficient pollination than a less diverse community, as a result of pollinator species having different food preferences, foraging behaviour and activity patterns. Furthermore, studies at local scales show that crop production is higher in fields with diverse and abundant pollinator communities than in fields with less diverse pollinator communities. Wild pollinators, for some crops, contribute more to global crop production than do honey bees. Managed honey bees often cannot compensate fully for the loss of wild pollinators, can be less effective pollinators of many crops and cannot always be supplied in sufficient numbers to meet pollination demand in many countries (established but incomplete). However, certain wild pollinator species are dominant. It is estimated that 80 per cent of the pollination of global crops can be attributed to the activities of just 2 per cent of wild bee species. A diversity of pollination options, including both wild and managed species, is needed in most open field systems, where weather and environment can be unpredictable (established but incomplete) {3.7.2, 3.8.2, 3.8.3}." ;
+    dcterms:identifier "13" ;
+    skos:prefLabel "While global agriculture is becoming increasingly pollinator-dependent, yield growth and stability of pollinator-dependent crops are lower than those of pollinator-independent crops (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-14> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.5> ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-14-SM0> ;
+    ipbes:hasCategory "B. Status and trends in pollinators, pollination and pollinator-dependent crops and wild plants" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "(figure SPM. 5). Colony losses may not always result in irreversible declines, as losses can be mitigated by beekeepers splitting colonies to recover or even exceed seasonal losses. The seasonal loss of western honey bees in Europe and North America varies strongly by country, state and province and by year, but in recent decades (at least since the widespread introduction of Varroa) has often been higher than the 10-15 per cent that was previously regarded as normal (established but incomplete). Data for other regions of the world is largely lacking {2.4.2.3, 2.4.2.4, 3.3.2, 3.3.3, 3.3.4, 3.3.5}." ;
+    dcterms:identifier "14" ;
+    skos:prefLabel "The number of managed western honey bee hives is increasing at the global scale, although seasonal colony loss is high in some European countries and in North America (well established)" .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-15> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-15-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-15-SM1>,
+        <http://ontology.ipbes.net/report/subm/PPA16-15-SM2>,
+        <http://ontology.ipbes.net/report/subm/PPA16-15-SM3>,
+        <http://ontology.ipbes.net/report/subm/PPA16-15-SM4>,
+        <http://ontology.ipbes.net/report/subm/PPA16-15-SM5>,
+        <http://ontology.ipbes.net/report/subm/PPA16-15-SM6>,
+        <http://ontology.ipbes.net/report/subm/PPA16-15-SM7>,
+        <http://ontology.ipbes.net/report/subm/PPA16-15-SM8> ;
+    ipbes:hasCategory "B. Status and trends in pollinators, pollination and pollinator-dependent crops and wild plants" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription """At a regional level, declines in the diversity of bees and pollinator-dependent wild plants have been recorded in highly industrialized regions of the world, particularly Western Europe and Eastern North America, over the last century (well established). Some species have declined severely, such as Franklin’s bumble bee (Bombus franklini) in the western United States of America and the great yellow bumble bee (Bombus distinguendus) in Europe (well established). Trends for other species are unknown or are only known for a small part of the species’ distribution. Declines have also been recorded in other insect and vertebrate pollinator groups such as moths, hummingbirds and bats (established but incomplete). In some European countries, declining trends in insect pollinator diversity have slowed down or even stopped (established but incomplete). However, the reason(s) for this remain(s) unclear. In agricultural systems, the local abundance and diversity of wild bees have been found to decline strongly with distance from field margins and remnants of natural and semi natural habitat at scales of a few hundred metres (well established) {3.2.2, 3.2.3}.
+
+While global agriculture is becoming increasingly pollinator-dependent, yield growth and stability of pollinator-dependent crops are lower than those of pollinator-independent crops (well established). Yield per hectare of pollinator-dependent crops has increased less, and varies more year to year, than yield per hectare of pollinator-independent crops. While the drivers of this trend are not clear, studies of several crops at local scales show that production declines when pollinators decline. Furthermore, yields of many crops show local declines and lower stability when pollinator communities lack a variety of species (well established). A diverse pollinator community is more likely to provide stable, sufficient pollination than a less diverse community as a result of pollinator species having different food preferences, foraging behaviour and activity patterns. Furthermore, studies at local scales show that crop production is higher in fields with diverse and abundant pollinator communities than in fields with less diverse pollinator communities. Managed honey bees often cannot compensate fully for the loss of wild pollinators, can be less effective pollinators of many crops and cannot always be supplied in sufficient numbers to meet pollination demand in many countries (established but incomplete). However, certain wild pollinator species are dominant. It is estimated that 80 per cent of the pollination of global crops can be attributed to the activities of just 2 per cent of wild bee species. A diversity of pollination options, including both wild and managed species, is needed in most open field systems, where weather and environment can be unpredictable (established but incomplete) {3.7.2, 3.8.2, 3.8.3}.""" ;
+    dcterms:identifier "15" ;
+    skos:prefLabel "Many wild bees and butterflies have been declining in abundance, occurrence and diversity at local and regional scales in North-West Europe and North America (established but incomplete); data for other regions and pollinator groups are currently insufficient to draw general conclusions, although local declines have been reported." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-16> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.6> ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-16-SM0> ;
+    ipbes:hasCategory "B. Status and trends in pollinators, pollination and pollinator-dependent crops and wild plants" ;
+    ipbes:hasConfidenceLevel "established but incomplete",
+        "well established" ;
+    ipbes:hasDescription "Recent European scale assessments indicate that 9 per cent of bees and 9 per cent of butterflies are threatened (figure SPM. 6B) and that populations are declining for 37 per cent of bees and 31 per cent of butterflies (excluding data deficient species). For the majority of European bees, data are insufficient to make IUCN assessments. At the national level, where Red Lists are available they show that the numbers of threatened species tend to be much higher than at the regional level. In contrast, crop pollinating bees are generally common species and rarely threatened species. Of 130 common crop pollinating bees, only 58 species have been assessed either in Europe or North America, of which only two species are threatened, two are near threatened, and 42 are not threatened (i.e., Least Concern IUCN risk category), and for 12 species data are insufficient for assessment. Of 57 species considered in a 2007 assessment of global crop pollination, only 10 species have been formally assessed, of which one bumble bee species is critically endangered. However, at least 10 other species, including three honey bee species, are known to be very common, although the health of honey bee colonies should also be considered {3.2.2, 3.2.3}." ;
+    dcterms:identifier "16" ;
+    skos:prefLabel "An objective evaluation of the status of a species is The International Union for Conservation of Nature (IUCN) Red List assessment. Global assessments are available for many vertebrate pollinators, e.g., per cent of vertebrate pollinators are threatened with global extinction (increasing to 30 per cent for island species) (established but incomplete), with a trend towards more extinctions (well established). Most insect pollinators have not been assessed at the global level (well established). Regional and national assessments of insect pollinators indicate high levels of threat, particularly for bees and butterflies (often more than 40 per cent of species threatened) (established but incomplete)." .
 
 <http://ontology.ipbes.net/report/ref/2333088/items/2KNEFKXM> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch2> ;
@@ -28675,102 +28701,6 @@ Scanning for alternative options, or solutions, is an important element of organ
     dcterms:identifier "6.5.1.2" ;
     skos:prefLabel "Evidence synthesis" .
 
-<http://ontology.ipbes.net/report/bgm/PPA16-1> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-1-SM0> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Scientific knowledge provides extensive and multi-dimensional understanding of pollinators and pollination, resulting in detailed information on their diversity, functions and steps needed to protect pollinators and the values they produce. In indigenous and local knowledge systems, pollination processes are often understood, celebrated and managed holistically in terms of maintaining values through fostering fertility, fecundity, spirituality and a diversity of farms, gardens and other habitats. The combined use of economic, socio-cultural and holistic valuation of pollinator gains and losses, using multiple knowledge systems, brings different perspectives from different stakeholder groups, providing more information for the management of and decision-making about pollinators and pollination, although key knowledge gaps remain {4.2, 4.6, 5.1.1, 5.1.2, 5.1.3, 5.1.4, 5.1.5, 5.2.1, 5.2.5, 5.3.1, 5.5, figure 5-5 and boxes 5-1, 5-2}." ;
-    dcterms:identifier "1" ;
-    skos:prefLabel "Diverse knowledge systems, including science and indigenous and local knowledge, contribute to understanding pollinators and pollination, their economic, environmental and socio-cultural values and their management globally (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-10> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-10-SM0> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "While small holdings (less than 2 hectares) constitute about 8-16 per cent of global farm land, large gaps exist in our knowledge on the area of diversified farming systems linked to indigenous and local knowledge. Diversified farming systems foster agro-biodiversity and pollination through crop rotation, the promotion of habitat at diverse stages of succession, diversity and abundance of floral resources; ongoing incorporation of wild resources and inclusion of tree canopy species; innovations, for example in apiaries, swarm capture and pest control; and adaptation to social-environmental change, for example through the incorporation of new invasive bee species and pollination resources into farming practices {5.2.8, case examples 5-7, 5-8. 5-9, 5-10, 5-11, 5-12, 5-13, and figures 5-14, 5-15, 5-22}." ;
-    dcterms:identifier "10" ;
-    skos:prefLabel "Diversified farming systems, some linked to indigenous and local knowledge, represent an important pollinator-friendly addition to industrial agriculture and include swidden, home garden, commodity agroforestry and bee farming systems (established but incomplete)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-11> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-11-SM0> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "This includes practices of diverse farming systems; of favouring heterogeneity in landscapes and gardens; of kinship relationships that protect many specific pollinators; of using biotemporal indicators that rely on distinguishing a great range of pollinators; and of tending to the conservation of nesting trees and floral and other pollinator resources. The ongoing linkages among these cultural practices, the underpinning indigenous and local knowledge (including multiple local language names for diverse pollinators) and pollinators constitute elements of “biocultural diversity”. Areas where “biocultural diversity” is maintained are valued globally for their roles in protecting both threatened species and endangered languages. While the extent of these areas is clearly considerable, for example extending over 30 per cent of forests in developing countries, key gaps remain in the understanding of their location, status and trends {5.1.3, 5.2.5, 5.2.6, 5.2.7, 5.4.7.2, case example 5-1, 5-3, 5-5, 5-6, and figures 5-4, 5-11}." ;
-    dcterms:identifier "11" ;
-    skos:prefLabel "A number of cultural practices based on indigenous and local knowledge contribute to supporting an abundance and diversity of pollinators and maintaining valued “biocultural diversity” (for the purposes of this assessment, biological and cultural diversity and the links between them are referred to as “biocultural diversity”) (established but incomplete)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-2> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-2-SM0> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "Pollinators play central roles in the stability and functioning of many terrestrial food webs, as wild plants provide a wide range of resources such as food and shelter for many other invertebrates, mammals, birds and other taxa {1.2.1, 1.6, 4.0, 4.4}." ;
-    dcterms:identifier "2" ;
-    skos:prefLabel "Animal pollination plays a vital role as a regulating ecosystem service in nature. An estimated 87.5 per cent (approximately 308,000 species) of the world’s flowering wild plants depend, at least in part, on animal pollination for sexual reproduction, and this ranges from 94 per cent in tropical communities to 78 per cent in temperate zone communities (established but incomplete)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-3> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.2> ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-3-SM0> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Of the 107 leading global crop types, production from 91 (fruit, seed and nut) crops rely to varying degrees upon animal pollination. Total pollinator loss would decrease crop production by more than 90 per cent in 12 per cent of the leading global crops, would have no effects in 7 per cent of the crops and would have unknown effects in 8 per cent of the crops. In addition, 28 per cent of the crops would lose between 40 and 90 per cent of production, whereas the remaining crops would lose between 1 and 40 per cent (figure SPM. 2). In terms of global production volumes, 60 per cent of production comes from crops that do not depend on animal pollination (e.g., cereals and root crops), 35 per cent of production comes from crops that depend at least in part on animal pollination and 5 per cent have not been evaluated (established but incomplete). In addition, many crops, such as potatoes, carrots, parsnips, alliums and other vegetables, do not depend directly on pollinators for the production of the parts we consume (e.g., roots, tubers, stems, leaves or flowers), but pollinators are still important for their propagation via seeds or in breeding programmes. Furthermore, many forage species (e.g., legumes) also benefit from animal pollination {1.1, 1.2.1, 3.7.2}." ;
-    dcterms:identifier "3" ;
-    skos:prefLabel "Production, yield and quality of more than three quarters of the leading global food crop types, occupying 33-35 per cent of all agricultural land, benefit from animal pollination (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-4> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.3> ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-4-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-4-SM1> ;
-    ipbes:hasDescription """(figure SPM. 3A) (established but incomplete) {3.7.2, 5.2.2}.
-
-Loss of pollinators could lead to lower availability of crops and wild plants that provide essential micronutrients for human diets, impacting health and nutritional security and risking increased numbers of people suffering from vitamin A, iron and folate deficiency. It is now well recognized that hunger and malnutrition are best addressed by paying attention to diverse nutritional requirements and not to calories alone, but also to the dietary nutritional value from non staple crop products, many of which are dependent on pollinators {1.1, 2.6.4, 3.7, 3.8, 5.4.1}. This includes some animal pollinators that are themselves consumed for food and are high in protein, vitamins and minerals.""" ;
-    dcterms:identifier "4" ;
-    skos:prefLabel "Animal pollination is directly responsible for between 5 and 8 per cent of current global agricultural production by volume (i.e., this amount of production would be lost if there were no pollinators), and includes foods that supply major proportions of micronutrients, such as vitamin A, iron and folate, in global human diets" .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-5> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.3> ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-5-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-5-SM1>,
-        <http://ontology.ipbes.net/report/subm/PPA16-5-SM2>,
-        <http://ontology.ipbes.net/report/subm/PPA16-5-SM3> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "(figure SPM. 3B) {3.7.2, 4.7.3}. On average, pollinator-dependent crops have higher prices than non-pollinator dependent crops. The distribution of these monetary benefits is not uniform, with the greatest additional production occurring in parts of Eastern Asia, the Middle East, Mediterranean Europe and North America. The additional monetary output linked to pollination services accounts for 5-15 per cent of total crop output in different United Nations regions, with the greatest contributions in the Middle East, South Asia and East Asia. In the absence of animal pollination, changes in global crop supplies could increase prices to consumers and reduce profits to producers, resulting in a potential annual net loss of economic welfare of $160 billion-$191 billion globally to crop consumers and producers and a further $207 billion-$497 billion to producers and consumers in other, non-crop markets (e.g., non-crop agriculture, forestry and food processing) {4.7}. The accuracy of the economic methods used to estimate these values is limited by numerous data gaps, and most studies focus on developed nations {4.2, 4.3, 4.5, 4.7}. Explicit estimation and consideration of economic benefits through tools such as cost-benefit analyses and multi-criteria analyses provide information to stakeholders and can help inform land-use choices with greater recognition of pollinator biodiversity and sustainability {4.1, 4.6}." ;
-    dcterms:identifier "5" ;
-    skos:prefLabel "The annual market value of the 5-8 per cent of production that is directly linked with pollination services is estimated at $235 billion-$577 billion (in 2015 US$) worldwide (established but incomplete)" .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-6> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-6-SM0> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription ". Many of the world’s most important cash crops are pollinator-dependent. These constitute leading export products in developing countries (e.g., coffee and cocoa) and developed countries (e.g., almonds) providing employment and income for millions of people. Impacts of pollinator loss will therefore be different among regional economies, being higher for economies with a stronger reliance on pollinator-dependent crops (whether grown nationally or imported). Existing studies of the economic value of pollination have not accounted for non-monetary aspects of economies, particularly the assets that form the basis of rural economies, for example human (e.g., employment of beekeepers), social (e.g., beekeepers associations), physical (e.g., honey bee colonies), financial (e.g., honey sales) and natural assets (e.g., wider biodiversity resulting from pollinator-friendly practices). The sum and balance of these assets are the foundation for future development and sustainable rural livelihoods {3.7, 4.2, 4.4, 4.7}." ;
-    dcterms:identifier "6" ;
-    skos:prefLabel "Many livelihoods depend on pollinators, their products and their multiple benefits (established but incomplete)" .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-7> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-7-SM0> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Globally, available data show that 81 million hives annually produce 65,000 tonnes of beeswax and 1.6 million tonnes of honey, of which an estimated 518,000 tonnes are traded. Many rural economies favour beekeeping and honey hunting, as minimal investment is required; diverse products can be sold; diverse forms of ownership support access; family nutrition and medicinal benefits can be derived from it; the timing and location of activities are flexible; and numerous links exist with cultural and social institutions. Beekeeping is also of growing importance as an ecologically-inspired lifestyle choice in many urban contexts. Significant unrealized potential exists for beekeeping as a sustainable livelihood activity in developing world contexts {4.3.2, 4.7.1, 5.2.8.4, 5.3.5, 5.4.6.1, case examples 5-10, 5-11, 5-12, 5-13, 5-14, 5-21, 5-24, 5-25, and figures 5-12, 5-13, 5-14, 5-15, 5-22}." ;
-    dcterms:identifier "7" ;
-    skos:prefLabel "Livelihoods based on beekeeping and honey hunting are an anchor for many rural economies and are the source of multiple educational and recreational benefits in both rural and urban contexts (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-8> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-8-SM0> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "For example, some anti-bacterial, anti-fungal and anti-diabetic agents are derived from honey; Jatropha oil, cotton and eucalyptus trees are examples of pollinator-dependent biofuel, fibre and timber sources respectively; beeswax can be used to protect and maintain fine musical instruments. Artistic, literary and religious inspiration from pollinators includes popular and classical music (e.g., I’m a King Bee by Slim Harpo, the Flight of the Bumblebee by Rimsky-Korsakov); sacred passages about bees in the Mayan codices (e.g., stingless bees), the Surat An-Naĥl in the Qur’an, the three-bee motif of Pope Urban VIII in the Vatican and sacred passages of Hinduism, Buddhism and Chinese traditions such as the Chuang Tzu. Pollinator-inspired technical design is reflected in the visually guided flight of robots and the 10 metre telescopic nets used by some amateur entomologists today {5.2.1, 5.2.2., 5.2.3, 5.2.4, case examples 5-2, 5-16, and figures 5-7, 5-8, 5-9, 5-10, 5-24}." ;
-    dcterms:identifier "8" ;
-    skos:prefLabel "Pollinators are a source of multiple benefits to people well beyond food-provisioning alone, contributing directly to medicines, biofuels, fibres, construction materials, musical instruments, arts and crafts and as sources of inspiration for art, music, literature, religion and technology (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-9> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-9-SM0> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "As examples, the World Heritage site the Agave Landscape and Ancient Industrial Facilities of Tequila depends on bat pollination to maintain agave genetic diversity and health; people show marked aesthetic preferences for the flowering season in diverse European cultural landscapes; a hummingbird is the national symbol of Jamaica, a sunbird of Singapore, and an endemic birdwing the national butterfly of Sri Lanka; seven-foot wide butterfly masks symbolize fertility in festivals of the Bwa people of Burkina Faso; and the Tagbanua people of the Philippines, according to their tradition, interact with two bee deities living in the forest and karst as the ultimate authority for their shifting agriculture {5.3.1, 5.3.2, 5.3.3, 5.3.4, 5.3.6, case examples 5-16, 5-17, 5-18, 5-19, 5-20, and figures 5-16, 5-17, 5-18, 5-19, 5-20, 5-21}." ;
-    dcterms:identifier "9" ;
-    skos:prefLabel "A good quality of life for many people relies on the ongoing roles of pollinators in globally significant heritage as symbols of identity, as aesthetically significant landscapes, flowers, birds, bats and butterflies and in the social relations and governance interactions of indigenous peoples and local communities (well established)." .
-
 <http://ontology.ipbes.net/report/ref/2333088/items/82JXS5ZR> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch3>,
         <http://ontology.ipbes.net/report/ch/PPA16ch4>,
@@ -29213,224 +29143,112 @@ Honey bees are managed for honey production as well as crop pollination, and the
     dcterms:identifier "6.7.2" ;
     skos:prefLabel "Trade-offs between pollination and food provisioning services (crop yield and honey)" .
 
-<http://ontology.ipbes.net/report/bgm/PPA16-17> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/PPA16-1> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-17-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-17-SM1> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-1-SM0> ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Scientific knowledge provides extensive and multi-dimensional understanding of pollinators and pollination, resulting in detailed information on their diversity, functions and steps needed to protect pollinators and the values they produce. In indigenous and local knowledge systems, pollination processes are often understood, celebrated and managed holistically in terms of maintaining values through fostering fertility, fecundity, spirituality and a diversity of farms, gardens and other habitats. The combined use of economic, socio-cultural and holistic valuation of pollinator gains and losses, using multiple knowledge systems, brings different perspectives from different stakeholder groups, providing more information for the management of and decision-making about pollinators and pollination, although key knowledge gaps remain {4.2, 4.6, 5.1.1, 5.1.2, 5.1.3, 5.1.4, 5.1.5, 5.2.1, 5.2.5, 5.3.1, 5.5, figure 5-5 and boxes 5-1, 5-2}." ;
+    dcterms:identifier "1" ;
+    skos:prefLabel "Diverse knowledge systems, including science and indigenous and local knowledge, contribute to understanding pollinators and pollination, their economic, environmental and socio-cultural values and their management globally (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-10> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-10-SM0> ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "However, a lack of data, particularly outside Western Europe and North America, and correlations between drivers make it very difficult to link long-term pollinator declines with specific direct drivers. Changes in pollinator health, diversity and abundance have generally led to locally reduced pollination of pollinator-dependent crops (lowering the quantity, quality or stability of yield) and have contributed to altered wild plant diversity at the local and regional scales, and resulted in the loss of distinctive ways of life, cultural practices and traditions as a result of pollinator loss (established but incomplete). Other risks, including the loss of aesthetic value or well-being associated with pollinators and the loss of long-term resilience in food production systems, could develop in the longer-term. The relative importance of each driver varies between pollinator species according to their biology and geographic location. Drivers can also combine or interact in their effects, complicating any ranking of drivers by risk of harm (unresolved) {2.7, 4.5, 6.2.1}." ;
-    dcterms:identifier "17" ;
-    skos:prefLabel "A wealth of observational, empirical and modelling studies worldwide point to a high likelihood that many drivers have affected, and are affecting, wild and managed pollinators negatively (established but incomplete)." .
+    ipbes:hasDescription "While small holdings (less than 2 hectares) constitute about 8-16 per cent of global farm land, large gaps exist in our knowledge on the area of diversified farming systems linked to indigenous and local knowledge. Diversified farming systems foster agro-biodiversity and pollination through crop rotation, the promotion of habitat at diverse stages of succession, diversity and abundance of floral resources; ongoing incorporation of wild resources and inclusion of tree canopy species; innovations, for example in apiaries, swarm capture and pest control; and adaptation to social-environmental change, for example through the incorporation of new invasive bee species and pollination resources into farming practices {5.2.8, case examples 5-7, 5-8. 5-9, 5-10, 5-11, 5-12, 5-13, and figures 5-14, 5-15, 5-22}." ;
+    dcterms:identifier "10" ;
+    skos:prefLabel "Diversified farming systems, some linked to indigenous and local knowledge, represent an important pollinator-friendly addition to industrial agriculture and include swidden, home garden, commodity agroforestry and bee farming systems (established but incomplete)." .
 
-<http://ontology.ipbes.net/report/bgm/PPA16-18> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/PPA16-11> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-18-SM0> ;
-    ipbes:hasConfidenceLevel "established but incomplete",
-        "well established" ;
-    ipbes:hasDescription "These practices include high use of agrochemicals and intensively performed tillage, grazing or mowing. Such changes in pollinator resources are known to lower densities and diversity of foraging insects and alter the composition and structure of pollinator communities from local to regional scales (well established) {2.2.1.1, 2.2.1.2, 2.2.2, 2.3.1.2, 2.3.1.3, 3.2}." ;
-    dcterms:identifier "18" ;
-    skos:prefLabel "Habitat destruction, fragmentation and degradation, along with conventional intensive land management practices, often reduce or alter pollinators’ food (well established) and nesting resources (established but incomplete)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-19> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-TableSPM.1> ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-19-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-19-SM1> ;
-    ipbes:hasDescription "(table SPM. 1). (i) Ecological intensification involves managing nature’s ecological functions to improve agricultural production and livelihoods while minimizing environmental damage. (ii) Strengthening existing diverse farming systems involves managing systems such as forest gardens, home gardens and agroforestry to foster pollinators and pollination through practices validated by science or indigenous and local knowledge (e.g., crop rotation). (iii) Ecological infrastructure needed to improve pollination includes patches of semi-natural habitats distributed throughout productive agricultural landscapes, providing nesting and floral resources. These three strategies concurrently address several important drivers of pollinator decline by mitigating the impacts of land-use change, pesticide use and climate change (established but incomplete). The policies and practices that form them have direct economic benefits to people and livelihoods in many cases (established but incomplete). Responses identified for managing immediate risks in agriculture (table SPM. 1) tend to mitigate only one or none of the drivers of pollinator decline. Some of these responses (marked with an asterisk in table SPM. 1) have potential adverse effects, both on pollinators and for wider agricultural sustainability, that need to be quantified and better understood {2.2.1, 2.2.2, 2.3.1, 2.3.2.3, 3.2.3, 3.6.3, 5.2.8, 6.9}." ;
-    dcterms:identifier "19" ;
-    skos:prefLabel "Three complementary strategies are envisaged for producing more sustainable agriculture that address several important drivers of pollinator decline: ecological intensification, strengthening existing diverse farming systems and investing in ecological infrastructure" .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-20> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-20-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-20-SM1> ;
-    ipbes:hasConfidenceLevel "established but incomplete",
-        "well established" ;
-    ipbes:hasDescription "Long-term abundance data (which are not yet available) would be required to establish whether these responses have population-level benefits. Evidence for the effects of organic farming comes largely from Europe and North America. Actions to enhance pollination on intensive farmland also enhance other ecosystem services, including natural pest regulation (established but incomplete). There are, however, potential trade-offs between enhancing yield and enhancing pollination. For example, in many, but not all, farming systems current organic practices usually produce lower yields (well established). Better understanding the role of ecological intensification could address this issue of trade-off by increasing organic farm yields while boosting pollination benefits. The effects of this response, including its utility in reducing the tradeoff, represent a knowledge gap {6.4.1.1.1, 6.4.1.1.4, 6.7.1, 6.7.2}." ;
-    dcterms:identifier "20" ;
-    skos:prefLabel "Responses known to reduce or mitigate negative agricultural impacts on pollinators include organic farming and planting flower strips, both of which increase local numbers of foraging pollinating insects (well established) and pollination (established but incomplete)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-21> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-21-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-21-SM1>,
-        <http://ontology.ipbes.net/report/subm/PPA16-21-SM2>,
-        <http://ontology.ipbes.net/report/subm/PPA16-21-SM3>,
-        <http://ontology.ipbes.net/report/subm/PPA16-21-SM4> ;
-    ipbes:hasConfidenceLevel "established but incomplete",
-        "well established" ;
-    ipbes:hasDescription "Depending on land use (e.g., agriculture, forestry, grazing, etc.), landscape habitat diversity can be enhanced to support pollinators through intercropping; crop rotation including flowering crops; agroforestry; and creating, restoring or maintaining wildflower habitat or native vegetation (well established). The efficacy of such measures can be enhanced if implemented from field to landscape scales that correspond with pollinator mobility, hence assuring connectivity among these landscape features (established but incomplete) {2.2.2, 2.2.3, 3.2.3}. Such actions can be achieved by rewarding farmers or land managers for good practices (well established), by demonstrating the economic value of pollination services in agriculture, forestry or livestock production and by using (agricultural) extension services to convey knowledge and demonstrate practical application to farmers or land managers (established but incomplete). The protection of large areas of semi-natural or natural habitat (tens of hectares or more) helps to maintain pollinator habitats at regional or national scales (established but incomplete), but will not directly support agricultural pollination in areas that are more than a few kilometres away from large reserves because of the limited flight ranges of crop pollinators (established but incomplete). Enhancing connectivity at the landscape scale, for example by linking habitat patches (including with road verges), may enhance pollination of wild plants by enabling the movement of pollinators (established but incomplete), but its role in maintaining pollinator populations remains unclear {2.2.1.2, 6.4.1.1.10, 6.4.1.5, 6.4.1.3, 6.4.3.1.1, 6.4.3.1.2, 6.4.3.2.2, 6.4.5.1.6}." ;
-    dcterms:identifier "21" ;
-    skos:prefLabel "Greater landscape-scale habitat diversity often results in more diverse pollinator communities (well established) and more effective crop and wild plant pollination (established but incomplete)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-22> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-22-SM0> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-11-SM0> ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "A number of integrated responses that address these drivers of pollinator decline have been identified: 1) food security, including the ability to determine one’s own agricultural and food policies, resilience and ecological intensification; 2) conservation of biological and cultural diversity and the links between them; 3) strengthening traditional governance that supports pollinators; 4) prior and informed consent for conservation, development and knowledge-sharing; 5) recognizing tenure; 6) recognizing significant agricultural, biological and cultural heritage and 7) framing conservation to link with peoples’ values {5.4, case examples 5-18, 5-19, 5-20, 5-21, 5-22, 5-23, 5-24, 5-25, 5-26, figures 5-26, 5-27, and box 5-3}." ;
-    dcterms:identifier "22" ;
-    skos:prefLabel "Managing and mitigating the impacts of pollinator decline on people’s good quality of life could benefit from responses that address loss of access to traditional territories, loss of traditional knowledge, tenure and governance, and the interacting, cumulative effects of direct drivers (established but incomplete)." .
+    ipbes:hasDescription "This includes practices of diverse farming systems; of favouring heterogeneity in landscapes and gardens; of kinship relationships that protect many specific pollinators; of using biotemporal indicators that rely on distinguishing a great range of pollinators; and of tending to the conservation of nesting trees and floral and other pollinator resources. The ongoing linkages among these cultural practices, the underpinning indigenous and local knowledge (including multiple local language names for diverse pollinators) and pollinators constitute elements of “biocultural diversity”. Areas where “biocultural diversity” is maintained are valued globally for their roles in protecting both threatened species and endangered languages. While the extent of these areas is clearly considerable, for example extending over 30 per cent of forests in developing countries, key gaps remain in the understanding of their location, status and trends {5.1.3, 5.2.5, 5.2.6, 5.2.7, 5.4.7.2, case example 5-1, 5-3, 5-5, 5-6, and figures 5-4, 5-11}." ;
+    dcterms:identifier "11" ;
+    skos:prefLabel "A number of cultural practices based on indigenous and local knowledge contribute to supporting an abundance and diversity of pollinators and maintaining valued “biocultural diversity” (for the purposes of this assessment, biological and cultural diversity and the links between them are referred to as “biocultural diversity”) (established but incomplete)." .
 
-<http://ontology.ipbes.net/report/bgm/PPA16-23> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/PPA16-2> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-23-SM0> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-2-SM0> ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "Road verges, power lines, railway banks (established but incomplete) in cities also have a large potential for supporting pollinators if managed appropriately to provide flowering and nesting resources {6.4.5.1, 6.4.5.1.6}." ;
-    dcterms:identifier "23" ;
-    skos:prefLabel "Managing urban and recreational green spaces to increase the local abundance of nectar providing and pollen-providing flowering plants increases pollinator diversity and abundance (established but incomplete), although it is unknown whether this has long-term benefits at the population level." .
+    ipbes:hasDescription "Pollinators play central roles in the stability and functioning of many terrestrial food webs, as wild plants provide a wide range of resources such as food and shelter for many other invertebrates, mammals, birds and other taxa {1.2.1, 1.6, 4.0, 4.4}." ;
+    dcterms:identifier "2" ;
+    skos:prefLabel "Animal pollination plays a vital role as a regulating ecosystem service in nature. An estimated 87.5 per cent (approximately 308,000 species) of the world’s flowering wild plants depend, at least in part, on animal pollination for sexual reproduction, and this ranges from 94 per cent in tropical communities to 78 per cent in temperate zone communities (established but incomplete)." .
 
-<http://ontology.ipbes.net/report/bgm/PPA16-24> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/PPA16-3> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.2> ;
     ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-24-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-24-SM1> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-3-SM0> ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "The risk also varies geographically, with the compounds used, with the type and scale of land management (well established) and potentially with the refuges provided by un-treated semi natural or natural habitats in the landscape (established but incomplete). Insecticides are toxic to insect pollinators and the direct lethal risk is increased, for example, if label information is insufficient or not respected, where application equipment is faulty or not fit-for-purpose, or the regulatory policy and risk assessment are deficient (well established). A reduction of pesticide use or use within an established Integrated Pest Management approach would lower the risk of not sustaining populations of pollinators, many of which deliver pollination to crops and wild plants, but needs to be considered while balancing the need to ensure agricultural yields {2.3.1, 2.3.1.2, 2.3.1.3, and box 2.3.5}." ;
-    dcterms:identifier "24" ;
-    skos:prefLabel "The risk to pollinators from pesticides arises through a combination of toxicity (compounds vary in toxicity to different pollinator species) and the level of exposure (well established)." .
+    ipbes:hasDescription "Of the 107 leading global crop types, production from 91 (fruit, seed and nut) crops rely to varying degrees upon animal pollination. Total pollinator loss would decrease crop production by more than 90 per cent in 12 per cent of the leading global crops, would have no effects in 7 per cent of the crops and would have unknown effects in 8 per cent of the crops. In addition, 28 per cent of the crops would lose between 40 and 90 per cent of production, whereas the remaining crops would lose between 1 and 40 per cent (figure SPM. 2). In terms of global production volumes, 60 per cent of production comes from crops that do not depend on animal pollination (e.g., cereals and root crops), 35 per cent of production comes from crops that depend at least in part on animal pollination and 5 per cent have not been evaluated (established but incomplete). In addition, many crops, such as potatoes, carrots, parsnips, alliums and other vegetables, do not depend directly on pollinators for the production of the parts we consume (e.g., roots, tubers, stems, leaves or flowers), but pollinators are still important for their propagation via seeds or in breeding programmes. Furthermore, many forage species (e.g., legumes) also benefit from animal pollination {1.1, 1.2.1, 3.7.2}." ;
+    dcterms:identifier "3" ;
+    skos:prefLabel "Production, yield and quality of more than three quarters of the leading global food crop types, occupying 33-35 per cent of all agricultural land, benefit from animal pollination (well established)." .
 
-<http://ontology.ipbes.net/report/bgm/PPA16-25> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.7> ;
+<http://ontology.ipbes.net/report/bgm/PPA16-4> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.3> ;
     ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-25-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-25-SM1>,
-        <http://ontology.ipbes.net/report/subm/PPA16-25-SM2>,
-        <http://ontology.ipbes.net/report/subm/PPA16-25-SM3>,
-        <http://ontology.ipbes.net/report/subm/PPA16-25-SM4> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "(figure SPM. 7) provide conflicting evidence of effects based on the species studied and pesticide usage (established but incomplete). It is currently unresolved how sublethal effects of pesticide exposure recorded for individual insects affect colonies and populations of managed bees and wild pollinators, especially over the longer term. Most studies of sublethal impacts of insecticides on pollinators have tested a limited range of pesticides, recently focusing on neonicotinoids, and have been carried out using honey bees and bumble bees, with fewer studies on other insect pollinator taxa. Thus, significant gaps in our knowledge remain (well established) with potential implications for comprehensive risk assessment. Recent research focusing on neonicotinoid insecticides shows evidence of lethal and sublethal effects on bees under controlled conditions (well established) and some evidence of impacts on the pollination they provide (established but incomplete). There is evidence from a recent study that shows impacts of neonicotinoids on wild pollinator survival and reproduction at actual field exposure (established but incomplete). Evidence, from this and other studies, of effects on managed honey bee colonies is conflicting (unresolved). What constitutes a field realistic exposure, as well as the potential synergistic and long term effects of pesticides (and their mixtures), remain unresolved {2.3.1.4}." ;
-    dcterms:identifier "25" ;
-    skos:prefLabel "Pesticides, particularly insecticides, have been demonstrated to have a broad range of lethal and sublethal effects on pollinators under controlled experimental conditions (well established). The few available field studies assessing effects of field-realistic exposure" .
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-4-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-4-SM1> ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
+    ipbes:hasDescription """(figure SPM. 3A) (established but incomplete) {3.7.2, 5.2.2}.
 
-<http://ontology.ipbes.net/report/bgm/PPA16-26> a ipbes:BackgroundMessage ;
+Loss of pollinators could lead to lower availability of crops and wild plants that provide essential micronutrients for human diets, impacting health and nutritional security and risking increased numbers of people suffering from vitamin A, iron and folate deficiency. It is now well recognized that hunger and malnutrition are best addressed by paying attention to diverse nutritional requirements and not to calories alone, but also to the dietary nutritional value from non staple crop products, many of which are dependent on pollinators {1.1, 2.6.4, 3.7, 3.8, 5.4.1}. This includes some animal pollinators that are themselves consumed for food and are high in protein, vitamins and minerals.""" ;
+    dcterms:identifier "4" ;
+    skos:prefLabel "Animal pollination is directly responsible for between 5 and 8 per cent of current global agricultural production by volume (i.e., this amount of production would be lost if there were no pollinators), and includes foods that supply major proportions of micronutrients, such as vitamin A, iron and folate, in global human diets" .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-5> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.3> ;
     ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-26-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-26-SM1>,
-        <http://ontology.ipbes.net/report/subm/PPA16-26-SM2> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-5-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-5-SM1>,
+        <http://ontology.ipbes.net/report/subm/PPA16-5-SM2>,
+        <http://ontology.ipbes.net/report/subm/PPA16-5-SM3> ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "{2.3.1.1, 2.3.1.3, 6.4.2.4.1}. Pesticide exposure can be reduced by decreasing the usage of pesticides, for example by adopting Integrated Pest Management practices, and where they are used, the impacts of pesticides can be lessened through application practices and technologies to reduce pesticide drift (well established) {2.3.1.3, 6.4.2.1.2, 6.4.2.1.3, 6.4.2.1.4}. Education and training are necessary to ensure that farmers, farm advisers, pesticide appliers and the public use pesticides safely (established but incomplete). Policy strategies that can help to reduce pesticide use, or avoid misuse, include supporting farmer field schools, which are known to increase the adoption of Integrated Pest Management practices as well as agricultural production and farmer incomes (well established). The International Code of Conduct on Pesticide Management of the Food and Agriculture Organization and the World Health Organization of the United Nations sets out voluntary actions for Government and industry; a survey from 2004 and 2005 suggests that sixty-one per cent of countries who completed the survey questionnaire (31 out of 51 countries) are using it {6.4.2.1, 6.4.2.2.5, 6.4.2.2.6, 6.4.2.4.2}. Research aimed at improving the effectiveness of pest management in pesticide-free and pesticide minimized (e.g., Integrated Pest Management) farming systems would help provide viable alternatives to conventional high chemical input systems that are productive while at the same time reducing the risks to pollinators." ;
-    dcterms:identifier "26" ;
-    skos:prefLabel "Risk assessment of specific pesticide ingredients and regulation based on identified risks are important responses that can decrease the environmental hazard from pesticides used in agriculture at the national level (established but incomplete)" .
+    ipbes:hasDescription "(figure SPM. 3B) {3.7.2, 4.7.3}. On average, pollinator-dependent crops have higher prices than non-pollinator dependent crops. The distribution of these monetary benefits is not uniform, with the greatest additional production occurring in parts of Eastern Asia, the Middle East, Mediterranean Europe and North America. The additional monetary output linked to pollination services accounts for 5-15 per cent of total crop output in different United Nations regions, with the greatest contributions in the Middle East, South Asia and East Asia. In the absence of animal pollination, changes in global crop supplies could increase prices to consumers and reduce profits to producers, resulting in a potential annual net loss of economic welfare of $160 billion-$191 billion globally to crop consumers and producers and a further $207 billion-$497 billion to producers and consumers in other, non-crop markets (e.g., non-crop agriculture, forestry and food processing) {4.7}. The accuracy of the economic methods used to estimate these values is limited by numerous data gaps, and most studies focus on developed nations {4.2, 4.3, 4.5, 4.7}. Explicit estimation and consideration of economic benefits through tools such as cost-benefit analyses and multi-criteria analyses provide information to stakeholders and can help inform land-use choices with greater recognition of pollinator biodiversity and sustainability {4.1, 4.6}." ;
+    dcterms:identifier "5" ;
+    skos:prefLabel "The annual market value of the 5-8 per cent of production that is directly linked with pollination services is estimated at $235 billion-$577 billion (in 2015 US$) worldwide (established but incomplete)" .
 
-<http://ontology.ipbes.net/report/bgm/PPA16-27> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/PPA16-6> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-27-SM0> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Agricultural and urban land management systems that allow a variety of weedy species to flower support more diverse communities of pollinators, which can enhance pollination (established but incomplete) {2.2.2.1.4, 2.2.2.1.8, 2.2.2.1.9, 2.2.2.3, 2.3.1.2, 2.3.1.4.2}. This can be achieved by reducing herbicide use or taking less stringent approaches to weed control, paying careful attention to the potential trade-off with crop yield and control of invasive alien species {2.3, 6.4.2.1.4, 6.4.5.1.3.}. One possible approach is demonstrated by traditional diversified farming systems, in which weeds themselves are valued as supplementary food products {5.3.3, 5.3.4, 5.4.2, 6.4.1.1.8}. The potential direct sublethal effects of herbicides on pollinators are largely unknown and seldom studied {2.3.1.4.2}." ;
-    dcterms:identifier "27" ;
-    skos:prefLabel "Use of herbicides to control weeds indirectly affects pollinators by reducing the abundance and diversity of flowering plants providing pollen and nectar (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-28> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-28-SM0> ;
-    ipbes:hasConfidenceLevel "established but incomplete",
-        "well established" ;
-    ipbes:hasDescription "No direct lethal effects of insect-resistant (IR) crops (e.g., producing Bacillus thuringiensis (Bt) toxins) on honey bees or other Hymenoptera have been reported. Lethal effects have been identified in some butterflies (established but incomplete), while data on other pollinator groups (e.g., hoverflies) are scarce {2.3.2.2}. The ecological and evolutionary effects of potential transgene flow and introgression in wild relatives and non-genetically modified crops on non-target organisms, such as pollinators, need study {2.3.2.3.2}. The risk assessment required for the approval of genetically-modified-organism (GMO) crops in most countries does not adequately address the direct sublethal effects of insect-resistant (IR) crops or the indirect effects of herbicide-tolerant (HT) and insect-resistant (IR) crops, partly because of a lack of data {6.4.2.6.1}. Quantifying the direct and indirect impacts of genetically-modified organisms (GMOs) on pollinators would help to inform whether, and to what extent, response options are required." ;
-    dcterms:identifier "28" ;
-    skos:prefLabel "Most agricultural genetically modified organisms (GMOs) carry traits for herbicide tolerance (HT) or insect resistance (IR). Reduced weed populations are likely to accompany most herbicide-tolerant (HT) crops, diminishing food resources for pollinators (established but incomplete). The actual consequences for the abundance and diversity of pollinators foraging in herbicide-tolerant (HT)-crop fields is unknown {2.3.2.3.1}. Insect-resistant (IR) crops result in the reduction of insecticide use, which varies regionally according to the prevalence of pests, and the emergence of secondary outbreaks of non-target pests or primary pest resistance (well established). If sustained, this reduction in insecticide use could reduce pressure on non target insects (established but incomplete). How insect-resistant-(IR) crop use and reduced pesticide use affect pollinator abundance and diversity is unknown {2.3.2.3.1}." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-29> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-29-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-29-SM1> ;
-    ipbes:hasConfidenceLevel "unresolved" ;
-    ipbes:hasDescription "While pollinator management has developed over thousands of years, there are opportunities for further substantial innovation and improvement of management practices, including better management of parasites and pathogens (well established) {3.3.3, 3.4.3, 6.4.4.1.1.2}, improving selection for desired traits in bees (well established) and breeding for genetic diversity (well established) {6.4.4.1.1.3}. Successful management of bees, including honey bees and stingless bees, often depends on local and traditional knowledge systems. The erosion of those knowledge systems, particularly in tropical countries, may contribute to local declines (established but incomplete) {3.3.2, 6.4.4.5}." ;
-    dcterms:identifier "29" ;
-    skos:prefLabel "Declines in the number of managed western honey bee colonies are due in part to socio-economic changes affecting beekeeping and/or poor management practices (unresolved) {3.3.2}." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-30> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-30-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-30-SM1>,
-        <http://ontology.ipbes.net/report/subm/PPA16-30-SM2>,
-        <http://ontology.ipbes.net/report/subm/PPA16-30-SM3> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "The western honey bee, Apis mellifera, has been moved around the world, and this has resulted in a spill over of pathogens both to this species, in the case of the Varroa mite, and from this species to wild pollinators, such as deformed wing virus (established but incomplete). Greater emphasis on hygiene and the control of pests (Varroa and other pests) and pathogens in managed insect pollinators would have health benefits for the entire community of pollinators, managed and wild, by limiting pathogen spread. There are no proven options for treating viruses in any managed pollinator species, but ribonucleic acid interference (RNAi) technology could provide one pathway toward such treatment (established but incomplete) {6.4.4.1.1.2.3.1}. Varroa mites, a key parasite of honey bees, have developed resistance to some chemical treatments (well established) so new treatment options are required {2.4, 3.2.3, 3.3.3, 3.4.3, 6.4.4.1.1.2.3.5}. Other stressors, such as exposure to chemicals or insufficient nutrition, may sometimes worsen the impacts of disease (unresolved) {2.7}. In comparison, there is very little research on diseases of other pollinators (e.g., other insects, birds, bats) {2.4}." ;
-    dcterms:identifier "30" ;
-    skos:prefLabel "Insect pollinators suffer from a broad range of parasites, with Varroa mites attacking and transmitting viruses among honey bees being a notable example (well established). Emerging and re-emerging diseases (e.g., due to host shifts of both pathogens and parasites) are a significant threat to the health of honey bees (well established), bumble bees and solitary bees (established but incomplete for both groups) during the trade and management of commercial bees for pollination {2.4, 3.3.3, 3.4.3}." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-31> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-31-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-31-SM1>,
-        <http://ontology.ipbes.net/report/subm/PPA16-31-SM2>,
-        <http://ontology.ipbes.net/report/subm/PPA16-31-SM3> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Recently developed commercial rearing of bumble bee species for greenhouse and field crop pollination, and their introduction to continents outside of their original ranges, have resulted in biological invasions, pathogen transmission to native species and the decline of congeneric (sub-)species (established but incomplete). A well-documented case is the severe decline in and extirpation from many areas of its original range of the giant bumble bee, Bombus dahlbomii, since the introduction and spread of the European B. terrestris in southern South America (well established) {3.2.3, 3.3.3, 3.4.32, 3.4.3}. The presence of managed honey bees and their escaped descendants (for example African honey bees in the Americas) have changed visitation patterns to the native plants in those regions (unresolved) {3.2.3, 3.3.2, 3.4.2, 3.4.3}. Better regulation of the movement of all species of managed pollinators around the world, and within countries, can limit the spread of parasites and pathogens to managed and wild pollinators alike and reduce the likelihood that pollinators will be introduced outside their native ranges and cause negative impacts (established but incomplete) {6.4.4.2}." ;
-    dcterms:identifier "31" ;
-    skos:prefLabel "Commercial management, mass breeding, transport and trade in pollinators outside their original ranges have resulted in new invasions, transmission of pathogens and parasites and regional extinctions of native pollinator species (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-32> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-32-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-32-SM1>,
-        <http://ontology.ipbes.net/report/subm/PPA16-32-SM2>,
-        <http://ontology.ipbes.net/report/subm/PPA16-32-SM3> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Alien plants or alien pollinators change native pollinator networks, but the effects on native species or networks can be positive, negative or neutral depending on the species involved {2.5.1, 2.5.2, 2.5.5, 3.5.3}. Introduced invasive pollinators when reaching high abundances can damage flowers, thereby reducing wild plant reproduction and crop yield (established but incomplete) {6.4.3.1.4}. Invasive alien predators can affect pollination by consuming pollinators (established but incomplete) {2.5.4}. The impacts of invasive aliens are exacerbated or altered when they exist in combination with other threats such as disease, climate change and land-use change (established but incomplete) {2.5.6, 3.5.4}. Eradicating invasive species that negatively impact pollinators is rarely successful, and so policies that focus on mitigating their impact and preventing new invasions are important (established but incomplete) {6.4.3.1.4}." ;
-    dcterms:identifier "32" ;
-    skos:prefLabel "The impact of invasive alien species on pollinators and pollination is highly contingent on the identity of the invader and the ecological and evolutionary context (well established) {2.5, 3.5.3}." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-33> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-33-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-33-SM1>,
-        <http://ontology.ipbes.net/report/subm/PPA16-33-SM2>,
-        <http://ontology.ipbes.net/report/subm/PPA16-33-SM3> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Generally, the impacts of ongoing climate change on pollinators and pollination services and agriculture may not be fully apparent for several decades owing to delayed response times in ecological systems (well established). Beyond 2050, all climate change scenarios reported by the Intergovernmental Panel on Climate Change suggest that (i) community composition is expected to change as certain species decrease in abundance while others increase (well established) {2.6.2.3, 3.2.2}; and (ii) the seasonal activity of many species is projected to change differentially, disrupting life cycles and interactions between species (established but incomplete) {2.6.2.1}. The rate of change of the climate across the landscape, especially under mid-end and high-end IPCC greenhouse gas emissions scenarios is predicted to exceed the maximum speed at which many pollinator groups (e.g., many bumble bee and butterfly species), can disperse or migrate, in many situations despite their mobility (established but incomplete) {2.6.2.2}. For some crops, such as apple and passion fruit, model projections at national scales have shown that climate change may disrupt crop pollination because the areas with the best climatic conditions for crops and their pollinators may no longer overlap in future (established but incomplete) {2.6.2.3}. Adaptive responses to climate change include increasing crop diversity and regional farm diversity and targeted habitat conservation, management and restoration. The effectiveness of adaptation efforts at securing pollination under climate change is untested. There are prominent research gaps in understanding climate change impacts on pollinators and efficient adaptation options {6.4.1.1.12, 6.4.4.1.5, 6.5.1.10.2, 6.8.1}." ;
-    dcterms:identifier "33" ;
-    skos:prefLabel "Some pollinator species (e.g., butterflies) have moved their ranges, altered their abundance and shifted their seasonal activities in response to observed climate change over recent decades, while for many other pollinators climate change induced shifts within habitats have had severe impacts on their populations and overall distribution (well established) {2.6.2.2, 3.2.2}." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-34> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-34-SM0>,
-        <http://ontology.ipbes.net/report/subm/PPA16-34-SM1>,
-        <http://ontology.ipbes.net/report/subm/PPA16-34-SM2>,
-        <http://ontology.ipbes.net/report/subm/PPA16-34-SM3> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-6-SM0> ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "Indirect drivers (demographic, socio-economic, institutional and technological) are producing environmental pressures (direct drivers) that alter pollinator diversity and pollination (well established). The growth in global human population, economic wealth, globalized trade and commerce and technological developments (e.g. increased transport efficacy) has transformed the climate, land cover and management intensity, ecosystem nutrient balance and biogeographical distribution of species (well established). This has had, and continues to have, consequences for pollinators and pollination worldwide (well established). In addition, the area of land devoted to growing pollinator-dependent crops has increased globally in response to market demands from a growing and increasingly wealthy population, albeit with regional variations (well established) {2.8, 3.7.2, 3.7.3, 3.8}." ;
-    dcterms:identifier "34" ;
-    skos:prefLabel "The many drivers that directly impact the health, diversity and abundance of pollinators, from the gene to the biome scales, can combine in their effects and thereby increase the overall pressure on pollinators (established but incomplete) {2.7}." .
+    ipbes:hasDescription ". Many of the world’s most important cash crops are pollinator-dependent. These constitute leading export products in developing countries (e.g., coffee and cocoa) and developed countries (e.g., almonds) providing employment and income for millions of people. Impacts of pollinator loss will therefore be different among regional economies, being higher for economies with a stronger reliance on pollinator-dependent crops (whether grown nationally or imported). Existing studies of the economic value of pollination have not accounted for non-monetary aspects of economies, particularly the assets that form the basis of rural economies, for example human (e.g., employment of beekeepers), social (e.g., beekeepers associations), physical (e.g., honey bee colonies), financial (e.g., honey sales) and natural assets (e.g., wider biodiversity resulting from pollinator-friendly practices). The sum and balance of these assets are the foundation for future development and sustainable rural livelihoods {3.7, 4.2, 4.4, 4.7}." ;
+    dcterms:identifier "6" ;
+    skos:prefLabel "Many livelihoods depend on pollinators, their products and their multiple benefits (established but incomplete)" .
 
-<http://ontology.ipbes.net/report/bgm/PPA16-35> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/PPA16-7> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-35-SM0> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-7-SM0> ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "In some parts of the world, there is evidence of impacts on peoples’ livelihoods from crop pollination deficits (leading to lower yield and quality of food production, and human diet quality) and loss of distinctive ways of life, cultural practices and traditions. These risks are largely driven by changes in land cover and agricultural management systems, including pesticide use (established but incomplete) {2.2.1, 2.2.2, 2.3.1, 2.3.2.3, 3.2.2, 3.3.3, 3.6, 3.8.2, 3.8.3, 5.4.1, 5.4.2, 6.2.1}." ;
-    dcterms:identifier "35" ;
-    skos:prefLabel "The variety and multiplicity of threats to pollinators and pollination generate risks to people and livelihoods (well established)." .
+    ipbes:hasDescription "Globally, available data show that 81 million hives annually produce 65,000 tonnes of beeswax and 1.6 million tonnes of honey, of which an estimated 518,000 tonnes are traded. Many rural economies favour beekeeping and honey hunting, as minimal investment is required; diverse products can be sold; diverse forms of ownership support access; family nutrition and medicinal benefits can be derived from it; the timing and location of activities are flexible; and numerous links exist with cultural and social institutions. Beekeeping is also of growing importance as an ecologically-inspired lifestyle choice in many urban contexts. Significant unrealized potential exists for beekeeping as a sustainable livelihood activity in developing world contexts {4.3.2, 4.7.1, 5.2.8.4, 5.3.5, 5.4.6.1, case examples 5-10, 5-11, 5-12, 5-13, 5-14, 5-21, 5-24, 5-25, and figures 5-12, 5-13, 5-14, 5-15, 5-22}." ;
+    dcterms:identifier "7" ;
+    skos:prefLabel "Livelihoods based on beekeeping and honey hunting are an anchor for many rural economies and are the source of multiple educational and recreational benefits in both rural and urban contexts (well established)." .
 
-<http://ontology.ipbes.net/report/bgm/PPA16-36> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-TableSPM.1> ;
+<http://ontology.ipbes.net/report/bgm/PPA16-8> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-36-SM0> ;
-    ipbes:hasDescription "Table SPM. 1 summarizes various strategies linked to specific responses based on the experiences and evidence described in this assessment." ;
-    dcterms:identifier "36" ;
-    skos:prefLabel "The strategic responses to the risks and opportunities associated with pollinators and pollination range in ambition and timescale from immediate, relatively straightforward, responses that reduce or avoid risks to relatively large-scale and long-term transformative responses." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-37> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-37-SM0> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "Knowledge co-production activities between farmers, indigenous peoples, local communities and scientists have led to numerous relevant insights including: improvements in hive design for bee health; understanding pesticide uptake into medicinal plants and the impacts of the mistletoe parasite on pollinator resources; identification of species of stingless bees new to science; establishing baselines to understand trends in pollinators; improvements in economic returns from forest honey; identification of change from traditional shade-grown to sun grown coffee as the cause of declines in migratory bird populations; and a policy response to risk of harm to pollinators leading to a restriction on the use of neonicotinoids in the European Union {5.4.1, 5.4.2.2, 5.4.7.3, tables 5-4 and 5-5}." ;
-    dcterms:identifier "37" ;
-    skos:prefLabel "Indigenous and local knowledge systems, in co-production with science, can be a source of solutions for the present challenges confronting pollinators and pollination (established but incomplete)." .
-
-<http://ontology.ipbes.net/report/bgm/PPA16-38> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-38-SM0> ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-8-SM0> ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Such monitoring would address major knowledge gaps on the status and trends of pollinators and pollination, particularly outside Western Europe. Wild pollinators can be monitored to some extent through citizen science projects focused on bees, birds or pollinators generally {6.4.1.1.10, 6.4.6.3.4}." ;
-    dcterms:identifier "38" ;
-    skos:prefLabel "Long-term monitoring of wild and managed pollinators and pollination can provide crucial data for responding rapidly to threats such as pesticide poisonings and disease outbreaks, as well as long-term information about trends, chronic issues and the effectiveness of interventions (well established)." .
+    ipbes:hasDescription "For example, some anti-bacterial, anti-fungal and anti-diabetic agents are derived from honey; Jatropha oil, cotton and eucalyptus trees are examples of pollinator-dependent biofuel, fibre and timber sources respectively; beeswax can be used to protect and maintain fine musical instruments. Artistic, literary and religious inspiration from pollinators includes popular and classical music (e.g., I’m a King Bee by Slim Harpo, the Flight of the Bumblebee by Rimsky-Korsakov); sacred passages about bees in the Mayan codices (e.g., stingless bees), the Surat An-Naĥl in the Qur’an, the three-bee motif of Pope Urban VIII in the Vatican and sacred passages of Hinduism, Buddhism and Chinese traditions such as the Chuang Tzu. Pollinator-inspired technical design is reflected in the visually guided flight of robots and the 10 metre telescopic nets used by some amateur entomologists today {5.2.1, 5.2.2., 5.2.3, 5.2.4, case examples 5-2, 5-16, and figures 5-7, 5-8, 5-9, 5-10, 5-24}." ;
+    dcterms:identifier "8" ;
+    skos:prefLabel "Pollinators are a source of multiple benefits to people well beyond food-provisioning alone, contributing directly to medicines, biofuels, fibres, construction materials, musical instruments, arts and crafts and as sources of inspiration for art, music, literature, religion and technology (well established)." .
 
-<http://ontology.ipbes.net/report/bgm/PPA16-39> a ipbes:BackgroundMessage ;
+<http://ontology.ipbes.net/report/bgm/PPA16-9> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:PPA16 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-39-SM0> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "Coordinated, collaborative action and knowledge sharing that strengthens linkages across sectors (e.g., agriculture and nature conservation), across jurisdictions (e.g., private, Government, not-for-profit), and among levels (e.g., local, national, global) can overcome many of these governance deficits. The establishment of social norms, habits and motivation that are the key to effective governance outcomes involves long time frames {5.4.2.8, 5.4.7.4}. However, the possibility that contradictions between policy sectors may remain even after coordination efforts have been undertaken should be acknowledged and should be a point of attention in future studies." ;
-    dcterms:identifier "39" ;
-    skos:prefLabel "Many actions to support pollinators are hampered in their implementation through governance deficits, including fragmented multi-level administrative units, mismatches between fine-scale variation in practices that protect pollinators and homogenizing broad-scale government policy, contradictory policy goals across sectors and contests over land use (established but incomplete)." .
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-9-SM0> ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "As examples, the World Heritage site the Agave Landscape and Ancient Industrial Facilities of Tequila depends on bat pollination to maintain agave genetic diversity and health; people show marked aesthetic preferences for the flowering season in diverse European cultural landscapes; a hummingbird is the national symbol of Jamaica, a sunbird of Singapore, and an endemic birdwing the national butterfly of Sri Lanka; seven-foot wide butterfly masks symbolize fertility in festivals of the Bwa people of Burkina Faso; and the Tagbanua people of the Philippines, according to their tradition, interact with two bee deities living in the forest and karst as the ultimate authority for their shifting agriculture {5.3.1, 5.3.2, 5.3.3, 5.3.4, 5.3.6, case examples 5-16, 5-17, 5-18, 5-19, 5-20, and figures 5-16, 5-17, 5-18, 5-19, 5-20, 5-21}." ;
+    dcterms:identifier "9" ;
+    skos:prefLabel "A good quality of life for many people relies on the ongoing roles of pollinators in globally significant heritage as symbols of identity, as aesthetically significant landscapes, flowers, birds, bats and butterflies and in the social relations and governance interactions of indigenous peoples and local communities (well established)." .
 
 <http://ontology.ipbes.net/report/ref/2333088/items/M8EZ855N> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch1>,
@@ -29994,6 +29812,248 @@ Maskell et al. (2013) used the number of species of nectar-rich plants preferred
     dcterms:identifier "6.5.1.9.1" ;
     skos:prefLabel "Indicators of pollination, as a basis for mapping" .
 
+<http://ontology.ipbes.net/report/bgm/PPA16-17> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-17-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-17-SM1> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "However, a lack of data, particularly outside Western Europe and North America, and correlations between drivers make it very difficult to link long-term pollinator declines with specific direct drivers. Changes in pollinator health, diversity and abundance have generally led to locally reduced pollination of pollinator-dependent crops (lowering the quantity, quality or stability of yield) and have contributed to altered wild plant diversity at the local and regional scales, and resulted in the loss of distinctive ways of life, cultural practices and traditions as a result of pollinator loss (established but incomplete). Other risks, including the loss of aesthetic value or well-being associated with pollinators and the loss of long-term resilience in food production systems, could develop in the longer-term. The relative importance of each driver varies between pollinator species according to their biology and geographic location. Drivers can also combine or interact in their effects, complicating any ranking of drivers by risk of harm (unresolved) {2.7, 4.5, 6.2.1}." ;
+    dcterms:identifier "17" ;
+    skos:prefLabel "A wealth of observational, empirical and modelling studies worldwide point to a high likelihood that many drivers have affected, and are affecting, wild and managed pollinators negatively (established but incomplete)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-18> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-18-SM0> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "established but incomplete",
+        "well established" ;
+    ipbes:hasDescription "These practices include high use of agrochemicals and intensively performed tillage, grazing or mowing. Such changes in pollinator resources are known to lower densities and diversity of foraging insects and alter the composition and structure of pollinator communities from local to regional scales (well established) {2.2.1.1, 2.2.1.2, 2.2.2, 2.3.1.2, 2.3.1.3, 3.2}." ;
+    dcterms:identifier "18" ;
+    skos:prefLabel "Habitat destruction, fragmentation and degradation, along with conventional intensive land management practices, often reduce or alter pollinators’ food (well established) and nesting resources (established but incomplete)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-19> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-TableSPM.1> ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-19-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-19-SM1> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasDescription "(table SPM. 1). (i) Ecological intensification involves managing nature’s ecological functions to improve agricultural production and livelihoods while minimizing environmental damage. (ii) Strengthening existing diverse farming systems involves managing systems such as forest gardens, home gardens and agroforestry to foster pollinators and pollination through practices validated by science or indigenous and local knowledge (e.g., crop rotation). (iii) Ecological infrastructure needed to improve pollination includes patches of semi-natural habitats distributed throughout productive agricultural landscapes, providing nesting and floral resources. These three strategies concurrently address several important drivers of pollinator decline by mitigating the impacts of land-use change, pesticide use and climate change (established but incomplete). The policies and practices that form them have direct economic benefits to people and livelihoods in many cases (established but incomplete). Responses identified for managing immediate risks in agriculture (table SPM. 1) tend to mitigate only one or none of the drivers of pollinator decline. Some of these responses (marked with an asterisk in table SPM. 1) have potential adverse effects, both on pollinators and for wider agricultural sustainability, that need to be quantified and better understood {2.2.1, 2.2.2, 2.3.1, 2.3.2.3, 3.2.3, 3.6.3, 5.2.8, 6.9}." ;
+    dcterms:identifier "19" ;
+    skos:prefLabel "Three complementary strategies are envisaged for producing more sustainable agriculture that address several important drivers of pollinator decline: ecological intensification, strengthening existing diverse farming systems and investing in ecological infrastructure" .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-20> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-20-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-20-SM1> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "established but incomplete",
+        "well established" ;
+    ipbes:hasDescription "Long-term abundance data (which are not yet available) would be required to establish whether these responses have population-level benefits. Evidence for the effects of organic farming comes largely from Europe and North America. Actions to enhance pollination on intensive farmland also enhance other ecosystem services, including natural pest regulation (established but incomplete). There are, however, potential trade-offs between enhancing yield and enhancing pollination. For example, in many, but not all, farming systems current organic practices usually produce lower yields (well established). Better understanding the role of ecological intensification could address this issue of trade-off by increasing organic farm yields while boosting pollination benefits. The effects of this response, including its utility in reducing the tradeoff, represent a knowledge gap {6.4.1.1.1, 6.4.1.1.4, 6.7.1, 6.7.2}." ;
+    dcterms:identifier "20" ;
+    skos:prefLabel "Responses known to reduce or mitigate negative agricultural impacts on pollinators include organic farming and planting flower strips, both of which increase local numbers of foraging pollinating insects (well established) and pollination (established but incomplete)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-21> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-21-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-21-SM1>,
+        <http://ontology.ipbes.net/report/subm/PPA16-21-SM2>,
+        <http://ontology.ipbes.net/report/subm/PPA16-21-SM3>,
+        <http://ontology.ipbes.net/report/subm/PPA16-21-SM4> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "established but incomplete",
+        "well established" ;
+    ipbes:hasDescription "Depending on land use (e.g., agriculture, forestry, grazing, etc.), landscape habitat diversity can be enhanced to support pollinators through intercropping; crop rotation including flowering crops; agroforestry; and creating, restoring or maintaining wildflower habitat or native vegetation (well established). The efficacy of such measures can be enhanced if implemented from field to landscape scales that correspond with pollinator mobility, hence assuring connectivity among these landscape features (established but incomplete) {2.2.2, 2.2.3, 3.2.3}. Such actions can be achieved by rewarding farmers or land managers for good practices (well established), by demonstrating the economic value of pollination services in agriculture, forestry or livestock production and by using (agricultural) extension services to convey knowledge and demonstrate practical application to farmers or land managers (established but incomplete). The protection of large areas of semi-natural or natural habitat (tens of hectares or more) helps to maintain pollinator habitats at regional or national scales (established but incomplete), but will not directly support agricultural pollination in areas that are more than a few kilometres away from large reserves because of the limited flight ranges of crop pollinators (established but incomplete). Enhancing connectivity at the landscape scale, for example by linking habitat patches (including with road verges), may enhance pollination of wild plants by enabling the movement of pollinators (established but incomplete), but its role in maintaining pollinator populations remains unclear {2.2.1.2, 6.4.1.1.10, 6.4.1.5, 6.4.1.3, 6.4.3.1.1, 6.4.3.1.2, 6.4.3.2.2, 6.4.5.1.6}." ;
+    dcterms:identifier "21" ;
+    skos:prefLabel "Greater landscape-scale habitat diversity often results in more diverse pollinator communities (well established) and more effective crop and wild plant pollination (established but incomplete)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-22> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-22-SM0> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "A number of integrated responses that address these drivers of pollinator decline have been identified: 1) food security, including the ability to determine one’s own agricultural and food policies, resilience and ecological intensification; 2) conservation of biological and cultural diversity and the links between them; 3) strengthening traditional governance that supports pollinators; 4) prior and informed consent for conservation, development and knowledge-sharing; 5) recognizing tenure; 6) recognizing significant agricultural, biological and cultural heritage and 7) framing conservation to link with peoples’ values {5.4, case examples 5-18, 5-19, 5-20, 5-21, 5-22, 5-23, 5-24, 5-25, 5-26, figures 5-26, 5-27, and box 5-3}." ;
+    dcterms:identifier "22" ;
+    skos:prefLabel "Managing and mitigating the impacts of pollinator decline on people’s good quality of life could benefit from responses that address loss of access to traditional territories, loss of traditional knowledge, tenure and governance, and the interacting, cumulative effects of direct drivers (established but incomplete)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-23> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-23-SM0> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "Road verges, power lines, railway banks (established but incomplete) in cities also have a large potential for supporting pollinators if managed appropriately to provide flowering and nesting resources {6.4.5.1, 6.4.5.1.6}." ;
+    dcterms:identifier "23" ;
+    skos:prefLabel "Managing urban and recreational green spaces to increase the local abundance of nectar providing and pollen-providing flowering plants increases pollinator diversity and abundance (established but incomplete), although it is unknown whether this has long-term benefits at the population level." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-24> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-24-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-24-SM1> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "The risk also varies geographically, with the compounds used, with the type and scale of land management (well established) and potentially with the refuges provided by un-treated semi natural or natural habitats in the landscape (established but incomplete). Insecticides are toxic to insect pollinators and the direct lethal risk is increased, for example, if label information is insufficient or not respected, where application equipment is faulty or not fit-for-purpose, or the regulatory policy and risk assessment are deficient (well established). A reduction of pesticide use or use within an established Integrated Pest Management approach would lower the risk of not sustaining populations of pollinators, many of which deliver pollination to crops and wild plants, but needs to be considered while balancing the need to ensure agricultural yields {2.3.1, 2.3.1.2, 2.3.1.3, and box 2.3.5}." ;
+    dcterms:identifier "24" ;
+    skos:prefLabel "The risk to pollinators from pesticides arises through a combination of toxicity (compounds vary in toxicity to different pollinator species) and the level of exposure (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-25> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-FigureSPM.7> ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-25-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-25-SM1>,
+        <http://ontology.ipbes.net/report/subm/PPA16-25-SM2>,
+        <http://ontology.ipbes.net/report/subm/PPA16-25-SM3>,
+        <http://ontology.ipbes.net/report/subm/PPA16-25-SM4> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "(figure SPM. 7) provide conflicting evidence of effects based on the species studied and pesticide usage (established but incomplete). It is currently unresolved how sublethal effects of pesticide exposure recorded for individual insects affect colonies and populations of managed bees and wild pollinators, especially over the longer term. Most studies of sublethal impacts of insecticides on pollinators have tested a limited range of pesticides, recently focusing on neonicotinoids, and have been carried out using honey bees and bumble bees, with fewer studies on other insect pollinator taxa. Thus, significant gaps in our knowledge remain (well established) with potential implications for comprehensive risk assessment. Recent research focusing on neonicotinoid insecticides shows evidence of lethal and sublethal effects on bees under controlled conditions (well established) and some evidence of impacts on the pollination they provide (established but incomplete). There is evidence from a recent study that shows impacts of neonicotinoids on wild pollinator survival and reproduction at actual field exposure (established but incomplete). Evidence, from this and other studies, of effects on managed honey bee colonies is conflicting (unresolved). What constitutes a field realistic exposure, as well as the potential synergistic and long term effects of pesticides (and their mixtures), remain unresolved {2.3.1.4}." ;
+    dcterms:identifier "25" ;
+    skos:prefLabel "Pesticides, particularly insecticides, have been demonstrated to have a broad range of lethal and sublethal effects on pollinators under controlled experimental conditions (well established). The few available field studies assessing effects of field-realistic exposure" .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-26> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-26-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-26-SM1>,
+        <http://ontology.ipbes.net/report/subm/PPA16-26-SM2> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "{2.3.1.1, 2.3.1.3, 6.4.2.4.1}. Pesticide exposure can be reduced by decreasing the usage of pesticides, for example by adopting Integrated Pest Management practices, and where they are used, the impacts of pesticides can be lessened through application practices and technologies to reduce pesticide drift (well established) {2.3.1.3, 6.4.2.1.2, 6.4.2.1.3, 6.4.2.1.4}. Education and training are necessary to ensure that farmers, farm advisers, pesticide appliers and the public use pesticides safely (established but incomplete). Policy strategies that can help to reduce pesticide use, or avoid misuse, include supporting farmer field schools, which are known to increase the adoption of Integrated Pest Management practices as well as agricultural production and farmer incomes (well established). The International Code of Conduct on Pesticide Management of the Food and Agriculture Organization and the World Health Organization of the United Nations sets out voluntary actions for Government and industry; a survey from 2004 and 2005 suggests that sixty-one per cent of countries who completed the survey questionnaire (31 out of 51 countries) are using it {6.4.2.1, 6.4.2.2.5, 6.4.2.2.6, 6.4.2.4.2}. Research aimed at improving the effectiveness of pest management in pesticide-free and pesticide minimized (e.g., Integrated Pest Management) farming systems would help provide viable alternatives to conventional high chemical input systems that are productive while at the same time reducing the risks to pollinators." ;
+    dcterms:identifier "26" ;
+    skos:prefLabel "Risk assessment of specific pesticide ingredients and regulation based on identified risks are important responses that can decrease the environmental hazard from pesticides used in agriculture at the national level (established but incomplete)" .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-27> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-27-SM0> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Agricultural and urban land management systems that allow a variety of weedy species to flower support more diverse communities of pollinators, which can enhance pollination (established but incomplete) {2.2.2.1.4, 2.2.2.1.8, 2.2.2.1.9, 2.2.2.3, 2.3.1.2, 2.3.1.4.2}. This can be achieved by reducing herbicide use or taking less stringent approaches to weed control, paying careful attention to the potential trade-off with crop yield and control of invasive alien species {2.3, 6.4.2.1.4, 6.4.5.1.3.}. One possible approach is demonstrated by traditional diversified farming systems, in which weeds themselves are valued as supplementary food products {5.3.3, 5.3.4, 5.4.2, 6.4.1.1.8}. The potential direct sublethal effects of herbicides on pollinators are largely unknown and seldom studied {2.3.1.4.2}." ;
+    dcterms:identifier "27" ;
+    skos:prefLabel "Use of herbicides to control weeds indirectly affects pollinators by reducing the abundance and diversity of flowering plants providing pollen and nectar (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-28> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-28-SM0> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "established but incomplete",
+        "well established" ;
+    ipbes:hasDescription "No direct lethal effects of insect-resistant (IR) crops (e.g., producing Bacillus thuringiensis (Bt) toxins) on honey bees or other Hymenoptera have been reported. Lethal effects have been identified in some butterflies (established but incomplete), while data on other pollinator groups (e.g., hoverflies) are scarce {2.3.2.2}. The ecological and evolutionary effects of potential transgene flow and introgression in wild relatives and non-genetically modified crops on non-target organisms, such as pollinators, need study {2.3.2.3.2}. The risk assessment required for the approval of genetically-modified-organism (GMO) crops in most countries does not adequately address the direct sublethal effects of insect-resistant (IR) crops or the indirect effects of herbicide-tolerant (HT) and insect-resistant (IR) crops, partly because of a lack of data {6.4.2.6.1}. Quantifying the direct and indirect impacts of genetically-modified organisms (GMOs) on pollinators would help to inform whether, and to what extent, response options are required." ;
+    dcterms:identifier "28" ;
+    skos:prefLabel "Most agricultural genetically modified organisms (GMOs) carry traits for herbicide tolerance (HT) or insect resistance (IR). Reduced weed populations are likely to accompany most herbicide-tolerant (HT) crops, diminishing food resources for pollinators (established but incomplete). The actual consequences for the abundance and diversity of pollinators foraging in herbicide-tolerant (HT)-crop fields is unknown {2.3.2.3.1}. Insect-resistant (IR) crops result in the reduction of insecticide use, which varies regionally according to the prevalence of pests, and the emergence of secondary outbreaks of non-target pests or primary pest resistance (well established). If sustained, this reduction in insecticide use could reduce pressure on non target insects (established but incomplete). How insect-resistant-(IR) crop use and reduced pesticide use affect pollinator abundance and diversity is unknown {2.3.2.3.1}." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-29> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-29-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-29-SM1> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "unresolved" ;
+    ipbes:hasDescription "While pollinator management has developed over thousands of years, there are opportunities for further substantial innovation and improvement of management practices, including better management of parasites and pathogens (well established) {3.3.3, 3.4.3, 6.4.4.1.1.2}, improving selection for desired traits in bees (well established) and breeding for genetic diversity (well established) {6.4.4.1.1.3}. Successful management of bees, including honey bees and stingless bees, often depends on local and traditional knowledge systems. The erosion of those knowledge systems, particularly in tropical countries, may contribute to local declines (established but incomplete) {3.3.2, 6.4.4.5}." ;
+    dcterms:identifier "29" ;
+    skos:prefLabel "Declines in the number of managed western honey bee colonies are due in part to socio-economic changes affecting beekeeping and/or poor management practices (unresolved) {3.3.2}." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-30> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-30-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-30-SM1>,
+        <http://ontology.ipbes.net/report/subm/PPA16-30-SM2>,
+        <http://ontology.ipbes.net/report/subm/PPA16-30-SM3> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "The western honey bee, Apis mellifera, has been moved around the world, and this has resulted in a spill over of pathogens both to this species, in the case of the Varroa mite, and from this species to wild pollinators, such as deformed wing virus (established but incomplete). Greater emphasis on hygiene and the control of pests (Varroa and other pests) and pathogens in managed insect pollinators would have health benefits for the entire community of pollinators, managed and wild, by limiting pathogen spread. There are no proven options for treating viruses in any managed pollinator species, but ribonucleic acid interference (RNAi) technology could provide one pathway toward such treatment (established but incomplete) {6.4.4.1.1.2.3.1}. Varroa mites, a key parasite of honey bees, have developed resistance to some chemical treatments (well established) so new treatment options are required {2.4, 3.2.3, 3.3.3, 3.4.3, 6.4.4.1.1.2.3.5}. Other stressors, such as exposure to chemicals or insufficient nutrition, may sometimes worsen the impacts of disease (unresolved) {2.7}. In comparison, there is very little research on diseases of other pollinators (e.g., other insects, birds, bats) {2.4}." ;
+    dcterms:identifier "30" ;
+    skos:prefLabel "Insect pollinators suffer from a broad range of parasites, with Varroa mites attacking and transmitting viruses among honey bees being a notable example (well established). Emerging and re-emerging diseases (e.g., due to host shifts of both pathogens and parasites) are a significant threat to the health of honey bees (well established), bumble bees and solitary bees (established but incomplete for both groups) during the trade and management of commercial bees for pollination {2.4, 3.3.3, 3.4.3}." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-31> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-31-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-31-SM1>,
+        <http://ontology.ipbes.net/report/subm/PPA16-31-SM2>,
+        <http://ontology.ipbes.net/report/subm/PPA16-31-SM3> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Recently developed commercial rearing of bumble bee species for greenhouse and field crop pollination, and their introduction to continents outside of their original ranges, have resulted in biological invasions, pathogen transmission to native species and the decline of congeneric (sub-)species (established but incomplete). A well-documented case is the severe decline in and extirpation from many areas of its original range of the giant bumble bee, Bombus dahlbomii, since the introduction and spread of the European B. terrestris in southern South America (well established) {3.2.3, 3.3.3, 3.4.32, 3.4.3}. The presence of managed honey bees and their escaped descendants (for example African honey bees in the Americas) have changed visitation patterns to the native plants in those regions (unresolved) {3.2.3, 3.3.2, 3.4.2, 3.4.3}. Better regulation of the movement of all species of managed pollinators around the world, and within countries, can limit the spread of parasites and pathogens to managed and wild pollinators alike and reduce the likelihood that pollinators will be introduced outside their native ranges and cause negative impacts (established but incomplete) {6.4.4.2}." ;
+    dcterms:identifier "31" ;
+    skos:prefLabel "Commercial management, mass breeding, transport and trade in pollinators outside their original ranges have resulted in new invasions, transmission of pathogens and parasites and regional extinctions of native pollinator species (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-32> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-32-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-32-SM1>,
+        <http://ontology.ipbes.net/report/subm/PPA16-32-SM2>,
+        <http://ontology.ipbes.net/report/subm/PPA16-32-SM3> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Alien plants or alien pollinators change native pollinator networks, but the effects on native species or networks can be positive, negative or neutral depending on the species involved {2.5.1, 2.5.2, 2.5.5, 3.5.3}. Introduced invasive pollinators when reaching high abundances can damage flowers, thereby reducing wild plant reproduction and crop yield (established but incomplete) {6.4.3.1.4}. Invasive alien predators can affect pollination by consuming pollinators (established but incomplete) {2.5.4}. The impacts of invasive aliens are exacerbated or altered when they exist in combination with other threats such as disease, climate change and land-use change (established but incomplete) {2.5.6, 3.5.4}. Eradicating invasive species that negatively impact pollinators is rarely successful, and so policies that focus on mitigating their impact and preventing new invasions are important (established but incomplete) {6.4.3.1.4}." ;
+    dcterms:identifier "32" ;
+    skos:prefLabel "The impact of invasive alien species on pollinators and pollination is highly contingent on the identity of the invader and the ecological and evolutionary context (well established) {2.5, 3.5.3}." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-33> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-33-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-33-SM1>,
+        <http://ontology.ipbes.net/report/subm/PPA16-33-SM2>,
+        <http://ontology.ipbes.net/report/subm/PPA16-33-SM3> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Generally, the impacts of ongoing climate change on pollinators and pollination services and agriculture may not be fully apparent for several decades owing to delayed response times in ecological systems (well established). Beyond 2050, all climate change scenarios reported by the Intergovernmental Panel on Climate Change suggest that (i) community composition is expected to change as certain species decrease in abundance while others increase (well established) {2.6.2.3, 3.2.2}; and (ii) the seasonal activity of many species is projected to change differentially, disrupting life cycles and interactions between species (established but incomplete) {2.6.2.1}. The rate of change of the climate across the landscape, especially under mid-end and high-end IPCC greenhouse gas emissions scenarios is predicted to exceed the maximum speed at which many pollinator groups (e.g., many bumble bee and butterfly species), can disperse or migrate, in many situations despite their mobility (established but incomplete) {2.6.2.2}. For some crops, such as apple and passion fruit, model projections at national scales have shown that climate change may disrupt crop pollination because the areas with the best climatic conditions for crops and their pollinators may no longer overlap in future (established but incomplete) {2.6.2.3}. Adaptive responses to climate change include increasing crop diversity and regional farm diversity and targeted habitat conservation, management and restoration. The effectiveness of adaptation efforts at securing pollination under climate change is untested. There are prominent research gaps in understanding climate change impacts on pollinators and efficient adaptation options {6.4.1.1.12, 6.4.4.1.5, 6.5.1.10.2, 6.8.1}." ;
+    dcterms:identifier "33" ;
+    skos:prefLabel "Some pollinator species (e.g., butterflies) have moved their ranges, altered their abundance and shifted their seasonal activities in response to observed climate change over recent decades, while for many other pollinators climate change induced shifts within habitats have had severe impacts on their populations and overall distribution (well established) {2.6.2.2, 3.2.2}." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-34> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-34-SM0>,
+        <http://ontology.ipbes.net/report/subm/PPA16-34-SM1>,
+        <http://ontology.ipbes.net/report/subm/PPA16-34-SM2>,
+        <http://ontology.ipbes.net/report/subm/PPA16-34-SM3> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "Indirect drivers (demographic, socio-economic, institutional and technological) are producing environmental pressures (direct drivers) that alter pollinator diversity and pollination (well established). The growth in global human population, economic wealth, globalized trade and commerce and technological developments (e.g. increased transport efficacy) has transformed the climate, land cover and management intensity, ecosystem nutrient balance and biogeographical distribution of species (well established). This has had, and continues to have, consequences for pollinators and pollination worldwide (well established). In addition, the area of land devoted to growing pollinator-dependent crops has increased globally in response to market demands from a growing and increasingly wealthy population, albeit with regional variations (well established) {2.8, 3.7.2, 3.7.3, 3.8}." ;
+    dcterms:identifier "34" ;
+    skos:prefLabel "The many drivers that directly impact the health, diversity and abundance of pollinators, from the gene to the biome scales, can combine in their effects and thereby increase the overall pressure on pollinators (established but incomplete) {2.7}." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-35> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-35-SM0> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "In some parts of the world, there is evidence of impacts on peoples’ livelihoods from crop pollination deficits (leading to lower yield and quality of food production, and human diet quality) and loss of distinctive ways of life, cultural practices and traditions. These risks are largely driven by changes in land cover and agricultural management systems, including pesticide use (established but incomplete) {2.2.1, 2.2.2, 2.3.1, 2.3.2.3, 3.2.2, 3.3.3, 3.6, 3.8.2, 3.8.3, 5.4.1, 5.4.2, 6.2.1}." ;
+    dcterms:identifier "35" ;
+    skos:prefLabel "The variety and multiplicity of threats to pollinators and pollination generate risks to people and livelihoods (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-36> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-TableSPM.1> ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-36-SM0> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasDescription "Table SPM. 1 summarizes various strategies linked to specific responses based on the experiences and evidence described in this assessment." ;
+    dcterms:identifier "36" ;
+    skos:prefLabel "The strategic responses to the risks and opportunities associated with pollinators and pollination range in ambition and timescale from immediate, relatively straightforward, responses that reduce or avoid risks to relatively large-scale and long-term transformative responses." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-37> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-37-SM0> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "Knowledge co-production activities between farmers, indigenous peoples, local communities and scientists have led to numerous relevant insights including: improvements in hive design for bee health; understanding pesticide uptake into medicinal plants and the impacts of the mistletoe parasite on pollinator resources; identification of species of stingless bees new to science; establishing baselines to understand trends in pollinators; improvements in economic returns from forest honey; identification of change from traditional shade-grown to sun grown coffee as the cause of declines in migratory bird populations; and a policy response to risk of harm to pollinators leading to a restriction on the use of neonicotinoids in the European Union {5.4.1, 5.4.2.2, 5.4.7.3, tables 5-4 and 5-5}." ;
+    dcterms:identifier "37" ;
+    skos:prefLabel "Indigenous and local knowledge systems, in co-production with science, can be a source of solutions for the present challenges confronting pollinators and pollination (established but incomplete)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-38> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-38-SM0> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Such monitoring would address major knowledge gaps on the status and trends of pollinators and pollination, particularly outside Western Europe. Wild pollinators can be monitored to some extent through citizen science projects focused on bees, birds or pollinators generally {6.4.1.1.10, 6.4.6.3.4}." ;
+    dcterms:identifier "38" ;
+    skos:prefLabel "Long-term monitoring of wild and managed pollinators and pollination can provide crucial data for responding rapidly to threats such as pesticide poisonings and disease outbreaks, as well as long-term information about trends, chronic issues and the effectiveness of interventions (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/PPA16-39> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/PPA16-39-SM0> ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "Coordinated, collaborative action and knowledge sharing that strengthens linkages across sectors (e.g., agriculture and nature conservation), across jurisdictions (e.g., private, Government, not-for-profit), and among levels (e.g., local, national, global) can overcome many of these governance deficits. The establishment of social norms, habits and motivation that are the key to effective governance outcomes involves long time frames {5.4.2.8, 5.4.7.4}. However, the possibility that contradictions between policy sectors may remain even after coordination efforts have been undertaken should be acknowledged and should be a point of attention in future studies." ;
+    dcterms:identifier "39" ;
+    skos:prefLabel "Many actions to support pollinators are hampered in their implementation through governance deficits, including fragmented multi-level administrative units, mismatches between fine-scale variation in practices that protect pollinators and homogenizing broad-scale government policy, contradictory policy goals across sectors and contests over land use (established but incomplete)." .
+
 <http://ontology.ipbes.net/report/ref/2333088/items/DIP25RQF> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch1>,
         <http://ontology.ipbes.net/report/ch/PPA16ch3>,
@@ -30484,50 +30544,6 @@ Many examples of small-scale farmers maintaining habitat elements such as hedger
     dcterms:identifier "6.4.1.1.1" ;
     skos:prefLabel "Conserve or sow field margins within or around crops" .
 
-<http://ontology.ipbes.net/report/key/PPA16-10> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/PPA16-12>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-13>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-14>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-15>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-16> ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:hasDescription "Although a lack of wild pollinator data (species identity, distribution and abundance) for Latin America, Africa, Asia and Oceania preclude any general statement on their regional status, local declines have been recorded. Long-term international or national monitoring of both pollinators and pollination is urgently required to provide information on status and trends for most species and most parts of the world." ;
-    dcterms:identifier "10" ;
-    skos:prefLabel "Wild pollinators have declined in occurrence and diversity (and abundance for certain species) at local and regional scales in North West Europe and North America." .
-
-<http://ontology.ipbes.net/report/key/PPA16-11> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/PPA16-12>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-13>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-14>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-15>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-16> ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:hasDescription "Seasonal colony loss of western honey bees has in recent years been high at least in some parts of the temperate Northern Hemisphere and in South Africa. Beekeepers can under some conditions, with associated economic costs, make up such losses through the splitting of managed colonies." ;
-    dcterms:identifier "11" ;
-    skos:prefLabel "The number of managed western honey bee hives has increased globally over the last five decades, even though declines have been recorded in some European countries and North America over the same period." .
-
-<http://ontology.ipbes.net/report/key/PPA16-12> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/PPA16-12>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-13>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-14>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-15>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-16> ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:hasDescription "In Europe, 9 per cent of bee and butterfly species are threatened and populations are declining for 37 per cent of bees and 31 per cent of butterflies (excluding data deficient species, which includes 57 per cent of bees). Where national Red List assessments are available, they show that often more than 40 per cent of bee species may be threatened." ;
-    dcterms:identifier "12" ;
-    skos:prefLabel "The International Union for Conservation of Nature (IUCN) Red List assessments indicate that 16.5 per cent of vertebrate pollinators are threatened with global extinction (increasing to 30 per cent for island species). There are no global Red List assessments specifically for insect pollinators. However, regional and national assessments indicate high levels of threat for some bees and butterflies." .
-
-<http://ontology.ipbes.net/report/key/PPA16-13> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/PPA16-12>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-13>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-14>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-15>,
-        <http://ontology.ipbes.net/report/bgm/PPA16-16> ;
-    ipbes:Report ipbes:PPA16 ;
-    ipbes:hasDescription "Yield per hectare of pollinator-dependent crops has increased less, and varies more year to year, than yield per hectare of pollinator-independent crops. While the drivers of this trend are not clear, studies of several crops at local scales show that production declines when pollinators decline." ;
-    dcterms:identifier "13" ;
-    skos:prefLabel "The volume of production of pollinator-dependent crops has increased by 300 per cent over the last five decades, making livelihoods increasingly dependent on the provision of pollination. However, overall these crops have experienced lower growth and lower stability of yield than pollinator-independent crops." .
-
 <http://ontology.ipbes.net/report/ref/2333088/items/4JJURDBQ> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch1>,
         <http://ontology.ipbes.net/report/ch/PPA16ch4>,
@@ -30939,6 +30955,54 @@ These examples demonstrate that dedicated funding for pollinator research is eff
     ipbes:hasDescription "Many of these tools and methods aim to incorporate existing knowledge and stakeholder or policy preferences into environmental decisions. Often, they can be applied in conjunction with one another. For example, models can be used to build maps that are used in participatory assessments or decision support tools. Evidence synthesis can be used to identify best practice, to define parameters in models or to quantify performance criteria for multi-criteria analysis. Some, not all, of these tools employ economic valuation methods discussed in Chapter 4 (Sections 4.4, 4.5 and 4.6)." ;
     dcterms:identifier "6.5.1" ;
     skos:prefLabel "Summary of tools, methods and approaches" .
+
+<http://ontology.ipbes.net/report/key/PPA16-10> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/PPA16-12>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-13>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-14>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-15>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-16> ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "B. Status and trends in pollinators, pollination and pollinator-dependent crops and wild plants" ;
+    ipbes:hasDescription "Although a lack of wild pollinator data (species identity, distribution and abundance) for Latin America, Africa, Asia and Oceania preclude any general statement on their regional status, local declines have been recorded. Long-term international or national monitoring of both pollinators and pollination is urgently required to provide information on status and trends for most species and most parts of the world." ;
+    dcterms:identifier "10" ;
+    skos:prefLabel "Wild pollinators have declined in occurrence and diversity (and abundance for certain species) at local and regional scales in North West Europe and North America." .
+
+<http://ontology.ipbes.net/report/key/PPA16-11> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/PPA16-12>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-13>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-14>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-15>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-16> ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "B. Status and trends in pollinators, pollination and pollinator-dependent crops and wild plants" ;
+    ipbes:hasDescription "Seasonal colony loss of western honey bees has in recent years been high at least in some parts of the temperate Northern Hemisphere and in South Africa. Beekeepers can under some conditions, with associated economic costs, make up such losses through the splitting of managed colonies." ;
+    dcterms:identifier "11" ;
+    skos:prefLabel "The number of managed western honey bee hives has increased globally over the last five decades, even though declines have been recorded in some European countries and North America over the same period." .
+
+<http://ontology.ipbes.net/report/key/PPA16-12> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/PPA16-12>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-13>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-14>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-15>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-16> ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "B. Status and trends in pollinators, pollination and pollinator-dependent crops and wild plants" ;
+    ipbes:hasDescription "In Europe, 9 per cent of bee and butterfly species are threatened and populations are declining for 37 per cent of bees and 31 per cent of butterflies (excluding data deficient species, which includes 57 per cent of bees). Where national Red List assessments are available, they show that often more than 40 per cent of bee species may be threatened." ;
+    dcterms:identifier "12" ;
+    skos:prefLabel "The International Union for Conservation of Nature (IUCN) Red List assessments indicate that 16.5 per cent of vertebrate pollinators are threatened with global extinction (increasing to 30 per cent for island species). There are no global Red List assessments specifically for insect pollinators. However, regional and national assessments indicate high levels of threat for some bees and butterflies." .
+
+<http://ontology.ipbes.net/report/key/PPA16-13> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/PPA16-12>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-13>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-14>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-15>,
+        <http://ontology.ipbes.net/report/bgm/PPA16-16> ;
+    ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "B. Status and trends in pollinators, pollination and pollinator-dependent crops and wild plants" ;
+    ipbes:hasDescription "Yield per hectare of pollinator-dependent crops has increased less, and varies more year to year, than yield per hectare of pollinator-independent crops. While the drivers of this trend are not clear, studies of several crops at local scales show that production declines when pollinators decline." ;
+    dcterms:identifier "13" ;
+    skos:prefLabel "The volume of production of pollinator-dependent crops has increased by 300 per cent over the last five decades, making livelihoods increasingly dependent on the provision of pollination. However, overall these crops have experienced lower growth and lower stability of yield than pollinator-independent crops." .
 
 <http://ontology.ipbes.net/report/ref/2333088/items/JLR5VCU9> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/PPA16ch3>,
@@ -34720,6 +34784,7 @@ In summary, an increasing number of observational and experimental studies acros
         <http://ontology.ipbes.net/report/bgm/PPA16-8>,
         <http://ontology.ipbes.net/report/bgm/PPA16-9> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasDescription "Globally, nearly 90 per cent of wild flowering plant species depend, at least in part, on the transfer of pollen by animals. These plants are critical for the continued functioning of ecosystems as they provide food, form habitats and provide other resources for a wide range of other species." ;
     dcterms:identifier "1" ;
     skos:prefLabel "Animal pollination plays a vital role as a regulating ecosystem service in nature." .
@@ -34737,6 +34802,7 @@ In summary, an increasing number of observational and experimental studies acros
         <http://ontology.ipbes.net/report/bgm/PPA16-8>,
         <http://ontology.ipbes.net/report/bgm/PPA16-9> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasDescription "Pollinator-dependent crops contribute to 35 per cent of global crop production volume." ;
     dcterms:identifier "2" ;
     skos:prefLabel "More than three quarters of the leading types of global food crops rely to some extent on animal pollination for yield and/or quality." .
@@ -34754,6 +34820,7 @@ In summary, an increasing number of observational and experimental studies acros
         <http://ontology.ipbes.net/report/bgm/PPA16-8>,
         <http://ontology.ipbes.net/report/bgm/PPA16-9> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     dcterms:identifier "3" ;
     skos:prefLabel "Given that pollinator-dependent crops rely on animal pollination to varying degrees, it is estimated that 5-8 per cent of current global crop production, with an annual market value of $235 billion-$577 billion (in 2015, United States dollars) worldwide, is directly attributable to animal pollination." .
 
@@ -34770,6 +34837,7 @@ In summary, an increasing number of observational and experimental studies acros
         <http://ontology.ipbes.net/report/bgm/PPA16-8>,
         <http://ontology.ipbes.net/report/bgm/PPA16-9> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasDescription "Many of the world’s most important cash crops benefit from animal pollination in terms of yield and/or quality and are leading export products in developing countries (e.g., coffee and cocoa) and developed countries (e.g., almonds), providing employment and income for millions of people." ;
     dcterms:identifier "4" ;
     skos:prefLabel "The importance of animal pollination varies substantially among crops, and therefore among regional crop economies." .
@@ -34787,6 +34855,7 @@ In summary, an increasing number of observational and experimental studies acros
         <http://ontology.ipbes.net/report/bgm/PPA16-8>,
         <http://ontology.ipbes.net/report/bgm/PPA16-9> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasDescription "Pollinator-dependent species encompass many fruit, vegetable, seed, nut and oil crops, which supply major proportions of micronutrients, vitamins and minerals in the human diet." ;
     dcterms:identifier "5" ;
     skos:prefLabel "Pollinator-dependent food products are important contributors to healthy human diets and nutrition." .
@@ -34804,6 +34873,7 @@ In summary, an increasing number of observational and experimental studies acros
         <http://ontology.ipbes.net/report/bgm/PPA16-8>,
         <http://ontology.ipbes.net/report/bgm/PPA16-9> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasDescription "Beekeeping provides an important source of income for many rural livelihoods. The western honey bee is the most widespread managed pollinator in the world, and globally there are about 81 million hives producing an estimated 1.6 million tonnes of honey annually." ;
     dcterms:identifier "6" ;
     skos:prefLabel "The vast majority of pollinator species are wild, including more than 20,000 species of bees, some species of flies, butterflies, moths, wasps, beetles, thrips, birds, bats and other vertebrates. A few species of bees are widely managed, including the western honey bee (Apis mellifera), the eastern honey bee (Apis cerana), some bumble bees, some stingless bees and a few solitary bees." .
@@ -34821,6 +34891,7 @@ In summary, an increasing number of observational and experimental studies acros
         <http://ontology.ipbes.net/report/bgm/PPA16-8>,
         <http://ontology.ipbes.net/report/bgm/PPA16-9> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasDescription "A diverse community of pollinators generally provides more effective and stable crop pollination than any single species. Pollinator diversity contributes to crop pollination even when managed species (e.g., honey bees) are present in high abundance. The contribution of wild pollinators to crop production is undervalued." ;
     dcterms:identifier "7" ;
     skos:prefLabel "Both wild and managed pollinators have globally significant roles in crop pollination, although their relative contributions differ according to crop and location. Crop yield and/or quality depend on both the abundance and diversity of pollinators." .
@@ -34838,6 +34909,7 @@ In summary, an increasing number of observational and experimental studies acros
         <http://ontology.ipbes.net/report/bgm/PPA16-8>,
         <http://ontology.ipbes.net/report/bgm/PPA16-9> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasDescription "Pollinators serve as important spiritual symbols in many cultures. Sacred passages about bees in all the worlds’ major religions highlight their significance to human societies over millennia." ;
     dcterms:identifier "8" ;
     skos:prefLabel "Pollinators are a source of multiple benefits to people, beyond food provisioning, contributing directly to medicines, biofuels (e.g. canola and palm oil), fibres (e.g., cotton and linen) construction materials (timbers), musical instruments, arts and crafts, recreational activities and as sources of inspiration for art, music, literature, religion, traditions, technology and education." .
@@ -34855,6 +34927,7 @@ In summary, an increasing number of observational and experimental studies acros
         <http://ontology.ipbes.net/report/bgm/PPA16-8>,
         <http://ontology.ipbes.net/report/bgm/PPA16-9> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "A. Values of pollinators and pollination" ;
     ipbes:hasDescription "Pollinators and pollination are critical to the implementation of the Convention for the Safeguarding of the Intangible Cultural Heritage; the Convention Concerning the Protection of the World Cultural and Natural Heritage; and the Globally Important Agricultural Heritage Systems Initiative." ;
     dcterms:identifier "9" ;
     skos:prefLabel "A good quality of life for many people relies on ongoing roles of pollinators in globally significant heritage, as symbols of identity, as aesthetically significant landscapes and animals, in social relations, for education and recreation and in governance interactions." .
@@ -35511,6 +35584,7 @@ For Petalangan people in Indonesia, bees are seen as a symbol of health and chea
         <http://ontology.ipbes.net/report/bgm/PPA16-38>,
         <http://ontology.ipbes.net/report/bgm/PPA16-39> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
     ipbes:hasDescription "Threats include land-use change, intensive agricultural management and pesticide use, environmental pollution, invasive alien species, pathogens and climate change. Explicitly linking pollinator declines to individual or combinations of direct drivers is limited by data availability or complexity, yet a wealth of individual case studies worldwide suggests that these direct drivers often affect pollinators negatively." ;
     dcterms:identifier "14" ;
     skos:prefLabel "The abundance, diversity and health of pollinators and the provision of pollination are threatened by direct drivers that generate risks to societies and ecosystems." .
@@ -35541,6 +35615,7 @@ For Petalangan people in Indonesia, bees are seen as a symbol of health and chea
         <http://ontology.ipbes.net/report/bgm/PPA16-39> ;
     ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-TableSPM.1> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
     ipbes:hasDescription "There are seven broad strategies, linked to actions, for responding to risks and opportunities (table SPM. 1), including a range of solutions that draw on indigenous and local knowledge. These strategies can be adopted in parallel and would be expected to reduce risks associated with pollinator decline in any region of the world, regardless of the extent of available knowledge about the status of pollinators or the effectiveness of interventions." ;
     dcterms:identifier "15" ;
     skos:prefLabel "Strategic responses to the risks and opportunities associated with pollinators and pollination range in ambition and timescale from immediate, relatively straightforward, responses that reduce or avoid risks to relatively large-scale and long-term responses that aim to transform agriculture or society’s relationship with nature." .
@@ -35570,6 +35645,7 @@ For Petalangan people in Indonesia, bees are seen as a symbol of health and chea
         <http://ontology.ipbes.net/report/bgm/PPA16-38>,
         <http://ontology.ipbes.net/report/bgm/PPA16-39> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
     ipbes:hasDescription "Three complementary approaches to maintaining healthy pollinator communities and productive agriculture are: (a) ecological intensification (i.e., managing nature’s ecological functions to improve agricultural production and livelihoods while minimizing environmental damage); (b) strengthening existing diversified farming systems (including forest gardens, home gardens, agroforestry and mixed cropping and livestock systems) to foster pollinators and pollination through practices validated by science or indigenous and local knowledge (e.g., crop rotation); and (c) investing in ecological infrastructure by protecting, restoring and connecting patches of natural and semi-natural habitats throughout productive agricultural landscapes. These strategies can concurrently mitigate the impacts of land-use change, land management intensity, pesticide use and climate change on pollinators." ;
     dcterms:identifier "16" ;
     skos:prefLabel "A number of features of current intensive agricultural practices threaten pollinators and pollination. Moving towards more sustainable agriculture and reversing the simplification of agricultural landscapes offer key strategic responses to risks associated with pollinator decline." .
@@ -35599,6 +35675,7 @@ For Petalangan people in Indonesia, bees are seen as a symbol of health and chea
         <http://ontology.ipbes.net/report/bgm/PPA16-38>,
         <http://ontology.ipbes.net/report/bgm/PPA16-39> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
     ipbes:hasDescription "Practices include diverse farming systems; favouring heterogeneity in landscapes and gardens; kinship relationships that protect many specific pollinators; using seasonal indicators (e.g., flowering) to trigger actions (e.g., planting); distinguishing a wide range of pollinators; and tending to nest trees and floral and other pollinator resources. Knowledge co-production has led to improvements in hive design, new understanding of parasite impacts and the identification of stingless bees new to science." ;
     dcterms:identifier "17" ;
     skos:prefLabel "Practices based on indigenous and local knowledge can be a source of solutions to current challenges, in co-production with science, by supporting an abundance and diversity of pollinators." .
@@ -35628,6 +35705,7 @@ For Petalangan people in Indonesia, bees are seen as a symbol of health and chea
         <http://ontology.ipbes.net/report/bgm/PPA16-38>,
         <http://ontology.ipbes.net/report/bgm/PPA16-39> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
     ipbes:hasDescription "The few available field studies assessing effects of field-realistic exposure provide conflicting evidence of effects based on species studied and pesticide usage. It is currently unresolved how sublethal effects of pesticide exposure recorded for individual insects affect colonies and populations of managed bees and wild pollinators, especially over the longer term. Recent research focusing on neonicotinoid insecticides shows evidence of lethal and sublethal effects on bees and some evidence of impacts on the pollination they provide. There is evidence from a recent study that shows impacts of neonicotinoids on wild pollinator survival and reproduction at actual field exposure. Evidence, from this and other studies, of effects on managed honey bee colonies is conflicting." ;
     dcterms:identifier "18" ;
     skos:prefLabel "The risk to pollinators from pesticides arises through a combination of toxicity and the level of exposure, which varies geographically with the compounds used and the scale of land management and habitat in the landscape. Pesticides, particularly insecticides, have been demonstrated to have a broad range of lethal and sublethal effects on pollinators under controlled experimental conditions." .
@@ -35657,6 +35735,7 @@ For Petalangan people in Indonesia, bees are seen as a symbol of health and chea
         <http://ontology.ipbes.net/report/bgm/PPA16-38>,
         <http://ontology.ipbes.net/report/bgm/PPA16-39> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
     ipbes:hasDescription "Risk assessment can be an effective tool for defining pollinator-safe uses of pesticides, which should consider different levels of risk among wild and managed pollinator species according to their biology. Subsequent use regulations (including labelling) are important steps towards avoiding the misuse of specific pesticides. The International Code of Conduct on Pesticide Management of the Food and Agriculture Organization and the World Health Organization of the United Nations provides a set of voluntary actions for Government and industry to reduce risks for human health and environment." ;
     dcterms:identifier "19" ;
     skos:prefLabel "Exposure of pollinators to pesticides can be decreased by reducing the use of pesticides, seeking alternative forms of pest control and adopting a range of specific application practices, including technologies to reduce pesticide drift. Actions to reduce pesticide use include promoting Integrated Pest Management, supported by educating farmers, organic farming and policies to reduce overall use." .
@@ -35686,6 +35765,7 @@ For Petalangan people in Indonesia, bees are seen as a symbol of health and chea
         <http://ontology.ipbes.net/report/bgm/PPA16-38>,
         <http://ontology.ipbes.net/report/bgm/PPA16-39> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
     ipbes:hasDescription "Reduced weed populations are likely to accompany most herbicide-tolerant (HT) crops, diminishing food resources for pollinators. The actual consequences for the abundance and diversity of pollinators foraging in herbicide-tolerant (HT)-crop fields is unknown. Insect resistant (IR) crops can result in the reduction of insecticide use, which varies regionally according to the prevalence of pests, the emergence of secondary outbreaks of non-target pests or primary pest resistance. If sustained, the reduction in insecticide use could reduce pressure on non-target insects. How insect-resistant (IR) crop use and reduced pesticide use affect pollinator abundance and diversity is unknown. Risk assessments required for the approval of genetically modified organism (GMO) crops in most countries do not adequately address the direct sublethal effects of insect-resistant (IR) crops or the indirect effects of herbicide-tolerant (HT) and insect-resistant (IR) crops, partly because of a lack of data." ;
     dcterms:identifier "20" ;
     skos:prefLabel "Most agricultural genetically modified organisms (GMOs) carry traits for herbicide tolerance (HT) or insect resistance (IR)." .
@@ -35715,6 +35795,7 @@ For Petalangan people in Indonesia, bees are seen as a symbol of health and chea
         <http://ontology.ipbes.net/report/bgm/PPA16-38>,
         <http://ontology.ipbes.net/report/bgm/PPA16-39> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
     ipbes:hasDescription "Greater emphasis on hygiene and the control of pathogens would help reduce the spread of disease across the entire community of pollinators, managed and wild. Mass breeding and large-scale transport of managed pollinators can pose risks for the transmission of pathogens and parasites and increase the likelihood of selection for more virulent pathogens, alien species invasions and regional extinctions of native pollinator species. The risk of unintended harm to wild and managed pollinators could be decreased by better regulation of their trade and use." ;
     dcterms:identifier "21" ;
     skos:prefLabel "Bees suffer from a broad range of parasites, including Varroa mites in western and eastern honey bees. Emerging and re-emerging diseases are a significant threat to the health of honey bees, bumble bees and solitary bees, especially when they are managed commercially." .
@@ -35744,6 +35825,7 @@ For Petalangan people in Indonesia, bees are seen as a symbol of health and chea
         <http://ontology.ipbes.net/report/bgm/PPA16-38>,
         <http://ontology.ipbes.net/report/bgm/PPA16-39> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
     ipbes:hasDescription "Generally, the impacts of ongoing climate change on pollinators and pollination services to agriculture may not be fully apparent for several decades, owing to a delayed response in ecological systems. Adaptive responses to climate change include increasing crop diversity and regional farm diversity and targeted habitat conservation, management or restoration. The effectiveness of adaptation efforts at securing pollination under climate change is untested." ;
     dcterms:identifier "22" ;
     skos:prefLabel "The ranges, abundances and seasonal activities of some wild pollinator species (e.g., bumble bees and butterflies) have changed in response to observed climate change over recent decades." .
@@ -35774,6 +35856,7 @@ For Petalangan people in Indonesia, bees are seen as a symbol of health and chea
         <http://ontology.ipbes.net/report/bgm/PPA16-39> ;
     ipbes:Illustration <http://ontology.ipbes.net/report/il/PPA16-TableSPM.1> ;
     ipbes:Report ipbes:PPA16 ;
+    ipbes:hasCategory "C. Drivers of change, risks and opportunities and policy and management options" ;
     ipbes:hasDescription "table SPM. 1) could be implemented more effectively with improved governance. For example, broad-scale government policy may be too homogenous and not allow for local variation in practices; administration can be fragmented into different levels; and goals can be contradictory between sectors. Coordinated, collaborative action and knowledge sharing that builds links across sectors (e.g., agriculture and nature conservation), across jurisdictions (e.g., private, Government, not-for-profit), and among levels (e.g., local, national, global) can overcome these challenges and lead to long-term changes that benefit pollinators. Establishing effective governance requires habits, motivations and social norms to change over the long term. However, the possibility that contradictions between policy sectors may remain even after coordination efforts have been undertaken should be acknowledged and should be a point of attention in future studies." ;
     dcterms:identifier "23" ;
     skos:prefLabel "Many actions to support wild and managed pollinators and pollination (described above and in" .
@@ -36488,14 +36571,7 @@ ipbes:PPA16 a ipbes:Report ;
     ipbes:year "2016" ;
     skos:altLabel "IPBES Pollinators, Pollination and Food Production Assessment" ;
     skos:prefLabel "The assessment report of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services on pollinators, pollination and food production" ;
-    foaf:Person <http://ontology.ipbes.net/report/person/Bartuska_Ann>,
-        <http://ontology.ipbes.net/report/person/Baste_IvarAndreas>,
-        <http://ontology.ipbes.net/report/person/Báldi_András>,
-        <http://ontology.ipbes.net/report/person/Imperatriz-Fonseca_Vera>,
-        <http://ontology.ipbes.net/report/person/Medellín_RodrigoAntonio>,
+    foaf:Person <http://ontology.ipbes.net/report/person/Imperatriz-Fonseca_Vera>,
         <http://ontology.ipbes.net/report/person/Ngo_HienT>,
-        <http://ontology.ipbes.net/report/person/Oteng-Yeboah_Alfred>,
-        <http://ontology.ipbes.net/report/person/Potts_SimonG>,
-        <http://ontology.ipbes.net/report/person/Watson_RT>,
-        <http://ontology.ipbes.net/report/person/Watson_Robert> .
+        <http://ontology.ipbes.net/report/person/Potts_SimonG> .
 

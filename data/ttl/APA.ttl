@@ -1948,6 +1948,73 @@ Research on predator species has been conducted in the Gobi Desert. Non-invasive
     dcterms:identifier "Table6.5" ;
     skos:prefLabel "Progress and policy options towards achieving the Aichi Biodiversity Targets" .
 
+<http://ontology.ipbes.net/report/key/APA18-A> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-A1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A4> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/APA18-1>,
+        <http://ontology.ipbes.net/report/key/APA18-2>,
+        <http://ontology.ipbes.net/report/key/APA18-3>,
+        <http://ontology.ipbes.net/report/key/APA18-4> ;
+    ipbes:Report ipbes:APA18 ;
+    dcterms:identifier "A" ;
+    skos:prefLabel "Importance of nature’s contributions to human well-being and good quality of life" .
+
+<http://ontology.ipbes.net/report/key/APA18-B> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-B1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-B2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-B3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-B4>,
+        <http://ontology.ipbes.net/report/bgm/APA18-B5>,
+        <http://ontology.ipbes.net/report/bgm/APA18-B6>,
+        <http://ontology.ipbes.net/report/bgm/APA18-B7>,
+        <http://ontology.ipbes.net/report/bgm/APA18-B8> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/APA18-10>,
+        <http://ontology.ipbes.net/report/key/APA18-11>,
+        <http://ontology.ipbes.net/report/key/APA18-12>,
+        <http://ontology.ipbes.net/report/key/APA18-13>,
+        <http://ontology.ipbes.net/report/key/APA18-5>,
+        <http://ontology.ipbes.net/report/key/APA18-6>,
+        <http://ontology.ipbes.net/report/key/APA18-7>,
+        <http://ontology.ipbes.net/report/key/APA18-8>,
+        <http://ontology.ipbes.net/report/key/APA18-9> ;
+    ipbes:Report ipbes:APA18 ;
+    dcterms:identifier "B" ;
+    skos:prefLabel "Varying trends of biodiversity and ecosystem services and the role of underlying drivers" .
+
+<http://ontology.ipbes.net/report/key/APA18-C> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-C1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-C2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-C3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-C4>,
+        <http://ontology.ipbes.net/report/bgm/APA18-C5>,
+        <http://ontology.ipbes.net/report/bgm/APA18-C6> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/APA18-14>,
+        <http://ontology.ipbes.net/report/key/APA18-15>,
+        <http://ontology.ipbes.net/report/key/APA18-16>,
+        <http://ontology.ipbes.net/report/key/APA18-17> ;
+    ipbes:Report ipbes:APA18 ;
+    dcterms:identifier "C" ;
+    skos:prefLabel "Implications of biodiversity decline and opportunities for sustaining nature’s contributions to people" .
+
+<http://ontology.ipbes.net/report/key/APA18-D> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/APA18-18>,
+        <http://ontology.ipbes.net/report/key/APA18-19>,
+        <http://ontology.ipbes.net/report/key/APA18-20>,
+        <http://ontology.ipbes.net/report/key/APA18-21>,
+        <http://ontology.ipbes.net/report/key/APA18-22>,
+        <http://ontology.ipbes.net/report/key/APA18-23> ;
+    ipbes:Report ipbes:APA18 ;
+    dcterms:identifier "D" ;
+    skos:prefLabel "Policies, institutional frameworks and governance options for achieving global goals and targets" .
+
 <http://ontology.ipbes.net/report/ref/2333075/items/3ICPHM7A> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch1> ;
     ipbes:Report ipbes:APA18 ;
@@ -2843,15 +2910,6 @@ Specific policies relating to rewarding local knowledge, practices on conservati
     foaf:firstName "Elena" ;
     foaf:lastName "Eugenio" .
 
-<http://ontology.ipbes.net/report/person/Fazel_AsgharM> a foaf:Person ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:country "IRN" ;
-    ipbes:mc "Management Committee in APA18" ;
-    owl:sameAs <https://orcid.org/0000-0001-7494-2357> ;
-    skos:prefLabel "Asghar M. Fazel" ;
-    foaf:firstName "Asghar M." ;
-    foaf:lastName "Fazel" .
-
 <http://ontology.ipbes.net/report/person/Fisher_Judith> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch2> ;
     ipbes:Report ipbes:APA18 ;
@@ -3271,14 +3329,6 @@ Specific policies relating to rewarding local knowledge, practices on conservati
     foaf:firstName "Hsing-Juh" ;
     foaf:lastName "Lin" .
 
-<http://ontology.ipbes.net/report/person/Lonsdale_Mark> a foaf:Person ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:country "AUS" ;
-    ipbes:mc "Management Committee in APA18" ;
-    skos:prefLabel "Mark Lonsdale" ;
-    foaf:firstName "Mark" ;
-    foaf:lastName "Lonsdale" .
-
 <http://ontology.ipbes.net/report/person/Magni_Paolo> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch1> ;
     ipbes:Report ipbes:APA18 ;
@@ -3324,13 +3374,6 @@ Specific policies relating to rewarding local knowledge, practices on conservati
     skos:prefLabel "Ather Masoodi" ;
     foaf:firstName "Ather" ;
     foaf:lastName "Masoodi" .
-
-<http://ontology.ipbes.net/report/person/Mathur_VinodB> a foaf:Person ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:mc "Management Committee in APA18" ;
-    skos:prefLabel "Vinod B. Mathur" ;
-    foaf:firstName "Vinod B." ;
-    foaf:lastName "Mathur" .
 
 <http://ontology.ipbes.net/report/person/Matsuda_Hiroyuki> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch5> ;
@@ -3424,16 +3467,14 @@ Specific policies relating to rewarding local knowledge, practices on conservati
     foaf:firstName "Aidin" ;
     foaf:lastName "Niamir" .
 
-<http://ontology.ipbes.net/report/person/Wu_Ning> a foaf:Person ;
+<http://ontology.ipbes.net/report/person/Ning_Wu> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch4> ;
     ipbes:Report ipbes:APA18 ;
     ipbes:cl "Coordinating Lead Author in APA18-ch4" ;
     ipbes:country "CHN" ;
-    skos:prefLabel "Ning Wu" ;
-    foaf:firstName "Ning" ;
-    foaf:lastName "Wu" .
-
-<http://ontology.ipbes.net/report/person/Ning_Wu> dcterms:isReplacedBy <http://ontology.ipbes.net/report/person/Wu_Ning> .
+    skos:prefLabel "Wu Ning" ;
+    foaf:firstName "Wu" ;
+    foaf:lastName "Ning" .
 
 <http://ontology.ipbes.net/report/person/Okabe_Kimiko> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch6> ;
@@ -3448,6 +3489,7 @@ Specific policies relating to rewarding local knowledge, practices on conservati
 <http://ontology.ipbes.net/report/person/Okayasu_Sana> a foaf:Person ;
     ipbes:Report ipbes:APA18 ;
     ipbes:country "JPN" ;
+    ipbes:ed "Editor in APA18" ;
     ipbes:ts "Technical Support Unit in APA18" ;
     skos:prefLabel "Sana Okayasu" ;
     foaf:firstName "Sana" ;
@@ -3704,15 +3746,6 @@ Specific policies relating to rewarding local knowledge, practices on conservati
     foaf:firstName "Jyothis" ;
     foaf:lastName "Sathyapalan" .
 
-<http://ontology.ipbes.net/report/person/Saw_LengGuan> a foaf:Person ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:country "MYS" ;
-    ipbes:mc "Management Committee in APA18" ;
-    owl:sameAs <https://orcid.org/0000-0002-7170-7922> ;
-    skos:prefLabel "Leng Guan Saw" ;
-    foaf:firstName "Leng Guan" ;
-    foaf:lastName "Saw" .
-
 <http://ontology.ipbes.net/report/person/Settele_Josef> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch4> ;
     ipbes:Report ipbes:APA18 ;
@@ -3740,6 +3773,15 @@ Specific policies relating to rewarding local knowledge, practices on conservati
     skos:prefLabel "Myron Shekelle" ;
     foaf:firstName "Myron" ;
     foaf:lastName "Shekelle" .
+
+<http://ontology.ipbes.net/report/person/Shirayama_Yoshihisa> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch3> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:country "JPN" ;
+    ipbes:la "Lead Author in APA18-ch3" ;
+    skos:prefLabel "Yoshihisa Shirayama" ;
+    foaf:firstName "Yoshihisa" ;
+    foaf:lastName "Shirayama" .
 
 <http://ontology.ipbes.net/report/person/Sirin_Andrey> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch3> ;
@@ -3787,17 +3829,10 @@ Specific policies relating to rewarding local knowledge, practices on conservati
     foaf:firstName "Suneetha M." ;
     foaf:lastName "Subramanian" .
 
-<http://ontology.ipbes.net/report/person/Suh_Youngbae> a foaf:Person ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:country "KOR" ;
-    ipbes:mc "Management Committee in APA18" ;
-    skos:prefLabel "Youngbae Suh" ;
-    foaf:firstName "Youngbae" ;
-    foaf:lastName "Suh" .
-
 <http://ontology.ipbes.net/report/person/Suzuki_Wataru> a foaf:Person ;
     ipbes:Report ipbes:APA18 ;
     ipbes:country "JPN" ;
+    ipbes:ed "Editor in APA18" ;
     ipbes:ts "Technical Support Unit in APA18" ;
     skos:prefLabel "Wataru Suzuki" ;
     foaf:firstName "Wataru" ;
@@ -23953,6 +23988,7 @@ Contributors: Ranbeer Rawal & Rajan Kotru""" ;
     ipbes:cl "Coordinating Lead Author in APA18-ch1" ;
     ipbes:country "NPL" ;
     ipbes:cs "Co-chair in APA18" ;
+    ipbes:ed "Editor in APA18" ;
     owl:sameAs <https://orcid.org/0000-0003-0842-3836> ;
     skos:prefLabel "Madhav Karki" ;
     foaf:firstName "Madhav" ;
@@ -24034,19 +24070,10 @@ Contributors: Ranbeer Rawal & Rajan Kotru""" ;
     ipbes:country "LAO",
         "LKA" ;
     ipbes:cs "Co-chair in APA18" ;
+    ipbes:ed "Editor in APA18" ;
     skos:prefLabel "Sonali Senaratna Sellamuttu" ;
     foaf:firstName "Sonali" ;
     foaf:lastName "Senaratna Sellamuttu" .
-
-<http://ontology.ipbes.net/report/person/Shirayama_Yoshihisa> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch3> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:country "JPN" ;
-    ipbes:la "Lead Author in APA18-ch3" ;
-    ipbes:mc "Management Committee in APA18" ;
-    skos:prefLabel "Yoshihisa Shirayama" ;
-    foaf:firstName "Yoshihisa" ;
-    foaf:lastName "Shirayama" .
 
 <http://ontology.ipbes.net/report/ref/2333075/items/23PVARYB> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch2> ;
@@ -28879,122 +28906,6 @@ Despite a general increase in awareness of these issues in recent years, the cur
     dcterms:identifier "6.2.2" ;
     skos:prefLabel "National, sub-national governments and civil society" .
 
-<http://ontology.ipbes.net/report/bgm/APA18-A1> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-A1-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-A1-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-A1-SM2>,
-        <http://ontology.ipbes.net/report/subm/APA18-A1-SM3>,
-        <http://ontology.ipbes.net/report/subm/APA18-A1-SM4>,
-        <http://ontology.ipbes.net/report/subm/APA18-A1-SM5> ;
-    ipbes:hasDescription """(well established).
-
-The 4.5 billion people living across the Asia-Pacific region are highly dependent on the diverse marine, aquatic and terrestrial biodiversity and ecosystems services in the region for their food, water, energy and health security (well established) {2.3.1, 2.4.1.1, 2.4.1.2, 2.4.1.3, 2.4.1.4, 2.2.4.7}. Overall, biodiversity and ecosystem services play a critical role in socioeconomic development as well as the cultural and spiritual fulfilment of the population in the five diverse subregions of the Asia-Pacific region (established but incomplete) {1.1.3, 2.3.2, 2.3.3.4}. Ample evidence exists to demonstrate that human well-being in the region is intricately connected with nature {2.2, 2.3.3.4, 2.4.2}. However, the dependency is not uniform within the subregions and countries. Many rural populations in the region are highly dependent on wild harvests from nature for their subsistence, income and energy needs, through forest enterprises, woodcutting, honey collection and gathering fuelwood {2.4.6}. It is estimated that nearly 200 million people across the region directly depend on the forest for their non-timber forest products, medicine, food and fuel, as well as other subsistence needs {2.4.6.3}. Agriculture provides much of the employment and nutrition of the region’s communities {2.4.4}. Urban and suburban food production in farms, backyards, community gardens and rooftop farms can also make significant contributions to the urban food supply and biodiversity {3.2.1.6}.
-
-Among coastal ecosystems, coral reefs, mangroves, seagrass beds and kelp forests are of critical ecological, cultural and economic importance in the Asia-Pacific region, providing a range of services, including food security, livelihoods and coastal protection {3.2.3.1, 3.2.3.3, 3.2.3.4, 3.2.3.5}. They are key social-ecological systems supporting the livelihoods of hundreds of millions of people in the region and beyond, through vital and valuable ecosystem services, for example, coastal protection, fisheries and tourism {2.3.4.4, 2.5.1.3}. The Asia-Pacific region contains three quarters of the world’s coral reefs {4.4.8.10}. They are the most diverse coastal ecosystems on Earth.""" ;
-    dcterms:identifier "A1" ;
-    skos:prefLabel "The Asia-Pacific region has a great richness of biodiversity, including a variety of ecosystems. The ecosystem services derived from these provide vital support for human well-being and sustainable development" .
-
-<http://ontology.ipbes.net/report/bgm/APA18-A2> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-A2-SM0> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "The Asia-Pacific region contains some of the top 10 economies of the world in terms of gross domestic product {1.1.3.1}. The region maintained an average growth rate of 7.6 per cent as compared to the 3.4 per cent global average from 1990 to 2010. Aquatic environments in the Asia-Pacific region are home to countless species of fish and invertebrates, many of which are consumed as food. About 90 per cent of the world’s aquaculture production, including the top 10 producer countries, occurs in the Asia-Pacific region, with aquaculture growing at about 6.7 per cent per annum {4.1.2.3}. Overall, the Asia-Pacific region has undergone the most extensive land-use transformation to agriculture and pastureland since the 1960s compared to other regions of the world (well established) {1.1.4}. Rapid socioeconomic transitions have come at a high environmental cost, including a high rate of species and habitat loss, environmental pollution and deforestation. This has accelerated and sometimes led to permanent loss of biodiversity in the terrestrial and marine ecosystems of the Asia-Pacific region {3.2.1, 3.2.2, 3.2.3, 3.2.4, 4.2.1, 4.2.2, 4.3.3}." ;
-    dcterms:identifier "A2" ;
-    skos:prefLabel "Biodiversity and ecosystem services have contributed to the rapid economic growth in the Asia-Pacific region, although this growth, in turn, has had varying impacts on biodiversity and ecosystem services (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-A3> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-A3-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-A3-SM1> ;
-    ipbes:hasDescription "-Pacific region’s terrestrial, freshwater and marine ecosystems offer various goods directly — such as plants, fungi, and animals including fish — that individuals need in order to earn an income and secure a sustainable livelihood (well established). Sustaining the viability of, and access to, various provisioning services, will contribute to the alleviation of poverty {2.1.2, 2.4.4, 4.2.2.2}. Although the Asia-Pacific region has achieved unprecedented success in reducing global poverty, mass poverty persists in some subregions, and people affected depend directly on their natural ecosystems for provisioning services (e.g. fisheries, aquaculture, agriculture) (well established). Although trends are improving, with the proportion of the world’s population living in poverty decreasing from 29.7 per cent in the period 2000–2004 to 10.3 per cent in the period 2010–2013, high levels of poverty persist in some subregions of the Asia-Pacific region, which accommodates the largest number of people living below the poverty line. Based on the international poverty line of $1.90 per person per day, using 2011 purchasing power parity, 400 million (52 per cent) of the 767 million global poor live in the Asia-Pacific region. The extent of poverty is highest in the Pacific (38.2 per cent excluding Australia and New Zealand, and largely due to Papua New Guinea), and lowest in North-East Asia (1.8 per cent) {1.1.3.1, 2.1.2}. Achieving the goal of lifting people out of poverty requires multiple strategies, including the sustainable management of the food production systems that remain the main source of nutrition and income in the region." ;
-    dcterms:identifier "A3" ;
-    skos:prefLabel "The Asia" .
-
-<http://ontology.ipbes.net/report/bgm/APA18-A4> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.2> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-A4-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-A4-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-A4-SM2>,
-        <http://ontology.ipbes.net/report/subm/APA18-A4-SM3>,
-        <http://ontology.ipbes.net/report/subm/APA18-A4-SM4> ;
-    ipbes:hasConfidenceLevel "established but incomplete",
-        "well established" ;
-    ipbes:hasDescription "}. Marine, freshwater and terrestrial ecosystems all directly support the livelihoods of communities through the provision of nature’s multiple material contributions to people (well established) {2.3.1.2}. However, people also value substantially the wealth of nature’s non-material and regulating contributions to people derived from ecosystems across the region, such as the regulation of water flows and quality, habitat creation and maintenance, climate regulation, recreation and spiritual fulfilment, among several others (well established) {2.3.1.1, 2.3.1.3}. These contributions have been estimated to differing extents through non-monetary and economic valuation studies (established but incomplete) {2.2.2, 2.3, 2.3.2, 2.3.3.2} (Figure SPM.2). Based on the available evidence, nature’s contributions to people derived from wetlands, inland surface waters and forests have significant economic value, which nevertheless varies substantially due to the different environmental and socioeconomic contexts and valuation methodologies between studies (established but incomplete) {2.3.3.4}. Caution is thus required when using, transferring and generalizing the economic values of nature’s contributions to people for decision-making in contexts outside those of the original valuation. If the current trends of ecosystem change continue within the region, there could be a substantial decline in the economic and non-monetary value of nature’s contributions to people in the region and its subregions in coming decades (established but incomplete) {2.3.3.4}." ;
-    dcterms:identifier "A4" ;
-    skos:prefLabel "People value nature across the Asia-Pacific region for its important contribution to their cultural, spiritual, psychological, physical and economic well-being (well established) {2.3}. Interactions with nature are shaped by people’s diverse values and value systems (established but incomplete) {2.2.1, 2.2.2, 2.3.1, 2.3.2}. There is significant variation in the way economic and non-monetary values are elicited for nature’s contributions to people across the Asia-Pacific region and its subregions (well established) {2.3.3, 2.3.3.4" .
-
-<http://ontology.ipbes.net/report/bgm/APA18-C1> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-Figure5.16>,
-        <http://ontology.ipbes.net/report/il/APA18-FigureSPM.7> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C1-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-C1-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-C1-SM2> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Although direct drivers such as land-use change are important, especially in subregions where deforestation and forest degradation continue (established but incomplete) {3.2.1.1; Figure 5.16}, indirect drivers such as socioeconomic and demographic changes are playing a more significant role in causing biodiversity decline and ecosystem change (well established) {4.2.1, 4.2.2, 4.2.3, 4.2.4, 4.2.5}. These indirect drivers interact with direct drivers, including unsustainable use, habitat destruction, invasive alien species, pollution and climate change, accelerating biodiversity decline and ecosystem degradation {4.1, 4.3, 5.2, 5.3; Figure 5.16}. Together they cause loss of livelihoods, with serious implications for food security, especially among indigenous and vulnerable communities (established but incomplete) {2.4.3, 2.4.4}. In some cases, however, the interaction between drivers and institutional change is also improving ecosystem conditions through more effective management and governance {4.2.5, 4.3}. The newer and more critical indirect drivers such as sociocultural change (in food preference, behaviour and norms) and urbanization are also hindering the flow of nature’s contributions to people {2.2.2, 2.4.6, 4.2.2, 4.2.3} (Figure SPM.7). Environmental governance and targeted policies are a powerful tool to alter these interlinked drivers and have significant effects on biodiversity and nature’s contributions to people across the Asia-Pacific region (well established). There is a need to improve the capacity of policymakers to better understand these dynamic interactions and plan appropriate responses to reduce biodiversity loss and ecosystem degradation at the national, regional and subregional levels {4.1.5, 4.2.5, 4.3, 4.6, 5.5, 6.4.2.8, 6.4.3}." ;
-    dcterms:identifier "C1" ;
-    skos:prefLabel "Both direct and indirect drivers and interactions among them are causing biodiversity loss and habitat destruction in the Asia-Pacific region, with indirect drivers playing an increasingly prominent role (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-C2> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C2-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-C2-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-C2-SM2>,
-        <http://ontology.ipbes.net/report/subm/APA18-C2-SM3>,
-        <http://ontology.ipbes.net/report/subm/APA18-C2-SM4>,
-        <http://ontology.ipbes.net/report/subm/APA18-C2-SM5> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """The Asia-Pacific region is undergoing one of the fastest rates of urbanization (2-3 per cent per year) in the world. Rapid economic development coupled with growth in international trade, combined with large rural out-migration, are changing lifestyles and dietary habits (well established). This has reduced the consumption of traditional foods, with mixed cropping shifting towards commercial high-yielding crops, and a decline in inhabited production landscapes (or biodiversity-rich cultural ecosystems) in most of the Asia-Pacific subregions (well established) {2.1.5, 3.2.1, 3.3.6, 4.2.1.4, 4.2.2, 4.2.3, 4.4.5}. The integration of many rural societies into regional and global consumption markets has transformed many subsistence farms to commercial monoculture production systems (well established) {1.1.4, 2.4.3, 3.2.1.5, 4.1.1, 4.4.1, 4.4.5}. Direct drivers including poorly planned urbanization and agriculture expansion into fragile areas, such as freshwater wetlands, peatlands and coastal belts, are pushing ecosystem degradation and biodiversity loss to a critical threshold across all subregions (well established) {2.3.1.2, 4.1.1, 4.3, 4.4.7.1, 5.2.1, 5.2.3}.
-
-On the positive side, advances in scientific research and the application of new technology are improving food, water and energy security (established but incomplete) {4.2.4, 5.4.3}. Improved means of communication, transportation and social networking have raised public awareness, helping to achieve Aichi Target 1 and the Sustainable Development Goals (established but incomplete) {4.2.4.1, 4.2.4.4}.""" ;
-    dcterms:identifier "C2" ;
-    skos:prefLabel "Rapid economic growth, globalization, urbanization and infrastructure development are profoundly modifying consumption and production patterns and adversely impacting biodiversity and nature’s contributions to people (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-C3> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C3-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-C3-SM1> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Mass invasion by exotic species is causing significant economic and irretrievable biological loss of native species and ecosystems (well established) {3.3.5, 4.1.4}. The overexploitation of forest, rangeland, ocean, coast and freshwater bodies, combined with poorly planned urbanization and infrastructure development, such as unregulated recreation and tourism infrastructure, are leading to a massive decline in biodiversity and ecosystems, although it has drastically reduced poverty and led to good quality of life in the short term. The resulting decline in nature’s contributions to people could compromise the achievement of Aichi Target 5 and Sustainable Development Goals 12, 13, 14 and 15, requiring urgent action to strike a balance between conservation and development (well established) {4.1.1, 4.1.2, 4.4, 5.3.3.4, 6.5, 6.6}." ;
-    dcterms:identifier "C3" ;
-    skos:prefLabel "Unsustainable use and invasive alien species are two of the key direct drivers of declining biodiversity, particularly on island ecosystems (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-C4> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.8>,
-        <http://ontology.ipbes.net/report/il/APA18-Table5.1> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C4-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-C4-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-C4-SM2> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "The increase in the forest and protected area coverage in most of the subregions of the Asia-Pacific region is benefiting both biodiversity and nature’s contributions to people, albeit marginally, but largely in Oceania and North-East Asia (well established) {3.2.1.1, 3.2.6}. Major countries with high economic growth are reporting an increase in forest and protected area coverage {3.2.1.1, 3.2.6; Table 5.1}, and good progress therefore in achieving Aichi Target 5 and partially achieving Target 11, and creating synergies with a number of the Sustainable Development Goals (6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17) {6.5, 6.6}. While an increase in forest and protected areas contributes to reducing biodiversity loss, it alone is not sufficient as protected area coverage of key biodiversity areas is generally low and increases in forest area may not align with biodiversity rich ecosystems (well established) {3.2.1.1, 3.2.6.1}. On the positive side, a consistent increase in forest cover is correlated with a decline in fuelwood demand in North-East Asia (Figure SPM.8) and an increase in the protected area coverage of key biodiversity areas, mostly in Oceania and North‑East Asia {3.2.1.1, 3.2.6.1, 4.1.2.1}. In many countries, a long-term increase in forest and protected areas, combined with more effective management, has supported progress towards the achievement of multiple Aichi Targets (4, 5 and 11) and Sustainable Development Goals (12, 14 and 15) (established but incomplete) {3.2.6.1, 6.2.2.1, 6.4.2, 6.5, 6.6}." ;
-    dcterms:identifier "C4" ;
-    skos:prefLabel "Progress in forest management and protected area expansion and management increases the probability of meeting the Aichi Targets and the Sustainable Development Goals (established but incomplete), although not enough to reduce biodiversity loss." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-C5> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C5-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-C5-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-C5-SM2> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "In some countries, rapid economic growth and increasing urbanization, if coupled with the application of new technologies, could reduce pressure on natural ecosystems {4.2.4.1, 4.2.4.4, 5.3.2.1, 5.3.3.4}. However, there have been concerns about both the potential benefits and the potential risks of new technology implementation to biodiversity and human health {4.2.4.2}. New and adaptive multiple-use land management practices are helping many countries to place their conservation efforts on a recovery trajectory by stabilizing land-use and sea-use change, and they provide evidence that coherent actions by Governments can improve nature’s contributions to people {2.5.2.2, 2.5.2.3, 2.5.3, 5.3.2, 5.3.3, 5.5, 6.4.1.5, 6.4.2.4}." ;
-    dcterms:identifier "C5" ;
-    skos:prefLabel "New technologies and the implementation of effective policies and good governance have the potential to promote the sustainable use of biodiversity (established but incomplete)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-C6> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.9>,
-        <http://ontology.ipbes.net/report/il/APA18-Table5.2> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C6-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-C6-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-C6-SM2> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "Given the high social, economic and biological diversity of the region, a few regional and global scenarios and models may not address the entire array of complex human-nature interactions (well established) {5.2, 5.4.3, 5.5}, but the Asia-Pacific assessment represents a start at teasing out the complexities. Since a combination of old and new drivers and factors such as increasing disasters, are shaping outcomes at different spatial and temporal scales, the analysis of different scenarios can help policymakers to make better decisions on the most plausible futures for biodiversity and nature’s contributions to people (established but incomplete) {5.3.2, 5.3.3.1, 5.4.3, 5.5}. Predictive models indicate that under a business-as-usual scenario, the Asia-Pacific region will continue to lose habitats and species at a similar pace to the global rate of extinction by 2050 (approximately 45 per cent) {5.3.2.2, 5.4; Tables 5.2, 5.3 and 5.5}. Broadly, scenarios indicate that climate change, urbanization and agricultural intensification all impact biodiversity in the Asia-Pacific region at different spatial and temporal scales, which vary across the subregions. In Western Asia and Oceania, climate change is anticipated as the main driver of biodiversity loss, but in South-East Asia, North-East Asia and South Asia, crop production has the greatest influence on future biodiversity losses (established but incomplete) {5.4.2.2}. Proactive policies are therefore necessary to avoid such trends {5.3.2.2, 5.3.3.4, 5.4.3} (Figure SPM.9)." ;
-    dcterms:identifier "C6" ;
-    skos:prefLabel "Decision-making based on harmonized scenarios and models at different temporal and spatial scales allows the mapping of plausible futures in diverse settings of the Asia-Pacific region (established but incomplete)." .
-
 <http://ontology.ipbes.net/report/il/APA18-FigureSPM.4> a ipbes:Figure,
         ipbes:Illustration ;
     dcterms:identifier "FigureSPM.4" ;
@@ -29633,6 +29544,132 @@ Despite none of our reviewed articles explicitly mentioning SDGs or targets, the
     dcterms:identifier "5.4.1" ;
     skos:prefLabel "Synergies between the Aichi Biodiversity Targets and the Sustainable Development Goals (SDGs)" .
 
+<http://ontology.ipbes.net/report/bgm/APA18-A1> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-A1-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-A1-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-A1-SM2>,
+        <http://ontology.ipbes.net/report/subm/APA18-A1-SM3>,
+        <http://ontology.ipbes.net/report/subm/APA18-A1-SM4>,
+        <http://ontology.ipbes.net/report/subm/APA18-A1-SM5> ;
+    ipbes:hasCategory "A. Importance of nature’s contributions to human well-being and good quality of life" ;
+    ipbes:hasDescription """(well established).
+
+The 4.5 billion people living across the Asia-Pacific region are highly dependent on the diverse marine, aquatic and terrestrial biodiversity and ecosystems services in the region for their food, water, energy and health security (well established) {2.3.1, 2.4.1.1, 2.4.1.2, 2.4.1.3, 2.4.1.4, 2.2.4.7}. Overall, biodiversity and ecosystem services play a critical role in socioeconomic development as well as the cultural and spiritual fulfilment of the population in the five diverse subregions of the Asia-Pacific region (established but incomplete) {1.1.3, 2.3.2, 2.3.3.4}. Ample evidence exists to demonstrate that human well-being in the region is intricately connected with nature {2.2, 2.3.3.4, 2.4.2}. However, the dependency is not uniform within the subregions and countries. Many rural populations in the region are highly dependent on wild harvests from nature for their subsistence, income and energy needs, through forest enterprises, woodcutting, honey collection and gathering fuelwood {2.4.6}. It is estimated that nearly 200 million people across the region directly depend on the forest for their non-timber forest products, medicine, food and fuel, as well as other subsistence needs {2.4.6.3}. Agriculture provides much of the employment and nutrition of the region’s communities {2.4.4}. Urban and suburban food production in farms, backyards, community gardens and rooftop farms can also make significant contributions to the urban food supply and biodiversity {3.2.1.6}.
+
+Among coastal ecosystems, coral reefs, mangroves, seagrass beds and kelp forests are of critical ecological, cultural and economic importance in the Asia-Pacific region, providing a range of services, including food security, livelihoods and coastal protection {3.2.3.1, 3.2.3.3, 3.2.3.4, 3.2.3.5}. They are key social-ecological systems supporting the livelihoods of hundreds of millions of people in the region and beyond, through vital and valuable ecosystem services, for example, coastal protection, fisheries and tourism {2.3.4.4, 2.5.1.3}. The Asia-Pacific region contains three quarters of the world’s coral reefs {4.4.8.10}. They are the most diverse coastal ecosystems on Earth.""" ;
+    dcterms:identifier "A1" ;
+    skos:prefLabel "The Asia-Pacific region has a great richness of biodiversity, including a variety of ecosystems. The ecosystem services derived from these provide vital support for human well-being and sustainable development" .
+
+<http://ontology.ipbes.net/report/bgm/APA18-A2> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-A2-SM0> ;
+    ipbes:hasCategory "A. Importance of nature’s contributions to human well-being and good quality of life" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "The Asia-Pacific region contains some of the top 10 economies of the world in terms of gross domestic product {1.1.3.1}. The region maintained an average growth rate of 7.6 per cent as compared to the 3.4 per cent global average from 1990 to 2010. Aquatic environments in the Asia-Pacific region are home to countless species of fish and invertebrates, many of which are consumed as food. About 90 per cent of the world’s aquaculture production, including the top 10 producer countries, occurs in the Asia-Pacific region, with aquaculture growing at about 6.7 per cent per annum {4.1.2.3}. Overall, the Asia-Pacific region has undergone the most extensive land-use transformation to agriculture and pastureland since the 1960s compared to other regions of the world (well established) {1.1.4}. Rapid socioeconomic transitions have come at a high environmental cost, including a high rate of species and habitat loss, environmental pollution and deforestation. This has accelerated and sometimes led to permanent loss of biodiversity in the terrestrial and marine ecosystems of the Asia-Pacific region {3.2.1, 3.2.2, 3.2.3, 3.2.4, 4.2.1, 4.2.2, 4.3.3}." ;
+    dcterms:identifier "A2" ;
+    skos:prefLabel "Biodiversity and ecosystem services have contributed to the rapid economic growth in the Asia-Pacific region, although this growth, in turn, has had varying impacts on biodiversity and ecosystem services (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-A3> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-A3-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-A3-SM1> ;
+    ipbes:hasCategory "A. Importance of nature’s contributions to human well-being and good quality of life" ;
+    ipbes:hasDescription "-Pacific region’s terrestrial, freshwater and marine ecosystems offer various goods directly — such as plants, fungi, and animals including fish — that individuals need in order to earn an income and secure a sustainable livelihood (well established). Sustaining the viability of, and access to, various provisioning services, will contribute to the alleviation of poverty {2.1.2, 2.4.4, 4.2.2.2}. Although the Asia-Pacific region has achieved unprecedented success in reducing global poverty, mass poverty persists in some subregions, and people affected depend directly on their natural ecosystems for provisioning services (e.g. fisheries, aquaculture, agriculture) (well established). Although trends are improving, with the proportion of the world’s population living in poverty decreasing from 29.7 per cent in the period 2000–2004 to 10.3 per cent in the period 2010–2013, high levels of poverty persist in some subregions of the Asia-Pacific region, which accommodates the largest number of people living below the poverty line. Based on the international poverty line of $1.90 per person per day, using 2011 purchasing power parity, 400 million (52 per cent) of the 767 million global poor live in the Asia-Pacific region. The extent of poverty is highest in the Pacific (38.2 per cent excluding Australia and New Zealand, and largely due to Papua New Guinea), and lowest in North-East Asia (1.8 per cent) {1.1.3.1, 2.1.2}. Achieving the goal of lifting people out of poverty requires multiple strategies, including the sustainable management of the food production systems that remain the main source of nutrition and income in the region." ;
+    dcterms:identifier "A3" ;
+    skos:prefLabel "The Asia" .
+
+<http://ontology.ipbes.net/report/bgm/APA18-A4> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.2> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-A4-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-A4-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-A4-SM2>,
+        <http://ontology.ipbes.net/report/subm/APA18-A4-SM3>,
+        <http://ontology.ipbes.net/report/subm/APA18-A4-SM4> ;
+    ipbes:hasCategory "A. Importance of nature’s contributions to human well-being and good quality of life" ;
+    ipbes:hasConfidenceLevel "established but incomplete",
+        "well established" ;
+    ipbes:hasDescription "}. Marine, freshwater and terrestrial ecosystems all directly support the livelihoods of communities through the provision of nature’s multiple material contributions to people (well established) {2.3.1.2}. However, people also value substantially the wealth of nature’s non-material and regulating contributions to people derived from ecosystems across the region, such as the regulation of water flows and quality, habitat creation and maintenance, climate regulation, recreation and spiritual fulfilment, among several others (well established) {2.3.1.1, 2.3.1.3}. These contributions have been estimated to differing extents through non-monetary and economic valuation studies (established but incomplete) {2.2.2, 2.3, 2.3.2, 2.3.3.2} (Figure SPM.2). Based on the available evidence, nature’s contributions to people derived from wetlands, inland surface waters and forests have significant economic value, which nevertheless varies substantially due to the different environmental and socioeconomic contexts and valuation methodologies between studies (established but incomplete) {2.3.3.4}. Caution is thus required when using, transferring and generalizing the economic values of nature’s contributions to people for decision-making in contexts outside those of the original valuation. If the current trends of ecosystem change continue within the region, there could be a substantial decline in the economic and non-monetary value of nature’s contributions to people in the region and its subregions in coming decades (established but incomplete) {2.3.3.4}." ;
+    dcterms:identifier "A4" ;
+    skos:prefLabel "People value nature across the Asia-Pacific region for its important contribution to their cultural, spiritual, psychological, physical and economic well-being (well established) {2.3}. Interactions with nature are shaped by people’s diverse values and value systems (established but incomplete) {2.2.1, 2.2.2, 2.3.1, 2.3.2}. There is significant variation in the way economic and non-monetary values are elicited for nature’s contributions to people across the Asia-Pacific region and its subregions (well established) {2.3.3, 2.3.3.4" .
+
+<http://ontology.ipbes.net/report/bgm/APA18-C1> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-Figure5.16>,
+        <http://ontology.ipbes.net/report/il/APA18-FigureSPM.7> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C1-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-C1-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-C1-SM2> ;
+    ipbes:hasCategory "C. Implications of biodiversity decline and opportunities for sustaining nature’s contributions to people" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Although direct drivers such as land-use change are important, especially in subregions where deforestation and forest degradation continue (established but incomplete) {3.2.1.1; Figure 5.16}, indirect drivers such as socioeconomic and demographic changes are playing a more significant role in causing biodiversity decline and ecosystem change (well established) {4.2.1, 4.2.2, 4.2.3, 4.2.4, 4.2.5}. These indirect drivers interact with direct drivers, including unsustainable use, habitat destruction, invasive alien species, pollution and climate change, accelerating biodiversity decline and ecosystem degradation {4.1, 4.3, 5.2, 5.3; Figure 5.16}. Together they cause loss of livelihoods, with serious implications for food security, especially among indigenous and vulnerable communities (established but incomplete) {2.4.3, 2.4.4}. In some cases, however, the interaction between drivers and institutional change is also improving ecosystem conditions through more effective management and governance {4.2.5, 4.3}. The newer and more critical indirect drivers such as sociocultural change (in food preference, behaviour and norms) and urbanization are also hindering the flow of nature’s contributions to people {2.2.2, 2.4.6, 4.2.2, 4.2.3} (Figure SPM.7). Environmental governance and targeted policies are a powerful tool to alter these interlinked drivers and have significant effects on biodiversity and nature’s contributions to people across the Asia-Pacific region (well established). There is a need to improve the capacity of policymakers to better understand these dynamic interactions and plan appropriate responses to reduce biodiversity loss and ecosystem degradation at the national, regional and subregional levels {4.1.5, 4.2.5, 4.3, 4.6, 5.5, 6.4.2.8, 6.4.3}." ;
+    dcterms:identifier "C1" ;
+    skos:prefLabel "Both direct and indirect drivers and interactions among them are causing biodiversity loss and habitat destruction in the Asia-Pacific region, with indirect drivers playing an increasingly prominent role (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-C2> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C2-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-C2-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-C2-SM2>,
+        <http://ontology.ipbes.net/report/subm/APA18-C2-SM3>,
+        <http://ontology.ipbes.net/report/subm/APA18-C2-SM4>,
+        <http://ontology.ipbes.net/report/subm/APA18-C2-SM5> ;
+    ipbes:hasCategory "C. Implications of biodiversity decline and opportunities for sustaining nature’s contributions to people" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription """The Asia-Pacific region is undergoing one of the fastest rates of urbanization (2-3 per cent per year) in the world. Rapid economic development coupled with growth in international trade, combined with large rural out-migration, are changing lifestyles and dietary habits (well established). This has reduced the consumption of traditional foods, with mixed cropping shifting towards commercial high-yielding crops, and a decline in inhabited production landscapes (or biodiversity-rich cultural ecosystems) in most of the Asia-Pacific subregions (well established) {2.1.5, 3.2.1, 3.3.6, 4.2.1.4, 4.2.2, 4.2.3, 4.4.5}. The integration of many rural societies into regional and global consumption markets has transformed many subsistence farms to commercial monoculture production systems (well established) {1.1.4, 2.4.3, 3.2.1.5, 4.1.1, 4.4.1, 4.4.5}. Direct drivers including poorly planned urbanization and agriculture expansion into fragile areas, such as freshwater wetlands, peatlands and coastal belts, are pushing ecosystem degradation and biodiversity loss to a critical threshold across all subregions (well established) {2.3.1.2, 4.1.1, 4.3, 4.4.7.1, 5.2.1, 5.2.3}.
+
+On the positive side, advances in scientific research and the application of new technology are improving food, water and energy security (established but incomplete) {4.2.4, 5.4.3}. Improved means of communication, transportation and social networking have raised public awareness, helping to achieve Aichi Target 1 and the Sustainable Development Goals (established but incomplete) {4.2.4.1, 4.2.4.4}.""" ;
+    dcterms:identifier "C2" ;
+    skos:prefLabel "Rapid economic growth, globalization, urbanization and infrastructure development are profoundly modifying consumption and production patterns and adversely impacting biodiversity and nature’s contributions to people (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-C3> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C3-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-C3-SM1> ;
+    ipbes:hasCategory "C. Implications of biodiversity decline and opportunities for sustaining nature’s contributions to people" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Mass invasion by exotic species is causing significant economic and irretrievable biological loss of native species and ecosystems (well established) {3.3.5, 4.1.4}. The overexploitation of forest, rangeland, ocean, coast and freshwater bodies, combined with poorly planned urbanization and infrastructure development, such as unregulated recreation and tourism infrastructure, are leading to a massive decline in biodiversity and ecosystems, although it has drastically reduced poverty and led to good quality of life in the short term. The resulting decline in nature’s contributions to people could compromise the achievement of Aichi Target 5 and Sustainable Development Goals 12, 13, 14 and 15, requiring urgent action to strike a balance between conservation and development (well established) {4.1.1, 4.1.2, 4.4, 5.3.3.4, 6.5, 6.6}." ;
+    dcterms:identifier "C3" ;
+    skos:prefLabel "Unsustainable use and invasive alien species are two of the key direct drivers of declining biodiversity, particularly on island ecosystems (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-C4> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.8>,
+        <http://ontology.ipbes.net/report/il/APA18-Table5.1> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C4-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-C4-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-C4-SM2> ;
+    ipbes:hasCategory "C. Implications of biodiversity decline and opportunities for sustaining nature’s contributions to people" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "The increase in the forest and protected area coverage in most of the subregions of the Asia-Pacific region is benefiting both biodiversity and nature’s contributions to people, albeit marginally, but largely in Oceania and North-East Asia (well established) {3.2.1.1, 3.2.6}. Major countries with high economic growth are reporting an increase in forest and protected area coverage {3.2.1.1, 3.2.6; Table 5.1}, and good progress therefore in achieving Aichi Target 5 and partially achieving Target 11, and creating synergies with a number of the Sustainable Development Goals (6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17) {6.5, 6.6}. While an increase in forest and protected areas contributes to reducing biodiversity loss, it alone is not sufficient as protected area coverage of key biodiversity areas is generally low and increases in forest area may not align with biodiversity rich ecosystems (well established) {3.2.1.1, 3.2.6.1}. On the positive side, a consistent increase in forest cover is correlated with a decline in fuelwood demand in North-East Asia (Figure SPM.8) and an increase in the protected area coverage of key biodiversity areas, mostly in Oceania and North‑East Asia {3.2.1.1, 3.2.6.1, 4.1.2.1}. In many countries, a long-term increase in forest and protected areas, combined with more effective management, has supported progress towards the achievement of multiple Aichi Targets (4, 5 and 11) and Sustainable Development Goals (12, 14 and 15) (established but incomplete) {3.2.6.1, 6.2.2.1, 6.4.2, 6.5, 6.6}." ;
+    dcterms:identifier "C4" ;
+    skos:prefLabel "Progress in forest management and protected area expansion and management increases the probability of meeting the Aichi Targets and the Sustainable Development Goals (established but incomplete), although not enough to reduce biodiversity loss." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-C5> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C5-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-C5-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-C5-SM2> ;
+    ipbes:hasCategory "C. Implications of biodiversity decline and opportunities for sustaining nature’s contributions to people" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "In some countries, rapid economic growth and increasing urbanization, if coupled with the application of new technologies, could reduce pressure on natural ecosystems {4.2.4.1, 4.2.4.4, 5.3.2.1, 5.3.3.4}. However, there have been concerns about both the potential benefits and the potential risks of new technology implementation to biodiversity and human health {4.2.4.2}. New and adaptive multiple-use land management practices are helping many countries to place their conservation efforts on a recovery trajectory by stabilizing land-use and sea-use change, and they provide evidence that coherent actions by Governments can improve nature’s contributions to people {2.5.2.2, 2.5.2.3, 2.5.3, 5.3.2, 5.3.3, 5.5, 6.4.1.5, 6.4.2.4}." ;
+    dcterms:identifier "C5" ;
+    skos:prefLabel "New technologies and the implementation of effective policies and good governance have the potential to promote the sustainable use of biodiversity (established but incomplete)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-C6> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.9>,
+        <http://ontology.ipbes.net/report/il/APA18-Table5.2> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-C6-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-C6-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-C6-SM2> ;
+    ipbes:hasCategory "C. Implications of biodiversity decline and opportunities for sustaining nature’s contributions to people" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "Given the high social, economic and biological diversity of the region, a few regional and global scenarios and models may not address the entire array of complex human-nature interactions (well established) {5.2, 5.4.3, 5.5}, but the Asia-Pacific assessment represents a start at teasing out the complexities. Since a combination of old and new drivers and factors such as increasing disasters, are shaping outcomes at different spatial and temporal scales, the analysis of different scenarios can help policymakers to make better decisions on the most plausible futures for biodiversity and nature’s contributions to people (established but incomplete) {5.3.2, 5.3.3.1, 5.4.3, 5.5}. Predictive models indicate that under a business-as-usual scenario, the Asia-Pacific region will continue to lose habitats and species at a similar pace to the global rate of extinction by 2050 (approximately 45 per cent) {5.3.2.2, 5.4; Tables 5.2, 5.3 and 5.5}. Broadly, scenarios indicate that climate change, urbanization and agricultural intensification all impact biodiversity in the Asia-Pacific region at different spatial and temporal scales, which vary across the subregions. In Western Asia and Oceania, climate change is anticipated as the main driver of biodiversity loss, but in South-East Asia, North-East Asia and South Asia, crop production has the greatest influence on future biodiversity losses (established but incomplete) {5.4.2.2}. Proactive policies are therefore necessary to avoid such trends {5.3.2.2, 5.3.3.4, 5.4.3} (Figure SPM.9)." ;
+    dcterms:identifier "C6" ;
+    skos:prefLabel "Decision-making based on harmonized scenarios and models at different temporal and spatial scales allows the mapping of plausible futures in diverse settings of the Asia-Pacific region (established but incomplete)." .
+
 <http://ontology.ipbes.net/report/ref/2333075/items/9TZ5SDSS> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch3>,
         <http://ontology.ipbes.net/report/ch/APA18ch4> ;
@@ -30244,71 +30281,6 @@ Given the complexity in trends in drivers and their impacts on nature and NCP, t
     dcterms:identifier "6.4.3.3" ;
     skos:prefLabel "Local level actions" .
 
-<http://ontology.ipbes.net/report/bgm/APA18-D1> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-TableSPM.1> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D1-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-D1-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-D1-SM2>,
-        <http://ontology.ipbes.net/report/subm/APA18-D1-SM3> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Collaborative governance of biodiversity and ecosystem services improves engagement with key stakeholders, including indigenous peoples and local communities (e.g., UNESCO biosphere reserves), and creates an enabling environment for achieving a number of Aichi Biodiversity Targets, especially Targets 1, 2 and 3 (well established) {1.4.4.1, 2.5.1.1, 6.2.3.1, 6.4.1.4, 6.4.2.4}. Inappropriate institutional arrangements, such as overly centralized management, weak governance and poor coordination, hamper the effectiveness of biodiversity conservation efforts (established but incomplete) {6.4.2.4, 6.4.3.2, 6.4.3.3}. Collaborative and adaptive governance can lead to improved conditions of biodiversity and flow of ecosystem services (established but incomplete) {6.5}. More democratic, transparent and inclusive governance systems promote collective decision-making and co-production of ecosystem goods and services, benefiting all stakeholders {6.4.2.4}. These emerging governance systems could enable better implementation of national biodiversity strategies and action plans and help to accelerate the progress towards meeting the Aichi Targets {6.4.2.3, 6.5}. Scaling up and expanding successful community management of ecosystems to landscape and seascape levels would be a useful step towards promoting cross-scale governance {6.2.3, 6.4.2.4, 6.4.3, 6.5} (Table SPM.1). A critical challenge will be removing policy inertia and enhancing policy coherence by increasing opportunities for learning and feedback mechanisms (established but incomplete) {6.4.2.4, 6.7}." ;
-    dcterms:identifier "D1" ;
-    skos:prefLabel "Collaborative, participatory and adaptive governance of biodiversity demonstrates a potential pathway for the sustainable utilization of biodiversity and ecosystem services, although this requires significant scaling up across the Asia-Pacific region (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-D2> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D2-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-D2-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-D2-SM2> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Mainstreaming biodiversity and ecosystem conservation into decision-making and planning processes of government agencies that are not directly responsible for biodiversity policy (e.g., finance and social development ministries) can contribute to meeting Strategic Goal A of the Aichi Biodiversity Targets and the Sustainable Development Goals (well established) {6.2.2.1, 6.4.2.3}. It enhances the participation of stakeholders from different sectoral agencies and civil society groups at different scales, as well as ensuring policy coherence in sectoral planning {6.2.2, 6.2.3}. However, mainstreaming requires a willingness by Governments to manage nature and nature’s contributions to people collaboratively with multiple stakeholders {6.3.1, 6.3.2, 6.4.2.3, 6.4.3.2}. Complementing indigenous and local practices withecosystem-based approaches could also result in better biodiversity conservation and management in the Asia-Pacific region (well established) {2.5.1.2, 2.5.1.3, 2.5.2.3, 6.2.3.2, 6.4.1.4, 6.4.2.5, 6.5}. Proper accounting of the contribution of natural capital to socioeconomic development, which is poorly reflected in the conventional gross domestic product estimates, would allow the internalization of the direct and indirect cost of the use of ecosystem services. This could support mainstreaming by reflecting the degree of underinvestment in conservation and restoration of nature or the extent of overuse of natural resources (established but incomplete) {6.4.2.8, 6.7}. One of the requirements for mainstreaming is the development of sustainability criteria and indicators that capture the interdependencies of nature and livelihoods, food security and quality of life {6.2.2.1, 6.3.3, 6.4.1.4, 6.4.2.7}." ;
-    dcterms:identifier "D2" ;
-    skos:prefLabel "Mainstreaming of biodiversity-related goals into national, subnational and local development policies, plans and programmes is needed to address the impacts of underlying drivers on biodiversity and ecosystems to sustain the flow of nature’s contributions to people (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-D3> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-TableSPM.2> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D3-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-D3-SM1> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Experiences from the Asia-Pacific region show the suitability of integrated ecosystem management approaches to achieving multiple biodiversity goals and targets alongside food production, poverty alleviation, climate adaptation and mitigation and sustainable land management {6.2.2.1, 6.4.1, 6.4.2, 6.4.3, 6.6, 6.7}. For example, policies to ensure sustained supply of ecosystem services can be integrated with those of the agriculture, rural development, energy, water, tourism development and health sectors {6.3.1}. Enabling policies and institutional frameworks can promote the active and meaningful participation of key stakeholders by better addressing issues such as human rights, gender equality, social inclusion and the fair distribution of benefits {6.2.3.2, 6.2.3.3, 6.4.1, 6.4.2.5}. Removing perverse incentives, combining various policies, building partnerships with the private sector and scaling up collaborative management and governance mechanisms are some of the ways of accelerating progress towards the achievement of the biodiversity goals (well established) {6.2.2.2, 6.4.2.8, 6.4.3, 6.4.4}. Owing to high synergy and low trade-offs between biodiversity and sustainable development approaches, national biodiversity strategies and action plans can be integrated with programmes on climate change, disaster risk reduction, poverty alleviation, social development and sustainable land management to help achieve the Aichi Targets, implement the Paris Agreement and attain the Sustainable Development Goals (established but incomplete) {6.4.2.3, 6.5, 6.6} (Table SPM.2)." ;
-    dcterms:identifier "D3" ;
-    skos:prefLabel "Governance options for reducing biodiversity decline are more likely to work if integrated frameworks, partnership development, cross-sectoral cooperation and the smart use of policy instruments are adopted (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-D4> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-Box3.4> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D4-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-D4-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-D4-SM2>,
-        <http://ontology.ipbes.net/report/subm/APA18-D4-SM3> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Transboundary cooperation produces environmental benefits beyond national borders (well established) {2.5.1.1, 2.5.1.2, 6.4.2.4}. Across the Asia-Pacific region, a number of transboundary, subregional and cross-border biodiversity and ecosystem conservation initiatives, such as the Coral Triangle Initiative on coral reefs, fisheries and food security, the Association of South-East Asian Nations Agreement on Transboundary Haze Pollution, and the Kailash Sacred Landscape Conservation and Development Initiative {1.4.2, 2.3.4, 3.3.6, Box 3.4, 6.2.1}, have facilitated the management of shared terrestrial, marine and fresh water ecosystems and landscapes (well established) {6.2.1, 6.2.2.1, 6.4.2.2}. Many of these initiatives have improved the protection of threatened species and ecosystems while increasing the flow of nature’s contributions to people, generating multiple benefits and creating synergies in conservation and development actions {6.2.1, 6.2.2.1, 6.4.3}. These multi-country approaches also contribute to achieving the Aichi Biodiversity Targets (e.g., Target 17) and the Sustainable Development Goals through knowledge-sharing and capacity-building (established but incomplete) {4.6, 6.5, 6.6}. The creation of regional cooperation platforms can address gaps in knowledge and expand transboundary cooperation in conservation (established but incomplete) {6.2.1, 6.7}, as well as addressing emerging challenges caused by climate change." ;
-    dcterms:identifier "D4" ;
-    skos:prefLabel "Regional and transboundary management of important landscapes and seascapes is providing new opportunities for conservation of threatened ecosystems (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-D5> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D5-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-D5-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-D5-SM2>,
-        <http://ontology.ipbes.net/report/subm/APA18-D5-SM3> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Significantly increased funding is necessary if further and irretrievable biodiversity loss is to be prevented, especially in protected and key biodiversity areas (well established) {3.2.6, 6.2.2.2, 6.2.3.1, 6.4.1.3, 6.4.1.5, 6.4.2.6}. Public sector finance being inadequate, both market and non-market-based mechanisms (e.g., payment for ecosystem services, including REDD-plus and voluntary systems such as eco-labelling) can better channel private sector finance into conservation (established but incomplete) {6.2.2.2}. The application of natural capital accounting can assist in the internalization of the value of nature and nature’s contributions to people within development programmes and generate options for enhancing revenue for financing conservation (established but incomplete) {6.2.2.2, 6.4.2.8}. Innovative partnerships between and among government, non-government, community and private sector organizations are already raising funds from the corporate sector for conservation (e.g., REDD-plus and other payment for ecosystem services instruments in municipal water management; catchment conservation for protecting hydroelectricity dams, renewable energy technology promotion; and carbon offsets in waste management) {1.1.5, 1.4.1, 1.4.5, 6.2.2.2, 6.4.1.3}. Partnership with financial institutions, especially multilateral development banks, promotes the transfer of technology, knowledge and capacity for cross-scale and cross-sector conservation and climate change mitigation (established but incomplete) {6.4.1.3, 6.4.1.5, 6.4.2.4}. Several public‑private partnership initiatives, including through corporate social responsibility, are running in a number of countries in the region {6.2.2.2}." ;
-    dcterms:identifier "D5" ;
-    skos:prefLabel "Innovative partnerships with the private sector can significantly scale-up funding for a range of biodiversity protection and ecosystem conservation efforts throughout the Asia-Pacific region (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-D6> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-Table6.3> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D6-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-D6-SM1> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "The design and enforcement of sustainable production and consumption policy and regulations (Aichi Target 4, Sustainable Development Goal 12) has become a widely promoted concept for reducing the consumption of ecosystem services (established but incomplete) {5.2, 5.4.2, 6.5}. By establishing voluntary sustainability standards and enacting appropriate national policies, successful cases of sustainable production and consumption are seen in most of the subregions of the Asia-Pacific region {6.2.2.1, 6.4.1.1, 6.4.1.2, 6.4.2.7, 6.5}. Legal and regulatory, economic and financial, and social and cultural good practices serve as policy instruments that support sustainable production and consumption {6.4.1; Table 6.3}. However, many challenges, such as high costs, limited replicability and a lack of cross-sectoral coordination, limit their application throughout the region {6.4.1}. A number of approaches such as life-cycle costing, stimulating the market with financial incentives and eco-labelling/certification, as well as regional knowledge and experience sharing, can enhance progress towards the achievement of these goals (established but incomplete) {6.2.2.1, 6.4.1.3, 6.4.2.7, 6.4.4}." ;
-    dcterms:identifier "D6" ;
-    skos:prefLabel "Sustainable production and consumption policies bring about better quality of life, while minimizing the use of natural resources and the creation of wastes and pollution (established but incomplete)." .
-
 <http://ontology.ipbes.net/report/ref/2333075/items/497SMAWK> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch4>,
         <http://ontology.ipbes.net/report/ch/APA18ch5>,
@@ -30827,6 +30799,77 @@ Assessments have also confirmed limitations in current knowledge of status and t
 To sum up, this chapter showed that the emerging governance options (6.4.2) have potential to reverse negative trends and reduce impacts of drivers on BES, which in turn can support the achievement of ABTs and SDGs. However, many institutional challenges still need to be addressed to enhance the policy mix and participatory governance across scales and sectors (6.4.1, 6.4.3). This chapter presented best practices for the different options (Figure 6.6), which can guide decision makers in overcoming these challenges and creating opportunities for better BES governance.""" ;
     dcterms:identifier "6.7" ;
     skos:prefLabel "Conclusions" .
+
+<http://ontology.ipbes.net/report/bgm/APA18-D1> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-TableSPM.1> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D1-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-D1-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-D1-SM2>,
+        <http://ontology.ipbes.net/report/subm/APA18-D1-SM3> ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Collaborative governance of biodiversity and ecosystem services improves engagement with key stakeholders, including indigenous peoples and local communities (e.g., UNESCO biosphere reserves), and creates an enabling environment for achieving a number of Aichi Biodiversity Targets, especially Targets 1, 2 and 3 (well established) {1.4.4.1, 2.5.1.1, 6.2.3.1, 6.4.1.4, 6.4.2.4}. Inappropriate institutional arrangements, such as overly centralized management, weak governance and poor coordination, hamper the effectiveness of biodiversity conservation efforts (established but incomplete) {6.4.2.4, 6.4.3.2, 6.4.3.3}. Collaborative and adaptive governance can lead to improved conditions of biodiversity and flow of ecosystem services (established but incomplete) {6.5}. More democratic, transparent and inclusive governance systems promote collective decision-making and co-production of ecosystem goods and services, benefiting all stakeholders {6.4.2.4}. These emerging governance systems could enable better implementation of national biodiversity strategies and action plans and help to accelerate the progress towards meeting the Aichi Targets {6.4.2.3, 6.5}. Scaling up and expanding successful community management of ecosystems to landscape and seascape levels would be a useful step towards promoting cross-scale governance {6.2.3, 6.4.2.4, 6.4.3, 6.5} (Table SPM.1). A critical challenge will be removing policy inertia and enhancing policy coherence by increasing opportunities for learning and feedback mechanisms (established but incomplete) {6.4.2.4, 6.7}." ;
+    dcterms:identifier "D1" ;
+    skos:prefLabel "Collaborative, participatory and adaptive governance of biodiversity demonstrates a potential pathway for the sustainable utilization of biodiversity and ecosystem services, although this requires significant scaling up across the Asia-Pacific region (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-D2> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D2-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-D2-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-D2-SM2> ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Mainstreaming biodiversity and ecosystem conservation into decision-making and planning processes of government agencies that are not directly responsible for biodiversity policy (e.g., finance and social development ministries) can contribute to meeting Strategic Goal A of the Aichi Biodiversity Targets and the Sustainable Development Goals (well established) {6.2.2.1, 6.4.2.3}. It enhances the participation of stakeholders from different sectoral agencies and civil society groups at different scales, as well as ensuring policy coherence in sectoral planning {6.2.2, 6.2.3}. However, mainstreaming requires a willingness by Governments to manage nature and nature’s contributions to people collaboratively with multiple stakeholders {6.3.1, 6.3.2, 6.4.2.3, 6.4.3.2}. Complementing indigenous and local practices withecosystem-based approaches could also result in better biodiversity conservation and management in the Asia-Pacific region (well established) {2.5.1.2, 2.5.1.3, 2.5.2.3, 6.2.3.2, 6.4.1.4, 6.4.2.5, 6.5}. Proper accounting of the contribution of natural capital to socioeconomic development, which is poorly reflected in the conventional gross domestic product estimates, would allow the internalization of the direct and indirect cost of the use of ecosystem services. This could support mainstreaming by reflecting the degree of underinvestment in conservation and restoration of nature or the extent of overuse of natural resources (established but incomplete) {6.4.2.8, 6.7}. One of the requirements for mainstreaming is the development of sustainability criteria and indicators that capture the interdependencies of nature and livelihoods, food security and quality of life {6.2.2.1, 6.3.3, 6.4.1.4, 6.4.2.7}." ;
+    dcterms:identifier "D2" ;
+    skos:prefLabel "Mainstreaming of biodiversity-related goals into national, subnational and local development policies, plans and programmes is needed to address the impacts of underlying drivers on biodiversity and ecosystems to sustain the flow of nature’s contributions to people (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-D3> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-TableSPM.2> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D3-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-D3-SM1> ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Experiences from the Asia-Pacific region show the suitability of integrated ecosystem management approaches to achieving multiple biodiversity goals and targets alongside food production, poverty alleviation, climate adaptation and mitigation and sustainable land management {6.2.2.1, 6.4.1, 6.4.2, 6.4.3, 6.6, 6.7}. For example, policies to ensure sustained supply of ecosystem services can be integrated with those of the agriculture, rural development, energy, water, tourism development and health sectors {6.3.1}. Enabling policies and institutional frameworks can promote the active and meaningful participation of key stakeholders by better addressing issues such as human rights, gender equality, social inclusion and the fair distribution of benefits {6.2.3.2, 6.2.3.3, 6.4.1, 6.4.2.5}. Removing perverse incentives, combining various policies, building partnerships with the private sector and scaling up collaborative management and governance mechanisms are some of the ways of accelerating progress towards the achievement of the biodiversity goals (well established) {6.2.2.2, 6.4.2.8, 6.4.3, 6.4.4}. Owing to high synergy and low trade-offs between biodiversity and sustainable development approaches, national biodiversity strategies and action plans can be integrated with programmes on climate change, disaster risk reduction, poverty alleviation, social development and sustainable land management to help achieve the Aichi Targets, implement the Paris Agreement and attain the Sustainable Development Goals (established but incomplete) {6.4.2.3, 6.5, 6.6} (Table SPM.2)." ;
+    dcterms:identifier "D3" ;
+    skos:prefLabel "Governance options for reducing biodiversity decline are more likely to work if integrated frameworks, partnership development, cross-sectoral cooperation and the smart use of policy instruments are adopted (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-D4> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-Box3.4> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D4-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-D4-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-D4-SM2>,
+        <http://ontology.ipbes.net/report/subm/APA18-D4-SM3> ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Transboundary cooperation produces environmental benefits beyond national borders (well established) {2.5.1.1, 2.5.1.2, 6.4.2.4}. Across the Asia-Pacific region, a number of transboundary, subregional and cross-border biodiversity and ecosystem conservation initiatives, such as the Coral Triangle Initiative on coral reefs, fisheries and food security, the Association of South-East Asian Nations Agreement on Transboundary Haze Pollution, and the Kailash Sacred Landscape Conservation and Development Initiative {1.4.2, 2.3.4, 3.3.6, Box 3.4, 6.2.1}, have facilitated the management of shared terrestrial, marine and fresh water ecosystems and landscapes (well established) {6.2.1, 6.2.2.1, 6.4.2.2}. Many of these initiatives have improved the protection of threatened species and ecosystems while increasing the flow of nature’s contributions to people, generating multiple benefits and creating synergies in conservation and development actions {6.2.1, 6.2.2.1, 6.4.3}. These multi-country approaches also contribute to achieving the Aichi Biodiversity Targets (e.g., Target 17) and the Sustainable Development Goals through knowledge-sharing and capacity-building (established but incomplete) {4.6, 6.5, 6.6}. The creation of regional cooperation platforms can address gaps in knowledge and expand transboundary cooperation in conservation (established but incomplete) {6.2.1, 6.7}, as well as addressing emerging challenges caused by climate change." ;
+    dcterms:identifier "D4" ;
+    skos:prefLabel "Regional and transboundary management of important landscapes and seascapes is providing new opportunities for conservation of threatened ecosystems (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-D5> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D5-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-D5-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-D5-SM2>,
+        <http://ontology.ipbes.net/report/subm/APA18-D5-SM3> ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Significantly increased funding is necessary if further and irretrievable biodiversity loss is to be prevented, especially in protected and key biodiversity areas (well established) {3.2.6, 6.2.2.2, 6.2.3.1, 6.4.1.3, 6.4.1.5, 6.4.2.6}. Public sector finance being inadequate, both market and non-market-based mechanisms (e.g., payment for ecosystem services, including REDD-plus and voluntary systems such as eco-labelling) can better channel private sector finance into conservation (established but incomplete) {6.2.2.2}. The application of natural capital accounting can assist in the internalization of the value of nature and nature’s contributions to people within development programmes and generate options for enhancing revenue for financing conservation (established but incomplete) {6.2.2.2, 6.4.2.8}. Innovative partnerships between and among government, non-government, community and private sector organizations are already raising funds from the corporate sector for conservation (e.g., REDD-plus and other payment for ecosystem services instruments in municipal water management; catchment conservation for protecting hydroelectricity dams, renewable energy technology promotion; and carbon offsets in waste management) {1.1.5, 1.4.1, 1.4.5, 6.2.2.2, 6.4.1.3}. Partnership with financial institutions, especially multilateral development banks, promotes the transfer of technology, knowledge and capacity for cross-scale and cross-sector conservation and climate change mitigation (established but incomplete) {6.4.1.3, 6.4.1.5, 6.4.2.4}. Several public‑private partnership initiatives, including through corporate social responsibility, are running in a number of countries in the region {6.2.2.2}." ;
+    dcterms:identifier "D5" ;
+    skos:prefLabel "Innovative partnerships with the private sector can significantly scale-up funding for a range of biodiversity protection and ecosystem conservation efforts throughout the Asia-Pacific region (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-D6> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-Table6.3> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-D6-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-D6-SM1> ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "The design and enforcement of sustainable production and consumption policy and regulations (Aichi Target 4, Sustainable Development Goal 12) has become a widely promoted concept for reducing the consumption of ecosystem services (established but incomplete) {5.2, 5.4.2, 6.5}. By establishing voluntary sustainability standards and enacting appropriate national policies, successful cases of sustainable production and consumption are seen in most of the subregions of the Asia-Pacific region {6.2.2.1, 6.4.1.1, 6.4.1.2, 6.4.2.7, 6.5}. Legal and regulatory, economic and financial, and social and cultural good practices serve as policy instruments that support sustainable production and consumption {6.4.1; Table 6.3}. However, many challenges, such as high costs, limited replicability and a lack of cross-sectoral coordination, limit their application throughout the region {6.4.1}. A number of approaches such as life-cycle costing, stimulating the market with financial incentives and eco-labelling/certification, as well as regional knowledge and experience sharing, can enhance progress towards the achievement of these goals (established but incomplete) {6.2.2.1, 6.4.1.3, 6.4.2.7, 6.4.4}." ;
+    dcterms:identifier "D6" ;
+    skos:prefLabel "Sustainable production and consumption policies bring about better quality of life, while minimizing the use of natural resources and the creation of wastes and pollution (established but incomplete)." .
 
 <http://ontology.ipbes.net/report/ref/2333075/items/296PM3ZE> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch1>,
@@ -31535,92 +31578,6 @@ Replacing fossil fuels with renewable energy and innovative low-carbon technolog
     dcterms:identifier "6.4.1.5" ;
     skos:prefLabel "Management based instruments" .
 
-<http://ontology.ipbes.net/report/bgm/APA18-B1> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.3>,
-        <http://ontology.ipbes.net/report/il/APA18-FigureSPM.4> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B1-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-B1-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-B1-SM2> ;
-    ipbes:hasConfidenceLevel "established but incomplete" ;
-    ipbes:hasDescription "The region exhibits varying trends in the status of biodiversity and ecosystem services. Among the various ecosystem types, forests, alpine ecosystems, inland freshwater and wetlands and coastal systems are the most threatened (well established) {4.3}. Genetic diversity within species, both wild and domestic, is also decreasing, in many cases as a result of decreasing habitat ranges (established but incomplete) {3.2.1, 3.2.2, 3.2.3}. South-East Asia showed a reduction of 12.9 per cent in forest cover between 1990 and 2015, largely caused by an increasing export market for palm oil, pulp, rubber and timber products {4.1.1, 4.1.2}. Likewise, 60 per cent of the grasslands and more than 20 per cent of the deserts in the Asia-Pacific region are degraded owing to overgrazing by livestock, invasion by alien species or conversion to agriculture, resulting in a rapid decline of native flora and fauna {3.2.1.2, 3.2.1.4, 4.1.2, 4.4.2, 4.4.4}. On the other hand, there is a small trend of an overall increase in the region’s forest cover, except in South-East Asia, with North-East Asia and South Asia showing an increase by 22.9 per cent and 5.8 per cent, respectively, from 1990 to 2015 {3.2.1.1, 4.1.2.1, 4.4.1}, with a likely consequent increase in the flow of forest ecosystem services. Positive change in forest cover is attributed to the enabling policies of Governments reducing deforestation and promoting afforestation and restoration (Figure SPM.3). Despite the increase in forest cover, biodiversity is still at risk. Nearly 25 per cent of the region’s endemic species are currently threatened according to the International Union for Conservation of Nature (IUCN) Red List of Threatened Species, although there is a high percentage of data-deficient species (19 per cent), indicating the need for more research on endemic species loss in the region (well established) {3.2.2, 3.2.6.2} (Figure SPM.4)." ;
-    dcterms:identifier "B1" ;
-    skos:prefLabel "Across the Asia-Pacific, while biodiversity and ecosystem conditions are declining overall, they are well maintained in some areas (established but incomplete)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-B2> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.4> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B2-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-B2-SM1> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "However, owing to improved global efforts and enabling policies of the range countries, some of the charismatic species have performed better. Habitat degradation and fragmentation, especially in forests, have led to a decline in wild mammals and birds. In the lowland forests of Sundaland (region of South-East Asia), it is projected that 29 per cent of the bird species and 24 per cent of the mammals are likely to become extinct in the coming decades if the current rate of forest loss continues {3.2.1.1, 3.2.1.2}. The reduction in faunal diversity could also lead to a decline in the population of large seeded animal-dispersed trees in tropical forests. The widespread loss of large vertebrates has had a measurable impact on many forest functions and services, including seed dispersal {3.2.1.1}. While some hunting is for subsistence or local markets, there is also a massive regional trade in wildlife and wildlife products for food, traditional medicines, ornaments and pets, which is also causing species decline in some countries {3.2.1.1}. Likewise, several grassland animals are highly threatened in the Asia-Pacific region, for example, brow antlered deer or Thamin, swamp deer, great Indian bustard, lesser florican {3.3.2}. Bird extinctions on individual Pacific islands and Hawaii range from 15.4 per cent to 87.5 per cent of the total number of bird species, with the implication that there is a loss of ecological functions such as seed dispersal and predation previously performed by birds (well established) {3.2.1.7}. The extinction risk for endemic species (25 per cent threatened) is similar to that for all species (21 per cent threatened), as a very high proportion of the species found in the Asia-Pacific region are endemic {3.2.6.2} (Figure SPM.4). Apart from the exploitation of wildlife and climate change as direct drivers, the global trade in timber and high demand for traditional medicines and natural products are also causing species decline (well established) {3.2.1.1}. Exotic vertebrate predators have been largely responsible for native mammal extinctions in countries such as Australia, where predation by foxes and cats have led to the highest rate of mammal extinction (>10 per cent) of any continent globally {3.2.1.2, 3.2.1.4, 4.1.4}." ;
-    dcterms:identifier "B2" ;
-    skos:prefLabel "The population of large wild mammals, especially some ungulates and carnivores, and birds has declined across the region (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-B3> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B3-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-B3-SM1> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Invasive alien species constitute one of the most serious drivers of ecosystem change and biodiversity loss across the Asia-Pacific region. This is particularly true for oceanic islands {1.1.4, 4.1.4, 4.5.1}. There is also increasing evidence that marine invasive alien species constitute an extremely serious, but less well understood, threat to fisheries, coral reefs and the overall functioning of marine ecosystems and food webs in the Asia-Pacific region {1.1.4, 4.1.4.1}. In semi-arid and arid ecosystems across the region, an increase in the cover of invasive alien species has been largely attributable to the planting of woody invasive alien species such as Prosopis juliflora (well established) {3.3.5, 4.4.5}. The introduction of invasive alien species also occurs frequently in urban ecosystems because cities are centres of trade, traffic and horticulture {4.4.6.2}. The annual economic loss attributed to invasive alien species is not well studied but is likely to be substantial – for example, it is estimated at $33.5 billion in South-East Asia. There is evidence that invasive alien species are increasing in number of species as a consequence of the increasing volume of international trade, transportation improvement and cross-border migration (established but incomplete) {3.3.5, 4.1.4, 4.2.2.3, 4.2.2.4, 4.6}. There have been increasing efforts in the region towards better surveillance and management of invasive alien species, with a majority of Asia-Pacific countries having signed up to invasive alien species-relevant international agreements and having introduced relevant national legislation. The knowledge base is variable across the region, however, with a lack of detailed large-scale surveys and a central depository for information on invasive alien species {4.1.4.1, 4.6, 6.2.2.1}." ;
-    dcterms:identifier "B3" ;
-    skos:prefLabel "There is a steady increase in the number and abundance of invasive alien species, impacting native biodiversity, ecosystem functioning and productivity (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-B4> a ipbes:BackgroundMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.5>,
-        <http://ontology.ipbes.net/report/il/APA18-FigureSPM.6> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B4-SM0> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Between 2004 and 2017, North-East Asia, Oceania and South-East Asia registered a growth in protected area, with a regional total increase of 0.3 per cent for terrestrial and 13.8 per cent for coastal and marine protected areas {3.2.6} (Figures SPM.5, SPM.6). Many countries in North-East Asia, Oceania and South-East Asia are on track to partially fulfilling Aichi Biodiversity Target 11, having designated close to 17 per cent of the land or 10 per cent of oceans as protected areas. However, most of the important bird areas and key biodiversity areas remain unprotected, suggesting that the region is not on track in conserving areas of particular importance for biodiversity, as called for under this target (well established) {3.2.6.1}. Oceania has the highest overall protected area coverage in the region (Figure SPM.6). North-East Asia has a high percentage of land under protected areas (17 per cent), but less than 5 per cent of its marine area is protected {3.2.6}. Several countries have set up community conserved areas that are managed and guided by indigenous and local knowledge and culture-based practices that have been shown to have a positive impact on the conservation of native biodiversity {2.5.3.2, 3.2.5.6, 6.4.1.2, 6.4.1.4}. In some countries, a number of community-based conservation initiatives supported through indigenous and local knowledge have helped in scaling up community conserved areas {6.2.3, 6.4.2.4, 6.5}. Despite the progress in protected area coverage in both marine and terrestrial ecosystems, the rate of species loss has not slowed down {3.2.6.2}." ;
-    dcterms:identifier "B4" ;
-    skos:prefLabel "Protected area coverage in the Asia-Pacific region has increased substantially, but coverage of key biodiversity areas and important bird areas still remain low and progress is needed towards better overall management effectiveness (well established) {3.2.6.3, 6.4.2.1}." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-B5> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B5-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-B5-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-B5-SM2> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """There has been a decline in the cultivation of native varieties of plants and a reduction in crop genetic resources in the Asia-Pacific region owing to agriculture intensification and a shift to monoculture. Agro-ecosystems in the region represent 30 per cent of the world’s agricultural land and 87 per cent of the world’s small farms, most of which support a wide range of native crops. Recent decades have seen a shift towards high-yielding varieties and monoculture due to higher demand, leading to a loss of crop varieties grown with traditional methods (e.g., swidden agricultural conversion in South-East Asia) and an increased risk of losing genetic materials that serve as insurance policies for sustaining food supply and human health. The indiscriminate use of chemical fertilizers and pesticides in agriculture also causes loss of agrobiodiversity owing to pest outbreaks, loss of pollinators and changes in soil microbiota (established but incomplete) {3.2.1.5, 4.1.3.2, 4.1.3.3, 4.4.5}. There has been a nearly 30 per cent decline in biological and cultural diversity in the Asia-Pacific region since the 1970s (well established) {3.2.5.2, 3.2.5.4, 3.4}.
-
-Demographic urbanization and rural depopulation in some countries may affect the transmission of indigenous and local knowledge to future generations {4.2.1.4}.""" ;
-    dcterms:identifier "B5" ;
-    skos:prefLabel "Traditional agrobiodiversity is in decline, along with its associated indigenous and local knowledge, owing to a shift towards agricultural intensification and high-yielding crop varieties (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-B6> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B6-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-B6-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-B6-SM2> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription """Freshwater ecosystems in the Asia-Pacific region support more than 28 per cent of the aquatic and semi-aquatic species of the world, but nearly 37 per cent of these species are threatened owing to anthropogenic and climatic drivers (well established) {3.2.2.1, 4.1.2.3}. Overfishing, pollution, infrastructure development and invasive alien species are largely responsible. Roughly one out of every three species of freshwater fishes is threatened {3.2.2, 4.4.7}. In South-East Asia, capture fisheries, particularly marine, continued to decline, from almost 70 per cent of the region’s total fisheries production in 2000 to only 40 per cent in 2014 {4.1.2.3}. The damming of rivers has damaged fish productivity and diversity, and the cumulative effect of climate change may exacerbate this loss {3.2.2.3, 3.3.3, 4.4.7.2}. The conservation status of fishes varies considerably within the region, with freshwater fish extinction rates projected to be highest in semi-arid and arid areas {3.2.2.1}. Aquatic biodiversity and ecosystems are under threat from economic development, including the excessive use of water for industries and infrastructure expansion and the heavy use of fertilizers in agricultural fields in and around wetlands, leading to rapid eutrophication, which has an impact on fish {3.2.2.2, 3.2.2.4, 4.1.3, 4.4.7, 4.4.8}.
-
-Coastal and marine ecosystems are threatened due to unsustainable aquaculture practices, overfishing and destructive harvesting practices. It is projected that if unsustainable fishing practices continue, there could be no exploitable fish stocks left by as early as 2048. The intertidal zones are also rapidly deteriorating owing to human activities (established but incomplete) {3.1.3.1, 3.2.3.2, 3.2.3.3, 3.2.3.6, 3.2.4.6, 3.4, 4.1.2.3, 5.2.3}. Coral reefs are already under serious threat; some reefs have been lost, especially in South and South-East Asia {5.2.3}. It is expected that up to 90 per cent of coral will suffer severe degradation by 2050 even under conservative climate change scenarios (established but incomplete) {5.2.3}. Even for the most managed reefs, coral loss rates are estimated at around 1–2 per cent annually {4.4.8.10}. It is projected that they will experience increasing frequency of disease, bleaching and death under the combined effects of habitat loss, overfishing, pollution, sediments and nutrients from land run-off, sea level rise, ocean warming and ocean acidification {5.2.3, 4.4.8.10, 6.3.1}. Coral reefs are interlinked to other coastal habitats, especially mangroves, intertidal flats and seagrass beds, and their combined degradation is an aggravating factor in coastal biodiversity decline {3.2.3}.""" ;
-    dcterms:identifier "B6" ;
-    skos:prefLabel "In the Asia-Pacific region, people are heavily dependent on fisheries for food, with aquaculture growing by nearly 7 per cent annually. But the capture fisheries sector faces challenges owing to overharvesting, invasive alien species, disease and pollution (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-B7> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B7-SM0>,
-        <http://ontology.ipbes.net/report/subm/APA18-B7-SM1>,
-        <http://ontology.ipbes.net/report/subm/APA18-B7-SM2>,
-        <http://ontology.ipbes.net/report/subm/APA18-B7-SM3>,
-        <http://ontology.ipbes.net/report/subm/APA18-B7-SM4>,
-        <http://ontology.ipbes.net/report/subm/APA18-B7-SM5> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "These global changes are posing great threats, especially to coral reefs, seagrass beds, kelp forests, mangroves and salt marshes, and in turn are increasing coastal erosion and vulnerability of low-lying coastal areas, islands and atolls (well established) {3.2.3, 3.2.3.4, 4.1.5, 4.4.8.10, 4.4.3, 4.5.1, 4.5.2.6}. High variability in the Asia-Pacific region’s climate and weather cycle are directly and indirectly affecting almost all ecosystems, although the severity of the effects is projected to vary across the region (established but incomplete) {3.3.4, 4.1.5, 4.4, 4.5, 5.2}. There is evidence that the climate in the region will continue to change over the coming decades, triggering increased frequency of extreme events such as floods and droughts (well established) {4.1.5, 4.4.2.4, 4.4.4, 4.4.5, 4.4.7.5}. The melting of ice and snow, permafrost thawing and extreme precipitation events are major threats to biodiversity in the high mountains, resulting in an increase of soil erosion and further greenhouse gas emissions (well established) {4.4.3, 4.5.2.6}. Climate change and associated extreme events are affecting species distributions, population sizes and the timing of their reproduction or migration, all of which are likely to have significant implications for terrestrial and ocean biodiversity, leading to disruptions in ecosystem functioning and aggravating the food security issue across the region (established but incomplete) {4.1.5, 4.4.2, 4.4.3, 4.4.5, 4.4.7}. Conflict in some parts of the region has led to large-scale human migration, further exerting local and transboundary pressures on ecosystems. This trend may escalate and become more prevalent in the future with the increased frequency of adverse climate events, but empirical data is lacking to assess its socio-ecological effects (established but incomplete) {2.1.5, 2.5.2.7, 4.2.1.6}." ;
-    dcterms:identifier "B7" ;
-    skos:prefLabel "Climate change, sea level rise and extreme climatic events are harming species, habitats and ecosystem structure and functions. Other global changes, including ocean warming, ocean acidification and increased frequency and severity of pest and disease outbreaks, are affecting production systems and ecosystem functions in both marine and terrestrial systems (well established)." .
-
-<http://ontology.ipbes.net/report/bgm/APA18-B8> a ipbes:BackgroundMessage ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B8-SM0> ;
-    ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "Rapid population growth, changing values, shifting socio-economic status, technological and industrial capabilities, and urbanization across the region are resulting in an increase in the consumption of natural resources, and the subsequent production of waste. For example, quantities of household hazardous waste, e-waste, and food waste are rising with the growth of urbanization in subregions across the Asia-Pacific region. An estimated 870 million tons of municipal solid waste were produced in the Asia-Pacific region in 2014, and that figure is projected to increase to 1.4 billion tons per year by 2030. Construction and demolition waste is also increasing. Of particular concern is plastic waste: the world’s top five plastic waste polluters are in North-East, South and South-East Asia, and of the 10 rivers around the globe carrying the highest amounts of plastic waste, 8 are located in Asia. This waste accounts for 88–95 per cent of the total global load of plastics in the oceans {2.1.7, 4.3}. Additionally, water pollution, air pollution and hazardous substances pose ongoing threats to human and environmental health (well established) {2.2.2.3, 2.2.4.4, 2.3.4.3, 2.4.1, 4.1.3.3}." ;
-    dcterms:identifier "B8" ;
-    skos:prefLabel "The increasing impact of waste and pollution on terrestrial, freshwater and marine ecosystems, is threatening the current and future health of nature and people in the Asia-Pacific region (well established)." .
-
 <http://ontology.ipbes.net/report/ref/2333075/items/UDQJ4PM7> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch2> ;
     ipbes:Report ipbes:APA18 ;
@@ -31842,6 +31799,100 @@ Future pathways studies on the importance of terrestrial ecosystems for human we
     ipbes:hasDescription "In our review of regional and subregional scenarios, the greatest emphasis was on provisioning ecosystem services, followed by regulating and supporting ecosystem services (Figure 5.20). Even though we encountered variety of regulating (n=7), cultural and supporting ecosystem services, over 50 per cent of the scenario exercises examined plausible future trends in food provisioning services (e.g. Fox et al. (2012); Baral et al. (2014)). These in turn primarily focused on agricultural production landscapes (including expansion of biofuels and land-competition), as well as limited attention on productive marine and coastal areas. The trade-off between agricultural intensification and consequent loss of habitat quality was well established in almost all the spatially explicit scenarios (e.g. Fox et al. (2012); Baral et al. (2014)). Furthermore, the impact on the food provisioning services of demographic and economic drivers including trade reforms, global and domestic policy changes, and urbanization were addressed in various policy-screening scenarios (e.g. Corner et al. (2015)). Water availability was also addressed by studies examining potential impacts of indirect drivers, such as changes in life styles and consumption, and the intensification of direct drivers such as climate change, land use alteration, crop intensification, and urbanization (e.g. Herzig et al. (2016); Yang et al. (2016)). In general, however, regional scenario exercises generally lacked assessments of cultural or non-material ecosystem services, probably due to lack of well-established models and methods, highlighting a significant research gap." ;
     dcterms:identifier "5.3.3.4" ;
     skos:prefLabel "Consideration of Ecosystem Services and Nature’s Contribution to People" .
+
+<http://ontology.ipbes.net/report/bgm/APA18-B1> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.3>,
+        <http://ontology.ipbes.net/report/il/APA18-FigureSPM.4> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B1-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-B1-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-B1-SM2> ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
+    ipbes:hasConfidenceLevel "established but incomplete" ;
+    ipbes:hasDescription "The region exhibits varying trends in the status of biodiversity and ecosystem services. Among the various ecosystem types, forests, alpine ecosystems, inland freshwater and wetlands and coastal systems are the most threatened (well established) {4.3}. Genetic diversity within species, both wild and domestic, is also decreasing, in many cases as a result of decreasing habitat ranges (established but incomplete) {3.2.1, 3.2.2, 3.2.3}. South-East Asia showed a reduction of 12.9 per cent in forest cover between 1990 and 2015, largely caused by an increasing export market for palm oil, pulp, rubber and timber products {4.1.1, 4.1.2}. Likewise, 60 per cent of the grasslands and more than 20 per cent of the deserts in the Asia-Pacific region are degraded owing to overgrazing by livestock, invasion by alien species or conversion to agriculture, resulting in a rapid decline of native flora and fauna {3.2.1.2, 3.2.1.4, 4.1.2, 4.4.2, 4.4.4}. On the other hand, there is a small trend of an overall increase in the region’s forest cover, except in South-East Asia, with North-East Asia and South Asia showing an increase by 22.9 per cent and 5.8 per cent, respectively, from 1990 to 2015 {3.2.1.1, 4.1.2.1, 4.4.1}, with a likely consequent increase in the flow of forest ecosystem services. Positive change in forest cover is attributed to the enabling policies of Governments reducing deforestation and promoting afforestation and restoration (Figure SPM.3). Despite the increase in forest cover, biodiversity is still at risk. Nearly 25 per cent of the region’s endemic species are currently threatened according to the International Union for Conservation of Nature (IUCN) Red List of Threatened Species, although there is a high percentage of data-deficient species (19 per cent), indicating the need for more research on endemic species loss in the region (well established) {3.2.2, 3.2.6.2} (Figure SPM.4)." ;
+    dcterms:identifier "B1" ;
+    skos:prefLabel "Across the Asia-Pacific, while biodiversity and ecosystem conditions are declining overall, they are well maintained in some areas (established but incomplete)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-B2> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.4> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B2-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-B2-SM1> ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "However, owing to improved global efforts and enabling policies of the range countries, some of the charismatic species have performed better. Habitat degradation and fragmentation, especially in forests, have led to a decline in wild mammals and birds. In the lowland forests of Sundaland (region of South-East Asia), it is projected that 29 per cent of the bird species and 24 per cent of the mammals are likely to become extinct in the coming decades if the current rate of forest loss continues {3.2.1.1, 3.2.1.2}. The reduction in faunal diversity could also lead to a decline in the population of large seeded animal-dispersed trees in tropical forests. The widespread loss of large vertebrates has had a measurable impact on many forest functions and services, including seed dispersal {3.2.1.1}. While some hunting is for subsistence or local markets, there is also a massive regional trade in wildlife and wildlife products for food, traditional medicines, ornaments and pets, which is also causing species decline in some countries {3.2.1.1}. Likewise, several grassland animals are highly threatened in the Asia-Pacific region, for example, brow antlered deer or Thamin, swamp deer, great Indian bustard, lesser florican {3.3.2}. Bird extinctions on individual Pacific islands and Hawaii range from 15.4 per cent to 87.5 per cent of the total number of bird species, with the implication that there is a loss of ecological functions such as seed dispersal and predation previously performed by birds (well established) {3.2.1.7}. The extinction risk for endemic species (25 per cent threatened) is similar to that for all species (21 per cent threatened), as a very high proportion of the species found in the Asia-Pacific region are endemic {3.2.6.2} (Figure SPM.4). Apart from the exploitation of wildlife and climate change as direct drivers, the global trade in timber and high demand for traditional medicines and natural products are also causing species decline (well established) {3.2.1.1}. Exotic vertebrate predators have been largely responsible for native mammal extinctions in countries such as Australia, where predation by foxes and cats have led to the highest rate of mammal extinction (>10 per cent) of any continent globally {3.2.1.2, 3.2.1.4, 4.1.4}." ;
+    dcterms:identifier "B2" ;
+    skos:prefLabel "The population of large wild mammals, especially some ungulates and carnivores, and birds has declined across the region (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-B3> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B3-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-B3-SM1> ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Invasive alien species constitute one of the most serious drivers of ecosystem change and biodiversity loss across the Asia-Pacific region. This is particularly true for oceanic islands {1.1.4, 4.1.4, 4.5.1}. There is also increasing evidence that marine invasive alien species constitute an extremely serious, but less well understood, threat to fisheries, coral reefs and the overall functioning of marine ecosystems and food webs in the Asia-Pacific region {1.1.4, 4.1.4.1}. In semi-arid and arid ecosystems across the region, an increase in the cover of invasive alien species has been largely attributable to the planting of woody invasive alien species such as Prosopis juliflora (well established) {3.3.5, 4.4.5}. The introduction of invasive alien species also occurs frequently in urban ecosystems because cities are centres of trade, traffic and horticulture {4.4.6.2}. The annual economic loss attributed to invasive alien species is not well studied but is likely to be substantial – for example, it is estimated at $33.5 billion in South-East Asia. There is evidence that invasive alien species are increasing in number of species as a consequence of the increasing volume of international trade, transportation improvement and cross-border migration (established but incomplete) {3.3.5, 4.1.4, 4.2.2.3, 4.2.2.4, 4.6}. There have been increasing efforts in the region towards better surveillance and management of invasive alien species, with a majority of Asia-Pacific countries having signed up to invasive alien species-relevant international agreements and having introduced relevant national legislation. The knowledge base is variable across the region, however, with a lack of detailed large-scale surveys and a central depository for information on invasive alien species {4.1.4.1, 4.6, 6.2.2.1}." ;
+    dcterms:identifier "B3" ;
+    skos:prefLabel "There is a steady increase in the number and abundance of invasive alien species, impacting native biodiversity, ecosystem functioning and productivity (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-B4> a ipbes:BackgroundMessage ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/APA18-FigureSPM.5>,
+        <http://ontology.ipbes.net/report/il/APA18-FigureSPM.6> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B4-SM0> ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Between 2004 and 2017, North-East Asia, Oceania and South-East Asia registered a growth in protected area, with a regional total increase of 0.3 per cent for terrestrial and 13.8 per cent for coastal and marine protected areas {3.2.6} (Figures SPM.5, SPM.6). Many countries in North-East Asia, Oceania and South-East Asia are on track to partially fulfilling Aichi Biodiversity Target 11, having designated close to 17 per cent of the land or 10 per cent of oceans as protected areas. However, most of the important bird areas and key biodiversity areas remain unprotected, suggesting that the region is not on track in conserving areas of particular importance for biodiversity, as called for under this target (well established) {3.2.6.1}. Oceania has the highest overall protected area coverage in the region (Figure SPM.6). North-East Asia has a high percentage of land under protected areas (17 per cent), but less than 5 per cent of its marine area is protected {3.2.6}. Several countries have set up community conserved areas that are managed and guided by indigenous and local knowledge and culture-based practices that have been shown to have a positive impact on the conservation of native biodiversity {2.5.3.2, 3.2.5.6, 6.4.1.2, 6.4.1.4}. In some countries, a number of community-based conservation initiatives supported through indigenous and local knowledge have helped in scaling up community conserved areas {6.2.3, 6.4.2.4, 6.5}. Despite the progress in protected area coverage in both marine and terrestrial ecosystems, the rate of species loss has not slowed down {3.2.6.2}." ;
+    dcterms:identifier "B4" ;
+    skos:prefLabel "Protected area coverage in the Asia-Pacific region has increased substantially, but coverage of key biodiversity areas and important bird areas still remain low and progress is needed towards better overall management effectiveness (well established) {3.2.6.3, 6.4.2.1}." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-B5> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B5-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-B5-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-B5-SM2> ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription """There has been a decline in the cultivation of native varieties of plants and a reduction in crop genetic resources in the Asia-Pacific region owing to agriculture intensification and a shift to monoculture. Agro-ecosystems in the region represent 30 per cent of the world’s agricultural land and 87 per cent of the world’s small farms, most of which support a wide range of native crops. Recent decades have seen a shift towards high-yielding varieties and monoculture due to higher demand, leading to a loss of crop varieties grown with traditional methods (e.g., swidden agricultural conversion in South-East Asia) and an increased risk of losing genetic materials that serve as insurance policies for sustaining food supply and human health. The indiscriminate use of chemical fertilizers and pesticides in agriculture also causes loss of agrobiodiversity owing to pest outbreaks, loss of pollinators and changes in soil microbiota (established but incomplete) {3.2.1.5, 4.1.3.2, 4.1.3.3, 4.4.5}. There has been a nearly 30 per cent decline in biological and cultural diversity in the Asia-Pacific region since the 1970s (well established) {3.2.5.2, 3.2.5.4, 3.4}.
+
+Demographic urbanization and rural depopulation in some countries may affect the transmission of indigenous and local knowledge to future generations {4.2.1.4}.""" ;
+    dcterms:identifier "B5" ;
+    skos:prefLabel "Traditional agrobiodiversity is in decline, along with its associated indigenous and local knowledge, owing to a shift towards agricultural intensification and high-yielding crop varieties (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-B6> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B6-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-B6-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-B6-SM2> ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription """Freshwater ecosystems in the Asia-Pacific region support more than 28 per cent of the aquatic and semi-aquatic species of the world, but nearly 37 per cent of these species are threatened owing to anthropogenic and climatic drivers (well established) {3.2.2.1, 4.1.2.3}. Overfishing, pollution, infrastructure development and invasive alien species are largely responsible. Roughly one out of every three species of freshwater fishes is threatened {3.2.2, 4.4.7}. In South-East Asia, capture fisheries, particularly marine, continued to decline, from almost 70 per cent of the region’s total fisheries production in 2000 to only 40 per cent in 2014 {4.1.2.3}. The damming of rivers has damaged fish productivity and diversity, and the cumulative effect of climate change may exacerbate this loss {3.2.2.3, 3.3.3, 4.4.7.2}. The conservation status of fishes varies considerably within the region, with freshwater fish extinction rates projected to be highest in semi-arid and arid areas {3.2.2.1}. Aquatic biodiversity and ecosystems are under threat from economic development, including the excessive use of water for industries and infrastructure expansion and the heavy use of fertilizers in agricultural fields in and around wetlands, leading to rapid eutrophication, which has an impact on fish {3.2.2.2, 3.2.2.4, 4.1.3, 4.4.7, 4.4.8}.
+
+Coastal and marine ecosystems are threatened due to unsustainable aquaculture practices, overfishing and destructive harvesting practices. It is projected that if unsustainable fishing practices continue, there could be no exploitable fish stocks left by as early as 2048. The intertidal zones are also rapidly deteriorating owing to human activities (established but incomplete) {3.1.3.1, 3.2.3.2, 3.2.3.3, 3.2.3.6, 3.2.4.6, 3.4, 4.1.2.3, 5.2.3}. Coral reefs are already under serious threat; some reefs have been lost, especially in South and South-East Asia {5.2.3}. It is expected that up to 90 per cent of coral will suffer severe degradation by 2050 even under conservative climate change scenarios (established but incomplete) {5.2.3}. Even for the most managed reefs, coral loss rates are estimated at around 1–2 per cent annually {4.4.8.10}. It is projected that they will experience increasing frequency of disease, bleaching and death under the combined effects of habitat loss, overfishing, pollution, sediments and nutrients from land run-off, sea level rise, ocean warming and ocean acidification {5.2.3, 4.4.8.10, 6.3.1}. Coral reefs are interlinked to other coastal habitats, especially mangroves, intertidal flats and seagrass beds, and their combined degradation is an aggravating factor in coastal biodiversity decline {3.2.3}.""" ;
+    dcterms:identifier "B6" ;
+    skos:prefLabel "In the Asia-Pacific region, people are heavily dependent on fisheries for food, with aquaculture growing by nearly 7 per cent annually. But the capture fisheries sector faces challenges owing to overharvesting, invasive alien species, disease and pollution (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-B7> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B7-SM0>,
+        <http://ontology.ipbes.net/report/subm/APA18-B7-SM1>,
+        <http://ontology.ipbes.net/report/subm/APA18-B7-SM2>,
+        <http://ontology.ipbes.net/report/subm/APA18-B7-SM3>,
+        <http://ontology.ipbes.net/report/subm/APA18-B7-SM4>,
+        <http://ontology.ipbes.net/report/subm/APA18-B7-SM5> ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "These global changes are posing great threats, especially to coral reefs, seagrass beds, kelp forests, mangroves and salt marshes, and in turn are increasing coastal erosion and vulnerability of low-lying coastal areas, islands and atolls (well established) {3.2.3, 3.2.3.4, 4.1.5, 4.4.8.10, 4.4.3, 4.5.1, 4.5.2.6}. High variability in the Asia-Pacific region’s climate and weather cycle are directly and indirectly affecting almost all ecosystems, although the severity of the effects is projected to vary across the region (established but incomplete) {3.3.4, 4.1.5, 4.4, 4.5, 5.2}. There is evidence that the climate in the region will continue to change over the coming decades, triggering increased frequency of extreme events such as floods and droughts (well established) {4.1.5, 4.4.2.4, 4.4.4, 4.4.5, 4.4.7.5}. The melting of ice and snow, permafrost thawing and extreme precipitation events are major threats to biodiversity in the high mountains, resulting in an increase of soil erosion and further greenhouse gas emissions (well established) {4.4.3, 4.5.2.6}. Climate change and associated extreme events are affecting species distributions, population sizes and the timing of their reproduction or migration, all of which are likely to have significant implications for terrestrial and ocean biodiversity, leading to disruptions in ecosystem functioning and aggravating the food security issue across the region (established but incomplete) {4.1.5, 4.4.2, 4.4.3, 4.4.5, 4.4.7}. Conflict in some parts of the region has led to large-scale human migration, further exerting local and transboundary pressures on ecosystems. This trend may escalate and become more prevalent in the future with the increased frequency of adverse climate events, but empirical data is lacking to assess its socio-ecological effects (established but incomplete) {2.1.5, 2.5.2.7, 4.2.1.6}." ;
+    dcterms:identifier "B7" ;
+    skos:prefLabel "Climate change, sea level rise and extreme climatic events are harming species, habitats and ecosystem structure and functions. Other global changes, including ocean warming, ocean acidification and increased frequency and severity of pest and disease outbreaks, are affecting production systems and ecosystem functions in both marine and terrestrial systems (well established)." .
+
+<http://ontology.ipbes.net/report/bgm/APA18-B8> a ipbes:BackgroundMessage ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:SubMessage <http://ontology.ipbes.net/report/subm/APA18-B8-SM0> ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
+    ipbes:hasConfidenceLevel "well established" ;
+    ipbes:hasDescription "Rapid population growth, changing values, shifting socio-economic status, technological and industrial capabilities, and urbanization across the region are resulting in an increase in the consumption of natural resources, and the subsequent production of waste. For example, quantities of household hazardous waste, e-waste, and food waste are rising with the growth of urbanization in subregions across the Asia-Pacific region. An estimated 870 million tons of municipal solid waste were produced in the Asia-Pacific region in 2014, and that figure is projected to increase to 1.4 billion tons per year by 2030. Construction and demolition waste is also increasing. Of particular concern is plastic waste: the world’s top five plastic waste polluters are in North-East, South and South-East Asia, and of the 10 rivers around the globe carrying the highest amounts of plastic waste, 8 are located in Asia. This waste accounts for 88–95 per cent of the total global load of plastics in the oceans {2.1.7, 4.3}. Additionally, water pollution, air pollution and hazardous substances pose ongoing threats to human and environmental health (well established) {2.2.2.3, 2.2.4.4, 2.3.4.3, 2.4.1, 4.1.3.3}." ;
+    dcterms:identifier "B8" ;
+    skos:prefLabel "The increasing impact of waste and pollution on terrestrial, freshwater and marine ecosystems, is threatening the current and future health of nature and people in the Asia-Pacific region (well established)." .
 
 <http://ontology.ipbes.net/report/ref/2333075/items/3SPBFY7U> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch1>,
@@ -37162,46 +37213,6 @@ Due in part to the illegal nature of much wildmeat harvesting, there is minimal 
     dcterms:identifier "2.3.1.2" ;
     skos:prefLabel "Production of food, fuel, medicine, and materials" .
 
-<http://ontology.ipbes.net/report/key/APA18-1> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-A1>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A2>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A3>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A4> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:hasDescription "The biodiversity of the Asia-Pacific region is important for providing food, water, energy, and health security, as well as cultural and spiritual fulfilment to its 4.5 billion inhabitants. Ample evidence demonstrates that human well-being in the region is deeply connected with nature, although there is much variation in dependency across the region." ;
-    dcterms:identifier "1" ;
-    skos:prefLabel "The Asia-Pacific region’s rich biodiversity and valuable ecosystem services provide vital support for human well-being and sustainable development." .
-
-<http://ontology.ipbes.net/report/key/APA18-2> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-A1>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A2>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A3>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A4> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:hasDescription "The region has maintained an average economic growth rate of 7.6 per cent as compared to the 3.4 per cent global average (from 1990 to 2010) and is experiencing one of the fastest urbanization rates in the world (2.0–3.0 per cent per year). The expansion of agricultural land has also been among the world’s highest. Rapid socio-economic transitions have come at a high cost however, causing an accelerated and permanent loss of biodiversity in the ecosystems of the Asia-Pacific region." ;
-    dcterms:identifier "2" ;
-    skos:prefLabel "The Asia-Pacific region has achieved rapid economic growth, and is undergoing one of the highest rates of urbanization and agricultural expansion in the world. This has come at a high environmental cost, causing degradation and loss of biodiversity." .
-
-<http://ontology.ipbes.net/report/key/APA18-3> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-A1>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A2>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A3>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A4> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:hasDescription "The Asia-Pacific region has the world’s largest number of people living below the poverty line – 400 million of the world’s 767 million poor people live in Asia and the Pacific –although trends are improving. Eradicating poverty requires multiple strategies, including the sustainable management of food production systems (such as agriculture and aquaculture) that remain the main source of income and nutrition in the region. Similarly, natural terrestrial, freshwater and marine ecosystems also offer goods and services that people need to secure their livelihoods. Sustaining these provisioning services will assist in poverty alleviation." ;
-    dcterms:identifier "3" ;
-    skos:prefLabel "Although the Asia-Pacific region is succeeding in reducing poverty, mass poverty persists in some subregions. Sustaining the viability of and access to ecosystem services will contribute to poverty alleviation." .
-
-<http://ontology.ipbes.net/report/key/APA18-4> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-A1>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A2>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A3>,
-        <http://ontology.ipbes.net/report/bgm/APA18-A4> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:hasDescription "While people across the region value nature for its contributions to their spiritual, cultural and physical well-being, these contributions have been measured to different extent with respect to their economic value. Studies of valuation estimates of nature’s contributions to people in the Asia-Pacific region show that, in addition to provisioning services, regulating services are also significantly valued, and their contribution to a good quality of life is acknowledged. But the number of such studies is small, and drawn mostly from North-East Asia and Oceania." ;
-    dcterms:identifier "4" ;
-    skos:prefLabel "The diverse values and value systems across the Asia-Pacific region shape interactions between people and nature. There are some significant valuation data gaps so caution needs to be applied during interpretation." .
-
 <http://ontology.ipbes.net/report/sch/APA18-2.6.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333075/items/23PVARYB>,
@@ -37254,6 +37265,50 @@ With the Asia-Pacific emerging as a world power of economic growth (UNESCAP, 201
 Technological solutions are increasingly assisting the reduction of the environmental impact of human activities on nature e.g. the uptake of solar energy and water saving technologies (Central Research Institute for Dryland Agriculture, n.d.; Larkin, 2016; UNEP, 2010; Williamson, 2012). Progressing and supporting technological advancements, aimed at minimizing ecological footprints, will assist innovative solutions to the protection of the Asia-Pacific’s ecosystems.""" ;
     dcterms:identifier "2.6.2" ;
     skos:prefLabel "Emerging issues and opportunities" .
+
+<http://ontology.ipbes.net/report/key/APA18-1> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-A1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A4> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "A. Importance of nature’s contributions to human well-being and good quality of life" ;
+    ipbes:hasDescription "The biodiversity of the Asia-Pacific region is important for providing food, water, energy, and health security, as well as cultural and spiritual fulfilment to its 4.5 billion inhabitants. Ample evidence demonstrates that human well-being in the region is deeply connected with nature, although there is much variation in dependency across the region." ;
+    dcterms:identifier "1" ;
+    skos:prefLabel "The Asia-Pacific region’s rich biodiversity and valuable ecosystem services provide vital support for human well-being and sustainable development." .
+
+<http://ontology.ipbes.net/report/key/APA18-2> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-A1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A4> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "A. Importance of nature’s contributions to human well-being and good quality of life" ;
+    ipbes:hasDescription "The region has maintained an average economic growth rate of 7.6 per cent as compared to the 3.4 per cent global average (from 1990 to 2010) and is experiencing one of the fastest urbanization rates in the world (2.0–3.0 per cent per year). The expansion of agricultural land has also been among the world’s highest. Rapid socio-economic transitions have come at a high cost however, causing an accelerated and permanent loss of biodiversity in the ecosystems of the Asia-Pacific region." ;
+    dcterms:identifier "2" ;
+    skos:prefLabel "The Asia-Pacific region has achieved rapid economic growth, and is undergoing one of the highest rates of urbanization and agricultural expansion in the world. This has come at a high environmental cost, causing degradation and loss of biodiversity." .
+
+<http://ontology.ipbes.net/report/key/APA18-3> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-A1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A4> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "A. Importance of nature’s contributions to human well-being and good quality of life" ;
+    ipbes:hasDescription "The Asia-Pacific region has the world’s largest number of people living below the poverty line – 400 million of the world’s 767 million poor people live in Asia and the Pacific –although trends are improving. Eradicating poverty requires multiple strategies, including the sustainable management of food production systems (such as agriculture and aquaculture) that remain the main source of income and nutrition in the region. Similarly, natural terrestrial, freshwater and marine ecosystems also offer goods and services that people need to secure their livelihoods. Sustaining these provisioning services will assist in poverty alleviation." ;
+    dcterms:identifier "3" ;
+    skos:prefLabel "Although the Asia-Pacific region is succeeding in reducing poverty, mass poverty persists in some subregions. Sustaining the viability of and access to ecosystem services will contribute to poverty alleviation." .
+
+<http://ontology.ipbes.net/report/key/APA18-4> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-A1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-A4> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "A. Importance of nature’s contributions to human well-being and good quality of life" ;
+    ipbes:hasDescription "While people across the region value nature for its contributions to their spiritual, cultural and physical well-being, these contributions have been measured to different extent with respect to their economic value. Studies of valuation estimates of nature’s contributions to people in the Asia-Pacific region show that, in addition to provisioning services, regulating services are also significantly valued, and their contribution to a good quality of life is acknowledged. But the number of such studies is small, and drawn mostly from North-East Asia and Oceania." ;
+    dcterms:identifier "4" ;
+    skos:prefLabel "The diverse values and value systems across the Asia-Pacific region shape interactions between people and nature. There are some significant valuation data gaps so caution needs to be applied during interpretation." .
 
 <http://ontology.ipbes.net/report/sch/APA18-2.5.3.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch2> ;
@@ -37891,78 +37946,6 @@ Urban and suburban food production in farms, back-yards, community gardens, and 
     dcterms:identifier "3.2.1.6" ;
     skos:prefLabel "Urban ecosystem and biodiversity" .
 
-<http://ontology.ipbes.net/report/key/APA18-18> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:hasDescription "Collaborative, participatory and decentralized governance, for example, community-conserved areas and United Nations Educational, Scientific and Cultural Organization (UNESCO) biosphere reserves, creates an enabling environment for mounting joint actions to improve ecosystem health by giving everyone a voice and a stake. Such governance promotes collective decision-making and co-production of ecosystem services, thereby benefiting all stakeholders. Nature, with its multidimensional role, can attract support from many diverse sectors and stakeholders. In the past, overly top-down policies have created disincentives and perverse incentives that have fuelled biodiversity loss. Multi-stakeholder governance has great potential to accelerate progress in achieving biodiversity goals. Successful examples abound in the region, and are ripe for extension to new areas." ;
-    dcterms:identifier "18" ;
-    skos:prefLabel "Local communities and higher-level stakeholders collaborating in decision-making processes that involve the conservation of nature are the best positioned to ensure the sustainable use of biodiversity and nature’s contributions to people." .
-
-<http://ontology.ipbes.net/report/key/APA18-19> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:hasDescription "Mainstreaming of biodiversity – that is, integrating biodiversity conservation into broader areas, including poverty alleviation, climate adaptation and degraded land rehabilitation programmes – has great potential to drive the region towards sustainability. It necessitates embedding biodiversity in the decision-making processes of government agencies that are not directly responsible for biodiversity policy (e.g., finance, agriculture, rural development, or energy and water resources ministries). Governments that involve multiple stakeholders in the decision-making process have achieved better coordination in the implementation of national biodiversity strategies and action plans." ;
-    dcterms:identifier "19" ;
-    skos:prefLabel "The mainstreaming of biodiversity into development policies, plans, and programmes can improve efforts to achieve both the Aichi Targets and the Sustainable Development Goals." .
-
-<http://ontology.ipbes.net/report/key/APA18-20> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:hasDescription "Ecosystem-based approaches, such as ecosystem based adaptation, disaster risk reduction and sustainable forest and pasture management, provide multiple benefits and can foster synergies between biodiversity conservation and these agreements. Countries of the Asia-Pacific region can use a mix of policy instruments that consider the multiple values of nature’s contribution to people and build it into these approaches." ;
-    dcterms:identifier "20" ;
-    skos:prefLabel "The Paris Agreement on climate change, the Sendai Framework for Disaster Risk Reduction 2015–2030 and the 2030 Agenda for Sustainable Development recommend the use of ecosystem-based approaches." .
-
-<http://ontology.ipbes.net/report/key/APA18-21> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:hasDescription "Biodiversity-rich and threatened terrestrial, marine and wetland ecosystems transcend political boundaries. Action or inaction in one country can generate positive or negative effects in neighbouring or downstream countries. Transboundary conservation initiatives covering critically threatened biological and cultural landscapes and seascapes exist in the form of upstream-downstream river basin, ridge-to-reef, and regional cooperative agreements." ;
-    dcterms:identifier "21" ;
-    skos:prefLabel "Regional cooperation in devising and implementing the transboundary conservation of threatened landscapes and seascapes is expanding and showing positive results." .
-
-<http://ontology.ipbes.net/report/key/APA18-22> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:hasDescription "The corporate sector is contributing globally to conservation efforts and the trend is also positive in the Asia-Pacific region. There is a broad scope for innovative private sector financing in biodiversity protection, including in protected areas, watershed management, renewable energy technologies and climate change mitigation, through widely used instruments such as payment for ecosystem services, including reducing emissions from deforestation and forest degradation and the role of conservation, sustainable management of forests and enhancement of forest carbon stocks in developing countries (REDD-plus). There are market-based and voluntary instruments used by philanthropic organizations and direct investment initiatives as a part of corporate social responsibility. The private sector has committed to contributing to climate change adaptation under the Paris Agreement." ;
-    dcterms:identifier "22" ;
-    skos:prefLabel "Partnerships with the private sector, individuals and non-governmental organizations, can help countries meet the growing gaps in funding to finance conservation efforts." .
-
-<http://ontology.ipbes.net/report/key/APA18-23> a ipbes:KeyMessage ;
-    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
-        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
-    ipbes:Report ipbes:APA18 ;
-    ipbes:hasDescription "In many countries, waste management and land, air and water pollution threaten to undermine the gains in relation to a number of the Aichi Targets and Sustainable Development Goals. Sustainable production and consumption policies and practices are made possible through strong regulatory enforcement and education, as well as the adoption of voluntary sustainability standards backed up by national incentive-based policies and regulations." ;
-    dcterms:identifier "23" ;
-    skos:prefLabel "Sustainable production, consumption and waste management policies can help to reduce biodiversity loss, including by promoting low-carbon and renewable solutions that are less polluting and more sustainable." .
-
 <http://ontology.ipbes.net/report/sch/APA18-3.2.1.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch3> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/APA18-10>,
@@ -38121,6 +38104,84 @@ With exceptional riverine fish diversity and endemism, China has at least 717 fr
 The Himalayan mountain ranges are characterised by glacier-fed river systems and the largest river run-off from a single location (UNEP/GRID-Arendal, 2007). Here, biodiversity across freshwater ecosystems of the Eastern Himalaya region is especially diverse and of great importance to local communities. Development pressures in this region are likely to underestimate biodiversity values in planning process due to a lack of readily available information on the status and distribution of freshwater biodiversity, their ecological significance and connection to human health and well-being (Allen et al., 2010).""" ;
     dcterms:identifier "3.2.2.3" ;
     skos:prefLabel "Rivers and streams" .
+
+<http://ontology.ipbes.net/report/key/APA18-18> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasDescription "Collaborative, participatory and decentralized governance, for example, community-conserved areas and United Nations Educational, Scientific and Cultural Organization (UNESCO) biosphere reserves, creates an enabling environment for mounting joint actions to improve ecosystem health by giving everyone a voice and a stake. Such governance promotes collective decision-making and co-production of ecosystem services, thereby benefiting all stakeholders. Nature, with its multidimensional role, can attract support from many diverse sectors and stakeholders. In the past, overly top-down policies have created disincentives and perverse incentives that have fuelled biodiversity loss. Multi-stakeholder governance has great potential to accelerate progress in achieving biodiversity goals. Successful examples abound in the region, and are ripe for extension to new areas." ;
+    dcterms:identifier "18" ;
+    skos:prefLabel "Local communities and higher-level stakeholders collaborating in decision-making processes that involve the conservation of nature are the best positioned to ensure the sustainable use of biodiversity and nature’s contributions to people." .
+
+<http://ontology.ipbes.net/report/key/APA18-19> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasDescription "Mainstreaming of biodiversity – that is, integrating biodiversity conservation into broader areas, including poverty alleviation, climate adaptation and degraded land rehabilitation programmes – has great potential to drive the region towards sustainability. It necessitates embedding biodiversity in the decision-making processes of government agencies that are not directly responsible for biodiversity policy (e.g., finance, agriculture, rural development, or energy and water resources ministries). Governments that involve multiple stakeholders in the decision-making process have achieved better coordination in the implementation of national biodiversity strategies and action plans." ;
+    dcterms:identifier "19" ;
+    skos:prefLabel "The mainstreaming of biodiversity into development policies, plans, and programmes can improve efforts to achieve both the Aichi Targets and the Sustainable Development Goals." .
+
+<http://ontology.ipbes.net/report/key/APA18-20> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasDescription "Ecosystem-based approaches, such as ecosystem based adaptation, disaster risk reduction and sustainable forest and pasture management, provide multiple benefits and can foster synergies between biodiversity conservation and these agreements. Countries of the Asia-Pacific region can use a mix of policy instruments that consider the multiple values of nature’s contribution to people and build it into these approaches." ;
+    dcterms:identifier "20" ;
+    skos:prefLabel "The Paris Agreement on climate change, the Sendai Framework for Disaster Risk Reduction 2015–2030 and the 2030 Agenda for Sustainable Development recommend the use of ecosystem-based approaches." .
+
+<http://ontology.ipbes.net/report/key/APA18-21> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasDescription "Biodiversity-rich and threatened terrestrial, marine and wetland ecosystems transcend political boundaries. Action or inaction in one country can generate positive or negative effects in neighbouring or downstream countries. Transboundary conservation initiatives covering critically threatened biological and cultural landscapes and seascapes exist in the form of upstream-downstream river basin, ridge-to-reef, and regional cooperative agreements." ;
+    dcterms:identifier "21" ;
+    skos:prefLabel "Regional cooperation in devising and implementing the transboundary conservation of threatened landscapes and seascapes is expanding and showing positive results." .
+
+<http://ontology.ipbes.net/report/key/APA18-22> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasDescription "The corporate sector is contributing globally to conservation efforts and the trend is also positive in the Asia-Pacific region. There is a broad scope for innovative private sector financing in biodiversity protection, including in protected areas, watershed management, renewable energy technologies and climate change mitigation, through widely used instruments such as payment for ecosystem services, including reducing emissions from deforestation and forest degradation and the role of conservation, sustainable management of forests and enhancement of forest carbon stocks in developing countries (REDD-plus). There are market-based and voluntary instruments used by philanthropic organizations and direct investment initiatives as a part of corporate social responsibility. The private sector has committed to contributing to climate change adaptation under the Paris Agreement." ;
+    dcterms:identifier "22" ;
+    skos:prefLabel "Partnerships with the private sector, individuals and non-governmental organizations, can help countries meet the growing gaps in funding to finance conservation efforts." .
+
+<http://ontology.ipbes.net/report/key/APA18-23> a ipbes:KeyMessage ;
+    ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/APA18-D1>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D2>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D3>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D4>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D5>,
+        <http://ontology.ipbes.net/report/bgm/APA18-D6> ;
+    ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "D. Policies, institutional frameworks and governance options for achieving global goals and targets" ;
+    ipbes:hasDescription "In many countries, waste management and land, air and water pollution threaten to undermine the gains in relation to a number of the Aichi Targets and Sustainable Development Goals. Sustainable production and consumption policies and practices are made possible through strong regulatory enforcement and education, as well as the adoption of voluntary sustainability standards backed up by national incentive-based policies and regulations." ;
+    dcterms:identifier "23" ;
+    skos:prefLabel "Sustainable production, consumption and waste management policies can help to reduce biodiversity loss, including by promoting low-carbon and renewable solutions that are less polluting and more sustainable." .
 
 <http://ontology.ipbes.net/report/sch/APA18-2.3.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/APA18ch2> ;
@@ -38419,6 +38480,7 @@ UNCCD, 2008). Adeel (2005) has estimated that nearly 20 per cent of the deserts 
         <http://ontology.ipbes.net/report/bgm/APA18-C5>,
         <http://ontology.ipbes.net/report/bgm/APA18-C6> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "C. Implications of biodiversity decline and opportunities for sustaining nature’s contributions to people" ;
     ipbes:hasDescription "Direct drivers, such as unsustainable use, illegal trade in wildlife, conversion of habitats, invasive alien species, pollution and climate change, are combining with indirect drivers such as socioeconomic and demographic changes to create stress and risks to ecosystems, threatening livelihoods and food security for millions of people. Climate change will exacerbate these impacts, especially among indigenous and vulnerable communities. However, intervention through environmental governance and targeted policies can alter these interlinkages." ;
     dcterms:identifier "14" ;
     skos:prefLabel "Direct and indirect drivers acting synergistically are accelerating the loss of biodiversity and posing an increasing risk to the sustained flow of nature’s contributions to people in the Asia-Pacific region, but there are opportunities to counter them." .
@@ -38431,6 +38493,7 @@ UNCCD, 2008). Adeel (2005) has estimated that nearly 20 per cent of the deserts 
         <http://ontology.ipbes.net/report/bgm/APA18-C5>,
         <http://ontology.ipbes.net/report/bgm/APA18-C6> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "C. Implications of biodiversity decline and opportunities for sustaining nature’s contributions to people" ;
     ipbes:hasDescription "Many countries in the Asia-Pacific region are still facing persistent poverty, and so are seeking fast economic development through expansion of industries, agriculture and trade. However, agriculture intensification and production for global markets need not compromise the progress already made in forest restoration and protected area expansion. Better application of scientific knowledge and technology has the potential to improve food, water and energy security while reducing pressure on ecosystems in many countries in the region." ;
     dcterms:identifier "15" ;
     skos:prefLabel "Continuing economic growth and infrastructure development, in some subregions, are required for achieving the Sustainable Development Goals of eradicating poverty and hunger, and ensuring energy, health, and water security, but need to be pursued in harmony with nature if they are to be sustainable." .
@@ -38443,6 +38506,7 @@ UNCCD, 2008). Adeel (2005) has estimated that nearly 20 per cent of the deserts 
         <http://ontology.ipbes.net/report/bgm/APA18-C5>,
         <http://ontology.ipbes.net/report/bgm/APA18-C6> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "C. Implications of biodiversity decline and opportunities for sustaining nature’s contributions to people" ;
     ipbes:hasDescription "Countries with high economic growth are reporting an increase in forest and protected area coverage. These countries have also made significant progress towards achieving several of the Aichi Targets compared to other developing countries, and are on track to achieve the Sustainable Development Goals. However, an increase in forest and protected areas alone is not enough to reduce biodiversity loss caused by the negative impacts of monoculture. A nationally driven and regionally coordinated sustainable forest and protected area management effort can contribute to the achievement of multiple Aichi Targets (5 and 11) and Sustainable Development Goals (12, 14 and 15)." ;
     dcterms:identifier "16" ;
     skos:prefLabel "Progress in forest and protected area management, although not enough to reduce biodiversity loss, increases the probability of meeting the Aichi Biodiversity Targets and the Sustainable Development Goals." .
@@ -38455,6 +38519,7 @@ UNCCD, 2008). Adeel (2005) has estimated that nearly 20 per cent of the deserts 
         <http://ontology.ipbes.net/report/bgm/APA18-C5>,
         <http://ontology.ipbes.net/report/bgm/APA18-C6> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "C. Implications of biodiversity decline and opportunities for sustaining nature’s contributions to people" ;
     ipbes:hasDescription "Accounting for the complexity and dynamism of human-nature interactions is the key challenge facing policymakers involved in managing biodiversity in the region. Scenario-planning tools that offer alternative pathways, and are sensitive to high economic and cultural diversity, will be most useful to decision makers. Given that both trade-offs and synergies exist between the utilization of biodiversity and the pursuit of economic development, policymakers need decision-making support tools that can explore multisectoral objectives." ;
     dcterms:identifier "17" ;
     skos:prefLabel "Policymakers will benefit from using scenarios adapted to unique local and national characteristics for planning the future of biodiversity and human well-being in the region." .
@@ -38917,6 +38982,7 @@ Finally, invasive alien species (IAS) constitute one of the most serious, but un
         <http://ontology.ipbes.net/report/bgm/APA18-B7>,
         <http://ontology.ipbes.net/report/bgm/APA18-B8> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
     ipbes:hasDescription "Aquatic environments in the Asia-Pacific region are home to numerous species of fish and invertebrates, many of which are consumed as food. About 90 per cent of the global aquaculture production occurs in the Asia-Pacific region. Freshwater ecosystems in the region support more than 28 per cent of aquatic and semi-aquatic species, but nearly 37 per cent of these species are threatened by overfishing, pollution, infrastructure development and invasive alien species." ;
     dcterms:identifier "10" ;
     skos:prefLabel "People in the Asia-Pacific region depend heavily on fisheries for food, with aquaculture growing by nearly 7 per cent annually, but the capture fisheries sector is threatened." .
@@ -38931,6 +38997,7 @@ Finally, invasive alien species (IAS) constitute one of the most serious, but un
         <http://ontology.ipbes.net/report/bgm/APA18-B7>,
         <http://ontology.ipbes.net/report/bgm/APA18-B8> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
     ipbes:hasDescription "It is projected that they will experience increasing frequency of disease, bleaching and death under the combined effects of habitat loss, overfishing, pollution, sediments and nutrients from land run-off, sea level rise, ocean warming and ocean acidification. Coral reefs are interlinked to other coastal habitats, especially mangroves, intertidal flats and seagrass beds, and their combined degradation is an aggravating factor in coastal biodiversity decline." ;
     dcterms:identifier "11" ;
     skos:prefLabel "Coral reefs are of critical ecological, cultural and economic importance, supporting the livelihoods of hundreds of millions of people in the Asia-Pacific region and beyond through vital and valuable ecosystem services such as food security or coastal protection, and are under serious threat." .
@@ -38945,6 +39012,7 @@ Finally, invasive alien species (IAS) constitute one of the most serious, but un
         <http://ontology.ipbes.net/report/bgm/APA18-B7>,
         <http://ontology.ipbes.net/report/bgm/APA18-B8> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
     ipbes:hasDescription "Some low-lying islands are already threatened by sea‑level rise. Climate-induced floods caused by melting of ice pose a major threat to people and biodiversity in the Himalayan region. Regional changes in precipitation are also anticipated, as well as more extreme events such as floods and drought. Already, changes have been observed in species distribution, population sizes and the timing of reproduction or migration, and the frequency of pest and disease outbreaks has increased. These negative impacts on biodiversity and nature’s contributions to people are projected to worsen, and close regional and global collaboration will be required to counter them." ;
     dcterms:identifier "12" ;
     skos:prefLabel "Climate change and associated extreme events are impacting species distribution, population sizes and the timing of reproduction or migration; increased frequency of pest and disease outbreaks resulting from these changes may have additional adverse effects on agricultural production and human well-being." .
@@ -38959,6 +39027,7 @@ Finally, invasive alien species (IAS) constitute one of the most serious, but un
         <http://ontology.ipbes.net/report/bgm/APA18-B7>,
         <http://ontology.ipbes.net/report/bgm/APA18-B8> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
     ipbes:hasDescription "With the increase in consumption of natural resources in the Asia-Pacific region, there has been a rise in the subsequent production of waste. Household hazardous waste, e-waste and food waste are increasing with the growth of urbanization across the region. Plastic waste is of concern: 8 of the 10 rivers around the globe carrying the highest amounts of plastic waste are located in Asia. This waste accounts for up to 95 per cent of the global load of plastics in the oceans. Waste in water supplies and air pollution pose persistent threats to human and environmental health." ;
     dcterms:identifier "13" ;
     skos:prefLabel "The increase of waste and pollution in the Asia-Pacific region is impacting ecosystems and threatening the current and future health of nature and people." .
@@ -38973,6 +39042,7 @@ Finally, invasive alien species (IAS) constitute one of the most serious, but un
         <http://ontology.ipbes.net/report/bgm/APA18-B7>,
         <http://ontology.ipbes.net/report/bgm/APA18-B8> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
     ipbes:hasDescription "There are contrasting trends in the status of biodiversity and ecosystem services in the region. Among the different ecosystem types, forests, alpine ecosystems, inland freshwater and wetlands, coastal systems are the most threatened. From 1990 to 2015, South-East Asia showed a reduction in forest cover by 12.9 per cent, largely due to an increase in timber extraction, large-scale bio-fuel plantations and the expansion of intensive agriculture and shrimp farms. However, over the same period, North-East Asia and South Asia have shown an increase in forest cover of 22.9 per cent and 5.8 per cent respectively, through policies and instruments such as joint participatory management, payment for ecosystem services, and the restoration of degraded forests." ;
     dcterms:identifier "5" ;
     skos:prefLabel "While biodiversity and ecosystem conditions are declining across the Asia-Pacific region, they are well maintained in some areas." .
@@ -38987,6 +39057,7 @@ Finally, invasive alien species (IAS) constitute one of the most serious, but un
         <http://ontology.ipbes.net/report/bgm/APA18-B7>,
         <http://ontology.ipbes.net/report/bgm/APA18-B8> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
     ipbes:hasDescription "Habitat degradation and fragmentation, especially in forests and grasslands, has largely resulted in a decline in wild mammals and birds. Widespread loss of large vertebrates has had a measurable impact on several forest functions and services, including seed dispersal. Illegal trade in wildlife and wildlife products is causing species decline in some countries." ;
     dcterms:identifier "6" ;
     skos:prefLabel "The population of large wild mammals and birds has declined across the region." .
@@ -39001,6 +39072,7 @@ Finally, invasive alien species (IAS) constitute one of the most serious, but un
         <http://ontology.ipbes.net/report/bgm/APA18-B7>,
         <http://ontology.ipbes.net/report/bgm/APA18-B8> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
     ipbes:hasDescription "Areas most impacted by invasive alien species in the Asia-Pacific region include islands and coastlines as well as agricultural heartlands and large affluent cities. There is evidence that the number of these species is growing as a consequence of the increasing volume of international trade, improvements in transportation, and cross-border migration. This increased risk has led to efforts for their better surveillance and management, but the knowledge base is variable across the region." ;
     dcterms:identifier "7" ;
     skos:prefLabel "Invasive alien species have increased in number and abundance, and constitute one of the most serious drivers of biodiversity loss across the Asia-Pacific region." .
@@ -39015,6 +39087,7 @@ Finally, invasive alien species (IAS) constitute one of the most serious, but un
         <http://ontology.ipbes.net/report/bgm/APA18-B7>,
         <http://ontology.ipbes.net/report/bgm/APA18-B8> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
     ipbes:hasDescription "Between 2004 and 2017, the region registered a growth in protected area coverage of 0.3 per cent in terrestrial protected areas and 13.8 per cent in marine protected areas. Many countries in North-East Asia, Oceania, and South-East Asia are on track to fulfil Aichi Biodiversity Target 11, of declaring 17 per cent of the land and 10 per cent of oceans as protected areas. Concerns remain over coverage and management of the protected area networks." ;
     dcterms:identifier "8" ;
     skos:prefLabel "Protected area coverage in the Asia-Pacific region has increased substantially but does not effectively target areas of important biodiversity, and progress is needed towards better overall management effectiveness." .
@@ -39029,6 +39102,7 @@ Finally, invasive alien species (IAS) constitute one of the most serious, but un
         <http://ontology.ipbes.net/report/bgm/APA18-B7>,
         <http://ontology.ipbes.net/report/bgm/APA18-B8> ;
     ipbes:Report ipbes:APA18 ;
+    ipbes:hasCategory "B. Varying trends of biodiversity and ecosystem services and the role of underlying drivers" ;
     ipbes:hasDescription "Agroecosystems in the region represent 30 per cent of the world’s agricultural land and 87 per cent of the world’s small farms, most of which support a wide range of native crops. There has been a considerable decline in the cultivation of native varieties of plants and a reduction in crop genetic resources in the Asia-Pacific region, owing to agriculture intensification and a shift to monoculture." ;
     dcterms:identifier "9" ;
     skos:prefLabel "Traditional agrobiodiversity is in decline, along with its associated indigenous and local knowledge, due to a shift towards intensification of agriculture with a small number of improved crop species and varieties." .
@@ -39942,7 +40016,7 @@ Strong, effective participatory governance can help alleviate the negative impac
         <http://ontology.ipbes.net/report/person/Kohli_Priyanka>,
         <http://ontology.ipbes.net/report/person/KumarapuramApadodharan_Subramanian>,
         <http://ontology.ipbes.net/report/person/Lin_Hsing-Juh>,
-        <http://ontology.ipbes.net/report/person/Wu_Ning>,
+        <http://ontology.ipbes.net/report/person/Ning_Wu>,
         <http://ontology.ipbes.net/report/person/Okubo_Satoru>,
         <http://ontology.ipbes.net/report/person/Onuma_Ayumi>,
         <http://ontology.ipbes.net/report/person/Pagad_Shyama>,
@@ -39960,14 +40034,8 @@ ipbes:APA18 a ipbes:Report ;
     ipbes:year "2018" ;
     skos:altLabel "IPBES Regional Assessment for Asia and the Pacific" ;
     skos:prefLabel "The IPBES regional assessment report on biodiversity and ecosystem services for Asia and the Pacific" ;
-    foaf:Person <http://ontology.ipbes.net/report/person/Fazel_AsgharM>,
-        <http://ontology.ipbes.net/report/person/Karki_Madhav>,
-        <http://ontology.ipbes.net/report/person/Lonsdale_Mark>,
-        <http://ontology.ipbes.net/report/person/Mathur_VinodB>,
+    foaf:Person <http://ontology.ipbes.net/report/person/Karki_Madhav>,
         <http://ontology.ipbes.net/report/person/Okayasu_Sana>,
-        <http://ontology.ipbes.net/report/person/Saw_LengGuan>,
         <http://ontology.ipbes.net/report/person/SenaratnaSellamuttu_Sonali>,
-        <http://ontology.ipbes.net/report/person/Shirayama_Yoshihisa>,
-        <http://ontology.ipbes.net/report/person/Suh_Youngbae>,
         <http://ontology.ipbes.net/report/person/Suzuki_Wataru> .
 

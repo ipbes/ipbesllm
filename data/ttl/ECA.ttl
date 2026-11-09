@@ -4038,6 +4038,7 @@ Despite these positive trends, such as the integration and evaluation of environ
         <http://ontology.ipbes.net/report/subm/ECA18-A1-SM7>,
         <http://ontology.ipbes.net/report/subm/ECA18-A1-SM8>,
         <http://ontology.ipbes.net/report/subm/ECA18-A1-SM9> ;
+    ipbes:hasCategory "A. Nature and its contributions to people’s quality of life in Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription """The highest valued regulating contributions to people in Europe and Central Asia include: the regulation of freshwater and coastal water quality (estimated to have a median value of $1965 per hectare per year) (established but incomplete); habitat maintenance ($765 per hectare per year) (unresolved); the regulation of climate ($464 per hectare per year); and the regulation of air quality ($289 per hectare per year) (established but incomplete) {2.3.5.2}. Monetary values for regulating contributions to people, however, are site-specific and vary significantly across the Europe and Central Asia region depending on location, habitat, extent of contribution and valuation method used.
 
@@ -4067,6 +4068,7 @@ There is a range of monetary and non-monetary approaches to capture the multiple
         <http://ontology.ipbes.net/report/subm/ECA18-A2-SM7>,
         <http://ontology.ipbes.net/report/subm/ECA18-A2-SM8>,
         <http://ontology.ipbes.net/report/subm/ECA18-A2-SM9> ;
+    ipbes:hasCategory "A. Nature and its contributions to people’s quality of life in Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "established but incomplete",
         "well established" ;
     ipbes:hasDescription """A total of 7 out of the 16 assessed nature’s contributions to people are known to be declining in Europe and Central Asia, in particular regulating contributions and learning derived from indigenous and local knowledge (well established) {2.2.1, 2.2.3, 2.2.5}. These trends are consistent across the subregions of Europe and Central Asia (Figure SPM.3) (well established) {2.2.5}. Habitat maintenance, pollination (established but incomplete), regulation of freshwater quantity and quality, formation and protection of soils and regulation of floods are declining because of land-use intensification designed to increase the production of crops, livestock, aquaculture, forest biomass and cotton, as well as urban development (well established) {2.2.1, 2.2.2, 2.2.5}. Trade-offs between material and regulating contributions have compromised food and water security in some areas {2.2.1, 2.2.2, 2.2.5}.
@@ -4085,6 +4087,7 @@ Water security depends partially on the regulation of water quality and quantity
         <http://ontology.ipbes.net/report/subm/ECA18-A3-SM3>,
         <http://ontology.ipbes.net/report/subm/ECA18-A3-SM4>,
         <http://ontology.ipbes.net/report/subm/ECA18-A3-SM5> ;
+    ipbes:hasCategory "A. Nature and its contributions to people’s quality of life in Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "established but incomplete" ;
     ipbes:hasDescription "Intra-regional equity in access to food and a balanced diet is largely achieved (well established) {2.3.1.1} as indicated by, for example, the average dietary energy supply, which ranges from 137 per cent in Western Europe to 121 per cent in Central Asia of the average dietary energy requirement for the population of the region {2.3.1.1}. However, large-scale land acquisitions in Central and Eastern Europe and Central Asia by entities from outside and within the region, mainly from Western Europe, may compromise the opportunities for certain groups of people to influence their own food systems (established but incomplete) {2.3.1.1}. Nature’s contributions to people are factors in influencing the situation in which some 15 per cent of people in Central Asia, but only 1 per cent in Western Europe, lack access to safe drinking water (well established) {2.3.1.3, 2.3.4.2}. Within cities, inhabitants have unequal access to green spaces with consequences for public health and well-being (established but incomplete) {2.2.3.2, 2.3.4.2}. For example, residents in cities in the south of the European Union have less access to green space than residents of northern, western and central cities. Public access to forests for recreation is uneven across countries, with a high level of access (98–100 per cent) in Nordic and some Baltic countries and lower levels (under 50 per cent) in some other Western European countries (well established) {2.3.4.2}. There is also temporal inequity as today’s generations are benefiting from nature’s contributions to people at the expense of future provision (established but incomplete) {2.2.3.4}." ;
     dcterms:identifier "A3" ;
@@ -4102,6 +4105,7 @@ Water security depends partially on the regulation of water quality and quantity
         <http://ontology.ipbes.net/report/subm/ECA18-A4-SM6>,
         <http://ontology.ipbes.net/report/subm/ECA18-A4-SM7>,
         <http://ontology.ipbes.net/report/subm/ECA18-A4-SM8> ;
+    ipbes:hasCategory "A. Nature and its contributions to people’s quality of life in Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "established but incomplete",
         "well established" ;
     ipbes:hasDescription """Measures of ecological footprint and “biocapacity” show that Central and Western Europe import more of nature’s contributions to people than Eastern Europe and Central Asia (well established) {2.2.4} (Figure SPM.4). While most of Western and Central Europe and Central Asia have a “biocapacity” deficit, in Eastern Europe and northern parts of Western and Central Europe high footprints are offset by even higher biocapacities (well established) {2.2.4}. This negatively affects biodiversity, nature’s contributions to people and food security both within Europe and Central Asia and other parts of the world (established but incomplete) {2.2.4, 2.3.4}. For instance, according to the technical report 2013-063 funded by the European Commission, 10 per cent of the world’s annual deforestation was the result of consumption by the then 27 member States of the European Union (established but incomplete) {2.2.4.1}.
@@ -4120,6 +4124,7 @@ Food availability in Central and Western Europe relies significantly on imports 
         <http://ontology.ipbes.net/report/subm/ECA18-A5-SM3>,
         <http://ontology.ipbes.net/report/subm/ECA18-A5-SM4>,
         <http://ontology.ipbes.net/report/subm/ECA18-A5-SM5> ;
+    ipbes:hasCategory "A. Nature and its contributions to people’s quality of life in Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription """Different organisms, species and communities differ in their contributions to ecosystem processes in Europe and Central Asia. Higher biodiversity therefore increases the capacity of terrestrial, freshwater and marine ecosystems to provide nature’s contributions to people, such as soil formation, pollination, regulation of hazards, regulation of air and water quality, or the provision of materials, learning and inspiration (well established) {3.2.1, 3.2.2}. Higher biodiversity also stabilizes ecosystem functioning and improves capacity for evolutionary adaptation (well established) {3.2.3, 3.2.4}. The higher the number of nature’s contributions to people to be provided, and the longer the time span and the larger the area of their provision, the more biodiversity is required (well established) {3.2.5}.
 
@@ -4141,6 +4146,7 @@ Ecosystem functioning is affected by genetic and phenotypic biodiversity within 
         <http://ontology.ipbes.net/report/subm/ECA18-B1-SM7>,
         <http://ontology.ipbes.net/report/subm/ECA18-B1-SM8>,
         <http://ontology.ipbes.net/report/subm/ECA18-B1-SM9> ;
+    ipbes:hasCategory "B. Trends in biodiversity and attribution to direct drivers" ;
     ipbes:hasConfidenceLevel "established but incomplete",
         "well established" ;
     ipbes:hasDescription """Present positive trends, mainly due to improved fishing practices, the establishment of marine protected areas and a reduction in eutrophication, include increases in some fish stocks in the North Sea and in plankton diversity in the Black Sea (well established) {3.3.4.1, 3.3.4.4}. However, monitoring data are generally missing for most marine habitats and species (well established) {3.3.4}.
@@ -4156,6 +4162,7 @@ In Europe and Central Asia, 26 per cent of the marine fish species have known tr
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/ECA18-B2-SM0>,
         <http://ontology.ipbes.net/report/subm/ECA18-B2-SM1>,
         <http://ontology.ipbes.net/report/subm/ECA18-B2-SM2> ;
+    ipbes:hasCategory "B. Trends in biodiversity and attribution to direct drivers" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription """Over 75 per cent of catchment areas in Europe and Central Asia are heavily modified and subject to multiple pressures. In 2015, good chemical status, as defined by the European Union Water Framework Directive, was not achieved for surface water bodies by 22 European Union member States and only 53 per cent of rivers and lakes had good ecological status as defined by the European Union Water Framework Directive despite some improvements {3.3.3.1}. In Western and Central Europe and the western parts of Eastern Europeat least 37 per cent of freshwater fish and about 23 per cent of amphibians are currently threatened with extinction. In the same area, freshwater invertebrates are also threatened, with the most threatened group among those that are well monitored being gastropods (45–70 per cent of species threatened depending on whether or not data deficient species are considered threatened), followed by bivalves (20–26 per cent) and dragonflies (15–19 per cent) (established but incomplete) {3.4.5, 3.4.6.2, 3.4.8}.
 
@@ -4177,6 +4184,7 @@ Freshwater biodiversity trends are primarily driven by habitat destruction and m
         <http://ontology.ipbes.net/report/subm/ECA18-B3-SM7>,
         <http://ontology.ipbes.net/report/subm/ECA18-B3-SM8>,
         <http://ontology.ipbes.net/report/subm/ECA18-B3-SM9> ;
+    ipbes:hasCategory "B. Trends in biodiversity and attribution to direct drivers" ;
     ipbes:hasConfidenceLevel "established but incomplete",
         "well established" ;
     ipbes:hasDescription """Across Europe and Central Asia, 14 out of 15 habitat types have been declining in extent and biodiversity status since the 1950s (Figure SPM.6) {3.3.2.5}. These declines are continuing, albeit at a slower rate, with some exceptions in the Macaronesian and Atlantic Boreal regions of Western and Central Europe, where recoveries in habitat conservation status have been reported. Grasslands, tundra, mires and bogs have been the most affected habitats since the 1950s (established but incomplete) {3.3.2}.
@@ -4205,6 +4213,7 @@ Across Europe and Central Asia, 42 per cent of terrestrial animal and plant spec
         <http://ontology.ipbes.net/report/subm/ECA18-C1-SM7>,
         <http://ontology.ipbes.net/report/subm/ECA18-C1-SM8>,
         <http://ontology.ipbes.net/report/subm/ECA18-C1-SM9> ;
+    ipbes:hasCategory "C. Drivers of change in biodiversity and nature’s contributions to people in Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription """Despite the development of more sustainable agricultural policies and practices in recent years in some countries, such as organic farming, conventional intensive agriculture, especially related to the excessive use of agrochemicals {4.5.1.1} reduces natural and semi-natural habitats, with severe negative impacts on biodiversity and ecosystem function (well established) {4.5.1, 4.5.2, 4.5.5}. This jeopardizes the sustainable management of land and food production (established but incomplete) (Figure SPM.8) {4.5.1, 4.5.2}. Agri-environmental schemes, ecological restoration and sustainable approaches to agriculture, such as agroecology and agroforestry, mitigate some of the adverse effects of intensive agriculture (established but incomplete) {4.5.1, 4.5.2}. The efficiency of such measures depends also on the inclusion of traditional and local knowledge, and the consideration of biophysical and social-cultural contexts (established but incomplete) {4.5.1, 4.5.2, 4.5.3}.
 
@@ -4224,6 +4233,7 @@ Protected areas now cover 10.2 per cent of the region, 13.5 per cent of its terr
         <http://ontology.ipbes.net/report/subm/ECA18-C3-SM2>,
         <http://ontology.ipbes.net/report/subm/ECA18-C3-SM3>,
         <http://ontology.ipbes.net/report/subm/ECA18-C3-SM4> ;
+    ipbes:hasCategory "C. Drivers of change in biodiversity and nature’s contributions to people in Europe and Central Asia" ;
     ipbes:hasDescription """Extraction of biotic and abiotic natural resources has continued to reduce biodiversity and nature’s contribution to people both within Europe and Central Asia and beyond. For biotic resources, the demand for fish in Western and Central Europe, coupled with the European Union Common Fisheries Policy that restricts extraction, contributes to unsustainable fishing practices and resource depletion outside Western and Central Europe. While awareness of local resource shortages, such as fish in Europe, would be expected to be prompted by price increases, displacement from interregional imports masks these feedbacks (established but incomplete) {4.2.5, 4.3.1, 4.4.1}.
 
 As an example for abiotic resources, trade liberalization and increasing world market prices have increased extraction of mineral resources in Central Asia. Although this has resulted in the mining industry being one of the largest contributors to GDP in the subregion, this has led to the depletion of mineral resources and the loss of ecosystem services important to human health and well-being (well established) {4.4.4.2}.
@@ -4240,6 +4250,7 @@ Recent regulations have reduced some pollution (for example, sulphur oxides, nit
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/ECA18-C4-SM0>,
         <http://ontology.ipbes.net/report/subm/ECA18-C4-SM1>,
         <http://ontology.ipbes.net/report/subm/ECA18-C4-SM2> ;
+    ipbes:hasCategory "C. Drivers of change in biodiversity and nature’s contributions to people in Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "established but incomplete" ;
     ipbes:hasDescription """There is evidence of growth in GDP across Europe and Central Asia (well established). For example, since 2000, gross domestic material consumption has increased across European Union member States, much of which has been driven by growth-oriented policies (well established) {4.3.2}. However, this economic growth has indirectly reinforced drivers of biodiversity loss, which in turn has reduced nature’s contributions to people. Such drivers have included land-use change, climate change, natural resource extraction, pollution and invasive alien species (Table SPM.2).
 
@@ -4263,6 +4274,7 @@ Awareness of sustainability challenges has led to some institutional change in t
         <http://ontology.ipbes.net/report/subm/ECA18-D1-SM7>,
         <http://ontology.ipbes.net/report/subm/ECA18-D1-SM8>,
         <http://ontology.ipbes.net/report/subm/ECA18-D1-SM9> ;
+    ipbes:hasCategory "D. Futures for Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "established but incomplete" ;
     ipbes:hasDescription """a transformation in policies and tax reforms at the global and national levels. Across the region, a range of policies for resource efficiency, including environmental taxation, have been implemented. The total revenue from environmental taxes in the European Union has declined from 6.8 per cent of the total revenues derived from all taxes and social contributions in 2002 down to 6.3 per cent in 2016 (well established) {4.3.1, 4.3.2}. Furthermore, there still exist policy instruments, such as harmful agricultural and fishing subsidies, which continue to impede transitions towards a sustainable future (established but incomplete). Decoupling would be assisted by new indicators that incorporate well-being, environmental quality, employment and equity, biodiversity conservation and nature’s ability to contribute to people.
 
@@ -4287,6 +4299,7 @@ Trade-offs depend on scenario assumptions about lifestyle and consumption, which
         <http://ontology.ipbes.net/report/subm/ECA18-D2-SM2>,
         <http://ontology.ipbes.net/report/subm/ECA18-D2-SM3>,
         <http://ontology.ipbes.net/report/subm/ECA18-D2-SM4> ;
+    ipbes:hasCategory "D. Futures for Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "established but incomplete",
         "well established" ;
     ipbes:hasDescription "Many scenarios consider climate change as a single driver (well established). The few multi-driver scenarios are largely based on the Special Report on Emissions Scenarios of the Intergovernmental Panel on Climate Change and, hence, focus on long-term climate change issues (to 2100). Pollution and invasive alien species are poorly represented in scenarios (well established) {5.2.2}. Land-use change is rarely considered as a direct driver of biodiversity and nature’s contributions to people because land-use change scenarios focus more on the effects of indirect drivers (e.g., policy, social preferences and economics) on land use per se (established but incomplete) {5.2.1}. There are fewer scenarios of future land-use change impacts on biodiversity and nature’s contributions to people than empirical studies of past trends (established but incomplete). Single-driver scenarios fail to capture feedbacks and synergies between and amongst indirect and direct drivers operating across different scales (established but incomplete) {5.3.4}. Integrated scenarios and models are explicit about nature and cover multiple drivers, sectors and scales. This enhances the understanding of complex interdependencies between human and environmental systems to support coordinated decision-making {5.2.2, 5.3.1}." ;
@@ -4300,6 +4313,7 @@ Trade-offs depend on scenario assumptions about lifestyle and consumption, which
         <http://ontology.ipbes.net/report/subm/ECA18-D3-SM2>,
         <http://ontology.ipbes.net/report/subm/ECA18-D3-SM3>,
         <http://ontology.ipbes.net/report/subm/ECA18-D3-SM4> ;
+    ipbes:hasCategory "D. Futures for Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "established but incomplete" ;
     ipbes:hasDescription "Four types of pathways are specified. Two types of pathways do not challenge the economic growth paradigm (green economy and low carbon transformation pathways). They include actions related to technological innovation, land sparing or land sharing, and focus on combinations of top-down legal and regulatory instruments and economic and financial instruments. These pathways do not fully mitigate trade-offs and may not be able to achieve sustainable futures (established but incomplete) {5.5.2, 5.5.4, 5.6.1}. The third type of pathways focus on radical social innovation to achieve local food and energy selfsufficiency and local supply of nature’s contributions to people (ecotopian solutions). They emphasize local multifunctionality, green infrastructure, urban design and food production (established but incomplete) {5.5.2, 5.5.4, 5.6.1}. The fourth type of pathways emphasize a change towards diverse values, promoting resource-sparing lifestyles, continuous education and innovative forms of agriculture where different knowledge systems combine with technological innovation (transition movements). They achieve transformation using social and information-based policy instruments focusing on participatory processes, community actions and voluntary agreements. Rights-based instruments and customary norms, including indigenous and local knowledge, are used in combination with legal, regulatory and economic instruments (established but incomplete) {5.5.3, 5.6.1}. Actions proposed in all of the pathways can be combined. For example, short-term, incremental actions in green economy and low carbon transformation pathways may pave the way for more transformative transition movements pathways (established but incomplete) {5.5.4}. Despite distinct differences, all pathways stress some of the governance options highlighted in section E, including mainstreaming, integrated approaches that cut across sectoral boundaries, awareness-raising tools, education and participation to facilitate multi-actor governance (established but incomplete) {5.5.3}." ;
     dcterms:identifier "D3" ;
@@ -4317,6 +4331,7 @@ Trade-offs depend on scenario assumptions about lifestyle and consumption, which
         <http://ontology.ipbes.net/report/subm/ECA18-E1-SM2>,
         <http://ontology.ipbes.net/report/subm/ECA18-E1-SM3>,
         <http://ontology.ipbes.net/report/subm/ECA18-E1-SM4> ;
+    ipbes:hasCategory "E. Promising governance options for Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription "The conservation and sustainable use of biodiversity in the more than 80 per cent of landscapes and seascapes outside protected areas would benefit from embedding biodiversity considerations into policies, strategies and practices of public and private actors that impact or rely on biodiversity {Table 6.1; Figure 6.2, Figure 6.15}. These considerations are equally important inside protected areas. Although progress has been made towards mainstreaming by setting up, reviewing and updating biodiversity strategies and action plans at multiple levels, existing legislation in all economic sectors could be implemented more effectively {6.3, 6.4.1} (Table SPM.4). Mainstreaming the conservation and sustainable use of biodiversity would benefit environmental policies {6.4.2}, economic sectors and business actors depending on, or influencing, biodiversity {6.4.1, 6.5, 6.6; Table 6.10} (Table SPM.4). Opportunities to successfully mainstream biodiversity and nature’s contributions to people, in public and private policy and decision-making (Table SPM.4) {6.6, 6.6.1; Figure 6.13}, could be harnessed by: first, raising awareness of the dependence of good quality of life on nature, enhancing capacity-building and strengthening participation of affected actors in decision processes; second, defining policy objectives concerning the ecological, economic and sociocultural needs for achieving sustainable living, taking account of the diverse values of nature for different stakeholder groups; and, third, designing instruments and policy mixes to support the implementation of effective, efficient and equitable policy and decision-making for nature and a good quality of life {6.6, 6.6.1}. Taking the European Union Common Agricultural Policy as an example, a number of factors would increase the effectiveness, efficiency and equity of related policy instruments. These factors include a better definition of clear and coherent objectives for the Common Agricultural Policy, simultaneously addressing multiple ecosystem services; a more defined focus on biodiversity conservation and the delivery of nature’s contributions to people at the landscape level; a more explicit disclosure of trade-offs and synergies between different objectives; and more balanced and transparent funding between the production of agricultural commodities and the delivery of public goods {6.5.1.3}." ;
     dcterms:identifier "E1" ;
@@ -4475,22 +4490,6 @@ Trade-offs depend on scenario assumptions about lifestyle and consumption, which
     skos:prefLabel "Susan Baker" ;
     foaf:firstName "Susan" ;
     foaf:lastName "Baker" .
-
-<http://ontology.ipbes.net/report/person/Barudanovic_Senka> a foaf:Person ;
-    ipbes:Report ipbes:ECA18 ;
-    ipbes:country "BIH" ;
-    ipbes:mc "Management Committee in ECA18" ;
-    skos:prefLabel "Senka Barudanovic" ;
-    foaf:firstName "Senka" ;
-    foaf:lastName "Barudanovic" .
-
-<http://ontology.ipbes.net/report/person/Baste_IvarAndreas> a foaf:Person ;
-    ipbes:Report ipbes:ECA18 ;
-    ipbes:country "NOR" ;
-    ipbes:mc "Management Committee in ECA18" ;
-    skos:prefLabel "Ivar Andreas Baste" ;
-    foaf:firstName "Ivar Andreas" ;
-    foaf:lastName "Baste" .
 
 <http://ontology.ipbes.net/report/person/BaşakDessane_Esra> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/ECA18ch2> ;
@@ -5405,6 +5404,7 @@ Trade-offs depend on scenario assumptions about lifestyle and consumption, which
 <http://ontology.ipbes.net/report/person/Mader_André> a foaf:Person ;
     ipbes:Report ipbes:ECA18 ;
     ipbes:country "CHE" ;
+    ipbes:ed "Editor in ECA18" ;
     ipbes:ts "Technical Support Unit in ECA18" ;
     skos:prefLabel "André Mader" ;
     foaf:firstName "André" ;
@@ -5620,6 +5620,15 @@ Trade-offs depend on scenario assumptions about lifestyle and consumption, which
     skos:prefLabel "Oxana Nikitina" ;
     foaf:firstName "Oxana" ;
     foaf:lastName "Nikitina" .
+
+<http://ontology.ipbes.net/report/person/Novitsky_Ruslan> a foaf:Person ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/ECA18ch3> ;
+    ipbes:Report ipbes:ECA18 ;
+    ipbes:ca "Contributing Author in ECA18-ch3" ;
+    ipbes:country "BLR" ;
+    skos:prefLabel "Ruslan Novitsky" ;
+    foaf:firstName "Ruslan" ;
+    foaf:lastName "Novitsky" .
 
 <http://ontology.ipbes.net/report/person/Nurkse_Kristiina> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/ECA18ch3> ;
@@ -6107,15 +6116,6 @@ Trade-offs depend on scenario assumptions about lifestyle and consumption, which
     foaf:firstName "Erik" ;
     foaf:lastName "Stange" .
 
-<http://ontology.ipbes.net/report/person/Stenseke_Marie> a foaf:Person ;
-    ipbes:Report ipbes:ECA18 ;
-    ipbes:country "SWE" ;
-    ipbes:mc "Management Committee in ECA18" ;
-    owl:sameAs <https://orcid.org/0000-0002-1111-5175> ;
-    skos:prefLabel "Marie Stenseke" ;
-    foaf:firstName "Marie" ;
-    foaf:lastName "Stenseke" .
-
 <http://ontology.ipbes.net/report/person/Sultanaliev_Kanat> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/ECA18ch4> ;
     ipbes:Report ipbes:ECA18 ;
@@ -6201,6 +6201,7 @@ Trade-offs depend on scenario assumptions about lifestyle and consumption, which
 <http://ontology.ipbes.net/report/person/Torre-MarinRando_Amor> a foaf:Person ;
     ipbes:Report ipbes:ECA18 ;
     ipbes:country "CHE" ;
+    ipbes:ed "Editor in ECA18" ;
     ipbes:ts "Technical Support Unit in ECA18" ;
     skos:prefLabel "Amor Torre-Marin Rando" ;
     foaf:firstName "Amor" ;
@@ -6306,14 +6307,6 @@ Trade-offs depend on scenario assumptions about lifestyle and consumption, which
     skos:prefLabel "Marija Vugdelic" ;
     foaf:firstName "Marija" ;
     foaf:lastName "Vugdelic" .
-
-<http://ontology.ipbes.net/report/person/Watson_RobertT> a foaf:Person ;
-    ipbes:Report ipbes:ECA18 ;
-    ipbes:country "GBR" ;
-    ipbes:mc "Management Committee in ECA18" ;
-    skos:prefLabel "Robert T. Watson" ;
-    foaf:firstName "Robert T." ;
-    foaf:lastName "Watson" .
 
 <http://ontology.ipbes.net/report/person/Whitehorn_Penelope> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/ECA18ch1> ;
@@ -32683,6 +32676,7 @@ Consistent with the focus of the pathways on direct drivers, Strategic Goal B to
         <http://ontology.ipbes.net/report/subm/ECA18-C2-SM7>,
         <http://ontology.ipbes.net/report/subm/ECA18-C2-SM8>,
         <http://ontology.ipbes.net/report/subm/ECA18-C2-SM9> ;
+    ipbes:hasCategory "C. Drivers of change in biodiversity and nature’s contributions to people in Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "established but incomplete" ;
     ipbes:hasDescription """The region’s climate is expected to be on average 1°C –3°C warmer in 2041–2060 than in 1986–2005, with larger increases in the north of the region (well established) {4.7.2.1}. Summers will be drier in the south of the region and winters wetter in the north, with increasing risks of extreme climatic events such as droughts and storms (established but incomplete) {4.7.1.2} (Figure SPM.8). Indirect climate change effects, such as increased fire and flood risks and loss of permafrost, are already affecting biodiversity and nature’s contributions to people (well established) {4.7.1.3, 4.7.2.5}. The extent of near-surface permafrost at high latitudes could decrease by between 37 and 81 per cent by 2100 (established but incomplete) {4.7.2.4}. In Arctic and alpine regions, permafrost melting will cause large greenhouse gas emissions, while short-term heat waves reduce biomass productivity and food availability for wildlife and livestock (unresolved) {4.7.1}.
 
@@ -32701,6 +32695,7 @@ Global economic growth is the main indirect driver of greenhouse gas emissions a
         <http://ontology.ipbes.net/report/subm/ECA18-E4-SM1>,
         <http://ontology.ipbes.net/report/subm/ECA18-E4-SM2>,
         <http://ontology.ipbes.net/report/subm/ECA18-E4-SM3> ;
+    ipbes:hasCategory "E. Promising governance options for Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription "The role of multi-actor environmental governance is recognized in Western and Central Europe, and increasingly also in Eastern Europe and Central Asia. In parallel to top-down governance, decision-making concerning biodiversity and nature’s contributions to people is increasingly devolved to public-private partnerships, co-management arrangements or even private governance, involving many stakeholders {6.2, 6.4, 6.5, 6.6; Tables 6.1, 6.8}. Promising developments include the establishment of new protected areas, and the protection of cultural landscapes through the United Nations Educational, Scientific and Cultural Organization (UNESCO) World Heritage Convention, the European Landscape Convention, and the International Union for Conservation of Nature (IUCN) protected landscape approach, where various forms of knowledge are integrated into management. Assessing the effectiveness, efficiency and equity of promising governance arrangements and taking power relationships and asymmetries into consideration require careful evaluation and monitoring {6.2, 6.4.2.2, 6.5.1.2, 6.5.1.5, 6.5.1.6, 6.2.2.2; Table 6.8; Boxes 6.7, 6.11}. This holds especially true for environmental governance in Central Europe, Eastern Europe and Central Asia with their rapid transformation processes since the early 1990s, moving from hierarchical, state-dominated processes to more collaborative governance processes {6.4.2; 6.5.1.4}. Another key challenge for policy success is posed by sufficient mobilization of financial resources. Increased funding from both public and private sources, together with innovative financing mechanisms, such as ecological fiscal transfers, would help to strengthen institutional capacities; to invest in research, training, capacity-building and education; to employ necessary staff; and to secure monitoring activities {6.3.2, 6.3.3, 6.4.1, 6.5.4, 6.6.2, 6.6.4}." ;
     dcterms:identifier "E4" ;
@@ -32961,16 +32956,6 @@ Green symbols with upward arrow indicate an increase, purple symbols with horizo
     foaf:firstName "Ana" ;
     foaf:lastName "Nieto" .
 
-<http://ontology.ipbes.net/report/person/Novitsky_Ruslan> a foaf:Person ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/ECA18ch3> ;
-    ipbes:Report ipbes:ECA18 ;
-    ipbes:ca "Contributing Author in ECA18-ch3" ;
-    ipbes:country "BLR" ;
-    ipbes:mc "Management Committee in ECA18" ;
-    skos:prefLabel "Ruslan Novitsky" ;
-    foaf:firstName "Ruslan" ;
-    foaf:lastName "Novitsky" .
-
 <http://ontology.ipbes.net/report/person/Rossberg_AxelG> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/ECA18ch2>,
         <http://ontology.ipbes.net/report/ch/ECA18ch3> ;
@@ -32991,6 +32976,7 @@ Green symbols with upward arrow indicate an increase, purple symbols with horizo
     ipbes:country "DEU",
         "GBR" ;
     ipbes:cs "Co-chair in ECA18" ;
+    ipbes:ed "Editor in ECA18" ;
     skos:prefLabel "Mark Rounsevell" ;
     foaf:firstName "Mark" ;
     foaf:lastName "Rounsevell" .
@@ -38236,6 +38222,7 @@ Impacts from extractive sectors can be managed much better when decisions are ma
         <http://ontology.ipbes.net/report/subm/ECA18-E2-SM5>,
         <http://ontology.ipbes.net/report/subm/ECA18-E2-SM6>,
         <http://ontology.ipbes.net/report/subm/ECA18-E2-SM7> ;
+    ipbes:hasCategory "E. Promising governance options for Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "established but incomplete",
         "well established" ;
     ipbes:hasDescription "Conventional sectoral approaches are insufficient to tackle interlinked environmental, economic and social challenges. Actions in one sector may affect other sectors, because policy design, instrument choice, or policy implementation rarely consider trade-offs {6.2, 6.4.1, 6.4.2, 6.6, 6.6.4.1, 6.6.4.2; Box 6.1, Box 6.9}. Without coordination between, and sustainable management practices within, sectors, there is evidence that agriculture, forestry, fisheries, mining, energy, manufacturing and the services sector may exert negative impacts on biodiversity, on nature’s contributions to people and on the livelihoods of indigenous peoples and local communities {4.2.2, 6.4.2, 6.5.1–6.5.5, 6.6.4.1; Table 6.6}. Taking individual sectors as an example, a mismatch has been detected between the low degree of forest sector integration with other policy sectors on the one hand, and on the other its high potential to contribute to policy integration {6.5.2.3}. While some instruments of the European Union Common Agricultural Policy support extensive management practices, others are less well suited to, or implemented by, particularly, Central European countries of the European Union, to support indigenous and local knowledge and practices of small and semi-subsistence farms in high nature value farmland {6.5.1.2}. With regard to economy-wide policy integration, reflecting the real changes in the diverse values of nature’s contributions to people in national income accounts is one option to provide better information and help to mitigate trade-offs {6.6.3.1}. Another option would be complementing national income accounts with satellite accounts containing information on the costs of ecosystem degradation. Ecological fiscal reform that creates an integrated set of incentives by redirecting taxation from labour to environment, including ecological indicators in intergovernmental fiscal relations and by greening public expenditure programmes, could support the shift to sustainable development {6.4.1, 6.4.2, 6.6.2}. Designing, implementing and assessing instruments in relation to their role in the overall policy mix would help to mitigate conflicting policy goals and trade-offs {6.2, 6.4.1, 6.5.5, 6.6.1, 6.6.2, 6.6.4.1, 6.6.5.5; Box 6.1}. The use of proactive strategies, tools and methodologies to account for diverse values and criteria, and of participatory processes can support trade-off analyses and facilitate policy integration {6.4.1, 6.4.2, 6.6.4, 6.6.5}." ;
@@ -38260,6 +38247,7 @@ Impacts from extractive sectors can be managed much better when decisions are ma
         <http://ontology.ipbes.net/report/subm/ECA18-E3-SM7>,
         <http://ontology.ipbes.net/report/subm/ECA18-E3-SM8>,
         <http://ontology.ipbes.net/report/subm/ECA18-E3-SM9> ;
+    ipbes:hasCategory "E. Promising governance options for Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription """Where legal and regulatory instruments are concerned, the ratification and implementation of international treaties and transboundary agreements provide strong impetus for improving national and subnational policies in all sectors {6.3}. Marine protected areas, however, need more attention {4.5.4, 6.4.1}. For freshwater ecosystems, the European Union Water Framework Directive is of particular importance for achieving a good status for surface and groundwater {6.3.2.3, 6.4.2, 6.5.1, 6.5.2, 6.5.3, 6.5.4, 6.6.3, 6.6.5.5}, although integration and implementation of such novel governance approaches often remain incomplete, and ineffective when member States retain existing structures and procedures without transferring responsibilities and power to the river basin authorities {6.4.2}. Similar structures have been developed in non-European Union countries, such as Ukraine, which share river basins with European Union countries {6.4.2}. Targeted spatial and urban planning integrated across sectors and scales can support the conservation of biodiversity and nature’s contributions to people, and enhance the quality of life of urban dwellers {6.6.4.2}.
 
@@ -38331,6 +38319,7 @@ The overall effectiveness of the policy mix is closely tied to a range of policy
     ipbes:country "CHE",
         "DEU" ;
     ipbes:cs "Co-chair in ECA18" ;
+    ipbes:ed "Editor in ECA18" ;
     owl:sameAs <https://orcid.org/0000-0002-5589-5900> ;
     skos:prefLabel "Markus Fischer" ;
     foaf:firstName "Markus" ;
@@ -40184,6 +40173,7 @@ The field of sustainable finance is still in its infancy, and faces some risks, 
     ipbes:Report ipbes:ECA18 ;
     ipbes:SubMessage <http://ontology.ipbes.net/report/subm/ECA18-E5-SM0>,
         <http://ontology.ipbes.net/report/subm/ECA18-E5-SM1> ;
+    ipbes:hasCategory "E. Promising governance options for Europe and Central Asia" ;
     ipbes:hasConfidenceLevel "well established" ;
     ipbes:hasDescription """The design of promising governance options and smart institutional arrangements supports the effective involvement of different actors in policy and decision-making with the aim of promoting shared responsibility for our common future. Developing pathways and corresponding experiments in a participatory manner, including all relevant stakeholder groups and indigenous peoples and local communities, enables the inclusion of a diversity of perspectives and promotes the necessary deliberation of strategic planning and agenda-setting {5.4.3, 5.5.1, 5.5.2, 5.5.6, 5.6.2}.
 
@@ -44812,6 +44802,7 @@ Several aspects need to be considered when designing policy interventions in Eas
         <http://ontology.ipbes.net/report/bgm/ECA18-D2>,
         <http://ontology.ipbes.net/report/bgm/ECA18-D3> ;
     ipbes:Report ipbes:ECA18 ;
+    ipbes:hasCategory "D. Futures for Europe and Central Asia" ;
     ipbes:hasDescription """The continuation of past and present trends in drivers to, and beyond, 2030 (as represented in business-as-usual scenarios) will inhibit the widespread achievement of goals similar to and including the Sustainable Development Goals. Future scenarios that focus on achieving a balanced supply of nature’s contributions to people and that incorporate a diversity of values are more likely to achieve the majority of such goals. Trade-offs are indicated between different ecosystem services under different future scenarios for Europe and Central Asia. Ways of resolving these trade-offs depend on political and societal value judgements. Scenarios that include proactive decision-making on environmental issues, environmental management approaches that support multifunctionality, and mainstreaming environmental issues across sectors, are generally more successful in mitigating trade-offs than isolated environmental policies. Scenarios that include cooperation between countries or regions are expected to be more effective in mitigating undesirable cross-scale impacts on biodiversity and ecosystem services.
 
 Long-term societal transformation through continuous education, knowledge-sharing and participatory decision-making characterize the most effective pathways for moving towards sustainable futures. These pathways promote resource-sparing lifestyles and emphasize community actions and voluntary agreements supported by social and information-based instruments as well as rights-based approaches. They support regulating ecosystem services and highlight a diverse range of values in comprehensively considering biodiversity and nature’s contributions to people across sectors, and across spatial and temporal scales. Other actions, such as technological innovation, ecosystem-based approaches, land sparing or land sharing, could support and pave the way for these more transformational solutions.""" ;
@@ -48109,6 +48100,7 @@ Manufacturing. Table 6.10 presents a compilation of business-related risks and o
         <http://ontology.ipbes.net/report/bgm/ECA18-B2>,
         <http://ontology.ipbes.net/report/bgm/ECA18-B3> ;
     ipbes:Report ipbes:ECA18 ;
+    ipbes:hasCategory "B. Trends in biodiversity and attribution to direct drivers" ;
     ipbes:hasDescription """The biodiversity of Europe and Central Asia is in continuous strong decline. The extent of natural ecosystems has declined, e.g., wetland extent has declined by 50 per cent since 1970 and natural and semi-natural grasslands, peatlands and coastal marine habitats have been degraded. Ecosystems have considerably declined in terms of species diversity. Of the assessed species living exclusively in Europe and Central Asia, 28 per cent are threatened. Among all the assessed groups of species living in the region, particularly threatened are mosses and liverworts (50 per cent), freshwater fish (37 per cent), freshwater snails (45 per cent), vascular plants (33 per cent) and amphibians (23 per cent). Landscapes and seascapes have become more uniform in their species composition and thus their diversity has declined.
 
 In recent years, national and international sustainability and conservation policies and actions have contributed to reversing some negative biodiversity trends. More sustainable management of fisheries and reduction of eutrophication has led to an increase in some fish stocks in areas such as the North Sea. Endangered habitats, such as Macaronesian woodlands, and species such as the Iberian lynx and European bison, have recovered substantially because of targeted conservation efforts.
@@ -49403,6 +49395,7 @@ Concerning the private level, forest certification is often considered as one of
         <http://ontology.ipbes.net/report/bgm/ECA18-C3>,
         <http://ontology.ipbes.net/report/bgm/ECA18-C4> ;
     ipbes:Report ipbes:ECA18 ;
+    ipbes:hasCategory "C. Drivers of change in biodiversity and nature’s contributions to people in Europe and Central Asia" ;
     ipbes:hasDescription """Land-use change is the major direct driver of the loss of both biodiversity and ecosystem services in Europe and Central Asia. Production-based subsidies have led to intensification in agriculture and forestry, and, together with urban development, have led to biodiversity decline. Increasing intensity often impinges on traditional land use. Ceasing traditional land use has reduced semi-natural habitats of high conservation value and associated indigenous and local knowledge, practices and culture across the region. Although protected areas have expanded in the region, protected areas alone cannot prevent biodiversity loss. Only where protected areas are managed effectively can they contribute to the prevention of biodiversity loss.
 
 The impact of climate change on biodiversity and nature’s contributions to people is increasing rapidly and is likely to be one of the most important drivers in the future. Trends in natural resource extraction, pollution and invasive alien species have led to considerable declines in biodiversity and ecosystem services, and are likely to continue to pose considerable threats, particularly in combination with climate change. Natural resource extraction is still a major pressure on biodiversity. Furthermore, despite effective regulations, pollution continues to pose a major threat to biodiversity and human health. Invasive alien species have increased in number – for all taxonomic groups across all the subregions of Europe and Central Asia – and this has severe effects on biodiversity and ecosystem services. The individual and combined effects of all the direct drivers have chronic, prolonged and delayed consequences for biodiversity and the provision of nature’s contributions to people owing to considerable time-lags in the response of ecological systems.
@@ -49517,6 +49510,7 @@ Variability has always been part of natural systems. Climate extremes denote eve
         <http://ontology.ipbes.net/report/bgm/ECA18-A4>,
         <http://ontology.ipbes.net/report/bgm/ECA18-A5> ;
     ipbes:Report ipbes:ECA18 ;
+    ipbes:hasCategory "A. Nature and its contributions to people’s quality of life in Europe and Central Asia" ;
     ipbes:hasDescription """Nature’s contributions to people, which embody ecosystem services, are critically important for livelihoods, economies and a good quality of life, and are therefore vital to sustaining human life on earth. Nature has considerable economic and cultural values for societies. Nature also benefits, for example, human health through its role in medicines, the provision of food for varied diets and support to mental and physical health through green spaces. The knowledge and customary practices of indigenous peoples and local communities also enhance people’s quality of life by fostering cultural heritage and identity. In Europe and Central Asia, which has an area of 31 million square kilometres, the regulation of freshwater quality has a median value of $1,965 per hectare per year. Other important regulating services include habitat maintenance ($765 per hectare per year); the regulation of climate ($464 per hectare per year); and the regulation of air quality ($289 per hectare per year).
 
 Nature’s contributions to people are under threat due to the continuing loss of biodiversity. Sustaining nature’s contributions to people requires the maintenance of high levels of biodiversity. The continuing decline in biodiversity has had negative consequences for the delivery of many ecosystem services over the last decades. These include habitat maintenance, pollination, regulation of freshwater quantity and quality, soil formation and regulation of floods. These declines have occurred in part because of the intensive agriculture and forestry practices used to increase the provision of food and biomass-based fuels.
@@ -51278,6 +51272,7 @@ An increase in species richness at warmer temperature is predicted for phytoplan
         <http://ontology.ipbes.net/report/bgm/ECA18-E4>,
         <http://ontology.ipbes.net/report/bgm/ECA18-E5> ;
     ipbes:Report ipbes:ECA18 ;
+    ipbes:hasCategory "E. Promising governance options for Europe and Central Asia" ;
     ipbes:hasDescription """A mix of governance options, policies and management practices is available for public and private actors in Europe and Central Asia, but further commitment is needed to adopt and effectively implement them to address the drivers of change, to safeguard biodiversity and to ensure nature’s contributions to people for a good quality of life. Well-designed, context-specific mixes of policy instruments building on, for example, ecosystem-based approaches, have been effective in the governance of biodiversity and nature’s contributions to people. While legal and regulatory instruments are the backbone of policy mixes, economic, financial, social and information-based instruments provide additional incentives to trigger behaviour change. Developing rights-based instruments would fully integrate the fundamental principles of good governance, equalizing power relations and facilitating capacity-building for indigenous peoples and local communities. The mobilization of sufficient financial resources would strengthen institutional capacities to support research, training, capacity-building, education and monitoring activities. The removal of harmful subsidies in various sectoral policies, such as agriculture, fisheries and energy, in Europe and Central Asia, reduces negative impacts on biodiversity and allows for a more cost-effective use of public funds.
 
 Mainstreaming the conservation and sustainable use of biodiversity and the sustained provision of nature’s contributions to people into all sectoral policies, plans, programmes, strategies and practices could be achieved with more proactive, focused and goal-oriented approaches to environmental action. Partial progress has been made in tackling the underlying drivers of biodiversity loss, by mainstreaming across government and society. Mainstreaming could be harnessed in a three-step process by: first, raising awareness of the dependence of good quality of life on biodiversity; second, defining policy objectives concerning the ecological, economic and sociocultural needs for achieving sustainable development; and, third, designing instruments and policy mixes to support the implementation of effective, efficient and equitable policy and decision-making for nature and a good quality of life.
@@ -53363,13 +53358,8 @@ ipbes:ECA18 a ipbes:Report ;
     ipbes:year "2018" ;
     skos:altLabel "IPBES Regional Assessment for Europe and Central Asia" ;
     skos:prefLabel "The IPBES regional assessment report on biodiversity and ecosystem services for Europe and Central Asia" ;
-    foaf:Person <http://ontology.ipbes.net/report/person/Barudanovic_Senka>,
-        <http://ontology.ipbes.net/report/person/Baste_IvarAndreas>,
-        <http://ontology.ipbes.net/report/person/Fischer_Markus>,
+    foaf:Person <http://ontology.ipbes.net/report/person/Fischer_Markus>,
         <http://ontology.ipbes.net/report/person/Mader_André>,
-        <http://ontology.ipbes.net/report/person/Novitsky_Ruslan>,
         <http://ontology.ipbes.net/report/person/Rounsevell_Mark>,
-        <http://ontology.ipbes.net/report/person/Stenseke_Marie>,
-        <http://ontology.ipbes.net/report/person/Torre-MarinRando_Amor>,
-        <http://ontology.ipbes.net/report/person/Watson_RobertT> .
+        <http://ontology.ipbes.net/report/person/Torre-MarinRando_Amor> .
 

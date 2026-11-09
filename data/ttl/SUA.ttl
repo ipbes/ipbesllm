@@ -4564,14 +4564,6 @@ Some examples are summarized in Table 5. 4. covering the multidimensional aspect
     foaf:firstName "Sharlene C." ;
     foaf:lastName "Alook" .
 
-<http://ontology.ipbes.net/report/person/AndradePérez_GermánIgnacio> a foaf:Person ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:country "COL" ;
-    ipbes:mc "Management Committee in SUA22" ;
-    skos:prefLabel "Germán Ignacio Andrade Pérez" ;
-    foaf:firstName "Germán Ignacio" ;
-    foaf:lastName "Andrade Pérez" .
-
 <http://ontology.ipbes.net/report/person/Archer_Emma> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch5> ;
     ipbes:Report ipbes:SUA22 ;
@@ -4963,6 +4955,7 @@ Some examples are summarized in Table 5. 4. covering the multidimensional aspect
 <http://ontology.ipbes.net/report/person/Danner_Marie-Claire> a foaf:Person ;
     ipbes:Report ipbes:SUA22 ;
     ipbes:country "DEU" ;
+    ipbes:ed "Editor in SUA22" ;
     ipbes:ts "Technical Support Unit in SUA22" ;
     skos:prefLabel "Marie-Claire Danner" ;
     foaf:firstName "Marie-Claire" ;
@@ -4996,15 +4989,6 @@ Some examples are summarized in Table 5. 4. covering the multidimensional aspect
     skos:prefLabel "Alexis J.G. De Villa" ;
     foaf:firstName "Alexis J.G." ;
     foaf:lastName "De Villa" .
-
-<http://ontology.ipbes.net/report/person/Demissew_Sebsebe> a foaf:Person ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:country "ETH" ;
-    ipbes:mc "Management Committee in SUA22" ;
-    owl:sameAs <https://orcid.org/0000-0002-0123-9596> ;
-    skos:prefLabel "Sebsebe Demissew" ;
-    foaf:firstName "Sebsebe" ;
-    foaf:lastName "Demissew" .
 
 <http://ontology.ipbes.net/report/person/Dermawan_Ahmad> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch3> ;
@@ -5289,14 +5273,6 @@ Some examples are summarized in Table 5. 4. covering the multidimensional aspect
     foaf:firstName "Ghassen" ;
     foaf:lastName "Halouani" .
 
-<http://ontology.ipbes.net/report/person/HernandezSalgar_AnaMaría> a foaf:Person ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:country "COL" ;
-    ipbes:mc "Management Committee in SUA22" ;
-    skos:prefLabel "Ana María Hernandez Salgar" ;
-    foaf:firstName "Ana María" ;
-    foaf:lastName "Hernandez Salgar" .
-
 <http://ontology.ipbes.net/report/person/Hernandez_Sara> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch4> ;
     ipbes:Report ipbes:SUA22 ;
@@ -5460,6 +5436,7 @@ Some examples are summarized in Table 5. 4. covering the multidimensional aspect
 <http://ontology.ipbes.net/report/person/Kieling_Daniel> a foaf:Person ;
     ipbes:Report ipbes:SUA22 ;
     ipbes:country "DEU" ;
+    ipbes:ed "Editor in SUA22" ;
     ipbes:ts "Technical Support Unit in SUA22" ;
     skos:prefLabel "Daniel Kieling" ;
     foaf:firstName "Daniel" ;
@@ -6125,15 +6102,6 @@ Some examples are summarized in Table 5. 4. covering the multidimensional aspect
     foaf:firstName "Jyothis" ;
     foaf:lastName "Sathyapalan" .
 
-<http://ontology.ipbes.net/report/person/Saw_LengGuan> a foaf:Person ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:country "MYS" ;
-    ipbes:mc "Management Committee in SUA22" ;
-    owl:sameAs <https://orcid.org/0000-0002-7170-7922> ;
-    skos:prefLabel "Leng Guan Saw" ;
-    foaf:firstName "Leng Guan" ;
-    foaf:lastName "Saw" .
-
 <http://ontology.ipbes.net/report/person/Schramm_Engelbert> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
     ipbes:Report ipbes:SUA22 ;
@@ -6298,15 +6266,6 @@ Some examples are summarized in Table 5. 4. covering the multidimensional aspect
     foaf:firstName "Zina" ;
     foaf:lastName "Skandrani" .
 
-<http://ontology.ipbes.net/report/person/Stenseke_Marie> a foaf:Person ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:country "SWE" ;
-    ipbes:mc "Management Committee in SUA22" ;
-    owl:sameAs <https://orcid.org/0000-0002-1111-5175> ;
-    skos:prefLabel "Marie Stenseke" ;
-    foaf:firstName "Marie" ;
-    foaf:lastName "Stenseke" .
-
 <http://ontology.ipbes.net/report/person/Stiefel_Sarah-LanMathez-> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
     ipbes:Report ipbes:SUA22 ;
@@ -6324,14 +6283,6 @@ Some examples are summarized in Table 5. 4. covering the multidimensional aspect
     skos:prefLabel "Natalie Stryamets" ;
     foaf:firstName "Natalie" ;
     foaf:lastName "Stryamets" .
-
-<http://ontology.ipbes.net/report/person/Taleb_MohammedSghir> a foaf:Person ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:country "MAR" ;
-    ipbes:mc "Management Committee in SUA22" ;
-    skos:prefLabel "Mohammed Sghir Taleb" ;
-    foaf:firstName "Mohammed Sghir" ;
-    foaf:lastName "Taleb" .
 
 <http://ontology.ipbes.net/report/person/Teitelbaum_Sara> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch3> ;
@@ -6499,14 +6450,6 @@ Some examples are summarized in Table 5. 4. covering the multidimensional aspect
     skos:prefLabel "Kristine Wray" ;
     foaf:firstName "Kristine" ;
     foaf:lastName "Wray" .
-
-<http://ontology.ipbes.net/report/person/Wu_Ning> a foaf:Person ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:country "CHN" ;
-    ipbes:mc "Management Committee in SUA22" ;
-    skos:prefLabel "Ning Wu" ;
-    foaf:firstName "Ning" ;
-    foaf:lastName "Wu" .
 
 <http://ontology.ipbes.net/report/person/Wynberg_Rachel> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch6> ;
@@ -44749,6 +44692,7 @@ Distribution of benefits from vicuña fibre harvest in Sajama, Bolivia (Plurinat
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch1> ;
     ipbes:Report ipbes:SUA22 ;
     ipbes:country "DEU" ;
+    ipbes:ed "Editor in SUA22" ;
     ipbes:la "Lead Author in SUA22-ch1" ;
     ipbes:ts "Technical Support Unit in SUA22" ;
     skos:prefLabel "Agnès Hallosserie" ;
@@ -54744,6 +54688,7 @@ Similarly, in Spain, a management scenario explored limiting the fishing season 
         <http://ontology.ipbes.net/report/subm/SUA22-D.3-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-D.3-SM8>,
         <http://ontology.ipbes.net/report/subm/SUA22-D.3-SM9> ;
+    ipbes:hasCategory "D. Pathways and levers to promote sustainable use and enhance the sustainability of the use of wild species in a dynamic future" ;
     ipbes:hasDescription """(D.3.1) Successful adaptation and negotiation require attention to the dynamics of both the social and ecological contexts of uses (well established) {2.2.3.7}. Because the species under use, the ecosystems that support them and the social systems within which uses occur are dynamic and change over time and space, the sustainable use of wild species is an ongoing adaptive process, which may be depicted as follows: (i) assess status and trends in wild species under use; (ii) identify drivers of (un)sustainability; (iii) adapt uses and management; and (iv) re-assess after a given time interval and re-adapt use and management, if needed (well established) {1.3, Box 2.3, 4.2.2.2, 4.2.2.4, 6.5.1.3}. Continuous long-term monitoring is needed to inform such adaptive management processes and benefit from approaches that integrate complementary information from science and indigenous and local knowledge (well established) {2.2.6, 2.3.3, 2.3.4}.
 
 (D.3.2) Intensification of existing uses and/or the emergence of new uses for wild species have often led to the rapid and substantial reconfiguration of trade-offs and synergies within and among practices, with negative impacts on the sustainability of the use (well established) {3.4}. They can also create novel interfaces that influence disease risk, but the link with the intensification of the use of wild species and zoonotic diseases is unresolved (established but incomplete) {4.2.1.7}. Such changes can be fast and profound. For instance, rapid development of new markets can produce rapid changes in resource exploitation and overwhelm the ability of institutions to respond (established but incomplete) {4.2.2.2}. Intensification of uses can reinforce negative impacts, such as land degradation or the introduction of invasive alien species, modifying the spillover risk of novel or known pathogens from wild species hosts to domestic animals and humans (established but incomplete) {4.2.1.7.2.}. Transparency and effective institutions informed by evidence, and robust management and governance, will likely help tackle threats to ecosystems and health by recognizing the interconnection between humans, domestic and wild animals, plants, and the wider environment, contributing to sustainable development, and ultimately reducing the risk of future spillover events (well established) {4.2.1.7}. Governance that supports the involvement of multiple sectors at varying levels of society in decision-making, (e.g., One Health), can limit risk from zoonotic disease and provide positive ecological and social outcomes (established but incomplete) {4.2.1.4}.
@@ -54764,6 +54709,7 @@ Similarly, in Spain, a management scenario explored limiting the fishing season 
     ipbes:cl "Coordinating Lead Author in SUA22-ch1" ;
     ipbes:country "ZAF" ;
     ipbes:cs "Co-chair in SUA22" ;
+    ipbes:ed "Editor in SUA22" ;
     owl:sameAs <https://orcid.org/0000-0002-7930-1695> ;
     skos:prefLabel "John Donaldson" ;
     foaf:firstName "John" ;
@@ -54780,6 +54726,7 @@ Similarly, in Spain, a management scenario explored limiting the fishing season 
     ipbes:country "NOR",
         "USA" ;
     ipbes:cs "Co-chair in SUA22" ;
+    ipbes:ed "Editor in SUA22" ;
     owl:sameAs <https://orcid.org/0000-0003-2178-3027> ;
     skos:prefLabel "Marla R. Emery" ;
     foaf:firstName "Marla R." ;
@@ -54795,6 +54742,7 @@ Similarly, in Spain, a management scenario explored limiting the fishing season 
     ipbes:cl "Coordinating Lead Author in SUA22-ch1" ;
     ipbes:country "FRA" ;
     ipbes:cs "Co-chair in SUA22" ;
+    ipbes:ed "Editor in SUA22" ;
     owl:sameAs <https://orcid.org/0000-0002-1496-4332> ;
     skos:prefLabel "Jean-Marc Fromentin" ;
     foaf:firstName "Jean-Marc" ;
@@ -55844,6 +55792,7 @@ Consumer awareness and social change can also drive corporate social responsibil
         <http://ontology.ipbes.net/report/subm/SUA22-C.1-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-C.1-SM8>,
         <http://ontology.ipbes.net/report/subm/SUA22-C.1-SM9> ;
+    ipbes:hasCategory "C. Key elements and conditions for the sustainable use of wild species" ;
     ipbes:hasDescription """(C.1.1) Conceptualizations of sustainable use of wild species influence policymaking by determining the ecological and social elements that are considered, monitored, assessed and used in policy (Box SPM.2) (established but incomplete) {2.3.2, 2.3.3, 2.3.4, 2.2.10}. Sustainable use of wild species is increasingly understood as inextricably social and ecological. Voluntary agreements often invoke both dimensions. However, national frameworks and international instruments largely continue to emphasize ecological dimensions, as well as some social, including economic, and governance dimensions, while cultural contexts receive little attention (well established) {2.2.3, 2.2.4, 2.2.8, 2.2.10, 6.4.1.2}. Adverse effects of these conceptual oversights include reduced effectiveness and inequities (well established) {2.2.10, 2.3.4}, in particular a lack of recognition of the sustainable use practices of indigenous peoples and local communities and support for their tenure and access rights (well established) {6.4.4.1}.
 
 (C.1.2) Policy instruments and tools commonly fail when they are not tailored to local ecological and social contexts (Figure SPM.7) (established but incomplete) {1.4, 4.2.2, 6.5.2.3}. The use of wild species takes place in landscapes and seascapes with diverse ecologies, cultures, politics and histories, all of which affect policy outcomes. Policies and regulations that fail to recognize and account for the diversity of uses and benefits associated with a practice can lead to negative social and ecological outcomes. Such adverse outcomes are especially pronounced in cases where there are differences between large-scale commercial actors and subsistence or small-scale actors (well established) {6.4.3.1}. Similarly, multiple pre-existing policies and instruments often apply to a species, practice or place (well established) {6.5}. Where customary governance is ignored, new policies may undermine previously successful approaches to sustainable use. New policy instruments that do not account for the history and current conditions of use also may exacerbate pre-existing tensions and create conflict, even where other enabling conditions are present (well established) {6.5.4.2}. The need for policy which is “fit for purpose” is widely acknowledged but incompletely pursued (well established) {6.5.2.1, 6.5.4.2}. For example, community-based and nature-based tourism standards that combine legal and regulatory approaches with social and information-based approaches provide livelihood benefits to communities while protecting indigenous and local cultures and environments (established but incomplete) {6.4.1.3, 6.4.4.5}. Many of the unsustainable impacts of the tourism industry could be mitigated through context-based understanding, implementation of best practice guidelines for observing, communication, education and public awareness of tourists and tour operators, collaborative engagement with all stakeholders and sector-specific regulation (well established) {3.3.5.2.3}.
@@ -55876,6 +55825,7 @@ Consumer awareness and social change can also drive corporate social responsibil
         <http://ontology.ipbes.net/report/subm/SUA22-C.2-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-C.2-SM8>,
         <http://ontology.ipbes.net/report/subm/SUA22-C.2-SM9> ;
+    ipbes:hasCategory "C. Key elements and conditions for the sustainable use of wild species" ;
     ipbes:hasDescription """(C.2.1) Robust governance systems tend to be adaptive to changes in social and ecological conditions and include participatory mechanisms (well established) {6.6.1}. The social and ecological conditions under which uses of wild species occur are always dynamic. Consequently, policy instruments and management tools are most effective when they address the causes of unsustainable use and adapt to changing circumstances (well established) {6.5.2}. Adaptive processes are enhanced by collaborative learning and governance. Successful co-learning is characterized by comprehensive, continuous, iterative and transparent engagement between key actors, including governance institutions and those who depend on wild species for their livelihoods and well-being (Box SPM.4) (well established) {6.5}. Collaborative governance arrangements that meaningfully engage these key actors, such as biosphere reserves designated by the United Nations Educational, Scientific and Cultural Organization, can ensure that policy decisions on sustainable use are equitable (well established) {4.2.2.2, 4.2.2.3, 6.5}. Such participatory mechanisms are more effective when implemented through inclusive processes that integrate customary and statutory laws, include participation of indigenous peoples and local communities in policy design, recognize gendered differences in the knowledge and practices of uses of wild species and include close follow-up through monitoring (Box SPM.4) (well established) {6.5.2.2}. Conservation instruments such as protected areas or other effective conservation measures can also contribute to the sustainability of the use of wild species (well established) {6.5.1.1}. However, to be effective, protected areas should be inclusive of indigenous peoples and local communities and other people involved, avoid displacing indigenous peoples, local communities and dependent livelihoods, be embedded in larger planning processes, and have a full implementation strategy (well established) {4.2.2.2, 4.2.2.3, 4.2.3.2.2, 6.5, 6.5.1.1}.
 
 (C.2.2) Aligning and coordinating policies across sectors and scales of governance can create enabling conditions for sustainable use of wild species (well established) {6.5.1.2, 6.5.2.2}. Policies enacted to govern diverse sectors, including, but not limited to, agriculture, energy and transportation, often also affect uses of wild species. The interaction of such policies can support or undermine sustainable use. For example, sectoral policies designed to advance national economies and territorial connections can escalate the exploitation of wild species, displace local uses and exacerbate poverty (well established) {4.2.3.5}. Further, laws are often built incrementally and, as a result, may come to lack coherent objectives and strategies (well established) {6.5.3}. If well designed, strategic combinations of policies can simultaneously alleviate multiple drivers of unsustainable use and create a supportive environment for sustainable use of wild species (well established) {6.5.3, 6.6.4}. Similarly, policies that align at international, national, regional, subnational, and local levels are more effective at supporting sustainable use of wild species, with fewer negative and unintended consequences. When attention is paid to coordinated interactions between approaches, actors, and scales, outcomes are more effective (well established) {6.5}.
@@ -56325,6 +56275,7 @@ More sustainable use of wild species will benefit from policy processes that pro
         <http://ontology.ipbes.net/report/subm/SUA22-D.1-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-D.1-SM8>,
         <http://ontology.ipbes.net/report/subm/SUA22-D.1-SM9> ;
+    ipbes:hasCategory "D. Pathways and levers to promote sustainable use and enhance the sustainability of the use of wild species in a dynamic future" ;
     ipbes:hasDescription """(D.1.1) According to most scenarios and models, climate change is expected to lead to multiple changes, such as changing wild species distribution and population dynamics, increasing frequency of extreme events and altering nutrient cycles, as well as ecological changes, which will affect wild species and their use across all practices, through multiple impacts. There is uncertainty however about future trajectories. Climate change may further exacerbate social, including economic, vulnerabilities and inequalities (well established) {5.2.1.2, 5.2.1.5, 5.4}. Climate change has implications for all extractive and non-extractive practices, including effects on the population dynamics of targeted wild species and the ecosystems they inhabit (well established) {5.4}. For example, climate change projections in high-emission scenarios up to 2100 from the Intergovernmental Panel on Climate Change show a decrease in global ocean biomass; the global catch is projected to be potentially reduced in all systems and more substantially in tropical systems, while a poleward shift in marine species could create new opportunities in mid- to high-latitude oceans (established but incomplete) {4.2.1.2.2, 5.4.2.5, 5.4.2.8}.
 
 (D.1.2) For many practices, demand is linked to demographic trends and consumption patterns. Growing human populations and consumption will result in greater pressure on wild species (well established) {5.4.3.1, 5.4.4.4, 5.4.6.8, 5.9.4}. For example, global fish demand is expected to almost double by mid-century and will increase in all regions of the world, while the demand for gathered wild plants, algae, and fungi is increasing both at the local level, where most products are consumed, as well as in international markets (well established) {5.4.2.2, 5.4.2.8, 5.4.3.4}. Demand for wood-based bioenergy is expected to increase, while at the same time there are continuing reductions in global forest cover due to increased logging and mortality resulting from climate change. Forest plantations may meet some of the growing demand but there are likely to be trade-offs between the management of natural forests to meet demand for wood and biodiversity conservation (well established) {5.4.5.1}. Non-extractive practices including nature-based tourism are also likely to grow and potentially generate negative environmental trends resulting from, for example, increasing waste. Projections of increasing tourism growth suggest that significant additional efforts will be necessary to mitigate these negative impacts (well established) {5.4.6}.
@@ -57671,6 +57622,7 @@ Historical context should thus be considered and reflected in policy design for 
         <http://ontology.ipbes.net/report/subm/SUA22-B.2-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-B.2-SM8>,
         <http://ontology.ipbes.net/report/subm/SUA22-B.2-SM9> ;
+    ipbes:hasCategory "B. Status and trends in uses of wild species" ;
     ipbes:hasDescription """(B.2.1) Multiple drivers affect the sustainability of the use of wild species and these interact with one another (Figure SPM.5) (well established) {4.3, 4.4}. Outcomes for a particular species and a particular practice can be simultaneously impacted by multiple drivers, some positive, some negative, as well as mediating factors that may mitigate or amplify impacts on multiple scales. As a result, to be effective, governance responses address the multiple drivers affecting use and are flexible enough to accommodate differences among species, practices, sites and scales. For instance, the sustainability of wild meat hunting is increasingly driven by socio economic changes, recreation, entertainment, trade, or trafficking, rather than solely by hunting for subsistence (well established) {3.3.3}.
 
 (B.2.2) Drivers such as landscape and seascape changes, climate change, pollution and invasive alien species impact the abundance and distribution of wild species, and can increase stress and challenges for the human communities who use them (well established) {4.2.1.2., 4.2.1.4, 4.2.1.5, 4.2.1.6}. The prevailing trend is a reduction in species’ abundance and shifts in their spatial distributions, although landscape and seascape changes, climate change, pollution and invasive alien species may positively affect some species. These drivers also place pressure on the capacity of systems to sustain extractive harvests at previous levels and may increase the need to use wild species to meet basic needs. Efforts to directly address such drivers can also have positive outcomes for sustainable use (established but incomplete) {4.2.1.2., 4.2.1.5.}.
@@ -58584,6 +58536,7 @@ Another factor in the least successful terrestrial animal harvesting cases that 
         <http://ontology.ipbes.net/report/subm/SUA22-B.3-SM6>,
         <http://ontology.ipbes.net/report/subm/SUA22-B.3-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-B.3-SM8> ;
+    ipbes:hasCategory "B. Status and trends in uses of wild species" ;
     ipbes:hasDescription """(B.3.1) Conceptualizations of sustainable use are evolving over time. Nevertheless, statements in international and regional agreements continue to maintain a common emphasis on not causing irreversible harm to biodiversity and supporting the material and non-material contributions of biodiversity to human well-being (well established) {2.2.2, 2.2.3.7, 2.2.5, 2.2.7}. Sustainable use of wild species is therefore best operationalized through a set of specific targets or indicators in the ecological and social domains. These targets and indicators will require periodic revision, as knowledge and experience grow and public policy dialogue progresses (well established) {2.3.1, 2.3.4}.
 
 Ideally, indicators are developed jointly by all the actors in the social-ecological system (well established) {1.3.1, 1.5} and additional efforts are undertaken by all actors in order to address existing knowledge gaps (see appendix 2).
@@ -58838,6 +58791,7 @@ The demand for wood-based panels, paper and paperboard has been estimated to dou
         <http://ontology.ipbes.net/report/subm/SUA22-D.2-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-D.2-SM8>,
         <http://ontology.ipbes.net/report/subm/SUA22-D.2-SM9> ;
+    ipbes:hasCategory "D. Pathways and levers to promote sustainable use and enhance the sustainability of the use of wild species in a dynamic future" ;
     ipbes:hasDescription """(D.2.1) Key elements (sets of policy actions) that support sustainable use of wild species have been identified (see section C, Figure SPM.8). However, with the exception of fishing, these key elements are poorly integrated into binding agreements and this limits progress towards their implementation (Table SPM.1) (established but incomplete) {2.2.6, 2.2.7}. The following seven key elements have been shown to enhance the sustainability of the use of wild species (Table SPM.1): inclusive and participatory decision-making, inclusion of multiple forms of knowledge and recognition of rights, equitable distribution of costs and benefits, policies tailored to local social and ecological contexts, monitoring of social and ecological conditions and practices, coordinated and aligned policies, and robust customary and statutory institutions (well established) {6.6}. Integration of these key elements into binding agreements, voluntary agreements and certification schemes differs strikingly among practices. Binding agreements for fishing display the strongest integration of these seven key elements, although two key elements (inclusive and participatory decision making, acknowledgement of rights and equitable distribution of benefits) remain largely absent (Table SPM.1) (established but incomplete) {2.2.6}. Certification schemes for gathering and logging integrate most of these key elements, but do not address alignment of policies or coordination of interactions with other practices. These two prior key elements are only reflected in voluntary agreements for gathering, terrestrial animal harvesting and non-extractive practices (Table SPM.1) (well established) {2.2.6}. All types of agreements related to logging and non-extractive practices entirely overlook one or two key elements (Table SPM.1). Integrating all seven key elements into binding agreements, voluntary agreements and certification schemes for all practices is a prerequisite for the future of sustainable use of wild species (established but incomplete) {6.6}.
 
 (D.2.2) These seven key elements have been deployed in limited contexts and could be used as levers of changes to promote sustainable use and enhance the sustainability of the use of wild species in the future if they are scaled up across practices, regions and sectors (well established) {6.6}.
@@ -61183,6 +61137,7 @@ Long-term, spatially explicit studies are important for the assessment of the su
         <http://ontology.ipbes.net/report/subm/SUA22-A.1-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-A.1-SM8>,
         <http://ontology.ipbes.net/report/subm/SUA22-A.1-SM9> ;
+    ipbes:hasCategory "A. Sustainable use of wild species is critical for people and nature" ;
     ipbes:hasDescription """(A.1.1) The use of wild species directly contributes to the well-being of billions of people globally on a day-to-day basis and is particularly important to people in vulnerable situations (well established) (see appendix 1) {1.5, 3.2.1, 3.3.1, 3.3.4.4.2}. Wild species contribute to human well-being through many different types of uses (Figure SPM.1), which can be continuous, daily or irregular. In many cases, a single species may have multiple uses and contribute to human well-being in multiple ways (well established) {1.3.4, 3.4.3.1, 4.3.4}. For example, wild plants, algae and fungi provide food, nutritional diversity and income for an estimated one in five people around the world, in particular women, children, landless farmers and others in vulnerable situations (well established) {3.3.2}. 2.4 billion people (approximately one third of the global population) rely on fuelwood for cooking and an estimated 880 million people globally log firewood or produce charcoal, particularly in developing countries (established but incomplete) {3.3.4.4.2}. Small-scale fisheries are strongly anchored in local communities’ ways of life on all continents and support over 90 per cent of the 120 million people engaged in capture fisheries globally. About half of the people involved in small-scale fisheries are women (well established) {3.4.3.1}. People in vulnerable situations are often most reliant on wild species and are most likely to benefit from more sustainable forms of use of wild species to secure their livelihoods (well established) {1.5, 1.6, 3.2.1, 4.2.3.5}. An estimated 70 per cent of the world’s poor depend directly on wild species and on businesses fostered by them (well established) {3.2.1}.
 
 (A.1.2) About 50,000 wild species are used for food, energy, medicine, materials and other purposes through fishing, gathering, logging and terrestrial animal harvesting globally. People all over the world directly use about 7,500 species of wild fish and aquatic invertebrates, 31,100 species of wild plants, of which 7,400 species are trees, 1,500 species of fungi, 1,700 species of wild terrestrial invertebrates and 7,500 species of wild amphibians, reptiles, birds and mammals (well established) {3.2.1.3, 3.3, 3.3.2.3.4}. Among the wild species that are used, more than 20 per cent (over 10,000 species) are used for human food, making the sustainable use of wild species critical to achieving food security and improving nutrition in rural and urban areas worldwide (well established) {3.3}. Fisheries constitute a major source of food from wild species, with a total annual harvest of 90 million tons over recent decades, of which about 60 million tons go to direct human consumption, with the rest used as feed for aquaculture and livestock (well established) {3.2.1.1}. Terrestrial animal harvesting (which includes hunting) contributes to the food security of many people living in rural and urban areas worldwide, especially in developing countries (well established) {3.3.3.3.3}. Wild aquatic and terrestrial animals constitute key sources of protein, fat, and micronutrients, such as calcium, iron, zinc and fatty acids, for the global human population (well established) {3.3.1.5.1, 3.3.2.3.4, 3.3.3.3.3}.
@@ -61219,6 +61174,7 @@ Long-term, spatially explicit studies are important for the assessment of the su
         <http://ontology.ipbes.net/report/subm/SUA22-A.3-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-A.3-SM8>,
         <http://ontology.ipbes.net/report/subm/SUA22-A.3-SM9> ;
+    ipbes:hasCategory "A. Sustainable use of wild species is critical for people and nature" ;
     ipbes:hasDescription """(A.3.1) Effective management systems that promote the sustainable use of wild species can contribute to broader conservation objectives (established but incomplete) {1.1.1, 3.3.3.3.4, 3.3.3.4.1, 3.3.4.3.2, 3.3.5.2.3, 4.2.4.3.1}. Based on the assessment of 10,098 species from 10 taxonomic groups documented for the International Union for Conservation of Nature Red List of Threatened Species, at least 34 per cent of the wild species assessed are used sustainably (established but incomplete) {3.2.1, 3.2.2, 4.2.4.3.1}. This includes 172 threatened or near-threatened species. Effective management systems that promote sustainable use, supported by policies linked to land tenure and rights of access, have contributed to the conservation of ecosystems such as forests at the local level (well established) {3.3.2.3.4, 4.2.2.2.4, 4.2.2.6}. Revenues from the sustainable use of wild species can make a substantial contribution to the conservation of landscapes and seascapes (established but incomplete) {4.2.3.3.5, 4.2.4.3.1, 4.2.4.3.3, 4.2.5.2.3}. Revenues from non-extractive practices, notably tourism in protected areas, can make a significant contribution to overcoming funding shortfalls for protected areas if the revenue is used to support protected area management (established but incomplete) {4.2.4.3.1}. Revenues from the extractive use of wild animals, including hunting and fishing licenses and concession fees, provide an important and substantial income stream for conservation agencies and local communities in some countries (well established) {3.3.3.2.4}. Large areas of land that are managed for recreational hunting (e.g., approximately 1.4 million km² in Africa) could contribute to conservation objectives and spatial conservation targets, but their unique biodiversity values as well as their ecological and social durability have mostly not been evaluated (established but incomplete) {3.3.3.2.4}.
 
 (A.3.2) Overexploitation has been identified as the main threat to wild species in marine ecosystems and the second greatest threat to those in terrestrial and freshwater ecosystems (well established) {1.1, 3.3.1.4}. Addressing the causes of unsustainable use and reversing the trend will result in better outcomes for these wild species. Many uses of wild species occur within the context of declining wild species populations and ranges. For example, unsustainable fishing is the main cause of the increased extinction risk of sharks and rays over the past half-century (well established) {3.3.1}. Among the 1,250 shark and ray species identified today, 1,199 have been recently assessed and 449 (37.5 per cent) have been assessed as threatened (well established) {3.3.1.3}. Unsustainable hunting has been identified as a threat for 1,341 wild mammal species, including 669 species that were assessed as threatened, and declines in large-bodied species with low intrinsic rates of population increase have been linked to hunting pressure (well established) {3.3.3}. Negative impacts of hunting have also been reported for bird species (well established) {3.3.3.2.5, 3.3.3.2.6, 3.3.3.3.4}. An estimated 12 per cent of wild tree species are threatened by unsustainable logging {3.2.1.4} and unsustainable gathering is one of the main threats for several plant groups, notably cacti, cycads and orchids (well established), as well as other plants and fungi harvested for medicinal purposes {3.2.2, 3.3.2.3.2, 4.2.4.3.1}. Overall, unsustainable harvesting contributes towards elevated extinction risk for 28–29 per cent of near-threatened and threatened species from 10 taxonomic groups assessed on the International Union for Conservation of Nature Red List of Threatened Species {3.2.1, 3.2.2}.
@@ -61589,6 +61545,7 @@ The combination of scientific and customary knowledge can be particularly powerf
         <http://ontology.ipbes.net/report/subm/SUA22-B.1-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-B.1-SM8>,
         <http://ontology.ipbes.net/report/subm/SUA22-B.1-SM9> ;
+    ipbes:hasCategory "B. Status and trends in uses of wild species" ;
     ipbes:hasDescription """(B.1.1) Recent global estimates indicate that approximately 34 per cent of marine wild fish stocks are overfished and 66 per cent are fished within biologically sustainable levels, but this global picture displays strong heterogeneities (well established) {3.2.1.1}. In countries or regions implementing robust fisheries management, stocks are increasing in abundance and tend to be above target levels (Figure SPM.4) (well established) {3.3.1}. These countries provide roughly half of the fisheries landings reported to the Food and Agriculture Organization of the United Nations and mostly concern large-scale fisheries (well established) {3.3.1}. For countries and regions with low-intensity fisheries management measures, the status of stocks is often poorly known (well established) {3.3.1.2}, but generally believed to be below the abundance that would maximize sustainable food production (established but incomplete) {3.3.1}. For small-scale fisheries that have been assessed around the world, many have been considered to be unsustainable or only partially sustainable, especially in Africa for both inland and marine fisheries and in Asia, Latin America and Europe for coastal marine fisheries (established but incomplete) {3.3.1.4.1}. The diversity of contexts in which small-scale fisheries operate have often made conventional data-driven fisheries management inadequate and unsuccessful, but when the involvement, participation and empowerment of indigenous peoples and local communities are maintained or promoted, the sustainability of small-scale fisheries can be achieved (well established) {6.5.1.1, 6.5.3.1}.
 
 (B.1.2) Unintentional bycatch of threatened and/or protected marine species is unsustainable for many populations, including wild sea turtles, seabirds, sharks, rays, chimaeras, marine mammals and some bony fishes. Reducing unintentional bycatch and discards is progressing, but still insufficient (well established) {3.3.1.1}. While fishing of target species may be sustainable, the conservation status of bycatch species and other associated and dependent species is often poorly known. Bycatch is a well-known issue for several large-scale fisheries, such as shrimp or bottom-trawl fisheries, but it is also a concern for several small scale fisheries (well established) {3.3.1.1, 3.3.1.5}. There have been recent advances in monitoring and managing fishing mortality of marketable incidental species and discarded bycatch species, however global uptake of effective bycatch management measures is severely lagging in a majority of marine capture fisheries (well established) {3.3.1.5}. For example, nearly all (99 per cent) shark and ray species are officially declared to be taken unintentionally, but are valuable and are retained for food. Consequently, shark species have been declining steeply since the 1970s, especially in tropical and subtropical coastal shelf waters (well established) {3.3.1.3}.
@@ -62682,6 +62639,7 @@ The importance of religious beliefs in promoting sustainable use of wild species
         <http://ontology.ipbes.net/report/subm/SUA22-A.2-SM6>,
         <http://ontology.ipbes.net/report/subm/SUA22-A.2-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-A.2-SM8> ;
+    ipbes:hasCategory "A. Sustainable use of wild species is critical for people and nature" ;
     ipbes:hasDescription """(A.2.1) Wild species play essential roles in the well-being of many indigenous peoples and local communities. Loss of opportunity to engage in sustainable use of wild species represents an existential threat to indigenous peoples and local communities (well established) {1.4, 2.2.4, 3.3.1.4, 3.3.2., 3.3.3, 3.3.4.3.1, 4.2, 6.5, 6.6}. Uses of wild species are central to the identities, cultural expressions and livelihoods of many indigenous peoples and local communities (Figure SPM.3). While all wild species in use are important, some have special significance as cultural keystone species (Box SPM.1); that is, they provide multiple benefits that define key elements of a people’s tangible and intangible cultural heritage. Continued ability to engage in sustainable use of wild species and the cultural practices associated with them is essential for indigenous peoples and local communities to survive and thrive (well established) {1.4, 2.2.4, 2.2.8, 3.2.1, 3.3.3, 3.3.4, 4.2.2.2.5, 4.2.3.4, 4.2.3.5, 4.2.2.6, 6.5.2}.
 
 (A.2.2) Sustainable use of wild species contributes to the livelihoods of indigenous peoples and local communities through subsistence, as well as trade in informal and formal markets (well established) {4.2.4.3.2}. Subsistence uses of wild species are important sources of food, medicine, fuel and other livelihood resources for indigenous peoples and local communities in both developed and developing countries. Often, wild species are considered superior to cultivated species or other substitutes, as identified in discussions with indigenous peoples and local communities. Many wild foods have nutritional benefits over processed foods and there may be no culturally acceptable alternative for ceremonial and ritual materials (well established) {3.3.1.7.1, 3.3.2.3.4, 3.3.3.3.3, 3.3.3.4.2, 3.3.5.2.1}. Wild species also provide a basis for culturally meaningful employment (well established) {1.6, 3.3.3.2.1, 3.3.5.2.3}. Indigenous peoples and local communities have engaged in long-distance trade of wild species and materials derived from them for millennia. Trade continues to be an important source of goods and monetary income for many indigenous peoples and local communities (well established) {4.2.4.3.2}.
@@ -62990,6 +62948,7 @@ Whilst it is commonplace to assume practical answers to fishing-related problems
         <http://ontology.ipbes.net/report/subm/SUA22-C.3-SM7>,
         <http://ontology.ipbes.net/report/subm/SUA22-C.3-SM8>,
         <http://ontology.ipbes.net/report/subm/SUA22-C.3-SM9> ;
+    ipbes:hasCategory "C. Key elements and conditions for the sustainable use of wild species" ;
     ipbes:hasDescription """(C.3.1) Monitoring of the ecological and social, including economic, aspects of uses of wild species is critical for sustainable use (well established) {3.2.4, 3.3.3.3.4}. The lack of ongoing monitoring of population dynamics may make the most adaptive of regulations insufficient to prevent species decline (well established) {4.2.2.2.3}. Where governance systems are informed by monitoring of species health and use, equitable participation by those dependent on wild species (particularly for food) and the inclusion of strong mechanisms for dispute resolution, there is evidence of sustainable use (well established) {4.2.2.2}. Scientific monitoring is limited or lacking for many extractive and non-extractive practices (well established) {3.3.1, 3.3.3, 3.3.5} and is identified as a critical knowledge gap for sustainable use {3.5}. Many indigenous peoples and local communities have well-developed monitoring practices that contribute to sustainable use through stewardship and adaptive and innovative learning (well established) {4.2.2.2, 4.2.2.4.}. Examples of traditional measurement observations include the amount of caribou back fat observed by hunters or the changing flavour of fish. For some communities, knowledge of species trends and dynamics has been passed from generation to generation, resulting in knowledge that exceeds the time frames of most scientific studies. Increasingly robust networks of indigenous peoples and local communities dedicated to monitoring with a hybrid of traditional and scientific methods are generating important information about the status of wild species and their uses (well established) {2.3.3, 3.4, 4.2}.
 
 (C.3.2) Policy instruments and tools are more effective when they are inclusive of plural knowledge systems (well established) {1.1.2, 1.4, 2.2.6, 2.2.8, 6.6.2}. Bringing together scientists and holders of indigenous and local knowledge improves decision-making (well established) {2.2.3, 3.4, 4.2}. Co-production of knowledge by indigenous peoples and local communities and scientists can create robust information about social and ecological conditions and enhance decision-making (well established) {1.1.2, 1.4, 2.2.6, 2.2.8, 4.2.2.2, 6.5.1.1, 6.5.1.2}. While there is global recognition of the importance of indigenous and local knowledge in sustainable management of wild species, national policy initiatives often do not involve indigenous peoples and local communities in decision-making. Inclusion of indigenous peoples and local communities in the development and implementation of policies for sustainable use of wild species requires sustained commitment and recognition of both indigenous and local knowledge and science as authoritative; doing so can be mutually beneficial. It is also important that engagement with indigenous peoples and local communities ensure free, prior and informed consent and follows international protocols on access and benefit sharing, for example based on the Nagoya Protocol on Access to Genetic Resources and the Fair and Equitable Sharing of Benefits Arising from their Utilization to the Convention on Biological Diversity (well established) {1.1.2, 1.4, 2.2.6, 6.4.4.2, 6.5.3.3}. Legal and regulatory instruments are more effective when they take into account indigenous and local knowledge and science (well established) {6.5.3.3}.""" ;
@@ -66193,6 +66152,7 @@ In the Sundarbans, the women, who collect prawn seed along the rivers, are the p
         <http://ontology.ipbes.net/report/bgm/SUA22-C.2>,
         <http://ontology.ipbes.net/report/bgm/SUA22-C.3> ;
     ipbes:Report ipbes:SUA22 ;
+    ipbes:hasCategory "C. Key elements and conditions for the sustainable use of wild species" ;
     ipbes:hasDescription "Policy instruments and tools are most successful when they pay attention to and fit both the ecological and social contexts in which they are applied. Many policy instruments for the sustainable use of wild species have been successful in some circumstances, but have failed in others." ;
     dcterms:identifier "C" ;
     skos:prefLabel "Key elements and conditions for the sustainable use of wild species" .
@@ -67432,6 +67392,7 @@ The spread of illegal logging and other forest crimes into protected areas occur
         <http://ontology.ipbes.net/report/bgm/SUA22-D.2>,
         <http://ontology.ipbes.net/report/bgm/SUA22-D.3> ;
     ipbes:Report ipbes:SUA22 ;
+    ipbes:hasCategory "D. Pathways and levers to promote sustainable use and enhance the sustainability of the use of wild species in a dynamic future" ;
     ipbes:hasDescription "There is an urgent need to implement and scale up policy instruments that work, while recognizing the need for adaptive management and transformative changes to address current and future pressures and challenges. Scenarios point to a future where the sustainability of the use of wild species will become increasingly vulnerable to pressures associated with climate change, technological advances and increasing consumption." ;
     dcterms:identifier "D" ;
     skos:prefLabel "Pathways and levers to promote sustainable use and enhance the sustainability of the use of wild species in a dynamic future" .
@@ -67542,6 +67503,7 @@ The reviewed studies employed a wide range of indicators, most commonly catches 
         <http://ontology.ipbes.net/report/bgm/SUA22-A.2>,
         <http://ontology.ipbes.net/report/bgm/SUA22-A.3> ;
     ipbes:Report ipbes:SUA22 ;
+    ipbes:hasCategory "A. Sustainable use of wild species is critical for people and nature" ;
     ipbes:hasDescription "The use of wild species is widespread and occurs across almost all aquatic and terrestrial ecosystems, in subsistence to global economies, and is embedded in local and global systems, including for food, medicine, hygiene, energy and many other uses. Addressing the causes of unsustainable use and promoting and ensuring the sustainable use of wild species are critical for people and to address biodiversity decline." ;
     dcterms:identifier "A" ;
     skos:prefLabel "Sustainable use of wild species is critical for people and nature" .
@@ -68395,6 +68357,7 @@ Land occupation and timber extraction through conventional industrial logging ha
         <http://ontology.ipbes.net/report/bgm/SUA22-B.2>,
         <http://ontology.ipbes.net/report/bgm/SUA22-B.3> ;
     ipbes:Report ipbes:SUA22 ;
+    ipbes:hasCategory "B. Status and trends in uses of wild species" ;
     ipbes:hasDescription "Status and trends in uses of wild species display strong disparities according to the social and ecological contexts in which they occur. Although common principles of sustainable use have been identified, methods and tools to assess the sustainability of the use of wild species are constrained by lack of a comprehensive set of indicators, especially regarding non-extractive use and social components of extractive uses." ;
     dcterms:identifier "B" ;
     skos:prefLabel "Status and trends in uses of wild species" .
@@ -71669,17 +71632,10 @@ ipbes:SUA22 a ipbes:Report ;
     ipbes:year "2022" ;
     skos:altLabel "IPBES Sustainable Use Assessment" ;
     skos:prefLabel "The Thematic Assessment Report on the Sustainable Use of Wild Species of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services" ;
-    foaf:Person <http://ontology.ipbes.net/report/person/AndradePérez_GermánIgnacio>,
-        <http://ontology.ipbes.net/report/person/Danner_Marie-Claire>,
-        <http://ontology.ipbes.net/report/person/Demissew_Sebsebe>,
+    foaf:Person <http://ontology.ipbes.net/report/person/Danner_Marie-Claire>,
         <http://ontology.ipbes.net/report/person/Donaldson_John>,
         <http://ontology.ipbes.net/report/person/Emery_MarlaR>,
         <http://ontology.ipbes.net/report/person/Fromentin_Jean-Marc>,
         <http://ontology.ipbes.net/report/person/Hallosserie_Agnès>,
-        <http://ontology.ipbes.net/report/person/HernandezSalgar_AnaMaría>,
-        <http://ontology.ipbes.net/report/person/Kieling_Daniel>,
-        <http://ontology.ipbes.net/report/person/Saw_LengGuan>,
-        <http://ontology.ipbes.net/report/person/Stenseke_Marie>,
-        <http://ontology.ipbes.net/report/person/Taleb_MohammedSghir>,
-        <http://ontology.ipbes.net/report/person/Wu_Ning> .
+        <http://ontology.ipbes.net/report/person/Kieling_Daniel> .
 
