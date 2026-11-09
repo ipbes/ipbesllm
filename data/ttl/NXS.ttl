@@ -2102,6 +2102,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
 <http://ontology.ipbes.net/report/il/NXS24-Figure5.0.1> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.0> ;
+    ipbes:hasDescription "This chapter builds on Chapters 1 to 4 to examine response options specific to each element of the nexus." ;
     dcterms:identifier "Figure5.0.1" ;
     skos:prefLabel "Organization of the Nexus Assessment chapters." .
 
@@ -2213,7 +2214,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.1> ;
     dcterms:identifier "Figure5.1.6" ;
-    skos:prefLabel "The Xinshe socioecological production landscape and seascape," .
+    skos:prefLabel "The Xinshe socioecological production landscape and seascape, Xinshe Village, Hualien County, Taiwan, Province of China." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Figure5.1.7> a ipbes:Figure,
         ipbes:Illustration ;
@@ -2432,7 +2433,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.3> ;
     dcterms:identifier "Figure5.3.8" ;
-    skos:prefLabel "Building Africa's Great Green Wall: Landscape restoration needs and" .
+    skos:prefLabel "Building Africa's Great Green Wall: Landscape restoration needs and opportunities." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Figure5.3.9> a ipbes:Figure,
         ipbes:Illustration ;
@@ -2662,7 +2663,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.5> ;
     dcterms:identifier "Figure5.5.7" ;
-    skos:prefLabel "The Andhra Pradesh Community Managed Natural Farming initiative in" .
+    skos:prefLabel "The Andhra Pradesh Community Managed Natural Farming initiative in India." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Figure5.5.8> a ipbes:Figure,
         ipbes:Illustration ;
@@ -2999,7 +3000,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.1> ;
     dcterms:identifier "Table5.1.2" ;
-    skos:prefLabel "Comparison of four dimensions of biodiversity management between classic" .
+    skos:prefLabel "Comparison of four dimensions of biodiversity management between classic conservation and nexus approaches." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Table5.1.3> a ipbes:Illustration,
         ipbes:Table ;
@@ -3068,7 +3069,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.3> ;
     dcterms:identifier "Table5.3.10" ;
-    skos:prefLabel "Dimensions of Indigenous Peoples’ and local communities’ relationships to" .
+    skos:prefLabel "Dimensions of Indigenous Peoples’ and local communities’ relationships to their food systems." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Table5.3.2> a ipbes:Illustration,
         ipbes:Table ;
@@ -3093,7 +3094,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.3> ;
     dcterms:identifier "Table5.3.5" ;
-    skos:prefLabel "Examples of approaches for halting conversion of ecosystems of high" .
+    skos:prefLabel "Examples of approaches for halting conversion of ecosystems of high ecological integrity." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Table5.3.6> a ipbes:Illustration,
         ipbes:Table ;
@@ -3143,7 +3144,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.5> ;
     dcterms:identifier "Table5.5.10" ;
-    skos:prefLabel "Impacts of the restoration of blue carbon ecosystems on biodiversity, water," .
+    skos:prefLabel "Impacts of the restoration of blue carbon ecosystems on biodiversity, water, food, health and climate change mitigation and adaptation." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Table5.5.11> a ipbes:Illustration,
         ipbes:Table ;
@@ -3156,7 +3157,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.5> ;
     dcterms:identifier "Table5.5.12" ;
-    skos:prefLabel "Integrated urban nature-based solution actions in Medellin with" .
+    skos:prefLabel "Integrated urban nature-based solution actions in Medellin with climate-biodiversity-social focus." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Table5.5.13> a ipbes:Illustration,
         ipbes:Table ;
@@ -3168,7 +3169,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.5> ;
     dcterms:identifier "Table5.5.14" ;
-    skos:prefLabel "Benefits of promoting traditional, local, healthy diets through school" .
+    skos:prefLabel "Benefits of promoting traditional, local, healthy diets through school meal programs in the Arara’s Indigenous territories." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Table5.5.15> a ipbes:Illustration,
         ipbes:Table ;
@@ -3181,13 +3182,13 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.5> ;
     dcterms:identifier "Table5.5.16" ;
-    skos:prefLabel "Ethical, values-based and world view frameworks for contextualising climate" .
+    skos:prefLabel "Ethical, values-based and world view frameworks for contextualising climate actions." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Table5.5.17> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.5> ;
     dcterms:identifier "Table5.5.17" ;
-    skos:prefLabel "Potential contributions of Indigenous and local knowledge to enhance climate" .
+    skos:prefLabel "Potential contributions of Indigenous and local knowledge to enhance climate action." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Table5.5.18> a ipbes:Illustration,
         ipbes:Table ;
@@ -3306,7 +3307,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-7.4> ;
     dcterms:identifier "Table7.11" ;
-    skos:prefLabel "Capacity gaps identified in the Nexus Assessment chapters with traceability to the" .
+    skos:prefLabel "Capacity gaps identified in the Nexus Assessment chapters with traceability to the assessment chapter sections." .
 
 <http://ontology.ipbes.net/report/il/NXS24-Table7.12> a ipbes:Illustration,
         ipbes:Table ;
@@ -3369,7 +3370,7 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
 <http://ontology.ipbes.net/report/il/NXS24-TableSPM.A1> a ipbes:Illustration,
         ipbes:Table ;
     dcterms:identifier "TableSPM.A1" ;
-    skos:prefLabel "Summary of key categories and types of knowledge and data gaps from the" .
+    skos:prefLabel "Summary of key categories and types of knowledge and data gaps from the nexus assessment." .
 
 <http://ontology.ipbes.net/report/intro/NXS24-Introduction> a ipbes:Introduction ;
     ipbes:Illustration <http://ontology.ipbes.net/report/il/NXS24-FigureSPM.1> ;
@@ -42155,7 +42156,7 @@ The assessment has also revealed a number of knowledge gaps across key areas of 
 <http://ontology.ipbes.net/report/subm/NXS24-C6-SM0> a ipbes:SubMessage ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/NXS24-5.2.3.8> ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "cooperation facilitates sustainable management of resources at the basin scale and better collaboration between sectors and stakeholders (W08) (well established) {5.2.3.8}." ;
+    ipbes:hasDescription "Transboundary water cooperation facilitates sustainable management of resources at the basin scale and better collaboration between sectors and stakeholders (W08) (well established) {5.2.3.8}." ;
     dcterms:identifier "5.2.3.8" .
 
 <http://ontology.ipbes.net/report/subm/NXS24-C6-SM1> a ipbes:SubMessage ;
@@ -52854,9 +52855,9 @@ From a nexus perspective, the potential contribution of funds such as the GCF to
         <http://ontology.ipbes.net/report/subm/NXS24-C6-SM3> ;
     ipbes:hasCategory "C. Response options that address nexus interactions" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "cooperation facilitates sustainable management of resources at the basin scale and better collaboration between sectors and stakeholders (W08) (well established) {5.2.3.8}. Improving groundwater governance (W09) through cooperation across scales, where appropriate, and support for community water management (W15) increase benefits across the nexus elements, while integrated water infrastructure (W02) and water-sensitive urban infrastructure (W13), which take advantage of natural systems to reduce risks from floods and other hazards, deliver benefits for food production and contribute to climate change mitigation and adaptation (well established) {5.2.3.2, 5.2.3.9, 5.2.3.13, 5.2.3.15}. Integrating disease management within landscapes, including inland water bodies, and seascapes can reduce risks of waterborne and other diseases and provide wider benefits from protecting water quality and biodiversity (H12) (well established) {5.4.3.12}. Local solutions often emerge from coordinated networks by drawing on social knowledge and integrating actions across sectors by increasing collaboration among diverse actors (Figure SPM.9) (well established) {5.1.3.9, 5.1.3.12, 5.2.3.8, 5.2.3.15, 5.3.1, 5.4.3.12, 5.5.4.1}. For example, in the lower Mekong basin, multisectoral development agreements and investments, alongside integrated governance from the local to the watershed level, were critical for implementing a long-term intergovernmental sustainable river management plan {5.2.3.8, 5.2.4, Box 5.2.10}." ;
+    ipbes:hasDescription "Transboundary water cooperation facilitates sustainable management of resources at the basin scale and better collaboration between sectors and stakeholders (W08) (well established) {5.2.3.8}. Improving groundwater governance (W09) through cooperation across scales, where appropriate, and support for community water management (W15) increase benefits across the nexus elements, while integrated water infrastructure (W02) and water-sensitive urban infrastructure (W13), which take advantage of natural systems to reduce risks from floods and other hazards, deliver benefits for food production and contribute to climate change mitigation and adaptation (well established) {5.2.3.2, 5.2.3.9, 5.2.3.13, 5.2.3.15}. Integrating disease management within landscapes, including inland water bodies, and seascapes can reduce risks of waterborne and other diseases and provide wider benefits from protecting water quality and biodiversity (H12) (well established) {5.4.3.12}. Local solutions often emerge from coordinated networks by drawing on social knowledge and integrating actions across sectors by increasing collaboration among diverse actors (Figure SPM.9) (well established) {5.1.3.9, 5.1.3.12, 5.2.3.8, 5.2.3.15, 5.3.1, 5.4.3.12, 5.5.4.1}. For example, in the lower Mekong basin, multisectoral development agreements and investments, alongside integrated governance from the local to the watershed level, were critical for implementing a long-term intergovernmental sustainable river management plan {5.2.3.8, 5.2.4, Box 5.2.10}." ;
     dcterms:identifier "C6" ;
-    skos:prefLabel "Integrated approaches incorporating planning and governance for the use of landscapes and seascapes are effective for addressing complex sustainability challenges for biodiversity, food, water, health and climate change (Figures SPM.7 and SPM.8) (well established) {5.1.3.9, 5.1.3.12, 5.2.3.2, 5.2.3.8, 5.2.3.9, 5.2.3.13, 5.2.3.15, 5.3.3.12, 5.4.3.12, 5.6}. Response options involving mainstreaming biodiversity across sectors primarily target biodiversity, but they also have considerable potential to benefit other nexus elements and thereby support important policy goals, including the Sustainable Development Goals, the Kunming-Montreal Global Biodiversity Framework and the Paris Agreement (well established) {5.1.1.4, 5.1.3.9, 5.1.3.12, 5.3.3.12, 5.4.3.12}. Response options that integrate across landscapes and seascapes (B09) and that involve strategic land and sea planning (B12, F12) produce nexus-wide benefits by implementing several actions either together (i.e., in bundles) or sequentially to take advantage of synergies (Figure SPM.9) (well established) {5.1.3.9, 5.1.3.12, 5.3.3.12}. Nexus-wide benefits of such integrated approaches include conservation of both terrestrial and marine biodiversity, improved water quality in both freshwater and coastal zones, strengthened natural infrastructure (e.g., mangroves, riverside forests) to buffer climate extremes and more equitable sharing of these benefits resulting from the involvement of Indigenous Peoples and local communities in decision-making, development and implementation (well established) {5.1.3.9, 5.1.3.12, 5.3.3.12}. These response options support targets 1 and 12 of the Kunming-Montreal Global Biodiversity Framework. Transboundary water" .
+    skos:prefLabel "Integrated approaches incorporating planning and governance for the use of landscapes and seascapes are effective for addressing complex sustainability challenges for biodiversity, food, water, health and climate change (Figures SPM.7 and SPM.8) (well established) {5.1.3.9, 5.1.3.12, 5.2.3.2, 5.2.3.8, 5.2.3.9, 5.2.3.13, 5.2.3.15, 5.3.3.12, 5.4.3.12, 5.6}. Response options involving mainstreaming biodiversity across sectors primarily target biodiversity, but they also have considerable potential to benefit other nexus elements and thereby support important policy goals, including the Sustainable Development Goals, the Kunming-Montreal Global Biodiversity Framework and the Paris Agreement (well established) {5.1.1.4, 5.1.3.9, 5.1.3.12, 5.3.3.12, 5.4.3.12}. Response options that integrate across landscapes and seascapes (B09) and that involve strategic land and sea planning (B12, F12) produce nexus-wide benefits by implementing several actions either together (i.e., in bundles) or sequentially to take advantage of synergies (Figure SPM.9) (well established) {5.1.3.9, 5.1.3.12, 5.3.3.12}. Nexus-wide benefits of such integrated approaches include conservation of both terrestrial and marine biodiversity, improved water quality in both freshwater and coastal zones, strengthened natural infrastructure (e.g., mangroves, riverside forests) to buffer climate extremes and more equitable sharing of these benefits resulting from the involvement of Indigenous Peoples and local communities in decision-making, development and implementation (well established) {5.1.3.9, 5.1.3.12, 5.3.3.12}. These response options support targets 1 and 12 of the Kunming-Montreal Global Biodiversity Framework." .
 
 <http://ontology.ipbes.net/report/bgm/NXS24-D1> a ipbes:BackgroundMessage ;
     ipbes:Illustration <http://ontology.ipbes.net/report/il/NXS24-FigureSPM.11> ;
@@ -69028,9 +69029,7 @@ Food can be a transformative intervention across nexus elements (well establishe
 
 Addressing challenges in biodiversity, water systems, food systems, human health and climate change in isolation can create unintended trade-offs, hindering progress in other areas {1.1.1, 1.1.2}. Siloed policies, i.e., those that treat nexus elements in isolation, can lead to unintended consequences and trade-offs among the elements. Such policies often result in disjointed approaches, including creating gaps and loopholes that allow harmful practices to continue, conflicting objectives and inefficient use of resources. They also tend to maintain the status quo by focusing on the immediate symptoms of environmental challenges, rather than addressing their root causes and interlinkages. A nexus approach recognizes challenges within each element are interconnected with other elements across multiple spatial and temporal scales. By improving understanding of these interconnections and identifying opportunities for collaboration across sectors and scales, the findings of the Nexus Assessment will contribute to synergistic and holistic management and governance {1.1.4}.
 
-Despite increasing evidence of the benefits of nexus approaches for integrated decision-making, five
-
-key challenges have limited its uptake in policy and practice: navigating social-ecological complexity; fragmented, sectoral and siloed decision-making; neglecting multiple and diverse values; inadequate and inappropriate scaling of actions; and insufficient, inaccessible and unpredictable finance {1.1.2}. Solving for these challenges involves: (a) embracing the complexity of nexus interactions through consideration of the interdependencies, dynamics, fluxes and feedback loops between different nexus elements; (b) fostering governance that engages different actors across the nexus elements to achieve policy change and meet international and domestic goals and objectives, including with response options that promote synergies and manage for trade-offs; (c) recognizing pluralistic values and knowledge systems of actors, including Indigenous Peoples and local communities, to effectively navigate potential conflicts, build trust and mobilize collective action; (d) overcoming mismatches across temporal and spatial scales and identifying the key processes and enabling conditions to scale up holistic solutions; and (e) redesigning financial systems and mechanisms for implementing nexus approaches {1.1.2}. New tools, approaches and indicators that enable understanding and monitoring of the interlinkages between nexus elements and assist in decision-making and meeting governance goals are thus increasingly important {1.1.2.4, 1.3.4}.
+Despite increasing evidence of the benefits of nexus approaches for integrated decision-making, five key challenges have limited its uptake in policy and practice: navigating social-ecological complexity; fragmented, sectoral and siloed decision-making; neglecting multiple and diverse values; inadequate and inappropriate scaling of actions; and insufficient, inaccessible and unpredictable finance {1.1.2}. Solving for these challenges involves: (a) embracing the complexity of nexus interactions through consideration of the interdependencies, dynamics, fluxes and feedback loops between different nexus elements; (b) fostering governance that engages different actors across the nexus elements to achieve policy change and meet international and domestic goals and objectives, including with response options that promote synergies and manage for trade-offs; (c) recognizing pluralistic values and knowledge systems of actors, including Indigenous Peoples and local communities, to effectively navigate potential conflicts, build trust and mobilize collective action; (d) overcoming mismatches across temporal and spatial scales and identifying the key processes and enabling conditions to scale up holistic solutions; and (e) redesigning financial systems and mechanisms for implementing nexus approaches {1.1.2}. New tools, approaches and indicators that enable understanding and monitoring of the interlinkages between nexus elements and assist in decision-making and meeting governance goals are thus increasingly important {1.1.2.4, 1.3.4}.
 
 The conceptualization of the nexus developed within the assessment can be mapped to the IPBES conceptual framework {1.2.3}. Nexus elements interact in complex ways and can be conceptualized as interweaving threads that run through the different components of the IPBES conceptual framework. While biodiversity is clearly associated with the nature component and climate change with the direct drivers component of the IPBES conceptual framework, all five nexus elements can be mapped onto all other components. For example, nature’s contributions to people includes food provisioning, regulation of water quality and climate, and physical and psychological experiences. All elements are also related to good quality of life in terms of health and well-being, including food and water security. The complexity of the nexus approach means that elements are not always easily separated into single components of the IPBES conceptual framework. For example, elements can act as negative drivers (e.g., food production on biodiversity and water) or support positive benefits in other nexus elements (e.g., biodiversity and water to food, or food to health) depending on context.
 
@@ -69151,17 +69150,13 @@ Increased future freshwater demand for food production and other uses can have n
 
 Transformative change across the food system is central to unlocking co-benefits for biodiversity, nutritional health, climate change and water (well established). The food system is important in many scenarios evaluating biodiversity impacts within the nexus for both terrestrial and marine realms (well established). For example, national scale increases in food imports have been shown to cause indirect land-use change, such as deforestation, in exporting countries (established but incomplete) {3.2.3, 3.2.4}. The current agricultural area can potentially feed future human populations in the medium to long-term while reducing greenhouse gas emissions and water pollution (well established) {3.4.3.1} through sustainable agricultural practices and improving nitrogen use efficiency from the current 35 to 44 per cent to 70 to 80 per cent, combined with a reduction in the over-consumption of meat and optimal crop food-feed ratios (well established) {3.4.3.1}. Positive food system scenarios also include sustainably managed fisheries, healthy diets that are less resource intensive and distributing food more equitably (well established) {3.4.2, 3.4.3}.
 
-There are clear co-benefits to nutritional health from widespread adoption of a less meat intensive
-
-diet, which could provide sustainable healthy diets for 10 billion people in 2050, preventing 19 to 24 per cent of total deaths per year among adults caused by insufficient food and unhealthy diets, without overstepping global biophysical limits (established but incomplete) {3.4.2}. Reductions in livestock numbers due to reduced intake of animal-based foods would reduce the demand for plant proteins such as soy used for animal feed and the land area used for pasture (established but incomplete) {3.4.2}. However, increases in the production of plant-based proteins in tropical regions could have negative impacts on biodiversity (established but incomplete) {3.4.2}.
+There are clear co-benefits to nutritional health from widespread adoption of a less meat intensive diet, which could provide sustainable healthy diets for 10 billion people in 2050, preventing 19 to 24 per cent of total deaths per year among adults caused by insufficient food and unhealthy diets, without overstepping global biophysical limits (established but incomplete) {3.4.2}. Reductions in livestock numbers due to reduced intake of animal-based foods would reduce the demand for plant proteins such as soy used for animal feed and the land area used for pasture (established but incomplete) {3.4.2}. However, increases in the production of plant-based proteins in tropical regions could have negative impacts on biodiversity (established but incomplete) {3.4.2}.
 
 Foods from freshwater and marine environments can contribute positively to health, climate change mitigation and adaptation and biodiversity conservation (well established) {3.4.3.2}. Fisheries scenarios show that climate change and the choice of management practices could negatively affect marine ecosystems and the long-term availability of marine food (well established) {3.4.3.2}. Sustainable fishing practices, including the use of efficient fisheries restricted areas, would ensure sustainable production (well established) {3.4.3.2}. Sustainable mariculture is a potential alternative to continuing deteriorating fish stocks and is expected to grow in the future as an important source of nutrition (established but incomplete) {3.4.3.2}, although some regions will face greater climate change challenges. Countries with less affected maricultural sectors could add stability through trade (established but incomplete) {3.4.3.2}.
 
 Scenarios show that land-use change influences the exposure of humans to zoonotic hazards. The distribution of several vector-borne diseases is projected to shift towards higher latitudes and altitudes under climate change scenarios (established but incomplete) {3.5.2}. Changes in biodiversity, land-use and land cover, and social behaviour will shape future disease emergence {3.5.2.1}. New mammal assemblages and viral evolution hotspots are projected to occur in areas of high human population density, which could act as starting points for newly emerging zoonoses (established but incomplete) {3.5.1, 3.5.2}. However, these effects will vary locally depending on the implementation of individual and public health prevention measures {3.5.1, 3.5.2}. Some non-native arthropod disease vectors may colonise new locations under warmer temperatures. For other vectors of human diseases, the geographic extent of habitable regions in some localised terrestrial landscapes could decrease with a warming climate (established but incomplete) {3.5.2}.
 
-Urban green and blue space can have positive effects on mental and physical health and other nexus elements (climate change mitigation, food production and water regulation), including the improvement of local micro-economic conditions
-
-and social cohesion (established but incomplete) {3.5.3}. As land-use, precipitation, temperature and extreme weather patterns change, opportunities for urban and coastal green spaces to support mental health and physical exercise are projected to diminish {3.5.3}. Under high-end climate scenarios, cyanobacterial and algal blooms would elicit marine biodiversity imbalances that downgrade the recreational value of fisheries and the support functions of marine and coastal ecosystems (established but incomplete) {3.3.1, 3.5.3}.
+Urban green and blue space can have positive effects on mental and physical health and other nexus elements (climate change mitigation, food production and water regulation), including the improvement of local micro-economic conditions and social cohesion (established but incomplete) {3.5.3}. As land-use, precipitation, temperature and extreme weather patterns change, opportunities for urban and coastal green spaces to support mental health and physical exercise are projected to diminish {3.5.3}. Under high-end climate scenarios, cyanobacterial and algal blooms would elicit marine biodiversity imbalances that downgrade the recreational value of fisheries and the support functions of marine and coastal ecosystems (established but incomplete) {3.3.1, 3.5.3}.
 
 Scenarios indicate the importance of early climate change mitigation actions, with further delays expected to be more costly. Delay will also require land-based carbon dioxide removal at large scale that would increase competition for land and water (well established) {3.6.3}. Delays in mitigation actions will cause greater trade-offs across the nexus, jeopardizing water supply, biodiversity and habitat restoration as well as food security (well established) {3.6, 3.6.3}. A holistic portfolio of integrated measures across the nexus would contribute to climate change mitigation while also benefiting sustainable development (established but incomplete) {3.6.3}. For example, ecosystem restoration, sustainable production and consumption, dietary and energy transitions promise benefits across multiple nexus elements (well established) {3.6.3}. The ocean is a major climate change mitigator with many solutions focusing on the placement of excess carbon in deep water, but these solutions are still far from implementation and knowledge is lacking about potential impacts on biodiversity and food (established but incomplete) {3.6.3.2}. Scenarios of continuation of current trends for climate change mitigation (and adaptation) tend to be more costly and less just than scenarios based on a holistic portfolio of integrated measures across nexus elements (established but incomplete) {3.6.3}.
 
@@ -69340,9 +69335,7 @@ Major research gaps need to be addressed to enable the financial sector to contr
     ipbes:Report ipbes:NXS24 ;
     ipbes:hasDescription """Biodiversity continues to decline, leading to significant cascading impacts on health, food, water and climate systems, and influencing human well-being and environmental sustainability (well established) {2.2, 2.4, 2.5}. The relative abundance of the global wildlife population has declined on average 69 per cent between 1970 and 2018, with a greater decline for Latin America (94 per cent) when compared to other regions of the world. Likewise, freshwater species also show greater overall decline (83 per cent) than terrestrial and marine species (well established) {2.3.3}. Biodiverse ecosystems regulate the hydrological cycle, ensuring water supply and purification which is crucial for human consumption, agriculture and maintaining natural habitats. Forests, grasslands, wetlands and mountains play pivotal roles in this process, but their degradation compromises water quality and availability (well established) {2.4.1}. In the food system, biodiversity supports the resilience and productivity of agriculture through pollination, pest control and soil health (well established) {2.4.1}. However, modern (i.e., conventional) agricultural practices and climate change drive biodiversity loss, leading to reduced nutritional diversity and food security, especially for smallholder farmers who form the backbone of global food production. Monocultures and the over-reliance on a few crop species exacerbate these issues, impacting both human health and ecosystem stability, with diet-related non-communicable diseases a major cause of the global burden of disease (well established) {2.4.1}. Biodiversity also directly influences human health through better mental health outcomes, natural products used in traditional and modern medicine and through the regulation of air and water quality (well established) {2.4.3}. The loss of biodiversity increases the risk of zoonotic diseases as human activities encroach on natural habitats, disrupting the balance of ecosystems and increasing human exposure to pathogens (established, but incomplete) {2.4.3}. Climate change further stresses biodiversity, altering species distributions and ecosystem functions, leading to the extinction of vulnerable species and the spread of invasive species (well established) {2.4.4}. This creates feedback loops that exacerbate climate impacts, highlighting the critical need for biodiversity conservation to sustain nature’s contributions to people and mitigate and adapt to climate change effects (well established) {2.4.4}.
 
-Indirect drivers such as economic growth, population dynamics, urbanization and institutional policies
-
-underpin trends in direct drivers, thereby impacting biodiversity, water, food, health and climate change (well established) {2.3.2}. Economic expansion and increased trade drive changes in land and resource use, intensifying exploitation and pollution while at the same time fostering prosperity and poverty alleviation. However, this growth often correlates with higher greenhouse gas emissions and environmental degradation (well established) {2.3.2.1}. Population growth and urbanization increase the demand for housing, food and energy, leading to further land- and sea-use changes, pollution, and resource extraction (well established) {2.3.2.2}. Institutional drivers, including environmental policies and regulations, can mitigate or exacerbate these impacts (well established) {2.3.2.3}. Effective policies and regulations have succeeded in reducing pollution in some regions but have often fallen short globally (well established) {2.3.2.3}. Additionally, cultural drivers, such as increasing per-capita consumption, intensify the demand for resources, leading to further exploitation and environmental degradation (well established) {2.3.2.4; 2.3.2.5}. Finally, in addition to resulting in the loss of human lives, destruction of nature, loss of agricultural land, water supply and pollution, the increasing number of armed conflicts in various places of the world diverts political capacity from fostering engagement in fighting climate change and biodiversity decline (established but incomplete) {2.3.2}.
+Indirect drivers such as economic growth, population dynamics, urbanization and institutional policies underpin trends in direct drivers, thereby impacting biodiversity, water, food, health and climate change (well established) {2.3.2}. Economic expansion and increased trade drive changes in land and resource use, intensifying exploitation and pollution while at the same time fostering prosperity and poverty alleviation. However, this growth often correlates with higher greenhouse gas emissions and environmental degradation (well established) {2.3.2.1}. Population growth and urbanization increase the demand for housing, food and energy, leading to further land- and sea-use changes, pollution, and resource extraction (well established) {2.3.2.2}. Institutional drivers, including environmental policies and regulations, can mitigate or exacerbate these impacts (well established) {2.3.2.3}. Effective policies and regulations have succeeded in reducing pollution in some regions but have often fallen short globally (well established) {2.3.2.3}. Additionally, cultural drivers, such as increasing per-capita consumption, intensify the demand for resources, leading to further exploitation and environmental degradation (well established) {2.3.2.4; 2.3.2.5}. Finally, in addition to resulting in the loss of human lives, destruction of nature, loss of agricultural land, water supply and pollution, the increasing number of armed conflicts in various places of the world diverts political capacity from fostering engagement in fighting climate change and biodiversity decline (established but incomplete) {2.3.2}.
 
 Direct drivers of biodiversity loss—land- and sea-use changes, unsustainable exploitation of species and resources, climate change, pollution and invasive alien species—have significant but varying impacts across different world regions and ecosystems. These direct drivers influence multiple nexus elements and thus human well-being by altering nature’s contributions to people that are essential for food security, clean water and health (well established) {2.3.1}. Land- and sea-use changes, including deforestation and expansion of agricultural lands, are major contributors to biodiversity decline, particularly in tropical regions where forests and savannas are converted for cattle ranching and crop cultivation (well established) {2.3.1.1}. This transformation reduces biodiversity and contributes to climate change by increasing greenhouse gas emissions (well established) {2.3.1.1, 2.4.4}. Unsustainable agricultural practices and land degradation have led to a loss of nature’s contributions to people, with an associated cost of $6.3 trillion/year in the first decade of the 21st century {2.3.1.1}. Urban expansion affects local climates and exacerbates health issues due to pollution and reduced green spaces. Direct exploitation, such as overfishing and resource extraction, exacerbates biodiversity loss while providing resources for the growing human population (well established) {2.3.1.1}. However, this leads to ecological degradation and greenhouse gas emissions, further impacting climate change and health (well established) {2.3.1.2}. Pollution from fertilizers and pesticides used in agriculture contaminates water sources and soils, posing risks to both ecosystems and human health (well established) {2.3.1.3}. Additionally, invasive alien species disrupt local ecosystems, leading to significant biodiversity loss and affecting food supplies (well established) {2.3.1.4}.
 

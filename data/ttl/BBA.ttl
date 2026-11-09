@@ -2148,6 +2148,12 @@ Despite these advances, the availability of tools remains limited, and there are
     dcterms:identifier "FigureSPM.3" ;
     skos:prefLabel "Impacts and dependencies of business on biodiversity and nature’s contributions to people." .
 
+<http://ontology.ipbes.net/report/il/BBA26-FigureSPM.6> a ipbes:Figure,
+        ipbes:Illustration ;
+    ipbes:hasDoi "10.5281/zenodo.19702935" ;
+    dcterms:identifier "FigureSPM.6" ;
+    skos:prefLabel "Examples of appropriate measurement approaches at different decision- making levels." .
+
 <http://ontology.ipbes.net/report/il/BBA26-TableSPM.1> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:hasDoi "10.5281/zenodo.19702935" ;
@@ -15137,10 +15143,9 @@ Location-based observations and participatory approaches are required to assess 
     dcterms:identifier "4.2.1" .
 
 <http://ontology.ipbes.net/report/subm/BBA26-C2-SM0> a ipbes:SubMessage ;
-    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-FigureSPM.6> ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/BBA26-4.4> ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "levels (Figure SPM.6). Location-based observations (including relevant maps and remote sensing) can inform biodiversity assessments at the operations level for all business purposes, often with existing data, but may require significant data gathering to inform decisions requiring greater geographical coverage (e.g., decisions that affect value chains, corporate strategies and portfolios) (well established) {4.4}." ;
+    ipbes:hasDescription "Location-based observations (including relevant maps and remote sensing) can inform biodiversity assessments at the operations level for all business purposes, often with existing data, but may require significant data gathering to inform decisions requiring greater geographical coverage (e.g., decisions that affect value chains, corporate strategies and portfolios) (well established) {4.4}." ;
     dcterms:identifier "4.4" .
 
 <http://ontology.ipbes.net/report/subm/BBA26-C2-SM1> a ipbes:SubMessage ;
@@ -15446,12 +15451,6 @@ Location-based observations and participatory approaches are required to assess 
     ipbes:hasDoi "10.5281/zenodo.19702935" ;
     dcterms:identifier "FigureSPM.5" ;
     skos:prefLabel "Actions by businesses to address their impacts and dependencies and contribute to creating an enabling environment." .
-
-<http://ontology.ipbes.net/report/il/BBA26-FigureSPM.6> a ipbes:Figure,
-        ipbes:Illustration ;
-    ipbes:hasDoi "10.5281/zenodo.19702935" ;
-    dcterms:identifier "FigureSPM.6" ;
-    skos:prefLabel "Examples of appropriate measurement approaches at different decision- making levels." .
 
 <http://ontology.ipbes.net/report/il/BBA26-TableSPM.6> a ipbes:Illustration,
         ipbes:Table ;
@@ -19668,9 +19667,9 @@ Incoherent governmental actions exist, such as biodiversity-harmful incentives l
         <http://ontology.ipbes.net/report/subm/BBA26-C2-SM3> ;
     ipbes:hasCategory "C. Measuring businesses’ impacts and dependencies on biodiversity and nature’s contributions to people" ;
     ipbes:hasConfidenceLevel "well established" ;
-    ipbes:hasDescription "levels (Figure SPM.6). Location-based observations (including relevant maps and remote sensing) can inform biodiversity assessments at the operations level for all business purposes, often with existing data, but may require significant data gathering to inform decisions requiring greater geographical coverage (e.g., decisions that affect value chains, corporate strategies and portfolios) (well established) {4.4}. As a result, decisions at those levels often rely on aggregate metrics and proxies (well established) {4.4}. Bottom-up methods, such as location-based observations and participatory mapping and monitoring, that make use of primary data collection to populate a wide set of metrics and integrate local specificities can effectively represent the diverse values of nature (well established) {4.4}. Aggregate metrics, which are outputs of top-down model-based methods, are not appropriate for measuring changes in biodiversity outcomes at specific sites, for decisions affecting specific sites or for selecting specific investments (well established) {4.4}." ;
+    ipbes:hasDescription "Location-based observations (including relevant maps and remote sensing) can inform biodiversity assessments at the operations level for all business purposes, often with existing data, but may require significant data gathering to inform decisions requiring greater geographical coverage (e.g., decisions that affect value chains, corporate strategies and portfolios) (well established) {4.4}. As a result, decisions at those levels often rely on aggregate metrics and proxies (well established) {4.4}. Bottom-up methods, such as location-based observations and participatory mapping and monitoring, that make use of primary data collection to populate a wide set of metrics and integrate local specificities can effectively represent the diverse values of nature (well established) {4.4}. Aggregate metrics, which are outputs of top-down model-based methods, are not appropriate for measuring changes in biodiversity outcomes at specific sites, for decisions affecting specific sites or for selecting specific investments (well established) {4.4}." ;
     dcterms:identifier "C2" ;
-    skos:prefLabel "Methods exist to support all business decisions, and appropriate methods can be selected according to purpose and decision-making level (well established)." .
+    skos:prefLabel "Methods exist to support all business decisions, and appropriate methods can be selected according to purpose and decision-making level (well established). levels (Figure SPM.6)." .
 
 <http://ontology.ipbes.net/report/bgm/BBA26-C5> a ipbes:BackgroundMessage ;
     ipbes:Report ipbes:BBA26 ;

@@ -203,9 +203,7 @@
 
 <http://ontology.ipbes.net/report/il/GA119-Box1.2> a ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3> ;
-    ipbes:hasDescription """were identified as meaningful and relevant to all stakeholders involved in IPBES during a participatory process, including various disciplines of the natural and social sciences and the humanities, and other knowledge systems, including those of Indigenous Peoples and Local Communities. Text in green denotes scientific concepts, and text in blue denotes concepts originating in other knowledge systems. The solid arrows in the main panel denote influence between elements, and dotted arrows denote links that are acknowledged as important, but that are not the main focus of the Platform. The thick coloured arrows below and to the right of the central panel indicate the scales of time and space, respectively. The intrinsic values of nature (represented by a blue oval at the bottom of the nature box) are interpreted as being independent from human experience and thus do not participate in these arrows (see Section 1.3.1.3). See Supplementary Material 1.1 for glossary, and Díaz et al. (2015a) for further explanation and examples of the links indicated by the different arrows.
-
-This conceptual framework was accepted by the Plenary in decision IPBES/2/4, and the Plenary took note of an update presented in IPBES/5/INF/24 and in decision IPBES/5/1. Further details and examples of the concepts defined in the box can be found in the glossary.
+    ipbes:hasDescription """This conceptual framework was accepted by the Plenary in decision IPBES/2/4, and the Plenary took note of an update presented in IPBES/5/INF/24 and in decision IPBES/5/1. Further details and examples of the concepts defined in the box can be found in the glossary.
 
 • Nature: (also referred as “living nature”) the nonhuman world, including coproduced features, with particular emphasis on living organisms, their diversity, their interactions among themselves and with their abiotic environment. Within the framing of the natural sciences (context of science), nature include e.g., all dimensions of biodiversity, species, genotypes, populations, ecosystems, the biosphere, ecosystem functioning, communities, biomes, Earth life support’s systems, and their associated ecological, evolutionary, biogeochemical processes and biocultural diversity. Within the framework of economics, it includes categories such as biotic natural resources, natural capital and natural assets. Within a wider context of social sciences and humanities and interdisciplinary environmental sciences, it is referred to with categories such as natural heritage, living environment, or the nonhuman. Within the context of other knowledge systems, it includes categories such as Mother Earth (shared by many IPLCs around the world), Pachamama (South American Andes), se¯nluo´-wa`nxia`ng and tien-ti (East Asia), Country (Australia), fonua/vanua/whenua/ples (South Pacific Islands), Iwigara (Northern Mexico), Ixofijmogen (Southern Argentina and Chile), among many others (see Díaz et al., 2015a for references). Other (non-living) components of nature, such as deep aquifers, mineral and fossil reserves, and wind, solar, geothermal and wave power, are not the focus of the Platform. The degree to which humans are considered part of nature varies strongly across these categories (see Section 1.3.1.1). Many aspects of biocultural diversity (see glossary) are part of nature, while some others pertain more to what in the CF is defined as NCP and anthropogenic assets.
 
@@ -490,13 +488,14 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Figure1.2> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3> ;
-    ipbes:hasDescription "The IPBES conceptual framework is a highly simplified model of the complex interactions between the natural world and human societies. The model identifies the main elements (boxes within the main panel outlined in white), together with their interactions (arrows in the main panel), that are most relevant to the Platform’s goal. “Nature”, “nature’s contributions to people” and “good quality of life” (indicated as black headlines and defined in each corresponding box) are inclusive categories that" ;
+    ipbes:hasDescription "The IPBES conceptual framework is a highly simplified model of the complex interactions between the natural world and human societies. The model identifies the main elements (boxes within the main panel outlined in white), together with their interactions (arrows in the main panel), that are most relevant to the Platform’s goal. “Nature”, “nature’s contributions to people” and “good quality of life” (indicated as black headlines and defined in each corresponding box) are inclusive categories that were identified as meaningful and relevant to all stakeholders involved in IPBES during a participatory process, including various disciplines of the natural and social sciences and the humanities, and other knowledge systems, including those of Indigenous Peoples and Local Communities. Text in green denotes scientific concepts, and text in blue denotes concepts originating in other knowledge systems. The solid arrows in the main panel denote influence between elements, and dotted arrows denote links that are acknowledged as important, but that are not the main focus of the Platform. The thick coloured arrows below and to the right of the central panel indicate the scales of time and space, respectively. The intrinsic values of nature (represented by a blue oval at the bottom of the nature box) are interpreted as being independent from human experience and thus do not participate in these arrows (see Section 1.3.1.3). See Supplementary Material 1.1 for glossary, and Díaz et al. (2015a) for further explanation and examples of the links indicated by the different arrows." ;
     dcterms:identifier "Figure1.2" ;
     skos:prefLabel "The IPBES conceptual framework (CF). Source: Díaz et al. (2015a, 2015b)." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure1.3> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3> ;
+    ipbes:hasDescription "A Two perspectives on nature’s contributions to people (NCP) [Source: Díaz et al. (2018)]. NCP can be seen from the generalizing (green, bottom) or from the context-specifi c perspectives (blue, top). From a more generalizing perspective, 18 NCP are distinguished and organized in three broad groups – material, non-material and regulating– of general applicability (represented by the white-line fi gure overlapping the landscape at the bottom, shown in full in B. From a context-specifi c perspective these more universally applicable categories may or may not be meaningful depending on the issue and/or context. For example, a symbolic domain, such as the Warlpiri perspective on nature-human relationships (represented in a highly simplifi ed version by white-line fi gure overlapping the landscape at the bottom) is only one of very many possible" ;
     dcterms:identifier "Figure1.3" ;
     skos:prefLabel "The nature’s contribution to people (NCP) approach and reporting system." .
 
@@ -509,24 +508,30 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Figure1.5> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3> ;
+    ipbes:hasDescription "The grading in the colors indicate that both instrumental and relational values can be ascribed to the value of nature’s contributions to people, and to highlight that nature’s contributions to people are intertwined with nature and a good quality of life." ;
     dcterms:identifier "Figure1.5" ;
     skos:prefLabel "Diverse values related to nature, nature’s contributions to people (NCP) and a" .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure1.6> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3> ;
+    ipbes:hasDescription "The right-hand side of the fi gure shows what Chapters 4 and 5 assessed in terms different types of scenarios within major phases of the policy cycle. The left-hand side of the fi gure shows the relationships between scenarios (burgundy arrows), models (blue arrows) and the key elements of the IPBES conceptual framework. This fi gure was modifi ed from the Summary for policymakers of the methodological assessment of scenarios and models of biodiversity and ecosystem services of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES 2016b)." ;
     dcterms:identifier "Figure1.6" ;
     skos:prefLabel "Scenarios in the Global Assessment." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure1.7> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3> ;
+    ipbes:hasDescription "The top map illustrates the biomes, followed by two maps of anthrome extent: urban and semi-urban areas (in the middle), and cultivated areas (in the bottom). Higher percentages of anthrome area are represented by deeper red tones. For more information on the description of IPBES Units of Analysis please see Supplementary Material 1.5. Access the spatial data layers here: https://doi.org/10.5281/zenodo.3975694." ;
     dcterms:identifier "Figure1.7" ;
     skos:prefLabel "Maps of the IPBES Units of Analysis; depicting both natural biomes and anthromes" .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure1.8> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3> ;
+    ipbes:hasDescription """The left side conveys the fl ow of data to information and knowledge relevant to IPBES, facilitated by a variety of approaches highlighted in colored boxes. Data may lead to knowledge directly or, outside this hierarchy of scientifi c inference, come from other knowledge systems. The right portion illustrates how raw data on temporal or spatial variation in drivers and nature (biodiversity and ecosystem properties and processes) may be combined to establish information about them, such as in the form of metrics, indicators or indices. Other knowledge systems directly contribute to assessment and inference for future projection. A combination of data or information from science and other sources contribute to knowledge about causal associations between drivers and impacts, which may then be used for projection. Source: Walter Jetz, Yale University.
+
+For more information on the list of Core and Highlighted Indicators please see Supplementary Material 1.6 and 1.7.""" ;
     dcterms:identifier "Figure1.8" ;
     skos:prefLabel "Conceptual connection among types of evidence." .
 
@@ -540,24 +545,28 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Figure2.1> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-2.1.1> ;
+    ipbes:hasDescription "The fi rst trajectory is ongoing degradation, the second is stabilization after degradation, and the third is not only stabilization but also a reversal or recovery. The vertical line is a point of transition, whose timing depends upon many factors, including scarcities in nature." ;
     dcterms:identifier "Figure2.1" ;
     skos:prefLabel "1 Illustrative trajectories along differing development pathways for ‘nature’, i.e.," .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure2.2> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-2.2.1> ;
+    ipbes:hasDescription "This fi gure has many parallels with the IPBES conceptual framework (see chapter 1), but emphasises how the multiple scales of governance infl uence both nature’s contributions to people (arrows passing through the box labelled ‘Ecosystem services & other goods and services) and societal feedbacks onto nature’s systems. Figure from Duraiappah et al. (2014)." ;
     dcterms:identifier "Figure2.2" ;
     skos:prefLabel "1 The hierarchical scales of nature, society and governance." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure2.3> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-2.3.1> ;
+    ipbes:hasDescription "The fi gure illustrates the relationship between potential NCP, realized NCP, output, and impact on good quality of life. Ecosystems, as altered by human management, lead to co-production of potential NCP. The combination of potential NCP along with human inputs leads to realized NCP. For some NCP, there is a difference between realized NCP and output, either because of differences between what the NCP measures and what people care about, or because of substitutes. Outputs as modulated by substitutes, institutions, and culture, impact good quality life. Information about how NCP impact on good quality of life can be used to modify human management and inputs, shown by the arrow from impact on good quality of life to the blue region that represents human systems and back to the green region often via natural systems and joint production." ;
     dcterms:identifier "Figure2.3" ;
     skos:prefLabel "1 Differentiation of Potential NCP, Realized NCP, Output, and Impact on Good" .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure3.1> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2> ;
+    ipbes:hasDescription "Positive scores represent an increase in cumulative impact; the maximum cumulative impact score for both periods = 11.1. Source: Halpern et al. (2015a)." ;
     dcterms:identifier "Figure3.1" ;
     skos:prefLabel "Change in cumulative human impact on marine ecosystems between 2008 and" .
 
@@ -570,6 +579,7 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Figure3.11> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.3> ;
+    ipbes:hasDescription "Relations between grabbing (red triangles) and grabbed (green circles) are shown (green lines) only when they are associated with a land grabbing exceeding 100,00 ha. Source: Rulli et al. (2013)." ;
     dcterms:identifier "Figure3.11" ;
     skos:prefLabel "A global map of the land-grabbing network: land-grabbed countries (green disks)" .
 
@@ -582,6 +592,7 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Figure3.13> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.3> ;
+    ipbes:hasDescription "Selected targets are those where current evidence and target wording enable assessment of the consequences for target achievement of trends in nature and nature’s contribution to people. Chapter 3 section 3.3 provides a goal-level assessment of the evidence of links between nature and all Sustainable Development Goals. Scores for targets are based on systematic assessments of the literature and quantitative analysis of indicators where possible. None of the targets scored ‘Full support’ (that is, good status or substantial positive trends at a global scale); consequently, it was not included in the table. ‘Partial support’: the overall global status and trends are good or positive but insubstantial or insuffi cient, or there may be substantial positive trends for some relevant aspects but negative trends for others, or the trends are positive in some geographic regions but negative in others; ‘Poor/Declining support’: poor status or substantial negative trends at a global scale; “Uncertain relationship”: the relationship between nature and/or nature’s contributions to people and achieving the target is uncertain; “Unknown”: insuffi cient information to score the status and trends." ;
     dcterms:identifier "Figure3.13" ;
     skos:prefLabel "Summary of recent status of, and trends in, aspects of nature and nature’s" .
 
@@ -589,35 +600,40 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.4> ;
     dcterms:identifier "Figure3.14" ;
-    skos:prefLabel "A Conservation Outlook rating of 241 natural World Heritage sites, and B threats" .
+    skos:prefLabel "A Conservation Outlook rating of 241 natural World Heritage sites, and B threats to natural World Heritage sites assessed as high or very high in 2014 and 2017." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure3.15> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.4> ;
+    ipbes:hasDescription "Groups are ordered according to the vertical red lines, which indicate the best estimate for proportion of extant species considered threatened (Critically Endangered or Vulnerable). The numbers to the right of each bar represent the total number of extant species assessed for each group. Extinct species are excluded. Source: IUCN (2017)." ;
     dcterms:identifier "Figure3.15" ;
-    skos:prefLabel "The proportion of marine species in each category of extinction risk on the IUCN" .
+    skos:prefLabel "The proportion of marine species in each category of extinction risk on the IUCN Red List." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure3.16> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.5> ;
+    ipbes:hasDescription "These themes were defi ned through their relationships to targets of major environmental agreements (Aichi Biodiversity Targets, Sustainable Development Goals), and elements of the IPBES conceptual framework (nature and nature’s contributions to people) in a cluster analysis exercise (see section S3.13). The thickness of the lines indicates a degree of association. Only targets signifi cantly associated with each theme are shown." ;
     dcterms:identifier "Figure3.16" ;
     skos:prefLabel "Nine themes cutting across the Aichi Biodiversity Targets, SDGs and other" .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure3.2> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2> ;
+    ipbes:hasDescription "Source for A: FAO (2016a); for B: Ottinger et al. (2016: 246)." ;
     dcterms:identifier "Figure3.2" ;
     skos:prefLabel "A Global trends in aquaculture production compared with capture fi sheries;" .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure3.3> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2> ;
+    ipbes:hasDescription "A Current and projected coverage of marine and terrestrial areas by protected areas, showing the potential contributions of approved projects through 5th and 6th replenishments of the Global Environment Facility (GEF-5 and GEF-6), national targets defi ned in National Biodiversity Strategies and Action Plans, and other national commitments, in addition to coverage documented in the May 2018 release of the World Database on Protected Areas (dotted lines indicate the thresholds of 10% of coastal and marine areas and 17% of terrestrial and freshwater areas, as specifi ed in Target 11); B Increase in mean percentage of Key Biodiversity Areas covered by protected areas in different ecosystems. Source for A CBD (2018b); for B BirdLife International, IUCN and UNEP-WCMC (2018)." ;
     dcterms:identifier "Figure3.3" ;
     skos:prefLabel "Progress towards elements of Aichi Target 11." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure3.4> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2> ;
+    ipbes:hasDescription "A Percentage of species threatened with extinction in taxonomic groups that have been assessed comprehensively, or through a ‘sampled’ approach, or for which selected subsets have been assessed, by the International Union for Conservation of Nature (IUCN) Red List of Threatened Species. Species in are grouped into classes (with the exception of reef-forming corals, which includes species from classes Hydrozoa and Anthozoa). Groups are ordered according to the best estimate for the percentage of extant species considered threatened (shown by the vertical blue lines), assuming that data defi cient species are as threatened as non-data defi cient species. For ‘sampled’ and ‘selected’ groups, the total estimated number of described specie are as follows: bony fi shes: 28,000, gastropods: 85,000, dragonfl ies: 3,000, ferns and relatives: 12,000, monocots: 60,000, reptiles: 10,793, crustaceans: 47,000, dicots: 208,000. The taxonomic subsets included in the ‘selected’ groups are listed at http://www.iucnredlist.org/about/summary-statistics. B Red List Index of species survival for taxonomic groups that have been assessed for the IUCN Red List at least twice. A value of 1 is equivalent to all species being categorized as Least Concern; a value of zero is equivalent to all species being classifi ed as Extinct. Data for both panels derive from www.iucnredlist.org, plus Butchart et al. (2016) for panel B." ;
     dcterms:identifier "Figure3.4" ;
     skos:prefLabel "A substantial proportion of assessed species are threatened with extinction and" .
 
@@ -630,12 +646,14 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Figure3.6> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2> ;
+    ipbes:hasDescription "Scores are based on quantitative analysis of indicators, a systematic review of the literature, fi fth National Reports to the CBD, and available information on countries’ stated intentions to implement additional actions by 2020. Progress towards target elements is scored as “Good” (substantial positive trends at a global scale relating to most aspects of the element), “Moderate” (the overall global trend is positive but insubstantial or insuffi cient, or there may be substantial positive trends for some aspects of the element but little or no progress for others, or the trends are positive in some geographic regions but not in others), “Poor” (little or no progress towards the element or movement away from it; while there may be local, national or case-specifi c successes and positive trends for some aspects, the overall global trend shows little or negative progress) or “Unknown” (insuffi cient information to score progress). IPLCs = Indigenous Peoples and Local Communities; NBSAPs = National Biodiversity Strategies and Action Plans; ILK = Indigenous and Local Knowledge. Numbers for target elements match those in Table 3.3." ;
     dcterms:identifier "Figure3.6" ;
     skos:prefLabel "Summary of progress towards the Aichi Biodiversity Targets." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure3.7> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2> ;
+    ipbes:hasDescription "Source: RSPB et al. (2016) based on data in CBD (2016d)." ;
     dcterms:identifier "Figure3.7" ;
     skos:prefLabel "Alignment of national targets (set in National Biodiversity Strategies and Action" .
 
@@ -654,18 +672,21 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Figure4.1> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-4.1> ;
+    ipbes:hasDescription "NCP: nature’s contributions to people; GQL: good quality of life." ;
     dcterms:identifier "Figure4.1" ;
-    skos:prefLabel "1 Scope of Chapter 4 “Plausible futures of nature, its contributions to people and" .
+    skos:prefLabel "1 Scope of Chapter 4 “Plausible futures of nature, its contributions to people and their good quality of life” of the IPBES Global Assessment, content of sections and their relationships, and linkages with the other chapters of the Global Assessment." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure4.2> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-4.2> ;
+    ipbes:hasDescription "The results are extracted from scenarios with increasing pressures from direct drivers (all climate change scenarios and business-as-usual scenarios for resource exploitation, land-use change and pollution). The selected scenarios were at global scale. Regional/local scale scenarios were not referenced in the literature database. Colours code the projected trends in the indicators. N=the number of trends reported and in parentheses the number of papers." ;
     dcterms:identifier "Figure4.2" ;
     skos:prefLabel "1 Future trends of selected indicators in marine A, terrestrial B and freshwater" .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure4.3> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-4.3> ;
+    ipbes:hasDescription "The y-axis indicates the proportion of negative and positive trends reported in the literature review. Numbers (N) indicate the number of results, followed by the number of articles that report those results in parentheses." ;
     dcterms:identifier "Figure4.3" ;
     skos:prefLabel "1 Results of the systematic literature review (Appendix A4.1.1) showing the" .
 
@@ -678,6 +699,7 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Figure4.5> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-4.5> ;
+    ipbes:hasDescription "Overlaps of the circles indicate that a result contained trends for more than one group of indicators." ;
     dcterms:identifier "Figure4.5" ;
     skos:prefLabel "1 Number of results in the systematic literature review (for details, see" .
 
@@ -690,55 +712,64 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Figure4.7> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-4.7> ;
+    ipbes:hasDescription "A Outcome of the analysis of the systematic literature review (Appendix A4.1.1) showing the percentage of studies that include estimates of different sources of uncertainty. B An example of systematic analysis of sources of uncertainty in models of fi sh community responses to climate change (from Buisson et al., 2010)." ;
     dcterms:identifier "Figure4.7" ;
     skos:prefLabel "2 Treatment and importance of different sources of uncertainty in models and" .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure5.1> a ipbes:Figure,
         ipbes:Illustration ;
+    ipbes:hasDescription "Collaborative implementation of priority governance interventions (levers) targeting key points of intervention (leverage points) could enable transformative change from current trends towards more sustainable ones. Most levers can be applied at multiple leverage points by a range of actors, such as intergovernmental organizations, governments, non-governmental organizations, citizen and community groups, Indigenous Peoples and Local Communities, donor agencies, science and educational organizations, and the private sector, depending on the context. Implementing existing and new instruments through place-based governance interventions that are integrative, informed, inclusive and adaptive, using strategic policy mixes and learning from feedback, could enable global transformation." ;
     dcterms:identifier "Figure5.1" ;
     skos:prefLabel "Transformative change in global sustainability pathways." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure5.2> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-5.2> ;
+    ipbes:hasDescription "These complementary perspectives roughly followed divisions in the underlying scenario and pathways literatures addressing a variety of sustainability goals and targets (especially the UN’s Sustainable Development Goals, SDGs, and the CBD’s Aichi Targets). Source: PBL for this publication." ;
     dcterms:identifier "Figure5.2" ;
     skos:prefLabel "The six interconnected foci of our nexus analysis." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure5.3> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-5.2> ;
+    ipbes:hasDescription "The grey arrows denote the multiple foci we used to structure our analysis. For each focus, we strived to connect information across regions (horizontal arrow) and across spatial scales (vertical arrows)." ;
     dcterms:identifier "Figure5.3" ;
     skos:prefLabel "Schematic representation of our multi-scale approach." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure5.4> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-5.3> ;
+    ipbes:hasDescription "A target-seeking scenarios, policy-screening scenarios, ‘sustainability’ scenarios of exploratory exercises, and visioning exercises; B using a quantitative approach, a narrative approach, or both together; and C applying different time frames of analysis (N=34; a given study could score in multiple categories for panel A)." ;
     dcterms:identifier "Figure5.4" ;
     skos:prefLabel "The number of studies from the review on target-seeking scenarios that fulfi ll the" .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure5.5> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-5.3> ;
+    ipbes:hasDescription "Green (“direct”) represents scenarios that address an SDG directly; orange represents scenarios that address an SDG only implicitly (“indirect”)." ;
     dcterms:identifier "Figure5.5" ;
-    skos:prefLabel "Sustainable Development Goals in Scenarios. Green (“direct”) represents" .
+    skos:prefLabel "Sustainable Development Goals in Scenarios." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure5.7> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-5.4> ;
+    ipbes:hasDescription "The leverage points (numbers) and levers (letters) vary in many dimensions, but each has the property that a relatively small change could effect a large change in outcomes for nature and its contributions to people. Change in one leverage point or lever can in many cases also help change others e.g., a change in visions of good quality lives (1) could greatly enable changes in consumption (2). All pertain somewhat to human formal and informal institutions, and in most cases the relationships of these institutions with other elements of the conceptual framework (in particular all fi ve levers could be situated within the Institutions bubble, but they do pertain especially to direct drivers). Figure text for levers and leverage points differs slightly from the subsection headings, for brevity." ;
     dcterms:identifier "Figure5.7" ;
     skos:prefLabel "Eight featured leverage points and fi ve levers of transformative change toward" .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure5.9> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-5.4> ;
+    ipbes:hasDescription "Current ecosystem services assessments focus on the benefi ts, trade-offs and synergies provided by ecosystem services within a delimited (often jurisdictional) boundary (green arrows) and the impacts that human activities have over such ecosystem services therein (grey arrows). Ecosystem assessments thus tend to overlook off-stage ecosystem service burdens (negative impacts on ecosystem services elsewhere; red arrows) of place-based management decisions and their feedbacks (e.g., due to climate change, bottom arrow re-entering the smaller white ellipse). Figure from Pascual et al. (2017b)." ;
     dcterms:identifier "Figure5.9" ;
     skos:prefLabel "Examples of telecoupling effects, in this case via unintended consequences" .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure6.1> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-6.2> ;
+    ipbes:hasDescription "Design adapted from Strassburg et al. (2017)." ;
     dcterms:identifier "Figure6.1" ;
-    skos:prefLabel "Suite of policy opportunities and actions to better integrate Indigenous Peoples" .
+    skos:prefLabel "Suite of policy opportunities and actions to better integrate Indigenous Peoples and Local Communities in transformative governance for sustainability." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure6.2> a ipbes:Figure,
         ipbes:Illustration ;
@@ -755,12 +786,14 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Figure6.4> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-6.3> ;
+    ipbes:hasDescription "Water quality risk indices for major river basins during the base period (2000-2005) compared to 2050 (Veolia & IPFRI, 2015, fi g.3, p.9)." ;
     dcterms:identifier "Figure6.4" ;
     skos:prefLabel "Water quality risk indices for major river basins." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure6.5> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-6.3> ;
+    ipbes:hasDescription "Percentage (relative to the total potential of each source) of unrestricted power generation potential available for bioenergy (in the form of Miscanthus × giganteus), wind energy and solar photovoltaic summarized by continents and globally. The bars show generation potential within current PAs (Protected Areas; black section of each bar), top ranked areas for 17% PA expansion (dark grey), 17–30% highest ranked areas (light grey) and for the remaining 70% of the landscape (white)." ;
     dcterms:identifier "Figure6.5" ;
     skos:prefLabel "Trade-offs between renewable energy potential and protected areas (Santangeli" .
 
@@ -768,11 +801,12 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-6.4> ;
     dcterms:identifier "Figure6.6" ;
-    skos:prefLabel "Fraction of the national public investment need for the SDG agenda that could be" .
+    skos:prefLabel "Fraction of the national public investment need for the SDG agenda that could be fi nanced by freeing up funds that are used at present for subsidizing fossil fuels." .
 
 <http://ontology.ipbes.net/report/il/GA119-Figure6.7> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-6.4> ;
+    ipbes:hasDescription "Source: https://www.europarl.europa.eu/ireland/en/news-press/circular-economy-meps-call-for-“systemic-change”-to-address-resource-scarcity." ;
     dcterms:identifier "Figure6.7" ;
     skos:prefLabel "Depiction of the circular economy." .
 
@@ -796,12 +830,14 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Table1.1> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3> ;
+    ipbes:hasDescription "Adapted from the Millennium Ecosystem Assessment (2005)." ;
     dcterms:identifier "Table1.1" ;
-    skos:prefLabel "Material and non-material dimensions of a good quality of life (GQL) used across" .
+    skos:prefLabel "Material and non-material dimensions of a good quality of life (GQL) used across chapters of the global assessment." .
 
 <http://ontology.ipbes.net/report/il/GA119-Table1.2> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3> ;
+    ipbes:hasDescription "See Supplementary Material 1.3 for a more detailed description." ;
     dcterms:identifier "Table1.2" ;
     skos:prefLabel "Typology of drivers used in the IPBES Global Assessment." .
 
@@ -815,7 +851,7 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3> ;
     dcterms:identifier "Table1.4" ;
-    skos:prefLabel "Operationalization strategy for systematically including Indigenous and Local" .
+    skos:prefLabel "Operationalization strategy for systematically including Indigenous and Local Knowledge (ILK) and issues of concern to Indigenous Peoples and Local Communities (IPLCs) in the global assessment." .
 
 <http://ontology.ipbes.net/report/il/GA119-Table3.1> a ipbes:Illustration,
         ipbes:Table ;
@@ -832,18 +868,21 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Table3.3> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2> ;
+    ipbes:hasDescription "For each element of each of the 20 Targets, relevant indicators are shown along with their alignment to the Target element (i.e. their relevance to the element and the degree to which they are a good proxy, scored as ‘low’, ‘medium’, or ‘high’), the direction and signifi cance of their projected trend to 2020, and a thumbnail graph (solid line and brown shading show modelled trends with confi dence intervals; dotted lines and blue shading shows projected trends with confi dence intervals; horizontal line shows 2010 value). Target elements lacking indicators with suitable data for extrapolation are shown in red. Asterisks identify those indicators for which positive trends are generally have negative consequences for biodiversity. Larger format versions of the thumbnail graphs, which include y-axis labels and background information on each indicator, are provided in Table S3.1.2, while the methods to extrapolate and assess the signifi cance of trends to 2020 are provided in the Supplementary Online Materials. The interpretation of the indicator trends in relation to each Aichi Biodiversity Target is given in the text below." ;
     dcterms:identifier "Table3.3" ;
     skos:prefLabel "Trends of indicators used to assess progress towards the Aichi Biodiversity Targets." .
 
 <http://ontology.ipbes.net/report/il/GA119-Table3.4> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2> ;
+    ipbes:hasDescription "Graphs show the smoothed trend in average indicator values for each of the four IPBES regions (Africa: navy, Americas: gold, Europe and Central Asia: coral, Asia-Pacifi c: sky blue). Grey areas delineate the central 90% of variation among countries. Regional values account for the different sizes of countries, and lines characterize the trends of a region’s average-sized country. The indicators shown are those considered by the IPBES indicators task group to be relevant to particular Aichi Biodiversity Targets, appropriate for weighting national values by country size, and for which trends are available for IPBES regions." ;
     dcterms:identifier "Table3.4" ;
     skos:prefLabel "Regional trends for selected indicators relevant to selected Aichi Biodiversity Targets." .
 
 <http://ontology.ipbes.net/report/il/GA119-Table3.5> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.3> ;
+    ipbes:hasDescription "Clusters are based on the nature of the relationships and feedbacks between SDGs, nature and NCP. The names of each cluster are drawn from the IPBES conceptual framework to illustrate the focus of the SDGs in each cluster. Clusters also differed in terms of the level of assessment possible (goal vs. target) due to current target formulations and available data and were sub-jected to different types of approaches in the assessment." ;
     dcterms:identifier "Table3.5" ;
     skos:prefLabel "Clusters used to guide the assessment of SDG progress linked to nature and NCP." .
 
@@ -856,14 +895,16 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Table3.7> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.3> ;
+    ipbes:hasDescription "Targets listed in red had no indicators suitable for extrapolation. Larger format versions of the thumbnail graphs, which include y-axis labels and background information on each indicator, are provided in Table S3.6." ;
     dcterms:identifier "Table3.7" ;
-    skos:prefLabel "Trends of indicators extrapolated to 2030 to assess progress towards Sustainable" .
+    skos:prefLabel "Trends of indicators extrapolated to 2030 to assess progress towards Sustainable Development Goals 6, 14 and 15 and their targets that are most closely related to nature and its contributions to people." .
 
 <http://ontology.ipbes.net/report/il/GA119-Table3.8> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.4> ;
+    ipbes:hasDescription "(the overall global trend is positive, but insubstantial or insuffi cient, or there may be substantial positive trends for some aspects of the goal, but little or no progress for others, or the trends are positive in some geographic regions but not in others), Poor" ;
     dcterms:identifier "Table3.8" ;
-    skos:prefLabel "Progress towards achieving the goals of other global agreements related to nature" .
+    skos:prefLabel "Progress towards achieving the goals of other global agreements related to nature and nature’s contributions to people, based on a synthesis of the literature and available information." .
 
 <http://ontology.ipbes.net/report/il/GA119-Table4.1> a ipbes:Illustration,
         ipbes:Table ;
@@ -874,12 +915,14 @@ Bloom, 1999; Axworthy et al., 2012; Nilsson & Meek, 2016). Inclusiveness is an i
 <http://ontology.ipbes.net/report/il/GA119-Table4.2> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-4.2> ;
+    ipbes:hasDescription "The number of scenarios published is reported, and in parentheses, the number of scientific papers from the Chapter 4 literature database (Appendix A4.1.1). Scenarios addressed single drivers (purple cells) or combination of drivers." ;
     dcterms:identifier "Table4.2" ;
     skos:prefLabel "1 Major drivers represented in global change scenarios addressing impacts on" .
 
 <http://ontology.ipbes.net/report/il/GA119-Table4.6> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-4.6> ;
+    ipbes:hasDescription "Colours indicate synergies (green) and trade-offs (red) in various intensities. Source: van Vuuren et al. (2015)." ;
     dcterms:identifier "Table4.6" ;
     skos:prefLabel "1 Synergies and trade-offs between different sustainability objectives." .
 
@@ -6729,18 +6772,23 @@ Marine assessment processes provide opportunities for management agencies, resea
 
 <http://ontology.ipbes.net/report/il/GA119-FigureSPM.4> a ipbes:Figure,
         ipbes:Illustration ;
+    ipbes:hasDescription "Countries are classified according to the United Nations World Economic Situation and Prospects (https://www.un.org/development/desa/dpad/publication/world-economic-situation-and-prospects-2019/). Global gross domestic product has risen fourfold in real terms, with the vast majority of growth occurring in developed and developing countries A. Extraction of living biomass (e.g., crops, fish) to meet the demand for domestic consumption and for export is highest in developing countries and rising rapidly B. However, material consumption per capita within each country (from imports and domestic production) is highest in developed countries. Overall protection of Key Biodiversity Areas is rising, being highest within developed countries D. Air pollution is highest in least developed countries E, while the challenges of non-point-source pollution from the use of fertilizers are highest in developing countries. Data sources: A, E, F: www.data.worldbank.org; B, C: www.materialflows.net; D: www.keybiodiversityareas.org, www.protectedplanet.net." ;
     dcterms:identifier "FigureSPM.4" ;
-    skos:prefLabel "Development pathways since 1970 for selected key indicators of human-" .
+    skos:prefLabel "Development pathways since 1970 for selected key indicators of human- environment interactions, which show a large increase in the scale of global economic growth and its impacts on nature, with strong contrasts across developed, developing, and least developed countries." .
 
 <http://ontology.ipbes.net/report/il/GA119-FigureSPM.5> a ipbes:Figure,
         ipbes:Illustration ;
+    ipbes:hasDescription """Indigenous and local knowledge systems are locally based, but regionally manifested and thus globally relevant.
+
+A wide diversity of practices actively and positively contributes to wild and domestic biodiversity through “accompanying” natural processes with anthropogenic assets (knowledge, practices and technology). Indigenous peoples often manage the land and coastal areas based on culturally specific world views, applying principles and indicators such as the health of the land, caring for the country and reciprocal responsibility. As lifestyles, values and external pressures change with globalization, however, unsustainable practices are becoming increasingly common in certain regions. The image in the centre of the above figure shows the global overlap between 1) land areas traditionally owned, managed, used, or occupied by indigenous peoples; 2) formally designated protected areas; and 3) remaining terrestrial areas with very low human intervention (areas that score <4 on the Human Footprint Index). Circles and overlapping sections are proportional in area. Land areas traditionally owned, managed, used, or occupied by indigenous peoples overlap with approximately 35 per cent of the area that is formally protected, and approximately 35 per cent of all remaining terrestrial areas with very low human intervention. The topics and pictures in the figure aim to illustrate, not represent, the types and diversity of the following contributions of indigenous peoples and local communities to biodiversity: a domestication and maintenance of locally adapted crop and fruit varieties (potatoes, Peru) and b animal breeds (rider and sheep, Kyrgyzstan) {2.2.4.4}; c creation of species-rich habitats and high ecosystem diversity in cultural landscapes (hay meadows, Central Europe) {2.2.4.1-2}; d identification of useful plants and their cultivation in high-diversity ecosystems (multi-species forest garden, Indonesia) {2.2.4.3}; e and f management and monitoring of wild species, habitats and landscapes for wildlife and for increased resilience ( e - Australia, f - Alaska) {2.2.4.5-6}; g restoration of degraded lands (Niger) {3.2.4}; h prevention of deforestation in recognized indigenous territories (Amazon basin, Brazil) {2.2.4.7}; i offering alternative concepts of relations between humanity and nature (Northern Australia).""" ;
     dcterms:identifier "FigureSPM.5" ;
-    skos:prefLabel "Contributions of indigenous peoples and local communities to the enhancement" .
+    skos:prefLabel "Contributions of indigenous peoples and local communities to the enhancement and maintenance of wild and domesticated biodiversity and landscapes." .
 
 <http://ontology.ipbes.net/report/il/GA119-FigureSPM.7> a ipbes:Figure,
         ipbes:Illustration ;
+    ipbes:hasDescription "The targets selected are those where the current evidence and wording of the target make it possible to assess the consequences of the trends in nature and nature’s contribution to people as they relate to the achievement of the target. Chapter 3, Section 3.3 provides" ;
     dcterms:identifier "FigureSPM.7" ;
-    skos:prefLabel "Summary of recent status and trends in aspects of nature and nature’s" .
+    skos:prefLabel "Summary of recent status and trends in aspects of nature and nature’s contributions to people that support progress towards achieving selected targets of the Sustainable Development Goals." .
 
 <http://ontology.ipbes.net/report/person/Aburto_Marisol> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2> ;
@@ -33996,7 +34044,7 @@ Marine assessment processes provide opportunities for management agencies, resea
 <http://ontology.ipbes.net/report/ref/2333077/items/KW6FJ9E2> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
     ipbes:Report ipbes:GA119 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-4.7.2> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-4.7> ;
     ipbes:hasDescription "Buisson, L., Thuiller, W., Casajus, N., Lek, S., & Grenouillet, G. (2010). Uncertainty in ensemble forecasting of species distribution. Global Change Biology, 16(4), 1145–1157. https://doi.org/10.1111/j.1365-2486.2009.02000.x" ;
     ipbes:hasDoi "10.1111/j.1365-2486.2009.02000.x" ;
     owl:sameAs <https://www.zotero.org/groups/2333077/items/KW6FJ9E2> .
@@ -52231,12 +52279,6 @@ Marine assessment processes provide opportunities for management agencies, resea
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2.1> ;
     ipbes:hasDescription "CBD (2016c). Full report of the expert team on a full assessment of the funds needed for the implementation of the convention and its protocols for the seventh replenishment of the Global Environment Facility. Document UNEP/CBD/COP/13/INF/16. Available at https://www.cbd.int/doc/meetings/cop/cop-13/information/cop-13-inf-16-en.pdf" .
 
-<http://ontology.ipbes.net/report/ref/GA119-ch3-3475> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
-    ipbes:Report ipbes:GA119 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2.3> ;
-    ipbes:hasDescription "CBD (2016d). Analysis of targets established by Parties and progress towards the Aichi biodiversity targets. Available at https://www.cbd.int/impact/assessment-table-2016-04-22-en.pdf" .
-
 <http://ontology.ipbes.net/report/ref/GA119-ch3-3476> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
     ipbes:Report ipbes:GA119 ;
@@ -52266,12 +52308,6 @@ Marine assessment processes provide opportunities for management agencies, resea
     ipbes:Report ipbes:GA119 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2.1> ;
     ipbes:hasDescription "CBD (2018a). Update on progress in revising/updating and implementing National Biodiversity Strategies and Action Plans, including national targets. Document CBD/SBI/2/2/Add.1. Available at https://www.cbd.int/doc/c/fcae/4aa8/dd3362074b26490c60880abd/sbi-02-02-add1-en.pdf" .
-
-<http://ontology.ipbes.net/report/ref/GA119-ch3-3481> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
-    ipbes:Report ipbes:GA119 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2.1> ;
-    ipbes:hasDescription "CBD (2018b). Updated status of Aichi Biodiversity target 11. Document CBD/SBSTTA/22/INF/30. Available at https://www.cbd.int/doc/c/5a93/21ba/d085c6e64dcb8a505f6d49af/sbstta-22-inf-30-en.pdf" .
 
 <http://ontology.ipbes.net/report/ref/GA119-ch3-3483> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
@@ -52918,12 +52954,6 @@ Marine assessment processes provide opportunities for management agencies, resea
     ipbes:Report ipbes:GA119 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.3.2.2> ;
     ipbes:hasDescription "RRI (2012). What rights? A comparative analysis of developing countries’ national legislation on community and indigenous peoples’ forest tenure rights. RRI Washington, D.C." .
-
-<http://ontology.ipbes.net/report/ref/GA119-ch3-4716> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
-    ipbes:Report ipbes:GA119 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2.3> ;
-    ipbes:hasDescription "RSPB, BirdLife International, WWF, Conservation International, and The Nature Conservancy (2016) Convention on Biological Diversity progress report towards the Aichi Biodiversity Targets. Available at http://www.birdlife.org/sites/default/files/score_card_booklet_final.pdf" .
 
 <http://ontology.ipbes.net/report/ref/GA119-ch3-4718> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
@@ -55194,8 +55224,11 @@ Protecting marine areas For progress towards establishing marine protected areas
 
 <http://ontology.ipbes.net/report/il/GA119-FigureSPM.3> a ipbes:Figure,
         ipbes:Illustration ;
+    ipbes:hasDescription """A Percentage of species threatened with extinction in taxonomic groups that have been assessed comprehensively, or through a ‘sampled’ approach, or for which selected subsets have been assessed, by the International Union for Conservation of Nature (IUCN) Red List of Threatened Species. Groups are ordered according to the best estimate for the percentage of extant species considered threatened (shown by the vertical blue lines), assuming that data deficient species are as threatened as non-data deficient species.
+
+B Extinctions since 1500 for vertebrate groups. Rates for reptiles and fishes have not been assessed for all species. C Red List Index of species survival for taxonomic groups that have been assessed for the IUCN Red List at least twice. A value of 1 is equivalent to all species being categorized as Least Concern; a value of zero is equivalent to all species being classified as Extinct. Data for all panels derive from www.iucnredlist.org (see Chapter 3 Figure 3.4 and Chapter 2 Figure 2.7).""" ;
     dcterms:identifier "FigureSPM.3" ;
-    skos:prefLabel "A substantial proportion of assessed species are threatened with extinction and" .
+    skos:prefLabel "A substantial proportion of assessed species are threatened with extinction and overall trends are deteriorating, with extinction rates increasing sharply in the past century." .
 
 <http://ontology.ipbes.net/report/person/Adams_Cristina> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2>,
@@ -59931,7 +59964,7 @@ Protecting marine areas For progress towards establishing marine protected areas
         <http://ontology.ipbes.net/report/ch/GA119ch6> ;
     ipbes:Report ipbes:GA119 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-5.3.2.3>,
-        <http://ontology.ipbes.net/report/sch/GA119-6.2.4.4> ;
+        <http://ontology.ipbes.net/report/sch/GA119-6.2> ;
     ipbes:hasDescription "Strassburg, Bernardo B. N., Thomas Brooks, Rafael Feltran-Barbieri, Alvaro Iribarrem, Renato Crouzeilles, Rafael Loyola, Agnieszka E. Latawiec, et al. “Moment of Truth for the Cerrado Hotspot.” Nature Ecology & Evolution 1, no. 4 (March 2017): 0099. https://doi.org/10.1038/s41559-017-0099" ;
     ipbes:hasDoi "10.1038/s41559-017-0099" ;
     owl:sameAs <https://www.zotero.org/groups/2333077/items/LC9YY5BR> .
@@ -62843,6 +62876,20 @@ Protecting marine areas For progress towards establishing marine protected areas
         <http://ontology.ipbes.net/report/sch/GA119-3.3.2.2> ;
     ipbes:hasDescription "CBD (2015). Dialogue Workshop on Assessment of Collective Action in Biodiversity Conservation. Panajachel, Guatemala, 11-13 June 2015: Convention on Biological Diversity." .
 
+<http://ontology.ipbes.net/report/ref/GA119-ch3-3475> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
+    ipbes:Report ipbes:GA119 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2>,
+        <http://ontology.ipbes.net/report/sch/GA119-3.2.3> ;
+    ipbes:hasDescription "CBD (2016d). Analysis of targets established by Parties and progress towards the Aichi biodiversity targets. Available at https://www.cbd.int/impact/assessment-table-2016-04-22-en.pdf" .
+
+<http://ontology.ipbes.net/report/ref/GA119-ch3-3481> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
+    ipbes:Report ipbes:GA119 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2>,
+        <http://ontology.ipbes.net/report/sch/GA119-3.2.1> ;
+    ipbes:hasDescription "CBD (2018b). Updated status of Aichi Biodiversity target 11. Document CBD/SBSTTA/22/INF/30. Available at https://www.cbd.int/doc/c/5a93/21ba/d085c6e64dcb8a505f6d49af/sbstta-22-inf-30-en.pdf" .
+
 <http://ontology.ipbes.net/report/ref/GA119-ch3-3482> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
     ipbes:Report ipbes:GA119 ;
@@ -62957,6 +63004,13 @@ Protecting marine areas For progress towards establishing marine protected areas
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2.4>,
         <http://ontology.ipbes.net/report/sch/GA119-3.3.2.2> ;
     ipbes:hasDescription "RRI (2015). Who owns the world’s land? A global baseline of formally recognised indigenous and community land rights. Rights and Resources Institute Washington, D.C." .
+
+<http://ontology.ipbes.net/report/ref/GA119-ch3-4716> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
+    ipbes:Report ipbes:GA119 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2>,
+        <http://ontology.ipbes.net/report/sch/GA119-3.2.3> ;
+    ipbes:hasDescription "RSPB, BirdLife International, WWF, Conservation International, and The Nature Conservancy (2016) Convention on Biological Diversity progress report towards the Aichi Biodiversity Targets. Available at http://www.birdlife.org/sites/default/files/score_card_booklet_final.pdf" .
 
 <http://ontology.ipbes.net/report/ref/GA119-ch3-4915> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
@@ -63544,18 +63598,6 @@ Tropical and subtropical regions seem to be suffering the most pronounced change
     ipbes:hasDoi "10.1038/s41559-018-0563-x" ;
     owl:sameAs <https://www.zotero.org/groups/2333077/items/5Z5HYHGM> .
 
-<http://ontology.ipbes.net/report/ref/2333077/items/5ZIDHJLB> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2>,
-        <http://ontology.ipbes.net/report/ch/GA119ch3>,
-        <http://ontology.ipbes.net/report/ch/GA119ch5> ;
-    ipbes:Report ipbes:GA119 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-2.1.12>,
-        <http://ontology.ipbes.net/report/sch/GA119-3.3.2.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-5.4.2.4> ;
-    ipbes:hasDescription "Halpern, B. S., Frazier, M., Potapenko, J., Casey, K. S., Koenig, K., Longo, C., Lowndes, J. S., Rockwood, R. C., Selig, E. R., Selkoe, K. A., & Walbridge, S. (2015). Spatial and temporal changes in cumulative human impacts on the world’s ocean. Nature Communications, 6(May), 1–7. https://doi.org/10.1038/ncomms8615" ;
-    ipbes:hasDoi "10.1038/ncomms8615" ;
-    owl:sameAs <https://www.zotero.org/groups/2333077/items/5ZIDHJLB> .
-
 <http://ontology.ipbes.net/report/ref/2333077/items/636DUG4V> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2>,
         <http://ontology.ipbes.net/report/ch/GA119ch3>,
@@ -63578,16 +63620,6 @@ Tropical and subtropical regions seem to be suffering the most pronounced change
     ipbes:hasDescription "Barber, C.P., Cochrane, M.A., Souza, C.M. & Laurance, W.F. (2014). Roads, deforestation, and the mitigating effect of protected areas in the Amazon. Biological Conservation, 177, 203-209." ;
     ipbes:hasDoi "10.1016/j.biocon.2014.07.004" ;
     owl:sameAs <https://www.zotero.org/groups/2333077/items/665HK5L6> .
-
-<http://ontology.ipbes.net/report/ref/2333077/items/6BDFLZLP> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
-    ipbes:Report ipbes:GA119 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-3.6>,
-        <http://ontology.ipbes.net/report/sch/GA119-3.7> ;
-    ipbes:hasDescription "Butchart, S. H. M., M. Di Marco, and J. E. M. Watson (2016). Formulating Smart Commitments on Biodiversity: Lessons from the Aichi Targets. Conservation Letters 9:457-468." ;
-    ipbes:hasDoi "10.1111/conl.12278" ;
-    owl:sameAs <https://www.zotero.org/groups/2333077/items/6BDFLZLP> .
 
 <http://ontology.ipbes.net/report/ref/2333077/items/6BU6V3MU> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4>,
@@ -66364,14 +66396,15 @@ Chapter 5 follows by providing a more in-depth analysis of “target-seeking” 
 
 <http://ontology.ipbes.net/report/il/GA119-FigureSPM.1> a ipbes:Figure,
         ipbes:Illustration ;
+    ipbes:hasDescription "Data supporting global trends and regional variations come from a systematic review of over 2,000 studies {2.3.5.1}. Indicators were selected on the basis of availability of global data, prior use in assessments and alignment with 18 categories. For many categories of nature’s contributions, two indicators are included that show different aspects of nature’s capacity to contribute to human well-being within that category. Indicators are defined so that an increase in the indicator is associated with an improvement in nature’s contributions." ;
     dcterms:identifier "FigureSPM.1" ;
-    skos:prefLabel "Global trends in the capacity of nature to sustain contributions to good quality of" .
+    skos:prefLabel "Global trends in the capacity of nature to sustain contributions to good quality of life from 1970 to the present, which show a decline for 14 of the 18 categories of nature’s contributions to people analysed." .
 
 <http://ontology.ipbes.net/report/il/GA119-FigureSPM.8> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:hasDescription "This figure illustrates three main messages: i) the impacts on biodiversity and on nature’s contributions to people (NCP) are the lowest in the “global sustainability” scenario in nearly all sub-regions, ii) regional differences in impacts are high in the regional competition and economic optimism scenario, and iii) material NCP increase the most in the regional competition and economic optimism scenarios, but this comes at the expense of biodiversity and regulating NCP. Projected impacts are based on a subset of the Shared Socioeconomic Pathway (SSP) scenarios and greenhouse gas emissions trajectories (RCP) developed in support of Intergovernmental Panel on Climate Change assessments. This figure does not cover the scenarios that include transformative change that are discussed in Chapter 5." ;
     dcterms:identifier "FigureSPM.8" ;
-    skos:prefLabel "Projections of the impacts of land use and climate change on biodiversity and" .
+    skos:prefLabel "Projections of the impacts of land use and climate change on biodiversity and nature’s material and regulating contributions to people between 2015 and 2050." .
 
 <http://ontology.ipbes.net/report/ref/2333077/items/25MEQS22> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2>,
@@ -66504,6 +66537,19 @@ Chapter 5 follows by providing a more in-depth analysis of “target-seeking” 
     ipbes:hasDescription "UN (2014). Population facts – Our urbanizing world. No. 2014/3. Retrieved from United Nations Department of Economic and Social Affairs website: https://www.un.org/en/development/desa/population/publications/pdf/popfacts/PopFacts_2014-3.pdf" ;
     owl:sameAs <https://www.zotero.org/groups/2333077/items/5FPXAAWX> .
 
+<http://ontology.ipbes.net/report/ref/2333077/items/5ZIDHJLB> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2>,
+        <http://ontology.ipbes.net/report/ch/GA119ch3>,
+        <http://ontology.ipbes.net/report/ch/GA119ch5> ;
+    ipbes:Report ipbes:GA119 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-2.1.12>,
+        <http://ontology.ipbes.net/report/sch/GA119-3.2>,
+        <http://ontology.ipbes.net/report/sch/GA119-3.3.2.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-5.4.2.4> ;
+    ipbes:hasDescription "Halpern, B. S., Frazier, M., Potapenko, J., Casey, K. S., Koenig, K., Longo, C., Lowndes, J. S., Rockwood, R. C., Selig, E. R., Selkoe, K. A., & Walbridge, S. (2015). Spatial and temporal changes in cumulative human impacts on the world’s ocean. Nature Communications, 6(May), 1–7. https://doi.org/10.1038/ncomms8615" ;
+    ipbes:hasDoi "10.1038/ncomms8615" ;
+    owl:sameAs <https://www.zotero.org/groups/2333077/items/5ZIDHJLB> .
+
 <http://ontology.ipbes.net/report/ref/2333077/items/69C46V2M> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
     ipbes:Report ipbes:GA119 ;
@@ -66526,6 +66572,17 @@ Chapter 5 follows by providing a more in-depth analysis of “target-seeking” 
     ipbes:hasDescription "Lynch, A. J., Cooke, S. J., Deines, A. M., Bower, S. D., Bunnell, D. B., Cowx, I. G., Nguyen, V. M., Nohner, J., Phouthavong, K., Riley, B., Rogers, M. W., Taylor, W. W., Woelmer, W., Youn, S.-J., & Beard, T. D. (2016). The social, economic, and environmental importance of inland fish and fisheries. Environmental Reviews, 24(2), 115–121. https://doi.org/10.1139/er-2015-0064" ;
     ipbes:hasDoi "10.1139/er-2015-0064" ;
     owl:sameAs <https://www.zotero.org/groups/2333077/items/6APXBPC6> .
+
+<http://ontology.ipbes.net/report/ref/2333077/items/6BDFLZLP> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
+    ipbes:Report ipbes:GA119 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-3.2>,
+        <http://ontology.ipbes.net/report/sch/GA119-3.2.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-3.6>,
+        <http://ontology.ipbes.net/report/sch/GA119-3.7> ;
+    ipbes:hasDescription "Butchart, S. H. M., M. Di Marco, and J. E. M. Watson (2016). Formulating Smart Commitments on Biodiversity: Lessons from the Aichi Targets. Conservation Letters 9:457-468." ;
+    ipbes:hasDoi "10.1111/conl.12278" ;
+    owl:sameAs <https://www.zotero.org/groups/2333077/items/6BDFLZLP> .
 
 <http://ontology.ipbes.net/report/ref/2333077/items/6QZS7TPL> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
@@ -67513,20 +67570,6 @@ Chapter 5 follows by providing a more in-depth analysis of “target-seeking” 
     ipbes:hasDoi "10.1016/j.agsy.2010.07.005" ;
     owl:sameAs <https://www.zotero.org/groups/2333077/items/YVNJ3WPG> .
 
-<http://ontology.ipbes.net/report/ref/2333077/items/Z8WASQEB> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch1>,
-        <http://ontology.ipbes.net/report/ch/GA119ch2>,
-        <http://ontology.ipbes.net/report/ch/GA119ch3>,
-        <http://ontology.ipbes.net/report/ch/GA119ch4> ;
-    ipbes:Report ipbes:GA119 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3.1.6>,
-        <http://ontology.ipbes.net/report/sch/GA119-2.1.6.3.2>,
-        <http://ontology.ipbes.net/report/sch/GA119-3.3.2.3>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.3.3> ;
-    ipbes:hasDescription "Rulli, M. C., Saviori, A., & D’Odorico, P. (2013). Global land and water grabbing. Proceedings of the National Academy of Science USA, 110(3), 892–897. https://doi.org/10.1073/pnas.1213163110" ;
-    ipbes:hasDoi "10.1073/pnas.1213163110" ;
-    owl:sameAs <https://www.zotero.org/groups/2333077/items/Z8WASQEB> .
-
 <http://ontology.ipbes.net/report/ref/GA119-ch2-651> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2> ;
     ipbes:Report ipbes:GA119 ;
@@ -67789,7 +67832,7 @@ Greater efforts are needed to achieve coherence between the efforts of sectoral 
         ipbes:Illustration ;
     ipbes:hasDescription "The direct drivers (land-/sea-use change; direct exploitation of organisms; climate change; pollution; and invasive alien species) result from an array of underlying societal causes. These causes can be demographic (e.g., human population dynamics), sociocultural (e.g., consumption patterns), economic (e.g., trade), technological, or relating to institutions, governance, conflicts and epidemics. They are called indirect drivers and are underpinned by societal values and behaviours. The colour bands represent the relative global impact of direct drivers, from top to bottom, on terrestrial, freshwater and marine nature, as estimated from a global systematic review of studies published since 2005. Land- and sea-use change and direct exploitation account for more than 50 per cent of the global impact on land, in fresh water and in the sea, but each driver is dominant in certain contexts {2.2.6}. The circles illustrate the magnitude of the negative human impacts on a diverse selection of aspects of nature over a range of different time scales based on a global synthesis of indicators {2.2.5, 2.2.7}." ;
     dcterms:identifier "FigureSPM.2" ;
-    skos:prefLabel "Examples of global declines in nature, emphasizing declines in biodiversity, that" .
+    skos:prefLabel "Examples of global declines in nature, emphasizing declines in biodiversity, that have been and are being caused by direct and indirect drivers of change." .
 
 <http://ontology.ipbes.net/report/il/GA119-FigureSPM.9> a ipbes:Figure,
         ipbes:Illustration ;
@@ -67798,6 +67841,7 @@ Greater efforts are needed to achieve coherence between the efforts of sectoral 
 
 <http://ontology.ipbes.net/report/il/GA119-TableSPM.1> a ipbes:Illustration,
         ipbes:Table ;
+    ipbes:hasDescription "The appropriateness and relevance of different approaches varies according to place, system, decision-making process and scale. The list of actions and pathways in the following table is illustrative rather than exhaustive and uses examples from the assessment report." ;
     dcterms:identifier "TableSPM.1" ;
     skos:prefLabel "Approaches for sustainability and possible actions and pathways for achieving" .
 
@@ -68364,6 +68408,21 @@ Greater efforts are needed to achieve coherence between the efforts of sectoral 
         <http://ontology.ipbes.net/report/sch/GA119-6.3.2.3> ;
     ipbes:hasDescription "Juffe-Bignoli, D., Burgess, N. D., Bingham, H., Belle, E. M. S., de Lima, M. G., Deguignet, M., Bertzky, B., Milam, a N., Martinez-Lopez, J., Lewis, E., Eassom, A., Wicander, S., Geldmann, J., van Soesbergen, A., Arnell, a P., O’Connor, B., Park, S., Shi, Y. N., Danks, F. S., MacSharry, B., & Kingston, N. (2014). Protected Planet Report 2014. Retrieved from http://wdpa.s3.amazonaws.com/WPC2014/protected_planet_report.pdf" ;
     owl:sameAs <https://www.zotero.org/groups/2333077/items/YRN3GI74> .
+
+<http://ontology.ipbes.net/report/ref/2333077/items/Z8WASQEB> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch1>,
+        <http://ontology.ipbes.net/report/ch/GA119ch2>,
+        <http://ontology.ipbes.net/report/ch/GA119ch3>,
+        <http://ontology.ipbes.net/report/ch/GA119ch4> ;
+    ipbes:Report ipbes:GA119 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.3.1.6>,
+        <http://ontology.ipbes.net/report/sch/GA119-2.1.6.3.2>,
+        <http://ontology.ipbes.net/report/sch/GA119-3.3>,
+        <http://ontology.ipbes.net/report/sch/GA119-3.3.2.3>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.3.3> ;
+    ipbes:hasDescription "Rulli, M. C., Saviori, A., & D’Odorico, P. (2013). Global land and water grabbing. Proceedings of the National Academy of Science USA, 110(3), 892–897. https://doi.org/10.1073/pnas.1213163110" ;
+    ipbes:hasDoi "10.1073/pnas.1213163110" ;
+    owl:sameAs <https://www.zotero.org/groups/2333077/items/Z8WASQEB> .
 
 <http://ontology.ipbes.net/report/ref/GA119-ch3-4059> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
@@ -70153,24 +70212,6 @@ For any generation of biofuels to be sustainable, global demand would have to be
     ipbes:hasDoi "10.1017/CBO9780511807763" ;
     owl:sameAs <https://www.zotero.org/groups/2333077/items/NFLZL67M> .
 
-<http://ontology.ipbes.net/report/ref/2333077/items/TIKN7EIB> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2>,
-        <http://ontology.ipbes.net/report/ch/GA119ch4>,
-        <http://ontology.ipbes.net/report/ch/GA119ch5>,
-        <http://ontology.ipbes.net/report/ch/GA119ch6> ;
-    ipbes:Report ipbes:GA119 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-2.1.3.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.1.3>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.3.3>,
-        <http://ontology.ipbes.net/report/sch/GA119-5.4.1.6>,
-        <http://ontology.ipbes.net/report/sch/GA119-6.2.4>,
-        <http://ontology.ipbes.net/report/sch/GA119-6.2.4.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-6.3.2.2>,
-        <http://ontology.ipbes.net/report/sch/GA119-6.4.5> ;
-    ipbes:hasDescription "Pascual, U., Palomo, I., Adams, W. M., Chan, K. M. A., Daw, T. M., Garmendia, E., Gómez-Baggethun, E., De Groot, R. S., Mace, G. M., Martín-López, B., & Phelps, J. (2017b). Off-stage ecosystem service burdens: A blind spot for global sustainability. Environmental Research Letters, 12(7). https://doi.org/10.1088/1748-9326/aa7392" ;
-    ipbes:hasDoi "10.1088/1748-9326/aa7392" ;
-    owl:sameAs <https://www.zotero.org/groups/2333077/items/TIKN7EIB> .
-
 <http://ontology.ipbes.net/report/ref/2333077/items/YGV9ZWT8> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4>,
         <http://ontology.ipbes.net/report/ch/GA119ch5> ;
@@ -70358,24 +70399,6 @@ The main issue with quantifying degradation and restoration is the lack of a cle
 Given the uncertainty in the quantification of current land degradation, scenario analysis cannot provide strong quantitative predictions around restoration, but boundaries for restoration opportunities can be identified. According to the World Resource Institute, over 20 million km²of degraded tropical and temperate forests would be suitable for restoration (Laestadius et al., 2011). Extending afforestation further, to non-forest biomes, would have significant negative effects on ecosystem services (Veldman et al., 2015) as well as inevitably on the biodiversity adapted to these biomes. A trade-off between restoration of natural ecosystems and bioenergy production exists, since under a business-as-usual scenario, limiting warming to 2° C will require an expansion of bioenergy production to abandoned and degraded land (Dauber et al., 2012; Nijsen et al., 2012) to achieve negative emissions from biofuels (van Vuuren et al., 2011).""" ;
     dcterms:identifier "4.6.2.7" ;
     skos:prefLabel "Ecosystem Restoration and Resilience (Target 15)" .
-
-<http://ontology.ipbes.net/report/sch/GA119-5.4> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch5> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/7W7VN5MH>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/8PI3TBUQ>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/T657LHVE> ;
-    ipbes:Report ipbes:GA119 ;
-    ipbes:hasDescription """The scenario analysis in 5.2 and 5.3 demonstrated that pathways to achieve SDGs and biodiversity targets imply fundamental changes from current trends in all of the world’s regions. They are in one sense extremely ambitious, while also necessary and apparently feasible. This scenario analysis also provides key insights about the pathways to realizing the full suite of goals for biodiversity and ecosystem services, but it is not a sufficient source for such insight. Our analysis revealed that some of the issues considered in the literature as central to social-ecological transitions and transformations were largely implicit or even absent in many of the target-seeking and sustainability-oriented scenarios we consulted, such as the role of formal and informal institutions, and other indirect drivers (chapter 2). Following this insight and to characterize the constituents of sustainable pathways comprehensively, the sections below interweave evidence from the scenario analysis (5.3) with evidence from diverse literatures (including those discussed in 5.2.1).
-
-We organize this synthesis of key constituents of pathways to sustainability via eight points of leverage for social-ecological change, and five types of interventions or ‘levers’ of institutional change for sustainable pathways. These key points of intervention in social-ecological systems can be thought of as ‘leverage points’ (Abson et al., 2017; Meadows, 2009), while ‘levers’ are management or governance interventions to effect the transformative change that achieves the collectively agreed-upon objectives for nature and its contributions to people. Note that we use the notion of ‘lever’ metaphorically, recognizing that global systems—as complex social-ecological systems—cannot be manipulated as neatly as can a boulder with a stick. Rather, we use ‘lever’/‘leverage point’ to illustrate only that these levers and leverage points offer crucial opportunities to engender changes in economies and societies towards achieving shared goals.
-
-Second, levers and leverage points are independently important: the five levers pertain more broadly than the eight leverage points, and other tools may be needed to achieve desired changes in the leverage points. The pathways we identify involve considerable flexibility in how to, for instance, promote positive changes in leverage points such as consumption or inequalities. Chapter 6 provides the needed account of policy options for intervention at these specific points. Our five levers, meanwhile, are intended to suggest general and systemic interventions; they are policy tools or governance approaches that are themselves key constituents of social-ecological transitions, to be considered broadly, simultaneously addressing many leverage points and social variables. There are no governance panaceas for social-ecological sustainability (Ostrom, 2007).
-
-Change in any of these levers and leverage points may appear difficult to achieve, but we argue that many are easier to achieve in sets. Change in one aspect may enable change in others (5.4.3 details several nation-scale case studies). For example, changes in laws and policies will enable and underpin changes in management, consumption, and other aspects of behaviour. The reverse is also true: changes in individual and collective behaviours and habits can facilitate changes in attitudes, policies, and laws. Because of these bidirectional influences, there is no one way to order the levers and leverage points. Here we present the leverage points in an order that proceeds clockwise around the outside of the IPBES conceptual framework, spiralling into institutions at the end; levers are ordered from most labile to most lasting and structural (i.e., incentive programs are most easily changed, law hardest)
-
-The analyses of leverage points and levers are organized into three sections. The first section examines each of the identified leverage points as they relate to important dimensions of global social-ecological systems (5.4.1), while the second section discusses levers of change (5.4.2). Each subsection within starts with a statement of the leverage point or lever, followed by any needed Background, Evidence and a brief discussion of Possible points of action (with more detail found in chapter 6). The last section provides examples illustrating leverage points and levers in action, both via national case studies and potential alternative routes that proceed from the bottom up (5.4.3).""" ;
-    dcterms:identifier "5.4" ;
-    skos:prefLabel "Key constituents of pathways to sustainability: addressing the indirect drivers of change" .
 
 <http://ontology.ipbes.net/report/sch/GA119-5.4.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch5> ;
@@ -70577,6 +70600,25 @@ The analyses of leverage points and levers are organized into three sections. Th
         <http://ontology.ipbes.net/report/sch/GA119-4.7.2> ;
     ipbes:hasDescription "Settele, J., R. Scholes, R. Betts, S. Bunn, P. Leadley, D. Nepstad, J. T. Overpeck, and M. A. Taboad. “Terrestrial and Inland Water Systems.” In Climate Change 2014: Impacts, Adaptation, and Vulnerability. Part A: Global and Sectoral Aspects. Contribution of Working Group II to the Fifth Assessment Report of the Intergovernmental Panel on Climate Change, edited by C. B. Field, V. R. Barros, D. J. Dokken, K. J. Mach, M. D." ;
     owl:sameAs <https://www.zotero.org/groups/2333077/items/LSIXDB8U> .
+
+<http://ontology.ipbes.net/report/ref/2333077/items/TIKN7EIB> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2>,
+        <http://ontology.ipbes.net/report/ch/GA119ch4>,
+        <http://ontology.ipbes.net/report/ch/GA119ch5>,
+        <http://ontology.ipbes.net/report/ch/GA119ch6> ;
+    ipbes:Report ipbes:GA119 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-2.1.3.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.1.3>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.3.3>,
+        <http://ontology.ipbes.net/report/sch/GA119-5.4>,
+        <http://ontology.ipbes.net/report/sch/GA119-5.4.1.6>,
+        <http://ontology.ipbes.net/report/sch/GA119-6.2.4>,
+        <http://ontology.ipbes.net/report/sch/GA119-6.2.4.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-6.3.2.2>,
+        <http://ontology.ipbes.net/report/sch/GA119-6.4.5> ;
+    ipbes:hasDescription "Pascual, U., Palomo, I., Adams, W. M., Chan, K. M. A., Daw, T. M., Garmendia, E., Gómez-Baggethun, E., De Groot, R. S., Mace, G. M., Martín-López, B., & Phelps, J. (2017b). Off-stage ecosystem service burdens: A blind spot for global sustainability. Environmental Research Letters, 12(7). https://doi.org/10.1088/1748-9326/aa7392" ;
+    ipbes:hasDoi "10.1088/1748-9326/aa7392" ;
+    owl:sameAs <https://www.zotero.org/groups/2333077/items/TIKN7EIB> .
 
 <http://ontology.ipbes.net/report/sch/GA119-1.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch1> ;
@@ -70854,6 +70896,25 @@ Chapter authors systematically evaluated how co-production of NCP is measured fo
 While indigenous worldviews differ from one community to another, indigenous understandings of well-being are also frequently intertwined with understandings of nature; the relationship between people and their environment happens not only at a cognitive level. In many societies, “prestige and satisfaction are gained through relationships and generosity rather than in accumulation of personal wealth. A good life is one spent in service to one’s community, in living in balance with the other lifeforms of one’s homeplace. Responsibilities extend not just to the present, but to many generations into the future” (Turner & Clifton, 2009). Different understandings also exist around the notion of ‘time’. In Iñupiaq and Siberian Yupik culture, for instance, it is important for hunters to avoid speculating about the future, reflecting the belief that one should be humble about one’s abilities to predict it, and not expect any one particular outcome over another (Voorhees et al., 2014). Addressing quality of life under different plausible futures will benefit from bridging indigenous and local epistemologies with scientific knowledge systems (Tengö et al., 2017), such as initiatives addressing mitigation and adaptation from a local perspective (UNU-IAS & IGES, 2015).""" ;
     dcterms:identifier "4.4.1.2" ;
     skos:prefLabel "Good quality of life across worldviews and knowledge systems" .
+
+<http://ontology.ipbes.net/report/sch/GA119-5.4> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch5> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/7W7VN5MH>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/8PI3TBUQ>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/T657LHVE>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/TIKN7EIB> ;
+    ipbes:Report ipbes:GA119 ;
+    ipbes:hasDescription """The scenario analysis in 5.2 and 5.3 demonstrated that pathways to achieve SDGs and biodiversity targets imply fundamental changes from current trends in all of the world’s regions. They are in one sense extremely ambitious, while also necessary and apparently feasible. This scenario analysis also provides key insights about the pathways to realizing the full suite of goals for biodiversity and ecosystem services, but it is not a sufficient source for such insight. Our analysis revealed that some of the issues considered in the literature as central to social-ecological transitions and transformations were largely implicit or even absent in many of the target-seeking and sustainability-oriented scenarios we consulted, such as the role of formal and informal institutions, and other indirect drivers (chapter 2). Following this insight and to characterize the constituents of sustainable pathways comprehensively, the sections below interweave evidence from the scenario analysis (5.3) with evidence from diverse literatures (including those discussed in 5.2.1).
+
+We organize this synthesis of key constituents of pathways to sustainability via eight points of leverage for social-ecological change, and five types of interventions or ‘levers’ of institutional change for sustainable pathways. These key points of intervention in social-ecological systems can be thought of as ‘leverage points’ (Abson et al., 2017; Meadows, 2009), while ‘levers’ are management or governance interventions to effect the transformative change that achieves the collectively agreed-upon objectives for nature and its contributions to people. Note that we use the notion of ‘lever’ metaphorically, recognizing that global systems—as complex social-ecological systems—cannot be manipulated as neatly as can a boulder with a stick. Rather, we use ‘lever’/‘leverage point’ to illustrate only that these levers and leverage points offer crucial opportunities to engender changes in economies and societies towards achieving shared goals.
+
+Second, levers and leverage points are independently important: the five levers pertain more broadly than the eight leverage points, and other tools may be needed to achieve desired changes in the leverage points. The pathways we identify involve considerable flexibility in how to, for instance, promote positive changes in leverage points such as consumption or inequalities. Chapter 6 provides the needed account of policy options for intervention at these specific points. Our five levers, meanwhile, are intended to suggest general and systemic interventions; they are policy tools or governance approaches that are themselves key constituents of social-ecological transitions, to be considered broadly, simultaneously addressing many leverage points and social variables. There are no governance panaceas for social-ecological sustainability (Ostrom, 2007).
+
+Change in any of these levers and leverage points may appear difficult to achieve, but we argue that many are easier to achieve in sets. Change in one aspect may enable change in others (5.4.3 details several nation-scale case studies). For example, changes in laws and policies will enable and underpin changes in management, consumption, and other aspects of behaviour. The reverse is also true: changes in individual and collective behaviours and habits can facilitate changes in attitudes, policies, and laws. Because of these bidirectional influences, there is no one way to order the levers and leverage points. Here we present the leverage points in an order that proceeds clockwise around the outside of the IPBES conceptual framework, spiralling into institutions at the end; levers are ordered from most labile to most lasting and structural (i.e., incentive programs are most easily changed, law hardest)
+
+The analyses of leverage points and levers are organized into three sections. The first section examines each of the identified leverage points as they relate to important dimensions of global social-ecological systems (5.4.1), while the second section discusses levers of change (5.4.2). Each subsection within starts with a statement of the leverage point or lever, followed by any needed Background, Evidence and a brief discussion of Possible points of action (with more detail found in chapter 6). The last section provides examples illustrating leverage points and levers in action, both via national case studies and potential alternative routes that proceed from the bottom up (5.4.3).""" ;
+    dcterms:identifier "5.4" ;
+    skos:prefLabel "Key constituents of pathways to sustainability: addressing the indirect drivers of change" .
 
 <http://ontology.ipbes.net/report/sch/GA119-5.4.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch5> ;
@@ -72023,12 +72084,6 @@ In sum, biophysical measures are essential for defining potential NCP, realized 
     dcterms:identifier "2.3.4.1" ;
     skos:prefLabel "Biophysical measures of NCP" .
 
-<http://ontology.ipbes.net/report/sch/GA119-3.3> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
-    ipbes:Report ipbes:GA119 ;
-    dcterms:identifier "3.3" ;
-    skos:prefLabel "Impacts of trends in nature on progress towards the Sustainable Development Goals" .
-
 <http://ontology.ipbes.net/report/sch/GA119-3.4.5> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/69GGNU6W>,
@@ -72164,18 +72219,6 @@ These considerations suggest that future policy targets could highlight the rela
 Models and other considerations also suggest that a more focused set of indicators would be helpful for monitoring progress towards such a target. For example, trends and projections of sea surface temperatures, ocean acidity, coral reef bleaching events, proxies of marine nutrient loading in coral reef areas, etc. are readily available from observations and models and may be much better adapted to monitoring progress towards a component focusing on tropical coral reefs than very broad indicators of ocean health or human impacts on marine ecosystems.""" ;
     dcterms:identifier "4.6.2.4" ;
     skos:prefLabel "Vulnerable ecosystems (Coral Reefs) (Target 10)" .
-
-<http://ontology.ipbes.net/report/sch/GA119-4.7> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/553QRUKQ>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/CQGGD3FQ>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/EXZHV87D>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/P79FBENL>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/PRXQWBY4>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/TBQDJ5AW> ;
-    ipbes:Report ipbes:GA119 ;
-    dcterms:identifier "4.7" ;
-    skos:prefLabel "Dealing with uncertainty, spatial scale and temporal scale issues when mobilizing scenarios and models for decision-making" .
 
 <http://ontology.ipbes.net/report/sch/GA119-6.3.3.3.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch6> ;
@@ -72435,6 +72478,13 @@ Although Mediterranean biodiversity is facing multiple threats and is declining 
     dcterms:identifier "2.2.7.4" ;
     skos:prefLabel "Mediterranean forests, woodlands and scrub" .
 
+<http://ontology.ipbes.net/report/sch/GA119-3.3> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/Z8WASQEB> ;
+    ipbes:Report ipbes:GA119 ;
+    dcterms:identifier "3.3" ;
+    skos:prefLabel "Impacts of trends in nature on progress towards the Sustainable Development Goals" .
+
 <http://ontology.ipbes.net/report/sch/GA119-3.3.2.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/665HK5L6>,
@@ -72512,6 +72562,19 @@ Negative impacts on the planet and people are becoming more profound (Figure 4.2
     ipbes:Report ipbes:GA119 ;
     dcterms:identifier "4.3" ;
     skos:prefLabel "Plausible futures for nature’s contributions to people" .
+
+<http://ontology.ipbes.net/report/sch/GA119-4.7> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/553QRUKQ>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/CQGGD3FQ>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/EXZHV87D>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/KW6FJ9E2>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/P79FBENL>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/PRXQWBY4>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/TBQDJ5AW> ;
+    ipbes:Report ipbes:GA119 ;
+    dcterms:identifier "4.7" ;
+    skos:prefLabel "Dealing with uncertainty, spatial scale and temporal scale issues when mobilizing scenarios and models for decision-making" .
 
 <http://ontology.ipbes.net/report/sch/GA119-6.3.4.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch6> ;
@@ -74125,31 +74188,6 @@ Positive actions on wetlands are expanding, particularly in the USA and Europe, 
     dcterms:identifier "2.2.7.9" ;
     skos:prefLabel "Wetlands" .
 
-<http://ontology.ipbes.net/report/sch/GA119-3.2> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/GA119-A1>,
-        <http://ontology.ipbes.net/report/key/GA119-A2>,
-        <http://ontology.ipbes.net/report/key/GA119-A3>,
-        <http://ontology.ipbes.net/report/key/GA119-A4>,
-        <http://ontology.ipbes.net/report/key/GA119-A5>,
-        <http://ontology.ipbes.net/report/key/GA119-A6>,
-        <http://ontology.ipbes.net/report/key/GA119-A7>,
-        <http://ontology.ipbes.net/report/key/GA119-A8>,
-        <http://ontology.ipbes.net/report/key/GA119-B1>,
-        <http://ontology.ipbes.net/report/key/GA119-B2>,
-        <http://ontology.ipbes.net/report/key/GA119-B3>,
-        <http://ontology.ipbes.net/report/key/GA119-B4>,
-        <http://ontology.ipbes.net/report/key/GA119-B5>,
-        <http://ontology.ipbes.net/report/key/GA119-B6>,
-        <http://ontology.ipbes.net/report/key/GA119-C1>,
-        <http://ontology.ipbes.net/report/key/GA119-C2>,
-        <http://ontology.ipbes.net/report/key/GA119-C3>,
-        <http://ontology.ipbes.net/report/key/GA119-C4>,
-        <http://ontology.ipbes.net/report/key/GA119-C5> ;
-    ipbes:Report ipbes:GA119 ;
-    dcterms:identifier "3.2" ;
-    skos:prefLabel "Progress towards the Aichi Biodiversity Targets" .
-
 <http://ontology.ipbes.net/report/sch/GA119-4.2.1.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/233GESDG>,
@@ -74209,6 +74247,43 @@ The feedback between species composition and single species extinctions (SD4 in 
 Current major threats to freshwater biodiversity include climate change, habitat modification and pollution from land-use, habitat fragmentation and flow regime homogenization by dams, non-native species, increased eutrophication resulting from nutrient and organic discharges, water abstraction, and overexploitation (Young et al., 2016). Those threats currently affect freshwater biodiversity and functioning to varying degrees (Carpenter et al., 2011; Vörösmarty et al., 2010), and their additive and potentially synergistic effects may further threaten future freshwater biodiversity and resources (Collen et al., 2014; Knouft & Ficklin, 2017).""" ;
     dcterms:identifier "4.2.3.1" ;
     skos:prefLabel "Freshwater biodiversity and current threats" .
+
+<http://ontology.ipbes.net/report/sch/GA119-4.7.2> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/2EMKPF78>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/3TPZUZ9V>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/53YCU268>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/7RLE8Q5L>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/8LXHWCPK>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/8WSRB46Q>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/9EHN62UU>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/KMXDM6BX>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/LSIXDB8U>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/T9JQNHQH>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/TR2US3GL>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/U7N7VHYB>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/U9WKT44Q>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/VEI9RFSA>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/VYRMFSPD>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/VZAE8BCH>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/XNJ5S7ZR>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/ZDP7UNAV>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/ZR9XQWJR> ;
+    ipbes:Report ipbes:GA119 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-4.7> ;
+    ipbes:hasDescription """Uncertainty in scenarios and models arises from many sources including insufficient data for development and testing, inadequate representation of complex socio-ecological systems and intrinsically low predictability of the system being analyzed (Ferrier et al., 2016). The importance of these sources of uncertainty differs greatly between scenarios of direct and indirect drivers and models of impacts on nature and NCP (Brotons et al., 2016; Ferrier et al., 2016). As noted in the introduction of this chapter, the exploratory scenarios assessed in this chapter can help address the high level of uncertainty in many components of direct and indirect drivers by exploring a wide range of plausible futures (Pichs-Madruga et al., 2016). Evaluation of uncertainty in models of nature and NCP are typically addressed using comparisons of model outputs with data, intercomparisons of multiple types of models, sensitivity analyses and measures of error propagation in coupled models (Brotons et al., 2016).
+
+Uncertainty in scenarios and model projections is not necessarily a major obstacle to acceptance by stakeholders, especially if it does not directly conflict with their recent experiences (Kuhn & Sniezek, 1996). Indeed, despite the common perception that communication of uncertainty can lead to confusion for decision makers, recent studies show that most audiences value the communication of uncertainty in scientific evidence as opposed to oversimplification (Fischhoff & Davis, 2014; Rudiak-Gould, 2014). This highlights the importance of transparency as well as sustained, effective communication between scientists and decision makers throughout the processes of using models for decision support (Acosta et al., 2016; Ferrier et al., 2016). There are also a wide range of qualitative and quantitative decision support mechanisms that can help decision makers deal with uncertainty, even though these tools are underexploited in many decision-making contexts (Acosta et al., 2016).
+
+The literature survey carried out for this chapter (Appendix A4.1.1) highlights the challenges facing the scientific community in dealing with uncertainty. The majority of studies did not include an analysis of uncertainty (Figure 4.7.2a). Of those that did include an analysis, most focused on uncertainty associated with different scenarios of direct and indirect drivers and less than half provided quantitative analyses of uncertainty. Relatively few studies examined multiple sources of uncertainty. This analysis shows that significant progress needs to be made in understanding, quantifying and communicating uncertainty in order for scenarios and models to be more widely used in decision-making.
+
+In the small number of studies that have assessed uncertainty across a wide range of sources, the relative contribution of sources of uncertainty varies substantially over time, space and different measures of nature or NCP (e.g., Figure 4.7.2b; Payne et al., 2016). These analyses also indicate that currently the largest sources of uncertainty arise from differences in model structure or application rather than data, scenarios or models of direct drivers (e.g., Figure 4.7.2b; Payne et al., 2016). It is important to note as well that the range of scenarios typically used in many analyses may not cover plausible extremes and potential regime shifts (Leadley et al., 2010; Pereira et al., 2010; Prestele et al., 2016).
+
+Comparisons of models and observations provide a powerful means of evaluating uncertainty in models of impacts on nature and NCP, and for communicating with decision makers. Considerable work has been done to evaluate models of ecosystem functions and some categories of NCP (e.g., ecosystem carbon stocks and fluxes; Zaehle, 2013), that indicated large variation between models, and helped improving the understanding of the capacities and limits of these models. On the other hand, models of global change impacts on species diversity, species range, habitat change and many NCP suffer from a chronic deficit of comparison with independent datasets (i.e., datasets that are entirely independent from the data used to develop and calibrate the model (Araújo & Guisan, 2006; Settele et al., 2014). Those studies that have made robust comparisons between models and data indicate that agreement between models and data varies greatly between species, habitats and NCP (Araujo & Rahbek, 2006; Sitch et al., 2008). It is widely acknowledged that significant progress needs to be made in comparing models and data in order for scenarios and models to be more widely used in decision-making (Araújo & Guisan, 2006; Dawson et al., 2011).
+
+There is a growing consensus that triangulation of multiple approaches, e.g., ecosystem and species models, projections based on trend extrapolation, in situ observations and experimentation, should be used to increase confidence in models (Dawson et al., 2011). There are a number of efforts underway to improve international collaboration to including efforts being supported by IPBES (Rosa et al., 2017; Tittensor et al., 2018b).""" ;
+    dcterms:identifier "4.7.2" ;
+    skos:prefLabel "Dealing with uncertainty when using scenarios and models to support decision-making" .
 
 <http://ontology.ipbes.net/report/sch/GA119-5.4.1.6> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch5> ;
@@ -74319,35 +74394,6 @@ This section presents both short and long-term options for decision makers that 
     dcterms:identifier "6.3.4" ;
     skos:prefLabel "Integrated Approaches for Sustainable Freshwater" .
 
-<http://ontology.ipbes.net/report/ref/2333077/items/JETB4BE7> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch1>,
-        <http://ontology.ipbes.net/report/ch/GA119ch2>,
-        <http://ontology.ipbes.net/report/ch/GA119ch4>,
-        <http://ontology.ipbes.net/report/ch/GA119ch5> ;
-    ipbes:Report ipbes:GA119 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.1.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-1.3.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-1.3.1.6>,
-        <http://ontology.ipbes.net/report/sch/GA119-1.3.3>,
-        <http://ontology.ipbes.net/report/sch/GA119-2.2.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.1.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.1.2>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.1.3>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.1.4.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.1.5>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.2.1.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.3.2.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.4.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.5.3>,
-        <http://ontology.ipbes.net/report/sch/GA119-4.6.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-5.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-5.2.2>,
-        <http://ontology.ipbes.net/report/sch/GA119-5.2.2.2>,
-        <http://ontology.ipbes.net/report/sch/GA119-5.3.1.1>,
-        <http://ontology.ipbes.net/report/sch/GA119-5.3.2.5> ;
-    ipbes:hasDescription "IPBES (2016b). The methodological assessment on scenarios and models of biodiversity and ecosystem services (S. Ferrier, K. N. Ninan, P. Leadley, R. Alkemade, L. A. Acosta, H. R. Akçakaya, … B. A. Wintle, Eds.). Bonn, Germany: Secretariat of the Intergovernmental Platform for Biodiversity and Ecosystem Services." ;
-    owl:sameAs <https://www.zotero.org/groups/2333077/items/JETB4BE7> .
-
 <http://ontology.ipbes.net/report/sch/GA119-2.1.11.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/5MLY3ZYS>,
@@ -74415,44 +74461,6 @@ Today, indigenous and local knowledge (ILK) is increasingly seen as relevant for
 Yet, the traditional practices stemming from ILK clearly are also declining at the very same time, and across multiple communities (Forest Peoples Programme, 2016; chapters 2.3 and 3). For instance, changes in both values and knowledge can be driven by contemporary education, in which prestige and progress might be associated to the replacement of traditional knowledge, which plays a key role in either the maintenance or the erosion of local worldviews and knowledge (Godoy et al., 2009; Reyes-García et al., 2007). More generally, schooling can loosen people’s direct personal interactions with nature and lower traditional knowledge, while also potentially hindering the traditional transmission of knowledge based on direct learning from practice guided by local adults and elders. This occurs by creating cross-generational language barriers and changing cultural values (Godoy et al., 2009; Pearce et al., 2011; Reyes-García et al., 2014, 2007). For instance, formal education can remove children from the everyday lives of families during the periods crucial for learning traditional knowledge (Ohmagari & Berkes, 1997; Ruiz-Mallén et al., 2013), effective transmission of which relies upon observation, participation, and imitation in families and wider local communities. As formal education focuses on abstract and general knowledge, often alien to everyday life and local contexts, it may serve to overwrite elements of traditional knowledge. Thus, different ways of learning (i.e., traditional/ local vs. formal) may result in multiple cultural identities (Pearce et al., 2011). Yet, nonetheless, there are cases in which traditional knowledge and formal education have been successfully integrated, e.g., using local language and culture in implementing education and by also motivating traditional knowledge transmission (Barnnhardt & Kawagley, 2005; McCarter & Gavin, 2011; Michie, 2002; Ruiz-Mallén et al., 2013).""" ;
     dcterms:identifier "2.1.4.4.2" ;
     skos:prefLabel "Indigenous and Local Knowledge" .
-
-<http://ontology.ipbes.net/report/sch/GA119-4.7.2> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/2EMKPF78>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/3TPZUZ9V>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/53YCU268>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/7RLE8Q5L>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/8LXHWCPK>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/8WSRB46Q>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/9EHN62UU>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/KMXDM6BX>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/KW6FJ9E2>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/LSIXDB8U>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/T9JQNHQH>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/TR2US3GL>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/U7N7VHYB>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/U9WKT44Q>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/VEI9RFSA>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/VYRMFSPD>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/VZAE8BCH>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/XNJ5S7ZR>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/ZDP7UNAV>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/ZR9XQWJR> ;
-    ipbes:Report ipbes:GA119 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-4.7> ;
-    ipbes:hasDescription """Uncertainty in scenarios and models arises from many sources including insufficient data for development and testing, inadequate representation of complex socio-ecological systems and intrinsically low predictability of the system being analyzed (Ferrier et al., 2016). The importance of these sources of uncertainty differs greatly between scenarios of direct and indirect drivers and models of impacts on nature and NCP (Brotons et al., 2016; Ferrier et al., 2016). As noted in the introduction of this chapter, the exploratory scenarios assessed in this chapter can help address the high level of uncertainty in many components of direct and indirect drivers by exploring a wide range of plausible futures (Pichs-Madruga et al., 2016). Evaluation of uncertainty in models of nature and NCP are typically addressed using comparisons of model outputs with data, intercomparisons of multiple types of models, sensitivity analyses and measures of error propagation in coupled models (Brotons et al., 2016).
-
-Uncertainty in scenarios and model projections is not necessarily a major obstacle to acceptance by stakeholders, especially if it does not directly conflict with their recent experiences (Kuhn & Sniezek, 1996). Indeed, despite the common perception that communication of uncertainty can lead to confusion for decision makers, recent studies show that most audiences value the communication of uncertainty in scientific evidence as opposed to oversimplification (Fischhoff & Davis, 2014; Rudiak-Gould, 2014). This highlights the importance of transparency as well as sustained, effective communication between scientists and decision makers throughout the processes of using models for decision support (Acosta et al., 2016; Ferrier et al., 2016). There are also a wide range of qualitative and quantitative decision support mechanisms that can help decision makers deal with uncertainty, even though these tools are underexploited in many decision-making contexts (Acosta et al., 2016).
-
-The literature survey carried out for this chapter (Appendix A4.1.1) highlights the challenges facing the scientific community in dealing with uncertainty. The majority of studies did not include an analysis of uncertainty (Figure 4.7.2a). Of those that did include an analysis, most focused on uncertainty associated with different scenarios of direct and indirect drivers and less than half provided quantitative analyses of uncertainty. Relatively few studies examined multiple sources of uncertainty. This analysis shows that significant progress needs to be made in understanding, quantifying and communicating uncertainty in order for scenarios and models to be more widely used in decision-making.
-
-In the small number of studies that have assessed uncertainty across a wide range of sources, the relative contribution of sources of uncertainty varies substantially over time, space and different measures of nature or NCP (e.g., Figure 4.7.2b; Payne et al., 2016). These analyses also indicate that currently the largest sources of uncertainty arise from differences in model structure or application rather than data, scenarios or models of direct drivers (e.g., Figure 4.7.2b; Payne et al., 2016). It is important to note as well that the range of scenarios typically used in many analyses may not cover plausible extremes and potential regime shifts (Leadley et al., 2010; Pereira et al., 2010; Prestele et al., 2016).
-
-Comparisons of models and observations provide a powerful means of evaluating uncertainty in models of impacts on nature and NCP, and for communicating with decision makers. Considerable work has been done to evaluate models of ecosystem functions and some categories of NCP (e.g., ecosystem carbon stocks and fluxes; Zaehle, 2013), that indicated large variation between models, and helped improving the understanding of the capacities and limits of these models. On the other hand, models of global change impacts on species diversity, species range, habitat change and many NCP suffer from a chronic deficit of comparison with independent datasets (i.e., datasets that are entirely independent from the data used to develop and calibrate the model (Araújo & Guisan, 2006; Settele et al., 2014). Those studies that have made robust comparisons between models and data indicate that agreement between models and data varies greatly between species, habitats and NCP (Araujo & Rahbek, 2006; Sitch et al., 2008). It is widely acknowledged that significant progress needs to be made in comparing models and data in order for scenarios and models to be more widely used in decision-making (Araújo & Guisan, 2006; Dawson et al., 2011).
-
-There is a growing consensus that triangulation of multiple approaches, e.g., ecosystem and species models, projections based on trend extrapolation, in situ observations and experimentation, should be used to increase confidence in models (Dawson et al., 2011). There are a number of efforts underway to improve international collaboration to including efforts being supported by IPBES (Rosa et al., 2017; Tittensor et al., 2018b).""" ;
-    dcterms:identifier "4.7.2" ;
-    skos:prefLabel "Dealing with uncertainty when using scenarios and models to support decision-making" .
 
 <http://ontology.ipbes.net/report/sch/GA119-6.3.4.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch6> ;
@@ -74538,6 +74546,36 @@ Finally, ensuring compliance with fair tax policies can help ensure funding for 
 Tax havens reduce the amount of financing available to governments for global public goods provisioning and provide bad actors with opportunities to avoid financial scrutiny, reducing the impact of policies such as certification or supply chain monitoring (also see section 6.3.2). A recent study of tax havens found that 70% of known fishing vessels implicated in illegal fishing are flagged in a tax haven, and that nearly 70% of foreign capital to the largest companies raising soy and beef in the Amazon, prime drivers of deforestation, was channeled through tax havens (Galaz et al., 2018).""" ;
     dcterms:identifier "6.4.1" ;
     skos:prefLabel "Reforming environmentally harmful subsidy and tax policies" .
+
+<http://ontology.ipbes.net/report/ref/2333077/items/JETB4BE7> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch1>,
+        <http://ontology.ipbes.net/report/ch/GA119ch2>,
+        <http://ontology.ipbes.net/report/ch/GA119ch4>,
+        <http://ontology.ipbes.net/report/ch/GA119ch5> ;
+    ipbes:Report ipbes:GA119 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/GA119-1.1.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-1.3>,
+        <http://ontology.ipbes.net/report/sch/GA119-1.3.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-1.3.1.6>,
+        <http://ontology.ipbes.net/report/sch/GA119-1.3.3>,
+        <http://ontology.ipbes.net/report/sch/GA119-2.2.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.1.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.1.2>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.1.3>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.1.4.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.1.5>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.2.1.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.3.2.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.4.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.5.3>,
+        <http://ontology.ipbes.net/report/sch/GA119-4.6.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-5.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-5.2.2>,
+        <http://ontology.ipbes.net/report/sch/GA119-5.2.2.2>,
+        <http://ontology.ipbes.net/report/sch/GA119-5.3.1.1>,
+        <http://ontology.ipbes.net/report/sch/GA119-5.3.2.5> ;
+    ipbes:hasDescription "IPBES (2016b). The methodological assessment on scenarios and models of biodiversity and ecosystem services (S. Ferrier, K. N. Ninan, P. Leadley, R. Alkemade, L. A. Acosta, H. R. Akçakaya, … B. A. Wintle, Eds.). Bonn, Germany: Secretariat of the Intergovernmental Platform for Biodiversity and Ecosystem Services." ;
+    owl:sameAs <https://www.zotero.org/groups/2333077/items/JETB4BE7> .
 
 <http://ontology.ipbes.net/report/sch/GA119-2.1.15.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2> ;
@@ -75190,6 +75228,36 @@ Soil acidification is associated with atmospheric deposition of strong acids (ac
 Global soils in over 100 countries are affected by salinity, linked to climate change and increased use of irrigation for production of crops (Squires & Glenn, 2009). Salinity occurs naturally, yet it is often exacerbated by irrigation at rates not adequate to exceed evapotranspiration rates (FAO & ITPS, 2015), by poor drainage or groundwater levels near the soil surface (< 2m), by the use of brackish water to irrigate, by intrusion of seawater near coastal areas, and by shifts from deep rooted perennial vegetation to shallow rooted annual crops and pastures (FAO & ITPS, 2015).""" ;
     dcterms:identifier "2.1.13.4" ;
     skos:prefLabel "Land degradation" .
+
+<http://ontology.ipbes.net/report/sch/GA119-3.2> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/GA119-A1>,
+        <http://ontology.ipbes.net/report/key/GA119-A2>,
+        <http://ontology.ipbes.net/report/key/GA119-A3>,
+        <http://ontology.ipbes.net/report/key/GA119-A4>,
+        <http://ontology.ipbes.net/report/key/GA119-A5>,
+        <http://ontology.ipbes.net/report/key/GA119-A6>,
+        <http://ontology.ipbes.net/report/key/GA119-A7>,
+        <http://ontology.ipbes.net/report/key/GA119-A8>,
+        <http://ontology.ipbes.net/report/key/GA119-B1>,
+        <http://ontology.ipbes.net/report/key/GA119-B2>,
+        <http://ontology.ipbes.net/report/key/GA119-B3>,
+        <http://ontology.ipbes.net/report/key/GA119-B4>,
+        <http://ontology.ipbes.net/report/key/GA119-B5>,
+        <http://ontology.ipbes.net/report/key/GA119-B6>,
+        <http://ontology.ipbes.net/report/key/GA119-C1>,
+        <http://ontology.ipbes.net/report/key/GA119-C2>,
+        <http://ontology.ipbes.net/report/key/GA119-C3>,
+        <http://ontology.ipbes.net/report/key/GA119-C4>,
+        <http://ontology.ipbes.net/report/key/GA119-C5> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/5ZIDHJLB>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/6BDFLZLP>,
+        <http://ontology.ipbes.net/report/ref/GA119-ch3-3475>,
+        <http://ontology.ipbes.net/report/ref/GA119-ch3-3481>,
+        <http://ontology.ipbes.net/report/ref/GA119-ch3-4716> ;
+    ipbes:Report ipbes:GA119 ;
+    dcterms:identifier "3.2" ;
+    skos:prefLabel "Progress towards the Aichi Biodiversity Targets" .
 
 <http://ontology.ipbes.net/report/sch/GA119-4.2.2.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch4> ;
@@ -79944,32 +80012,6 @@ Mechanisms to facilitate and scale up international financing of protected areas
     dcterms:identifier "5.3.2.3" ;
     skos:prefLabel "Conserving and restoring nature on land while contributing positively to human well-being" .
 
-<http://ontology.ipbes.net/report/sch/GA119-1.3> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch1> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/289F7HH7>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/2YSP2JX3>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/37P7A5JF>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/5BLWEDHC>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/6BJEJEX9>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/7FI9CMAX>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/7HRM3DT4>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/7ZQTXJGQ>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/9ERN94X5>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/HV2B4X73>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/JZV4MG8C>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/LG7DWUIK>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/LP3QUH97>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/MAKBNTZU>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/MFGRTMN9>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/P5SRU87Y>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/R3LFHTDN>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/S9YLCT3U>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/VB9E62K9>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/WHA5PFM9> ;
-    ipbes:Report ipbes:GA119 ;
-    dcterms:identifier "1.3" ;
-    skos:prefLabel "The conceptual bases of the IPBES global assessment" .
-
 <http://ontology.ipbes.net/report/sch/GA119-1.3.1.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch1> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/2XGC3GXF>,
@@ -80552,6 +80594,33 @@ A convergence of demand-driven leverage is likely to improve the regulatory stri
     ipbes:hasDescription "Increased use of green infrastructure and other ecosystem-based approaches can help to advance sustainable urban development while reinforcing climate mitigation and adaptation. Urban key biodiversity areas should be safeguarded. Solutions can include retrofitting green and blue infrastructure, such as creating and maintaining green spaces and biodiversity-friendly water bodies, urban agriculture, rooftop gardens and expanded and accessible vegetation cover in existing urban and peri-urban areas and new developments. Green infrastructure in urban and surrounding rural areas can complement large-scale “grey infrastructure” in areas such as flood protection, temperature regulation, cleaning of air and water, treating wastewater and the provision of energy, locally sourced food and the health benefits of interaction with nature." ;
     dcterms:identifier "D9" ;
     skos:prefLabel "Nature-based solutions can be cost-effective for meeting the Sustainable Development Goals in cities, which are crucial for global sustainability." .
+
+<http://ontology.ipbes.net/report/sch/GA119-1.3> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch1> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/289F7HH7>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/2YSP2JX3>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/37P7A5JF>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/5BLWEDHC>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/6BJEJEX9>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/7FI9CMAX>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/7HRM3DT4>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/7ZQTXJGQ>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/9ERN94X5>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/HV2B4X73>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/JETB4BE7>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/JZV4MG8C>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/LG7DWUIK>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/LP3QUH97>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/MAKBNTZU>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/MFGRTMN9>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/P5SRU87Y>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/R3LFHTDN>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/S9YLCT3U>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/VB9E62K9>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/WHA5PFM9> ;
+    ipbes:Report ipbes:GA119 ;
+    dcterms:identifier "1.3" ;
+    skos:prefLabel "The conceptual bases of the IPBES global assessment" .
 
 <http://ontology.ipbes.net/report/sch/GA119-2.1.6.1.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2> ;
@@ -81143,73 +81212,6 @@ Similarly, concessions are a leading development policy in forests, awarding ext
     dcterms:identifier "2.1.18.2.2" ;
     skos:prefLabel "Spreading spillovers" .
 
-<http://ontology.ipbes.net/report/sch/GA119-6.2> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch6> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/GA119-D1>,
-        <http://ontology.ipbes.net/report/key/GA119-D10>,
-        <http://ontology.ipbes.net/report/key/GA119-D2>,
-        <http://ontology.ipbes.net/report/key/GA119-D3>,
-        <http://ontology.ipbes.net/report/key/GA119-D4>,
-        <http://ontology.ipbes.net/report/key/GA119-D5>,
-        <http://ontology.ipbes.net/report/key/GA119-D6>,
-        <http://ontology.ipbes.net/report/key/GA119-D7>,
-        <http://ontology.ipbes.net/report/key/GA119-D8>,
-        <http://ontology.ipbes.net/report/key/GA119-D9> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/23YPUSLS>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/259B93GM>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/66PK6A6A>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/6EGEUS69>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/6F9MSTAD>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/8UK96537>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/92M4WVG3>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/9Y3MQ3FL>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/ARWIEXKL>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/AZTNZW3H>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/DB6RQ29M>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/DHF7777E>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/DZPWCF3N>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/E3KU6UFF>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/EF9VFHAG>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/ELFDGA8T>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/F692XYXB>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/G7EFER62>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/G9GGS32Y>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/JVDC4G3K>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/JXCL8CAN>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/JYTKJQPB>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/K585BTMM>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/KJF5WPAI>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/KRF7QY4N>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/LIJRV2NT>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/M3T95P5K>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/MU6JAJ82>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/PADIBSN7>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/Q46TVK49>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/UKNCD4AV>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/V6LCUUNV>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/VACM8ZW9>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/W6T4HMJL>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/WCSAYXZQ>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/XD3TLQFN>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/XIG2ARDC>,
-        <http://ontology.ipbes.net/report/ref/GA119-ch6-7797> ;
-    ipbes:Report ipbes:GA119 ;
-    ipbes:hasDescription """As introduced in 6.1, transformative change can be defined as societal change in terms of technological, economic and social structures. It includes both personal and social transformation (Otsuki, 2015), and includes shifts in values and beliefs, and patterns of social behaviour (Chaffin et al., 2016).
-
-Transformative change has emerged in the policy discourse and is increasingly seen as both necessary and inevitable for biodiversity-related issues and sustainable development more broadly. The Convention on Biodiversity (CBD), European Environment Agency (EEA, 2015), OECD (OECD, 2015), World Bank (Evans & Davies, 2014), UN (UNEP, 2012), UNESCO (ISSC/UNESCO, 2013), European Union, national governments and the German Advisory Council on Global Change (WBGU, 2011), for example, have over the past years launched reports and policy programs in support of sustainability transformations or transitions. This attention is based upon the increasing understanding of the persistency of the complex sustainability challenges we face: in spite of high ambitions, policy commitments, large-scale investments in innovation and voluntary actions, our economies are still developing along unsustainable pathways pushing ecological boundaries (Rockstrom et al., 2009; Future Earth, 2014). To escape this path-dependency it is increasingly clear that structural, systemic change is necessary, and continuing along current trajectories increases the likelihood of disruptions, shocks and undesired systemic change.
-
-This process of nonlinear systemic change in complex societal systems has become the object of research especially since the late 1990s under the headers of ‘transformation’ (Feola, 2015; Olsson et al., 2014; Folke et al., 2010; Moore et al., 2014) and ‘transition’ (Geels, 2002; Grin et al., 2010; Markard et al., 2012; Rotmans et al., 2001; van den Bergh et al., 2011; Turnheim et al., 2015). While having different disciplinary origins (Hölscher et al., 2018), both terms are increasingly used in a similar way referring to a particular type of change, namely nonlinear and systemic shifts from one dynamic equilibrium to another (Patterson et al., 2016). A range of different scientific disciplines has studied underlying patterns and mechanisms of such transformation. Prominent fields of research include resilience, sustainability transition, innovation studies and social innovation research. While these debates have often remained rather a-political, a more critical perspective is emerging (see e.g. Blythe et al., 2018; Chaffin et al., 2016; Lawhon & Murphy, 2012; Meadowcroft, 2009; Scoones et al., 2015) that incorporates politics, power, legitimacy and equity issues, recognizing that transformations include the making of “hard choices” by decision makers (Meadowcroft, 2009).
-
-Governing transformative change, or transformative governance, can be defined as “an approach to environmental governance that has the capacity to respond to, manage, and trigger regime shifts in coupled socio-ecological systems at multiple scales” (Chaffin et al., 2016). Transformative governance is deliberate (Chaffin et al., 2016), and inherently political (Blythe et al., 2018), since the desired direction of the transformation is negotiated and contested, and power relations will change because of the transformation (Chaffin et al., 2016). Current vested interests (including in certain technologies) are thus expected to inhibit, challenge, slow down or downsize transformative change, among others through “lock-ins” (see e.g., Blythe et al., 2018; Chaffin et al., 2016; Meadowcroft, 2009). The debate on the related term “transition management” (Rotmans & Loorbach, 2010) points to the importance of (facilitating) emergent and co-evolutionary changes in cultures, structures and practices that challenge incumbent ‘regimes’ (Frantzeskaki et al., 2017). This in itself requires forms of governance that complement more institutionalized, consensus-based and incremental policies by facilitating transformative actor-networks, back-casting processes, strategic experimentation and reflexive learning.
-
-Transformative governance often needs a ‘policy’ or ‘governance’ mix aimed at navigating transformations (Kivimaa & Kern, 2016; Loorbach, 2014; Berkes et al., 2008). In such a mix, instruments that facilitate the build-up of alternatives, the gradual change of institutional structures and the managed phase-out of undesirable elements need to be combined, dynamically based on a systemic understanding of the present transition dynamics (Loorbach et al., 2017). How this is operationalized depends on the type of organization and level of operation and the types of (transformative) capacities, instruments and methods available (Wolfram, 2017; Fischer & Newig, 2016; Patterson et al., 2016). Through co-creative multi-actor processes (Avelino & Wittmayer, 2015; Brown et al., 2013) of seeking joint understandings of collective transition contexts and formulating shared desired future directions, different actors can align long-term agendas and more strategically use and implement short-term actions to guide and direct emerging transitions towards sustainable futures.
-
-Transformative change thus needs innovative approaches to governance. Such transformative governance can incorporate different existing approaches, which we group into four domains, namely integrative, inclusive, informed and adaptive governance. While these approaches have been extensively practiced and studied separately, their combined contribution to enabling transformative change has not yet been thoroughly explored.
-
-Transformative governance is: 1) integrative, since the change is related to and influenced by changes elsewhere (at other scales, locations, on other issues) (see e.g., Chaffin et al., 2016; Karki, 2017; Reyers et al., 2018; Wagner & Wilhelmer, 2017); 2) informed, based on different and credible knowledge systems (Blythe et al., 2018; Chaffin et al., 2016; Couvet & Prevot, 2015); 3) adaptive, based on learning, experimentation, reflexivity, monitoring and feedback (Colloff et al., 2017; Chaffin et al., 2016; Laakso et al., 2017; Meadowcroft, 2009; Otsuki, 2015; Rijke et al., 2013; Wagner & Wilhelmer, 2017); and finally 4) inclusive since transformative change per definition includes different types of actors, interests and values, and needs to address issues of social justice (Chaffin et al., 2016; Otsuki, 2015; Blythe et al., 2018; Li & Kampmann, 2017; Meadowcroft, 2009; Thomalla et al., 2018; Wolfram, 2016). Below we elaborate on each of these four approaches to governance (not presented in order of importance).""" ;
-    dcterms:identifier "6.2" ;
-    skos:prefLabel "Towards transformative governance" .
-
 <http://ontology.ipbes.net/report/sch/GA119-2.1.11.6> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/35GD8688>,
@@ -81339,6 +81341,74 @@ Any limitation on communities’ extraction rights is a significant equity conce
 Indigenous Peoples, in particular, have highlighted threats from petroleum and mining activities, which were authorized and incentivized by national governments, as in Ecuador (Forest Peoples Programme, 2007). Mining’s threats to the food security of Indigenous Peoples were seen in the Philippines (Working Group on Mining in the Philippines, 2009). Violent confrontations have occurred, e.g., an incident occurred in 2009 in Peru after a lack of consent by Indigenous Peoples for petroleum firms to enter indigenous territories. Indigenous Peoples in Latin America, Asia, and Africa are not categorically opposed to mining − although they struggle to hold companies and governments accountable for the negative local impacts (Herbertson et al., 2009; Richardson, 2007). Water contamination from mining, for instance, continues to stir up such heated conflicts (Anaya, 2011; Van de Wauw et al., 2010; van der Sandt, 2009). In the Philippines alone, by one account, there were 800 extrajudicial killings. in the period 2001– 2006, associated with protests against mining (Doyle et al., 2007).""" ;
     dcterms:identifier "2.1.9.3.2" ;
     skos:prefLabel "Policy Responses (rights, subsidies)" .
+
+<http://ontology.ipbes.net/report/sch/GA119-6.2> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch6> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/GA119-D1>,
+        <http://ontology.ipbes.net/report/key/GA119-D10>,
+        <http://ontology.ipbes.net/report/key/GA119-D2>,
+        <http://ontology.ipbes.net/report/key/GA119-D3>,
+        <http://ontology.ipbes.net/report/key/GA119-D4>,
+        <http://ontology.ipbes.net/report/key/GA119-D5>,
+        <http://ontology.ipbes.net/report/key/GA119-D6>,
+        <http://ontology.ipbes.net/report/key/GA119-D7>,
+        <http://ontology.ipbes.net/report/key/GA119-D8>,
+        <http://ontology.ipbes.net/report/key/GA119-D9> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333077/items/23YPUSLS>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/259B93GM>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/66PK6A6A>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/6EGEUS69>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/6F9MSTAD>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/8UK96537>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/92M4WVG3>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/9Y3MQ3FL>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/ARWIEXKL>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/AZTNZW3H>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/DB6RQ29M>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/DHF7777E>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/DZPWCF3N>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/E3KU6UFF>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/EF9VFHAG>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/ELFDGA8T>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/F692XYXB>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/G7EFER62>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/G9GGS32Y>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/JVDC4G3K>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/JXCL8CAN>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/JYTKJQPB>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/K585BTMM>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/KJF5WPAI>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/KRF7QY4N>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/LC9YY5BR>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/LIJRV2NT>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/M3T95P5K>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/MU6JAJ82>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/PADIBSN7>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/Q46TVK49>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/UKNCD4AV>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/V6LCUUNV>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/VACM8ZW9>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/W6T4HMJL>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/WCSAYXZQ>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/XD3TLQFN>,
+        <http://ontology.ipbes.net/report/ref/2333077/items/XIG2ARDC>,
+        <http://ontology.ipbes.net/report/ref/GA119-ch6-7797> ;
+    ipbes:Report ipbes:GA119 ;
+    ipbes:hasDescription """As introduced in 6.1, transformative change can be defined as societal change in terms of technological, economic and social structures. It includes both personal and social transformation (Otsuki, 2015), and includes shifts in values and beliefs, and patterns of social behaviour (Chaffin et al., 2016).
+
+Transformative change has emerged in the policy discourse and is increasingly seen as both necessary and inevitable for biodiversity-related issues and sustainable development more broadly. The Convention on Biodiversity (CBD), European Environment Agency (EEA, 2015), OECD (OECD, 2015), World Bank (Evans & Davies, 2014), UN (UNEP, 2012), UNESCO (ISSC/UNESCO, 2013), European Union, national governments and the German Advisory Council on Global Change (WBGU, 2011), for example, have over the past years launched reports and policy programs in support of sustainability transformations or transitions. This attention is based upon the increasing understanding of the persistency of the complex sustainability challenges we face: in spite of high ambitions, policy commitments, large-scale investments in innovation and voluntary actions, our economies are still developing along unsustainable pathways pushing ecological boundaries (Rockstrom et al., 2009; Future Earth, 2014). To escape this path-dependency it is increasingly clear that structural, systemic change is necessary, and continuing along current trajectories increases the likelihood of disruptions, shocks and undesired systemic change.
+
+This process of nonlinear systemic change in complex societal systems has become the object of research especially since the late 1990s under the headers of ‘transformation’ (Feola, 2015; Olsson et al., 2014; Folke et al., 2010; Moore et al., 2014) and ‘transition’ (Geels, 2002; Grin et al., 2010; Markard et al., 2012; Rotmans et al., 2001; van den Bergh et al., 2011; Turnheim et al., 2015). While having different disciplinary origins (Hölscher et al., 2018), both terms are increasingly used in a similar way referring to a particular type of change, namely nonlinear and systemic shifts from one dynamic equilibrium to another (Patterson et al., 2016). A range of different scientific disciplines has studied underlying patterns and mechanisms of such transformation. Prominent fields of research include resilience, sustainability transition, innovation studies and social innovation research. While these debates have often remained rather a-political, a more critical perspective is emerging (see e.g. Blythe et al., 2018; Chaffin et al., 2016; Lawhon & Murphy, 2012; Meadowcroft, 2009; Scoones et al., 2015) that incorporates politics, power, legitimacy and equity issues, recognizing that transformations include the making of “hard choices” by decision makers (Meadowcroft, 2009).
+
+Governing transformative change, or transformative governance, can be defined as “an approach to environmental governance that has the capacity to respond to, manage, and trigger regime shifts in coupled socio-ecological systems at multiple scales” (Chaffin et al., 2016). Transformative governance is deliberate (Chaffin et al., 2016), and inherently political (Blythe et al., 2018), since the desired direction of the transformation is negotiated and contested, and power relations will change because of the transformation (Chaffin et al., 2016). Current vested interests (including in certain technologies) are thus expected to inhibit, challenge, slow down or downsize transformative change, among others through “lock-ins” (see e.g., Blythe et al., 2018; Chaffin et al., 2016; Meadowcroft, 2009). The debate on the related term “transition management” (Rotmans & Loorbach, 2010) points to the importance of (facilitating) emergent and co-evolutionary changes in cultures, structures and practices that challenge incumbent ‘regimes’ (Frantzeskaki et al., 2017). This in itself requires forms of governance that complement more institutionalized, consensus-based and incremental policies by facilitating transformative actor-networks, back-casting processes, strategic experimentation and reflexive learning.
+
+Transformative governance often needs a ‘policy’ or ‘governance’ mix aimed at navigating transformations (Kivimaa & Kern, 2016; Loorbach, 2014; Berkes et al., 2008). In such a mix, instruments that facilitate the build-up of alternatives, the gradual change of institutional structures and the managed phase-out of undesirable elements need to be combined, dynamically based on a systemic understanding of the present transition dynamics (Loorbach et al., 2017). How this is operationalized depends on the type of organization and level of operation and the types of (transformative) capacities, instruments and methods available (Wolfram, 2017; Fischer & Newig, 2016; Patterson et al., 2016). Through co-creative multi-actor processes (Avelino & Wittmayer, 2015; Brown et al., 2013) of seeking joint understandings of collective transition contexts and formulating shared desired future directions, different actors can align long-term agendas and more strategically use and implement short-term actions to guide and direct emerging transitions towards sustainable futures.
+
+Transformative change thus needs innovative approaches to governance. Such transformative governance can incorporate different existing approaches, which we group into four domains, namely integrative, inclusive, informed and adaptive governance. While these approaches have been extensively practiced and studied separately, their combined contribution to enabling transformative change has not yet been thoroughly explored.
+
+Transformative governance is: 1) integrative, since the change is related to and influenced by changes elsewhere (at other scales, locations, on other issues) (see e.g., Chaffin et al., 2016; Karki, 2017; Reyers et al., 2018; Wagner & Wilhelmer, 2017); 2) informed, based on different and credible knowledge systems (Blythe et al., 2018; Chaffin et al., 2016; Couvet & Prevot, 2015); 3) adaptive, based on learning, experimentation, reflexivity, monitoring and feedback (Colloff et al., 2017; Chaffin et al., 2016; Laakso et al., 2017; Meadowcroft, 2009; Otsuki, 2015; Rijke et al., 2013; Wagner & Wilhelmer, 2017); and finally 4) inclusive since transformative change per definition includes different types of actors, interests and values, and needs to address issues of social justice (Chaffin et al., 2016; Otsuki, 2015; Blythe et al., 2018; Li & Kampmann, 2017; Meadowcroft, 2009; Thomalla et al., 2018; Wolfram, 2016). Below we elaborate on each of these four approaches to governance (not presented in order of importance).""" ;
+    dcterms:identifier "6.2" ;
+    skos:prefLabel "Towards transformative governance" .
 
 <http://ontology.ipbes.net/report/sch/GA119-3.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/GA119ch3> ;
@@ -82767,7 +82837,6 @@ Consumer actions: Reduction of consumption and waste as a key pathway element ca
         <http://ontology.ipbes.net/report/ref/2333077/items/KPY8MHJF>,
         <http://ontology.ipbes.net/report/ref/2333077/items/KXTBS7FH>,
         <http://ontology.ipbes.net/report/ref/2333077/items/KYCQSZL3>,
-        <http://ontology.ipbes.net/report/ref/2333077/items/LC9YY5BR>,
         <http://ontology.ipbes.net/report/ref/2333077/items/MA5IF52T>,
         <http://ontology.ipbes.net/report/ref/2333077/items/MQJSV8ZT>,
         <http://ontology.ipbes.net/report/ref/2333077/items/MSN4Q8PF>,
@@ -87232,7 +87301,7 @@ I-A. INDIRECT DRIVERS − VALUES
 
 5. Migration is both a cause and an effect of nature’s degradation. Links in both directions are connected to patterns of vulnerability, in rural as well as urban areas (well established). Migration has increased greatly, with 264 million international migrants entering other countries since 1970: more to developed countries {2.1.4}. Environmental and economic factors contribute to this migration. Today, environmental migrants number several million {2.1.2, 2.1.4} given inequity across regions in conditions for well-being and in provisioning and regulating contributions from nature that are among the most important determinants {2.1.2, 2.1.4}. Immigrants are often among the most vulnerable groups in society, with low access to nature’s contributions to basic needs (water, sanitation and nutrition), yet they can have impacts on how nature is managed, including due to differences in values {2.1.2, 2.1.4}.
 
-6. Urbanization has been rapid, with enormous consequences including spatial patterns of land use that affect nature and NCP provision in urban and rural areas (well established). Today, close to 60% of the world’s population lives in cities, with the fastest increases in Asia and the Pacific (25% rise in urban share in 1980–2010) and Africa (37%). There are 2.8 billion people now in megacities, with the fastest growth in low- (45% since 1980) and lower-middle income (39%) countries {2.1.4}. In the developing world, many of those people live in slums, with a low quality of environment and life {2.1.4}. Cities are sources of innovations in transport, industry and medicine, however, their high densities affect spatial patterns of land use and, thereby, nature {2.1.4}. Urban consumers have huge impacts and thus the potential to drive global changes {2.1.4}. I-C. INDIRECT DRIVERS − TECHNOLOGY
+6. Urbanization has been rapid, with enormous consequences including spatial patterns of land use I-C. INDIRECT DRIVERS − TECHNOLOGY that affect nature and NCP provision in urban and rural areas (well established). Today, close to 60% of the world’s population lives in cities, with the fastest increases in Asia and the Pacific (25% rise in urban share in 1980–2010) and Africa (37%). There are 2.8 billion people now in megacities, with the fastest growth in low- (45% since 1980) and lower-middle income (39%) countries {2.1.4}. In the developing world, many of those people live in slums, with a low quality of environment and life {2.1.4}. Cities are sources of innovations in transport, industry and medicine, however, their high densities affect spatial patterns of land use and, thereby, nature {2.1.4}. Urban consumers have huge impacts and thus the potential to drive global changes {2.1.4}.
 
 7. By region, IPLC practices are expanding in their use or disappearing (well established). Much of the globe’s population appropriates natural resources via rural or primary management of terrestrial, marine and freshwater ecosystems {2.1.2, 2.1.4, 2.1.5}. Related IPLCs practices based on long-standing knowledge of complex local ecological systems are seen to be resilient in IPLCs and among small-holders who together are ~2 billion people with 25% of land {2.1.5}. For instance, the agroforestry systems in many tropical countries have common characteristics: highly diversified, productive, complex, and using rotations in agriculture – as well as grazing, hunting, and fishing {2.1.5}. Yet a combination of lifestyle change, adaptation to climate change, seasonal migration, enclosures, privatization, and degradation of resources is strongly affecting both the settlement patterns and the lifestyles of the peoples who manage directly these diverse systems {2.1.5}.
 

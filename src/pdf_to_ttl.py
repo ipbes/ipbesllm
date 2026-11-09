@@ -112,6 +112,13 @@ def _spaced_number(text: str) -> str:
 _LIGATURES = str.maketrans({"ﬁ": "fi", "ﬂ": "fl", "ﬀ": "ff", "ﬃ": "ffi", "ﬄ": "ffl",
                             " ": " ", "\t": " ", " ": " ", " ": " ",
                             "﻿": "", "​": ""})
+# The reports of 2016-2019 print a space after the "fi" and "fl" ligatures
+# inside a word ("ﬁ gures", "inﬂ uence", AFA): it goes. ("ﬀ" ends words: "off".)
+_LIGATURE_SPACE = re.compile(r"([ﬁﬂ])[ \t]+(?=[a-z])")
+
+
+def _unligature(text: str) -> str:
+    return _LIGATURE_SPACE.sub(r"\1", text).translate(_LIGATURES)
 
 
 @dataclass
@@ -152,7 +159,7 @@ _CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")      # e.g. BEL in SP
 def _span(s: dict) -> Span:
     font = s["font"]
     return Span(
-        text=_CONTROL.sub("", s["text"].translate(_LIGATURES)),
+        text=_CONTROL.sub("", _unligature(s["text"])),
         font=font,
         size=round(s["size"], 1),
         color=s["color"],
@@ -236,8 +243,10 @@ def line_role(line: Line) -> str:
         return "h5"             # a heading inside a box (TCA Box SPM 9)
     if _near(m.size, 8.5, 0.3) and (dark(m.color) or m.color == ACCENT):
         return "body"
-    if _near(m.size, 8.5, 0.3) and coloured(m.color) and heavy and line.x1 - line.x0 > 150:
-        return "body"           # a background message's headline in colour (LDR); not a figure label
+    if _near(m.size, 8.5, 0.3) and coloured(m.color) and line.x1 - line.x0 > 150:
+        # A background message's headline in colour (LDR); a section's opening
+        # sentences in the chapter's colour (SCM); not a figure label.
+        return "body"
     if _near(m.size, 7.5) and (dark(m.color) or m.color == ACCENT) and "Roman" not in m.font:
         return "small"
     if _near(m.size, 7.8, 0.15) and (dark(m.color) or grey(m.color)) and "Roman" not in m.font:
@@ -755,7 +764,8 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             continue
         text = p.text
 
-        # PPA: "FIGURE 1.1" in white on a colour, its title in the line under it.
+        # PPA: "FIGURE 1.1" in white on a colour, its title in the line under it
+        # (in white too in SCM: "BOX 8.6" over "An example of the importance ...").
         mc = _WHITE_CAPTION.fullmatch(text.strip()) if p.role == "other" and _white(p) else None
         first_line = p.lines[0]
         ml = _WHITE_CAPTION.fullmatch(first_line.text.strip()) if p.role == "other" and len(p.lines) > 1 \
@@ -770,7 +780,8 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
             # The title: the paragraph just under the label, at its left edge.
             below = [q for q in paras[max(0, i - 40):i + 40] if q.page == p.page and q is not p
                      and q.role in ("small", "other", "body") and 0 < q.y0 - p.y0 < 50
-                     and abs(q.x0 - p.x0) < 12 and not _white(q) and id(q) not in skip]
+                     and abs(q.x0 - p.x0) < 12 and not _WHITE_CAPTION.match(q.text.strip())
+                     and id(q) not in skip]
             nxt = min(below, key=lambda q: q.y0) if below else None
             if nxt:
                 skip.add(id(nxt))
@@ -970,6 +981,32 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
         if p.role == "small" and mode in ("chapter", "exec") and chapter and p.page in ref_pages \
                 and _REF_START.match(text) and (_AUTHOR_START.match(text) or _ORG_START.match(text)):
             mode = "refs"           # the list starts without a title (LDR)
+
+        if p.role == "other" and legend_of and legend_end[0] == p.page and -2 < p.y0 - legend_end[1] < 20 \
+                and _near(p.lines[0].main.size, 10.0) and not _white(p) and _unfinished(legend_of.title) \
+                and not legend_of.legend and re.search(r"[a-z]{3}", text):
+            # The caption's title goes on in a regular weight: "... minus ecological
+            # footprint," / "can be either positive or negative. Estimates ..." (AMA Figure SPM 4).
+            ends = list(_SENTENCE_END.finditer(legend_of.title))
+            if ends:
+                # A whole sentence, then the start of the next: "... communication of
+                # confidence. Confidence" / "increases towards ..." (ECA Figure 1.11).
+                cut = ends[-1].end()
+                legend_of.legend.append(f"{legend_of.title[cut:].strip()} {text.strip()}")
+                legend_of.title = legend_of.title[:cut].rstrip()
+            else:
+                end = _SENTENCE_END.search(text)
+                cut = end.end() if end else len(text)
+                legend_of.title = f"{legend_of.title.rstrip()} {text[:cut].strip()}"
+                if text[cut:].strip():
+                    legend_of.legend.append(text[cut:].strip())
+            legend_end = (p.page, p.y1)
+            continue
+
+        if p.role == "other" and legend_of and legend_end[0] == p.page and -2 < p.y0 - legend_end[1] < 30 \
+                and _near(p.lines[0].main.size, 7.5) and p.x1 - p.x0 > 150 and not _white(p) \
+                and re.search(r"[a-z]{3}", text):
+            p.role = "small"    # a legend line under its caption in a regular weight (SUA Figure 3.30)
 
         if p.role == "small":
             if mode == "refs":
@@ -1478,7 +1515,7 @@ def _front_matter(doc: pymupdf.Document, rep: Report) -> None:
     # The management committee on page 2 is not recorded: the editors on
     # page 3 are, and include those of its members who edited the report.
     for pno in range(min(6, doc.page_count)):
-        text = doc[pno].get_text()
+        text = _unligature(doc[pno].get_text())
         m = re.search(r"SUGGESTED CITATION:?\s*\n(.*?)(?:\n\s*\n|$)", text, re.S)
         if m and not rep.title:
             cite = re.sub(r"\s+", " ", m.group(1))
@@ -1535,7 +1572,7 @@ def _chapter_page(doc: pymupdf.Document, page: int, chapter: Chapter, rep: Repor
     text = _page_text(doc[page - 1])
     if "SHOULD BE CITED AS" not in text.upper() and page < doc.page_count:
         text += "\n" + _page_text(doc[page])
-    text = text.translate(_LIGATURES)
+    text = _unligature(text)
     # The map disclaimer on the second page can sit inside an author list.
     text = re.sub(r"Disclaimer on maps.*?represented therein\.?", "", text, flags=re.S)
     heads = "|".join(sorted(map(re.escape, ROLE_HEADINGS), key=len, reverse=True))
@@ -1595,6 +1632,121 @@ def _split_people(text: str) -> list[str]:
         else:
             out.append(e)
     return out
+
+
+# ---------------------------------------------------------------------------
+# No paragraph begins in lower case
+# ---------------------------------------------------------------------------
+
+# Lower case that does start a paragraph: list items "a)", "i.", web addresses.
+_LOWER_OK = re.compile(r"^(?:(?:[a-z]|[ivx]{1,4})[.)]\s|www\.|https?:|e\.g\.|i\.e\.)")
+# The end of a sentence, before the next one.
+_SENTENCE_END = re.compile(r"[.!?][)”’\]}]*\s+(?=[A-Z“‘(\[{])")
+
+
+def _starts_lower(text: str) -> bool:
+    text = re.sub(r"^(?:\[\^\w+\]\s*)+", "", text.lstrip())     # a footnote mark first: "[^8] of the Americas"
+    return text[:1].islower() and not _LOWER_OK.match(text)
+
+
+def _unfinished(text: str) -> bool:
+    return not text.startswith("## ") and (not text.rstrip().endswith(_TERMINAL) or text.rstrip().endswith(","))
+
+
+def _join_lower(paras: list[str]) -> list[str]:
+    """A paragraph starting in lower case goes on from another, cut by a
+    column, page, figure or box break in the middle of a sentence: the
+    paragraph before it, or else the one left unfinished, which can come
+    after it in reading order (the two columns of GA1 Box 1.2)."""
+    out = list(paras)
+    i = 0
+    while i < len(out):
+        if out[i].startswith("## ") or not _starts_lower(out[i]):
+            i += 1
+            continue
+        before = [k for k in range(i - 1, -1, -1) if not out[k].startswith("## ")]
+        target = next((k for k in before[:1] if _unfinished(out[k])), None)
+        if target is None:
+            target = next((k for k in range(i + 1, len(out)) if _unfinished(out[k])), None)
+        if target is None:
+            target = before[0] if before else None
+        if target is None:
+            i += 1
+            continue
+        moved = out.pop(i)
+        if target > i:
+            target -= 1     # the unfinished paragraph came after it
+        out[target] = out[target].rstrip() + " " + moved.lstrip()
+        i = 0
+    return out
+
+
+def _complete_headline(m: Message) -> None:
+    """A message's text starting in lower case goes on from its headline:
+    either the headline took in the start of the next sentence ("...
+    {B11}. Strategy 1" / "deals with ...", TCA KM7), which moves down to the
+    text, or the headline stops short ("Although the high “biocapacity”" /
+    "of the Americas means ...", AMA 3), and takes in the text's first sentence."""
+    if not m.paras or not _starts_lower(m.paras[0]):
+        return
+    ends = list(_SENTENCE_END.finditer(m.headline))
+    if ends:
+        cut = ends[-1].end()
+        m.paras[0] = m.headline[cut:].rstrip() + " " + m.paras[0].lstrip()
+        m.headline = m.headline[:cut].rstrip()
+    else:
+        first = _SENTENCE_END.search(m.paras[0])
+        cut = first.end() if first else len(m.paras[0])
+        m.headline = m.headline.rstrip() + " " + m.paras[0][:cut].strip()
+        rest = m.paras[0][cut:].strip()
+        m.paras = ([rest] if rest else []) + m.paras[1:]
+
+
+def tidy_paragraphs(rep: Report) -> None:
+    """No paragraph of the report's text begins in lower case."""
+    messages = rep.key_messages + rep.background_messages + rep.guidance + rep.intros
+    for ch in rep.chapters:
+        # A finding whose bold lead starts in lower case goes on from the one
+        # before: "... for integrated decision-making, five" / "key challenges ..." (NXS 1).
+        findings: list[Message] = []
+        for f in ch.executive_summary:
+            if findings and not f.ident and _starts_lower(f.headline):
+                last = findings[-1]
+                if last.paras:
+                    last.paras[-1] = last.paras[-1].rstrip() + " " + f.headline.lstrip()
+                else:
+                    last.headline = last.headline.rstrip() + " " + f.headline.lstrip()
+                last.paras += f.paras
+            else:
+                findings.append(f)
+        ch.executive_summary = findings
+        messages += findings
+        prev: Section | None = None
+        for sec in ch.unnumbered + ch.sections:
+            sec.paras = _join_lower(sec.paras)
+            # A sub-chapter starting in lower case: its heading printed before
+            # the end of the previous one's last sentence ("... however, about" /
+            # 1.4.4.4 Evaluation of success / "the continuing use of glyphosate", LDR).
+            if prev is not None and sec.paras and _starts_lower(sec.paras[0]):
+                last = next((k for k in range(len(prev.paras) - 1, -1, -1)
+                             if not prev.paras[k].startswith("## ")), None)
+                if last is not None and _unfinished(prev.paras[last]):
+                    prev.paras[last] = prev.paras[last].rstrip() + " " + sec.paras.pop(0).lstrip()
+            prev = sec
+    for m in messages:
+        m.paras = _join_lower(m.paras)
+        _complete_headline(m)
+    for il in rep.illustrations:
+        il.legend = _join_lower(il.legend)
+    # A legend starting in lower case goes on from another illustration's on
+    # the same page: Figure 1.2 printed inside Box 1.2, its legend's end read
+    # with the box ("... are inclusive categories that" / "were identified as ...", GA1).
+    for il in rep.illustrations:
+        if il.legend and _starts_lower(il.legend[0]):
+            other = next((o for o in rep.illustrations if o is not il and o.page == il.page
+                          and o.legend and _unfinished(o.legend[-1])), None)
+            if other is not None:
+                other.legend[-1] = other.legend[-1].rstrip() + " " + il.legend.pop(0).lstrip()
 
 
 # ---------------------------------------------------------------------------
@@ -2722,7 +2874,7 @@ def link_citations(rep: Report, refs: list[Ref], doc: pymupdf.Document, log: Log
             if len(on_page) > 1:
                 ills = {il.section for il in rep.illustrations if il.page == pno and il.section}
                 on_page = [sec for sec in on_page if sec.number in ills] or on_page
-            found = citations(doc[pno - 1].get_text().translate(_LIGATURES))
+            found = citations(_unligature(doc[pno - 1].get_text()))
             for r in chrefs:
                 if not r.sections and _cites(r, found):
                     for sec in on_page:
@@ -3583,6 +3735,7 @@ def convert(assessment: str, config: Path = DEFAULT_CONFIG, out: Path | None = N
     doc = pymupdf.open(pdf)
     paras = build_paras(read_lines(doc))
     rep = parse(doc, paras)
+    tidy_paragraphs(rep)
     # Titles corrected by hand, where the report misprints them.
     for number, title in cfg.get("chapter_titles", {}).items():
         rep.chapter(int(number)).title = title

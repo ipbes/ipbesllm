@@ -757,11 +757,7 @@ The assembled dataset included 2,209 records of marine alien species (1,442 uniq
 
 <http://ontology.ipbes.net/report/il/IAS23-Box2.11> a ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.5> ;
-    ipbes:hasDescription """Invasive alien species are a significant and growing threat worldwide to the good quality of life (i.e., the achievement of a fulfilled human life, see IPBES glossary for a complete definition) for many communities (Costanza et al., 2006). A literature review conducted by the authors of Chapter 4 identified about 1050 invasive alien species that impact good quality of life (Chapter 4, Figure 4.2). In most cases (841 cases), the reported impacts negatively affected good quality of life, while in 212 cases, benefits of invasive alien species were reported. However, it is critical to note that a benefit from an invasive alien species in one sector does not mitigate the harm caused elsewhere, and that the same invasive alien species may both cause harm and produce a benefit. Integrating this invasive alien species list and the distributional data provided in this chapter (section 2.1.4 for data details) reveals that the United States, Australia, New Zealand, multiple European countries, China, Japan, Canada, Mexico, and South Africa were the countries with highest numbers of invasive alien species with impacts (negative or positive) on the good quality of life (Figure 2.36). This pattern largely reflects the distribution of all identified alien species (Figure 2.5) suggesting that in general, more impacts on good quality of life have been reported where more alien species were found.
-
-The total number of invasive alien species with impacts on good quality of life has risen continuously at a nearly linear rate since around 1830 (Figure 2.37). During this time, the rate of increase remained relatively constant at around 15 new invasive alien species with impacts on good quality of life per five years (or three new species annually).
-
-Most invasive alien species with impacts on good quality of life were insects (38 per cent), followed by vascular plants (29 per cent), fishes (7 per cent), molluscs (5 per cent), and mammals (5 per cent). Numerous widespread, well-known invasive alien species often negatively affect various aspects of good quality of life including culture, human health, and the local economy. High profile examples include fish species of the genus Oncorhynchus (trout and salmon) that have been introduced in many parts of the world (Crawford & Muir, 2008) and have changed local economies and livelihoods in areas. Such impacts include hybridization with native species and predation of native fishes (Kitano, 2004; Soto et al., 2001; Woodford & Impson, 2004). The introduction of Lates niloticus (Nile perch) has changed the local socio-economic dynamics such as a decline in multi-fisheries subsistence and livelihood (Njiru et al., 2018). In particular, women from marginalized communities have been disadvantaged by the effects of Lates niloticus on subsistence cichlid-based fisheries, and have had to adopt new livelihood practices, with prostitution being a primary one. This has, in turn, spurred inequality, social conflict, health issues (spread of human immunodeficiency virus (HIV) in particular), the loss of cultural practices, and reduced food identified and assessed 131 regional case studies worldwide of the impacts of invasive alien species on the good quality of life and their effects for Indigenous Peoples and local communities. The most frequently reported species in the case studies were first identified, then species and their impacts on good quality of life concerning taxonomic groups, units of analyses, and IPBES regions. The findings suggested that the biggest impacts were from plant species (85 species, 65 per cent), of which most (79 species) were woody vascular plants.
+    ipbes:hasDescription """Invasive alien species are a significant and growing threat worldwide to the good quality of life (i.e., the achievement of a fulfilled human life, see IPBES glossary for a complete definition) for many communities (Costanza et al., 2006). A literature review conducted by the authors of Chapter 4 identified about 1050 invasive alien species that impact good quality of life (Chapter 4, Figure 4.2). In most cases (841 cases), the reported impacts negatively affected good quality of life, while in 212 cases, benefits of invasive alien species were reported. However, it is critical to note that a benefit from an invasive alien species in one sector does not mitigate the harm caused elsewhere, and that the same invasive alien species may both cause harm and produce a benefit. Integrating this invasive alien species list and the distributional data provided in this chapter (section 2.1.4 for data details) reveals that the United States, Australia, New Zealand, multiple European countries, China, Japan, Canada, Mexico, and South Africa were the countries with highest numbers of invasive alien species with impacts (negative or positive) on the good quality of life (Figure 2.36). This pattern largely reflects the distribution of all identified alien species (Figure 2.5) suggesting that in general, more impacts on good quality of life have been reported where more alien species were found. introduced in many parts of the world (Crawford & Muir, 2008) and have changed local economies and livelihoods in areas. Such impacts include hybridization with native species and predation of native fishes (Kitano, 2004; Soto et al., 2001; Woodford & Impson, 2004). The introduction of Lates niloticus (Nile perch) has changed the local socio-economic dynamics such as a decline in multi-fisheries subsistence and livelihood (Njiru et al., 2018). In particular, women from marginalized communities have been disadvantaged by the effects of Lates niloticus on subsistence cichlid-based fisheries, and have had to adopt new livelihood practices, with prostitution being a primary one. This has, in turn, spurred inequality, social conflict, health issues (spread of human immunodeficiency virus (HIV) in particular), the loss of cultural practices, and reduced food identified and assessed 131 regional case studies worldwide of the impacts of invasive alien species on the good quality of life and their effects for Indigenous Peoples and local communities. The most frequently reported species in the case studies were first identified, then species and their impacts on good quality of life concerning taxonomic groups, units of analyses, and IPBES regions. The findings suggested that the biggest impacts were from plant species (85 species, 65 per cent), of which most (79 species) were woody vascular plants.
 
 The three most frequently reported invasive alien plants (38 cases) included either alone or in combination with other species were: Lantana camara (lantana), Prosopis spp., and Chromolaena odorata (Siam weed). Aquatic invasive alien plant species were reported in only six case studies. These included Pontederia crassipes (water hyacinth), Phragmites australis (common reed), Hydrilla verticillate (hydrilla), and Cryptostegia grandiflora (rubber vine), amongst others. Overall, fewer case studies (46 case studies) reported invasive alien species’ impact on good quality of life for other taxonomic groups. These taxa included fish species (10 species) such as Cyprinus carpio (common carp), Tilapia rendalli (redbreast tilapia), Oreochromis mossambicus (Mozambique tilapia), and Lates niloticus, Oncorhynchus mykiss (rainbow trout). Insects (12 studies), were also reported including Spodoptera frugiperda, and Agrilus planipennis (emerald ash borer). Other taxa were not reported in any case studies.
 
@@ -1264,6 +1260,7 @@ The European Union as a party to the CBD took actions to ensure its policies com
 <http://ontology.ipbes.net/report/il/IAS23-Figure1.11> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-1.6> ;
+    ipbes:hasDescription "Interactions amongst the components of the IPBES conceptual framework that are relevant to biological invasions are indicated in numbered arrows (boxes, arrows and numbers), with detailed descriptions provided in the lower panel of the figure. Unnumbered arrows represent the relationships between different components of the IPBES conceptual framework as defined in Díaz et al. (2015), that are not studied in this assessment. Adapted from Díaz et al. (2015), https://doi.org/10.1016/j.cosust.2014.11.002, under license CC BY-NC-SA 3.0." ;
     ipbes:hasDoi "10.5281/zenodo.8041593" ;
     dcterms:identifier "Figure1.11" ;
     skos:prefLabel "The IPBES conceptual framework adapted to the IPBES invasive alien species" .
@@ -1308,6 +1305,7 @@ Photo credits: David J. Stang, WM Commons – CC BY-SA 4.0 (Pinus mugo) / Charle
 <http://ontology.ipbes.net/report/il/IAS23-Figure1.17> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-1.6> ;
+    ipbes:hasDescription "Source: Nuñez et al. (2020), https://doi.org/10.1016/j.tree.2020.05.004, under license CC BY 4.0." ;
     dcterms:identifier "Figure1.17" ;
     skos:prefLabel "Comparison of the stages of a zoonotic viral epidemic and those of a biological" .
 
@@ -1344,7 +1342,7 @@ Photo credits: David J. Stang, WM Commons – CC BY-SA 4.0 (Pinus mugo) / Charle
 <http://ontology.ipbes.net/report/il/IAS23-Figure1.6> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-1.4> ;
-    ipbes:hasDescription "Alien species terminology adopted throughout the assessment. The status of the species is reflected in the change in terminology and depends on the stage within the biological invasion process. Each stage is separated from the next by a barrier which a species must overcome in order to pass to the next stage. Alien species at different stages are associated with different management interventions. Solid horizontal lines represent the core application of the terminology, or management interventions and broken lines indicate extended application of the terminology in some contexts and where suitable management interventions may have some relevance. Adapted" ;
+    ipbes:hasDescription "Alien species terminology adopted throughout the assessment. The status of the species is reflected in the change in terminology and depends on the stage within the biological invasion process. Each stage is separated from the next by a barrier which a species must overcome in order to pass to the next stage. Alien species at different stages are associated with different management interventions. Solid horizontal lines represent the core application of the terminology, or management interventions and broken lines indicate extended application of the terminology in some contexts and where suitable management interventions may have some relevance. Adapted from Blackburn, Pyšek, et al. (2011), https://doi.org/10.1016/j.tree.2011.03.023, under Copyright 2011 Elsevier Ltd." ;
     ipbes:hasDoi "10.5281/zenodo.8041593" ;
     dcterms:identifier "Figure1.6" ;
     skos:prefLabel "The biological invasion process." .
@@ -1431,7 +1429,7 @@ Photo credits: David J. Stang, WM Commons – CC BY-SA 4.0 (Pinus mugo) / Charle
 <http://ontology.ipbes.net/report/il/IAS23-Figure2.16> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.3> ;
-    ipbes:hasDescription "Other established alien invertebrates refer to animal groups, which are not covered in the previous sections. The names of the taxonomic groups are listed at the beginning of section 2.3.1.10. The number of established alien species per region (upper left) and the amount of available data (upper right) are indicated by colour. The amount of available data is estimated by the proportion of available first records among all records available for that region (section 2.1.4 for further details). Grey regions denote areas with lacking data. Oceans are tinted for visualization and do not indicate species numbers. Trends are shown in lower panels for cumulative numbers and as a rate of increase (i.e., numbers of established alien species per five years). Smoothed trend (line) is calculated as running median (section 2.1.4 for further details about data sources and data processing). Note presented numbers may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying" ;
+    ipbes:hasDescription "Other established alien invertebrates refer to animal groups, which are not covered in the previous sections. The names of the taxonomic groups are listed at the beginning of section 2.3.1.10. The number of established alien species per region (upper left) and the amount of available data (upper right) are indicated by colour. The amount of available data is estimated by the proportion of available first records among all records available for that region (section 2.1.4 for further details). Grey regions denote areas with lacking data. Oceans are tinted for visualization and do not indicate species numbers. Trends are shown in lower panels for cumulative numbers and as a rate of increase (i.e., numbers of established alien species per five years). Smoothed trend (line) is calculated as running median (section 2.1.4 for further details about data sources and data processing). Note presented numbers may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Figure2.16" ;
     skos:prefLabel "Status, trends and data gaps for other established alien invertebrates." .
@@ -1525,7 +1523,9 @@ Photo credits: David J. Stang, WM Commons – CC BY-SA 4.0 (Pinus mugo) / Charle
 <http://ontology.ipbes.net/report/il/IAS23-Figure2.27> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.4> ;
-    ipbes:hasDescription "Among the top 50 protected areas, 32 per cent are located in New Zealand, 26 per cent in Taiwan, Province of China, 16 per cent in the United States (mostly on Hawaii), 12 per cent in Great Britain and 6 per cent on Réunion. Adapted from X. Liu et al." ;
+    ipbes:hasDescription """Among the top 50 protected areas, 32 per cent are located in New Zealand, 26 per cent in Taiwan, Province of China, 16 per cent in the United States (mostly on Hawaii), 12 per cent in Great Britain and 6 per cent on Réunion. Adapted from X. Liu et al.
+
+(2020), https://doi.org/10.1038/s41467-020-16719-2, under license CC BY 4.0.""" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Figure2.27" ;
     skos:prefLabel "Numbers of established alien vertebrate species per terrestrial protected area." .
@@ -1564,7 +1564,7 @@ Photo credits: David J. Stang, WM Commons – CC BY-SA 4.0 (Pinus mugo) / Charle
 <http://ontology.ipbes.net/report/il/IAS23-Figure2.31> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.4> ;
-    ipbes:hasDescription "The cumulative numbers (left panels) and number of established alien species per five-year intervals (right panels). Numbers shown here underestimate the real extent of alien species occurrences due to a lack of data. Lines in right panels indicate smoothed trends calculated as running medians (section 2.1.4 for further details about data sources and data processing). Note numbers presented may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying" ;
+    ipbes:hasDescription "The cumulative numbers (left panels) and number of established alien species per five-year intervals (right panels). Numbers shown here underestimate the real extent of alien species occurrences due to a lack of data. Lines in right panels indicate smoothed trends calculated as running medians (section 2.1.4 for further details about data sources and data processing). Note numbers presented may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Figure2.31" ;
     skos:prefLabel "Trends in numbers of established alien species for the Americas." .
@@ -1572,7 +1572,7 @@ Photo credits: David J. Stang, WM Commons – CC BY-SA 4.0 (Pinus mugo) / Charle
 <http://ontology.ipbes.net/report/il/IAS23-Figure2.32> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.4> ;
-    ipbes:hasDescription "Cumulative numbers (left panels) and number of established alien species per five-year intervals (right panels). Numbers shown here underestimate the actual extent of alien species occurrences due to a lack of data. Lines in right panels indicate smoothed trends calculated as running medians (section 2.1.4 for further details about data sources and data processing). Note numbers presented may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying" ;
+    ipbes:hasDescription "Cumulative numbers (left panels) and number of established alien species per five-year intervals (right panels). Numbers shown here underestimate the actual extent of alien species occurrences due to a lack of data. Lines in right panels indicate smoothed trends calculated as running medians (section 2.1.4 for further details about data sources and data processing). Note numbers presented may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Figure2.32" ;
     skos:prefLabel "Trends in numbers of established alien species for Asia and the Pacific." .
@@ -1580,7 +1580,7 @@ Photo credits: David J. Stang, WM Commons – CC BY-SA 4.0 (Pinus mugo) / Charle
 <http://ontology.ipbes.net/report/il/IAS23-Figure2.33> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.4> ;
-    ipbes:hasDescription "Cumulative numbers (left panels) and number of established alien species per five-year intervals (right panels). Numbers underestimate the actual extent of alien species occurrences due to a lack of data. Lines in right panels indicate smoothed trends calculated as running medians (section 2.1.4 for further details about data sources and data processing). Note that presented numbers may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying this" ;
+    ipbes:hasDescription "Cumulative numbers (left panels) and number of established alien species per five-year intervals (right panels). Numbers underestimate the actual extent of alien species occurrences due to a lack of data. Lines in right panels indicate smoothed trends calculated as running medians (section 2.1.4 for further details about data sources and data processing). Note that presented numbers may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Figure2.33" ;
     skos:prefLabel "Trends in numbers of established alien species in Europe and Central Asia." .
@@ -1588,7 +1588,7 @@ Photo credits: David J. Stang, WM Commons – CC BY-SA 4.0 (Pinus mugo) / Charle
 <http://ontology.ipbes.net/report/il/IAS23-Figure2.34> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.5> ;
-    ipbes:hasDescription "Sites in mountain regions where MIREN surveys have been used to sample and monitor plant invasions across elevational" ;
+    ipbes:hasDescription "Sites in mountain regions where MIREN surveys have been used to sample and monitor plant invasions across elevational gradients. Source: Haider et al. (2022), https://doi.org/10.1002/ece3.8590, under license CC BY 4.0.3" ;
     dcterms:identifier "Figure2.34" ;
     skos:prefLabel "Locations of the MIREN surveys." .
 
@@ -1603,7 +1603,9 @@ Photo credits: David J. Stang, WM Commons – CC BY-SA 4.0 (Pinus mugo) / Charle
 <http://ontology.ipbes.net/report/il/IAS23-Figure2.36> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.5> ;
-    ipbes:hasDescription "Species were identified through the literature review conducted by Chapter 4 of this assessment (data management report available at: https:/doi.org/10.5281/zenodo.5766069) and the distributions of these species were extracted from the database used in Chapter 2 (section 2.1.4 for further details about data sources and data processing). Note numbers presented may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying" ;
+    ipbes:hasDescription """Species were identified through the literature review conducted by Chapter 4 of this assessment (data management report available at: https:/doi.org/10.5281/zenodo.5766069) and the distributions of these species were extracted from the database used in Chapter 2 (section 2.1.4 for further details about data sources and data processing). Note numbers presented may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582 The total number of invasive alien species with impacts on good quality of life has risen continuously at a nearly linear rate since around 1830 (Figure 2.37). During this time, the rate of increase remained relatively constant at around 15 new invasive alien species with impacts on good quality of life per five years (or three new species annually).
+
+Most invasive alien species with impacts on good quality of life were insects (38 per cent), followed by vascular plants (29 per cent), fishes (7 per cent), molluscs (5 per cent), and mammals (5 per cent). Numerous widespread, well-known invasive alien species often negatively affect various aspects of good quality of life including culture, human health, and the local economy. High profile examples include fish species of the genus Oncorhynchus (trout and salmon) that have been""" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Figure2.36" ;
     skos:prefLabel "Map of invasive alien species numbers with reported impacts on good quality of life." .
@@ -1646,7 +1648,7 @@ Focusing more specifically on Indigenous Peoples and local communities (i.e., ty
 <http://ontology.ipbes.net/report/il/IAS23-Figure2.40> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.6> ;
-    ipbes:hasDescription "Realms are defined as freshwater, marine and terrestrial. Number of observations is not equal to the number of studies as studies can report on more than one IPBES region and realm. The time reported on the y-axis refers to the date of publication of the respective study. Values are based on a comprehensive literature review about scenarios and models of biological invasions, a data management" ;
+    ipbes:hasDescription "Realms are defined as freshwater, marine and terrestrial. Number of observations is not equal to the number of studies as studies can report on more than one IPBES region and realm. The time reported on the y-axis refers to the date of publication of the respective study. Values are based on a comprehensive literature review about scenarios and models of biological invasions, a data management report is available at https://doi.org/10.5281/zenodo.5706520" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Figure2.40" ;
     skos:prefLabel "Trends in the number of analyses of future projections for realms." .
@@ -1780,7 +1782,7 @@ The introduction, establishment and spread of Poa annua (annual meadowgrass) in 
 <http://ontology.ipbes.net/report/il/IAS23-Figure3.2> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-3.1> ;
-    ipbes:hasDescription "The results of linear mixed models indicate the effects of different factors (GDP per capita; human population density; mean annual precipitation; and mean annual temperature) on alien species (Glossary) richness within eight taxonomic groups across 423 mainland regions. Number in parentheses are numbers of regions included per taxonomic group. Overall, taxonomic groups respond differently to the effects of climate and gross domestic product (GDP) per capita, but human population density is consistently among the best predictors with especially high effects for fish, plants and spiders. Estimates (±1 standard error) – represented by dots and lines – of effects were obtained from linear mixed-effects models of ln (species richness + 1), with subcontinental regions nested within continents" ;
+    ipbes:hasDescription "The results of linear mixed models indicate the effects of different factors (GDP per capita; human population density; mean annual precipitation; and mean annual temperature) on alien species (Glossary) richness within eight taxonomic groups across 423 mainland regions. Number in parentheses are numbers of regions included per taxonomic group. Overall, taxonomic groups respond differently to the effects of climate and gross domestic product (GDP) per capita, but human population density is consistently among the best predictors with especially high effects for fish, plants and spiders. Estimates (±1 standard error) – represented by dots and lines – of effects were obtained from linear mixed-effects models of ln (species richness + 1), with subcontinental regions nested within continents as random effects. Adapted from Dawson et al. (2017) https://doi.org/10.1038/s41559-017-0186, under license CC BY 4.0." ;
     ipbes:hasDoi "10.5281/zenodo.8045887" ;
     dcterms:identifier "Figure3.2" ;
     skos:prefLabel "Estimated effects of different factors on established alien species richness across eight taxonomic groups: amphibians, ants, birds, freshwater fishes, mammals, vascular plants, reptiles and spiders (from top to bottom)." .
@@ -1827,10 +1829,10 @@ The introduction, establishment and spread of Poa annua (annual meadowgrass) in 
 <http://ontology.ipbes.net/report/il/IAS23-Figure3.25> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-3.5> ;
-    ipbes:hasDescription "The size of the arrows represents the available evidence in the scientific literature for the importance of the different links, as assessed though a bibliometric analysis of the literature (the absolute number of articles retrieved is reflected in the size of each arrow). Adapted" ;
+    ipbes:hasDescription "The size of the arrows represents the available evidence in the scientific literature for the importance of the different links, as assessed though a bibliometric analysis of the literature (the absolute number of articles retrieved is reflected in the size of each arrow). Adapted from Hulme (2022), https://doi.org/10.1111/cobi.13817, under license CC BY 4.0." ;
     ipbes:hasDoi "10.5281/zenodo.8045887" ;
     dcterms:identifier "Figure3.25" ;
-    skos:prefLabel "Schematic representation of the links between indirect and direct drivers of change in nature in relation to their potential effect on invasive alien species" .
+    skos:prefLabel "Schematic representation of the links between indirect and direct drivers of change in nature in relation to their potential effect on invasive alien species (see Figure 3.3)." .
 
 <http://ontology.ipbes.net/report/il/IAS23-Figure3.26> a ipbes:Figure,
         ipbes:Illustration ;
@@ -1849,7 +1851,7 @@ The introduction, establishment and spread of Poa annua (annual meadowgrass) in 
 <http://ontology.ipbes.net/report/il/IAS23-Figure3.28> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-3.5> ;
-    ipbes:hasDescription "The thick arrow indicates the direct influence of international merchandise trade on invasive alien species, and thin arrows indicate how international merchandise trade affects other drivers which again may facilitate the introduction and spread of invasive alien species. Dotted lines represent interactions among drivers of change in nature. Adapted from Hulme (2021b), https://doi." ;
+    ipbes:hasDescription "The thick arrow indicates the direct influence of international merchandise trade on invasive alien species, and thin arrows indicate how international merchandise trade affects other drivers which again may facilitate the introduction and spread of invasive alien species. Dotted lines represent interactions among drivers of change in nature. Adapted from Hulme (2021b), https://doi. org/10.1016/j.oneear.2021.04.015, under license CC BY 4.0." ;
     ipbes:hasDoi "10.5281/zenodo.8045887" ;
     dcterms:identifier "Figure3.28" ;
     skos:prefLabel "Schematic illustration of how international merchandise trade interacts with other drivers of change in nature to influence the introduction and spread of invasive alien species." .
@@ -1897,7 +1899,7 @@ The introduction, establishment and spread of Poa annua (annual meadowgrass) in 
 <http://ontology.ipbes.net/report/il/IAS23-Figure3.33> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-3.6> ;
-    ipbes:hasDescription "The number of studies is shown on the y axis, and the different drivers of change in nature are shown on the x axis. Data" ;
+    ipbes:hasDescription "The number of studies is shown on the y axis, and the different drivers of change in nature are shown on the x axis. Data management report available at https://doi.org/10.5281/zenodo.5760266" ;
     ipbes:hasDoi "10.5281/zenodo.8045887" ;
     dcterms:identifier "Figure3.33" ;
     skos:prefLabel "Representation of the role of each driver in the studies included in the literature review on Indigenous Peoples and local communities and invasive alien species (numbers of reported cases across 131 references) in facilitating biological invasions, noting most papers included multiple cases." .
@@ -1921,7 +1923,7 @@ The introduction, establishment and spread of Poa annua (annual meadowgrass) in 
 <http://ontology.ipbes.net/report/il/IAS23-Figure3.5> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-3.1> ;
-    ipbes:hasDescription "The thickness of the lines between drivers is indicative of the number of papers that jointly addressed the two linked drivers. The size of the line surrounding each circle reflects the number of papers listed by Web of Science between 2000 and 2019 generated by a topic search on a particular driver in relation to invasive alien species. Note the greater emphasis on direct drivers both individually and jointly. Note that effects of biodiversity loss on biological invasions are not included in this figure. A data management report for this" ;
+    ipbes:hasDescription "The thickness of the lines between drivers is indicative of the number of papers that jointly addressed the two linked drivers. The size of the line surrounding each circle reflects the number of papers listed by Web of Science between 2000 and 2019 generated by a topic search on a particular driver in relation to invasive alien species. Note the greater emphasis on direct drivers both individually and jointly. Note that effects of biodiversity loss on biological invasions are not included in this figure. A data management report for this figure is available at https://doi.org/10.5281/zenodo.7861123" ;
     ipbes:hasDoi "10.5281/zenodo.8045887" ;
     dcterms:identifier "Figure3.5" ;
     skos:prefLabel "Network diagram illustrating the extent of knowledge on indirect (blue circles), direct (green circles) anthropogenic drivers of change in nature and natural drivers (grey circle), and their interactions (lines)." .
@@ -1975,7 +1977,9 @@ The introduction, establishment and spread of Poa annua (annual meadowgrass) in 
 <http://ontology.ipbes.net/report/il/IAS23-Figure4.11> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.3> ;
-    ipbes:hasDescription """Da: Deschampsia antarctica (Antarctic hair grass) Pa: Poa annua (annual meadowgrass) Cq: Colobanthus quitensis (Antarctic pearlwort)
+    ipbes:hasDescription """Source: Molina-Montenegro et al. (2019), https://doi.org/10.3897/neobiota.51.37250, under license CC BY 4.0.
+
+Da: Deschampsia antarctica (Antarctic hair grass) Pa: Poa annua (annual meadowgrass) Cq: Colobanthus quitensis (Antarctic pearlwort)
 
 Due to their size and extreme isolation, the Southern Cold Temperate Islands (e.g., Tristan da Cunha, New Zealand Shelf Islands), and the sub-Antarctic Islands (e.g., South Georgia and the South Sandwich Islands, Crozet Islands, Heard Island), are taxonomically and functionally depauperate, and thus, vulnerable to synanthropic introductions (Dawson et al., 2022; Frenot et al., 2005; Hughes et al., 2020).
 
@@ -2111,7 +2115,9 @@ There is clear evidence to implicate predation by Felis catus in the loss of wil
 <http://ontology.ipbes.net/report/il/IAS23-Figure4.27> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.4> ;
-    ipbes:hasDescription "As available in the literature and standardized in the InvaCost database (latest version 4.0 available at the time of writing this report): for all countries in the world (left on the previous page), the 10 countries with the highest cumulative costs (right on the previous page) and the four major taxonomic groups (left) as well as the ten costliest taxa (right). All costs have been standardized in equivalent 2017 US$ (Diagne, Leroy, et al. (2021) and Leroy et al. (2022) for methodological details) and only the most robust subset has been used here (Figure 4.26). Note that this figure represents data recorded in the latest version of the InvaCost database available at the time of writing this report, and the proportions displayed here are likely to evolve as the database is updated over time. All cost information are regularly updated (Leroy et al., 2021 for the most up-to-date figures)." ;
+    ipbes:hasDescription """As available in the literature and standardized in the InvaCost database (latest version 4.0 available at the time of writing this report): for all countries in the world (left on the previous page), the 10 countries with the highest cumulative costs (right on the previous page) and the four major taxonomic groups (left) as well as the ten costliest taxa (right). All costs have been standardized in equivalent 2017 US$ (Diagne, Leroy, et al. (2021) and Leroy et al. (2022) for methodological details) and only the most robust subset has been used here (Figure 4.26). Note that this figure represents data recorded in the latest version of the InvaCost database available at the time of writing this report, and the proportions displayed here are likely to evolve as the database is updated over time. All cost information are regularly updated (Leroy et al., 2021 for the most up-to-date figures).
+
+Data management report available at https://doi.org/10.5281/zenodo.8231570""" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Figure4.27" ;
     skos:prefLabel "Synthesis of cumulative economic costs of biological invasions." .
@@ -2412,7 +2418,7 @@ Combined with other threats to good quality of life described elsewhere in this 
 <http://ontology.ipbes.net/report/il/IAS23-Figure5.19> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-5.4> ;
-    ipbes:hasDescription "This figure shows the suggested optimum method integration of control strategies of Vachellia nilotica. Source: Zahra et al. (2020)," ;
+    ipbes:hasDescription "This figure shows the suggested optimum method integration of control strategies of Vachellia nilotica. Source: Zahra et al. (2020), https://doi.org/10.13057/biodiv/d210115, under license CC-BY-NC-SA 4.0." ;
     dcterms:identifier "Figure5.19" ;
     skos:prefLabel "Plan for integration of stakeholder engagement and management strategies for Vachellia nilotica (gum arabic tree) management in Baluran National Park, Indonesia." .
 
@@ -2450,7 +2456,7 @@ Ceroplastes cirripediformis (barnacle scale; Figure 5.21) is a highly polyphagou
 <http://ontology.ipbes.net/report/il/IAS23-Figure5.23> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-5.5> ;
-    ipbes:hasDescription "Square symbols are island mammal eradications (Martins et al., 2006); circles are mammal eradications from larger land masses in Northern Europe (Robertson et al., 2017); diamond symbols are examples/predictions of large-scale mammal eradications from islands (Cruz et al., 2009; Parkes et al., 2014; Piertney et al., 2016) triangles are plant eradications from California (Rejmanek &" ;
+    ipbes:hasDescription "Square symbols are island mammal eradications (Martins et al., 2006); circles are mammal eradications from larger land masses in Northern Europe (Robertson et al., 2017); diamond symbols are examples/predictions of large-scale mammal eradications from islands (Cruz et al., 2009; Parkes et al., 2014; Piertney et al., 2016) triangles are plant eradications from California (Rejmanek & Pitcairn, 2002). Source: Robertson et al. (2019), https://doi.org/10.2305/IUCN.CH.2019.SSC-OP.62.en, under license CC BY-NC 4.0." ;
     dcterms:identifier "Figure5.23" ;
     skos:prefLabel "Successful eradication programmes; the relationship between area (km², x axis) of successful eradication campaigns and eradication programme cost (y axis)." .
 
@@ -2509,7 +2515,7 @@ As fall armyworm was a new pest, farmers needed information on identification, b
 <http://ontology.ipbes.net/report/il/IAS23-Figure5.5> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-5.2> ;
-    ipbes:hasDescription "In this workflow, data and knowledge generated by all stakeholders (visualized in the circles at the top, i.e., scientists, public authorities, field managers and citizens involved in citizen science initiatives) are used to build a series of databases, indicators, risk assessments and communication tools to inform these stakeholders and take informed action. Source: Groom, Strubbe, et al. (2019)," ;
+    ipbes:hasDescription "In this workflow, data and knowledge generated by all stakeholders (visualized in the circles at the top, i.e., scientists, public authorities, field managers and citizens involved in citizen science initiatives) are used to build a series of databases, indicators, risk assessments and communication tools to inform these stakeholders and take informed action. Source: Groom, Strubbe, et al. (2019), https://doi.org/10.5334/cstp.238, under license CC BY 4.0." ;
     dcterms:identifier "Figure5.5" ;
     skos:prefLabel "The TrIAScycle – an example of knowledge flow allowing for transparency and promoting trust and confidence between stakeholders and decision makers." .
 
@@ -2524,14 +2530,14 @@ As fall armyworm was a new pest, farmers needed information on identification, b
 <http://ontology.ipbes.net/report/il/IAS23-Figure5.7> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-5.2> ;
-    ipbes:hasDescription "Pathway ranks using weighted impact scores for all established alien species in Great Britain. Point size indicates total number of species introduced since 1950, while position of points with error bars indicates the sum of impact values for the minimum, intermediate and maximum number of species introduced by each pathway since 1950. Source: Booy (2019), https://theses.ncl." ;
+    ipbes:hasDescription "Pathway ranks using weighted impact scores for all established alien species in Great Britain. Point size indicates total number of species introduced since 1950, while position of points with error bars indicates the sum of impact values for the minimum, intermediate and maximum number of species introduced by each pathway since 1950. Source: Booy (2019), https://theses.ncl. ac.uk/jspui/handle/10443/4926, under license CC BY 4.0." ;
     dcterms:identifier "Figure5.7" ;
     skos:prefLabel "Example of a pathway prioritization with a case study from Great Britain (United Kingdom)." .
 
 <http://ontology.ipbes.net/report/il/IAS23-Figure5.8> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-5.2> ;
-    ipbes:hasDescription "The figure shows the process leading to the development of recommendations for the listing of alien taxa. Adapted from Kumschick," ;
+    ipbes:hasDescription "The figure shows the process leading to the development of recommendations for the listing of alien taxa. Adapted from Kumschick, Foxcroft, et al. (2020), https://doi.org/10.1007/978-3-030-32394-3_20, under license CC BY 4.0." ;
     ipbes:hasDoi "10.5281/zenodo.8046424" ;
     dcterms:identifier "Figure5.8" ;
     skos:prefLabel "Risk Analysis for Alien Taxa (RAAT) framework developed in South Africa as a standardized and transparent approach to prioritizing and regulating alien species based on evidence." .
@@ -2630,7 +2636,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Figure6.2> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-6.1> ;
-    ipbes:hasDescription "Data is shown for 2010 (left bars; n = 192) and 2020 (right bars; n = 195), with % increase since 2010 (shown above), signatory countries to eight multilateral agreements relevant to the prevention and control of invasive alien species. Only countries party to the CBD at the time of reporting were considered in the analysis. The eight multilateral agreements (year of establishment below acronym in figure) analysed were the Cartagena Protocol on Biosafety to the CBD (CBD, 2000), the IPPC (IPPC, 1952), the Agreement on the Application of Sanitary and Phytosanitary Measures of the WTO (WTO SPS; WTO, 1995), CITES (CITES, 1975), the Convention on Wetlands of International Importance (Ramsar) (Secretariat of Convention on Wetlands, 1971), the Convention on the Conservation of Migratory Species of Wild Animals (CMS) (CMS, 1979), the World Heritage Convention (WHC) (UNESCO, 2017) and the BWM Convention) (IMO, 2004). The WOAH (WOAH, 2011) has a high level of uptake (93%) and showed no change between 2010 and 2020 and is therefore not Species_Policy/13065158, under license CC BY 4.0." ;
+    ipbes:hasDescription "Data is shown for 2010 (left bars; n = 192) and 2020 (right bars; n = 195), with % increase since 2010 (shown above), signatory countries to eight multilateral agreements relevant to the prevention and control of invasive alien species. Only countries party to the CBD at the time of reporting were considered in the analysis. The eight multilateral agreements (year of establishment below acronym in figure) analysed were the Cartagena Protocol on Biosafety to the CBD (CBD, 2000), the IPPC (IPPC, 1952), the Agreement on the Application of Sanitary and Phytosanitary Measures of the WTO (WTO SPS; WTO, 1995), CITES (CITES, 1975), the Convention on Wetlands of International Importance (Ramsar) (Secretariat of Convention on Wetlands, 1971), the Convention on the Conservation of Migratory Species of Wild Animals (CMS) (CMS, 1979), the World Heritage Convention (WHC) (UNESCO, 2017) and the BWM Convention) (IMO, 2004). The WOAH (WOAH, 2011) has a high level of uptake (93%) and showed no change between 2010 and 2020 and is therefore not included in the figure. Source: Pagad et al. (2020), https://opal.latrobe.edu.au/articles/report/International_Adoption_of_Invasive_Alien_ Species_Policy/13065158, under license CC BY 4.0." ;
     dcterms:identifier "Figure6.2" ;
     skos:prefLabel "Percentage of countries (y axis) signatory to eight multilateral agreements relevant to the prevention and control of invasive alien species (x axis)." .
 
@@ -2676,28 +2682,28 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Figure6.3> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-6.1> ;
-    ipbes:hasDescription "Data is shown for 195 countries reporting to the CBD. The percentage of countries (y axis) with national legislation in invasive alien" ;
+    ipbes:hasDescription "Data is shown for 195 countries reporting to the CBD. The percentage of countries (y axis) with national legislation in invasive alien species-relevant sectors (x axis) shown. Source: Pagad et al. (2020), https://opal.latrobe.edu.au/articles/report/International_Adoption_of_Invasive_Alien_Species_Policy/13065158, under license CC BY 4.0." ;
     dcterms:identifier "Figure6.3" ;
     skos:prefLabel "Adoption of national legislation relevant to the prevention and/or control of invasive alien species." .
 
 <http://ontology.ipbes.net/report/il/IAS23-Figure6.4> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-6.1> ;
-    ipbes:hasDescription "Policy/13065158, under license CC BY 4.0." ;
+    ipbes:hasDescription "Source: Pagad et al. (2020), https://opal.latrobe.edu.au/articles/report/International_Adoption_of_Invasive_Alien_Species_ Policy/13065158, under license CC BY 4.0." ;
     dcterms:identifier "Figure6.4" ;
     skos:prefLabel "Allocation of financial resources to the prevention and control of invasive alien" .
 
 <http://ontology.ipbes.net/report/il/IAS23-Figure6.5> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-6.1> ;
-    ipbes:hasDescription "Africa: n = 38, Americas: n = 25, Asia and the Pacific: n = 32, Europe and Central Asia: n = 46. Source: Pagad et al. (2020), https://" ;
+    ipbes:hasDescription "Africa: n = 38, Americas: n = 25, Asia and the Pacific: n = 32, Europe and Central Asia: n = 46. Source: Pagad et al. (2020), https:// opal.latrobe.edu.au/articles/report/International_Adoption_of_Invasive_Alien_Species_Policy/13065158, under license CC BY 4.0." ;
     dcterms:identifier "Figure6.5" ;
     skos:prefLabel "Percentage of countries (y axis) per IPBES region that have accessed different funding sources (x axis) for invasive alien species prevention and control." .
 
 <http://ontology.ipbes.net/report/il/IAS23-Figure6.6> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-6.2> ;
-    ipbes:hasDescription "The DPSR applied to the Antarctic context as an example (non-bold text). Adapted from McGeoch et al. (2010, 2015), https:// Elsevier license 5406200304811 respectively." ;
+    ipbes:hasDescription "The DPSR applied to the Antarctic context as an example (non-bold text). Adapted from McGeoch et al. (2010, 2015), https:// doi.org/10.1111/j.1472-4642.2009.00633.x, https://doi.org/10.1016/j.gloenvcha.2014.12.012, under license CC BY 4.0 and Elsevier license 5406200304811 respectively." ;
     ipbes:hasDoi "10.5281/zenodo.8046442" ;
     dcterms:identifier "Figure6.6" ;
     skos:prefLabel "Driver-Pressure-State-Response (DPSR) framework for invasive alien species in the Antarctic context." .
@@ -2713,7 +2719,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Figure6.8> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-6.2> ;
-    ipbes:hasDescription "There are four categories of stakeholders (on the left) and examples of stakeholders (on the right) involved in decision-making that affects the outcome of biological invasion, based on freshwater invasive alien species in the Ebro River, Spain. Adapted from Rodríguez-" ;
+    ipbes:hasDescription "There are four categories of stakeholders (on the left) and examples of stakeholders (on the right) involved in decision-making that affects the outcome of biological invasion, based on freshwater invasive alien species in the Ebro River, Spain. Adapted from Rodríguez-Labajos et al. (2009), https://doi.org/10.1016/j.ecolecon.2009.08.022, under copyright 2009 Elsevier B.V." ;
     ipbes:hasDoi "10.5281/zenodo.8046442" ;
     dcterms:identifier "Figure6.8" ;
     skos:prefLabel "An example of the many relevant stakeholders for managing biological invasions from the Ebro River, Spain." .
@@ -2790,7 +2796,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.12> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.3> ;
-    ipbes:hasDescription "The number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien species rather than their impacts which is covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is" ;
+    ipbes:hasDescription "The number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien species rather than their impacts which is covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.12" ;
     skos:prefLabel "Top 10 most widespread invasive alien arachnids worldwide." .
@@ -2798,7 +2804,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.13> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.3> ;
-    ipbes:hasDescription "The number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien mollusc species rather than their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this" ;
+    ipbes:hasDescription "The number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien mollusc species rather than their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.13" ;
     skos:prefLabel "Top 10 most widespread invasive alien mollusc species worldwide." .
@@ -2806,7 +2812,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.14> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.3> ;
-    ipbes:hasDescription "The number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien crustacean species rather than their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this" ;
+    ipbes:hasDescription "The number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien crustacean species rather than their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.14" ;
     skos:prefLabel "Top 10 most widespread invasive alien crustacean species worldwide." .
@@ -2814,7 +2820,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.15> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.3> ;
-    ipbes:hasDescription "The number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien vascular plant species rather than their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this" ;
+    ipbes:hasDescription "The number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien vascular plant species rather than their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.15" ;
     skos:prefLabel "Top 10 most widespread invasive alien vascular plant species worldwide." .
@@ -2822,7 +2828,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.16> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.3> ;
-    ipbes:hasDescription "The number of regions where the species is recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien algae species rather than their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is" ;
+    ipbes:hasDescription "The number of regions where the species is recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien algae species rather than their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.16" ;
     skos:prefLabel "Top 10 most widespread invasive alien algae species worldwide." .
@@ -2830,7 +2836,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.17> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.3> ;
-    ipbes:hasDescription "The number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien species rather than their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is" ;
+    ipbes:hasDescription "The number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien species rather than their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.17" ;
     skos:prefLabel "Top 10 most widespread invasive alien fungi worldwide." .
@@ -2846,7 +2852,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.19> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.4> ;
-    ipbes:hasDescription "Numbers of established alien species can vary depending on data sources. For mammals, birds, and vascular plants, ranges of values indicate variation among databases (section 2.1.4 for further details about data sources and data processing). Note presented numbers may deviate from those reported in the text due to variation among data sources. A data management report for the data" ;
+    ipbes:hasDescription "Numbers of established alien species can vary depending on data sources. For mammals, birds, and vascular plants, ranges of values indicate variation among databases (section 2.1.4 for further details about data sources and data processing). Note presented numbers may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying this table is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.19" ;
     skos:prefLabel "Numbers of established alien species across IPBES regions." .
@@ -2876,7 +2882,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.22> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.4> ;
-    ipbes:hasDescription "Numbers of alien species can vary depending on data sources. For mammals, birds and vascular plants, ranges of values indicate variation among databases (section 2.1.4 for further details about data sources and data processing). Note presented numbers may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying this" ;
+    ipbes:hasDescription "Numbers of alien species can vary depending on data sources. For mammals, birds and vascular plants, ranges of values indicate variation among databases (section 2.1.4 for further details about data sources and data processing). Note presented numbers may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying this table is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.22" ;
     skos:prefLabel "Numbers of established alien species for subregions of the Americas." .
@@ -2892,7 +2898,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.24> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.4> ;
-    ipbes:hasDescription "Numbers of established alien species can vary depending on data sources. For mammals, birds, and vascular plants ranges of values indicate variation among databases (see section 2.1.4 for further details on data sources and data processing). Note numbers may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying this" ;
+    ipbes:hasDescription "Numbers of established alien species can vary depending on data sources. For mammals, birds, and vascular plants ranges of values indicate variation among databases (see section 2.1.4 for further details on data sources and data processing). Note numbers may deviate from those reported in the text due to variation among data sources. A data management report for the data underlying this table is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.24" ;
     skos:prefLabel "Numbers of established alien species for subregions of Asia and the Pacific." .
@@ -2932,7 +2938,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.3> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.2> ;
-    ipbes:hasDescription "Species numbers can vary depending on data sources. Note numbers in this table may deviate from those reported in the text due to variation among data sources. For mammals, birds, and vascular plants, ranges of values indicate variation among databases (section 2.1.4 for further details about data sources and data processing). A data management report for the data underlying this" ;
+    ipbes:hasDescription "Species numbers can vary depending on data sources. Note numbers in this table may deviate from those reported in the text due to variation among data sources. For mammals, birds, and vascular plants, ranges of values indicate variation among databases (section 2.1.4 for further details about data sources and data processing). A data management report for the data underlying this table is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.3" ;
     skos:prefLabel "Numbers of established alien species for various taxonomic groups worldwide." .
@@ -2948,7 +2954,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.5> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.3> ;
-    ipbes:hasDescription "The number of regions where a species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien mammal species, not impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is" ;
+    ipbes:hasDescription "The number of regions where a species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien mammal species, not impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.5" ;
     skos:prefLabel "Top 10 most widespread invasive alien mammal species worldwide." .
@@ -2956,7 +2962,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.6> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.3> ;
-    ipbes:hasDescription "The number of regions where the respective species has been recorded and classified as being invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien bird species, not impacts, which are covered in Chapter 4 (see section 2.1.4 for further details on data sources and processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is" ;
+    ipbes:hasDescription "The number of regions where the respective species has been recorded and classified as being invasive based on GRIIS (Pagad et al., 2022). Note this table only refers to the distribution of invasive alien bird species, not impacts, which are covered in Chapter 4 (see section 2.1.4 for further details on data sources and processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.6" ;
     skos:prefLabel "Top 10 most widespread invasive alien bird species worldwide." .
@@ -2972,7 +2978,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table2.8> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-2.3> ;
-    ipbes:hasDescription "The table shows the number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table refers only to the distribution of invasive alien species, not their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this" ;
+    ipbes:hasDescription "The table shows the number of regions where the species has been recorded and classified as invasive based on GRIIS (Pagad et al., 2022). Note this table refers only to the distribution of invasive alien species, not their impacts which are covered in Chapter 4 (see section 2.1.4 for further details about data sources and data processing). “No. of regions” denotes the number of regions with confirmed occurrences of that species according to the chapter database. A data management report for the data underlying this figure is available at https://doi.org/10.5281/zenodo.7615582" ;
     ipbes:hasDoi "10.5281/zenodo.7615582" ;
     dcterms:identifier "Table2.8" ;
     skos:prefLabel "Top 10 most widespread invasive alien reptile species worldwide." .
@@ -3028,7 +3034,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table4.13> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.3> ;
-    ipbes:hasDescription "The number of invasive alien species impacting A) native plants, B) vertebrates, C) invertebrates and D) microbes and the number of documented impacts (in brackets) in each region. A data management report for the database of impacts developed through this" ;
+    ipbes:hasDescription "The number of invasive alien species impacting A) native plants, B) vertebrates, C) invertebrates and D) microbes and the number of documented impacts (in brackets) in each region. A data management report for the database of impacts developed through this chapter is available at https://doi.org/10.5281/zenodo.5766069" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Table4.13" ;
     skos:prefLabel "Number of invasive alien species causing impacts on native taxa by region." .
@@ -3044,7 +3050,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table4.15> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.4> ;
-    ipbes:hasDescription "The top 10 (by number of documented impacts) invasive alien species causing negative and positive impacts on nature’s contributions to people in the terrestrial realm by the affected units of analysis. A data management report for the database of impacts developed" ;
+    ipbes:hasDescription "The top 10 (by number of documented impacts) invasive alien species causing negative and positive impacts on nature’s contributions to people in the terrestrial realm by the affected units of analysis. A data management report for the database of impacts developed through this chapter is available at https://doi.org/10.5281/zenodo.5766069" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Table4.15" ;
     skos:prefLabel "Main invasive alien species impacting nature’s contributions to people in the terrestrial realm." .
@@ -3052,7 +3058,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table4.16> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.4> ;
-    ipbes:hasDescription "The top 10 (by number of documented impacts) invasive alien species causing negative and positive impacts on nature’s contributions to people in the inland waters realm by the affected units of analysis. A data management report for the database of impacts developed" ;
+    ipbes:hasDescription "The top 10 (by number of documented impacts) invasive alien species causing negative and positive impacts on nature’s contributions to people in the inland waters realm by the affected units of analysis. A data management report for the database of impacts developed through this chapter is available at https://doi.org/10.5281/zenodo.5766069" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Table4.16" ;
     skos:prefLabel "Main invasive alien species impacting nature’s contributions to people in the inland waters realm." .
@@ -3180,7 +3186,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table4.32> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.6> ;
-    ipbes:hasDescription "A data management report for the systematic cross-chapter review on Indigenous Peoples and local communities and invasive alien" ;
+    ipbes:hasDescription "A data management report for the systematic cross-chapter review on Indigenous Peoples and local communities and invasive alien species is available at: https://doi.org/10.5281/zenodo.5760266" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Table4.32" ;
     skos:prefLabel "Number and type of impacts on nature’s contributions to people caused by invasive alien species that were documented directly by Indigenous Peoples and local communities in peer-reviewed sources." .
@@ -3196,7 +3202,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table4.35> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.6> ;
-    ipbes:hasDescription "A data management report for the systematic cross-chapter review on Indigenous Peoples and local communities and invasive alien" ;
+    ipbes:hasDescription "A data management report for the systematic cross-chapter review on Indigenous Peoples and local communities and invasive alien species is available at https://doi.org/10.5281/zenodo.5760266" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Table4.35" ;
     skos:prefLabel "Number and type of impacts on society-wide good quality of life for Indigenous Peoples and local communities." .
@@ -3204,7 +3210,9 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table4.36> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.6> ;
-    ipbes:hasDescription "Sources retrieved from a systematic cross-chapter review on Indigenous Peoples and local communities and invasive alien species." ;
+    ipbes:hasDescription """Sources retrieved from a systematic cross-chapter review on Indigenous Peoples and local communities and invasive alien species.
+
+Data management report available at https://doi.org/10.5281/zenodo.5760266""" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Table4.36" ;
     skos:prefLabel "Examples of invasive alien species with conflicting values." .
@@ -3212,6 +3220,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table4.37> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.7> ;
+    ipbes:hasDescription "Data management report available at https://doi.org/10.5281/zenodo.5706520" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Table4.37" ;
     skos:prefLabel "Number of publications on the impacts of invasive alien species on nature’s contributions to people, good quality of life, and Indigenous and local knowledge, using models and scenarios." .
@@ -3219,6 +3228,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table4.38> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.7> ;
+    ipbes:hasDescription "Data management report available at https://doi.org/10.5281/zenodo.5706520" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Table4.38" ;
     skos:prefLabel "Number of publications per region on the impacts of invasive alien species using models and scenarios." .
@@ -3226,6 +3236,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table4.39> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.7> ;
+    ipbes:hasDescription "Data management report available at https://doi.org/10.5281/zenodo.5706520" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Table4.39" ;
     skos:prefLabel "Number of publications per country (top 12) on the impacts of invasive alien species using models and scenarios." .
@@ -3321,7 +3332,7 @@ Together, a coordinated coalition of trained volunteers was created to detect an
 <http://ontology.ipbes.net/report/il/IAS23-Table5.14> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-5.6> ;
-    ipbes:hasDescription "Overall, 183 publications were identified to include management of biological invasions. Numbers for the different groups can be higher than 183 if multiple model or scenario types or multiple drivers were considered in the same study. Evidence from the systematic literature review on scenarios and models undertaken for the IPBES invasive alien species assessment. Data management report" ;
+    ipbes:hasDescription "Overall, 183 publications were identified to include management of biological invasions. Numbers for the different groups can be higher than 183 if multiple model or scenario types or multiple drivers were considered in the same study. Evidence from the systematic literature review on scenarios and models undertaken for the IPBES invasive alien species assessment. Data management report available at: https://doi.org/10.5281/zenodo.5706520" ;
     ipbes:hasDoi "10.5281/zenodo.8046424" ;
     dcterms:identifier "Table5.14" ;
     skos:prefLabel "Overview of model and scenario types as well as drivers." .
@@ -10021,13 +10032,6 @@ Aside from microbes that do not have any documented positive impacts (section 4.
     ipbes:hasDescription "Lubell, M. (2004). Collaborative environmental institutions: All talk and no action? Journal of Policy Analysis and Management, 23(3), 549–573. https://doi." ;
     ipbes:hasDoi "10.1002/pam.20026" ;
     owl:sameAs <https://www.zotero.org/groups/2352922/items/5H4F8U9K> .
-
-<http://ontology.ipbes.net/report/ref/2352922/items/5HHDLH6I> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch5> ;
-    ipbes:Report ipbes:IAS23 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-5.5.3> ;
-    ipbes:hasDescription "Rejmanek, M., & Pitcairn, M. J. (2002). When is eradication of exotic pest plants a realistic goal? In C. R. Veitch & M. N. Clout (Eds.), Turning the tide: The eradication of invasive species: Proceedings of the International Conference on eradication of Island Invasives (pp. 249–253)." ;
-    owl:sameAs <https://www.zotero.org/groups/2352922/items/5HHDLH6I> .
 
 <http://ontology.ipbes.net/report/ref/2352922/items/5HY94I6A> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch2> ;
@@ -23125,14 +23129,6 @@ Aside from microbes that do not have any documented positive impacts (section 4.
     ipbes:hasDescription "Gregory, S., Henderson, W., Smee, E., & Cassey, P. (2014). Eradications of vertebrate pests in Australia: A review and guidelines for future best practice. Canberra, Australia: Invasive Animals Cooperative" ;
     owl:sameAs <https://www.zotero.org/groups/2352922/items/K5SQIDLS> .
 
-<http://ontology.ipbes.net/report/ref/2352922/items/K5U3QNCX> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch5> ;
-    ipbes:Report ipbes:IAS23 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-5.5.3> ;
-    ipbes:hasDescription "Robertson, P. A., Roy, S., Mill, A. C., Shirley, M., Adriaens, T., Ward, A. I., Tatayah, V., & Booy, O. (2019). Invasive species removals and scale – contrasting island and mainland experience. Island Invasives: Scaling up to Meet the Challenge.: Proceedings of the International Conference on Island Invasives., 62," ;
-    ipbes:hasDoi "https://doi.org/10.2305/IUCN.CH.2019.SSC-OP.62.en" ;
-    owl:sameAs <https://www.zotero.org/groups/2352922/items/K5U3QNCX> .
-
 <http://ontology.ipbes.net/report/ref/2352922/items/K66WH7XM> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch4> ;
     ipbes:Report ipbes:IAS23 ;
@@ -35153,7 +35149,7 @@ Aside from microbes that do not have any documented positive impacts (section 4.
 <http://ontology.ipbes.net/report/ref/2352922/items/Y37353EQ> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch6> ;
     ipbes:Report ipbes:IAS23 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-6.2.2> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-6.2> ;
     ipbes:hasDescription "Rodríguez-Labajos, B., Binimelis, R., & Monterroso, I. (2009). Multi-level driving forces of biological invasions. Ecological" ;
     ipbes:hasDoi "10.1016/j.ecolecon.2009.08.022" ;
     owl:sameAs <https://www.zotero.org/groups/2352922/items/Y37353EQ> .
@@ -39541,7 +39537,7 @@ In the native range of Mikania micrantha, a rust fungus (Puccinia spegazzinii) s
 <http://ontology.ipbes.net/report/il/IAS23-Table4.31> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.6> ;
-    ipbes:hasDescription "A data management report for the systematic cross-chapter review on Indigenous Peoples and local communities and invasive alien" ;
+    ipbes:hasDescription "A data management report for the systematic cross-chapter review on Indigenous Peoples and local communities and invasive alien species is available at: https://doi.org/10.5281/zenodo.5760266" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Table4.31" ;
     skos:prefLabel "Number and type of impacts on nature caused by invasive alien species, as documented directly by Indigenous Peoples and local communities." .
@@ -39549,7 +39545,7 @@ In the native range of Mikania micrantha, a rust fungus (Puccinia spegazzinii) s
 <http://ontology.ipbes.net/report/il/IAS23-Table4.33> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.6> ;
-    ipbes:hasDescription "A data management report for the systematic cross-chapter review on Indigenous Peoples and local communities and invasive alien" ;
+    ipbes:hasDescription "A data management report for the systematic cross-chapter review on Indigenous Peoples and local communities and invasive alien species is available at: https://doi.org/10.5281/zenodo.5760266" ;
     ipbes:hasDoi "10.5281/zenodo.8046326" ;
     dcterms:identifier "Table4.33" ;
     skos:prefLabel "Number of impacts of invasive alien species on the five constituents of good quality of life for Indigenous Peoples and local communities." .
@@ -40632,6 +40628,14 @@ In the native range of Mikania micrantha, a rust fungus (Puccinia spegazzinii) s
     ipbes:hasDescription "Traveset, A., & Richardson, D. M. (2014). Mutualistic Interactions and Biological Invasions. Annual Review of Ecology, Evolution, and Systematics, 45(1)," ;
     ipbes:hasDoi "10.1146/annurev-ecolsys-120213-091857" ;
     owl:sameAs <https://www.zotero.org/groups/2352922/items/5HACBJ84> .
+
+<http://ontology.ipbes.net/report/ref/2352922/items/5HHDLH6I> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch5> ;
+    ipbes:Report ipbes:IAS23 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-5.5>,
+        <http://ontology.ipbes.net/report/sch/IAS23-5.5.3> ;
+    ipbes:hasDescription "Rejmanek, M., & Pitcairn, M. J. (2002). When is eradication of exotic pest plants a realistic goal? In C. R. Veitch & M. N. Clout (Eds.), Turning the tide: The eradication of invasive species: Proceedings of the International Conference on eradication of Island Invasives (pp. 249–253)." ;
+    owl:sameAs <https://www.zotero.org/groups/2352922/items/5HHDLH6I> .
 
 <http://ontology.ipbes.net/report/ref/2352922/items/5HWPH7Z5> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch4>,
@@ -43452,6 +43456,15 @@ In the native range of Mikania micrantha, a rust fungus (Puccinia spegazzinii) s
     ipbes:hasDescription "Doria, C. R. da C., Agudelo, E., Akama, A., Barros, B., Bonfim, M., Carneiro, L., Briglia-Ferreira, S. R., Nobre Carvalho, L., Bonilla-Castillo, C. A., Charvet, P., dos Santos Catâneo, D. T. B., da Silva, H. P., Garcia-Dávila, C. R., dos Anjos, H. D. B., Duponchelle, F., Encalada, A., Fernandes, I., Florentino, A. C., Guarido, P. C. P., … Vitule, J. R. S. (2021). The Silent Threat of Non-native Fish in the Amazon: ANNF Database and Review. Frontiers in Ecology and Evolution, 9, 646702. https://doi." ;
     ipbes:hasDoi "10.3389/fevo.2021.646702" ;
     owl:sameAs <https://www.zotero.org/groups/2352922/items/K2U5TRCD> .
+
+<http://ontology.ipbes.net/report/ref/2352922/items/K5U3QNCX> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch5> ;
+    ipbes:Report ipbes:IAS23 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-5.5>,
+        <http://ontology.ipbes.net/report/sch/IAS23-5.5.3> ;
+    ipbes:hasDescription "Robertson, P. A., Roy, S., Mill, A. C., Shirley, M., Adriaens, T., Ward, A. I., Tatayah, V., & Booy, O. (2019). Invasive species removals and scale – contrasting island and mainland experience. Island Invasives: Scaling up to Meet the Challenge.: Proceedings of the International Conference on Island Invasives., 62," ;
+    ipbes:hasDoi "https://doi.org/10.2305/IUCN.CH.2019.SSC-OP.62.en" ;
+    owl:sameAs <https://www.zotero.org/groups/2352922/items/K5U3QNCX> .
 
 <http://ontology.ipbes.net/report/ref/2352922/items/K8SSIILK> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch2>,
@@ -53304,22 +53317,6 @@ Recognition of the challenges at the highest levels of government and political 
     ipbes:hasDoi "10.1111/gcb.13021" ;
     owl:sameAs <https://www.zotero.org/groups/2352922/items/JXSQ5KP4> .
 
-<http://ontology.ipbes.net/report/ref/2352922/items/M2BU94IG> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch1>,
-        <http://ontology.ipbes.net/report/ch/IAS23ch3>,
-        <http://ontology.ipbes.net/report/ch/IAS23ch6> ;
-    ipbes:Report ipbes:IAS23 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-1.3.3>,
-        <http://ontology.ipbes.net/report/sch/IAS23-1.6.1>,
-        <http://ontology.ipbes.net/report/sch/IAS23-3.1>,
-        <http://ontology.ipbes.net/report/sch/IAS23-3.1.2>,
-        <http://ontology.ipbes.net/report/sch/IAS23-3.1.3>,
-        <http://ontology.ipbes.net/report/sch/IAS23-3.2>,
-        <http://ontology.ipbes.net/report/sch/IAS23-6.1> ;
-    ipbes:hasDescription "Díaz, S., Demissew, S., Carabias, J., Joly, C., Lonsdale, M., Ash, N., Larigauderie, A., Adhikari, J. R., Arico, S., Báldi, A., Bartuska, A., Baste, I. A., Bilgin, A., Brondizio, E., Chan, K. M., Figueroa, V. E., Duraiappah, A., Fischer, M., Hill, R., … Zlatanova, D. (2015). The IPBES Conceptual Framework—Connecting nature and people. Current Opinion in Environmental Sustainability, 14, 1–16. https://doi." ;
-    ipbes:hasDoi "10.1016/j.cosust.2014.11.002" ;
-    owl:sameAs <https://www.zotero.org/groups/2352922/items/M2BU94IG> .
-
 <http://ontology.ipbes.net/report/ref/2352922/items/M8VZEIDM> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch4>,
         <http://ontology.ipbes.net/report/ch/IAS23ch5> ;
@@ -53745,6 +53742,23 @@ Concrete actions by industries involved in potential pathways for invasive alien
     ipbes:hasDescription "Hulme, P. E. (2021). Unwelcome exchange: International trade as a direct and indirect driver of biological invasions worldwide. One Earth, 4(5), 666–679. https://doi." ;
     ipbes:hasDoi "10.1016/j.oneear.2021.04.015" ;
     owl:sameAs <https://www.zotero.org/groups/2352922/items/KV62X9CX> .
+
+<http://ontology.ipbes.net/report/ref/2352922/items/M2BU94IG> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch1>,
+        <http://ontology.ipbes.net/report/ch/IAS23ch3>,
+        <http://ontology.ipbes.net/report/ch/IAS23ch6> ;
+    ipbes:Report ipbes:IAS23 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-1.3.3>,
+        <http://ontology.ipbes.net/report/sch/IAS23-1.6>,
+        <http://ontology.ipbes.net/report/sch/IAS23-1.6.1>,
+        <http://ontology.ipbes.net/report/sch/IAS23-3.1>,
+        <http://ontology.ipbes.net/report/sch/IAS23-3.1.2>,
+        <http://ontology.ipbes.net/report/sch/IAS23-3.1.3>,
+        <http://ontology.ipbes.net/report/sch/IAS23-3.2>,
+        <http://ontology.ipbes.net/report/sch/IAS23-6.1> ;
+    ipbes:hasDescription "Díaz, S., Demissew, S., Carabias, J., Joly, C., Lonsdale, M., Ash, N., Larigauderie, A., Adhikari, J. R., Arico, S., Báldi, A., Bartuska, A., Baste, I. A., Bilgin, A., Brondizio, E., Chan, K. M., Figueroa, V. E., Duraiappah, A., Fischer, M., Hill, R., … Zlatanova, D. (2015). The IPBES Conceptual Framework—Connecting nature and people. Current Opinion in Environmental Sustainability, 14, 1–16. https://doi." ;
+    ipbes:hasDoi "10.1016/j.cosust.2014.11.002" ;
+    owl:sameAs <https://www.zotero.org/groups/2352922/items/M2BU94IG> .
 
 <http://ontology.ipbes.net/report/ref/2352922/items/SR63FDXW> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch1>,
@@ -57500,34 +57514,6 @@ This model of governance involves a systematic approach to improve the planning 
     ipbes:hasDoi "10.1111/brv.12627" ;
     owl:sameAs <https://www.zotero.org/groups/2352922/items/84CFHG9A> .
 
-<http://ontology.ipbes.net/report/ref/2352922/items/NJYZEFXF> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch1>,
-        <http://ontology.ipbes.net/report/ch/IAS23ch2>,
-        <http://ontology.ipbes.net/report/ch/IAS23ch3> ;
-    ipbes:Report ipbes:IAS23 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-1.3.2>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.2.2>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.2.3>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.3.1.1>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.3.1.11>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.3.1.2>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.3.1.3>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.4>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.4.4.2>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.4.4.4>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.5.2.1>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.5.2.4>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.5.2.7>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.5.3.2>,
-        <http://ontology.ipbes.net/report/sch/IAS23-2.5.5.4>,
-        <http://ontology.ipbes.net/report/sch/IAS23-3.1.3.1>,
-        <http://ontology.ipbes.net/report/sch/IAS23-3.2.2.1>,
-        <http://ontology.ipbes.net/report/sch/IAS23-3.2.2.4>,
-        <http://ontology.ipbes.net/report/sch/IAS23-3.2.3> ;
-    ipbes:hasDescription "Dawson, W., Moser, D., van Kleunen, M., Kreft, H., Pergl, J., Pyšek, P., Weigelt, P., Winter, M., Lenzner, B., Blackburn, T. M., Dyer, E. E., Cassey, P., Scrivens, S. L., Economo, E. P., Guénard, B., Capinha, C., Seebens, H., García-Díaz, P., Nentwig, W., … Essl, F. (2017). Global hotspots and correlates of alien species richness across taxonomic groups. Nature Ecology & Evolution, 1(7), 0186. https://doi." ;
-    ipbes:hasDoi "10.1038/s41559-017-0186" ;
-    owl:sameAs <https://www.zotero.org/groups/2352922/items/NJYZEFXF> .
-
 <http://ontology.ipbes.net/report/sch/IAS23-1.6.8> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch1> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/IAS23-KM-A2> ;
@@ -57724,6 +57710,35 @@ Supporting active networks and platforms, re-activating previously established n
     dcterms:identifier "KM-D5" ;
     skos:prefLabel "Open and interoperable information systems will improve the coordination and effectiveness of the management of biological invasions, within and across countries {D31, D32}." .
 
+<http://ontology.ipbes.net/report/ref/2352922/items/NJYZEFXF> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch1>,
+        <http://ontology.ipbes.net/report/ch/IAS23ch2>,
+        <http://ontology.ipbes.net/report/ch/IAS23ch3> ;
+    ipbes:Report ipbes:IAS23 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-1.3.2>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.2.2>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.2.3>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.3.1.1>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.3.1.11>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.3.1.2>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.3.1.3>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.4>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.4.4.2>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.4.4.4>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.5.2.1>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.5.2.4>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.5.2.7>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.5.3.2>,
+        <http://ontology.ipbes.net/report/sch/IAS23-2.5.5.4>,
+        <http://ontology.ipbes.net/report/sch/IAS23-3.1>,
+        <http://ontology.ipbes.net/report/sch/IAS23-3.1.3.1>,
+        <http://ontology.ipbes.net/report/sch/IAS23-3.2.2.1>,
+        <http://ontology.ipbes.net/report/sch/IAS23-3.2.2.4>,
+        <http://ontology.ipbes.net/report/sch/IAS23-3.2.3> ;
+    ipbes:hasDescription "Dawson, W., Moser, D., van Kleunen, M., Kreft, H., Pergl, J., Pyšek, P., Weigelt, P., Winter, M., Lenzner, B., Blackburn, T. M., Dyer, E. E., Cassey, P., Scrivens, S. L., Economo, E. P., Guénard, B., Capinha, C., Seebens, H., García-Díaz, P., Nentwig, W., … Essl, F. (2017). Global hotspots and correlates of alien species richness across taxonomic groups. Nature Ecology & Evolution, 1(7), 0186. https://doi." ;
+    ipbes:hasDoi "10.1038/s41559-017-0186" ;
+    owl:sameAs <https://www.zotero.org/groups/2352922/items/NJYZEFXF> .
+
 <http://ontology.ipbes.net/report/sch/IAS23-1.3.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch1> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2352922/items/34UV5I24>,
@@ -57787,21 +57802,6 @@ Of the 13,168 established alien plant species reported in the GloNAF database, l
 Among marine vascular plants, the seagrass Zostera japonica (dwarf eelgrass) was introduced to the Pacific Northwest in the mid-1900s likely via oyster aquaculture and has since spread and negatively impacted native Zostera marina (eelgrass) and ecosystem processes (Shafer et al., 2014). Additionally, Halophila stipulacea (halophila seagrass) was introduced to the Mediterranean Sea through the Suez Canal where it is now widespread (Willette et al., 2014). More recently, Halophila stipulacea was introduced to the Caribbean Sea where it is spreading and is described as the world’s first globally invasive marine angiosperm (Willette et al., 2014; Winters et al., 2020).""" ;
     dcterms:identifier "2.3.2.2" ;
     skos:prefLabel "Aquatic plants" .
-
-<http://ontology.ipbes.net/report/sch/IAS23-3.1> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch3> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2352922/items/4BH3PUNM>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/BF3N3YYK>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/DWTD6BY8>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/HQTI4ZNS>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/M2BU94IG>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/SR63FDXW>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/XJQG3XT3>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/ZACZGHZL> ;
-    ipbes:Report ipbes:IAS23 ;
-    ipbes:hasDescription "The concept of direct and indirect drivers of change in nature has been a cornerstone in all the assessments led by the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES) to date (Díaz et al., 2015; IPBES, 2016a, 2018f, 2018e, 2018c, 2018d, 2019; Nelson et al., 2006), and the intention in this chapter is not to repeat past material pertaining to the status and trends in the drivers, but to synthesize information on the role of drivers of change in nature in affecting the biological invasion process. Chapter 3 therefore focuses on identifying how different drivers of change in nature affect the transport, introduction and establishment of invasive alien species (Glossary; Box 3.1). Chapter 3 builds on the status and trends of alien species, and the subset of these termed invasive alien species, documented in Chapter 2, with a more in-depth focus on establishing the drivers behind these patterns. The information provided in Chapter 3 contributes to the understanding of the underlying causes of the increase in invasive alien species globally (Chapter 2), the impacts of invasive alien species on nature, nature’s contributions to people and good quality of life (Glossary; Chapter 4) and underpins management actions (Glossary; Chapter 5) and policy options for the prevention and control of invasive alien species and their impacts (Glossary; Chapter 6)." ;
-    dcterms:identifier "3.1" ;
-    skos:prefLabel "Introduction" .
 
 <http://ontology.ipbes.net/report/sch/IAS23-3.2.3.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch3> ;
@@ -58147,6 +58147,22 @@ The domestication of plants and their widespread planting in agriculture has cre
 Information on biological invasions of insects and plants in cultivated areas has been systematically collected in Europe and North America, likely because they act as pests and weeds and negatively impact agricultural production. However, information from other parts of the world is scarce.""" ;
     dcterms:identifier "2.5.5.2" ;
     skos:prefLabel "Cultivated areas (including cropping, intensive livestock farming, etc.)" .
+
+<http://ontology.ipbes.net/report/sch/IAS23-3.1> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch3> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2352922/items/4BH3PUNM>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/BF3N3YYK>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/DWTD6BY8>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/HQTI4ZNS>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/M2BU94IG>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/NJYZEFXF>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/SR63FDXW>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/XJQG3XT3>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/ZACZGHZL> ;
+    ipbes:Report ipbes:IAS23 ;
+    ipbes:hasDescription "The concept of direct and indirect drivers of change in nature has been a cornerstone in all the assessments led by the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES) to date (Díaz et al., 2015; IPBES, 2016a, 2018f, 2018e, 2018c, 2018d, 2019; Nelson et al., 2006), and the intention in this chapter is not to repeat past material pertaining to the status and trends in the drivers, but to synthesize information on the role of drivers of change in nature in affecting the biological invasion process. Chapter 3 therefore focuses on identifying how different drivers of change in nature affect the transport, introduction and establishment of invasive alien species (Glossary; Box 3.1). Chapter 3 builds on the status and trends of alien species, and the subset of these termed invasive alien species, documented in Chapter 2, with a more in-depth focus on establishing the drivers behind these patterns. The information provided in Chapter 3 contributes to the understanding of the underlying causes of the increase in invasive alien species globally (Chapter 2), the impacts of invasive alien species on nature, nature’s contributions to people and good quality of life (Glossary; Chapter 4) and underpins management actions (Glossary; Chapter 5) and policy options for the prevention and control of invasive alien species and their impacts (Glossary; Chapter 6)." ;
+    dcterms:identifier "3.1" ;
+    skos:prefLabel "Introduction" .
 
 <http://ontology.ipbes.net/report/sch/IAS23-3.1.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch3> ;
@@ -61160,35 +61176,6 @@ Guided by the Intergovernmental Science-Policy Platform on Biodiversity and Ecos
     dcterms:identifier "6.1" ;
     skos:prefLabel "Introduction and outline" .
 
-<http://ontology.ipbes.net/report/sch/IAS23-6.2> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch6> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2352922/items/2IKJ4NA6>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/3MLHJ4IF>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/4G38RGTS>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/BNFNSJGS>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/DABRZBE7>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/ESKA6PRX>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/F77A72FN>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/FNAYIG8M>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/G6QLGHXL>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/HVL7Y33X>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/I6VWZJEU>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/KQ99DZL8>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/PN6IMK2B>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/SCEW9H9Y>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/W24H55GQ>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/YFB3Q6LP> ;
-    ipbes:Report ipbes:IAS23 ;
-    ipbes:hasDescription """This section provides context for assessing governance options for biological invasions. It aims to clarify the understanding of the governance system within which a policy instrument or policy support tool for biological invasions is being implemented (Box 6.2). “Good governance is an enabling condition for policy implementation, distributing the resulting positive impacts evenly across society” (IPBES, 2019b). This section identifies governance considerations from invasive alien species-specific literature and contextualizes these within environmental governance more broadly. A key finding is that there is little dedicated interdisciplinary research on the governance for biological invasions in an environmental governance context.
-
-The concept of governance is defined and used in several ways. This assessment uses the formulation and rationale of Gilek et al. (2016):
-
-“Governance includes both structures – such as policy contexts, existing power relations among key actors, regulatory frameworks and organizational forms of decision-making, reflexivity and participation – and processes. Processes comprise aspects such as the evolution of institutions and interactions between, for example, science and policy, as well as communication and interaction among policymakers, scientists, and other stakeholders. Processes also include the development of strategies, framings, communication, and learning.”
-
-Strong governance can help to address the problem of invasive alien species, as it enables the legislation, regulations, cooperation, participation and monitoring of actions to mitigate key drivers (T. Evans et al., 2018).""" ;
-    dcterms:identifier "6.2" ;
-    skos:prefLabel "Governance response options" .
-
 <http://ontology.ipbes.net/report/sch/IAS23-1.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch1> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2352922/items/2Y3F3SF8>,
@@ -61325,6 +61312,36 @@ Such modelling platforms can help answering a wide range of risk-based managemen
 Pest risk maps are commonly used for strategic and tactical decision-support in managing biological invasions. However, such maps rarely measure spatial risk and are generally only used to estimate risk in one component of the invasion curve (general introduction or establishment risks – Figure 5.1), and can be improved to understand risks and consequences across the invasion steps and interdependencies (Camac et al., 2020). More complex population-based modelling platforms can combine ecological distribution and climate data with process-based models to model pest establishment and spread, density and include impact risk analysis (e.g., Kriticos et al., 2017; Z. Li et al., 2016). These types of models can be made scalable from region down to farm level and provide risk-maps in near-real-time. Similar modelling tools also support decision-making around long-term management of invasive alien species and evaluating control programmes (Bourdôt et al., 2018; Shephard et al., 2016) as well as supporting ecosystem restoration to build resilience to prevent reinvasion. Most modern tools will have a mapping capability, and most will also use spatial information as a component of their evaluation (Beckett & Garner, 2007). Such tools can include individual-based (or agent-based) simulation models (e.g., Beckett, 2008), stochastic and deterministic mathematical models (e.g., Buckley et al., 2005; Tildesley et al., 2012) or, a combination of individual-based and mathematical approaches (e.g., Bradhurst et al., 2015). High power computing helps draw inferences on invasive alien population change in space and time. Other model types include bioeconomic modelling, option value models, endogenous risk theory models, and other economic models. Many of these types of tools can also benefit from artificial intelligence to assist optimizing dynamic response approaches. Collectively, there are no fixed impediments to any of these forms of modelling, other than the availability of the relevant data, including spatial data and the time and investment required to design, implement and validate a model (Chapter 1, section 1.6.7.3).""" ;
     dcterms:identifier "5.2.2.4" ;
     skos:prefLabel "Quantitative decision- support tools for implementing management options" .
+
+<http://ontology.ipbes.net/report/sch/IAS23-6.2> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch6> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2352922/items/2IKJ4NA6>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/3MLHJ4IF>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/4G38RGTS>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/BNFNSJGS>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/DABRZBE7>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/ESKA6PRX>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/F77A72FN>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/FNAYIG8M>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/G6QLGHXL>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/HVL7Y33X>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/I6VWZJEU>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/KQ99DZL8>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/PN6IMK2B>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/SCEW9H9Y>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/W24H55GQ>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/Y37353EQ>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/YFB3Q6LP> ;
+    ipbes:Report ipbes:IAS23 ;
+    ipbes:hasDescription """This section provides context for assessing governance options for biological invasions. It aims to clarify the understanding of the governance system within which a policy instrument or policy support tool for biological invasions is being implemented (Box 6.2). “Good governance is an enabling condition for policy implementation, distributing the resulting positive impacts evenly across society” (IPBES, 2019b). This section identifies governance considerations from invasive alien species-specific literature and contextualizes these within environmental governance more broadly. A key finding is that there is little dedicated interdisciplinary research on the governance for biological invasions in an environmental governance context.
+
+The concept of governance is defined and used in several ways. This assessment uses the formulation and rationale of Gilek et al. (2016):
+
+“Governance includes both structures – such as policy contexts, existing power relations among key actors, regulatory frameworks and organizational forms of decision-making, reflexivity and participation – and processes. Processes comprise aspects such as the evolution of institutions and interactions between, for example, science and policy, as well as communication and interaction among policymakers, scientists, and other stakeholders. Processes also include the development of strategies, framings, communication, and learning.”
+
+Strong governance can help to address the problem of invasive alien species, as it enables the legislation, regulations, cooperation, participation and monitoring of actions to mitigate key drivers (T. Evans et al., 2018).""" ;
+    dcterms:identifier "6.2" ;
+    skos:prefLabel "Governance response options" .
 
 <http://ontology.ipbes.net/report/sch/IAS23-6.2.3.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch6> ;
@@ -65295,60 +65312,6 @@ Indigenous Peoples and local communities recognize that most drivers of change o
     dcterms:identifier "3.5" ;
     skos:prefLabel "Multiple, additive or interacting effects of drivers affecting invasive alien species" .
 
-<http://ontology.ipbes.net/report/sch/IAS23-5.5> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch5> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2352922/items/2EQIYZQ2>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/3FQLBCIA>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/44CEGQT9>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/4CKZ3LSR>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/4Z439MRL>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/53JRFIBA>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/5ANGS2CA>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/5VH7H6JY>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/6IN3K7RS>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/6NVN3N58>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/6RHX4W2G>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/75IREDFL>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/7QM8ZTCF>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/9IYXL4BB>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/AWTLCZ6K>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/CMYDEKKT>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/D4T7D2UN>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/D857AK2E>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/FT9DB7HI>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/G2URTP2U>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/GG993XIJ>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/GX7CJR53>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/HPLXM4BJ>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/K8WR4IIM>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/LRZ4LDAS>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/M5PYKY6J>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/MQEH38TC>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/NNQD95PI>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/NP33TZF5>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/NQP7LAV2>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/RH7BIWGC>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/T9J8BG3P>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/TTRWSQC6>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/UCEMRHXY>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/V2RQYNE2>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/VB8KN4E5>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/VBJC3RXP>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/XI6KLSYU>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/XKXIRQ4H>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/XQXMDDWY>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/Y9AA5QUK>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/YG6IL2PN>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/YIH79J8S>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/YR77ZLY8>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/ZD7CDVWX>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/ZHZCEETV>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/ZK7XSM3H> ;
-    ipbes:Report ipbes:IAS23 ;
-    ipbes:hasDescription "This section reviews the effectiveness, successes and failures of pathway management (prevention) and species-based (eradication, containment, control) and site- and ecosystem-based (integrated management and restoration) management illustrated with case studies." ;
-    dcterms:identifier "5.5" ;
-    skos:prefLabel "Management strategies" .
-
 <http://ontology.ipbes.net/report/sch/IAS23-1.5> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch1> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/IAS23-KM-B1>,
@@ -65583,6 +65546,62 @@ Successful eradication can lead to ecological and social benefits. In the Seyche
     dcterms:identifier "2.5" ;
     skos:prefLabel "Trends and status of alien and invasive alien species by IPBES units of analysis" .
 
+<http://ontology.ipbes.net/report/sch/IAS23-5.5> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch5> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2352922/items/2EQIYZQ2>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/3FQLBCIA>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/44CEGQT9>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/4CKZ3LSR>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/4Z439MRL>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/53JRFIBA>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/5ANGS2CA>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/5HHDLH6I>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/5VH7H6JY>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/6IN3K7RS>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/6NVN3N58>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/6RHX4W2G>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/75IREDFL>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/7QM8ZTCF>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/9IYXL4BB>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/AWTLCZ6K>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/CMYDEKKT>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/D4T7D2UN>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/D857AK2E>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/FT9DB7HI>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/G2URTP2U>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/GG993XIJ>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/GX7CJR53>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/HPLXM4BJ>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/K5U3QNCX>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/K8WR4IIM>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/LRZ4LDAS>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/M5PYKY6J>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/MQEH38TC>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/NNQD95PI>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/NP33TZF5>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/NQP7LAV2>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/RH7BIWGC>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/T9J8BG3P>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/TTRWSQC6>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/UCEMRHXY>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/V2RQYNE2>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/VB8KN4E5>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/VBJC3RXP>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/XI6KLSYU>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/XKXIRQ4H>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/XQXMDDWY>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/Y9AA5QUK>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/YG6IL2PN>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/YIH79J8S>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/YR77ZLY8>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/ZD7CDVWX>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/ZHZCEETV>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/ZK7XSM3H> ;
+    ipbes:Report ipbes:IAS23 ;
+    ipbes:hasDescription "This section reviews the effectiveness, successes and failures of pathway management (prevention) and species-based (eradication, containment, control) and site- and ecosystem-based (integrated management and restoration) management illustrated with case studies." ;
+    dcterms:identifier "5.5" ;
+    skos:prefLabel "Management strategies" .
+
 <http://ontology.ipbes.net/report/sch/IAS23-3.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/IAS23ch3> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/IAS23-KM-B1>,
@@ -65816,7 +65835,6 @@ The COVID-19 pandemic (Chapter 1, Box 1.14) has demonstrated the effectiveness o
         <http://ontology.ipbes.net/report/ref/2352922/items/XDBT9A2Z>,
         <http://ontology.ipbes.net/report/ref/2352922/items/XM93LHZS>,
         <http://ontology.ipbes.net/report/ref/2352922/items/XS3NCSK5>,
-        <http://ontology.ipbes.net/report/ref/2352922/items/Y37353EQ>,
         <http://ontology.ipbes.net/report/ref/2352922/items/Y5JDKBQE>,
         <http://ontology.ipbes.net/report/ref/2352922/items/ZAF6GP67>,
         <http://ontology.ipbes.net/report/ref/2352922/items/ZEAPGNJU>,
@@ -66215,6 +66233,7 @@ The chapter flows from an unprecedented assessment of impacts, through which an 
         <http://ontology.ipbes.net/report/ref/2352922/items/L5WH9IYC>,
         <http://ontology.ipbes.net/report/ref/2352922/items/LHWYJQXG>,
         <http://ontology.ipbes.net/report/ref/2352922/items/LQKC5SIS>,
+        <http://ontology.ipbes.net/report/ref/2352922/items/M2BU94IG>,
         <http://ontology.ipbes.net/report/ref/2352922/items/MIBPMHP5>,
         <http://ontology.ipbes.net/report/ref/2352922/items/MKEG9DTN>,
         <http://ontology.ipbes.net/report/ref/2352922/items/MUWUXM9W>,

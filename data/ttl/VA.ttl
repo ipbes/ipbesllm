@@ -794,13 +794,7 @@
 
 <http://ontology.ipbes.net/report/il/VA22-Box2.1> a ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.2> ;
-    ipbes:hasDescription """Worldviews are like lenses through which individuals and social groups perceive, think about, interpret, inhabit and modify the world. Rooted in cultural traditions and languages, they help to shape people’s broad and specific values (see 2.2.1, 2.2.3). They also guide perspectives on our conceptualization of and relationship with nature, based on underlying value systems – a set of ethical principles and beliefs that drive or guide individual and/or social behaviour (see 2.2.1).
-
-Knowledge systems are cumulative bodies of knowledge, practices and beliefs, evolving and governed by adaptive processes and handed down and across generations by cultural transmission, about the relationship of living beings (including humans) with one another and with their environment.
-
-Broad values are ‘life goals’ and ‘guiding principles’ informed by one’s worldview and general beliefs, including what constitutes desirable human-nature relationships for a good quality of life (e.g., the desire for sustainability and justice). Broad values span particular contexts, but originate in and arise from specific cultural settings, languages and places that affect individuals and collectives (see 2.2.3). Often embedded in a society’s institutions (i.e., norms, rules), these values tend to be relatively stable (see 2.5).
-
-Indicators Specific values of nature & NCP Broad values Worldviews Specific values are ‘opinions’ or ‘judgements’ regarding the importance of things or situations expressed in particular contexts (e.g., components of nature, human-nature relationships, aspects of well-being). Specific values are justified as instrumental, intrinsic and relational (see 2.2.3, 2.2.4). They can be activated, formed and changed via individual, social and socio-ecological processes.
+    ipbes:hasDescription """Indicators Specific values of nature & NCP Broad values Worldviews Specific values are ‘opinions’ or ‘judgements’ regarding the importance of things or situations expressed in particular contexts (e.g., components of nature, human-nature relationships, aspects of well-being). Specific values are justified as instrumental, intrinsic and relational (see 2.2.3, 2.2.4). They can be activated, formed and changed via individual, social and socio-ecological processes.
 
 Indicators are the ‘quantitative measures’ (e.g., money, hectares) and ‘qualitative descriptors’ (e.g., expressions, arguments, stories) of specific values. Value indicators are associated with valuation methods and can include preference-based indicators (e.g., willingness-to-pay). Three categories are used in this chapter: biophysical, monetary and socio-cultural. Health indicators were treated as part of biophysical, economic or socio-cultural categories, while ILK-holistic indicators are part of the socio-cultural category (see 2.2.4).
 
@@ -1276,6 +1270,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure1.10> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-1.4> ;
+    ipbes:hasDescription "Some strands of knowledge and values intertwine, while others remain distinct. From this diversity, some “strands” are more prominently represented in the assessment, as is the case of academic knowledge. Adapted from Sillitoe (2006) and Tengö (2014)." ;
     ipbes:hasDoi "10.5281/zenodo.7075903" ;
     dcterms:identifier "Figure1.10" ;
     skos:prefLabel "The plurality achieved in the values assessment and its limitations. Representation of the multidimensional and dynamic nature of worldviews, knowledge and values, and how they get filtered through procedures, structures and evidence presented in the assessment." .
@@ -1345,6 +1340,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 
 <http://ontology.ipbes.net/report/il/VA22-Figure2.1> a ipbes:Figure,
         ipbes:Illustration ;
+    ipbes:hasDescription "‘Value’ has different meanings across academic, policy and cultural contexts. Clarifying these perspectives allows better recognition, communication and incorporation of diverse values and stakeholder interests into decision-making {2.1}. Core concepts in the chapter’s values typology include worldviews {2.2.1}, language-value connections {2.2.2}, broad values {2.2.3}, specific values (i.e., instrumental, intrinsic, and relational values) {2.2.3} and various biophysical, monetary and socio-cultural value indicators {2.2.4}. To help organize this diversity, four life frames illustrate how particular human-nature relationships prioritize certain sets of values {2.3}. Furthermore, values are embedded in norms and rules that influence individual and collective expressions, decisions and actions {2.4}. They form and change through individual and social processes as well as socio-ecological interactions and experiences {2.5}. Finally, these concepts inform broader IPBES efforts, including this assessment, and future capacity-building that addresses knowledge and operational gaps to promote just and sustainable futures {2.6}." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.1" ;
     skos:prefLabel "Value concepts addressed in Chapter 2." .
@@ -1352,6 +1348,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.10> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.2> ;
+    ipbes:hasDescription "Examples of broad values are presented that infuse and influence specific values and practices about human-nature-relationships. While broad values, such as justice, can apply to all aspects of life, the figure highlights those that are relevant for human-nature-relationships." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.10" ;
     skos:prefLabel "Values of and about human-nature-relationships – broad values." .
@@ -1359,6 +1356,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.11> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.2> ;
+    ipbes:hasDescription "The chart shows the frequency of which these terms occurred in the Philosophies of good living literature review (n=204" ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.11" ;
     skos:prefLabel "Topics and values associated with Philosophies of good living from" .
@@ -1366,6 +1364,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.12> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.2> ;
+    ipbes:hasDescription "Core definitions, examples and fuzzy boundaries are displayed for each value type." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.12" ;
     skos:prefLabel "General visualization of nature’s multiple specific values." .
@@ -1373,6 +1372,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.13> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.2> ;
+    ipbes:hasDescription "The figure presents a spectrum between stronger and weaker assumptions of substitutability between the objects of value. The red arrows refer to values that can be estimated directly by applying the total economic value categories. The blue dashed lines refer to a possible, indirect use of the total economic value categories as proxies to identify values whose full meaning and strength cannot normally be assessed by preference-based or monetary approaches. In such cases, the total economic value can be replaced or complemented by other frameworks." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.13" ;
     skos:prefLabel "The total economic value classification framework encompasses multiple" .
@@ -1380,6 +1380,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.14> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.2> ;
+    ipbes:hasDescription "Figure based on Frame & O’ Connor, 2011; Kenter et al., 2014; UK NEA, 2014." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.14" ;
     skos:prefLabel "Key factors influencing the relative robustness and efficiency of more monistic" .
@@ -1394,6 +1395,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.16> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.3> ;
+    ipbes:hasDescription "Living from (up left), with (up right), in (down left) and as (right down) nature frames. Selected values are key examples. Spotlights emphasize different sets of values." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.16" ;
     skos:prefLabel "Different value sets within the life frames." .
@@ -1408,6 +1410,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.18> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.4> ;
+    ipbes:hasDescription "The increasing size of the cone surrounding the constructs indicates the increasing prevalence of the type of construct (broad values, specific values, value-adjacent constructs, and all other constructs) in the literature. Coding produced exact counts of each, but because theories define and cluster constructs in diverse ways, results are best understood as approximate representations of the prevalence of various concepts." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.18" ;
     skos:prefLabel "Relative prevalence of value-related constructs and all other constructs in" .
@@ -1435,6 +1438,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.21> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.4> ;
+    ipbes:hasDescription "While people’s values may cover a spectrum of all value types, the choice of a valuation method will influence which values are expressed." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.21" ;
     skos:prefLabel "How valuation methods influence value expressions." .
@@ -1456,6 +1460,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.24> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.6> ;
+    ipbes:hasDescription "Red numbers indicate places where the chapter’s work complements or enhances the IPBES conceptual framework. Descriptions of each are provided in the text." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.24" ;
     skos:prefLabel "Summary of the main conclusions derived from the assessment in Chapter 2." .
@@ -1463,6 +1468,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.3> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.1> ;
+    ipbes:hasDescription "Chapter 2’s Stage III literature review6 identified 40,133 abstracts in Scopus about nature’s diverse values. Data are presented as each analytic category’s relative frequency (%) in the entire database. (A) An artificial intelligence (AI) algorithm produced 60 categories that were manually classified by the predominant research topics for each, resulting in 46 assessment-relevant categories (30 biophysical, 3 economic, 6 socio-cultural, 1 ILK, and 6 ‘other’ that did not fit one single type of topic). (B) Journal disciplinary domain was based on self-identified categories in Scopus: life, physical, health, social sciences or an interdisciplinary combination. NA are journals that did not self-report a discipline." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.3" ;
     skos:prefLabel "Review of the diverse values of nature." .
@@ -1470,6 +1476,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.4> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.1> ;
+    ipbes:hasDescription "The sections of the ensuing chapter answer specific questions and develop key concepts that enable decision-makers to more rigorously, effectively and ethically engage nature’s diverse values in policy." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.4" ;
     skos:prefLabel "Road map to Chapter 2." .
@@ -1477,6 +1484,13 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.5> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.2> ;
+    ipbes:hasDescription """Worldviews, broad values, specific values, preferences and indicators relating to nature, nature’s contributions to people and good quality of life can be depicted like the overlapping layers of an onion. Perspectives on how to organize these values, illustrated here by spotlights, are partially determined by one’s life frames of nature, or the ways of being/living in the world that prioritize particular sets of values in specific valuation contexts.
+
+Worldviews are like lenses through which individuals and social groups perceive, think about, interpret, inhabit and modify the world. Rooted in cultural traditions and languages, they help to shape people’s broad and specific values (see 2.2.1, 2.2.3). They also guide perspectives on our conceptualization of and relationship with nature, based on underlying value systems – a set of ethical principles and beliefs that drive or guide individual and/or social behaviour (see 2.2.1).
+
+Knowledge systems are cumulative bodies of knowledge, practices and beliefs, evolving and governed by adaptive processes and handed down and across generations by cultural transmission, about the relationship of living beings (including humans) with one another and with their environment.
+
+Broad values are ‘life goals’ and ‘guiding principles’ informed by one’s worldview and general beliefs, including what constitutes desirable human-nature relationships for a good quality of life (e.g., the desire for sustainability and justice). Broad values span particular contexts, but originate in and arise from specific cultural settings, languages and places that affect individuals and collectives (see 2.2.3). Often embedded in a society’s institutions (i.e., norms, rules), these values tend to be relatively stable (see 2.5).""" ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.5" ;
     skos:prefLabel "Value concepts developed in Chapter 2." .
@@ -1484,6 +1498,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.6> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.2> ;
+    ipbes:hasDescription "Worldviews act as lenses through which humans perceive, conceive, inhabit and shape the natural world. Based on the literature, human-nature worldviews can be organized in three main types: anthropocentric worldviews (humans at the center); bio- or ecocentric worldviews (animals, plants and other beings, ecosystems and ecological processes at the center); and pluricentric worldviews (no center, the main focus is on relationships among human and non-human beings, elements and processes). These worldviews can overlap and may also be connected to broad and specific values of nature, driving human behaviour and policy-making (see 2.2.3)." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.6" ;
     skos:prefLabel "Worldviews and values." .
@@ -1491,6 +1506,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.7> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.2> ;
+    ipbes:hasDescription "The columns are reported as relative frequency (%) of each worldview type as a function of the total number of papers (n) for each literature review." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.7" ;
     skos:prefLabel "Worldviews detected in three literature reviews, referred to as value types, ILK" .
@@ -1498,6 +1514,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.8> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.2> ;
+    ipbes:hasDescription "The map from the IPBES land degradation assessment (IPBES, 2018a) shows the global overlap between linguistic diversity (number of spoken languages) and biodiversity (number of mammal and bird species). The sites marked with yellow dots represent the places where linguists, language specialists and ILK holders who contributed reviews, focused their case studies for this chapter (see Annex 2.8)." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.8" ;
     skos:prefLabel "Linguistic diversity and case studies within the chapter." .
@@ -1505,6 +1522,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure2.9> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.2> ;
+    ipbes:hasDescription "These exploratory categories emerged from literature reviews and contributing authors. The waves represent fluid, overlapping and dynamic relationships between these different topics." ;
     ipbes:hasDoi "10.5281/zenodo.6975255" ;
     dcterms:identifier "Figure2.9" ;
     skos:prefLabel "Insights on the complex interconnections between languages, biodiversity and values of nature." .
@@ -1525,6 +1543,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.11> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "On the left, percentage abundance of valuations, on the right, distribution per method family (systematic in-depth review n=1163)." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.11" ;
     skos:prefLabel "Valuations per habitat type post 2010, using broad categories from the International Union for the Conservation of Nature Red List of Threatened Species Habitat Classification Scheme (IUCN, 2012)." .
@@ -1532,6 +1551,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.12> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "On the left, percentage abundance of valuations; on the right, distribution per method family (systematic in-depth review n=1163). Note that valuations often do not focus on a biophysical scale, but for example on the values of a social group or community." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.12" ;
     skos:prefLabel "Biophysical scale at which valuations were performed." .
@@ -1539,6 +1559,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.13> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "On the left, percentage abundance of valuations, on the right, distribution per method family (systematic in-depth review n=1163). Scale includes overlapping categories in order to capture both spatial biophysical and administrative aspects (including IPLC designations)." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.13" ;
     skos:prefLabel "Valuations per administrative scale." .
@@ -1546,6 +1567,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.14> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "On the left, percentage abundance of valuations, on the right, distribution per method family (systematic in-depth review n=1163). Note that actual uptake or use is largely unreported." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.14" ;
     skos:prefLabel "Stated purposes of valuations." .
@@ -1553,6 +1575,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.15> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "Classification following as in Europe and Central Asia Assessment (IPBES, 2018), colours according to targets of nature itself, nature’s contributions to people (regulating, material, non-material) and good quality of life categories." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.15" ;
     skos:prefLabel "Relative abundance of various valuation targets (systematic in-depth review n=1163)." .
@@ -1560,6 +1583,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.16> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "On the left, percentage abundance of valuations, on the right, distribution per method family (systematic in-depth review n=1163). Note that valuations often do not focus on a social scale, e.g., when focusing on a habitat or species." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.16" ;
     skos:prefLabel "Social scale at which valuations were performed." .
@@ -1567,6 +1591,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.17> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "Most such studies have been conducted in just a few countries. (Only countries with 10 or more studies are reported)." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.17" ;
     skos:prefLabel "The number of studies reporting on participatory valuation of nature in the academic literature have increased substantially over the last 25 years, most notably since 2014 (web of science search on participant* AND valuation AND environment*)." .
@@ -1581,6 +1606,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.19> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "On the left, percentage abundance of valuations, on the right, distribution per method family (systematic in-depth review n=1163). Note that justifications as well as aspects of life value frames often co-occur in valuations (systematic indepth review n=1163)." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.19" ;
     skos:prefLabel "Value justifications or dimensions (IPBES 2018c) relative per method family and" .
@@ -1594,6 +1620,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.20> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "On the left, percentage abundance of valuations, on the right, distribution per method family (systematic in-depth review n=1163)." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.20" ;
     skos:prefLabel "Value types sensu “total economic value” framework in valuations." .
@@ -1615,6 +1642,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.23> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "AF = Africa, AM = Americas, AP = Asia Pacific, ECA = Europe and Central Asia." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.23" ;
     skos:prefLabel "Concentric circles describing the content of the contributions: Regional balance of the contributions across the four IPBES regions; Background of contributing authors; Life frames of nature’s values and their relation to the communities livelihood strategies." .
@@ -1622,6 +1650,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.24> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "Note that the nature component includes broader aspects of nature that would not usually be considered as nature in non-IPLC contexts, such as the Sun and Moon. Also, that holistic elements at the centre cover in fact the full context. The size of the circles indicates the number of excerpts supporting the component from a total of 142 excerpts. On the right, types of values are indicated along with a list of examples that were extracted from the essays." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.24" ;
     skos:prefLabel "Projection of the focus of valuation (what is valued?) by IPLCs and the types of values that IPLC valuation captures onto the IPBES conceptual framework." .
@@ -1629,6 +1658,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.25> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "In orange: values from communities with Human- Nature Worldviews; in blue values from communities with Non-Human- Nature Worldviews; in green values shared by both types of worldviews." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.25" ;
     skos:prefLabel "Values reported by the contributing authors." .
@@ -1636,6 +1666,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.26> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "IPLC valuation methods assess these manifestations to make multiple conclusions about nature and human-nature relations in their communities. Values represent the number of excerpts from the 26 essays that conveyed these ways of value expression." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.26" ;
     skos:prefLabel "How values are expressed and manifested in IPLC contexts." .
@@ -1650,6 +1681,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.28> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2> ;
+    ipbes:hasDescription "The structure of the web itself and each node (circle) together represent a simplified example of an IPLC worldview in which valuation takes place as a multi-faceted and on-going process. On the right: Three examples (interviews, remote sensing, and observing people) of how the method families accesses or represents elements of IPLC valuation. Two examples of integral elements of IPLC valuation not accessed or represented by method families are ceremony and interactions with spirits. The spirituality core of the IPLC worldview is central in the figure and cannot be removed without dismantling the integrity of the rest of the web. Figure adapted from Casimirri, 2003." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.28" ;
     skos:prefLabel "On the left: Visual representation of how the methods families (statement- based, nature-based, behaviour-based, and integrated) act as a selective lens to make only isolated elements of IPLC valuation visible to the IPBES audience." .
@@ -1657,12 +1689,14 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.29> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.3> ;
+    ipbes:hasDescription "Note that goals often overlap, and that this abundance is based on the valuator’s interpretation on what is assessed." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.29" ;
     skos:prefLabel "The stated goals of valuation and the approaches to target these (systematic in-depth review n=1163)." .
 
 <http://ontology.ipbes.net/report/il/VA22-Figure3.3> a ipbes:Figure,
         ipbes:Illustration ;
+    ipbes:hasDescription "To the right: Three examples (interviews, remote sensing, and observing people) of how the method families framework accesses elements of IPLC valuation. Two examples of integral elements of IPLC valuation not accessed or represented by methods families (e.g., valuation as ceremony and interactions with spirits)." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.3" ;
     skos:prefLabel "Visual representation of how the methods families (left) act as selective filters" .
@@ -1670,6 +1704,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.30> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.3> ;
+    ipbes:hasDescription "Note that goals often overlap, and that this abundance is based on the valuator’s interpretation on what is assessed." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.30" ;
     skos:prefLabel "The stated goals of valuation and the approaches to target these (systematic in-depth review n=1163) associated to methods families." .
@@ -1691,6 +1726,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.33> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.3> ;
+    ipbes:hasDescription "The levels indicate the proportion of valuations that assessed or identified elements of five principles that guide IPLC’s relations to nature. Note that these also include the valuations not related to IPLC territories or communities." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.33" ;
     skos:prefLabel "Recognition of broad principles across all valuations (n=1163)." .
@@ -1698,6 +1734,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.34> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.3> ;
+    ipbes:hasDescription "The levels indicate the number of life value frames, Total Economic Value main categories and IPBES value dimensions. Very low: valuation considered from the perspective of a single life value frame, Total Economic Value category and value dimension. Very high: three or more value frames, Total Economic Value main categories and IPBES dimensions are considered." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.34" ;
     skos:prefLabel "Level of broad plurality of valuations (n=1163, right: relative per method family)." .
@@ -1705,6 +1742,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.35> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.3> ;
+    ipbes:hasDescription "The levels indicate the number of value targets considered in the valuation. Very low: valuation targets less than 5 components of biodiversity, nature’s contributions to people types and aspects of quality of life. Very high: valuation targets at least 25 components of biodiversity, nature’s contributions to people types and aspects of quality of life." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.35" ;
     skos:prefLabel "Level of specific plurality of valuations (n=1163, right: relative per method family)." .
@@ -1726,6 +1764,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.38> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.3> ;
+    ipbes:hasDescription "The distinctions include political, socio economic and cultural indicators (very low (one of fewer indicators) to very high (more than 8 indicators)). (n=1163)." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.38" ;
     skos:prefLabel "Consideration of the representation in valuation: (A) Studies including information on different types of stakeholders/groups in society the valuation divided according to method families; (B) the extent to which people are distinguished, for the studies that do include information on participants." .
@@ -1733,6 +1772,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.39> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.3> ;
+    ipbes:hasDescription "Most valuation studies do not report on whether efforts were made to expand inclusion. The most common approach to include more stakeholders is to conduct valuation processes in local languages and to communicate information about the valuation process in ways that can ensure that it is correctly delivered to relevant stakeholders (e.g., accompanying invitation letters with verbal communication, using local media and communication channels)." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.39" ;
     skos:prefLabel "Approaches for improving inclusion in valuation." .
@@ -1746,6 +1786,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.40> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.3> ;
+    ipbes:hasDescription "Most valuation studies -provide a process description, while a minority shares detailed methods or outputs." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.40" ;
     skos:prefLabel "Consideration of transparency in valuation." .
@@ -1767,12 +1808,14 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.43> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.4> ;
+    ipbes:hasDescription "The choice and application of an appropriate (set of) valuation methods (step 4) is embedded within this larger process." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.43" ;
     skos:prefLabel "Valuation process depicted in 5 steps." .
 
 <http://ontology.ipbes.net/report/il/VA22-Figure3.5> a ipbes:Figure,
         ipbes:Illustration ;
+    ipbes:hasDescription "The choice and application of an appropriate (set of) valuation methods is embedded within this larger process." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.5" ;
     skos:prefLabel "Valuation process depicted in 5 steps." .
@@ -1780,6 +1823,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure3.6> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.1> ;
+    ipbes:hasDescription "Valuation methods can offer a full set of procedures for undertaking all steps of the valuation process or only some procedures. Valuators often must combine complementary methods to ensure that all relevant steps are addressed. Valuators are not always explicit about the theories underpinning their methodological approach. They may also report specific techniques that they used without describing the precise procedures or methods informing their study." ;
     ipbes:hasDoi "10.5281/zenodo.7076484" ;
     dcterms:identifier "Figure3.6" ;
     skos:prefLabel "The five steps in the valuation process (see 3.4) are realised through interacting" .
@@ -1808,6 +1852,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure4.1> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-4.1> ;
+    ipbes:hasDescription "This chapter explores the complexity of these relationships (arrows) between values, institutions, power, knowledge, and outcomes in decision-making." ;
     ipbes:hasDoi "10.5281/zenodo.7079749" ;
     dcterms:identifier "Figure4.1" ;
     skos:prefLabel "Value articulation (through informal ‘valuing’ or formal ‘valuation’) as the link between values held across diverse people, and institutions and decisions, that lead to outcomes for well-being, equity and sustainability, is strongly influenced by power and knowledge." .
@@ -1892,6 +1937,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure4.20> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-4.6> ;
+    ipbes:hasDescription "Cities: Fuzhou, Ganzi Zangzu, Haikou, Hingaan League, Lishui, Ordos, Pu’er, Qiandongnan, Shenzhen, Shunde, Tonghua. County cities: Arxan, Deqing, Eshan Yi, Kaihua, Pingbian Miao. Provinces: Qinghai, Guizhou, Hainan, Inner Mongolia Note: South China Sea Islands are also part of the pilot, but not shown in this map." ;
     ipbes:hasDoi "10.5281/zenodo.7079749" ;
     dcterms:identifier "Figure4.20" ;
     skos:prefLabel "The sites of pilot gross ecosystem product accounting and applications in China." .
@@ -1899,6 +1945,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure4.3> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-4.2> ;
+    ipbes:hasDescription "With various entry points for value articulation; three waves of increased public concern and political pressure are indicated." ;
     ipbes:hasDoi "10.5281/zenodo.7079749" ;
     dcterms:identifier "Figure4.3" ;
     skos:prefLabel "Schematic representation in the inner circle of stages in a policy cycle and the public (political), private (economic) and civil society (socio-cultural) decisions (I – VI) that drive the outer circle of issue cycles." .
@@ -1941,6 +1988,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure4.9> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-4.5> ;
+    ipbes:hasDescription "Filled circles indicate evidence for a positive influence of the variable (related to values, knowledge, and process, listed in the columns) on the outcome (related to elements of the IPBES Conceptual Framework: nature, NCP, good quality of life, and institutions for justice and sustainability; listed in the rows). Evidence comes from literature review and case studies for protected areas (green), payments for ecosystem services (teal), certification schemes (orange), and large infrastructure projects (purple). The darkness of the shade of the respective colours indicates the level of evidence supporting (from well established in the darkest shade to inconclusive in the lightest shade)." ;
     ipbes:hasDoi "10.5281/zenodo.7079749" ;
     dcterms:identifier "Figure4.9" ;
     skos:prefLabel "Outcomes influenced by values, knowledge and process in decisions." .
@@ -1962,6 +2010,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure5.11> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.2> ;
+    ipbes:hasDescription "Instrumental values refer to values for substitutable means to a human end (e.g., water is used as a means to mitigate thirst, but it does not matter which particular water is used, it can be substituted for different water). Intrinsic values of nature refer to values of nature itself, without reference to humans. Relational values refer to non-substitutable relationships to nature (e.g., valuing a particular animal or tree that cannot be replaced by a different one). Please see Chapter 2 for a more nuanced explanation." ;
     ipbes:hasDoi "10.5281/zenodo.7079804" ;
     dcterms:identifier "Figure5.11" ;
     skos:prefLabel "Representation of different value justifications across scenario archetypes." .
@@ -1990,6 +2039,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure5.15> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.3> ;
+    ipbes:hasDescription "Note that an action can address more than one policy option, intervention type, or COM-B component." ;
     ipbes:hasDoi "10.5281/zenodo.7079804" ;
     dcterms:identifier "Figure5.15" ;
     skos:prefLabel "Frequency of the policy option, intervention types and COM-B components associated with the actions that specified individual behaviour change identified in the ten National Biodiversity Strategies and Action Plans; relative frequencies in percentage of the total number of actions (n=148)." .
@@ -1997,6 +2047,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure5.16> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.5> ;
+    ipbes:hasDescription "Arrows denote that pathway positions are not absolute but overlapping." ;
     ipbes:hasDoi "10.5281/zenodo.7079804" ;
     dcterms:identifier "Figure5.16" ;
     skos:prefLabel "Selected pathways in relation to Nature Futures Framework (Pereira et al.," .
@@ -2039,6 +2090,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure5.7> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.2> ;
+    ipbes:hasDescription "Red = widespread failure in the achievement of policy targets; green = widespread achievement of targets; yellow = mixed achievement of targets. For detailed information on the contribution to SDG-like goals see Figure 5.9." ;
     ipbes:hasDoi "10.5281/zenodo.7079804" ;
     dcterms:identifier "Figure5.7" ;
     skos:prefLabel "Different future archetypes, grouped by key combinations of values, in relation to sustainable state of nature, nature’s contributions to people, a good quality of life and contribution to SDGs." .
@@ -2053,6 +2105,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure5.9> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.2> ;
+    ipbes:hasDescription "The bars are colour-coded based on their dominant character – economic (red), biophysical (green), social (yellow), global partnership (purple) (based on Folke et al., 2016). The size of the bar towards each Sustainable Development Goal shows the proportion of futures targeting the respective goals (or their alikes), ranging from 0% (goal not targeted by any future scenario) to 100% (goal targeted by all future scenarios). Note the visions often concern a different timescale to the Sustainable Development Goals (longer-term, beyond 2030) (the Breakdown archetype has been omitted from the visualisation due to very scarce evidence)." ;
     ipbes:hasDoi "10.5281/zenodo.7079804" ;
     dcterms:identifier "Figure5.9" ;
     skos:prefLabel "Coverage of goals corresponding to the Sustainable Development Goals by future visions, scenarios and pathways (n=460), originating from the global to the local level." .
@@ -2073,6 +2126,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure6.11> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-6.3> ;
+    ipbes:hasDescription "Source: Adopted from Mochizuki, 2007, p. 395." ;
     ipbes:hasDoi "10.5281/zenodo.7079991" ;
     dcterms:identifier "Figure6.11" ;
     skos:prefLabel "Winter-Flooded Rice Fields (WFRF) as an innovation based on social learning in Kabukuri-numa and adjacent rice fields, designated as a Ramsar site at Ramsar COP 9 (the Ninth Conference of the Contracting Parties to the Convention on Wetlands of International Importance Especially as Waterfowl Habitat) in 2005." .
@@ -2094,6 +2148,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure6.14> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-6.4> ;
+    ipbes:hasDescription "The left hand-side vertical axis shows the percentage of total cases where the specific type of capacity gaps was mentioned (blue line). The right hand-side vertical axis shows the average rating of capacity gaps across all the cases where the given capacity gap was mentioned (green bars). Mean values could vary from one (not relevant gap) to five (highly relevant gap)." ;
     ipbes:hasDoi "10.5281/zenodo.7079991" ;
     dcterms:identifier "Figure6.14" ;
     skos:prefLabel "The frequency and the significance of capacity development needs assessed" .
@@ -2101,6 +2156,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Figure6.15> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-6.5> ;
+    ipbes:hasDescription "The bullet points in the upper left corner indicate the institutional framework conditions and the capacities, while the text in the stairs highlight actions which are of key importance to move from a more restricted to a more enabling context." ;
     ipbes:hasDoi "10.5281/zenodo.7079991" ;
     dcterms:identifier "Figure6.15" ;
     skos:prefLabel "Operationalization contexts." .
@@ -2227,6 +2283,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Table2.6> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.5> ;
+    ipbes:hasDescription "Concepts (bolded in text below) are organized by their focus as (i) individual, (ii) social or (iii) socio-ecological. These are not mutually exclusive categories and may operate simultaneously (see Annex 2.16)." ;
     ipbes:hasDoi "10.5281/zenodo.7080315" ;
     dcterms:identifier "Table2.6" ;
     skos:prefLabel "Summary of key concepts detected in the literature from diverse academic and cultural traditions to explain value formation and change." .
@@ -2240,6 +2297,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Table3.10> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.3> ;
+    ipbes:hasDescription "Strength of evidence is assessed to one of the following categories: Well-established (large bubble); Established but incomplete (small bubble). Methods with less available evidence have not been included in the assessment." ;
     ipbes:hasDoi "10.5281/zenodo.6975144" ;
     dcterms:identifier "Table3.10" ;
     skos:prefLabel "Comparing valuation across nature-based, statement-based, behaviour-based and integrated valuation using the 3R criteria (Relevance, Robustness and Resources)." .
@@ -2254,6 +2312,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Table3.12> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.4> ;
+    ipbes:hasDescription "The case descriptions are inspired by the in-depth systematic literature review (n=1163); any resemblance with real life cases is coincidental." ;
     ipbes:hasDoi "10.5281/zenodo.6975144" ;
     dcterms:identifier "Table3.12" ;
     skos:prefLabel "Illustrative example cases to illustrate valuation choices and method selection." .
@@ -2268,6 +2327,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Table3.14> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.4> ;
+    ipbes:hasDescription "Capital “M”: main method; small caps “a”: potential additional method. Note that this illustration only includes the example methods from Section 3.3.4: scores for the 3Rs are derived and summarised from Table 3.12. The illustrative method choice is based on general context descriptions from the cases: in reality, the range of potential methods is much larger, and contextual requirements more detailed." ;
     ipbes:hasDoi "10.5281/zenodo.6975144" ;
     dcterms:identifier "Table3.14" ;
     skos:prefLabel "Examples from the four method families, their main characteristics (see Table" .
@@ -2333,6 +2393,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Table4.1> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-4.3> ;
+    ipbes:hasDescription "E = Economic, P = Public policy (political), S = Social-cultural." ;
     ipbes:hasDoi "10.5281/zenodo.7101806" ;
     dcterms:identifier "Table4.1" ;
     skos:prefLabel "Aichi goals and targets, examples of policy instruments used to achieve them and interacting SDGs." .
@@ -2361,6 +2422,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Table5.1> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.2> ;
+    ipbes:hasDescription "The colour coding on a blue-white-red scale is used to highlight the most common (blue) and least common (orange) policy instruments and their combinations." ;
     ipbes:hasDoi "10.5281/zenodo.7101955" ;
     dcterms:identifier "Table5.1" ;
     skos:prefLabel "Proportions of assessed futures works including different types of policy" .
@@ -2375,6 +2437,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Table5.2> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.2> ;
+    ipbes:hasDescription "The first column contains attributes typically used to describe scenario archetypes. Economic optimism scenarios focus on competition, efficient market, and economic growth; reformed market scenarios are similar to economic optimism but corrected for market failures; global sustainable development scenarios focus on environmental protection and reduction of inequality through global cooperation, lifestyle change using efficient technologies; regional sustainability scenarios highlight globalization and international markets that are seen to erode traditional values and social norms; regional competition scenarios feature regional self-reliance, national sovereignty and regional identity but also involve tensions with other regions; and finally business-as-usual scenarios that assume continuation of historical trends (IPBES, 2016b; van Vuuren et al., 2012). These were rationalized in the IPBES regional assessments (IPBES, 2018a, 2018b, 2018c, 2018d) (from Sitas et al., 2019)." ;
     ipbes:hasDoi "10.5281/zenodo.7101955" ;
     dcterms:identifier "Table5.2" ;
     skos:prefLabel "Overview of the original set of global archetypes and their underlying assumptions that were used as a starting point to classify scenarios within the Intergovernmental Science-Policy Platform for Biodiversity and Ecosystem Services (IPBES) regional assessments." .
@@ -2403,6 +2466,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Table5.6> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.3> ;
+    ipbes:hasDescription "The examples are selected from National Biodiversity Strategies and Action Plans." ;
     ipbes:hasDoi "10.5281/zenodo.7101955" ;
     dcterms:identifier "Table5.6" ;
     skos:prefLabel "Definitions and examples of behaviour change wheel intervention types and policy options." .
@@ -2437,6 +2501,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Table6.10> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-6.5> ;
+    ipbes:hasDescription "Key messages (KM) refer to relevant messages in executive summaries of all chapters of the assessment." ;
     ipbes:hasDoi "10.5281/zenodo.7101992" ;
     dcterms:identifier "Table6.10" ;
     skos:prefLabel "Guidelines and related actions." .
@@ -2494,6 +2559,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Table6.7> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-6.4> ;
+    ipbes:hasDescription "Darker teal circles indicate larger opportunities of capacities to address the gaps." ;
     ipbes:hasDoi "10.5281/zenodo.7101992" ;
     dcterms:identifier "Table6.7" ;
     skos:prefLabel "Topical gap categories and potential of capacity dimensions to address them." .
@@ -2501,6 +2567,7 @@ An essential feature of the transformation that took place in Kabukuri was the s
 <http://ontology.ipbes.net/report/il/VA22-Table6.8> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-6.4> ;
+    ipbes:hasDescription "85 capacity needs grouped into the six categories were identified and ranked through a consultation process involving experts across the chapters of the values assessment. The larger the bubbles, the more capacity development needed." ;
     ipbes:hasDoi "10.5281/zenodo.7101992" ;
     dcterms:identifier "Table6.8" ;
     skos:prefLabel "Capacity development needs of the different key stakeholder groups." .
@@ -15868,7 +15935,7 @@ Table 6.9 summarizes options for values-centred actions. Different contexts usua
 <http://ontology.ipbes.net/report/ref/2345372/items/ITDXZHLE> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
     ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.2.2.3.1> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.2> ;
     ipbes:hasDescription "Folke, C., Biggs, R., Norström, A. V., Reyers, B., & Rockström, J. (2016). Social-ecological resilience and biosphere-based sustainability science. Ecology and Society, 21(3), 41. https://doi.org/10.5751/ES-08748-210341" ;
     ipbes:hasDoi "10.5751/ES-08748-210341" ;
     owl:sameAs <https://www.zotero.org/groups/2345372/items/ITDXZHLE> .
@@ -16694,7 +16761,7 @@ Table 6.9 summarizes options for values-centred actions. Different contexts usua
 <http://ontology.ipbes.net/report/ref/2345372/items/KB2XFRLR> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch1> ;
     ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-1.4.3> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-1.4> ;
     ipbes:hasDescription "Tengö, M., Brondizio, E. S., Elmqvist, T., Malmer, P., & Spierenburg, M. (2014). Connecting Diverse Knowledge Systems for Enhanced Ecosystem Governance: The Multiple Evidence Base Approach. AMBIO, 43(5), 579-591. https://doi.org/10.1007/s13280-014-0501-3" ;
     ipbes:hasDoi "10.1007/s13280-014-0501-3" ;
     owl:sameAs <https://www.zotero.org/groups/2345372/items/KB2XFRLR> .
@@ -18336,7 +18403,7 @@ Table 6.9 summarizes options for values-centred actions. Different contexts usua
 <http://ontology.ipbes.net/report/ref/2345372/items/NAZ26V3G> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch1> ;
     ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-1.4.3> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-1.4> ;
     ipbes:hasDescription "Sillitoe, P. (2006). Indigenous Knowledge in Development. Anthropology in Action, 13(3), 1-12. https://doi.org/10.3167/aia.2006.130302" ;
     ipbes:hasDoi "10.3167/aia.2006.130302" ;
     owl:sameAs <https://www.zotero.org/groups/2345372/items/NAZ26V3G> .
@@ -23878,7 +23945,7 @@ Table 6.9 summarizes options for values-centred actions. Different contexts usua
 <http://ontology.ipbes.net/report/ref/2345372/items/YHVFXTZJ> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
     ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.2.2.3.1> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.2> ;
     ipbes:hasDescription "van Vuuren, D. P., Kok, M. T. J., Girod, B., Lucas, P. L., & de Vries, B. (2012). Scenarios in Global Environmental Assessments: Key characteristics and lessons for future use. Global Environmental Change, 22(4), 884-895. https://doi.org/10.1016/j.gloenvcha.2012.06.001" ;
     ipbes:hasDoi "10.1016/j.gloenvcha.2012.06.001" ;
     owl:sameAs <https://www.zotero.org/groups/2345372/items/YHVFXTZJ> .
@@ -30660,46 +30727,6 @@ Collaborations between researchers, practitioners and indigenous peoples and loc
         <http://ontology.ipbes.net/report/sch/VA22-2.5.2> ;
     ipbes:hasDescription "Habermas, J. (1991). A Reply. In A. Honneth & H. Joas (Eds.), Communicative action: Essays on Jürgen Habermas’s Theory of communicative action. The MIT Press." .
 
-<http://ontology.ipbes.net/report/ref/VA22-ch3-1041> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch3> ;
-    ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2.3>,
-        <http://ontology.ipbes.net/report/sch/VA22-3.3.1.3> ;
-    ipbes:hasDescription "IPBES. (2018). The IPBES regional assessment report on biodiversity and ecosystem services for Europe and Central Asia. Rounsevell, M., Fischer, M., Torre-Marin Rando, A. and Mader, A. (eds.). Secretariat of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, Bonn, Germany. 892 pages. https://doi.org/10.5281/zenodo.3237428" ;
-    ipbes:hasDoi "10.5281/zenodo.3237428" .
-
-<http://ontology.ipbes.net/report/ref/VA22-ch5-2163> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
-    ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.1.1>,
-        <http://ontology.ipbes.net/report/sch/VA22-5.4.3> ;
-    ipbes:hasDescription "IPBES. (2018a). The IPBES regional assessment report on biodiversity and ecosystem services for Asia and the Pacific. Karki, M., Senaratna Sellamuttu, S., Okayasu, S., and Suzuki, W. (eds). Secretariat of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, Bonn, Germany. 612 pages. https://doi.org/10.5281/zenodo.3237373" ;
-    ipbes:hasDoi "10.5281/zenodo.3237373" .
-
-<http://ontology.ipbes.net/report/ref/VA22-ch5-2164> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
-    ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.1.1>,
-        <http://ontology.ipbes.net/report/sch/VA22-5.4.3> ;
-    ipbes:hasDescription "IPBES. (2018b). The IPBES regional assessment report on biodiversity and ecosystem services for Europe and Central Asia. Rounsevell, M., Fischer, M., Torre-Marin Rando, A. and Mader, A. (eds.). Secretariat of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, Bonn, Germany. 892 pages. https://doi.org/10.5281/zenodo.3237428" ;
-    ipbes:hasDoi "10.5281/zenodo.3237428" .
-
-<http://ontology.ipbes.net/report/ref/VA22-ch5-2165> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
-    ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.1.1>,
-        <http://ontology.ipbes.net/report/sch/VA22-5.4.3> ;
-    ipbes:hasDescription "IPBES. (2018c). The IPBES regional assessment report on biodiversity and ecosystem services for the Americas. Rice, J., Seixas, C. S., Zaccagnini, M. E., Bedoya-Gaitán, M., and Valderrama N. (eds.). Secretariat of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, Bonn, Germany. 656 pages. https://doi.org/10.5281/zenodo.3236252" ;
-    ipbes:hasDoi "10.5281/zenodo.3236252" .
-
-<http://ontology.ipbes.net/report/ref/VA22-ch5-2166> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
-    ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.1.1>,
-        <http://ontology.ipbes.net/report/sch/VA22-5.4.3> ;
-    ipbes:hasDescription "IPBES. (2018d). The IPBES regional assessment report on biodiversity and ecosystem services for Africa. Archer, E. Dziba, L., Mulongoy, K. J., Maoela, M. A., and Walters, M. (eds.). Secretariat of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, Bonn, Germany. 492 pages. https://doi.org/10.5281/zenodo.3236178" ;
-    ipbes:hasDoi "10.5281/zenodo.3236178" .
-
 <http://ontology.ipbes.net/report/sch/VA22-1.5> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch1> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/VA22-KM10> ;
@@ -31452,16 +31479,6 @@ Also, there are capacity gaps to bridge knowledge, in particular to integrate cu
         <http://ontology.ipbes.net/report/sch/VA22-2.5.2> ;
     ipbes:hasDescription "Rokeach, M. (1973). The nature of human values. Free Press." ;
     owl:sameAs <https://www.zotero.org/groups/2345372/items/7Y56MMLV> .
-
-<http://ontology.ipbes.net/report/ref/2345372/items/7ZNPE6ZU> a ipbes:Reference ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch2> ;
-    ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.1.2>,
-        <http://ontology.ipbes.net/report/sch/VA22-2.2.2>,
-        <http://ontology.ipbes.net/report/sch/VA22-2.2.3.2> ;
-    ipbes:hasDescription "IPBES. (2018a). Summary for policymakers of the assessment report on land degradation and restoration of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services. R. Scholes, L. Montanarella, A. Brainich, N. Barger, B. ten Brink, M. Cantele, B. Erasmus, J. Fisher, T. Gardner, T. G. Holland, F. Kohler, J. S. Kotiaho, G. Von Maltitz, G. Nangendo, R. Pandit, J. Parrotta, M. D. Potts, S. Prince, M. Sankaran and L. Willemen (eds.). IPBES secretariat, Bonn, Germany. 44 pages https://doi.org/10.5281/zenodo.3237410" ;
-    ipbes:hasDoi "10.5281/zenodo.3237410" ;
-    owl:sameAs <https://www.zotero.org/groups/2345372/items/7ZNPE6ZU> .
 
 <http://ontology.ipbes.net/report/ref/2345372/items/845DV29A> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch2> ;
@@ -32241,6 +32258,70 @@ Also, there are capacity gaps to bridge knowledge, in particular to integrate cu
     ipbes:hasDescription "Harvey, D. (2010). The Enigma of Capital: And the Crises of Capitalism. Oxford University Press." ;
     owl:sameAs <https://www.zotero.org/groups/2345372/items/ZHY927LW> .
 
+<http://ontology.ipbes.net/report/ref/VA22-ch3-1041> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch3> ;
+    ipbes:Report ipbes:VA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-3.2>,
+        <http://ontology.ipbes.net/report/sch/VA22-3.2.3>,
+        <http://ontology.ipbes.net/report/sch/VA22-3.3.1.3> ;
+    ipbes:hasDescription "IPBES. (2018). The IPBES regional assessment report on biodiversity and ecosystem services for Europe and Central Asia. Rounsevell, M., Fischer, M., Torre-Marin Rando, A. and Mader, A. (eds.). Secretariat of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, Bonn, Germany. 892 pages. https://doi.org/10.5281/zenodo.3237428" ;
+    ipbes:hasDoi "10.5281/zenodo.3237428" .
+
+<http://ontology.ipbes.net/report/ref/VA22-ch5-2163> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
+    ipbes:Report ipbes:VA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.1.1>,
+        <http://ontology.ipbes.net/report/sch/VA22-5.2>,
+        <http://ontology.ipbes.net/report/sch/VA22-5.4.3> ;
+    ipbes:hasDescription "IPBES. (2018a). The IPBES regional assessment report on biodiversity and ecosystem services for Asia and the Pacific. Karki, M., Senaratna Sellamuttu, S., Okayasu, S., and Suzuki, W. (eds). Secretariat of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, Bonn, Germany. 612 pages. https://doi.org/10.5281/zenodo.3237373" ;
+    ipbes:hasDoi "10.5281/zenodo.3237373" .
+
+<http://ontology.ipbes.net/report/ref/VA22-ch5-2164> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
+    ipbes:Report ipbes:VA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.1.1>,
+        <http://ontology.ipbes.net/report/sch/VA22-5.2>,
+        <http://ontology.ipbes.net/report/sch/VA22-5.4.3> ;
+    ipbes:hasDescription "IPBES. (2018b). The IPBES regional assessment report on biodiversity and ecosystem services for Europe and Central Asia. Rounsevell, M., Fischer, M., Torre-Marin Rando, A. and Mader, A. (eds.). Secretariat of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, Bonn, Germany. 892 pages. https://doi.org/10.5281/zenodo.3237428" ;
+    ipbes:hasDoi "10.5281/zenodo.3237428" .
+
+<http://ontology.ipbes.net/report/ref/VA22-ch5-2165> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
+    ipbes:Report ipbes:VA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.1.1>,
+        <http://ontology.ipbes.net/report/sch/VA22-5.2>,
+        <http://ontology.ipbes.net/report/sch/VA22-5.4.3> ;
+    ipbes:hasDescription "IPBES. (2018c). The IPBES regional assessment report on biodiversity and ecosystem services for the Americas. Rice, J., Seixas, C. S., Zaccagnini, M. E., Bedoya-Gaitán, M., and Valderrama N. (eds.). Secretariat of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, Bonn, Germany. 656 pages. https://doi.org/10.5281/zenodo.3236252" ;
+    ipbes:hasDoi "10.5281/zenodo.3236252" .
+
+<http://ontology.ipbes.net/report/ref/VA22-ch5-2166> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
+    ipbes:Report ipbes:VA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.1.1>,
+        <http://ontology.ipbes.net/report/sch/VA22-5.2>,
+        <http://ontology.ipbes.net/report/sch/VA22-5.4.3> ;
+    ipbes:hasDescription "IPBES. (2018d). The IPBES regional assessment report on biodiversity and ecosystem services for Africa. Archer, E. Dziba, L., Mulongoy, K. J., Maoela, M. A., and Walters, M. (eds.). Secretariat of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, Bonn, Germany. 492 pages. https://doi.org/10.5281/zenodo.3236178" ;
+    ipbes:hasDoi "10.5281/zenodo.3236178" .
+
+<http://ontology.ipbes.net/report/sch/VA22-1.4.3> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch1> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2345372/items/8BIX4KYZ>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/92MCTC23>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/ZZFCX46A> ;
+    ipbes:Report ipbes:VA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-1.4> ;
+    ipbes:hasDescription """This assessment’s authors recognize the diversity of knowledge and values represented within and across sociocultural groups and knowledge systems worldwide. This ranges from the worldviews, knowledges and values that are place-based and held by IPLCs (e.g., farmers, pastoralists, forest managers, and women’s cooperatives) to regional and global insights by academics from different traditions, to the perspectives of policymakers at local to national scales, urban groups and emerging social movements formed around shared values (e.g., neighbourhood associations, youth international movements, landless movements and others). For instance, some indigenous conceptualisations of nature and their related values associated with kinship, reciprocity, responsibility and stewardship can provide important global lessons to address the current biodiversity crisis (Annex 1.6). This diversity is not understood as a dichotomy between IPLCs and western societies, between the global south or the global north, or between ILK or academic knowledge, but as a multidimensional network of “hubs” or clusters of shared knowledges and values, which may dynamically intertwine and hybridise, like strands in a woven patchwork (Figure 1.10). These knowledge systems – which reflect and reinforce the worldviews, values and experiences of their holders and users – have guided and informed the daily decisions and actions of individuals, families, communities and others since time immemorial, and continue to do so today.
+
+The capacity of the assessment expert team to perceive and represent this diversity is bounded by the conditions that underpin the production of the assessment. The approaches used and insights gained have been filtered by the IPBES conceptual framework, IPBES procedures (e.g., the use of systematic literature reviews) and structures (e.g., the disciplinary representation and organization of experts) that have guided the assessment. Only a part of the vast spectrum of diverse worldviews and knowledges could be reflected: grey literature, difficult to identify by using search engines, and governmental documents (e.g., policies, laws), not easily accessible, only represented a small fraction of the sources (11%) even after devoting important effort to avoid this bias (18 of the 39 literature reviews- see above).
+
+A large share of the sources cited in the assessment (96%) were published in English, reflecting the rise of English as the lingua franca of global science at the cost of a global homogenisation and reduced plurality in cross-cultural science production and communication (Hanauer et al., 2019; Ramírez-Castañeda, 2020). The literature cited presents information from all the regions of the world, but countries belonging to the Western Europe and Others Group (WEOG) were the most frequently represented (21%), and those from Eastern Europe were very poorly depicted (1.1%). A strong bias was found in the country of affiliation of the first authors of these sources, with a large proportion of them based in countries of the Western Europe and Others Group (73%), with very few of them based in Africa (4%) or Eastern Europe (1%). Reports from governments and civil society organizations, including non-scientific valuation exercises published in consultant reports, that constitute substantial “grey literature” only represent a limited fraction of the sources of the assessment (8%), despite having targeted several search strategies to these types of documents. Other types of knowledge, different worldviews, kinds of narratives and expressions about the values of nature have their own perspectives that are hard to be captured, for example, in written form. All these sources have unavoidably been interpreted through the scientific approaches of the team of assessment experts and IPBES procedures.
+
+Regarding the conceptualization of nature-human relations, the types of values of nature, as well as valuation approaches and methods, IPLCs apply their own knowledge systems and conceptualizations, which do not usually align with the logic and procedures established by academia (see 3.2.4). The assessment provides the conceptual basis to recognise indigenous and local knowledge systems and to create mechanisms to elicit their values and to co-construct inclusive decision-making processes. Yet, the study of valuation by IPLCs is a relatively young field in academia and it has just begun to be explored by IPLC scholars (see 3.2.4). In the absence of IPLC conceptualisations, attempts to understand the knowledge, worldviews, values and approaches to valuations by IPLCs is subject to western science conceptualisations of nature, methods, evidence, and confines how other methods might be organised or what logics might inform them. The values assessment has significantly expanded upon previous IPBES approaches to its co-production with IPLCs, but still remains a process primarily framed by a western academic scientific worldview (e.g., written text, in English, encompassing mostly a western-science-perspective).
+
+Importantly, academic sources used to incorporate IPLCs and ILK in the assessment do not necessarily reflect the worldviews, concepts and values held by these groups, as academic researchers may present interpretations of reality based on filters from their own disciplinary fields or even personal biases. There is much more to learn directly from IPLCs, urging for the need to work with these groups (including indigenous and local knowledge holders, scholars, etc.) to fill in gaps in both the literature and in policy practice. This is not only because they hold the key to this vital knowledge, but, equally relevant, because of their sovereignty over their knowledge. Finally, it is worth mentioning that, although differences between knowledge systems do exist, including issues of intellectual property rights, linguistic particularities, context-based knowledge and others, some academic sources emphasize an existing polarization between ILK and western science or academic knowledge, which does not necessarily reflect what happens in practice. For example, some values of nature found to be connected to IPLCs’ worldviews are also shared by several other sociocultural groups in both rural and urban contexts (see 2.2.1 for examples). This calls for a need to recognize the synergies and intersections across knowledge systems that can help to build dialogue, understandings and collaborative initiatives in valuation processes and policies for biodiversity conservation and sustainability (Taylor et al., 2020; McElewee et al., 2020).""" ;
+    dcterms:identifier "1.4.3" ;
+    skos:prefLabel "The plurality achieved in the assessment (and its limits)" .
+
 <http://ontology.ipbes.net/report/sch/VA22-2.6.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2345372/items/T23WTMMD>,
@@ -32580,6 +32661,17 @@ Possibility to elicit values in diverse contexts Higher Lower but incomplete""" 
         <http://ontology.ipbes.net/report/sch/VA22-6.1.2.1> ;
     ipbes:hasDescription "Bemelmans-Videc, M.-L., Rist, R. C., & Vedung, E. (Eds.). (1998). Carrots, sticks & sermons: Policy instruments and their evaluation. Transaction Publishers." ;
     owl:sameAs <https://www.zotero.org/groups/2345372/items/7IE38B68> .
+
+<http://ontology.ipbes.net/report/ref/2345372/items/7ZNPE6ZU> a ipbes:Reference ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch2> ;
+    ipbes:Report ipbes:VA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-2.1.2>,
+        <http://ontology.ipbes.net/report/sch/VA22-2.2>,
+        <http://ontology.ipbes.net/report/sch/VA22-2.2.2>,
+        <http://ontology.ipbes.net/report/sch/VA22-2.2.3.2> ;
+    ipbes:hasDescription "IPBES. (2018a). Summary for policymakers of the assessment report on land degradation and restoration of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services. R. Scholes, L. Montanarella, A. Brainich, N. Barger, B. ten Brink, M. Cantele, B. Erasmus, J. Fisher, T. Gardner, T. G. Holland, F. Kohler, J. S. Kotiaho, G. Von Maltitz, G. Nangendo, R. Pandit, J. Parrotta, M. D. Potts, S. Prince, M. Sankaran and L. Willemen (eds.). IPBES secretariat, Bonn, Germany. 44 pages https://doi.org/10.5281/zenodo.3237410" ;
+    ipbes:hasDoi "10.5281/zenodo.3237410" ;
+    owl:sameAs <https://www.zotero.org/groups/2345372/items/7ZNPE6ZU> .
 
 <http://ontology.ipbes.net/report/ref/2345372/items/8NN8SB5K> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch1>,
@@ -33255,34 +33347,6 @@ The identification of these guidelines was built on literature review (Berghöfe
 The values assessment builds on decades of academic and management work concerning values and valuation of nature, including the IPBES conceptual framework (Díaz et al., 2015a; IPBES-2/4) and the Preliminary guide on values and valuation (IPBES, 2016a), which are this assessment’s foundations. It draws on insights from previous IPBES thematic, regional, and global assessments. It complements other important science-policy efforts that have called for making the values of nature explicit in decision-making, including the ‘The Economics of Ecosystems and Biodiversity’ report (TEEB, 2010) and the more recent Dasgupta Review (Dasgupta, 2021) (Figure 1.2). This assessment enhances and expands these efforts, in order to emphasise a greater plurality of values of nature, taking into consideration various perspectives, knowledge systems, and disciplinary traditions.""" ;
     dcterms:identifier "1.1.2" ;
     skos:prefLabel "The values assessment builds on previous initiatives" .
-
-<http://ontology.ipbes.net/report/sch/VA22-1.4> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch1> ;
-    ipbes:Report ipbes:VA22 ;
-    ipbes:hasDescription "Worldviews shape the overall framing and direction of any assessment effort. The values assessment draws on diverse knowledge systems and sources stemming from a wide range of scientific disciplines, as well as different knowledge types. It is thus important to reflect on the diverse backgrounds of the authors that have produced the assessment and how this has shaped the plurality of views portrayed in the assessment, as well as on the efforts made to integrate diverse knowledge sources and perspectives, including those of indigenous peoples and local communities (Annex 1.5 for a review of the assessment elaboration process and Annex 1.6 for the strategy for the inclusion and recognition of indigenous peoples and local communities)." ;
-    dcterms:identifier "1.4" ;
-    skos:prefLabel "Achieving robustness and plurality in the values assessment" .
-
-<http://ontology.ipbes.net/report/sch/VA22-1.4.3> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch1> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2345372/items/8BIX4KYZ>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/92MCTC23>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/KB2XFRLR>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/NAZ26V3G>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/ZZFCX46A> ;
-    ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-1.4> ;
-    ipbes:hasDescription """This assessment’s authors recognize the diversity of knowledge and values represented within and across sociocultural groups and knowledge systems worldwide. This ranges from the worldviews, knowledges and values that are place-based and held by IPLCs (e.g., farmers, pastoralists, forest managers, and women’s cooperatives) to regional and global insights by academics from different traditions, to the perspectives of policymakers at local to national scales, urban groups and emerging social movements formed around shared values (e.g., neighbourhood associations, youth international movements, landless movements and others). For instance, some indigenous conceptualisations of nature and their related values associated with kinship, reciprocity, responsibility and stewardship can provide important global lessons to address the current biodiversity crisis (Annex 1.6). This diversity is not understood as a dichotomy between IPLCs and western societies, between the global south or the global north, or between ILK or academic knowledge, but as a multidimensional network of “hubs” or clusters of shared knowledges and values, which may dynamically intertwine and hybridise, like strands in a woven patchwork (Figure 1.10). These knowledge systems – which reflect and reinforce the worldviews, values and experiences of their holders and users – have guided and informed the daily decisions and actions of individuals, families, communities and others since time immemorial, and continue to do so today.
-
-The capacity of the assessment expert team to perceive and represent this diversity is bounded by the conditions that underpin the production of the assessment. The approaches used and insights gained have been filtered by the IPBES conceptual framework, IPBES procedures (e.g., the use of systematic literature reviews) and structures (e.g., the disciplinary representation and organization of experts) that have guided the assessment. Only a part of the vast spectrum of diverse worldviews and knowledges could be reflected: grey literature, difficult to identify by using search engines, and governmental documents (e.g., policies, laws), not easily accessible, only represented a small fraction of the sources (11%) even after devoting important effort to avoid this bias (18 of the 39 literature reviews- see above).
-
-A large share of the sources cited in the assessment (96%) were published in English, reflecting the rise of English as the lingua franca of global science at the cost of a global homogenisation and reduced plurality in cross-cultural science production and communication (Hanauer et al., 2019; Ramírez-Castañeda, 2020). The literature cited presents information from all the regions of the world, but countries belonging to the Western Europe and Others Group (WEOG) were the most frequently represented (21%), and those from Eastern Europe were very poorly depicted (1.1%). A strong bias was found in the country of affiliation of the first authors of these sources, with a large proportion of them based in countries of the Western Europe and Others Group (73%), with very few of them based in Africa (4%) or Eastern Europe (1%). Reports from governments and civil society organizations, including non-scientific valuation exercises published in consultant reports, that constitute substantial “grey literature” only represent a limited fraction of the sources of the assessment (8%), despite having targeted several search strategies to these types of documents. Other types of knowledge, different worldviews, kinds of narratives and expressions about the values of nature have their own perspectives that are hard to be captured, for example, in written form. All these sources have unavoidably been interpreted through the scientific approaches of the team of assessment experts and IPBES procedures.
-
-Regarding the conceptualization of nature-human relations, the types of values of nature, as well as valuation approaches and methods, IPLCs apply their own knowledge systems and conceptualizations, which do not usually align with the logic and procedures established by academia (see 3.2.4). The assessment provides the conceptual basis to recognise indigenous and local knowledge systems and to create mechanisms to elicit their values and to co-construct inclusive decision-making processes. Yet, the study of valuation by IPLCs is a relatively young field in academia and it has just begun to be explored by IPLC scholars (see 3.2.4). In the absence of IPLC conceptualisations, attempts to understand the knowledge, worldviews, values and approaches to valuations by IPLCs is subject to western science conceptualisations of nature, methods, evidence, and confines how other methods might be organised or what logics might inform them. The values assessment has significantly expanded upon previous IPBES approaches to its co-production with IPLCs, but still remains a process primarily framed by a western academic scientific worldview (e.g., written text, in English, encompassing mostly a western-science-perspective).
-
-Importantly, academic sources used to incorporate IPLCs and ILK in the assessment do not necessarily reflect the worldviews, concepts and values held by these groups, as academic researchers may present interpretations of reality based on filters from their own disciplinary fields or even personal biases. There is much more to learn directly from IPLCs, urging for the need to work with these groups (including indigenous and local knowledge holders, scholars, etc.) to fill in gaps in both the literature and in policy practice. This is not only because they hold the key to this vital knowledge, but, equally relevant, because of their sovereignty over their knowledge. Finally, it is worth mentioning that, although differences between knowledge systems do exist, including issues of intellectual property rights, linguistic particularities, context-based knowledge and others, some academic sources emphasize an existing polarization between ILK and western science or academic knowledge, which does not necessarily reflect what happens in practice. For example, some values of nature found to be connected to IPLCs’ worldviews are also shared by several other sociocultural groups in both rural and urban contexts (see 2.2.1 for examples). This calls for a need to recognize the synergies and intersections across knowledge systems that can help to build dialogue, understandings and collaborative initiatives in valuation processes and policies for biodiversity conservation and sustainability (Taylor et al., 2020; McElewee et al., 2020).""" ;
-    dcterms:identifier "1.4.3" ;
-    skos:prefLabel "The plurality achieved in the assessment (and its limits)" .
 
 <http://ontology.ipbes.net/report/sch/VA22-2.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch2> ;
@@ -34017,6 +34081,15 @@ The assessment also identified limited available information regarding the uptak
     ipbes:hasDescription "Meadows, D. (1999). Leverage Points: Places to Intervene in a System. The Sustainability Institute, 21." ;
     owl:sameAs <https://www.zotero.org/groups/2345372/items/SQR8RJEU> .
 
+<http://ontology.ipbes.net/report/sch/VA22-1.4> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch1> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2345372/items/KB2XFRLR>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/NAZ26V3G> ;
+    ipbes:Report ipbes:VA22 ;
+    ipbes:hasDescription "Worldviews shape the overall framing and direction of any assessment effort. The values assessment draws on diverse knowledge systems and sources stemming from a wide range of scientific disciplines, as well as different knowledge types. It is thus important to reflect on the diverse backgrounds of the authors that have produced the assessment and how this has shaped the plurality of views portrayed in the assessment, as well as on the efforts made to integrate diverse knowledge sources and perspectives, including those of indigenous peoples and local communities (Annex 1.5 for a review of the assessment elaboration process and Annex 1.6 for the strategy for the inclusion and recognition of indigenous peoples and local communities)." ;
+    dcterms:identifier "1.4" ;
+    skos:prefLabel "Achieving robustness and plurality in the values assessment" .
+
 <http://ontology.ipbes.net/report/sch/VA22-3.1.2.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2345372/items/4K2HXKNN>,
@@ -34167,6 +34240,38 @@ The assessment presented here illustrates how different archetypal futures are u
 The following subsections summarise the types of futures that can potentially occur or future archetypes, and which combinations of values seem to underpin these future developments (archetypal combinations of value types).""" ;
     dcterms:identifier "5.2.2.3" ;
     skos:prefLabel "Future outcomes, archetypal futures and underpinning value types" .
+
+<http://ontology.ipbes.net/report/sch/VA22-5.2.2.3.1> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/VA22-KM1>,
+        <http://ontology.ipbes.net/report/key/VA22-KM2>,
+        <http://ontology.ipbes.net/report/key/VA22-KM3>,
+        <http://ontology.ipbes.net/report/key/VA22-KM7> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2345372/items/AKW3LXH3>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/CJUSIRS7>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/LER5UWL2>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/VXTKFX2P> ;
+    ipbes:Report ipbes:VA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.2.2.3> ;
+    ipbes:hasDescription """Future trends in nature, nature´s contributions to people and good quality of life from multiple types of future scenarios, visions, policy documents, reviewed in this assessment have been summarised based on the overall “archetypal” future they describe. While Table 5.2 and Figure 5.7 summarise the typical dynamics of each future archetype, and the outcomes for nature, nature´s contributions to people and good quality of life such futures might lead to, the next subsections summarise to what extent the archetypal futures are sustainable and just.
+
+The vast majority of the reviewed futures belonged to Regional sustainability (28%), Global sustainable development (25%), Economic optimism (20%), and the Business-as-Usual archetype (12% of futures), which provided enough material for their robust description and summary (Figure 5.8). However, descriptions of futures are scarcer for the Regional competition archetype (5% of futures), Inequality (3%) and Breakdown (2%); their summaries are therefore based on limited evidence.
+
+Almost half of the futures that included ILK were found to be aligned with the regional sustainability archetypes (n=51; 45%), followed by global sustainable development (n=20; 18%), economic optimism (n=17;15%) business as usual (n=13; 11%) with regional competition, inequality and breakdown archetypes each only represented by a handful of studies (5 (4%), 3 (3%) and 2 (2%) respectively).
+
+The archetypes differ vastly in the degree to which they contribute to fulfilling sustainability goals, e.g., the 2030 Agenda for Sustainable Development (SDGs; United Nations, 2015). While only a minor proportion of the future scenarios and visions covered SDGs explicitly (72 out of 460 futures), most of them addressed goals that could be linked to specific SDGs at least implicitly (257 out of 460 futures). Only the proportion of the 460 reviewed future scenarios and visions that led to reaching goals equivalent or similar to different SDGs was assessed.
+
+The most SDG-like goals can be reached under futures from the Global sustainable development and Regional sustainability archetypes (Figure 5.9). Should the future development follow the Business-as-Usual or the Economic optimism archetype, the most likely SDGs to be fulfilled are SDG 8 Decent Work and Economic Growth, followed by SDG 2 Zero Hunger and SDG 3 Good Health and Wellbeing. In addition, the Economic optimism archetype also seems to contribute to SDG 13 Climate action and SDG 15 Life on Land, in contrast to the Business-as-Usual archetype, under which the fulfilment of these goals is unlikely. The Regional competition and Inequality archetypes of future development show negligible level of contributing to SDGs.
+
+On the contrary, the Global Sustainable Development and Regional Sustainability archetypes show the highest potential for achieving SDGs, and also to contribute to multiple SDGs in parallel. In this respect, Global Sustainable Development shows even higher potential. High proportion of the futures under these two archetypes contribute to SDG 12 Responsible Consumption and Production (33% under Regional Sustainability and 34% under Global Sustainable Development), SDG 13 Climate Action (30% under Regional Sustainability and 37% under Global Sustainable Development), SDG 14 Life Below Water (34% under Global Sustainable Development) and SDG 15 Life on Land (41% under Regional Sustainability and 46% under Global Sustainable Development). In addition, these archetypes are strong in contributing to SDG 2 Zero Hunger, SDG 3 Good Health and Well-being, SDG 6 Clean Water and Sanitation and SDG 8 Decent Work and Economic Growth.
+
+Issues of justice were addressed to only a limited extent in the available scenarios. Our analysis showed that 27% scenarios (n=130) from peer-reviewed and grey literature, were coded to include dimensions of justice and equity. Of these studies, 38% (n=49) surfaced issues linked to (in) equity, with 32% (n=41) specifically referring to social or ecological justice. Ten percent of scenarios (n=13) mentioned the importance of fairness when considering outcomes, with another 10% (n=13) highlighting issues relating to inclusivity. Six studies (4% (n=5)) referred specifically to trade-offs between different actor groups in relation to justice dimensions, and only 6 studies (5%) explicitly mentioned a human rights-based approach as being central to more just outcomes, with two scenarios explicitly highlighting the importance of trust, and one scenario foregrounding dignity as an important consideration. The scenarios that included dimensions of justice or equity were mostly associated with the Global Sustainable Development archetype (32%, n=42) followed by Regional Sustainable Development archetypes (27%, n=35) and Economic Optimism (17%, n=22). Three scenarios had an explicit focus on indigenous rights and knowledge (Brown et al., 2016; Meyer et al., 2016; Outeiro et al., 2015) which were all associated with positive gains for nature, nature´s contributions to people and good quality of life and were associated with the Regional sustainability archetype and balanced with dominant societal focus in terms of value combination.
+
+The issue of trade-offs between those who benefit and those who lose in different futures is largely understudied. Trade-offs were explicitly coded for in 188 (40%) of the scenarios, with the majority focusing on trade-offs between ecosystem services (n=48), followed by trade-offs between different land-uses (n=33) and ecosystem services / nature´s contributions to people and dimensions of human wellbeing / good quality of life (n= 26). This analysis showed that 18% (n=55) of the scenarios explicitly accounted for winners and losers. Eighteen scenarios were coded in ways that couldn’t account for winners and losers, these were summarised as those where the powerful (in terms of economic, political or socio-cultural power) win, the powerful lose and those that are mutually beneficial to both powerful and non-powerful actors. Of these, it was found that the majority of scenarios where powerful actors won (n=9) were associated with increases in negative impacts on nature, nature´s contributions to people and good quality of life and only associated with instrumental values, with more deeply individualistic and materialistic value combinations, followed by moderately materialistic and individualistic and only one example where the values were more balanced with dominant societal focus.
+
+Of the scenarios where non-powerful actors won (n=10), overall the impacts for nature, nature´s contributions to people and good quality of life were mostly positive, followed by medium impacts and only a few examples where nature, nature´s contributions to people and good quality of life were negatively impacted. In addition, these scenarios were associated with Regional Sustainability or Global Sustainable Development (with 1 Business-as-Usual) and showed a much more diverse spread of values where instrumental still dominated, but there were equal other measures of intrinsic and relational values associated mostly with more balanced with dominant societal focus.""" ;
+    dcterms:identifier "5.2.2.3.1" ;
+    skos:prefLabel "Archetypal futures" .
 
 <http://ontology.ipbes.net/report/sch/VA22-5.2.3.3> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
@@ -34493,40 +34598,6 @@ Greater use of valuation has been promoted in particular by the European Union b
 Evidence suggests that the policy relevance of ecosystem service assessment and valuation could be enhanced. There has been some criticism of the practical impact and validity of applied cost-benefit analysis when it has been used by member states to assess policy targets of European Union Directives (Feuillette et al., 2016). The European Court of Auditors (2019) found failings in the Commission’s implementation of environmental accounting that reduced their usefulness for policymakers. Although the use of ecosystem services framing is now mainstream, valuation is still often mistrusted or misunderstood by policymakers (Tinch et al., 2019). This reflects tensions between intrinsic and anthropocentric conservation motives, resistance to the concept of non-use values, and unfamiliarity with the tools and methods of valuation (Annex 4.10).""" ;
     dcterms:identifier "4.6.4.3" ;
     skos:prefLabel "Uptake of ecosystem service valuation in European Union policy" .
-
-<http://ontology.ipbes.net/report/sch/VA22-5.2.2.3.1> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/VA22-KM1>,
-        <http://ontology.ipbes.net/report/key/VA22-KM2>,
-        <http://ontology.ipbes.net/report/key/VA22-KM3>,
-        <http://ontology.ipbes.net/report/key/VA22-KM7> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2345372/items/AKW3LXH3>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/CJUSIRS7>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/ITDXZHLE>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/LER5UWL2>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/VXTKFX2P>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/YHVFXTZJ> ;
-    ipbes:Report ipbes:VA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/VA22-5.2.2.3> ;
-    ipbes:hasDescription """Future trends in nature, nature´s contributions to people and good quality of life from multiple types of future scenarios, visions, policy documents, reviewed in this assessment have been summarised based on the overall “archetypal” future they describe. While Table 5.2 and Figure 5.7 summarise the typical dynamics of each future archetype, and the outcomes for nature, nature´s contributions to people and good quality of life such futures might lead to, the next subsections summarise to what extent the archetypal futures are sustainable and just.
-
-The vast majority of the reviewed futures belonged to Regional sustainability (28%), Global sustainable development (25%), Economic optimism (20%), and the Business-as-Usual archetype (12% of futures), which provided enough material for their robust description and summary (Figure 5.8). However, descriptions of futures are scarcer for the Regional competition archetype (5% of futures), Inequality (3%) and Breakdown (2%); their summaries are therefore based on limited evidence.
-
-Almost half of the futures that included ILK were found to be aligned with the regional sustainability archetypes (n=51; 45%), followed by global sustainable development (n=20; 18%), economic optimism (n=17;15%) business as usual (n=13; 11%) with regional competition, inequality and breakdown archetypes each only represented by a handful of studies (5 (4%), 3 (3%) and 2 (2%) respectively).
-
-The archetypes differ vastly in the degree to which they contribute to fulfilling sustainability goals, e.g., the 2030 Agenda for Sustainable Development (SDGs; United Nations, 2015). While only a minor proportion of the future scenarios and visions covered SDGs explicitly (72 out of 460 futures), most of them addressed goals that could be linked to specific SDGs at least implicitly (257 out of 460 futures). Only the proportion of the 460 reviewed future scenarios and visions that led to reaching goals equivalent or similar to different SDGs was assessed.
-
-The most SDG-like goals can be reached under futures from the Global sustainable development and Regional sustainability archetypes (Figure 5.9). Should the future development follow the Business-as-Usual or the Economic optimism archetype, the most likely SDGs to be fulfilled are SDG 8 Decent Work and Economic Growth, followed by SDG 2 Zero Hunger and SDG 3 Good Health and Wellbeing. In addition, the Economic optimism archetype also seems to contribute to SDG 13 Climate action and SDG 15 Life on Land, in contrast to the Business-as-Usual archetype, under which the fulfilment of these goals is unlikely. The Regional competition and Inequality archetypes of future development show negligible level of contributing to SDGs.
-
-On the contrary, the Global Sustainable Development and Regional Sustainability archetypes show the highest potential for achieving SDGs, and also to contribute to multiple SDGs in parallel. In this respect, Global Sustainable Development shows even higher potential. High proportion of the futures under these two archetypes contribute to SDG 12 Responsible Consumption and Production (33% under Regional Sustainability and 34% under Global Sustainable Development), SDG 13 Climate Action (30% under Regional Sustainability and 37% under Global Sustainable Development), SDG 14 Life Below Water (34% under Global Sustainable Development) and SDG 15 Life on Land (41% under Regional Sustainability and 46% under Global Sustainable Development). In addition, these archetypes are strong in contributing to SDG 2 Zero Hunger, SDG 3 Good Health and Well-being, SDG 6 Clean Water and Sanitation and SDG 8 Decent Work and Economic Growth.
-
-Issues of justice were addressed to only a limited extent in the available scenarios. Our analysis showed that 27% scenarios (n=130) from peer-reviewed and grey literature, were coded to include dimensions of justice and equity. Of these studies, 38% (n=49) surfaced issues linked to (in) equity, with 32% (n=41) specifically referring to social or ecological justice. Ten percent of scenarios (n=13) mentioned the importance of fairness when considering outcomes, with another 10% (n=13) highlighting issues relating to inclusivity. Six studies (4% (n=5)) referred specifically to trade-offs between different actor groups in relation to justice dimensions, and only 6 studies (5%) explicitly mentioned a human rights-based approach as being central to more just outcomes, with two scenarios explicitly highlighting the importance of trust, and one scenario foregrounding dignity as an important consideration. The scenarios that included dimensions of justice or equity were mostly associated with the Global Sustainable Development archetype (32%, n=42) followed by Regional Sustainable Development archetypes (27%, n=35) and Economic Optimism (17%, n=22). Three scenarios had an explicit focus on indigenous rights and knowledge (Brown et al., 2016; Meyer et al., 2016; Outeiro et al., 2015) which were all associated with positive gains for nature, nature´s contributions to people and good quality of life and were associated with the Regional sustainability archetype and balanced with dominant societal focus in terms of value combination.
-
-The issue of trade-offs between those who benefit and those who lose in different futures is largely understudied. Trade-offs were explicitly coded for in 188 (40%) of the scenarios, with the majority focusing on trade-offs between ecosystem services (n=48), followed by trade-offs between different land-uses (n=33) and ecosystem services / nature´s contributions to people and dimensions of human wellbeing / good quality of life (n= 26). This analysis showed that 18% (n=55) of the scenarios explicitly accounted for winners and losers. Eighteen scenarios were coded in ways that couldn’t account for winners and losers, these were summarised as those where the powerful (in terms of economic, political or socio-cultural power) win, the powerful lose and those that are mutually beneficial to both powerful and non-powerful actors. Of these, it was found that the majority of scenarios where powerful actors won (n=9) were associated with increases in negative impacts on nature, nature´s contributions to people and good quality of life and only associated with instrumental values, with more deeply individualistic and materialistic value combinations, followed by moderately materialistic and individualistic and only one example where the values were more balanced with dominant societal focus.
-
-Of the scenarios where non-powerful actors won (n=10), overall the impacts for nature, nature´s contributions to people and good quality of life were mostly positive, followed by medium impacts and only a few examples where nature, nature´s contributions to people and good quality of life were negatively impacted. In addition, these scenarios were associated with Regional Sustainability or Global Sustainable Development (with 1 Business-as-Usual) and showed a much more diverse spread of values where instrumental still dominated, but there were equal other measures of intrinsic and relational values associated mostly with more balanced with dominant societal focus.""" ;
-    dcterms:identifier "5.2.2.3.1" ;
-    skos:prefLabel "Archetypal futures" .
 
 <http://ontology.ipbes.net/report/sch/VA22-5.2.3.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
@@ -39611,48 +39682,6 @@ Justice is relevant to policy and decision-making in various ways (see Annex 5.4
     dcterms:identifier "2.2.3.1" ;
     skos:prefLabel "Broad values" .
 
-<http://ontology.ipbes.net/report/sch/VA22-5.2> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/VA22-KM10>,
-        <http://ontology.ipbes.net/report/key/VA22-KM4>,
-        <http://ontology.ipbes.net/report/key/VA22-KM5> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2345372/items/27U8FETM>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/2AKR7RKE>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/2ZXDT5AL>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/59PLE9UB>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/69VLX36K>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/8ZIMFR7D>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/BYCYU5RA>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/DQQTS6AA>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/E7E3T2GN>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/FGA4X49U>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/FRH7J37Z>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/GS423J7P>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/HYW85TH5>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/KXCDKNCP>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/LMBC8P3V>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/TEB2RCJG>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/WIMI3PLP>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/WLDESS5Y>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/WPZZNYFM>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/YPF6ALWT> ;
-    ipbes:Report ipbes:VA22 ;
-    ipbes:hasDescription """This section identifies what types of values underpin described futures, and what the futures outline in terms of impacts on nature, nature´s contributions to people and good quality of life. There are different approaches that have been developed and applied in defining aspects of the future, or developing futures works. These straddle all academic fields within both the sciences and arts, for example, forecasting, modelling, developing works of art and fictional writing. Each of these products or outputs have their own niche and audience and are either very specific or generic and speaking to either a short or long-term timeframe. Futures works are therefore seen to incorporate any form of evidence, including peer-reviewed or grey literature, arts-based or material from indigenous and local knowledge that is future-orientated including future visions and scenarios.
-
-Future visions include different articulations of the future surfacing in peer-reviewed literature, policies, institutional documents (e.g., corporate/non-governmental organizations visions), arts-based practices and visions of the future in indigenous and local knowledge.
-
-Scenarios, and scenario development (Box 5.2) is a futures output that has been applied to many different fields becoming a mainstream activity following the 1972 Meadows publication, Limits to Growth (Meadows et al., 1972; Pesonen et al., 2000). Scenario development has now been extensively used in the science-policy development space (IPBES, 2016b), in helping to address issues of uncertainty and complexity (Ash et al., 2010). Scenarios are representations of different possible futures from a defined starting point (IPBES, 2016b; Mahmoud et al., 2009). They are focused on highlighting or exploring drivers of change and the impacts of changes in these over a specified time frame. In doing so they enable decision-makers to anticipate potential changes and develop timely responses to these (Mahmoud et al., 2009). Scenario development has emerged as an important tool for exploring complex issues within science policy stakeholder dialogues. Within the science-policy development arena, three types of scenarios have been defined and developed (IPBES, 2016b): Exploratory scenarios (the most common), that examine plausible different futures based on select direct or indirect drivers, are often based on storylines or narratives and are used in agenda setting; 2) intervention or policy scenarios that consider alternative management approaches of policies around specific actions (this scenario type can be divided into two groups, those scenarios that are target seeking or normative describe agreed-upon desirable futures, and may include alternative pathways for reaching these targets though decisions and actions; and those that are policy screening); and 3) policy review scenarios (or retrospective policy evaluation scenarios) that evaluate past policy efforts so as to understand successes and failures against intended impacts (IPBES, 2016b). The first two approaches are most commonly developed and used.
-
-The guiding questions of this section are:
-
-What types of values of nature underpin different future scenarios and visions (particularly those visions that include dimensions of justice and sustainability), leading to what kind of outcomes for nature, nature’s contributions to people and a good quality of life?
-
-Are different types of values of nature (e.g., instrumental, relational) and their dynamics (e.g., singular / plural, level of diversity, dominance of one / balance), associated with particular types of futures (e.g., undesirable / desirable, unsustainable / sustainable, unjust / just)?
-
-Can the incorporation of plural (versus unique) values in decision-making be detected with regard to just and sustainable futures?""" ;
-    dcterms:identifier "5.2" ;
-    skos:prefLabel "Values of nature and nature’s contributions to people, found in just and sustainable futures" .
-
 <http://ontology.ipbes.net/report/sch/VA22-3.2.2.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch3> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/VA22-KM5> ;
@@ -40013,6 +40042,54 @@ Dialogue and convergences across ILK worldviews and other knowledge systems can 
 As an institution (i.e., a set of conventions and norms), religion also illustrates feedbacks shaping contrasting worldviews that may either hinder or promote biodiversity conservation (see Box 2.2). Like institutions, languages are among the factors that shape worldviews. Concepts used to refer to human-nature relationships are expressed in languages and are often connected to the contexts and places where these relationships take place across different human cultures. In the next section, we discuss the connections between languages, values and biodiversity.""" ;
     dcterms:identifier "2.2.1" ;
     skos:prefLabel "Worldviews, knowledge systems and values of nature" .
+
+<http://ontology.ipbes.net/report/sch/VA22-5.2> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/VA22ch5> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/VA22-KM10>,
+        <http://ontology.ipbes.net/report/key/VA22-KM4>,
+        <http://ontology.ipbes.net/report/key/VA22-KM5> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2345372/items/27U8FETM>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/2AKR7RKE>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/2ZXDT5AL>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/59PLE9UB>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/69VLX36K>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/8ZIMFR7D>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/BYCYU5RA>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/DQQTS6AA>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/E7E3T2GN>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/FGA4X49U>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/FRH7J37Z>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/GS423J7P>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/HYW85TH5>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/ITDXZHLE>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/KXCDKNCP>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/LMBC8P3V>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/TEB2RCJG>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/WIMI3PLP>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/WLDESS5Y>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/WPZZNYFM>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/YHVFXTZJ>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/YPF6ALWT>,
+        <http://ontology.ipbes.net/report/ref/VA22-ch5-2163>,
+        <http://ontology.ipbes.net/report/ref/VA22-ch5-2164>,
+        <http://ontology.ipbes.net/report/ref/VA22-ch5-2165>,
+        <http://ontology.ipbes.net/report/ref/VA22-ch5-2166> ;
+    ipbes:Report ipbes:VA22 ;
+    ipbes:hasDescription """This section identifies what types of values underpin described futures, and what the futures outline in terms of impacts on nature, nature´s contributions to people and good quality of life. There are different approaches that have been developed and applied in defining aspects of the future, or developing futures works. These straddle all academic fields within both the sciences and arts, for example, forecasting, modelling, developing works of art and fictional writing. Each of these products or outputs have their own niche and audience and are either very specific or generic and speaking to either a short or long-term timeframe. Futures works are therefore seen to incorporate any form of evidence, including peer-reviewed or grey literature, arts-based or material from indigenous and local knowledge that is future-orientated including future visions and scenarios.
+
+Future visions include different articulations of the future surfacing in peer-reviewed literature, policies, institutional documents (e.g., corporate/non-governmental organizations visions), arts-based practices and visions of the future in indigenous and local knowledge.
+
+Scenarios, and scenario development (Box 5.2) is a futures output that has been applied to many different fields becoming a mainstream activity following the 1972 Meadows publication, Limits to Growth (Meadows et al., 1972; Pesonen et al., 2000). Scenario development has now been extensively used in the science-policy development space (IPBES, 2016b), in helping to address issues of uncertainty and complexity (Ash et al., 2010). Scenarios are representations of different possible futures from a defined starting point (IPBES, 2016b; Mahmoud et al., 2009). They are focused on highlighting or exploring drivers of change and the impacts of changes in these over a specified time frame. In doing so they enable decision-makers to anticipate potential changes and develop timely responses to these (Mahmoud et al., 2009). Scenario development has emerged as an important tool for exploring complex issues within science policy stakeholder dialogues. Within the science-policy development arena, three types of scenarios have been defined and developed (IPBES, 2016b): Exploratory scenarios (the most common), that examine plausible different futures based on select direct or indirect drivers, are often based on storylines or narratives and are used in agenda setting; 2) intervention or policy scenarios that consider alternative management approaches of policies around specific actions (this scenario type can be divided into two groups, those scenarios that are target seeking or normative describe agreed-upon desirable futures, and may include alternative pathways for reaching these targets though decisions and actions; and those that are policy screening); and 3) policy review scenarios (or retrospective policy evaluation scenarios) that evaluate past policy efforts so as to understand successes and failures against intended impacts (IPBES, 2016b). The first two approaches are most commonly developed and used.
+
+The guiding questions of this section are:
+
+What types of values of nature underpin different future scenarios and visions (particularly those visions that include dimensions of justice and sustainability), leading to what kind of outcomes for nature, nature’s contributions to people and a good quality of life?
+
+Are different types of values of nature (e.g., instrumental, relational) and their dynamics (e.g., singular / plural, level of diversity, dominance of one / balance), associated with particular types of futures (e.g., undesirable / desirable, unsustainable / sustainable, unjust / just)?
+
+Can the incorporation of plural (versus unique) values in decision-making be detected with regard to just and sustainable futures?""" ;
+    dcterms:identifier "5.2" ;
+    skos:prefLabel "Values of nature and nature’s contributions to people, found in just and sustainable futures" .
 
 <http://ontology.ipbes.net/report/key/VA22-KM7> a ipbes:KeyMessage ;
     ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/VA22-A4>,
@@ -40995,6 +41072,7 @@ Case studies from area-based conservation and education provide three general le
         <http://ontology.ipbes.net/report/ref/2345372/items/77J5CJGU>,
         <http://ontology.ipbes.net/report/ref/2345372/items/7LN4QGZX>,
         <http://ontology.ipbes.net/report/ref/2345372/items/7X38VQ5P>,
+        <http://ontology.ipbes.net/report/ref/2345372/items/7ZNPE6ZU>,
         <http://ontology.ipbes.net/report/ref/2345372/items/88SXC3RK>,
         <http://ontology.ipbes.net/report/ref/2345372/items/9IPFSMP2>,
         <http://ontology.ipbes.net/report/ref/2345372/items/AHR2KQ79>,
@@ -41316,7 +41394,8 @@ Furthermore, large-sample quantitative studies tend to elicit a small range of q
         <http://ontology.ipbes.net/report/ref/2345372/items/XAEHL4ZS>,
         <http://ontology.ipbes.net/report/ref/2345372/items/XEGDFJXA>,
         <http://ontology.ipbes.net/report/ref/2345372/items/YCJ3LVZS>,
-        <http://ontology.ipbes.net/report/ref/2345372/items/ZAYGCTYU> ;
+        <http://ontology.ipbes.net/report/ref/2345372/items/ZAYGCTYU>,
+        <http://ontology.ipbes.net/report/ref/VA22-ch3-1041> ;
     ipbes:Report ipbes:VA22 ;
     ipbes:hasDescription "The objective of this section is to give an account of the richness of nature valuation in terms of the abundance of methodologies that exist to undertake valuation, and the diversity of valuation disciplines and traditions. In addition to describing how valuation has evolved in academia, this section also provides an assessment of how the current practice of valuation of nature has developed to what it is today, including in IPLC contexts. The section demonstrates the characteristics of different valuation methodologies, structured using the methods families, highlighting some of the key developments in valuation methods. This also contextualises the trend of growing inclusiveness in the valuation process, the continued search for ways to integrate more types of values of multiple stakeholders, as well as the growing interest by indigenous scholars in developing valuation methods and metrics that better capture values as they are lived and transmitted in IPLC contexts." ;
     dcterms:identifier "3.2" ;
