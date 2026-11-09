@@ -730,13 +730,6 @@ Another certification scheme based on the positive effect of businesses on biodi
     dcterms:identifier "Figure5.5" ;
     skos:prefLabel "Typical agricultural commodity value chain (e.g., olives, olive oil) with six interconnected stages from production to end-use." .
 
-<http://ontology.ipbes.net/report/il/BBA26-FigureSPM.1> a ipbes:Figure,
-        ipbes:Illustration ;
-    ipbes:hasDescription "Methods exist to measure business impacts and dependencies. These can be used to inform actions at all decision-making levels (i.e., portfolio, corporate, value chain and operations). Businesses, including financial institutions, working with Governments and financial and other actors, including civil society and Indigenous Peoples and local communities, can create an enabling environment. This can be achieved through changes in policy, legal and regulatory frameworks (“policy and legal”), economic and financial systems (“economics and finance”), social values, norms and culture (“values and norms”), technology and data, and capacity and knowledge {KM10}." ;
-    ipbes:hasDoi "10.5281/zenodo.19702935" ;
-    dcterms:identifier "FigureSPM.1" ;
-    skos:prefLabel "Overview of the business and biodiversity assessment. Businesses both depend on and impact biodiversity, creating risks and opportunities." .
-
 <http://ontology.ipbes.net/report/il/BBA26-FigureSPM.A1> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:hasDescription "Confidence increases towards the top-right corner, as suggested by the increasing strength of shading. Source: IPBES (2016). Further details of the approach are documented in the IPBES Guide on the Production of Assessments." ;
@@ -925,6 +918,17 @@ Another certification scheme based on the positive effect of businesses on biodi
     ipbes:hasDoi "10.5281/zenodo.21661958" ;
     dcterms:identifier "Table6.3" ;
     skos:prefLabel "Knowledge gaps." .
+
+<http://ontology.ipbes.net/report/intro/BBA26-Preface> a ipbes:Introduction ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/BBA26-FigureSPM.1> ;
+    ipbes:Report ipbes:BBA26 ;
+    ipbes:hasDescription """The Methodological Assessment of the Impact and Dependence of Business on Biodiversity and Nature’s Contributions to People (Business and Biodiversity Assessment) comes at a time when urgent action is needed to halt and reverse biodiversity loss and when there is increasing recognition of the central role of businesses in creating transformative change for a just and sustainable future. Evidence shows that biodiversity and nature’s contributions to people are declining across much of the globe. The Kunming-Montreal Global Biodiversity Framework sets out a commitment to a whole-of-government and whole-of-society approach to put biodiversity on a path to recovery for the benefit of people and the planet. Businesses have been key to driving the innovation and economic growth that have brought about rising standards of living, improved health outcomes, increased food security and reduced poverty, but these benefits have been unevenly distributed within and among countries. At the same time, unsustainable economic activity and a focus on growth as measured by gross domestic product have been drivers of the decline of biodiversity and nature’s contributions to people and stand in the way of transformative change. Although it is a historically neglected phenomenon, awareness of biodiversity decline is now growing, as is the awareness of the increasing risks that further declines pose for society, the economy and businesses.
+
+All businesses depend on and impact biodiversity and can act now on the basis of existing knowledge (Figure SPM.1). Improving the knowledge base would allow businesses to better measure and respond to their dependencies and impacts. Biodiversity has multiple dimensions, from genes to species to ecosystems. Methods for analysing the impacts and dependencies of businesses on biodiversity exist, although tying specific business actions to biodiversity outcomes can be difficult. Different methods are appropriate for decision-making at different business levels, including the operations, value chain, corporate and portfolio levels. Information about impacts and dependencies can guide businesses and enable reporting, transparency, decision-making and actions to address risks and opportunities, which in turn can lead to improved outcomes for biodiversity and businesses. For businesses to play a central role in halting and reversing biodiversity loss, the conditions in which they operate need to be fundamentally changed to provide incentives for the conservation and sustainable use of biodiversity. The prevailing conditions affect businesses differently depending, for example, on their size, resources and influence. An enabling environment providing businesses with incentives for the conservation and sustainable use of biodiversity would need to include the following important dimensions: policy, legal and regulatory frameworks; economic and financial systems; social values, norms and culture; technology and data; and capacity and knowledge. Creating an effective enabling environment can help to closely align what is profitable for businesses with what is good for biodiversity and society. An enabling environment requires coordinated, collaborative action through a whole-of-government and whole-of-society approach.
+
+This assessment reviews and critically evaluates approaches to the measurement of impacts and dependencies of businesses on biodiversity and discusses how such information can be used to improve outcomes for biodiversity and nature’s contributions to people. The assessment also addresses the roles of multiple actors in creating an enabling environment. The primary audience includes Governments, businesses, and organizations in the financial system. In addition, the assessment is intended to benefit civil society and Indigenous Peoples and local communities. Businesses play a major role in delivering transformative change to implement global policy goals and frameworks, such as the goals and targets under the 2030 Agenda for Sustainable Development, the Convention on Biological Diversity, the Kunming-Montreal Global Biodiversity Framework, the United Nations Framework Convention on Climate Change and the Paris Agreement.""" ;
+    dcterms:identifier "BBA26-Preface" ;
+    skos:prefLabel "Preface" .
 
 <http://ontology.ipbes.net/report/key/BBA26-KM-A> a ipbes:KeyMessage ;
     ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/BBA26-A1>,
@@ -2122,6 +2126,13 @@ Despite these advances, the availability of tools remains limited, and there are
     ipbes:hasDescription "A set of knowledge gaps in knowledge and data can be identified from the assessment of the evidence associated to the creation of an enabling environment for businesses by diverse actors. A summary of these gaps is presented in Table 6.3." ;
     dcterms:identifier "6.5" ;
     skos:prefLabel "Knowledge gaps" .
+
+<http://ontology.ipbes.net/report/il/BBA26-FigureSPM.1> a ipbes:Figure,
+        ipbes:Illustration ;
+    ipbes:hasDescription "Methods exist to measure business impacts and dependencies. These can be used to inform actions at all decision-making levels (i.e., portfolio, corporate, value chain and operations). Businesses, including financial institutions, working with Governments and financial and other actors, including civil society and Indigenous Peoples and local communities, can create an enabling environment. This can be achieved through changes in policy, legal and regulatory frameworks (“policy and legal”), economic and financial systems (“economics and finance”), social values, norms and culture (“values and norms”), technology and data, and capacity and knowledge {KM10}." ;
+    ipbes:hasDoi "10.5281/zenodo.19702935" ;
+    dcterms:identifier "FigureSPM.1" ;
+    skos:prefLabel "Overview of the business and biodiversity assessment. Businesses both depend on and impact biodiversity, creating risks and opportunities." .
 
 <http://ontology.ipbes.net/report/il/BBA26-FigureSPM.2> a ipbes:Figure,
         ipbes:Illustration ;

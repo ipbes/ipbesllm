@@ -2335,6 +2335,30 @@ Further details of the approach are documented in the IPBES Guide on the Product
     dcterms:identifier "TableSPM.A2" ;
     skos:prefLabel "Definitions for the thematic assessment of the sustainable use of wild species of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (see also chapter 1 and the glossary of the assessment)." .
 
+<http://ontology.ipbes.net/report/intro/SUA22-Introduction> a ipbes:Introduction ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/SUA22-FigureSPM.1> ;
+    ipbes:Report ipbes:SUA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-1.1.1>,
+        <http://ontology.ipbes.net/report/sch/SUA22-1.3.1>,
+        <http://ontology.ipbes.net/report/sch/SUA22-1.3.2>,
+        <http://ontology.ipbes.net/report/sch/SUA22-1.3.4>,
+        <http://ontology.ipbes.net/report/sch/SUA22-2.2.2>,
+        <http://ontology.ipbes.net/report/sch/SUA22-2.2.3>,
+        <http://ontology.ipbes.net/report/sch/SUA22-2.2.4>,
+        <http://ontology.ipbes.net/report/sch/SUA22-2.2.5> ;
+    ipbes:hasDescription """The thematic assessment of the sustainable use of wild species of the Intergovernmental Science Policy Platform on Biodiversity and Ecosystem Services (IPBES) evaluates the sustainable use of wild species through the lenses of practices, environmental and spatial contexts, human communities, policies, governance systems and institutions. The aim of the assessment is to consider various approaches to enhance the sustainability of the use of wild species besides their existence values and identify challenges and opportunities that ensure and promote the sustainable use of wild species, in order to reduce and eventually eliminate unsustainable and illegal uses of wild species within the ecosystems that they inhabit, and to strengthen related practices, measures, capacities and conservation approaches that arise from such uses. The assessment builds on previous IPBES assessments, most recently the Global Assessment Report on Biodiversity and Ecosystem Services, which evaluated the status of wild species worldwide and documented the impacts of human uses on wild populations.
+
+For purposes of the assessment, sustainable use and wild species are interpreted and defined as follows:
+
+Sustainable use was defined in article 2 of the Convention on Biological Diversity in 1992 as “the use of components of biological diversity in a way and at a rate that does not lead to the long-term decline of biological diversity, thereby maintaining its potential to meet the needs and aspirations of present and future generations.” The assessment notes that sustainable use is also an outcome of social-ecological systems {1.1.1} that aim to maintain biodiversity and ecosystem functions in the long term, while contributing to human well-being. It is a dynamic process as wild species, the ecosystems that support them and the social systems within which uses occur change over time and space {1.3.1, 2.2.2, 2.2.3, 2.2.4, 2.2.5}. The assessment takes into account the social, economic and environmental dimensions of sustainability, as identified by the 2030 Agenda for Sustainable Development and its Sustainable Development Goals.
+
+Wild species refers to populations of any species that have not been domesticated through multigenerational selection for particular traits, and which can survive independently of human intervention that may occur in any environment. This does not imply a complete absence of human management and recognizes various intermediate states between wild and domesticated {1.3.2}.
+
+Use of wild species involves both the practices associated with harvest or other direct interactions with wild species, as well as the end purpose for which the species is used. Practices and uses are defined in chapter 1 of the assessment. All other technical terms used in the present summary for policymakers, and in particular definitions of different practices and uses, are further defined in the glossary of the assessment and appendix 3 to the present annex. For the assessment, four main groups of wild species inhabiting different types of biomes, ecoregions or ecosystems, four extractive practices, one non-extractive practice and nine types of use are considered (Figure SPM.1) {1.3.4}.""" ;
+    ipbes:traceability "1.1.1, 1.3.1, 2.2.2, 2.2.3, 2.2.4, 2.2.5, 1.3.2, 1.3.4" ;
+    dcterms:identifier "SUA22-Introduction" ;
+    skos:prefLabel "Introduction" .
+
 <http://ontology.ipbes.net/report/kg/SUA22-1> a ipbes:KnowledgeGap ;
     ipbes:Report ipbes:SUA22 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-2.1> ;
@@ -44556,12 +44580,6 @@ Distribution of benefits from vicuña fibre harvest in Sajama, Bolivia (Plurinat
     dcterms:identifier "BoxSPM.3" ;
     skos:prefLabel "Distribution of benefits from vicuña fibre." .
 
-<http://ontology.ipbes.net/report/il/SUA22-FigureSPM.1> a ipbes:Figure,
-        ipbes:Illustration ;
-    ipbes:hasDoi "10.5281/zenodo.7038225" ;
-    dcterms:identifier "FigureSPM.1" ;
-    skos:prefLabel "Organizing structure of the sustainable use assessment." .
-
 <http://ontology.ipbes.net/report/il/SUA22-FigureSPM.2> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:hasDescription "This figure shows the untapped potential of including the sustainable use of wild species in strategies to achieve the Sustainable Development Goals. The potential contribution of the sustainable use of wild species to achieve each Goal was assessed based on the wording of the “outcome targets” (n=x) under each Goal and the evidence documented in the Thematic Assessment of the Sustainable Use of Wild Species. The percentages showed in the figure refer to the number of targets related to the sustainable use of wild species that are “already taken into account” (grey bar), have “potential relevance” (green bar), or have “no relevance” (white bar) to achieve each Goal. Supporting information and details on assessments for each Goal are available in chapter 1 {1.6}. A data management report for this figure is available at https://doi.org/10.5281/zenodo.6036273." ;
@@ -51571,20 +51589,6 @@ Overall, across practices, sustainable use of wild species is increasingly under
     dcterms:identifier "2.2.3.7" ;
     skos:prefLabel "Summary: conceptualization of sustainable use over time and across practices" .
 
-<http://ontology.ipbes.net/report/sch/SUA22-2.2.5> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-A>,
-        <http://ontology.ipbes.net/report/key/SUA22-B> ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-2.2> ;
-    ipbes:hasDescription """Today many international conventions and agreements that relate to the conservation of wild species also make reference to their sustainable use. Some provide definitions of “sustainable use”, whereas others only refer to it. Although emphases vary, a clear commonality across definitions and vision statements is that the idea of sustainable use refers both to conserving/ not causing serious or irreversible harm to biodiversity as well as to supporting people who depend on it, whether the dependence is in reference to needs, aspirations, socio-economic services or cultural values (Table 2. 3).
-
-This table is illustrative. It does not include all existing agreements, and new agreements and amendments to older ones continue to emerge, with shifting definitions.
-
-In addition, many of the agreements suggest that the sustainable use of wild species itself can be a central part of conservation. For example, the Addis Ababa Principles and Guidelines for the Sustainable Use of Biodiversity state that, “sustainable use is a valuable tool to promote conservation of biological diversity, since in many instances it provides incentives for conservation and restoration because of the social, cultural and economic benefits that people derive from that use”. Similarly, Axiom 4 of the IUCN White Oaks Principles states that “sustainable use is a means of bringing about conservation of species and habitats”. This notion is echoed across practices. For example, the European Charter on Hunting and Biodiversity (2007) states that “sustainably managed hunting can contribute to the conservation of biodiversity, the preservation of rural lifestyles and local economies. In this context hunting can provide strong incentives for conservation through use of biodiversity sensu the Convention on Biological Diversity”.""" ;
-    dcterms:identifier "2.2.5" ;
-    skos:prefLabel "Conceptualizations of sustainable use in the international policy arena: Definitions from international conventions" .
-
 <http://ontology.ipbes.net/report/sch/SUA22-2.2.7.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
     ipbes:Report ipbes:SUA22 ;
@@ -51913,6 +51917,12 @@ Purse seiner fishing Atlantic bluefin tuna. Photo credit: J.-M. Fromentin.
 Atlantic bluefin tuna has been sustainably exploited for two millennia by traditional fisheries, but the rise of the sashimi market during the 1980s generated new and strong demand, which sharply increased the value of the fish and led to uncontrolled international overcapacity in the fishing fleet and critical overexploitation in the 1990s and 2000s, including a severe problem of illegal catch. The failure of bluefin tuna management at that time was partly due to the multilateral nature of the International Commission for the Conservation of Atlantic Tunas. The scientific body of the Commission had alerted the management body about the critical status of Atlantic bluefin tuna stocks in the 1990s, but the scientific advice carried little weight against fisheries lobbies and national interests, which were most influential in maintaining high quotas. During the 2000s, however, environmental non-governmental organizations became more powerful and efficiently used communication tools to call the attention of the public to the poor stock status of bluefin tuna. Following a shift in public opinion, the management body of the Commission started to pay more attention to scientific advice and implemented a first rebuilding plan in 2007, which was reinforced in the following years. The final Atlantic bluefin tuna rebuilding plan included a reduction in the length of the fishing season for the main fleets, an increase in the minimum catch size, new tools to monitor and control fishing activities and a strong reduction in fishing capacity and annual quotas. As a result of this plan, the Atlantic bluefin tuna population has been rebuilt and is now exploited within biologically sustainable levels (well established) {6.5.3.3}.""" ;
     dcterms:identifier "BoxSPM.4" ;
     skos:prefLabel "Moving from unsustainable to sustainable fishing at local and large scales." .
+
+<http://ontology.ipbes.net/report/il/SUA22-FigureSPM.1> a ipbes:Figure,
+        ipbes:Illustration ;
+    ipbes:hasDoi "10.5281/zenodo.7038225" ;
+    dcterms:identifier "FigureSPM.1" ;
+    skos:prefLabel "Organizing structure of the sustainable use assessment." .
 
 <http://ontology.ipbes.net/report/il/SUA22-FigureSPM.7> a ipbes:Figure,
         ipbes:Illustration ;
@@ -54444,21 +54454,26 @@ Atlantic bluefin tuna has been sustainably exploited for two millennia by tradit
     dcterms:identifier "2.2.1" ;
     skos:prefLabel "Overview of approach" .
 
-<http://ontology.ipbes.net/report/sch/SUA22-2.2.2> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-B> ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-2.2> ;
-    ipbes:hasDescription "Ideas and conceptualizations of sustainability have a long and complex history. In this section, the historical background of academic, largely western, conceptualizations of sustainability is presented, focusing mainly on aspects related to the sustainable use of wild species. Following this, the narrower and shorter history of the explicit use of the concept ‘sustainable use of wild species’ is narrated. The historical account presented in this section is based on a literature review of 179 sources. The data management report for this review is available at: https://doi.org/10.5281/zenodo.6472995." ;
-    dcterms:identifier "2.2.2" ;
-    skos:prefLabel "Historical development of the concept of “sustainable use” in the global conservation arena" .
-
 <http://ontology.ipbes.net/report/sch/SUA22-2.2.3.6> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
     ipbes:Report ipbes:SUA22 ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-2.2.3> ;
     dcterms:identifier "2.2.3.6" ;
     skos:prefLabel "Conceptualizations of sustainable non-extractive practices (focus on wildlife watching)" .
+
+<http://ontology.ipbes.net/report/sch/SUA22-2.2.5> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-A>,
+        <http://ontology.ipbes.net/report/key/SUA22-B> ;
+    ipbes:Report ipbes:SUA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-2.2> ;
+    ipbes:hasDescription """Today many international conventions and agreements that relate to the conservation of wild species also make reference to their sustainable use. Some provide definitions of “sustainable use”, whereas others only refer to it. Although emphases vary, a clear commonality across definitions and vision statements is that the idea of sustainable use refers both to conserving/ not causing serious or irreversible harm to biodiversity as well as to supporting people who depend on it, whether the dependence is in reference to needs, aspirations, socio-economic services or cultural values (Table 2. 3).
+
+This table is illustrative. It does not include all existing agreements, and new agreements and amendments to older ones continue to emerge, with shifting definitions.
+
+In addition, many of the agreements suggest that the sustainable use of wild species itself can be a central part of conservation. For example, the Addis Ababa Principles and Guidelines for the Sustainable Use of Biodiversity state that, “sustainable use is a valuable tool to promote conservation of biological diversity, since in many instances it provides incentives for conservation and restoration because of the social, cultural and economic benefits that people derive from that use”. Similarly, Axiom 4 of the IUCN White Oaks Principles states that “sustainable use is a means of bringing about conservation of species and habitats”. This notion is echoed across practices. For example, the European Charter on Hunting and Biodiversity (2007) states that “sustainably managed hunting can contribute to the conservation of biodiversity, the preservation of rural lifestyles and local economies. In this context hunting can provide strong incentives for conservation through use of biodiversity sensu the Convention on Biological Diversity”.""" ;
+    dcterms:identifier "2.2.5" ;
+    skos:prefLabel "Conceptualizations of sustainable use in the international policy arena: Definitions from international conventions" .
 
 <http://ontology.ipbes.net/report/sch/SUA22-2.2.7.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
@@ -55390,6 +55405,15 @@ At the regional level, comparisons among regional bodies were possible for fishi
 This pattern appeared even more strongly at the national policy level with the analyses of national biodiversity strategies and action plans. It was at the national scale where some of the key elements were found not be taken up in a minority, but still a noteworthy number, of national policy frameworks. The key elements most likely to be missing in the national policy frameworks were explicit commitments regarding empowering indigenous peoples and local communities in governance, integrating diverse knowledge systems, and considering non-monetized values of the uses of biodiversity in policy, including spiritual and/or relational values. This is consistent with a pattern seen elsewhere in the chapter and assessment as a whole – that the ecological aspects of sustainable use (with the important exception of minimizing waste) are quite fully embraced in policy commitments at all level, with almost comparable uptake of macro-economic, employment, and general quality of livelihoods. Uptake in policy does not ensure success at or even adequate resourcing for implementation, but it provides a strong foundation for unified and integrated efforts at achieving and maintaining sustainability. The foundations in national policies for efforts at the more socio-cultural aspects of sustainable use are weaker and less unified, even if the aspirational commitments to the relevant key elements have been made globally.""" ;
     dcterms:identifier "2.2.10" ;
     skos:prefLabel "Synthesis of conceptualizations of sustainable use of wild species" .
+
+<http://ontology.ipbes.net/report/sch/SUA22-2.2.2> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-B> ;
+    ipbes:Report ipbes:SUA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-2.2> ;
+    ipbes:hasDescription "Ideas and conceptualizations of sustainability have a long and complex history. In this section, the historical background of academic, largely western, conceptualizations of sustainability is presented, focusing mainly on aspects related to the sustainable use of wild species. Following this, the narrower and shorter history of the explicit use of the concept ‘sustainable use of wild species’ is narrated. The historical account presented in this section is based on a literature review of 179 sources. The data management report for this review is available at: https://doi.org/10.5281/zenodo.6472995." ;
+    dcterms:identifier "2.2.2" ;
+    skos:prefLabel "Historical development of the concept of “sustainable use” in the global conservation arena" .
 
 <http://ontology.ipbes.net/report/sch/SUA22-2.2.3.3.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
@@ -58088,63 +58112,6 @@ Anthropogenic assets refer to knowledge (including indigenous and local knowledg
     dcterms:identifier "1.1.2" ;
     skos:prefLabel "Placing the assessment within the IPBES conceptual framework and nature’s contributions to people" .
 
-<http://ontology.ipbes.net/report/sch/SUA22-1.3.1> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch1> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-B> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2344805/items/26MRGHXT>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/36SK8F9V>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/G44UJY54>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/GIQ6WPGX>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/IRWPBZRX>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/SEBMMIP2>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/SZNGDJ2D>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/VT2R5J5N>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/W8MUUZXN> ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-1.3> ;
-    ipbes:hasDescription """The conceptualization of sustainable use of wild species in international policy can be traced at least back to the Declaration of the United Nations Conference on the Human Environment in 1972. Principles 2, 3 and 4 arising from this conference are particularly relevant:
-
-Principle 2: The natural resources of the earth, including the air, water, land, flora and fauna and especially representative samples of natural ecosystems, must be safeguarded for the benefit of present and future generations through careful planning or management, as appropriate.
-
-Principle 3: The capacity of the earth to produce vital renewable resources must be maintained and, wherever practicable, restored or improved.
-
-Principle 4: Man has a special responsibility to safeguard and wisely manage the heritage of wildlife and its habitat, which are now gravely imperilled by a combination of adverse factors. Nature conservation, including wildlife, must therefore receive importance in planning for economic development.
-
-Likewise, the World Charter for Nature adopted by the United Nations in 1982 reaffirms that “man must acquire the knowledge necessary to maintain and enhance his ability to use natural resources in a manner which ensures the preservation of the species and ecosystems for the benefit of present and future generations.”
-
-Sustainable use is a concept that is now widely applied in various sectors, including natural living resources (e.g., wild animals or wild plants), natural non-living resources (e.g., water, air and soil), and human products (e.g., agricultural products, pesticides, other goods) (Cooney, 2007). Using the term “sustainable use” in such different contexts leads to different meanings. The sustainable use assessment’s definition is restricted to the context of wild species (or wild living resources).
-
-For the Convention on Biological Diversity since 1992, sustainable use is mostly defined according to the target resource (see Figure 1. 3): “the use of the components of biodiversity in a way and at a rate that does not lead to the long-term decline of biological diversity, thereby maintaining its potential to meet the needs and aspirations of present and future generations”. As such, sustainable use is defined using primarily ecological criteria, but within a framework of human needs. Some other international organizations have adopted the CBD definition, but included further considerations in policy positions, e.g., the International Union for Conservation of Nature states that it is ‘committed to ensure that any use of wild species is equitable and ecologically sustainable’ (IUCN Resolution 2.29, 2000). Other formulations, e.g., the White Oak principles, include a clearly articulated social dimension as well: “a dynamic process toward which one strives in order to maintain biodiversity and enhance ecological and socio-economic services, recognizing that the greater the equity and degree of participation in governance, the greater the likelihood of achieving these objectives for present and future generations”. The sustainable use assessment’s definition of sustainable use considers both the ecological and social dimensions and should be understood as applying to multiple aspects of human-ecological interactions around use (see below and Figure 1. 3).
-
-Indigenous and local knowledge offer additional perspectives on sustainable use. Many indigenous peoples regard humans and wild species as relatives, existing in relationships like those of the members of a family, in which each has an essential role to play (IPBES, 2019a, 2019b; Muir et al., 2020). In this worldview, the social and ecological dimensions of the use of wild species are inseparable (Nadasdy, 2007; Polfus et al., 2016; Robinson & Raven, 2019). To be sustainable, the use of wild species should ensure the well-being of both humans and other species (Sangha et al., 2015). Seen through this lens, to choose between human well-being and that of wild species is both unethical and untenable.
-
-In defining sustainable use, the following aspects, which are discussed thoroughly in Chapter 2, are critical to this assessment:
-
-Sustainable use is an outcome of social-ecological systems, in which nature’s contributions to people derived from extractive or non-extractive uses of wild species are managed to meet current human needs while maintaining or co-creating natural systems that promote the continued survival of the species being used and the ongoing provision of nature’s contributions to people. It is not, and cannot be, a static endpoint because the target species, the ecosystems that support them, and the social systems within which uses occur are dynamic and change over time and space. Consequently, the sustainability of use is an ongoing adaptive process, which may be depicted as follows: (i) assess status and trends in wild species under use, (ii) identify drivers of (un) sustainability, (iii) adapt uses and management (which may include, if necessary, stopping use for a period of time), (iv) re-assess after a given time interval and re-adapt use and management if needed.
-
-Sustainable use has a narrower and more specific meaning than sustainable development or sustainable management and these should not be used as synonyms. Sustainable development has a clear economic basis and can be seen as a quest to reconcile economic growth with social and ecological challenges and problems (often conceptualized through the three-pillars, social-economic-environmental, diagram, see Purvis et al. (2019)). Sustainable management also encompasses a broader array of actions related to the reduction of environmental, and social (including economic) impacts associated with any activity, not only use (Cooney, 2007).
-
-Sustainable use emerges from social-ecological systems that meet human needs without compromising ecosystem health. Sustainable use is thus not limited to anthropocentric considerations (i.e., the sustainability of the use for the benefit of people) or to ecological/environmental considerations (i.e., the conservation of the target resource from an ecosystem perspective). Rather, it encompasses both social and ecological considerations as well as the multiple aspects of their interactions.
-
-Human views on sustainable use are diverse, resulting from local, indigenous and scientific knowledge that should each be appreciated as relevant experiments in sustainable use from which people can learn.
-
-For practical purposes, especially for an assessment of this nature, the definition of sustainable use or what is assessed as being sustainable, needs to be precise enough that assessors can determine whether or not use is sustainable.
-
-Sustainability should therefore be clearly defined through a set of specific targets or indicators in the social and ecological domains. Ideally, this set of indicators should be developed jointly by all the actors of the social-ecological system.
-
-Animal welfare and animal protection are important considerations receiving increasing social, ethical and legal consideration worldwide (see the Global Sustainable Development Report 2019 by the Independent Group of Scientists appointed by the Secretary-General). Animal welfare is increasingly incorporated into the concepts of sustainable use of wild species, but it was not identified in the scoping report for the IPBES assessment of the sustainable use of wild species (annex IV to decision IPBES-5/1). Therefore, animal welfare was not addressed in this assessment.""" ;
-    dcterms:identifier "1.3.1" ;
-    skos:prefLabel "Defining sustainable use" .
-
-<http://ontology.ipbes.net/report/sch/SUA22-2.2.3> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-B>,
-        <http://ontology.ipbes.net/report/key/SUA22-C> ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-2.2> ;
-    dcterms:identifier "2.2.3" ;
-    skos:prefLabel "Current academic conceptualization of sustainable use by practice" .
-
 <http://ontology.ipbes.net/report/sch/SUA22-2.2.6> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-C>,
@@ -58546,6 +58513,63 @@ Ideally, indicators are developed jointly by all the actors in the social-ecolog
 (B.3.3) Many of the ecological, economic and governance indicators in global and regional indicator sets have low sensitivity or specificity for the sustainability of individual practices, thus requiring substantial contextual information to be interpreted reliably (established but incomplete) {2.3.4}. Very few indicators capture the social-ecological linkages now globally recognized to be important to sustainable use. Monitoring by many indigenous peoples and local communities focuses on interlinked social and ecological elements and can inform the development of local and global indicators that recognize these linkages at different scales (well established) {2.3.4}.""" ;
     dcterms:identifier "B.3" ;
     skos:prefLabel "Key elements of sustainable use of wild species have been identified in relevant international and regional standards, agreements and certification schemes but indicators are incomplete, most notably for social components." .
+
+<http://ontology.ipbes.net/report/sch/SUA22-1.3.1> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch1> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-B> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2344805/items/26MRGHXT>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/36SK8F9V>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/G44UJY54>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/GIQ6WPGX>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/IRWPBZRX>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/SEBMMIP2>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/SZNGDJ2D>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/VT2R5J5N>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/W8MUUZXN> ;
+    ipbes:Report ipbes:SUA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-1.3> ;
+    ipbes:hasDescription """The conceptualization of sustainable use of wild species in international policy can be traced at least back to the Declaration of the United Nations Conference on the Human Environment in 1972. Principles 2, 3 and 4 arising from this conference are particularly relevant:
+
+Principle 2: The natural resources of the earth, including the air, water, land, flora and fauna and especially representative samples of natural ecosystems, must be safeguarded for the benefit of present and future generations through careful planning or management, as appropriate.
+
+Principle 3: The capacity of the earth to produce vital renewable resources must be maintained and, wherever practicable, restored or improved.
+
+Principle 4: Man has a special responsibility to safeguard and wisely manage the heritage of wildlife and its habitat, which are now gravely imperilled by a combination of adverse factors. Nature conservation, including wildlife, must therefore receive importance in planning for economic development.
+
+Likewise, the World Charter for Nature adopted by the United Nations in 1982 reaffirms that “man must acquire the knowledge necessary to maintain and enhance his ability to use natural resources in a manner which ensures the preservation of the species and ecosystems for the benefit of present and future generations.”
+
+Sustainable use is a concept that is now widely applied in various sectors, including natural living resources (e.g., wild animals or wild plants), natural non-living resources (e.g., water, air and soil), and human products (e.g., agricultural products, pesticides, other goods) (Cooney, 2007). Using the term “sustainable use” in such different contexts leads to different meanings. The sustainable use assessment’s definition is restricted to the context of wild species (or wild living resources).
+
+For the Convention on Biological Diversity since 1992, sustainable use is mostly defined according to the target resource (see Figure 1. 3): “the use of the components of biodiversity in a way and at a rate that does not lead to the long-term decline of biological diversity, thereby maintaining its potential to meet the needs and aspirations of present and future generations”. As such, sustainable use is defined using primarily ecological criteria, but within a framework of human needs. Some other international organizations have adopted the CBD definition, but included further considerations in policy positions, e.g., the International Union for Conservation of Nature states that it is ‘committed to ensure that any use of wild species is equitable and ecologically sustainable’ (IUCN Resolution 2.29, 2000). Other formulations, e.g., the White Oak principles, include a clearly articulated social dimension as well: “a dynamic process toward which one strives in order to maintain biodiversity and enhance ecological and socio-economic services, recognizing that the greater the equity and degree of participation in governance, the greater the likelihood of achieving these objectives for present and future generations”. The sustainable use assessment’s definition of sustainable use considers both the ecological and social dimensions and should be understood as applying to multiple aspects of human-ecological interactions around use (see below and Figure 1. 3).
+
+Indigenous and local knowledge offer additional perspectives on sustainable use. Many indigenous peoples regard humans and wild species as relatives, existing in relationships like those of the members of a family, in which each has an essential role to play (IPBES, 2019a, 2019b; Muir et al., 2020). In this worldview, the social and ecological dimensions of the use of wild species are inseparable (Nadasdy, 2007; Polfus et al., 2016; Robinson & Raven, 2019). To be sustainable, the use of wild species should ensure the well-being of both humans and other species (Sangha et al., 2015). Seen through this lens, to choose between human well-being and that of wild species is both unethical and untenable.
+
+In defining sustainable use, the following aspects, which are discussed thoroughly in Chapter 2, are critical to this assessment:
+
+Sustainable use is an outcome of social-ecological systems, in which nature’s contributions to people derived from extractive or non-extractive uses of wild species are managed to meet current human needs while maintaining or co-creating natural systems that promote the continued survival of the species being used and the ongoing provision of nature’s contributions to people. It is not, and cannot be, a static endpoint because the target species, the ecosystems that support them, and the social systems within which uses occur are dynamic and change over time and space. Consequently, the sustainability of use is an ongoing adaptive process, which may be depicted as follows: (i) assess status and trends in wild species under use, (ii) identify drivers of (un) sustainability, (iii) adapt uses and management (which may include, if necessary, stopping use for a period of time), (iv) re-assess after a given time interval and re-adapt use and management if needed.
+
+Sustainable use has a narrower and more specific meaning than sustainable development or sustainable management and these should not be used as synonyms. Sustainable development has a clear economic basis and can be seen as a quest to reconcile economic growth with social and ecological challenges and problems (often conceptualized through the three-pillars, social-economic-environmental, diagram, see Purvis et al. (2019)). Sustainable management also encompasses a broader array of actions related to the reduction of environmental, and social (including economic) impacts associated with any activity, not only use (Cooney, 2007).
+
+Sustainable use emerges from social-ecological systems that meet human needs without compromising ecosystem health. Sustainable use is thus not limited to anthropocentric considerations (i.e., the sustainability of the use for the benefit of people) or to ecological/environmental considerations (i.e., the conservation of the target resource from an ecosystem perspective). Rather, it encompasses both social and ecological considerations as well as the multiple aspects of their interactions.
+
+Human views on sustainable use are diverse, resulting from local, indigenous and scientific knowledge that should each be appreciated as relevant experiments in sustainable use from which people can learn.
+
+For practical purposes, especially for an assessment of this nature, the definition of sustainable use or what is assessed as being sustainable, needs to be precise enough that assessors can determine whether or not use is sustainable.
+
+Sustainability should therefore be clearly defined through a set of specific targets or indicators in the social and ecological domains. Ideally, this set of indicators should be developed jointly by all the actors of the social-ecological system.
+
+Animal welfare and animal protection are important considerations receiving increasing social, ethical and legal consideration worldwide (see the Global Sustainable Development Report 2019 by the Independent Group of Scientists appointed by the Secretary-General). Animal welfare is increasingly incorporated into the concepts of sustainable use of wild species, but it was not identified in the scoping report for the IPBES assessment of the sustainable use of wild species (annex IV to decision IPBES-5/1). Therefore, animal welfare was not addressed in this assessment.""" ;
+    dcterms:identifier "1.3.1" ;
+    skos:prefLabel "Defining sustainable use" .
+
+<http://ontology.ipbes.net/report/sch/SUA22-2.2.3> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-B>,
+        <http://ontology.ipbes.net/report/key/SUA22-C> ;
+    ipbes:Report ipbes:SUA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-2.2> ;
+    dcterms:identifier "2.2.3" ;
+    skos:prefLabel "Current academic conceptualization of sustainable use by practice" .
 
 <http://ontology.ipbes.net/report/sch/SUA22-3.2.1.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch3> ;
@@ -59880,40 +59904,6 @@ Regarding policies for securing sustainable small-scale fisheries, investments i
     dcterms:identifier "5.4.2.6" ;
     skos:prefLabel "Political" .
 
-<http://ontology.ipbes.net/report/sch/SUA22-1.1.1> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch1> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-A> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2344805/items/3Q49BQQW>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/3VCC6HMA>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/44YM8BPL>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/5F6IBU5V>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/94FGDH7S>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/AB942MBX>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/C29NHAMV>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/D2JBAK2R>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/IBENJ9QP>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/LYX5IXNY>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/MVVRMNQX>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/QKF99EKX>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/V8AECTQY>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/WZBYGGSA>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/YABIYX4Z> ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-1.1> ;
-    ipbes:hasDescription """All uses of wild species are embedded in social-ecological systems, defined as complex adaptive systems that include social (human) and ecological (biophysical) subsystems in a two-way feedback relationship (Berkes, 2011; Chapin et al., 2009). Because the social and ecological subsystems function as a coupled, interdependent and co-evolutionary system (Berkes & Folke, 1998), social-ecological systems constitute natural units of analysis of the sustainability of wild species use. An analytical framework proposed by Ostrom (2009) distinguishes four interacting subsystems which comprise the resource units (e.g., fish), the resource systems (e.g., coastal fishery), the users (fishers) and the governance systems (organizations and rules that govern fishing on that coast). These components interact to produce outcomes at the system level, which are also influenced by external drivers (see Figure 1. 1). For the purpose of this assessment, drivers are recognized as all the factors that directly or indirectly influence the use of wild species, such as environmental, economic or cultural drivers (see Chapter 4).
-
-A first step for undertaking an assessment of the sustainable use of wild species is to recognize the diverse ways in which people use wild species. This diversity results from the intersection of several dimensions (Figure 1. 1), primarily: (i) the wild species used by people, which encompass all main species groups, including algae, animals, fungi and plants, from freshwater, marine and terrestrial habitats; (ii) the goods and services derived from those species, referred to in this assessment as “uses”, including food, energy, materials, medicine or recreation (see section 1.3.4); (iii) the means or practices used to obtain benefits from wild species, including extractive and non-extractive practices; (iv) the destination and distribution of benefits derived from wild species, ranging from personal/family use or consumption to products sold in local informal markets, to those traded as global commodities in the international market; and (v) the statutory, customary and informal institutions, access regimes and rules that regulate uses and practices. The intensity of use of wild species and the scale of the operations involved vary enormously and are the main factors in evaluating sustainability and suitable forms of regulation. Furthermore, the components are affected by various drivers and the way they are managed can determine whether the outcomes of such complex social-ecological systems are consistent with sustainable use.
-
-The use of wild species involves various practices associated with their harvest and/or other kinds of interactions with them. For the purpose of the assessment, these practices have been classified into five categories, which are generally associated with the species in use, i.e., fishing, gathering, terrestrial animal harvesting, logging and non-extractive practices. While most practices used to obtain benefits from wild species clearly fit within one of these five categories, there are some that are not so obviously classified. To avoid ambiguity, a working definition of the five practices for use across all chapters is developed in Section 1.3.4. Within each practice, uses may be characterized by the users, the wild species and ecosystems used, their interactions and the context within which uses occur.
-
-The wide diversity of uses within each practice needs to be considered in order to provide a balanced and representative assessment of the sustainable use of wild species, as well as a suitable analysis of possible pathways to further sustainability. For example, a discussion of policy measures that may be effective at achieving sustainable fishing needs to consider the full spectrum of tools and institutions, but also the different types of fishing categories and operations, as well as the local context. What may work for large, industrial fisheries from regions with strong management capacity and resources tends not to be suitable for the management of small-scale artisanal fisheries, especially in resource and capacity-limited situations (FAO, 2020b; Hilborn et al., 2020). This lack of singular solutions and the dependency of most suitable forms of governance and tools on the attributes of the social-ecological system involved and the operational scale and intensity of wild species use is common to all the practices.
-
-The operational scales of extractive practices cover the full spectrum, ranging from manual gathering of a few grams of biomass to highly technological and capital-intensive harvesting methods that remove tons. While the total quantity extracted relative to the total population biomass or abundance (i.e., the harvest rate) has direct implications for the impact and sustainability of extraction, the operational scale of an extractive activity also has implications for the types of regulations and regulatory schemes that may be most effective to achieve sustainability (Kurien & Willmann, 2009; Parma et al., 2006). For example, depending on the intensity of use, the population impact of a small-scale artisanal extraction is not necessarily lower than that of an industrial operation; however, the suitable means for keeping harvest rates within sustainable levels will likely be very different (see Table 6.5 in Chapter 6, section 6.4.4.5). Similarly, non-extractive uses include a wide range of operational scales which have different regulatory implications, from individual experiences of watching wild species for recreation and inspiration to the high-end tourist industry built around whale watching, diving or game watching. Especially at the large-scale end of the spectrum, non-extractive recreational uses supporting the tourist industry can have negative impacts on wild species and the ecosystems they inhabit if not properly conducted; hence the need for guidelines and regulations (e.g., Parsons & Brown, 2017; Tapper, 2006, see also Chapter 4).
-
-When the complex social-ecological systems of wild species uses are managed to maintain and/or enhance nature’s contributions to people while ensuring the productivity of the species (or population) used and the integrity and functioning of the ecosystems in which they occur are preserved to meet current and future human needs, sustainable use is one possible outcome. However, outcomes may be highly heterogeneous across the different dimensions of the social-ecological system, and specific management interventions may be focused on strengthening sustainability of the resource system (e.g., reduce harvest rate to improve population status), the users (e.g., build users capacity) or the governance system (improve institutional arrangements) (Leslie et al., 2015). Furthermore, these complex interactive systems can be managed to produce wider ecosystem outcomes linked to sustainable use, beyond sustaining the wild species used and the direct benefits derived from them, such as to incentivise habitat and biodiversity conservation (Abensperg-Traun, 2009; Allen & Edwards, 1995) or to improve human well-being and achieve sustainable development goals (Mahapatra & Mitchell, 1997; Pullanikkatil & Shackleton, 2019).""" ;
-    dcterms:identifier "1.1.1" ;
-    skos:prefLabel "Diverse uses of wild species by people and practices associated with them" .
-
 <http://ontology.ipbes.net/report/sch/SUA22-2.2.8.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2344805/items/4MTNIXUY>,
@@ -60264,6 +60254,40 @@ Resource rights are undergoing change alongside broader views of property rights
     dcterms:identifier "6.4.4.1" ;
     skos:prefLabel "Tenure, access, and property rights" .
 
+<http://ontology.ipbes.net/report/sch/SUA22-1.1.1> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch1> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-A> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2344805/items/3Q49BQQW>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/3VCC6HMA>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/44YM8BPL>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/5F6IBU5V>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/94FGDH7S>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/AB942MBX>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/C29NHAMV>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/D2JBAK2R>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/IBENJ9QP>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/LYX5IXNY>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/MVVRMNQX>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/QKF99EKX>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/V8AECTQY>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/WZBYGGSA>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/YABIYX4Z> ;
+    ipbes:Report ipbes:SUA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-1.1> ;
+    ipbes:hasDescription """All uses of wild species are embedded in social-ecological systems, defined as complex adaptive systems that include social (human) and ecological (biophysical) subsystems in a two-way feedback relationship (Berkes, 2011; Chapin et al., 2009). Because the social and ecological subsystems function as a coupled, interdependent and co-evolutionary system (Berkes & Folke, 1998), social-ecological systems constitute natural units of analysis of the sustainability of wild species use. An analytical framework proposed by Ostrom (2009) distinguishes four interacting subsystems which comprise the resource units (e.g., fish), the resource systems (e.g., coastal fishery), the users (fishers) and the governance systems (organizations and rules that govern fishing on that coast). These components interact to produce outcomes at the system level, which are also influenced by external drivers (see Figure 1. 1). For the purpose of this assessment, drivers are recognized as all the factors that directly or indirectly influence the use of wild species, such as environmental, economic or cultural drivers (see Chapter 4).
+
+A first step for undertaking an assessment of the sustainable use of wild species is to recognize the diverse ways in which people use wild species. This diversity results from the intersection of several dimensions (Figure 1. 1), primarily: (i) the wild species used by people, which encompass all main species groups, including algae, animals, fungi and plants, from freshwater, marine and terrestrial habitats; (ii) the goods and services derived from those species, referred to in this assessment as “uses”, including food, energy, materials, medicine or recreation (see section 1.3.4); (iii) the means or practices used to obtain benefits from wild species, including extractive and non-extractive practices; (iv) the destination and distribution of benefits derived from wild species, ranging from personal/family use or consumption to products sold in local informal markets, to those traded as global commodities in the international market; and (v) the statutory, customary and informal institutions, access regimes and rules that regulate uses and practices. The intensity of use of wild species and the scale of the operations involved vary enormously and are the main factors in evaluating sustainability and suitable forms of regulation. Furthermore, the components are affected by various drivers and the way they are managed can determine whether the outcomes of such complex social-ecological systems are consistent with sustainable use.
+
+The use of wild species involves various practices associated with their harvest and/or other kinds of interactions with them. For the purpose of the assessment, these practices have been classified into five categories, which are generally associated with the species in use, i.e., fishing, gathering, terrestrial animal harvesting, logging and non-extractive practices. While most practices used to obtain benefits from wild species clearly fit within one of these five categories, there are some that are not so obviously classified. To avoid ambiguity, a working definition of the five practices for use across all chapters is developed in Section 1.3.4. Within each practice, uses may be characterized by the users, the wild species and ecosystems used, their interactions and the context within which uses occur.
+
+The wide diversity of uses within each practice needs to be considered in order to provide a balanced and representative assessment of the sustainable use of wild species, as well as a suitable analysis of possible pathways to further sustainability. For example, a discussion of policy measures that may be effective at achieving sustainable fishing needs to consider the full spectrum of tools and institutions, but also the different types of fishing categories and operations, as well as the local context. What may work for large, industrial fisheries from regions with strong management capacity and resources tends not to be suitable for the management of small-scale artisanal fisheries, especially in resource and capacity-limited situations (FAO, 2020b; Hilborn et al., 2020). This lack of singular solutions and the dependency of most suitable forms of governance and tools on the attributes of the social-ecological system involved and the operational scale and intensity of wild species use is common to all the practices.
+
+The operational scales of extractive practices cover the full spectrum, ranging from manual gathering of a few grams of biomass to highly technological and capital-intensive harvesting methods that remove tons. While the total quantity extracted relative to the total population biomass or abundance (i.e., the harvest rate) has direct implications for the impact and sustainability of extraction, the operational scale of an extractive activity also has implications for the types of regulations and regulatory schemes that may be most effective to achieve sustainability (Kurien & Willmann, 2009; Parma et al., 2006). For example, depending on the intensity of use, the population impact of a small-scale artisanal extraction is not necessarily lower than that of an industrial operation; however, the suitable means for keeping harvest rates within sustainable levels will likely be very different (see Table 6.5 in Chapter 6, section 6.4.4.5). Similarly, non-extractive uses include a wide range of operational scales which have different regulatory implications, from individual experiences of watching wild species for recreation and inspiration to the high-end tourist industry built around whale watching, diving or game watching. Especially at the large-scale end of the spectrum, non-extractive recreational uses supporting the tourist industry can have negative impacts on wild species and the ecosystems they inhabit if not properly conducted; hence the need for guidelines and regulations (e.g., Parsons & Brown, 2017; Tapper, 2006, see also Chapter 4).
+
+When the complex social-ecological systems of wild species uses are managed to maintain and/or enhance nature’s contributions to people while ensuring the productivity of the species (or population) used and the integrity and functioning of the ecosystems in which they occur are preserved to meet current and future human needs, sustainable use is one possible outcome. However, outcomes may be highly heterogeneous across the different dimensions of the social-ecological system, and specific management interventions may be focused on strengthening sustainability of the resource system (e.g., reduce harvest rate to improve population status), the users (e.g., build users capacity) or the governance system (improve institutional arrangements) (Leslie et al., 2015). Furthermore, these complex interactive systems can be managed to produce wider ecosystem outcomes linked to sustainable use, beyond sustaining the wild species used and the direct benefits derived from them, such as to incentivise habitat and biodiversity conservation (Abensperg-Traun, 2009; Allen & Edwards, 1995) or to improve human well-being and achieve sustainable development goals (Mahapatra & Mitchell, 1997; Pullanikkatil & Shackleton, 2019).""" ;
+    dcterms:identifier "1.1.1" ;
+    skos:prefLabel "Diverse uses of wild species by people and practices associated with them" .
+
 <http://ontology.ipbes.net/report/sch/SUA22-1.6> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch1> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-A> ;
@@ -60547,111 +60571,6 @@ Payment in the form of access or entrance fees (see 6.4.2.1 on fees) for wildlif
     dcterms:identifier "6.4.2.3" ;
     skos:prefLabel "Sustainability finance mechanisms" .
 
-<http://ontology.ipbes.net/report/sch/SUA22-1.3.4> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch1> ;
-    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-A> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2344805/items/3BNLEIHN>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/3E2Y3CQI>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/6E5D8ULM>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/6LTKDQTF>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/8LNRCBGI>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/9QJZ4T7Z>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/A6FP6AF5>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/B5P5G9D6>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/BD3KX62A>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/CS9GUB44>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/FF3Y3SGW>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/GVLDA89Q>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/IEHT7QZ6>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/L9N7XCWM>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/MAX6B4X5>,
-        <http://ontology.ipbes.net/report/ref/2344805/items/SHE47KF5> ;
-    ipbes:Report ipbes:SUA22 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-1.3> ;
-    ipbes:hasDescription """As set out in Section 1.1.2, the core factors to consider in the IPBES assessment of the sustainable use of wild species are the components of nature that are affected (wild species), the practices associated with the use of wild species, and their end uses, i.e., nature’s contributions to people. These take place within particular cultures, economies, governance systems, and technological developments. To ensure consistency across the assessment, and to facilitate the distillation of key findings, a common organizing structure has been used throughout and is summarized in Figure 1. 5. Categories within each system for the use of wild species are presented in diagram form below with narrative explanations in the subsequent paragraphs. They are not presented as a hierarchy but rather as interacting elements of the social-ecological systems of the use of wild species.
-
-It is worth noting that many categories are not mutually exclusive, a point essential to understanding wild species, their uses, and benefits to people. For example, many species occur in multiple ecosystems over the course of their lifecycle. Wild anadromous fish, such as salmonids are a case in point, as their lifecycle includes time spent in both freshwater and marine environments. Similarly, a single species may support multiple uses. For example, wild rice (Zizania palustris L.) is both a food and a ceremonial resource (see Box 1. 2), while the white gum tree or gum Arabic (Acacia senegal) is widely used as a food additive and in the pharmaceutical industry for medical puposes (Catarino et al., 2019). Also, a single species may be the focus of more than one practice, sometimes in the same location. In several African countries, large terrestrial animals are subject to non-extractive practices (wildlife watching) and trophy hunting (terrestrial animal harvesting).
-
-Species Groups. The sustainable use assessment used the following higher level categories of four species groups: (i) aquatic animals, (ii) plants (excluding trees), fungi and algae, (iii) trees and (iv) terrestrial animals because there are differences in the status of use and practices of these groups as well as in the policy options for managing their uses (Figure 1. 6).
-
-Biomes, ecoregions and ecosystems. Each population of a given group of species lives in a given ecosystem or ecoregion of a given biome. To avoid a level of detail that will obscure identification of key points for policy makers, some information may be analysed according to ecological biomes (terrestrial, marine and freshwater). These have been defined at a fairly high level using the typology adopted by the IPBES Global Assessment of Biodiversity and Ecosystem Services, which is more aggregated than most biological typologies. Elements that are relevant to this assessment are:
-
-Freshwater biomes are classified as: (i) wetlands and (ii) inland waters.
-
-Marine biomes are classified as: (i) coastal systems, (ii) shelf systems and (iii) open and deep seas.
-
-Terrestrial biomes are classified as: (i) grasslands-steppes-savannas, (ii) forests (iii) deserts and (iv) mountains. Where appropriate, ‘anthropogenic biomes’ are also included, namely urban areas and cultivated areas.
-
-For the purposes of this assessment, use of wild species involves both the practices associated with harvest or other direct interactions with wild species, as well as the end purpose for which the species is used (e.g., for food or medicine). Although the sustainable use of wild species has been discussed in academic and policy documents for more than 40 years, there is no single or accepted set of definitions for the practices associated with the use of wild species. Here the practices are defined to show how they have been applied in the assessment.
-
-The scoping report directs the assessment to consider consumptive and non-consumptive activities, or practices (Annex IV to decision IPBES-5/1, 2018). These terms have been in use for a long time, referring mostly to the use of wild animals (FAO, 1995). However, they can be confusing due to various possible interpretations of consumption, particularly when one is looking for a term that can be used for both plants and animals. Following the FAO, this assessment uses the alternative terms of extractive (consumptive) versus non-extractive (non-consumptive) practices. Extractive practices involve temporary or permanent removal of organisms, part of them or materials derived from them from their habitat, and may result in mortality of the individual to be used (e.g., hunting or whole plant harvest), but does not necessarily do so (e.g., limited collection of plant propagules or wild honey, or shearing and releasing of vicuña). Non-extractive use does not directly entail removal of materials from wild populations (e.g., wildlife photography) but may result in inadvertent mortality as a result of, for example, disease transmission at artificial feeders.
-
-For clarity, the sustainable use assessment then mapped different types and modalities of practices against the main taxonomic groups (Figure 1. 6). It started first by categorising the nature of different practices based on whether they were extractive or not, then on additional characteristics of the practices, such as whether it involved the entire organism or only a part or product of the organism. This mapping exercise showed that certain terms in common use were typically associated with a set of practices mostly aimed at one higher taxonomic group, e.g., fishing incorporates several practices relating to the extractive use of aquatic animals. In order to align with common understandings, the sustainable use assessment employed the terms fishing, gathering, and logging to cover the practices set out in Figure 1. 6. The one deviation from this approach was for hunting. Whereas fishing is understood as almost any practice relating to the harvest of aquatic animals, and can even be applied to harvest of animals in captivity, hunting generally applies only to activities that result in the death of the target animals and is not commonly applied when there is no direct, intentional mortality, again, as in the example of vicuña shearing and release. As a result, terrestrial animal harvesting has been adopted as the generic term for the extractive practice focused on terrestrial animals (see below for a full definition).
-
-Extractive practices. Extractive practices are broken down into the five following categories.
-
-Note: The definitions of practices are not intended to reflect on their impact. That is the role of the assessments that follow in Chapters 2-6. As a result, the definitions of non-lethal fishing and terrestrial animal harvesting should not be read as implying that these practices necessarily have less impact than lethal practices.
-
-Fishing. Fishing is defined as the removal from their habitats of aquatic animals (vertebrates and invertebrates) that spend their full life cycle in water (e.g., fish, some marine mammals, shellfish, shrimps, squids, corals). Fishing most often results in the death of the aquatic animal, but it may not in some cases. To reflect both situations, fishing has been sub-divided into a lethal and “non-lethal” category. Lethal fishing is defined as the general and more usual meaning of fishing that leads to the killing of the animal, such as in traditional commercial fisheries (Figure 1. 6). “Non-lethal” fishing is defined as the temporary or permanent capture of live animals from their habitat without intended mortality, such as in the aquarium fish trade or catch and release (Figure 1. 6). However, unintended mortality may occur in “non-lethal” fishing and the term “non-lethal” is therefore put in quotes. The killing of species that spend part of their life cycle in terrestrial environments (e.g., walrus, sea turtles) is encompassed by the definition of hunting.
-
-Gathering. Gathering is defined as the removal of terrestrial and aquatic algae, fungi, and plants (other than trees) or parts thereof from their habitats (Figure 1. 6). Gathering may, but often does not, result in the death of the organism. Gathering includes whole plant harvest and removal of above and below ground plant parts, as well as the fruiting bodies of macrofungi. It also includes removal of non-woody portions of trees (e.g., leaves, propagules, and bark). Where removal of propagules or death of an individual plant occurs (e.g., whole plant and root removal) effects on population sustainability are contingent upon factors including timing, frequency, and intensity of harvest (Figure 1. 6). The harvest of wood and woody parts of trees is encompassed by the definition of logging.
-
-Logging. Logging is defined as the removal of whole trees or woody parts of trees from their habitat (Figure 1. 6). Logging generally results in the death of the tree, but also includes cases in which it may not, such as coppicing. Logging occurs in forests that may be classified as primary, naturally regenerating, planted, and plantation (see below “other definitions”). This assessment does not address logging from plantation forests (except as it has bearing on the practice in the other forest types). Harvest of non-woody parts of trees (e.g., leaves, propagules and bark) are here defined as gathering.
-
-Terrestrial animal harvesting. Terrestrial animal harvesting is defined as the removal from their habitat of animals (vertebrates and invertebrates) that spend some or all of their life cycle in terrestrial environments. As with fishing, terrestrial animal harvesting often results in the death of the animal, but it may not in some cases. To reflect both situations, terrestrial animal harvesting has been sub-divided into a lethal and “non-lethal” category. Hunting is defined as terrestrial animal harvesting that leads to the killing of the animal, such as in trophy hunting or subsistence hunting (Figure 1. 6). “Non-lethal” terrestrial animal harvesting is defined as the temporary or permanent capture of live animals from their habitat without intended mortality, such as for the pet trade, falconry, or green hunting (Figure 1. 6). Non-lethal harvest of animals also includes removal of parts or products of animals that do not lead to the mortality of the host, such as vicuña fibre or wild honey. Unintended mortality may however occur in this category and the term “non-lethal” is therefore put in quotes.
-
-Non-extractive practices. Non-extractive practices are defined as practices based on the observation of wild species in a way that does not involve the harvest or removal of any part of the organism (Figure 1. 6). Observation can include some interaction with the wild species, such as the activities of wildlife and whale watching or no interaction with the wild species, such as remote photography.
-
-Each of these practices and uses take place at multiple spatial and temporal scales, from the very large (hundreds to thousands of hectares) to the very small (single organisms) and from the long-term (over centuries) to the very short-term (days or weeks). They may involve technologies ranging from heavy machinery to manual tools or no tools. Likewise, they take place in economic contexts from supplying global commodity markets to satisfying household subsistence needs (see below).
-
-For the purposes of this assessment, the uses of wild species have been divided into eight categories, which are not mutually exclusive:
-
-Ceremony and ritual expression are defined as the uses of wild species in collective or individual spiritual observances, including those that may be valued for their role in maintaining cultural identity.
-
-Decorative and aesthetic are defined as the uses of wild species in order to produce handicrafts and objects of adornment, beauty, and/or entertainment.
-
-Energy is defined as the use of wild species to provide energy for heat, cooking, water sterilization, etc.
-
-Food and feed are defined as the uses of wild species to provide food for humans and domestic animals.
-
-Learning and education are defined as uses of wild species in which the production of knowledge is a primary value.
-
-Materials and construction are defined as the uses of wild species to create shelter for humans or animals and to produce objects such as cordage.
-
-Medicine and hygiene are defined as the uses of wild species to heal illnesses or promote health and well-being of humans and domestic animals.
-
-Recreation is defined as the uses of wild species in which enjoyment is considered a primary value.
-
-Other is defined as the uses of wild species that are not encompassed by the categories above, such as companionship (i.e., pets).
-
-While the main components outlined in the scoping document have been defined in the previous sub-sections, it is also important to define key components of some practices (e.g., small-scale fisheries) as they are used in this assessment.
-
-Small-scale versus industrial fisheries. Following the definition from the FAO (2001), the assessment considers that a fishery is a unit determined by an authority or other entity that is engaged in raising and/or harvesting fish. This unit is defined in terms of the people involved, species or type of fish, area of water or seabed, method of fishing, class of boats and purpose of the activities (see Glossary). International bodies often refer to specific fisheries categories, especially to small-scale fisheries. However, this category remains an unresolved (often fuzzy) category, which still generates a large debate within the scientific community, as well as within international bodies.
-
-In its report of the Second Session of the Working Party on Small-scale Fisheries (2004), the Advisory Committee on Fisheries Research of the FAO concluded that there was no globally agreed definition of small-scale fisheries and its Small Scale Fisheries Guidelines did not prescribe a standard definition of small-scale fisheries, but underlined the need to ascertain which activities and operators are considered small-scale.
-
-The report of the FAO on “Improving our knowledge on small-scale fisheries: data needs and methodologies” (Basurto et al., 2017) proposed a matrix approach for the characterization of diverse small-scale fisheries. This matrix (see Table 1. 2) allows a value to be assigned to each characteristic which can then be aggregated into an overall score, allowing for clearer disaggregation between large-scale fisheries and small-scale fisheries, which is based on the following characteristics:
-
-The World Ocean Assessment (see Ferreira et al., 2016) gives the following definition: “Capture fisheries and aquaculture operate at many geographical scales, and vary in how they use marine resources for food production. Here, “small-scale” refers to operations that are generally low capital investment but high labour activities, relatively low production, and often family or community-based with a part of the catch being consumed by the producers (Béné et al., 2007; Garcia et al., 2008). Large-scale operations require significantly more capital equipment and expenditure, are more highly mechanized and their businesses are more vertically integrated, with generally global market access rather than focused on local consumption. These descriptions are at the ends of a spectrum continuum of scales with enormous variation in between.”
-
-The IPBES Global Assessment provides a definition for small scale fisheries only, based on the portal of the FAO (2018a), as follows: “Small-scale or non-industrial fisheries: Traditional fishing performed by family units rather than commercial units, using a relatively small amount of capital and energy, and carrying out short fishing trips close to coasts and mainly for local consumption”.
-
-According to the above reports and the fact that the IPBES assessment of the sustainable use of wild species needs common guidelines on the different types of fisheries to ensure consistency across chapters, it is acknowledged that capture fisheries operate at many geographical scales and vary in how they use marine resources for food production. The main fisheries categories are further distinguished as:
-
-Small-scale fisheries generally present (some of) the following characterics: (i) low capital investment, (ii) high labour activities often family or community-based, (iii) no vessel or small size vessel (< 12m and < 10 GT), (iv) relatively low production, which is household consumed or locally and directly sold and (v) operating close to the shoreline on a single day basis.
-
-Industrial fisheries generally present (some of) the following characterics: (i) high capital equipment and expenditure, (ii) high level of mechanization, motorization and onboard processing, (iii) large vessel size (> 24 m and > 50 GT), (iv) based on a more vertically integrated business, with generally global market access, (v) operating offshore on a multi-day basis.
-
-Organization and scale of logging. The organization of logging can be understood through the intersection of forest types, forest management objectives and forest ownership, including governance structures and institutions. Logging occurs in forests that may be characterized along a continuum of intensities of human intervention anchored at the one end by primary forests and at the other by plantation forests. Following the terms and definitions laid out in the Global Forest Resource Assessment 2020 by the FAO, the sustainable use assessment understands primary forests to be “naturally regenerated forest of native tree species, where there are no clearly visible indications of human activities and the ecological processes are not significantly disturbed” (FAO, 2020a), while plantation forests consist of areas in which the trees are deliberately planted (whether native or introduced species) often with the intent to produce wood, fiber or energy on a short rotation interval and do not resemble naturally regenerating forests at maturity (FAO, 2020a). Although boundaries between them can be fuzzy, intermediate levels of human manipulation of forests include naturally regenerating forests (i.e., composed in their majority, but not necessarily exclusively, of native and/or introduced tree species) and planted forests, which are dominated by trees that have been deliberately planted as saplings and/or seeds (FAO, 2020a). Broadly speaking, levels of labor and/or capital investment required to establish these forest types correspond with the intensity of human intervention. That is, such investments are lowest for primary forests and greatest for plantation forests.
-
-Logging occurs in forests that are managed for one primary objective or for multiple uses, with the volume of biomass removal ranging from coppice forestry, in which living trees remain on the landscape (Fabbio, 2016; Unrau et al., 2018), to even-aged management systems (i.e., clear cutting), with all trees removed from an area (Savilaakso et al., 2021). Timber is most obviously harvested to obtain wood and fiber for use as energy and construction materials (FAO & UNEP, 2020), but also is used in the production of decorative, aesthetic and ceremonial or ritual objects (Diamond & Emery, 2011; Frey et al., 2019; Johnson et al., 2021). Some logging also may occur on forest lands for which the primary management objective is protection of soil and water, conservation of biodiversity or provision of social benefits such as education and recreation (FAO, 2020a).
-
-Forest ownership is the right to “use, control, transfer, or otherwise benefit from…the trees growing on land classified as forest” (FAO, 2020a) and may be separate from ownership of the land on which those trees are growing. Forest ownership types include: (i) local, tribal and indigenous communities, (ii) private and (iii) public entities (FAO, 2020a). Group ownership and management for group benefit are a shared characteristics of local, tribal and indigenous community forests. However, there is great variation in the governance structures and institutions through which they are established and managed. Private forest ownerships include individuals, businesses, and institutions with profit or non-profit aims. Approximately 22% of global forest area is in private forest ownership (FAO, 2020a), which may range in size from a few hectares to 2,000 or more hectares. An estimated 73% of global forest area is owned by public entities (e.g., the State, administrative arms of the State and parastatal entities) (FAO, 2020a) but logging on these lands may be carried out by local, tribal and indigenous communities or private entities through forest concessions (see, for example, FAO & EFI, 2018).
-
-As with fishing, there is no easy crosswalk between forest type, management objective and ownership in which logging occurs. This assessment examines them as distinct and interacting aspects that influence the sustainability of this practice.""" ;
-    dcterms:identifier "1.3.4" ;
-    skos:prefLabel "Organizing structure" .
-
 <http://ontology.ipbes.net/report/sch/SUA22-3.3.5.2.1> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch3> ;
     ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-A> ;
@@ -60870,6 +60789,111 @@ Compensation payments, which can also be conceptualized as a conservation subsid
 A large majority of compensation schemes are based on ex-post compensation (Ravenelle & Nyhus, 2017; Schwerdtner & Gruber, 2007). However, even when they are effective, they have been widely criticized because compensation is not tied to incentives (Maheshwari et al., 2014; Nyhus et al., 2005). This criticism has led to the development of payment in advance and performance payment approaches (Nyhus et al., 2005; Schwerdtner & Gruber, 2007). The key difference between these approaches and ex-post compensation is that the affected receives compensation in advance (prior to predation damage on livestock or agricultural loss) with a grant or subsidized loan (Schwerdtner & Gruber, 2007). Therefore, this approach creates incentives for locals to seek technical support and acquire materials (e.g., electric fencing) to improve husbandry practices and to maintain carnivores in the landscape (Maheshwari et al., 2014; Zabel & Engel, 2010). Positively valuing a species or habitat is a prerequisite for investing in conservation action. Hence, a species or habitat is more secure, if it is valued by as many people in the community as possible for a diversity of different reasons/values, both intrinsic and utility (Webb, 2015).""" ;
     dcterms:identifier "6.4.2.2" ;
     skos:prefLabel "Subsidies and incentives" .
+
+<http://ontology.ipbes.net/report/sch/SUA22-1.3.4> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch1> ;
+    ipbes:KeyMessage <http://ontology.ipbes.net/report/key/SUA22-A> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2344805/items/3BNLEIHN>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/3E2Y3CQI>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/6E5D8ULM>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/6LTKDQTF>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/8LNRCBGI>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/9QJZ4T7Z>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/A6FP6AF5>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/B5P5G9D6>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/BD3KX62A>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/CS9GUB44>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/FF3Y3SGW>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/GVLDA89Q>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/IEHT7QZ6>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/L9N7XCWM>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/MAX6B4X5>,
+        <http://ontology.ipbes.net/report/ref/2344805/items/SHE47KF5> ;
+    ipbes:Report ipbes:SUA22 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SUA22-1.3> ;
+    ipbes:hasDescription """As set out in Section 1.1.2, the core factors to consider in the IPBES assessment of the sustainable use of wild species are the components of nature that are affected (wild species), the practices associated with the use of wild species, and their end uses, i.e., nature’s contributions to people. These take place within particular cultures, economies, governance systems, and technological developments. To ensure consistency across the assessment, and to facilitate the distillation of key findings, a common organizing structure has been used throughout and is summarized in Figure 1. 5. Categories within each system for the use of wild species are presented in diagram form below with narrative explanations in the subsequent paragraphs. They are not presented as a hierarchy but rather as interacting elements of the social-ecological systems of the use of wild species.
+
+It is worth noting that many categories are not mutually exclusive, a point essential to understanding wild species, their uses, and benefits to people. For example, many species occur in multiple ecosystems over the course of their lifecycle. Wild anadromous fish, such as salmonids are a case in point, as their lifecycle includes time spent in both freshwater and marine environments. Similarly, a single species may support multiple uses. For example, wild rice (Zizania palustris L.) is both a food and a ceremonial resource (see Box 1. 2), while the white gum tree or gum Arabic (Acacia senegal) is widely used as a food additive and in the pharmaceutical industry for medical puposes (Catarino et al., 2019). Also, a single species may be the focus of more than one practice, sometimes in the same location. In several African countries, large terrestrial animals are subject to non-extractive practices (wildlife watching) and trophy hunting (terrestrial animal harvesting).
+
+Species Groups. The sustainable use assessment used the following higher level categories of four species groups: (i) aquatic animals, (ii) plants (excluding trees), fungi and algae, (iii) trees and (iv) terrestrial animals because there are differences in the status of use and practices of these groups as well as in the policy options for managing their uses (Figure 1. 6).
+
+Biomes, ecoregions and ecosystems. Each population of a given group of species lives in a given ecosystem or ecoregion of a given biome. To avoid a level of detail that will obscure identification of key points for policy makers, some information may be analysed according to ecological biomes (terrestrial, marine and freshwater). These have been defined at a fairly high level using the typology adopted by the IPBES Global Assessment of Biodiversity and Ecosystem Services, which is more aggregated than most biological typologies. Elements that are relevant to this assessment are:
+
+Freshwater biomes are classified as: (i) wetlands and (ii) inland waters.
+
+Marine biomes are classified as: (i) coastal systems, (ii) shelf systems and (iii) open and deep seas.
+
+Terrestrial biomes are classified as: (i) grasslands-steppes-savannas, (ii) forests (iii) deserts and (iv) mountains. Where appropriate, ‘anthropogenic biomes’ are also included, namely urban areas and cultivated areas.
+
+For the purposes of this assessment, use of wild species involves both the practices associated with harvest or other direct interactions with wild species, as well as the end purpose for which the species is used (e.g., for food or medicine). Although the sustainable use of wild species has been discussed in academic and policy documents for more than 40 years, there is no single or accepted set of definitions for the practices associated with the use of wild species. Here the practices are defined to show how they have been applied in the assessment.
+
+The scoping report directs the assessment to consider consumptive and non-consumptive activities, or practices (Annex IV to decision IPBES-5/1, 2018). These terms have been in use for a long time, referring mostly to the use of wild animals (FAO, 1995). However, they can be confusing due to various possible interpretations of consumption, particularly when one is looking for a term that can be used for both plants and animals. Following the FAO, this assessment uses the alternative terms of extractive (consumptive) versus non-extractive (non-consumptive) practices. Extractive practices involve temporary or permanent removal of organisms, part of them or materials derived from them from their habitat, and may result in mortality of the individual to be used (e.g., hunting or whole plant harvest), but does not necessarily do so (e.g., limited collection of plant propagules or wild honey, or shearing and releasing of vicuña). Non-extractive use does not directly entail removal of materials from wild populations (e.g., wildlife photography) but may result in inadvertent mortality as a result of, for example, disease transmission at artificial feeders.
+
+For clarity, the sustainable use assessment then mapped different types and modalities of practices against the main taxonomic groups (Figure 1. 6). It started first by categorising the nature of different practices based on whether they were extractive or not, then on additional characteristics of the practices, such as whether it involved the entire organism or only a part or product of the organism. This mapping exercise showed that certain terms in common use were typically associated with a set of practices mostly aimed at one higher taxonomic group, e.g., fishing incorporates several practices relating to the extractive use of aquatic animals. In order to align with common understandings, the sustainable use assessment employed the terms fishing, gathering, and logging to cover the practices set out in Figure 1. 6. The one deviation from this approach was for hunting. Whereas fishing is understood as almost any practice relating to the harvest of aquatic animals, and can even be applied to harvest of animals in captivity, hunting generally applies only to activities that result in the death of the target animals and is not commonly applied when there is no direct, intentional mortality, again, as in the example of vicuña shearing and release. As a result, terrestrial animal harvesting has been adopted as the generic term for the extractive practice focused on terrestrial animals (see below for a full definition).
+
+Extractive practices. Extractive practices are broken down into the five following categories.
+
+Note: The definitions of practices are not intended to reflect on their impact. That is the role of the assessments that follow in Chapters 2-6. As a result, the definitions of non-lethal fishing and terrestrial animal harvesting should not be read as implying that these practices necessarily have less impact than lethal practices.
+
+Fishing. Fishing is defined as the removal from their habitats of aquatic animals (vertebrates and invertebrates) that spend their full life cycle in water (e.g., fish, some marine mammals, shellfish, shrimps, squids, corals). Fishing most often results in the death of the aquatic animal, but it may not in some cases. To reflect both situations, fishing has been sub-divided into a lethal and “non-lethal” category. Lethal fishing is defined as the general and more usual meaning of fishing that leads to the killing of the animal, such as in traditional commercial fisheries (Figure 1. 6). “Non-lethal” fishing is defined as the temporary or permanent capture of live animals from their habitat without intended mortality, such as in the aquarium fish trade or catch and release (Figure 1. 6). However, unintended mortality may occur in “non-lethal” fishing and the term “non-lethal” is therefore put in quotes. The killing of species that spend part of their life cycle in terrestrial environments (e.g., walrus, sea turtles) is encompassed by the definition of hunting.
+
+Gathering. Gathering is defined as the removal of terrestrial and aquatic algae, fungi, and plants (other than trees) or parts thereof from their habitats (Figure 1. 6). Gathering may, but often does not, result in the death of the organism. Gathering includes whole plant harvest and removal of above and below ground plant parts, as well as the fruiting bodies of macrofungi. It also includes removal of non-woody portions of trees (e.g., leaves, propagules, and bark). Where removal of propagules or death of an individual plant occurs (e.g., whole plant and root removal) effects on population sustainability are contingent upon factors including timing, frequency, and intensity of harvest (Figure 1. 6). The harvest of wood and woody parts of trees is encompassed by the definition of logging.
+
+Logging. Logging is defined as the removal of whole trees or woody parts of trees from their habitat (Figure 1. 6). Logging generally results in the death of the tree, but also includes cases in which it may not, such as coppicing. Logging occurs in forests that may be classified as primary, naturally regenerating, planted, and plantation (see below “other definitions”). This assessment does not address logging from plantation forests (except as it has bearing on the practice in the other forest types). Harvest of non-woody parts of trees (e.g., leaves, propagules and bark) are here defined as gathering.
+
+Terrestrial animal harvesting. Terrestrial animal harvesting is defined as the removal from their habitat of animals (vertebrates and invertebrates) that spend some or all of their life cycle in terrestrial environments. As with fishing, terrestrial animal harvesting often results in the death of the animal, but it may not in some cases. To reflect both situations, terrestrial animal harvesting has been sub-divided into a lethal and “non-lethal” category. Hunting is defined as terrestrial animal harvesting that leads to the killing of the animal, such as in trophy hunting or subsistence hunting (Figure 1. 6). “Non-lethal” terrestrial animal harvesting is defined as the temporary or permanent capture of live animals from their habitat without intended mortality, such as for the pet trade, falconry, or green hunting (Figure 1. 6). Non-lethal harvest of animals also includes removal of parts or products of animals that do not lead to the mortality of the host, such as vicuña fibre or wild honey. Unintended mortality may however occur in this category and the term “non-lethal” is therefore put in quotes.
+
+Non-extractive practices. Non-extractive practices are defined as practices based on the observation of wild species in a way that does not involve the harvest or removal of any part of the organism (Figure 1. 6). Observation can include some interaction with the wild species, such as the activities of wildlife and whale watching or no interaction with the wild species, such as remote photography.
+
+Each of these practices and uses take place at multiple spatial and temporal scales, from the very large (hundreds to thousands of hectares) to the very small (single organisms) and from the long-term (over centuries) to the very short-term (days or weeks). They may involve technologies ranging from heavy machinery to manual tools or no tools. Likewise, they take place in economic contexts from supplying global commodity markets to satisfying household subsistence needs (see below).
+
+For the purposes of this assessment, the uses of wild species have been divided into eight categories, which are not mutually exclusive:
+
+Ceremony and ritual expression are defined as the uses of wild species in collective or individual spiritual observances, including those that may be valued for their role in maintaining cultural identity.
+
+Decorative and aesthetic are defined as the uses of wild species in order to produce handicrafts and objects of adornment, beauty, and/or entertainment.
+
+Energy is defined as the use of wild species to provide energy for heat, cooking, water sterilization, etc.
+
+Food and feed are defined as the uses of wild species to provide food for humans and domestic animals.
+
+Learning and education are defined as uses of wild species in which the production of knowledge is a primary value.
+
+Materials and construction are defined as the uses of wild species to create shelter for humans or animals and to produce objects such as cordage.
+
+Medicine and hygiene are defined as the uses of wild species to heal illnesses or promote health and well-being of humans and domestic animals.
+
+Recreation is defined as the uses of wild species in which enjoyment is considered a primary value.
+
+Other is defined as the uses of wild species that are not encompassed by the categories above, such as companionship (i.e., pets).
+
+While the main components outlined in the scoping document have been defined in the previous sub-sections, it is also important to define key components of some practices (e.g., small-scale fisheries) as they are used in this assessment.
+
+Small-scale versus industrial fisheries. Following the definition from the FAO (2001), the assessment considers that a fishery is a unit determined by an authority or other entity that is engaged in raising and/or harvesting fish. This unit is defined in terms of the people involved, species or type of fish, area of water or seabed, method of fishing, class of boats and purpose of the activities (see Glossary). International bodies often refer to specific fisheries categories, especially to small-scale fisheries. However, this category remains an unresolved (often fuzzy) category, which still generates a large debate within the scientific community, as well as within international bodies.
+
+In its report of the Second Session of the Working Party on Small-scale Fisheries (2004), the Advisory Committee on Fisheries Research of the FAO concluded that there was no globally agreed definition of small-scale fisheries and its Small Scale Fisheries Guidelines did not prescribe a standard definition of small-scale fisheries, but underlined the need to ascertain which activities and operators are considered small-scale.
+
+The report of the FAO on “Improving our knowledge on small-scale fisheries: data needs and methodologies” (Basurto et al., 2017) proposed a matrix approach for the characterization of diverse small-scale fisheries. This matrix (see Table 1. 2) allows a value to be assigned to each characteristic which can then be aggregated into an overall score, allowing for clearer disaggregation between large-scale fisheries and small-scale fisheries, which is based on the following characteristics:
+
+The World Ocean Assessment (see Ferreira et al., 2016) gives the following definition: “Capture fisheries and aquaculture operate at many geographical scales, and vary in how they use marine resources for food production. Here, “small-scale” refers to operations that are generally low capital investment but high labour activities, relatively low production, and often family or community-based with a part of the catch being consumed by the producers (Béné et al., 2007; Garcia et al., 2008). Large-scale operations require significantly more capital equipment and expenditure, are more highly mechanized and their businesses are more vertically integrated, with generally global market access rather than focused on local consumption. These descriptions are at the ends of a spectrum continuum of scales with enormous variation in between.”
+
+The IPBES Global Assessment provides a definition for small scale fisheries only, based on the portal of the FAO (2018a), as follows: “Small-scale or non-industrial fisheries: Traditional fishing performed by family units rather than commercial units, using a relatively small amount of capital and energy, and carrying out short fishing trips close to coasts and mainly for local consumption”.
+
+According to the above reports and the fact that the IPBES assessment of the sustainable use of wild species needs common guidelines on the different types of fisheries to ensure consistency across chapters, it is acknowledged that capture fisheries operate at many geographical scales and vary in how they use marine resources for food production. The main fisheries categories are further distinguished as:
+
+Small-scale fisheries generally present (some of) the following characterics: (i) low capital investment, (ii) high labour activities often family or community-based, (iii) no vessel or small size vessel (< 12m and < 10 GT), (iv) relatively low production, which is household consumed or locally and directly sold and (v) operating close to the shoreline on a single day basis.
+
+Industrial fisheries generally present (some of) the following characterics: (i) high capital equipment and expenditure, (ii) high level of mechanization, motorization and onboard processing, (iii) large vessel size (> 24 m and > 50 GT), (iv) based on a more vertically integrated business, with generally global market access, (v) operating offshore on a multi-day basis.
+
+Organization and scale of logging. The organization of logging can be understood through the intersection of forest types, forest management objectives and forest ownership, including governance structures and institutions. Logging occurs in forests that may be characterized along a continuum of intensities of human intervention anchored at the one end by primary forests and at the other by plantation forests. Following the terms and definitions laid out in the Global Forest Resource Assessment 2020 by the FAO, the sustainable use assessment understands primary forests to be “naturally regenerated forest of native tree species, where there are no clearly visible indications of human activities and the ecological processes are not significantly disturbed” (FAO, 2020a), while plantation forests consist of areas in which the trees are deliberately planted (whether native or introduced species) often with the intent to produce wood, fiber or energy on a short rotation interval and do not resemble naturally regenerating forests at maturity (FAO, 2020a). Although boundaries between them can be fuzzy, intermediate levels of human manipulation of forests include naturally regenerating forests (i.e., composed in their majority, but not necessarily exclusively, of native and/or introduced tree species) and planted forests, which are dominated by trees that have been deliberately planted as saplings and/or seeds (FAO, 2020a). Broadly speaking, levels of labor and/or capital investment required to establish these forest types correspond with the intensity of human intervention. That is, such investments are lowest for primary forests and greatest for plantation forests.
+
+Logging occurs in forests that are managed for one primary objective or for multiple uses, with the volume of biomass removal ranging from coppice forestry, in which living trees remain on the landscape (Fabbio, 2016; Unrau et al., 2018), to even-aged management systems (i.e., clear cutting), with all trees removed from an area (Savilaakso et al., 2021). Timber is most obviously harvested to obtain wood and fiber for use as energy and construction materials (FAO & UNEP, 2020), but also is used in the production of decorative, aesthetic and ceremonial or ritual objects (Diamond & Emery, 2011; Frey et al., 2019; Johnson et al., 2021). Some logging also may occur on forest lands for which the primary management objective is protection of soil and water, conservation of biodiversity or provision of social benefits such as education and recreation (FAO, 2020a).
+
+Forest ownership is the right to “use, control, transfer, or otherwise benefit from…the trees growing on land classified as forest” (FAO, 2020a) and may be separate from ownership of the land on which those trees are growing. Forest ownership types include: (i) local, tribal and indigenous communities, (ii) private and (iii) public entities (FAO, 2020a). Group ownership and management for group benefit are a shared characteristics of local, tribal and indigenous community forests. However, there is great variation in the governance structures and institutions through which they are established and managed. Private forest ownerships include individuals, businesses, and institutions with profit or non-profit aims. Approximately 22% of global forest area is in private forest ownership (FAO, 2020a), which may range in size from a few hectares to 2,000 or more hectares. An estimated 73% of global forest area is owned by public entities (e.g., the State, administrative arms of the State and parastatal entities) (FAO, 2020a) but logging on these lands may be carried out by local, tribal and indigenous communities or private entities through forest concessions (see, for example, FAO & EFI, 2018).
+
+As with fishing, there is no easy crosswalk between forest type, management objective and ownership in which logging occurs. This assessment examines them as distinct and interacting aspects that influence the sustainability of this practice.""" ;
+    dcterms:identifier "1.3.4" ;
+    skos:prefLabel "Organizing structure" .
 
 <http://ontology.ipbes.net/report/sch/SUA22-2.2.3.3.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SUA22ch2> ;

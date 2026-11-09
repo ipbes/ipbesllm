@@ -2,7 +2,7 @@
 
 **File:** `docs/ontology/IPBES_Ontology_v07.ttl`. These changes are proposed to the TSU on data for agreement. It recommends changes to v06.
 
-**Basis:** 14 assessment reports (AFA, AMA, APA, BBA, ECA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) were converted automatically from their published PDFs to TTL and checked against v06. The files use ten properties v06 does not define: three on knowledge gaps that came from the reports, two links derived during conversion (changes 8 and 9), a single property for levels of confidence (change 10) and two roles, for the technical support unit and the editors (changes 11 and 12), a description on chapters (change 13) and a link from a merged person's old URI to the current one (change 14). Classes are added for guidance points (change 16), figures and tables (change 17) and footnotes (change 18); none is removed. Key and background messages record the section of the summary for policymakers they are printed in, and each section is a key message linked to them (change 19). 
+**Basis:** 14 assessment reports (AFA, AMA, APA, BBA, ECA, GA1, IAS, LDR, NXS, PPA, SCM, SUA, TCA, VA) were converted automatically from their published PDFs to TTL and checked against v06. The files use ten properties v06 does not define: three on knowledge gaps that came from the reports, two links derived during conversion (changes 8 and 9), a single property for levels of confidence (change 10) and two roles, for the technical support unit and the editors (changes 11 and 12), a description on chapters (change 13) and a link from a merged person's old URI to the current one (change 14). Classes are added for guidance points (change 16), figures and tables (change 17) and footnotes (change 18); none is removed. Key and background messages record the section of the summary for policymakers they are printed in, and each section is a key message linked to them (change 19). A class is added for the prefaces and the introductions of the summaries for policymakers (change 20). 
 
 ## Summary of decisions requested
 
@@ -27,7 +27,8 @@
 | 17 | Add `ipbes:Figure` and `ipbes:Table` as subclasses of `ipbes:Illustration`, with a link to the sub-chapter and the Zenodo DOI | Yes | None: illustrations keep their URIs and their type |
 | 18 | Add the class `ipbes:Footnote` | Yes | None: addition; footnotes leave the sub-chapter text once converted |
 | 19 | Add `ipbes:hasCategory` to KeyMessage and BackgroundMessage, and `ipbes:KeyMessage` to KeyMessage, for the sections of the summary for policymakers | Yes | None: additions; the section key messages of the manual files (NXS24-KM-A) gain links |
-| 20–21 | Questions for discussion | No | See below |
+| 20 | Add the class `ipbes:Introduction`, for prefaces and the introductions of summaries for policymakers | Yes | None: addition |
+| 21–22 | Questions for discussion | No | See below |
 
 ## Changes in v07
 
@@ -209,11 +210,28 @@ The converted files have 42 sections in 12 reports. ECA and SUA need none: their
 
 **hasCategory** is already used on KnowledgeGap and Guidance for the heading an item is printed under, so no new property is needed.
 
+### 20. A class for prefaces and introductions
+
+Ten reports print a text before their key messages or chapters that has no number and is not a message: the introduction of the summary for policymakers, printed as "Preamble" (NXS, TCA), "Introduction" (APA, SCM, SUA) or "Definitions, concepts and the context of the assessment" (IAS), and the preface of the report (BBA, ECA, LDR, PPA, SCM). v06 has no place for them, so the files left them out and their text was lost. The manual files do not have them either.
+
+`ipbes:Introduction` holds one such text, following `ipbes:Guidance`:
+
+| Property | Holds |
+|---|---|
+| `skos:prefLabel` | The title as printed: Preamble, Introduction, Preface ... |
+| `dcterms:identifier` | The report code and the kind of text, as in its URI: `intro/NXS24-Introduction`, `intro/PPA16-Preface` |
+| `ipbes:hasDescription` | The text, with its headings |
+| `ipbes:traceability`, `ipbes:SubChapter` | The sections it cites ({1.3.4}), and the sub-chapters they are |
+| `ipbes:Illustration` | The figures, tables and boxes it mentions |
+| `ipbes:Report` | The report |
+
+The kind is "Introduction" for the text of the summary for policymakers, whatever its printed title, and "Preface" for the preface, so both can be found the same way in every report. SCM has both. The converted files have 11 of these texts. The prefaces' own reference lists (ECA, LDR, PPA) are not recorded.
+
 ## Questions for discussion (not in v07)
 
-**20. Chapters printed in parts.** GA1's chapter 2 is printed in parts 2.1, 2.2 and 2.3, each with its own authors and reference list. The automatic file has one chapter with sub-chapters 2.1.1 ...; the manual file has three chapters. Which should be the model?
+**21. Chapters printed in parts.** GA1's chapter 2 is printed in parts 2.1, 2.2 and 2.3, each with its own authors and reference list. The automatic file has one chapter with sub-chapters 2.1.1 ...; the manual file has three chapters. Which should be the model?
 
-**21. Properties defined but unused in the converted files.**
+**22. Properties defined but unused in the converted files.**
 
 | Property | Note |
 |---|---|

@@ -621,6 +621,7 @@ class Message:
     paras: list[str] = field(default_factory=list)
     group: str = ""     # its section: "A. Understanding the relationship ..."
     label_printed: bool = False     # its number was printed (not counted, as in PPA)
+    page_last: int = 0              # the last page its text is on (a preface or introduction)
 
     @property
     def text(self) -> str:
@@ -661,6 +662,7 @@ class Report:
     key_messages: list[Message] = field(default_factory=list)
     background_messages: list[Message] = field(default_factory=list)
     guidance: list[Message] = field(default_factory=list)         # SCM: "Guidance point 1" ..., group = its section
+    intros: list[Message] = field(default_factory=list)           # "Preface", "Introduction": headline = printed title
     guidance_intro: dict[str, str] = field(default_factory=dict)  # section -> the text above its points
     illustrations: list[Illustration] = field(default_factory=list)
     chapters: list[Chapter] = field(default_factory=list)
@@ -737,6 +739,9 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
     legend_end = (0, 0.0)               # page and bottom of its caption or legend so far
     unnumbered: Section | None = None
     km_heading = ""                     # SUA: the heading of a group of key messages (A, B ...)
+    intro: Message | None = None        # the preface or SPM introduction being read
+    intro_prev = "front"                # the mode to go back to after it
+    drop_cap = ""                       # the large first letter printed apart ("T" + "he ...")
     group_km: Message | None = None     # SUA: the key message whose intro may follow its title
 
     def footnote_chapter() -> int:
@@ -804,6 +809,32 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
         if p.role == "title":
             t = text.upper()
             box = legend_of = None
+            if mode == "intro":
+                if len(re.sub(r"[^A-Z]", "", t)) <= 1:
+                    # The first letter printed large ("T"), or an ornament ("“ ”", IAS).
+                    drop_cap = t.strip() if re.fullmatch(r"[A-Z]", t.strip()) else drop_cap
+                    continue
+                mode, intro = intro_prev, None
+            # An unnumbered text before the chapters: the preface (front
+            # matter) or the introduction of the summary for policymakers,
+            # printed as "PREAMBLE" (NXS, TCA), "INTRODUCTION" (SCM, SUA,
+            # APA under "BACKGROUND") or "DEFINITIONS, CONCEPTS AND THE
+            # CONTEXT OF THE ASSESSMENT" (IAS). The large first letter may be
+            # read with the title: "PREAMBLE T".
+            mi = re.fullmatch(r"(PREFACE|PREAMBLE|INTRO-?DUCTION|DEFINITIONS, CONCEPTS AND THE CONTEXT OF "
+                              r"THE ASSESSMENT)(?:\s+([A-Z]))?", re.sub(r"\s+", " ", t).strip())
+            if mi and chapter is None and mode in ("front", "km", "bgm"):
+                kind = "Preface" if mi.group(1) == "PREFACE" else "Introduction"
+                intro = next((x for x in rep.intros if x.ident == kind), None)
+                if intro is None:
+                    title = re.sub(r"\s+", " ", text).strip()
+                    title = title[:-2] if mi.group(2) else title
+                    intro = Message(kind, sentence_case(title.replace("INTRO-DUCTION", "INTRODUCTION"), casing)
+                                    if title.isupper() else title, p.page)
+                    intro.page_last = p.page
+                    rep.intros.append(intro)
+                intro_prev, mode, drop_cap = mode, "intro", mi.group(2) or ""
+                continue
             if "TABLE OF KNOWLEDGE GAPS" in t:
                 rep.gap_table_pages.append(p.page)      # an appendix of its own (GA1 Appendix 4)
             if t == "KEY MESSAGES":
@@ -970,6 +1001,11 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 p.role = "h4"
             # Numbers printed with spaces: "4. 2. 1 Environmental drivers" (SUA chapter 4).
             text = re.sub(r"^\d{1,2}(?:\.\s?\d{1,2}){1,4}(?=\.?\s)", lambda m_: m_.group(0).replace(" ", ""), text)
+            if mode == "intro" and intro is not None:
+                # Not the heading of the key messages printed on the same page (SCM).
+                if text.strip().upper() not in ("HIGH-LEVEL MESSAGES", "KEY MESSAGES"):
+                    intro.paras.append("## " + re.sub(r"\s+", " ", text).strip())
+                continue
             if mode in ("km", "bgm"):
                 if mode == "bgm" and p.role == "h2":
                     # A heading going on after a footnote mark: "... transformative
@@ -1068,6 +1104,24 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
 
         # Body text
         legend_of = None
+
+        if mode == "intro" and intro is not None:
+            if drop_cap:
+                text, drop_cap = drop_cap + text, ""
+            last = next((x for x in reversed(intro.paras) if not x.startswith("## ")), "")
+            if p.page != intro.page_last and last and not _continues(last, text):
+                # A page of a figure only: its labels in body text, before the
+                # caption (NXS Figure SPM 1, after the preamble).
+                rest = [q for q in paras[i:] if q.page == p.page]
+                cap = next((k for k, q in enumerate(rest) if q.role == "caption"), None)
+                if cap is not None and not any(q.role == "body" for q in rest[cap + 1:]):
+                    msg = f"p{p.page}: figure labels after {intro.ident} ('{intro.headline}') not read as its text"
+                    if msg not in rep.problems:
+                        rep.problems.append(msg)
+                    continue
+            _add_para(intro.paras, text)
+            intro.page_last = p.page
+            continue
 
         if mode == "km":
             mk = re.match(r"^([A-F])\.\d{1,2}\s", text)
@@ -1562,7 +1616,14 @@ def to_markdown(rep: Report, name: str) -> str:
             for para in il.legend:
                 out.extend([para, ""])
 
-    out += ["## Summary for policymakers", "", "### Key messages", ""]
+    for intro in (x for x in rep.intros if x.ident == "Preface"):
+        out += [f"## {intro.headline} (p{intro.page}-{intro.page_last})", ""]
+        out += [x for para in intro.paras for x in (para.replace("## ", "### ", 1), "")]
+    out += ["## Summary for policymakers", ""]
+    for intro in (x for x in rep.intros if x.ident != "Preface"):
+        out += [f"### {intro.headline} (p{intro.page}-{intro.page_last})", ""]
+        out += [x for para in intro.paras for x in (para.replace("## ", "#### ", 1), "")]
+    out += ["### Key messages", ""]
     for km in rep.key_messages:
         out += [f"#### {km.ident} (p{km.page}{', in ' + km.group if km.group else ''})", f"**{km.headline}**", ""]
         out += [x for para in km.paras for x in (para, "")]
@@ -3195,6 +3256,25 @@ def write_ttl(rep: Report, cfg: dict, onto: dict, people: list[Person], gaps: li
         trace = ", ".join(t for _, t in segments if t)
         add(s, P("traceability"), trace)
         subs, ills = section_links(trace, point.ident)
+        for u in subs:
+            add(s, P("SubChapter"), u)
+        for u in dict.fromkeys(ills + mentions(text)):
+            add(s, P("Illustration"), u)
+
+    # Prefaces and introductions of the summary for policymakers
+    for intro in rep.intros:
+        s = URIRef(f"{base}intro/{rid}-{intro.ident}")
+        add(s, RDF.type, P("Introduction"))
+        add(s, P("Report"), report)
+        add(s, DCTERMS.identifier, f"{rid}-{intro.ident}")
+        add(s, SKOS.prefLabel, intro.headline)
+        paras = [x[3:] if x.startswith("## ") else x for x in intro.paras]
+        text = resolve_marks("\n\n".join(paras), 0, rep)
+        add(s, P("hasDescription"), text)
+        segments = split_submessages([clean(resolve_marks(x, 0, rep)) for x in paras], intro.ident, log)
+        trace = ", ".join(t for _, t in segments if t)
+        add(s, P("traceability"), trace)
+        subs, ills = section_links(trace, intro.ident)
         for u in subs:
             add(s, P("SubChapter"), u)
         for u in dict.fromkeys(ills + mentions(text)):

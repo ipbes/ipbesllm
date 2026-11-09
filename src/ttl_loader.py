@@ -466,6 +466,18 @@ def parse_ttl_file(ttl_path: str) -> list[dict]:
     # Guidance — the guidance points of a summary for policymakers (SCM)
     # -----------------------------------------------------------------
 
+    for intro in graph.subjects(RDF.type, URIRef(IPBES + "Introduction")):
+        # The preface, or the introduction of the summary for policymakers
+        # ("Preamble" in NXS and TCA).
+        emit(
+            subject=intro,
+            chunk_type="intro",
+            heading=_text(_first(graph, intro, SKOS.prefLabel)),
+            body=_text(_first(graph, intro, URIRef(IPBES + "hasDescription"))),
+            subchapter_uris=_subchapter_uris(graph, intro),
+            extra_meta={"Identifier": _text(_first(graph, intro, DCTERMS.identifier))},
+        )
+
     for point in graph.subjects(RDF.type, URIRef(IPBES + "Guidance")):
         category = _text(_first(graph, point, URIRef(IPBES + "hasCategory")))
         emit(

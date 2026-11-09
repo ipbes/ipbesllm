@@ -93,6 +93,7 @@ def uri_key(cls: str, s) -> str:
 # The path of each class in item URIs (http://ontology.ipbes.net/report/sch/BBA26-1.1).
 URI_PATHS = {"ch": "Chapter", "sch": "SubChapter", "key": "KeyMessage", "bgm": "BackgroundMessage",
              "subm": "SubMessage", "il": "Illustration", "kg": "KnowledgeGap", "guidance": "Guidance",
+             "intro": "Introduction",
              "person": "Person", "ref": "Reference"}
 
 

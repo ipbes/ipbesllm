@@ -989,6 +989,68 @@ The IPCC Working Group I assessing the physical scientific aspects of the climat
     dcterms:identifier "Table8.3" ;
     skos:prefLabel "Policy applications and development pathways for long-term and short-term scenarios" .
 
+<http://ontology.ipbes.net/report/intro/SCM16-Introduction> a ipbes:Introduction ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.3.1> ;
+    ipbes:hasDescription """The methodological assessment of scenarios and models of biodiversity and ecosystem services was initiated in order to provide expert advice on the use of such methodologies in all work under the Platform to ensure the policy relevance of its deliverables, as stated in the scoping report approved by the Plenary of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services at its second session (IPBES/2/17, annex VI). It is one of the first assessment activities of the Platform because it provides guidance for the use of scenarios and models in regional, global and thematic assessments, as well as by the other task forces and expert groups of the Platform.
+
+The report on the outcome of the assessment is available as document IPBES/4/INF/3/Rev.1. The present document is a summary for policymakers of the information presented in the full assessment report.
+
+Because the assessment focuses on methods, the summary for policymakers and the full assessment report are more technical in nature than are those of other thematic, regional and global assessments of the Platform. In particular, the assessment focuses on:
+
+Critical analyses of the state-of-the-art and best practices for using scenarios and models in assessments and policy design and implementation relevant to biodiversity and ecosystem services;
+
+Proposed means for addressing gaps in data, knowledge, methods and tools relating to scenarios and models;
+
+Recommendations for action by Platform member States, stakeholders and the scientific community to implement and encourage those best practices in regard to the use of scenarios and models, engage in capacity-building and mobilize indigenous and local knowledge.
+
+Unlike the thematic, regional or global assessments of the Platform, the methodological assessment does not analyse the status of, trends in or future projections of biodiversity and ecosystem services.
+
+There are several audiences for the methodological assessment. The summary for policymakers and chapter 1 have been written to be accessible to a broad audience, including audiences within the Platform community, as well as stakeholders and policymakers not directly involved with the Platform. The critical analyses and perspectives in chapters 2-8 are more technical in nature and address the broader scientific community in addition to the expert groups and task forces of the Platform.
+
+Target audiences outside of the Platform include:
+
+Policy support practitioners and policymakers wishing to make use of scenarios and models to inform decision-making on the local to global scales: the assessment provides guidance on appropriate and effective use of scenarios and models across a broad range of decision contexts and scales;
+
+Scientific community and funding agencies: the assessment provides analyses of key knowledge gaps and suggests ways of filling those gaps that would increase the utility of scenarios and models for the Platform and for their use in policymaking and decision making more broadly.
+
+The intended target audiences within the Platform include:
+
+The Plenary, the Bureau and the Multidisciplinary Expert Panel: the summary for policymakers and chapter 1 provide a broad overview of the benefits of and limits to using scenarios and models, of their applications to Platform deliverables and of priorities for future development that could be facilitated by the Platform;
+
+Task forces and expert groups: the full assessment report provides guidance for catalysing, facilitating and supporting the use of scenarios and models within the Platform and beyond;
+
+Regional, global and thematic assessments: the summary for policymakers and chapter 1 give all experts an overview of the benefits of, and caveats regarding, the use of scenarios and models, and chapters 2-8 provide experts who are working specifically on scenarios and models with guidance on more technical issues related to the application of scenarios and models in assessments of biodiversity and ecosystem services.
+
+The messages in the present summary for policymakers are divided into “key findings”, “guidance for science and policy” and “guidance for the Platform and its task forces and expert groups”.
+
+Key findings are messages that arise from the critical analyses in the assessment and are aimed at a broad audience, both within and beyond the Platform. They are grouped under the three “high level messages” emerging from the assessment.
+
+Guidance for science and policy is based on the key findings and broadly addresses target audiences outside of the Platform, as called for in the scoping report approved by the Plenary at its second session.
+
+Guidance for the Platform and its task forces and expert groups is based on the key findings and specifically addresses the Platform’s Plenary, Multidisciplinary Expert Panel and Bureau, and experts involved in Platform deliverables, as called for in the scoping report approved by the Plenary at its second session. The guidance proposes actions that could be undertaken or stimulated by the Platform.
+
+References enclosed in curly brackets at the end of each key finding and each guidance point in the present summary for policymakers, e.g., {2.3.1}, indicate where support for the findings and guidance point may be found in the chapters of the assessment report.""" ;
+    ipbes:traceability "2.3.1" ;
+    dcterms:identifier "SCM16-Introduction" ;
+    skos:prefLabel "Introduction" .
+
+<http://ontology.ipbes.net/report/intro/SCM16-Preface> a ipbes:Introduction ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:hasDescription """The goal of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES) is to strengthen the science-policy interface for biodiversity and ecosystem services towards conservation and sustainable use of biodiversity, long-term human well-being and sustainable development. It does so, in particular, by orchestrating the production, by hundreds of scientists and other knowledge holders from all parts of the world, of scientific reports which assess the state of knowledge on a particular theme (e.g. the pollination assessment), a region (e.g. the on-going four regional assessments of biodiversity and ecosystem services in four on-going regional assessments), or at the global level, in response to requests from decision-makers.
+
+This Methodological Assessment of Scenarios and Models of Biodiversity and Ecosystem Services was initiated in order to provide expert advice on the use of such methods in all work under IPBES to ensure the policy relevance of its deliverables. It is one of the first assessment activities of IPBES because it provides guidance for the use of scenarios and models in the regional, global and thematic assessments, as well as by the other task forces and expert groups of IPBES. Because the assessment focuses on methods, this report is more technical in nature than other thematic, regional and global assessments of IPBES. In particular, the assessment focuses on the following:
+
+Critical analyses of the state-of-the-art and best practices for using scenarios and models in assessments, policy design and policy implementation relevant to biodiversity and ecosystem services;
+
+Proposed means for addressing gaps in data, knowledge, methods and tools relating to scenarios and models;
+
+Recommendations for action by IPBES member States, stakeholders and the scientific community to implement and encourage those best practices in regard to the use of scenarios and models, engage in capacity-building and mobilize indigenous and local knowledge.
+
+The Methodological Assessment Report on Scenarios and Models of Biodiversity and Ecosystem Services was prepared in accordance with decision IPBES-2/5 on the IPBES work programme. The Multidisciplinary Expert Panel along with the Bureau prepared an initial scoping document for the assessment (IPBES/2/17, annex VI), which served as a basis for the second session of the IPBES Plenary (Antalya, 2013) to approve the undertaking of the assessment. This assessment report has been developed in accordance with the procedures for the preparation of Platform deliverables (annex I to decision IPBES-3/3). Governments and stakeholders nominated experts for the author team. The final author team consisted of two Co-chairs, 15 Coordinating Lead Authors, 51 Lead Authors and 12 Review Editors. In addition, during the development of the assessment report, authors selected an additional 21 Contributing Authors to help strengthen various parts of individual chapters. The assessment report underwent an internal review, followed by one formal external review by experts and by a second external formal review, which also included the draft Summary for Policymakers (SPM), by governments and experts. Revisions were made after each review in close collaboration with Review Editors who ensured that all comments were fully considered. The Scenarios and Models team received approximately 2360 comments from 194 expert reviewers (combined from the First Order Draft review and the Second Order Draft review) from 45 countries. The IPBES Plenary approved the SPM, and accepted the individual chapters of the assessment, at its fourth session in Kuala Lumpur, 22-28 February, 2016.""" ;
+    dcterms:identifier "SCM16-Preface" ;
+    skos:prefLabel "Preface" .
+
 <http://ontology.ipbes.net/report/ref/2333079/items/27V9UETT> a ipbes:Reference ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch5> ;
     ipbes:Report ipbes:SCM16 ;
@@ -15136,38 +15198,6 @@ Local communities and indigenous peoples have a wealth of traditional knowledge 
     dcterms:identifier "8.4.1" ;
     skos:prefLabel "Engaging stakeholders and identifying policy needs" .
 
-<http://ontology.ipbes.net/report/sch/SCM16-2.3.1> a ipbes:SubChapter ;
-    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
-    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/3CEPQET5>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/924DY85D>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/ACYDDWXX>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/BV8SNM9Z>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/E8HFWS84>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/EAEXXD9C>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/EDB37WQW>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/EUL53ESC>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/IAHCLATG>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/JJPN9LTM>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/PIP75HQ6>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/TPTWXBLC>,
-        <http://ontology.ipbes.net/report/ref/2333079/items/YKG5EUE6>,
-        <http://ontology.ipbes.net/report/ref/SCM16-ch2-153>,
-        <http://ontology.ipbes.net/report/ref/SCM16-ch2-154>,
-        <http://ontology.ipbes.net/report/ref/SCM16-ch2-156>,
-        <http://ontology.ipbes.net/report/ref/SCM16-ch2-158>,
-        <http://ontology.ipbes.net/report/ref/SCM16-ch2-261>,
-        <http://ontology.ipbes.net/report/ref/SCM16-ch2-274>,
-        <http://ontology.ipbes.net/report/ref/SCM16-ch2-276>,
-        <http://ontology.ipbes.net/report/ref/SCM16-ch2-278>,
-        <http://ontology.ipbes.net/report/ref/SCM16-ch2-311> ;
-    ipbes:Report ipbes:SCM16 ;
-    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.3> ;
-    ipbes:hasDescription """The first GBO (sCBD, 2001) presented information from national reports and a global evaluation of biodiversity trends (WCMC, 1992). These analyses were later augmented with exploratory scenario analysis in the second GBO – the Crossroads of Life on Earth study (sCBD and PBL, 2007). This study used GLOBIO as a modelling framework to assess the impact of environmental drivers on biodiversity and explore policy options in the form of intervention scenarios to reduce biodiversity loss and achieve the 2010 targets for biodiversity. The third GBO (sCBD, 2010) also presented biodiversity scenarios and tipping points contained in a study incorporating the results of the Millennium Ecosystem Assessment (MA), the GBO 2 and the Global Environment Outlook (GEO) 4, as well as the Mini Climate Assessment Model (MiniCAM) (Leadley et al., 2010). The fourth GBO provides a mid-term assessment of progress towards the implementation of the Strategic Plan for Biodiversity and achievement of the Aichi biodiversity targets (Alkemade et al., 2009; Leadley et al., 2014). These assessments have all contributed significantly to the current policy agenda pertaining to biodiversity and ecosystem services at multiple spatial scales across multiple jurisdictions Global agendas play out at regional and national scales in many ways. Referring directly to the Convention on Biological Diversity (CBD), the National Performance Assessment and Sub-regional Strategic Environment Framework for the Greater Mekong Sub-region (GMS; ADB, 2010) was developed to guide the GMS Core Environment Programme, through which the GMS governments create a vision and framework for long-term investment in environmental governance, institution building, environmental protection in the main development sectors, and biodiversity conservation. In this process, the GLOBIO3 model underpinned the assessment of different policy options to reach biodiversity targets in the region (Figure 2.2).
-
-At a regional level, the European Commission developed the European Union (EU) Biodiversity Strategy (EC, 2011), which was informed by an assessment of the 2010 biodiversity targets (EEA, 2009). These activities represent policy formulation and evaluation, following from the agenda set by CBD and MA (Figure 2.2). International fisheries policy in the same region has been influenced by models and scenarios at the same scale (Box 2.1). At a local scale, 20-year Forest Agreements were signed between the Australian government (responsible for implementing the Environment Protection and Biodiversity Conservation Act (1999) and export licencing) and the New South Wales state government (NSW, responsible for land management) that set out new forest conservation reserves and approved ecologically-sustainable forest management systems in four regions across the state. The negotiation of these agreements was based in part on C-Plan (Pressey et al., 2009), a participatory land-use planning decision support tool that utilises species distribution models (Ferrier et al., 2002) and forest growth and yield models (Vanclay, 1994) to identify trade-offs between forestry production and species conservation objectives.""" ;
-    dcterms:identifier "2.3.1" ;
-    skos:prefLabel "Policy agenda setting" .
-
 <http://ontology.ipbes.net/report/sch/SCM16-3.3.4> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch3> ;
     ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/2RVGQK9R>,
@@ -15342,6 +15372,38 @@ A simpler and faster approach that could be used by regional assessments is to r
 Short-term scenarios can also be useful for assessing how policies on direct drivers affect biodiversity and ecosystem services in the short term (Leadley et al., 2014b). Short-term scenarios do not require modelling the temporal dynamics of indirect drivers or of their impacts on direct drivers. Instead, they use simple projections of direct drivers under different policies or actions (corresponding to target-seeking or policy-screening scenarios) and assess alternative futures for biodiversity and ecosystem services. Trajectories can be irrelevant as users may only want to know the endpoints of direct drivers and to assess their impacts on biodiversity and nature’s benefits. Short-term scenarios can use optimisation tools to find the best actions to achieve a given target, models to assess the biodiversity and ecosystem services consequences of different land-use configurations, or simple statistical extrapolations under different policies. For instance, in systematic conservation planning, optimisation tools are used to find the minimum number of protected sites needed to achieve a given target scenario for biodiversity conservation (Sarkar et al., 2006). Ecosystem service models can be used to assess the impacts of short-term land-use scenarios on ecosystem services (Nemec and Raudsepp-Hearne, 2013). Short-term land-use scenarios can be developed through participatory exercises, using maps, photographs and Geographic Information System (GIS) tools (Carvalho Ribeiro et al., 2013; Van Berkel et al., 2011). Finally, simple extrapolations for future values of biodiversity or ecosystem services indicators under a specific action relative to current trends can be made (Leadley et al., 2014b). This range of short-term scenario techniques can be useful for global, regional and sub-regional assessments.""" ;
     dcterms:identifier "8.4.2" ;
     skos:prefLabel "Linking models to policy options in scenarios" .
+
+<http://ontology.ipbes.net/report/sch/SCM16-2.3.1> a ipbes:SubChapter ;
+    ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch2> ;
+    ipbes:Reference <http://ontology.ipbes.net/report/ref/2333079/items/3CEPQET5>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/924DY85D>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/ACYDDWXX>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/BV8SNM9Z>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/E8HFWS84>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/EAEXXD9C>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/EDB37WQW>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/EUL53ESC>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/IAHCLATG>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/JJPN9LTM>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/PIP75HQ6>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/TPTWXBLC>,
+        <http://ontology.ipbes.net/report/ref/2333079/items/YKG5EUE6>,
+        <http://ontology.ipbes.net/report/ref/SCM16-ch2-153>,
+        <http://ontology.ipbes.net/report/ref/SCM16-ch2-154>,
+        <http://ontology.ipbes.net/report/ref/SCM16-ch2-156>,
+        <http://ontology.ipbes.net/report/ref/SCM16-ch2-158>,
+        <http://ontology.ipbes.net/report/ref/SCM16-ch2-261>,
+        <http://ontology.ipbes.net/report/ref/SCM16-ch2-274>,
+        <http://ontology.ipbes.net/report/ref/SCM16-ch2-276>,
+        <http://ontology.ipbes.net/report/ref/SCM16-ch2-278>,
+        <http://ontology.ipbes.net/report/ref/SCM16-ch2-311> ;
+    ipbes:Report ipbes:SCM16 ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/SCM16-2.3> ;
+    ipbes:hasDescription """The first GBO (sCBD, 2001) presented information from national reports and a global evaluation of biodiversity trends (WCMC, 1992). These analyses were later augmented with exploratory scenario analysis in the second GBO – the Crossroads of Life on Earth study (sCBD and PBL, 2007). This study used GLOBIO as a modelling framework to assess the impact of environmental drivers on biodiversity and explore policy options in the form of intervention scenarios to reduce biodiversity loss and achieve the 2010 targets for biodiversity. The third GBO (sCBD, 2010) also presented biodiversity scenarios and tipping points contained in a study incorporating the results of the Millennium Ecosystem Assessment (MA), the GBO 2 and the Global Environment Outlook (GEO) 4, as well as the Mini Climate Assessment Model (MiniCAM) (Leadley et al., 2010). The fourth GBO provides a mid-term assessment of progress towards the implementation of the Strategic Plan for Biodiversity and achievement of the Aichi biodiversity targets (Alkemade et al., 2009; Leadley et al., 2014). These assessments have all contributed significantly to the current policy agenda pertaining to biodiversity and ecosystem services at multiple spatial scales across multiple jurisdictions Global agendas play out at regional and national scales in many ways. Referring directly to the Convention on Biological Diversity (CBD), the National Performance Assessment and Sub-regional Strategic Environment Framework for the Greater Mekong Sub-region (GMS; ADB, 2010) was developed to guide the GMS Core Environment Programme, through which the GMS governments create a vision and framework for long-term investment in environmental governance, institution building, environmental protection in the main development sectors, and biodiversity conservation. In this process, the GLOBIO3 model underpinned the assessment of different policy options to reach biodiversity targets in the region (Figure 2.2).
+
+At a regional level, the European Commission developed the European Union (EU) Biodiversity Strategy (EC, 2011), which was informed by an assessment of the 2010 biodiversity targets (EEA, 2009). These activities represent policy formulation and evaluation, following from the agenda set by CBD and MA (Figure 2.2). International fisheries policy in the same region has been influenced by models and scenarios at the same scale (Box 2.1). At a local scale, 20-year Forest Agreements were signed between the Australian government (responsible for implementing the Environment Protection and Biodiversity Conservation Act (1999) and export licencing) and the New South Wales state government (NSW, responsible for land management) that set out new forest conservation reserves and approved ecologically-sustainable forest management systems in four regions across the state. The negotiation of these agreements was based in part on C-Plan (Pressey et al., 2009), a participatory land-use planning decision support tool that utilises species distribution models (Ferrier et al., 2002) and forest growth and yield models (Vanclay, 1994) to identify trade-offs between forestry production and species conservation objectives.""" ;
+    dcterms:identifier "2.3.1" ;
+    skos:prefLabel "Policy agenda setting" .
 
 <http://ontology.ipbes.net/report/sch/SCM16-4.2> a ipbes:SubChapter ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/SCM16ch4> ;

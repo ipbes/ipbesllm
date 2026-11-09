@@ -71,6 +71,7 @@ PARTIAL_BY_NATURE = {
 CHUNK_TYPES = {
     "ipbes:KeyMessage": "key", "ipbes:BackgroundMessage": "bgm",
     "ipbes:SubMessage": "subm", "ipbes:KnowledgeGap": "kg", "ipbes:Guidance": "guidance",
+    "ipbes:Introduction": "intro",
     "ipbes:Chapter": "chapter", "ipbes:SubChapter": "sch",
     "ipbes:Illustration": "il", "foaf:Person": "person",
     "ipbes:Reference": "ref",

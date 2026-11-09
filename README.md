@@ -319,6 +319,7 @@ The files follow the IPBES report ontology in [`docs/ontology/IPBES_Ontology_v07
 | `ipbes:SubMessage` | `subm` | `hasDescription`, `dcterms:identifier`, confidence level |
 | `ipbes:KnowledgeGap` | `kg` | `hasDescription`, `hasCategory`; the gap's own ID (`GA119-1`) is its URI's name and its `dcterms:identifier`, as in the newer manual files (BBA, GA1, NXS); the related sections are in `ipbes:traceability` (the older manual files put them in `dcterms:identifier`, which is still read) |
 | `ipbes:Guidance` | `guidance` | `skos:prefLabel`, `hasDescription`, `hasCategory`, `skos:note`, `dcterms:identifier` (SCM only) |
+| `ipbes:Introduction` | `intro` | `skos:prefLabel` (the printed title: Preamble, Introduction, Preface), `hasDescription`, `dcterms:identifier`; the preface, and the introduction of the summary for policymakers |
 | `ipbes:Chapter` | `chapter` | `skos:prefLabel`, `dcterms:identifier`; its authors (`foaf:Person`) as text; its executive summary (`hasDescription`) |
 | `ipbes:SubChapter` | `sch` | `skos:prefLabel`, `dcterms:identifier`, `hasDescription`; its footnotes (`ipbes:Footnote` linked to it) follow under "Notes" |
 | `ipbes:Illustration` | `il` | `dcterms:identifier`, `skos:prefLabel` (caption) and `hasDescription`. Figures and tables are also `ipbes:Figure` or `ipbes:Table`, with `ipbes:SubChapter` and the Zenodo `hasDoi` |

@@ -47,6 +47,15 @@ ipbes:Table rdfs:subClassOf ipbes:Illustration .
     skos:note "The introduction printed above the section's guidance points, if any" ;
     skos:prefLabel "The label printed in the report, such as Guidance point 1 or Platform guidance point 1" .
 
+<http://ontology.ipbes.net/report/intro/> a ipbes:Introduction ;
+    ipbes:Illustration "Link to class Illustration. Used for mentioned tables, figures or boxes in the text" ;
+    ipbes:Report <http://ontology.ipbes.net/report/> ;
+    ipbes:SubChapter <http://ontology.ipbes.net/report/sch/> ;
+    ipbes:hasDescription "The text as printed, with its headings" ;
+    ipbes:traceability "The sections, figures, tables or boxes the text cites" ;
+    dcterms:identifier "The report code and the kind of text, as in its URI: NXS24-Introduction (the introduction of the summary for policymakers) or PPA16-Preface (the preface)" ;
+    skos:prefLabel "The title printed in the report, such as Preamble, Introduction or Preface" .
+
 <http://ontology.ipbes.net/report/subm/> a ipbes:SubMessage ;
     ipbes:Illustration "Link to class Illustration. Used for mentioned tables, figures or boxes in the sub-message" ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/> ;

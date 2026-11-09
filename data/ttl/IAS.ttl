@@ -3472,6 +3472,25 @@ Together, a coordinated coalition of trained volunteers was created to detect an
     dcterms:identifier "Table6.9" ;
     skos:prefLabel "Collective action questions towards improved governance for biological invasions." .
 
+<http://ontology.ipbes.net/report/intro/IAS23-Introduction> a ipbes:Introduction ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/IAS23-FigureSPM.1> ;
+    ipbes:Report ipbes:IAS23 ;
+    ipbes:hasDescription """The thematic assessment of invasive alien species and their control produced by the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES) critically evaluates evidence on biological invasions and the impacts of invasive alien species. In alignment with the United Nations Sustainable Development Goals and the Kunming-Montreal Global Biodiversity Framework adopted by the Conference of the Parties of the Convention on Biological Diversity, the assessment outlines key responses and policy options for prevention, early detection and effective control of invasive alien species and mitigation of their impacts in order to safeguard nature, nature’s contributions to people, and good quality of life.
+
+For the purposes of this assessment, the terms “native species”, “alien species”, “established alien species”, “invasive alien species”, “impacts”, “introduction pathways” and “drivers” are represented and defined in Figure SPM.1.
+
+The term “biological invasion” is used to describe the process involving the intentional or unintentional transport or movement of a species outside its natural range by human activities and its introduction to new regions, where it may become established and spread.
+
+Species introduced to new regions through human activities are termed alien species. Invasive alien species represent a subset of alien species, being animals, plants and other organisms known to have established and spread with negative impacts on biodiversity, local ecosystems and species. Many invasive alien species also have impacts on nature’s contributions to people (embodying different concepts such as ecosystem goods and services and nature’s gifts) and good quality of life. Some of the most problematic invasive alien species arrive through multiple introduction pathways and repeated introduction.
+
+Invasive alien species are recognized as one of the five major direct drivers of change in nature globally, alongside land- and sea-use change, direct exploitation of organisms, climate change, and pollution. This assessment considers how biological invasions are facilitated by all those direct anthropogenic drivers, noting that interactions among invasive alien species can enable further biological invasions. The assessment also considers how biological invasions can be influenced by indirect drivers, as identified in the IPBES Global Assessment Report on Biodiversity and Ecosystem Services: these include demographic, economic, sociocultural and technological drivers, as well as those relating to institutions and governance. Finally, the assessment considers how biological invasions, and ultimately the impacts of invasive alien species, can be facilitated by natural drivers of change, in particular natural hazards (such as floods, storms and wildfires) and by biodiversity loss itself.
+
+In the context of this assessment, management of biological invasions includes the development of decision support tools; prevention (supported by regulation) and preparedness planning and actions; eradication, containment and control of invasive alien species; site- and ecosystem-based management; and ecosystem restoration.
+
+Other important concepts associated with biological invasion are defined in the glossary of the assessment report. The conceptual basis underpinning the assessment, including the IPBES conceptual framework, and the methodology for reviewing literature are outlined in chapter 1 of the assessment report.""" ;
+    dcterms:identifier "IAS23-Introduction" ;
+    skos:prefLabel "Definitions, concepts and the context of the assessment" .
+
 <http://ontology.ipbes.net/report/key/IAS23-KM-A> a ipbes:KeyMessage ;
     ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/IAS23-A1>,
         <http://ontology.ipbes.net/report/bgm/IAS23-A2>,
@@ -39519,13 +39538,6 @@ In the native range of Mikania micrantha, a rust fungus (Puccinia spegazzinii) s
     dcterms:identifier "BoxSPM.3" ;
     skos:prefLabel "Classical biological control of Mikania micrantha (bitter vine): an example of" .
 
-<http://ontology.ipbes.net/report/il/IAS23-FigureSPM.1> a ipbes:Figure,
-        ipbes:Illustration ;
-    ipbes:hasDescription "Invasive alien species are one of the main direct drivers of change in nature. The biological invasion process comprises the following stages: transport, introduction, establishment and spread (or dispersal). Definitions of native, alien, established alien and invasive alien species are provided. Indirect and other direct drivers of change facilitate biological invasion." ;
-    ipbes:hasDoi "10.5281/zenodo.8045527" ;
-    dcterms:identifier "FigureSPM.1" ;
-    skos:prefLabel "Key concepts within the biological invasion process." .
-
 <http://ontology.ipbes.net/report/il/IAS23-Table4.31> a ipbes:Illustration,
         ipbes:Table ;
     ipbes:SubChapter <http://ontology.ipbes.net/report/sch/IAS23-4.6> ;
@@ -46874,6 +46886,13 @@ This programme reduced Sus scrofa abundance within two years to levels causing m
     ipbes:hasDescription "On six islands of the archipelago of French Polynesia, a project was undertaken in 2015 to eradicate five species of invasive alien vertebrates: Rattus exulans (Pacific rat), Rattus rattus (black rat), Felis catus (cat), Oryctolagus cuniculus (rabbits) and Capra hircus (goats). The project was successful on five of the six islands (Pacific rats survived at one site). A management plan was developed and implemented that aimed to restore populations of the endangered Pampusana erythroptera (Polynesian ground dove), Nesofregetta fuliginosa (Polynesian storm-petrel) and Aechmorhynchus parvirostris (Tuamotu sandpiper), as well as other native plant and animal species. International and local conservation non-governmental organizations as well as local communities were involved from the planning phase to the execution of the management actions. Although implementation was challenging, this collective approach proved more cost-effective than if each island had been targeted individually. Effective engagement of stakeholders was key for the success of the project. The livelihood of local communities was also improved through the project (Griffiths et al., 2019)." ;
     dcterms:identifier "Box5.8" ;
     skos:prefLabel "Case study: Eradication of five species of invasive alien vertebrates in the archipelago of French Polynesia." .
+
+<http://ontology.ipbes.net/report/il/IAS23-FigureSPM.1> a ipbes:Figure,
+        ipbes:Illustration ;
+    ipbes:hasDescription "Invasive alien species are one of the main direct drivers of change in nature. The biological invasion process comprises the following stages: transport, introduction, establishment and spread (or dispersal). Definitions of native, alien, established alien and invasive alien species are provided. Indirect and other direct drivers of change facilitate biological invasion." ;
+    ipbes:hasDoi "10.5281/zenodo.8045527" ;
+    dcterms:identifier "FigureSPM.1" ;
+    skos:prefLabel "Key concepts within the biological invasion process." .
 
 <http://ontology.ipbes.net/report/il/IAS23-FigureSPM.4> a ipbes:Figure,
         ipbes:Illustration ;

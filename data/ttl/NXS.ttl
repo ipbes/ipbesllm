@@ -2830,12 +2830,6 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
     dcterms:identifier "Figure7.2" ;
     skos:prefLabel "Models and tools for characterizing nexus interactions can range from qualitative to quantitative and from limited to more intensive participation." .
 
-<http://ontology.ipbes.net/report/il/NXS24-FigureSPM.1> a ipbes:Figure,
-        ipbes:Illustration ;
-    ipbes:hasDescription "Detailed definitions of the five nexus elements are given in Chapter 1, Box 1.1. Each nexus element is represented by a unique colour throughout the figures in this assessment: biodiversity is represented by light green; water is represented by teal; food is represented by orange; health is represented by dark red; and climate change is represented by light purple." ;
-    dcterms:identifier "FigureSPM.1" ;
-    skos:prefLabel "Key concepts and definitions used in the nexus assessment." .
-
 <http://ontology.ipbes.net/report/il/NXS24-FigureSPM.A1> a ipbes:Figure,
         ipbes:Illustration ;
     ipbes:hasDescription "Confidence increases towards the top-right corner, as suggested by the increasing strength of shading. Source: IPBES (2016). Further details of the approach are documented in the IPBES Guide on the Production of Assessments." ;
@@ -3376,6 +3370,19 @@ In New Zealand, Diprose et al. (2022) used the NFF value perspectives to categor
         ipbes:Table ;
     dcterms:identifier "TableSPM.A1" ;
     skos:prefLabel "Summary of key categories and types of knowledge and data gaps from the" .
+
+<http://ontology.ipbes.net/report/intro/NXS24-Introduction> a ipbes:Introduction ;
+    ipbes:Illustration <http://ontology.ipbes.net/report/il/NXS24-FigureSPM.1> ;
+    ipbes:Report ipbes:NXS24 ;
+    ipbes:hasDescription """The Thematic Assessment of the Interlinkages among Biodiversity, Water, Food and Health (Nexus Assessment) of the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES) addresses the complex and interconnected character of the crises and challenges of biodiversity loss, water availability and quality, food insecurity, health risks and climate change. It does so by providing a critical evaluation of evidence on interlinkages among five nexus elements: biodiversity, water, food, health and climate change. Although not mentioned in the title of the assessment, climate change has important and increasing, yet often overlooked, interactions with all nexus elements through climate change impacts and mitigation and adaptation actions. Climate change is a key direct driver of biodiversity loss and is thus considered one of the five nexus elements. While energy is not considered a nexus element, relevant aspects of energy systems are assessed where they have interlinkages with biodiversity, water, food, health and climate change adaptation and mitigation. Other systems, such as land, soil and air, are considered to be cross-cutting rather than stand-alone nexus elements.
+
+Nexus approaches are crucial because, despite the intertwined nature of the drivers and underlying causes of degradation of biodiversity, water, food, health and climate, decisions to address them are often taken in isolation, resulting in potential misalignment, unplanned trade-offs and/or unintended consequences. Nexus approaches recognize that challenges within each element are interconnected with other elements across multiple spatial and temporal scales. By improving understanding of these interconnections and identifying opportunities for collaboration across sectors and scales, the findings of the nexus assessment can contribute to synergistic and holistic management and governance. Key concepts and definitions related to the nexus assessment are provided in Figure SPM.1.
+
+This summary for policymakers is based on evidence from multiple knowledge systems. It assesses the state of knowledge on past, present and possible future trends in the interlinkages among the five nexus elements, focusing on biodiversity and on nature’s contributions to people. It further assesses evidence regarding a diverse range of response options that address specific objectives, challenges or opportunities in the governance and management of these interactions among nexus elements (e.g., the influence of the elements on one another). These response options and governance actions can be designed to facilitate coherent and coordinated decision-making that overcomes trade offs and enables synergies between biodiversity, water, food, health and climate change, while also supporting transformative change towards just and sustainable futures, in line with global policy goals and frameworks such as the 2030 Agenda for Sustainable Development and its Sustainable Development Goals, the Convention on Biological Diversity and the Kunming-Montreal Global Biodiversity Framework, and the United Nations Framework Convention on Climate Change and the Paris Agreement. Hereafter, we refer more concisely to these global policy goals and frameworks as the Sustainable Development Goals, the Kunming-Montreal Global Biodiversity Framework and the Paris Agreement.
+
+The summary for policymakers has four parts: A. Past and current nexus interactions; B. Future nexus interactions; C. Response options that address nexus interactions; and D. Governing the nexus for achieving just and sustainable futures. This report provides a set of key and background messages as approved by the members of IPBES. Key messages describe the high-level findings from the assessment for decision makers. More detailed evidence is given in background messages, with traceability between the key and background messages indicated in curly brackets after each key message. In turn, traceability to evidence in the chapters is indicated in curly brackets within each background message. Confidence terms based on the IPBES communication of the degree of confidence approach, explained in Appendix 1, are also provided in each background message.""" ;
+    dcterms:identifier "NXS24-Introduction" ;
+    skos:prefLabel "Preamble" .
 
 <http://ontology.ipbes.net/report/key/NXS24-KM-A> a ipbes:KeyMessage ;
     ipbes:BackgroundMessage <http://ontology.ipbes.net/report/bgm/NXS24-A1>,
@@ -7592,6 +7599,12 @@ The following two chapters, Chapters 6 and 7, address critical issues regarding 
     ipbes:hasDescription "A number of knowledge gaps were identified throughout the assessment, and detailed descriptions of these gaps are provided at the end of each chapter. A synthesis of these knowledge gaps across Chapters 2 to 6 is presented in Table 7.12." ;
     dcterms:identifier "7.4.2" ;
     skos:prefLabel "Knowledge gaps" .
+
+<http://ontology.ipbes.net/report/il/NXS24-FigureSPM.1> a ipbes:Figure,
+        ipbes:Illustration ;
+    ipbes:hasDescription "Detailed definitions of the five nexus elements are given in Chapter 1, Box 1.1. Each nexus element is represented by a unique colour throughout the figures in this assessment: biodiversity is represented by light green; water is represented by teal; food is represented by orange; health is represented by dark red; and climate change is represented by light purple." ;
+    dcterms:identifier "FigureSPM.1" ;
+    skos:prefLabel "Key concepts and definitions used in the nexus assessment." .
 
 <http://ontology.ipbes.net/report/person/Aguiar_Sebastián> a foaf:Person ;
     ipbes:Chapter <http://ontology.ipbes.net/report/ch/NXS24ch5> ;
