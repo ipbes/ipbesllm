@@ -1548,15 +1548,15 @@ def _chapter_page(doc: pymupdf.Document, page: int, chapter: Chapter, rep: Repor
         role = ROLE_HEADINGS[re.sub(r"\s+", " ", head).upper()]
         chapter.authors[role] = _split_people(re.sub(r"\s+", " ", body).strip())
     # The citation ends with the DOI, which may be broken after a "/".
-    m = re.search(r"THIS CHAPTER SHOULD BE CITED AS:\s*(.*?(?:DOI:\s*)?https?://doi\.org/(?:\S*/[ \t]*\n\s*\S+|\S+))",
+    m = re.search(r"THIS CHAPTER SHOULD BE CITED AS\s*:\s*(.*?(?:DOI:\s*)?https?://doi\.org/(?:\S*/[ \t]*\n\s*\S+|\S+))",
                   text, re.S | re.IGNORECASE)
     if not m:
         # Without a DOI (2016-2019): the citation ends with its pages, "pp.1-51."
-        m = re.search(r"THIS CHAPTER SHOULD BE CITED AS:\s*(.*?pp\.\s*[\dxvi]+\s*[-–]\s*[\dxvi]+\.?)",
+        m = re.search(r"THIS CHAPTER SHOULD BE CITED AS\s*:\s*(.*?pp\.\s*[\dxvi]+\s*[-–]\s*[\dxvi]+\.?)",
                       text, re.S | re.IGNORECASE)
     if not m:
         # Without pages (SCM): the citation ends with the publisher's place.
-        m = re.search(r"THIS CHAPTER SHOULD BE CITED AS:\s*(.*?Bonn,\s+Germany)", text, re.S | re.IGNORECASE)
+        m = re.search(r"THIS CHAPTER SHOULD BE CITED AS\s*:\s*(.*?Bonn,\s+Germany)", text, re.S | re.IGNORECASE)
     if m:
         cite = re.sub(r"(doi\.org/\S*/)\s+", r"\1", m.group(1))
         cite = re.sub(r"\s+", " ", cite).strip()
