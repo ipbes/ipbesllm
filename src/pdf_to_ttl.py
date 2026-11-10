@@ -156,10 +156,25 @@ class Line:
 _CONTROL = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")      # e.g. BEL in SPM captions
 
 
+def _raw_text(chars: list[dict]) -> str:
+    """A span's text from its characters (rawdict). Some reports of 2016-2019
+    (APA, ECA, GA1) print "fi" and "fl" as an "f" and a zero-width "i" or "l",
+    then a space inside the word ("Pacifi c"): that space goes."""
+    out = []
+    for k, ch in enumerate(chars):
+        if ch["c"] == " " and 2 <= k < len(chars) - 1 and chars[k - 2]["c"] == "f" \
+                and chars[k - 1]["c"] in "il" and chars[k - 1]["bbox"][2] - chars[k - 1]["bbox"][0] < 0.3 \
+                and chars[k + 1]["c"].islower():
+            continue
+        out.append(ch["c"])
+    return "".join(out)
+
+
 def _span(s: dict) -> Span:
     font = s["font"]
+    raw = _raw_text(s["chars"]) if "chars" in s else s["text"]
     return Span(
-        text=_CONTROL.sub("", _unligature(s["text"])),
+        text=_CONTROL.sub("", _unligature(raw)),
         font=font,
         size=round(s["size"], 1),
         color=s["color"],
@@ -285,7 +300,7 @@ def read_lines(doc: pymupdf.Document) -> list[Line]:
     ACCENT = accent_color(doc)
     lines: list[Line] = []
     for pno, page in enumerate(doc, 1):
-        for bno, b in enumerate(page.get_text("dict")["blocks"]):
+        for bno, b in enumerate(page.get_text("rawdict")["blocks"]):
             for l in b.get("lines", []):
                 spans = [_span(s) for s in l["spans"]]
                 if not any(s.text.strip() for s in spans):
@@ -526,8 +541,15 @@ def reading_order(paras: list[Para], page_width: float = 595.0) -> list[Para]:
                 columns.append(x)
             # a column is known by its leftmost start; indented lines join it
 
+        # A message's headline is indented after its white label ("C2"): it is
+        # in the column the label starts (BBA p46, where table cells made the
+        # indent a column of its own, and C2 was read after its own text).
+        labels = [q for q in items if q.role == "other" and _white(q) and LABEL.fullmatch(q.text.strip())]
+
         def column(p: Para) -> int:
-            return max((i for i, c in enumerate(columns) if p.x0 >= c - 5), default=0)
+            lab = next((q for q in labels if abs(q.y0 - p.y0) < 6 and 0 <= p.x0 - q.x1 < 30), None)
+            x = lab.x0 if lab else p.x0
+            return max((i for i, c in enumerate(columns) if x >= c - 5), default=0)
 
         def key(p: Para):
             if not p.lines[0].horizontal:
@@ -746,6 +768,7 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
     box: Illustration | None = None     # the box being read (its text is 7.5 pt)
     legend_of: Illustration | None = None   # the figure or table whose legend may follow
     legend_end = (0, 0.0)               # page and bottom of its caption or legend so far
+    caption_font = ""                   # the font of the caption's title
     unnumbered: Section | None = None
     km_heading = ""                     # SUA: the heading of a group of key messages (A, B ...)
     intro: Message | None = None        # the preface or SPM introduction being read
@@ -974,6 +997,7 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
                 box, legend_of = ill, None
             else:
                 legend_of, legend_end = ill, (p.page, p.y1)
+                caption_font = p.lines[-1].main.font
             if spm and kind == "Table" and "gap" in title.lower() and "knowledge" in title.lower():
                 rep.gap_table_pages.append(p.page)
             continue
@@ -981,6 +1005,16 @@ def parse(doc: pymupdf.Document, paras: list[Para]) -> Report:
         if p.role == "small" and mode in ("chapter", "exec") and chapter and p.page in ref_pages \
                 and _REF_START.match(text) and (_AUTHOR_START.match(text) or _ORG_START.match(text)):
             mode = "refs"           # the list starts without a title (LDR)
+
+        if p.role == "other" and legend_of and legend_end[0] == p.page and -2 < p.y0 - legend_end[1] < 20 \
+                and _near(p.lines[0].main.size, 10.0) and not _white(p) and not legend_of.legend \
+                and p.lines[0].main.font == caption_font and re.search(r"[a-z]{3}", text):
+            # The caption's next lines, in its title's font, are its title too:
+            # "Summary of reported mean yield variations (%) in Africa. Data
+            # shown are ... Source: Knox et al. (2012)." (AFA Figure 4.10).
+            legend_of.title = f"{legend_of.title.rstrip()} {text.strip()}"
+            legend_end = (p.page, p.y1)
+            continue
 
         if p.role == "other" and legend_of and legend_end[0] == p.page and -2 < p.y0 - legend_end[1] < 20 \
                 and _near(p.lines[0].main.size, 10.0) and not _white(p) and _unfinished(legend_of.title) \
@@ -1553,9 +1587,9 @@ def _page_text(page: pymupdf.Page) -> str:
     """A page's text without its footnotes and footnote numbers, which can sit
     in the middle of an author list."""
     out = []
-    for b in page.get_text("dict")["blocks"]:
+    for b in page.get_text("rawdict")["blocks"]:
         for l in b.get("lines", []):
-            spans = [_span(x) for x in l["spans"] if x["text"].strip()]
+            spans = [_span(x) for x in l["spans"] if "".join(c["c"] for c in x["chars"]).strip()]
             if not spans:
                 continue
             m = max(spans, key=lambda x: len(x.text))
@@ -2155,9 +2189,9 @@ def read_annex_people(doc: pymupdf.Document, pages: list[int]) -> list[dict]:
     people, group, cur = [], "", None
     for pno in pages:
         page = doc[pno - 1]
-        for b in page.get_text("dict")["blocks"]:
+        for b in page.get_text("rawdict")["blocks"]:
             for l in b.get("lines", []):
-                spans = [_span(s) for s in l["spans"] if s["text"].strip()]
+                spans = [_span(s) for s in l["spans"] if "".join(c["c"] for c in s["chars"]).strip()]
                 if not spans or l["bbox"][1] < 62 or l["bbox"][1] > 790:
                     continue
                 text = re.sub(r"\s+", " ", "".join(s.text for s in spans)).strip().lstrip("﻿")
@@ -2588,9 +2622,9 @@ def read_gaps(doc: pymupdf.Document, rep: Report, log: Log) -> list[Gap]:
 
     def page_lines(pno: int) -> list[tuple[float, float, str, Span]]:
         out = []
-        for b in doc[pno - 1].get_text("dict")["blocks"]:
+        for b in doc[pno - 1].get_text("rawdict")["blocks"]:
             for l in b.get("lines", []):
-                spans = [_span(x) for x in l["spans"] if x["text"].strip()]
+                spans = [_span(x) for x in l["spans"] if "".join(c["c"] for c in x["chars"]).strip()]
                 if not spans or abs(l["dir"][0] - 1) > 0.01:
                     continue
                 x0, y0 = l["bbox"][0], l["bbox"][1]
@@ -3111,9 +3145,12 @@ def resolve_marks(text: str, chapter: int, rep: Report, log: "Log | None" = None
     return FOOTNOTE_MARK.sub(sub, text)
 
 
-def clean(text: str) -> str:
-    """Text for the TTL: footnote marks out, spaces tidied."""
-    text = FOOTNOTE_MARK.sub("", text)
+def clean(text: str, marks: bool = True) -> str:
+    """Text for the TTL, spaces tidied. Footnote marks stay where the footnote
+    is cited, as [^12] (the footnote is fn/<report>-Footnote<chapter>.12), unless
+    marks=False."""
+    if not marks:
+        text = FOOTNOTE_MARK.sub("", text)
     text = _CONTROL.sub("", text.replace("\u00ad", ""))
     text = re.sub(r"[ \t]+", " ", text)
     text = re.sub(r" +([,.;:)])", r"\1", text)
@@ -3127,7 +3164,7 @@ def _sentences(text: str) -> list[str]:
     """A paragraph's full sentences: cut after ".", "!", "?" or a {mark} before a
     capital, not inside brackets or marks, nor after "et al." or an initial."""
     out, pos = [], 0
-    for m in re.finditer(r"(?:[.!?][”\"’\]]*|\})\s+(?=[A-Z“\"‘\[])", text):
+    for m in re.finditer(r"(?:[.!?][”\"’\]]*(?:\[\^\d+\])*|\})\s+(?=[A-Z“\"‘\[])", text):
         head = text[pos:m.end()]
         if head.count("(") > head.count(")") or head.count("{") > head.count("}") \
                 or _NOT_SENTENCE_END.search(head.rstrip()):

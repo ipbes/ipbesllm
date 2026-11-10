@@ -458,10 +458,14 @@ def write(summary, rows, fid, a: TTL, b: TTL, out: Path, names, corpus: str | No
     out.with_suffix(".md").write_text("\n".join(md), encoding="utf-8")
     with out.with_suffix(".csv").open("w", newline="", encoding="utf-8-sig") as f:
         w = csv.writer(f, quoting=csv.QUOTE_ALL)
+        # The lengths (characters, of the whole values) show large deviations
+        # beside differences of formatting and punctuation.
         w.writerow(["class", f"item ({names[0]})", f"item ({names[1]})", "property", "difference",
+                    f"{names[0]} length", f"{names[1]} length", "length difference",
                     names[0], names[1]])
         for r in rows:
-            w.writerow([r[0], r[1], r[2], r[3], r[4], r[5][:32000], r[6][:32000]])
+            w.writerow([r[0], r[1], r[2], r[3], r[4], len(r[5]), len(r[6]), len(r[6]) - len(r[5]),
+                        r[5][:32000], r[6][:32000]])
 
 
 def main(argv=None):

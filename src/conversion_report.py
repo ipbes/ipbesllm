@@ -335,7 +335,8 @@ def build_html(assessment: str, cfg: dict, folder: Path, today: str) -> str:
              [f"{assessment}_conversion.md", "What could not be read or matched, and where the sources disagree"]]
     if tables:
         files.append([f"{assessment}_compare.md / .csv", "The manual file compared with the automatic one; the CSV lists "
-                                                         "every difference"])
+                                                         "every difference, with the length of each value in characters "
+                                                         "and the difference between them"])
     files.append([f"{assessment}_zotero.json", "The Zotero library, cached"])
     h.append(table([f"File in data/pdf_compare/{assessment}/", "Content"], files, numeric_from=9))
     return "\n".join(h)
