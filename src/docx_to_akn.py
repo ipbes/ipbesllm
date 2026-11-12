@@ -1,9 +1,10 @@
 """Convert IPBES Plenary session reports from Word (.docx) to Akoma Ntoso
-XML (AKN4UN), in the form of the reports in data/xml.
+XML (AKN4UN) in data/xml, the files the app indexes, in the form of the
+Indigo reports in data/xml_original.
 
     PYTHONPATH=src python src/docx_to_akn.py                    # data/docx/*.docx
     PYTHONPATH=src python src/docx_to_akn.py data/docx/2017-5.docx
-    PYTHONPATH=src python src/docx_to_akn.py --out data/xml_compare
+    PYTHONPATH=src python src/docx_to_akn.py --out <folder>
 
 Files are named <year>-<session>.docx; the XML keeps the name. Old Word
 files (.doc) are skipped: open them in Word and save them as .docx first.
@@ -11,7 +12,7 @@ files (.doc) are skipped: open them in Word and save them as .docx first.
 The model follows the AKN4UN guidelines for meeting reports
 (https://unsceb-hlcm.github.io/part2/, section 7) and naming convention
 (https://unsceb-hlcm.github.io/part1/, section 6), as the Indigo files in
-data/xml do:
+data/xml_original do:
 
     <akomaNtoso><debateReport name="debateReport">
       <meta>        FRBR identification: /akn/un-ipbes/debatereport/report/plenary/<first day>/<session>
@@ -31,7 +32,7 @@ numbered by Word ("Normal_number"), and the annexes start with the
 ZZ_Anx_header style. Word's automatic numbers are not in the text; they are
 recomputed from numbering.xml (see Numbering).
 
-Compare the result with data/xml using xml_compare.py.
+Compare the result with data/xml_original using xml_compare.py.
 """
 from __future__ import annotations
 
@@ -768,8 +769,13 @@ def build(blocks: list[Block]) -> Builder:
         if b.kind == "annex_header" and _DECISION.match(title):
             b.kind = "heading"                  # a decision in the annex header style
         if b.kind == "annex_header":
+            # Inside a decision, an annex or appendix in this style belongs to
+            # it (IPBES-11: "Appendix to the scoping report ..." in Annex I);
+            # anything else starts a new part of the report.
             in_decision = any(a.kind == "decision" for a in bld.attachments)
-            bld.open_attachment("annex" if in_decision and _ANNEX.match(title) else "top", b.spans)
+            kind = ("appendix" if _APPENDIX.match(title) else
+                    "annex" if _ANNEX.match(title) else "top") if in_decision else "top"
+            bld.open_attachment(kind, b.spans)
             i += 1
             continue
         # "Annex I" then "Decision IPBES/1/1 Rules of procedure ..." (IPBES-1):
@@ -1292,7 +1298,7 @@ def convert(path: Path) -> tuple[etree._Element, Info]:
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("files", nargs="*", type=Path, help="Word files (default: data/docx/*)")
-    ap.add_argument("--out", type=Path, default=ROOT / "data" / "xml_compare")
+    ap.add_argument("--out", type=Path, default=ROOT / "data" / "xml")
     ap.add_argument("--config", type=Path, default=DEFAULT_CONFIG,
                     help="organization settings (default: config/akn4un_ipbes.toml)")
     args = ap.parse_args(argv)

@@ -33,7 +33,7 @@ The project is an evaluation platform for comparing and improving retrieval and 
 | Format | Content | Processing | Chroma collection |
 |---|---|---|---|
 | **TTL** (RDF/Turtle) | Assessments: the global assessment (GA1); the thematic assessments IAS, LDR, NXS, PPA, SUA, TCA; the methodological assessments BBA, SCM, VA; and the regional assessments for Africa (AFA), the Americas (AMA), Asia and the Pacific (APA) and Europe and Central Asia (ECA). All are converted automatically from the published reports by `pdf_to_ttl.py` (`data/ttl/<A>.ttl`); the earlier manual conversions are kept in `data/ttl_original/` for comparison | Parsed with RDFLib into typed chunks (key messages, chapters, sub-chapters, experts, figures, knowledge gaps …), then embedded | `ttl_documents` |
-| **XML** (Akoma Ntoso / LegalDocML) | Plenary session reports IPBES-1 to IPBES-8, with their decisions | Parsed into structured paragraphs and table rows, then embedded | `xml_documents` |
+| **XML** (Akoma Ntoso / LegalDocML) | Plenary session reports IPBES-1 to IPBES-12, with their decisions. All are converted from the Word reports by `docx_to_akn.py` (`data/xml/<year>-<session>.xml`); the files made by hand in Indigo are kept in `data/xml_original/` for comparison | Parsed into structured paragraphs and table rows, then embedded | `xml_documents` |
 | **PDF** | Assessment reports (each includes its SPM) of the same assessments as the TTL folder, and Plenary session reports | Text extracted with PyMuPDF, chunked, then embedded | `pdf_documents` |
 | **RDF** | IPBES thesaurus and geography | Used for query expansion, definitions and country matching; the thesaurus is also embedded | `ipbes_thesaurus` |
 
@@ -102,8 +102,8 @@ ipbesllm/
 │   ├── rdf/*.rdf                # ipbes-thesaurus.rdf, ipbes-geo.rdf
 │   ├── ttl/*.ttl                # The assessments the app indexes: <A>.ttl, converted from the PDFs by pdf_to_ttl.py
 │   ├── ttl_original/*.ttl       # The earlier manual conversions (e.g. GA1_v11.ttl), for comparison; not indexed
-│   ├── xml/*.xml                # Plenary reports, e.g. 2013-1.xml
-│   └── xml_compare/*.xml        # Plenary reports converted from Word, to check against xml/
+│   ├── xml/*.xml                # The Plenary reports the app indexes, e.g. 2013-1.xml, converted from Word by docx_to_akn.py
+│   └── xml_original/*.xml       # The reports made by hand in Indigo, for comparison; not indexed
 ├── dist/ipbes-data.zip          # Data bundle for the deployed app (built by data_bundle.py)
 ├── docs/ontology/*.ttl          # IPBES report ontology: the structure of the TTL files (used by ttl_audit.py)
 ├── docs/akn/*.xsd               # Akoma Ntoso 3.0 schema (OASIS), for validating XML
@@ -138,7 +138,7 @@ ipbesllm/
 │   ├── settings.py              # Project paths; loads .env
 │   ├── pdf_ttl_compare.py       # Runs a question set through PDF and TTL
 │   ├── docx_to_akn.py           # Converts Word Plenary reports to Akoma Ntoso XML (AKN4UN)
-│   ├── xml_compare.py           # Compares converted XML with data/xml and the schema
+│   ├── xml_compare.py           # Compares converted XML with data/xml_original and the schema
 │   ├── rdf_graph.py             # Thesaurus RAG (hybrid vector + graph)    
 │   └── *_test.py, xml_test_chunks.py, xml_test_loader.py, diagnose_chunks.py, ...   # Regression tests  and diagnostics
 ├── README.md
@@ -467,7 +467,7 @@ print(rag.answer('How does ecological integrity relate to ecosystem health?'))
 
 ### XML / Akoma Ntoso (Plenary reports)
 
-Place XML files in `data/xml/`. The session number is read from each file's metadata (`FRBRnumber`).
+The app indexes the XML files in `data/xml/`, made from the Word reports by `docx_to_akn.py` (see [Converting Word reports to XML](#converting-word-reports-to-xml)); the files made by hand in Indigo are kept in `data/xml_original/`, not indexed, to compare the two (`xml_compare.py`). The session number is read from each file's metadata (`FRBRnumber`).
 
 The parser preserves structural information: document title and date, the decision or annex a passage is part of, division, subdivision, paragraph number, eId, XPath, table title and table rows. This matters because XML tables often carry meaning in the relationship between a table title, headers, year, country and row value.
 
@@ -488,14 +488,14 @@ It produces three chunk types:
 
 #### Converting Word reports to XML
 
-`src/docx_to_akn.py` converts Plenary session reports from Word (`data/docx/<year>-<session>.docx`) to Akoma Ntoso XML in `data/xml_compare/`, following the AKN4UN guidelines for meeting reports ([part 2](https://unsceb-hlcm.github.io/part2/), section 7) and naming convention ([part 1](https://unsceb-hlcm.github.io/part1/), section 6), in the same form as the Indigo files in `data/xml`:
+`src/docx_to_akn.py` converts Plenary session reports from Word (`data/docx/<year>-<session>.docx`) to Akoma Ntoso XML in `data/xml/`, following the AKN4UN guidelines for meeting reports ([part 2](https://unsceb-hlcm.github.io/part2/), section 7) and naming convention ([part 1](https://unsceb-hlcm.github.io/part1/), section 6), in the same form as the Indigo files in `data/xml_original`:
 
 - `debateReport` with FRBR metadata (`/akn/un-ipbes/debatereport/report/plenary/<first day>/<session>`), a preface (document symbol, title, session, place and dates) and the report in `mainBody`;
 - headings (`CH1`-`CH4` styles, bold headings in older reports) become `division`/`subdivision`; numbered paragraphs become `paragraph`, lists in them `subparagraph` (agenda items, (a), (i));
 - the annex of decisions becomes nested `attachment`s: Annex › Decision IPBES-5/1 › Annex I to decision IPBES-5/1 › Appendix, each with its heading, subheading and `doc`;
 - footnotes become `authorialNote`, tables keep merged cells, bold/italic/superscript are kept; non-breaking hyphens become "-" so "IPBES-5/1" is found by searches.
 
-The values that belong to IPBES are in `config/akn4un_ipbes.toml`, set to match the files in `data/xml`: `FRBRcountry` `un-ipbes` and the IRIs (`/akn/un-ipbes/debatereport/report/plenary/...`), `source="#UNEP"`, `<TLCOrganization eId="UNEP" href="https://indigo-unep.indigo.ipbes.net" showAs="UNEP"/>`, an empty `FRBRauthor`, component names (`!annexure_1/annexure_2/appendix_1`), the acronym in decision symbols (`IPBES`), the document symbol pattern, the title used when a report has none, double quotation marks (straight, as in most reference files, or as in the Word file) and the Word style names. Colleagues from other entities can copy the file, change the values and run `python src/docx_to_akn.py --config config/akn4un_<body>.toml <files>`.
+The values that belong to IPBES are in `config/akn4un_ipbes.toml`, set to match the files in `data/xml_original`: `FRBRcountry` `un-ipbes` and the IRIs (`/akn/un-ipbes/debatereport/report/plenary/...`), `source="#UNEP"`, `<TLCOrganization eId="UNEP" href="https://indigo-unep.indigo.ipbes.net" showAs="UNEP"/>`, an empty `FRBRauthor`, component names (`!annexure_1/annexure_2/appendix_1`), the acronym in decision symbols (`IPBES`), the document symbol pattern, the title used when a report has none, double quotation marks (straight, as in most reference files, or as in the Word file) and the Word style names. Colleagues from other entities can copy the file, change the values and run `python src/docx_to_akn.py --config config/akn4un_<body>.toml <files>`.
 
 Word's automatic numbers are not in the text: they are recomputed from the document's numbering definitions. A number is a new paragraph when it continues the paragraph sequence; a "1." inside a paragraph starts a list (the agenda).
 
@@ -506,14 +506,14 @@ Old Word files (`.doc`) are skipped; save them as `.docx` in Word first (a file 
 | Convert every Word report | `PYTHONPATH=src python src/docx_to_akn.py` |
 | Convert one | `PYTHONPATH=src python src/docx_to_akn.py data/docx/2024-11.docx` |
 | Convert with another organization's settings | `PYTHONPATH=src python src/docx_to_akn.py --config config/akn4un_<body>.toml --out <folder> <files>` |
-| Compare with `data/xml` and validate | `PYTHONPATH=src python src/xml_compare.py` |
+| Compare with `data/xml_original` and validate | `PYTHONPATH=src python src/xml_compare.py` |
 | List the differences for one report | `PYTHONPATH=src python src/xml_compare.py 2017-5 --details` |
 
 `xml_compare.py` reports, per session, the share of the reference's words found in the conversion (and the reverse), the numbered paragraphs of the main report (same number, section and text), the decisions found, the share of the reference's element identifiers (`eId`) found in the conversion, element counts, footnotes, the chunks `xml_loader.py` makes, and validity against the Akoma Ntoso 3.0 schema (`docs/akn/akomantoso30.xsd`). Sessions without a reference file are checked on their own (paragraph numbering without gaps, decisions, schema).
 
 Results on the eight sessions with both Word and XML (October 2026): 97.5–100% of the reference text found in both directions; the main-report paragraphs of IPBES-1, 4, 5, 6, 7 and 8 match the reference exactly (number, section and text); all decisions found, including some the Indigo files miss (IPBES/1/1, IPBES-4/4, IPBES-7/1; the IPBES-2 decisions are not labelled there); every file valid. Element identifiers (`eId`) are compared too: the main report's identifiers are identical to the reference in IPBES-1 and 4 to 8, the decisions' 97–100% in IPBES-4 to 8, and 85–99% of all identifiers are identical for IPBES-1, 6, 7 and 8; elsewhere the reference files differ among themselves in where they put tables (in the paragraph, in `wrapUp`, in an `hcontainer`, or in a `Table N` subdivision, which the converter uses, as most files do) and how they nest annexes to decisions (attachments, or divisions in IPBES-2 and 3). Decision symbols typed differently in a heading ("IPBES 4-4") are read as IPBES-4/4, and a page break inside a Word paragraph starts a new one ("Annex III to decision IPBES-4/1" follows one). The remaining differences are choices or slips made by hand in Indigo: notes under financial tables marked as footnotes (kept as text below the table here), table titles as subdivisions, agenda items numbered as paragraphs (IPBES-2), paragraph 82 numbered 71 (IPBES-3).
 
-To use converted reports in the app, copy them to `data/xml/` and run `xml_index.py`.
+After converting, run `xml_index.py` to index the new files.
 
 ### PDF
 

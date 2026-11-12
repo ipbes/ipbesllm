@@ -1,5 +1,6 @@
-"""Compare Akoma Ntoso reports converted from Word (data/xml_compare) with
-the reference files (data/xml), to check and improve docx_to_akn.py.
+"""Compare Akoma Ntoso reports converted from Word (data/xml) with the
+Indigo reference files (data/xml_original), to check and improve
+docx_to_akn.py.
 
     PYTHONPATH=src python src/xml_compare.py                 # every file in both folders
     PYTHONPATH=src python src/xml_compare.py 2017-5 --details
@@ -20,7 +21,7 @@ For each report it prints:
   schema      validity against the Akoma Ntoso 3.0 schema (docs/akn/akomantoso30.xsd,
               from https://docs.oasis-open.org/legaldocml/akn-core/v1.0/os/part2-specs/schemas/)
 
-Reports without a reference (sessions not yet in data/xml) are checked on
+Reports without a reference (sessions not in data/xml_original) are checked on
 their own: paragraph numbering without gaps, decisions found, schema.
 
 The reference files were marked up by hand in Indigo and are not perfect
@@ -256,8 +257,8 @@ def compare(name: str, ref_dir: Path, new_dir: Path, details: bool) -> dict:
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("names", nargs="*", help="report names, e.g. 2017-5 (default: all converted)")
-    ap.add_argument("--ref", type=Path, default=ROOT / "data" / "xml")
-    ap.add_argument("--new", type=Path, default=ROOT / "data" / "xml_compare")
+    ap.add_argument("--ref", type=Path, default=ROOT / "data" / "xml_original")
+    ap.add_argument("--new", type=Path, default=ROOT / "data" / "xml")
     ap.add_argument("--details", action="store_true", help="list differences")
     args = ap.parse_args(argv)
     names = args.names or sorted((p.stem for p in args.new.glob("*.xml")),

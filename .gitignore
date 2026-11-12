@@ -11,7 +11,7 @@ data/pdf/
 data/pdf_compare/
 data/rdf/
 data/ttl_original/
-data/xml_compare/
+data/xml_original/
 src/__pycache__/
 src/test.py
 *.sqlite3

@@ -1,7 +1,7 @@
 # Settings for docx_to_akn.py: the values that belong to one organization.
 #
 # This file is for IPBES Plenary reports, with the same metadata as the
-# reports in data/xml (made in Indigo, indigo-unep.indigo.ipbes.net). To
+# reports in data/xml_original (made in Indigo, indigo-unep.indigo.ipbes.net). To
 # convert another body's meeting reports, copy this file, change the values
 # and run:
 #
