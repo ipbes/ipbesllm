@@ -9,6 +9,19 @@ Indigo reports in data/xml_original.
 Files are named <year>-<session>.docx; the XML keeps the name. Old Word
 files (.doc) are skipped: open them in Word and save them as .docx first.
 
+Translations are named with the language appended (2024-11_fr.docx: ar,
+es, fr, ru, zh, as in [languages] in the settings) and go to
+data/xml/<language>/2024-11.xml, outside the folder the app indexes. A
+translation is another expression of the English report's work: its date,
+session and symbol come from the English report, its expression IRI and
+<FRBRlanguage> use the language's code (fra), and <FRBRtranslation> points
+to the English expression. Its structure is built on the English form of
+the numbers (I., A., 1., (a)), so it has the English report's hierarchy and
+element identifiers; <num> shows the number as the translation does
+("一、", "أولاً-", "(أ)"). Decisions, annexes, appendices and tables are
+recognised from each language's words in the settings. Compare a
+translation with the English report using xml_compare_lang.py.
+
 The model follows the AKN4UN guidelines for meeting reports
 (https://unsceb-hlcm.github.io/part2/, section 7) and naming convention
 (https://unsceb-hlcm.github.io/part1/, section 6), as the Indigo files in
@@ -198,6 +211,162 @@ def format_number(n: int, fmt: str) -> str:
     }.get(fmt, str(n))
 
 
+# Numbers in the translations. The structure is built on the English form
+# of a number (I., A., 1., (a)), so that a translation has the hierarchy and
+# element identifiers of the English report; <num> shows the number as the
+# translation does ("一、", "أولاً-", "(أ)").
+_CHINESE_DIGITS = "一二三四五六七八九"
+# Abjad order (Word's arabicAbjad): a, b, c, d ... as أ، ب، ج، د ...
+_ARABIC_ABJAD = ["أ", "ب", "ج", "د", "هـ", "و", "ز", "ح", "ط", "ي", "ك", "ل", "م", "ن",
+                 "س", "ع", "ف", "ص", "ق", "ر", "ش", "ت", "ث", "خ", "ذ", "ض", "ظ", "غ"]
+_ARABIC_ALPHA = ["أ", "ب", "ت", "ث", "ج", "ح", "خ", "د", "ذ", "ر", "ز", "س", "ش", "ص",
+                 "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ك", "ل", "م", "ن", "هـ", "و", "ي"]
+# Section numbers I., II. ... and A., B. ... as Arabic words.
+_ARABIC_ORDINALS = ["أولاً", "ثانياً", "ثالثاً", "رابعاً", "خامساً", "سادساً", "سابعاً", "ثامناً",
+                    "تاسعاً", "عاشراً", "حادي عشر", "ثاني عشر", "ثالث عشر", "رابع عشر",
+                    "خامس عشر", "سادس عشر", "سابع عشر", "ثامن عشر", "تاسع عشر", "عشرون"]
+_ARABIC_LETTER_NAMES = ["ألف", "باء", "جيم", "دال", "هاء", "واو", "زاي", "حاء", "طاء", "ياء",
+                        "كاف", "لام", "ميم", "نون", "سين", "عين", "فاء", "صاد", "قاف", "راء",
+                        "شين", "تاء", "ثاء", "خاء", "ذال", "ضاد"]
+_RUSSIAN_LETTERS = "абвгдежзиклмнопрстуфхцчшщэюя"
+# Cyrillic letters typed for Latin ones in numbers ("А.", "В.", "С." for A., B., C.).
+_HOMOGLYPHS = str.maketrans("АВСЕНКМОРТХаеорсху", "ABCEHKMOPTXaeopcxy")
+# Word formats of the translations and the English format they stand for.
+_NATIVE_FORMATS = {
+    "chineseCounting": "upperRoman", "chineseCountingThousand": "upperRoman",
+    "japaneseCounting": "upperRoman", "ideographTraditional": "upperRoman",
+    "taiwaneseCounting": "upperRoman", "taiwaneseCountingThousand": "upperRoman",
+    "chineseLegalSimplified": "upperRoman",
+    "arabicAbjad": "lowerLetter", "arabicAlpha": "lowerLetter",
+    "russianLower": "lowerLetter", "russianUpper": "upperLetter",
+    "decimalFullWidth": "decimal", "decimalHalfWidth": "decimal",
+}
+# Punctuation of the translations' numbers, in the English form.
+_NUMBER_PUNCT = str.maketrans({"、": ".", "．": ".", "（": "(", "）": ")", "-": ".", "–": "."})
+
+
+def _chinese(n: int) -> str:
+    """1 -> 一, 10 -> 十, 12 -> 十二, 20 -> 二十, 21 -> 二十一 (up to 99)."""
+    if n < 10:
+        return _CHINESE_DIGITS[n - 1] if n > 0 else "〇"
+    tens, ones = divmod(n, 10)
+    return (_CHINESE_DIGITS[tens - 1] if tens > 1 else "") + "十" + \
+        (_CHINESE_DIGITS[ones - 1] if ones else "")
+
+
+def _from_chinese(text: str) -> int | None:
+    if not text or any(c not in _CHINESE_DIGITS + "十" for c in text):
+        return None
+    if "十" not in text:
+        return _CHINESE_DIGITS.index(text) + 1 if len(text) == 1 else None
+    tens, _, ones = text.partition("十")
+    t = _CHINESE_DIGITS.index(tens) + 1 if tens else 1
+    o = _CHINESE_DIGITS.index(ones) + 1 if ones else 0
+    return t * 10 + o
+
+
+def format_native(n: int, fmt: str) -> str:
+    """The number as Word shows it in a translation."""
+    if _NATIVE_FORMATS.get(fmt) == "upperRoman":
+        return _chinese(n)
+    if fmt == "arabicAbjad":
+        return _ARABIC_ABJAD[(n - 1) % len(_ARABIC_ABJAD)]
+    if fmt == "arabicAlpha":
+        return _ARABIC_ALPHA[(n - 1) % len(_ARABIC_ALPHA)]
+    if fmt == "russianLower":
+        return _RUSSIAN_LETTERS[(n - 1) % len(_RUSSIAN_LETTERS)]
+    if fmt == "russianUpper":
+        return _RUSSIAN_LETTERS[(n - 1) % len(_RUSSIAN_LETTERS)].upper()
+    return format_number(n, fmt)
+
+
+def _arabic_word(word: str) -> str:
+    """A pattern for an Arabic word with its tanwin optional and any alef."""
+    out = ""
+    for c in word:
+        if c == "ً":
+            out += "ً?"
+        elif c in "أإآا":
+            out += "[أإآا]"
+        else:
+            out += re.escape(c)
+    return out
+
+
+_SEP = r"\s*[-–]\s*"
+_AR_ORDINAL = re.compile(
+    r"^[\t ]*(" + "|".join(_arabic_word(w) for w in sorted(_ARABIC_ORDINALS, key=len, reverse=True))
+    + r")(?:" + _SEP + r"|$)")
+_AR_LETTER_NAME = re.compile(
+    r"^[\t ]*(" + "|".join(_arabic_word(w) for w in _ARABIC_LETTER_NAMES) + r")(?:" + _SEP + r"|$)")
+# (أ), (ب) ...: also typed (ه), (ﻫ), (ى), with zero-width non-joiners.
+_AR_LETTER_FORMS = {"هـ": "هـ|ه|ﻫ", "ي": "ي|ى", "أ": "أ|ا"}
+_ZW = "[‌‍‎‏]*"
+_AR_LIST_LETTER = re.compile(
+    r"^[\t ]*(\(" + _ZW + "(" + "|".join(_AR_LETTER_FORMS.get(c, re.escape(c)) for c in _ARABIC_ABJAD)
+    + ")" + _ZW + r"\))\s*")
+
+
+def _abjad_value(letter: str) -> int:
+    for n, c in enumerate(_ARABIC_ABJAD, 1):
+        if letter == c or letter in _AR_LETTER_FORMS.get(c, "").split("|"):
+            return n
+    return 0
+# Paragraph and list numbers typed as "1- ", "١- " (Arabic-Indic digits), "(1)".
+_AR_DECIMAL = re.compile(r"^[\t ]*(([0-9٠-٩]{1,3})\s*[-–])\s*(?=\S)")
+_AR_PAREN_DECIMAL = re.compile(r"^[\t ]*(\(([0-9٠-٩]{1,2})\))\s*(?=\S)")
+_INDIC_DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789")
+_ZH_NUMBER = re.compile(r"^[\t ]*([一二三四五六七八九十]{1,3})(?:\s*[、.．]\s*|$)")
+_ZH_LIST_NUMBER = re.compile(r"^[\t ]*([(（]([一二三四五六七八九十]{1,3})[)）])\s*(?=\S)")
+
+
+def _arabic_value(found: str, words: list[str]) -> int:
+    key = re.sub("[أإآا]", "ا", found.replace("ً", ""))
+    for n, w in enumerate(words, 1):
+        if re.sub("[أإآا]", "ا", w.replace("ً", "")) == key:
+            return n
+    return 0
+
+
+def native_number(raw: str, alone: bool = False):
+    """A number typed in a translation's own form at the start of `raw`:
+    (English number, format, number as typed, length of the prefix), else
+    None. With `alone`, the text must be the number alone (a section number
+    on its own line); otherwise it must be followed by its separator and text."""
+    lang = LANG.get("_key", "en")
+    if lang == "ar":
+        for pattern, words, fmt in ((_AR_ORDINAL, _ARABIC_ORDINALS, "upperRoman"),
+                                    (_AR_LETTER_NAME, _ARABIC_LETTER_NAMES, "upperLetter")):
+            m = pattern.match(raw)
+            if m and (m.end() == len(raw.rstrip())) == alone:
+                n = _arabic_value(m.group(1), words)
+                if n:
+                    num = format_number(n, fmt) + "."
+                    return num, fmt, raw[:m.end()].strip(), m.end()
+        if alone:
+            return None
+        m = _AR_LIST_LETTER.match(raw)
+        if m and (n := _abjad_value(m.group(2))):
+            return f"({_letter(n)})", "lowerLetter", re.sub(_ZW, "", m.group(1)), m.end()
+        m = _AR_DECIMAL.match(raw)
+        if m:
+            return f"{int(m.group(2).translate(_INDIC_DIGITS))}.", "decimal", m.group(1), m.end()
+        m = _AR_PAREN_DECIMAL.match(raw)
+        if m:                           # (1), (2): the (i), (ii) of the English
+            n = int(m.group(2).translate(_INDIC_DIGITS))
+            return f"({_roman(n)})", "lowerRoman", m.group(1), m.end()
+    elif lang == "zh":
+        m = _ZH_NUMBER.match(raw)
+        if m and (m.end() == len(raw.rstrip())) == alone:
+            n = _from_chinese(m.group(1))
+            if n:
+                return _roman(n).upper() + ".", "upperRoman", raw[:m.end()].strip(), m.end()
+        m = _ZH_LIST_NUMBER.match(raw) if not alone else None
+        if m and (n := _from_chinese(m.group(2))):        # (一): the (i) of a list
+            return f"({_roman(n)})", "lowerRoman", m.group(1), m.end()
+    return None
+
+
 @dataclass
 class Level:
     start: int = 1
@@ -289,10 +458,12 @@ class Numbering:
             style_id = self.style_parent.get(style_id)
         return None, None
 
-    def number(self, p_el) -> tuple[str, str, int] | None:
-        """(number text, format, level) for a numbered paragraph, else None.
-        Advances the list's counters, so call it once per paragraph, in
-        document order."""
+    def number(self, p_el) -> tuple[str, str, int, str] | None:
+        """(number text, format, level, as shown) for a numbered paragraph,
+        else None. The text and format are the English ones (I., (a)); "as
+        shown" is the number in a translation's own form (一、, (أ)) when it
+        differs, else "". Advances the list's counters, so call it once per
+        paragraph, in document order."""
         ppr = p_el.find(w("pPr"))
         num_id = ilvl = None
         style_id = None
@@ -329,14 +500,32 @@ class Numbering:
             del counts[deeper]
         level = levels[ilvl]
         if level.fmt in ("bullet", "none"):
-            return "", level.fmt, ilvl
+            return "", level.fmt, ilvl, ""
 
-        def fill(m):
-            k = int(m.group(1)) - 1
-            lv = levels.get(k, Level())
-            value = counts.get(k, starts.get(k, lv.start))
-            return format_number(value, lv.fmt)
-        return re.sub(r"%(\d)", fill, level.text).strip(), level.fmt, ilvl
+        def english(lv: Level) -> str:
+            """The English format of a level: Chinese counting is I. in
+            "一、" but (i) in "(一)" (a list)."""
+            fmt = _NATIVE_FORMATS.get(lv.fmt, lv.fmt)
+            if fmt == "upperRoman" and lv.fmt != "upperRoman" and re.search(r"[(（]%\d", lv.text):
+                return "lowerRoman"
+            return fmt
+
+        def filler(native: bool):
+            def fill(m):
+                k = int(m.group(1)) - 1
+                lv = levels.get(k, Level())
+                value = counts.get(k, starts.get(k, lv.start))
+                if native:
+                    return format_native(value, lv.fmt)
+                return format_number(value, english(lv))
+            return fill
+        text = re.sub(r"%(\d)", filler(False), level.text).strip()
+        fmt = english(level)
+        if LANG.get("_key", "en") == "en":
+            return text, fmt, ilvl, ""
+        shown = re.sub(r"%(\d)", filler(True), level.text).strip()
+        text = text.translate(_NUMBER_PUNCT)
+        return text, fmt, ilvl, (shown if shown != text else "")
 
 
 # ---------------------------------------------------------------------------
@@ -359,6 +548,8 @@ _TYPED_NUMBER = re.compile(
 _BIS_NUMBER = re.compile(r"^[\t ]*(\[?\d{1,3}\s?(?:bis|ter|quater)(?:\s+alt)?\.?)(?=\s)")
 _HEADING_NUMBER = re.compile(r"^[\t ]*([IVXLC]{1,6}\.?|[A-Z]\.|[0-9]{1,2}(?:\.[0-9]{1,2})*\.?)\t+")
 _ROMAN_ONLY = re.compile(r"^[IVXL]{1,6}\.?$")
+# Translations: a section number followed by a space in a heading style.
+_HEADING_NUMBER_SPACE = re.compile(r"^[\t ]*([IVXLC]{1,6}\.|[A-Z]\.)[ \u00a0\u3000]+(?=\S)")
 
 
 @dataclass
@@ -367,7 +558,8 @@ class Block:
     spans: list = field(default_factory=list)
     style: str = ""
     level: float = 0                # heading level
-    num: str = ""                   # number (Word's or typed)
+    num: str = ""                   # number (Word's or typed), in the English form
+    display: str = ""               # the number as a translation shows it, when different
     fmt: str = ""                   # decimal, lowerLetter, lowerRoman, upperRoman, bullet ...
     ilvl: int = 0
     auto: bool = False              # number from Word's numbering
@@ -504,16 +696,25 @@ def _paragraph_block(spans: list[Span], style: str, number) -> "Block | None":
         b.kind = "annex_title"
     prefix = 0
     if number is not None:
-        b.num, b.fmt, b.ilvl = number
+        b.num, b.fmt, b.ilvl, b.display = number
         b.auto = True
+    elif (native := native_number(raw)) is not None:
+        b.num, b.fmt, b.display, prefix = native
     else:
-        m = (_HEADING_NUMBER if b.kind == "heading" else _TYPED_NUMBER).match(raw) \
-            or (_BIS_NUMBER.match(raw) if b.kind == "para" else None)
+        # Russian reports type Cyrillic look-alikes in numbers ("В." for B.):
+        # matched in Latin, shown as typed. The length does not change.
+        latin = raw.translate(_HOMOGLYPHS) if LANG.get("_key", "en") == "ru" else raw
+        m = (_HEADING_NUMBER if b.kind == "heading" else _TYPED_NUMBER).match(latin) \
+            or (_BIS_NUMBER.match(latin) if b.kind == "para" else None)
+        if m is None and b.kind == "heading" and LANG.get("_key", "en") != "en":
+            m = _HEADING_NUMBER_SPACE.match(latin)  # "C. 选举..." in a heading style
         if m:
             b.num, prefix = m.group(1), m.end()
             b.fmt = _typed_format(b.num)
+            typed = raw[m.start(1):m.end(1)]
+            b.display = typed if typed != b.num else ""
     b.spans = strip_spans(spans, prefix)
-    if b.kind == "annex_header" and not re.match(rf"\[?\s*(Annex|Appendi|Decision|{_BODY})", b.text, re.I):
+    if b.kind == "annex_header" and not _HEADER.match(b.text):
         b.kind = "para"                 # a table note in the annex header style
     return b if b.text or any(s.note for s in b.spans) else None
 
@@ -547,15 +748,30 @@ _MISTYPED_DECISION: re.Pattern   # typed differently in a heading: "IPBES 4-4" (
 _ANNEX_TO_DECISION: re.Pattern   # "Annex I to decision IPBES-5/1"
 _OLD_DECISION: re.Pattern        # "Decision IPBES/1/2 Next steps ..." (IPBES-1)
 _SYMBOL: re.Pattern              # document symbol on the cover: IPBES/5/15
-_ANNEX = re.compile(r"^Annex(?:es)?\b", re.IGNORECASE)
-_TABLE_TITLE = re.compile(r"^(Table\s+[0-9]+[A-Za-z]?)\.?(?:\s|$)")
-_APPENDIX = re.compile(r"^Appendi(?:x|ces)\b", re.IGNORECASE)
+_ANNEX: re.Pattern               # "Annex", "Annex I to decision ..."
+_APPENDIX: re.Pattern            # "Appendix"
+_TABLE_TITLE: re.Pattern         # "Table 1" (group 1: as typed, group 2: the number)
+_HEADER: re.Pattern              # a real header in an annex header style
+_DECISION_SYMBOL: re.Pattern     # a decision symbol in any acronym, to normalise it
+
+# The language being converted: its settings ([languages.<key>]) and key.
+LANG: dict = {}
+
+# Settings for a configuration without [languages]: English, as before.
+_DEFAULT_LANGUAGE = {
+    "code": "", "bodies": [], "decision": r"(?:Decision\s+)?{symbol}",
+    "decision_old": r"Decision\s+({old_symbol})\s*:?\s*",
+    "decision_typo": r"((?:Decision\s+)?)({body})(?:[\s-]?(\d+)[-‑]|\s+(\d+)/)(\d+)\b",
+    "annex": r"Annex(?:es)?\b", "appendix": r"Appendi(?:x|ces)\b",
+    "annex_to_decision": r"\bto\s+decision\s+({symbol})",
+    "header": "Annex|Appendi|Decision|{body}", "table": "Table", "report": "Report of",
+    "not_headings": ["Rule ", "Table ", "Figure "], "session": "session", "rule": r"Rule\s+\d+",
+}
 
 
 def load_config(path: Path = DEFAULT_CONFIG) -> dict:
     """Read the organization's settings and set the styles and patterns
-    that depend on them."""
-    global _BODY, _DECISION, _MISTYPED_DECISION, _ANNEX_TO_DECISION, _OLD_DECISION, _SYMBOL
+    that depend on them (for English; see set_language)."""
     with open(path, "rb") as f:
         CONFIG.clear()
         CONFIG.update(tomllib.load(f))
@@ -566,13 +782,59 @@ def load_config(path: Path = DEFAULT_CONFIG) -> dict:
                         (ANNEX_TITLE_STYLES, "annex_titles"), (SKIP_STYLES, "skip")):
         target.clear()
         target.update(styles.get(key, []))
-    _BODY = re.escape(CONFIG["document"]["body"])
-    _DECISION = re.compile(rf"^(?:Decision\s+)?{_BODY}[-‑/]\d+/\d+\b", re.IGNORECASE)
-    _MISTYPED_DECISION = re.compile(rf"^((?:Decision\s+)?){_BODY}[\s-]?(\d+)[-‑](\d+)\b", re.IGNORECASE)
-    _ANNEX_TO_DECISION = re.compile(rf"\bto\s+decision\s+({_BODY}[-‑]\d+/\d+)", re.IGNORECASE)
-    _OLD_DECISION = re.compile(rf"^Decision\s+({_BODY}/\d+/\d+)\s*:?\s*")
-    _SYMBOL = re.compile(CONFIG["document"]["symbol"])
+    set_language("en")
     return CONFIG
+
+
+def set_language(key: str):
+    """Compile the patterns of a language ([languages.<key>] in the settings)."""
+    global _BODY, _DECISION, _MISTYPED_DECISION, _ANNEX_TO_DECISION, _OLD_DECISION, _SYMBOL
+    global _ANNEX, _APPENDIX, _TABLE_TITLE, _HEADER, _DECISION_SYMBOL
+    lang = dict(_DEFAULT_LANGUAGE)
+    lang.update(CONFIG.get("languages", {}).get(key, {}))
+    lang["code"] = lang["code"] or CONFIG["identification"]["language"]
+    lang["_key"] = key
+    LANG.clear()
+    LANG.update(lang)
+    body = CONFIG["document"]["body"]
+    # The settings' acronym, and the translations' (regular expressions:
+    # Arabic writes م.ح.د or م ح د).
+    _BODY = "(?:" + "|".join([re.escape(body)] + [b for b in lang["bodies"] if b != body]) + ")"
+    # Translations also space the hyphen: "م ح د - 3/1".
+    dash = r"[-‑/]" if key == "en" else r"\s?[-‑/]\s?"
+    sub = {"symbol": rf"{_BODY}{dash}\d+/\d+(?!\d)", "old_symbol": rf"{_BODY}/\d+/\d+",
+           "body": _BODY}
+
+    def compile_(name, anchor=True, flags=re.IGNORECASE):
+        pattern = re.sub(r"\{(symbol|old_symbol|body)\}", lambda m: sub[m.group(1)], lang[name])
+        return re.compile(("^" if anchor else "") + pattern, flags)
+    _DECISION = compile_("decision")
+    _MISTYPED_DECISION = compile_("decision_typo")
+    _ANNEX_TO_DECISION = compile_("annex_to_decision", anchor=False)
+    _OLD_DECISION = compile_("decision_old", flags=0)
+    _ANNEX = compile_("annex")
+    _APPENDIX = compile_("appendix")
+    _HEADER = re.compile(r"\[?\s*(?:" + re.sub(r"\{body\}", lambda m: _BODY, lang["header"]) + ")",
+                         re.IGNORECASE)
+    table = lang["table"]
+    _TABLE_TITLE = re.compile(rf"^((?:{table})\s*([0-9]+[A-Za-z]?))\.?(?:\s|$)")
+    _DECISION_SYMBOL = re.compile(rf"({_BODY}){dash}(\d+)/(\d+)")
+    _SYMBOL = re.compile(CONFIG["document"]["symbol"])
+
+
+def _is_report_title(text: str) -> bool:
+    """The report's title on the cover ("Report of ...", [languages] report)."""
+    return bool(re.match(LANG["report"], text))
+
+
+def decision_symbol(text: str) -> str:
+    """The first decision symbol in `text`, in the settings' acronym:
+    "Решение МПБЭУ-11/1" -> "IPBES-11/1"; the old form stays (IPBES/1/2)."""
+    m = _DECISION_SYMBOL.search(text)
+    if not m:
+        return ""
+    sep = "/" if m.group(0)[len(m.group(1)):].lstrip()[:1] == "/" else "-"
+    return f"{CONFIG['document']['body']}{sep}{m.group(2)}/{m.group(3)}"
 
 # Rank of a list format: lower ranks contain higher ones.
 _FMT_RANK = {"decimal": 1, "upperLetter": 1, "lowerLetter": 2, "lowerRoman": 3, "upperRoman": 1, "bullet": 4}
@@ -581,7 +843,8 @@ _FMT_RANK = {"decimal": 1, "upperLetter": 1, "lowerLetter": 2, "lowerRoman": 3, 
 @dataclass
 class Node:
     tag: str                        # division, subdivision, paragraph, subparagraph, attachment, root
-    num: str = ""
+    num: str = ""                   # in the English form (I., (a)): eId and structure
+    display: str = ""               # <num> as the translation shows it, when different
     heading: list = field(default_factory=list)       # spans
     subheading: list = field(default_factory=list)
     level: float = 0                # heading level (hierarchy) or list rank (paragraphs)
@@ -624,8 +887,19 @@ class Builder:
         text = norm(plain(heading)).lstrip("[ ")
         decision = ""
         if kind == "decision":
-            decision = _DECISION.match(text).group(0).split()[-1]
+            decision = decision_symbol(text)
         stack = self.attachments
+        # A decision with nothing in it, straight before another: an entry
+        # of the list of decisions in a heading style (a translation styles
+        # the last "IPBES-2/9: Communication ..." as an annex title). It
+        # goes back into the text.
+        prev = stack[-1] if stack else None
+        if kind == "decision" and prev is not None and prev.kind == "decision" \
+                and not prev.subheading and not prev.body.children and not prev.body.intro:
+            stack.pop()
+            parent = stack[-1].body if stack else self.root
+            parent.children.remove(prev)
+            parent.add_block(Block("para", spans=prev.heading))
         if kind == "top":
             stack.clear()
         elif kind == "decision":
@@ -652,7 +926,7 @@ class Builder:
         self.pending_subheading = True
 
     # headings --------------------------------------------------------------
-    def open_heading(self, level: float, num: str, heading: list):
+    def open_heading(self, level: float, num: str, heading: list, display: str = ""):
         self.close_table_section()
         while self.hier and self.hier[-1].level >= level:
             self.hier.pop()
@@ -660,19 +934,19 @@ class Builder:
         # as in most of the reference files.
         depth = len(self.hier)
         node = Node("division" if depth == 0 else "subdivision", num=num,
-                    heading=heading, level=level)
+                    heading=heading, level=level, display=display)
         self.container().children.append(node)
         self.hier.append(node)
         self.para, self.items = None, []
 
-    def open_table_section(self, num: str, heading: list):
+    def open_table_section(self, num: str, heading: list, display: str = ""):
         """A table title ("Table 1 / Status of cash contributions ...") is a
         subdivision holding the table, as in the reference files: num
         "Table 1", eId ...__subdvs_Table1__table_1."""
         self.close_table_section()
         top = self.hier[-1] if self.hier else None
         node = Node("subdivision", num=num, heading=heading, kind="table",
-                    level=(top.level if top is not None else 0) + 0.25)
+                    level=(top.level if top is not None else 0) + 0.25, display=display)
         self.container().children.append(node)
         self.hier.append(node)
         self.para, self.items = None, []
@@ -686,7 +960,7 @@ class Builder:
         self.close_table_section()
         m = re.match(r"\(?(\d+)", b.num)
         self.last_para_num = int(m.group(1)) if m else None
-        node = Node("paragraph", num=b.num, intro=[b])
+        node = Node("paragraph", num=b.num, intro=[b], display=b.display)
         self.container().children.append(node)
         self.para, self.items = node, []
 
@@ -698,14 +972,14 @@ class Builder:
         if self.para is not None and 0 < rank <= self.para.level:
             self.para, self.items = None, []
         if self.para is None:
-            node = Node("paragraph", num=b.num, intro=[b], level=rank)
+            node = Node("paragraph", num=b.num, intro=[b], level=rank, display=b.display)
             self.container().children.append(node)
             self.para, self.items = node, []
             return
         while self.items and self.items[-1].level >= rank:
             self.items.pop()
         parent = self.items[-1] if self.items else self.para
-        node = Node("subparagraph", num=b.num, intro=[b], level=rank)
+        node = Node("subparagraph", num=b.num, intro=[b], level=rank, display=b.display)
         parent.children.append(node)
         self.items.append(node)
 
@@ -748,9 +1022,18 @@ def build(blocks: list[Block]) -> Builder:
 
         # Front matter: everything before the first heading.
         if not bld.started:
-            if b.kind == "heading" and not b.num and text.startswith("Report of"):
+            if b.kind == "heading" and not b.num and _is_report_title(text):
                 b.kind, b.style = "title", "BB_Title"     # the title in a heading style
-            if b.kind == "heading" or b.kind == "annex_header":
+            # The cover's lines in heading styles before the title
+            # (translations of IPBES-1: "Première session").
+            elif b.kind == "heading" and not b.num and any(
+                    x.kind == "heading" and not x.num and _is_report_title(x.text) for x in blocks[i + 1:i + 4]):
+                b.kind = "para"
+            # Reports without heading styles (Arabic): the first section
+            # number typed in bold ("أولاً- افتتاح الدورة", I. Opening ...).
+            typed_section = b.kind == "para" and not b.auto and b.fmt == "upperRoman" \
+                and _bold_heading(b) is not None
+            if b.kind == "heading" or b.kind == "annex_header" or typed_section:
                 bld.started = True
             else:
                 bld.preface.append(b)
@@ -759,11 +1042,15 @@ def build(blocks: list[Block]) -> Builder:
 
         if b.kind == "title":                   # a title style after the cover: a heading
             b.kind, b.level = "heading", 1
-        heading_like = b.kind in ("heading", "annex_title", "annex_header") or b.bold_line
+        heading_like = b.kind in ("heading", "annex_title", "annex_header") or b.bold_line \
+            or _annex_to_decision_line(b, title) or _decision_line(b, title)
         # Attachments: annex header, decisions, annexes, appendices.
         m = _MISTYPED_DECISION.match(title) if heading_like and not b.num else None
         if m:                                   # "IPBES 4-4: ..." -> "IPBES-4/4: ..."
-            fixed = f"{m.group(1)}{CONFIG['document']['body']}-{m.group(2)}/{m.group(3)}"
+            body = CONFIG["document"]["body"]
+            typed = m.group(2) if m.group(2).casefold() != body.casefold() else body
+            session = next(g for g in m.groups()[2:-1] if g)
+            fixed = f"{m.group(1)}{typed}-{session}/{m.group(m.lastindex)}"
             b.spans = [Span(fixed)] + strip_spans(b.spans, len(plain(b.spans)) - len(plain(b.spans).lstrip()) + m.end())
             text = title = b.text
         if b.kind == "annex_header" and _DECISION.match(title):
@@ -790,6 +1077,12 @@ def build(blocks: list[Block]) -> Builder:
         if heading_like and not b.num and _starts_attachment(title):
             kind = ("decision" if _DECISION.match(title) else
                     "appendix" if _APPENDIX.match(title) else "annex")
+            # "Annex" alone, in bold rather than the annex header style
+            # (translations without styles): the annex of decisions.
+            word = _ANNEX.match(title)
+            if kind == "annex" and word and word.end() == len(title.rstrip(" ]")) \
+                    and not any(a.kind == "decision" for a in bld.attachments):
+                kind = "top"
             bld.open_attachment(kind, b.spans)
             i += 1
             continue
@@ -811,16 +1104,22 @@ def build(blocks: list[Block]) -> Builder:
                 b.kind == "heading" or b.style == "Title_table" or b.bold_line
                 or any(x.kind == "table" for x in blocks[i + 1:i + 3])):
             raw = plain(b.spans)
-            cut = len(raw) - len(raw.lstrip()) + len(re.match(r"\s*Table\s+\S+?\.?(?=\s|$)", raw).group(0))
-            bld.open_table_section(norm(tm.group(1)), strip_spans(b.spans, cut))
+            number = r"\s+\S+?\.?(?=\s|$)" if LANG["_key"] == "en" else r"\s*[0-9]+[A-Za-z]?\.?(?=\s|$|[^\w.])"
+            cut = len(raw) - len(raw.lstrip()) + \
+                len(re.match(rf"\s*(?:{LANG['table']}){number}", raw).group(0))
+            if LANG["_key"] == "en":
+                bld.open_table_section(norm(tm.group(1)), strip_spans(b.spans, cut))
+            else:                               # "Tableau 1": num "Table 1", as in English
+                bld.open_table_section(f"Table {tm.group(2)}", strip_spans(b.spans, cut), norm(tm.group(1)))
             i += 1
             continue
 
         # A section number alone on its line in a heading style ("VIII"),
         # then the title: one heading, as in decisions.
-        if b.kind == "heading" and not b.num and _ROMAN_ONLY.match(text) and nxt is not None \
+        alone = _section_alone(text) if not b.num else None
+        if b.kind == "heading" and alone and nxt is not None \
                 and nxt.kind in ("heading", "para") and not nxt.num and len(nxt.text) < 200:
-            bld.open_heading(1, text, nxt.spans)
+            bld.open_heading(1, alone[0], nxt.spans, alone[1])
             i += 2
             continue
         if b.kind in ("heading", "annex_title"):
@@ -838,26 +1137,26 @@ def build(blocks: list[Block]) -> Builder:
                 last_letter = None
             if not b.num and nxt is not None and nxt.kind == "heading":
                 level -= 0.5
-            bld.open_heading(level, b.num, b.spans)
+            bld.open_heading(level, b.num, b.spans, b.display)
             i += 1
             continue
         # A section number alone on its line ("II"), then the title: a
         # heading in decisions.
-        if not b.auto and _ROMAN_ONLY.match(text) and nxt is not None and nxt.kind == "para" \
+        if not b.auto and alone and nxt is not None and nxt.kind == "para" \
                 and not nxt.num and len(nxt.text) < 200:
-            bld.open_heading(1, text, nxt.spans)
+            bld.open_heading(1, alone[0], nxt.spans, alone[1])
             i += 2
             continue
         # Headings typed as bold paragraphs, in older reports: numbered
         # ("1.1 Governance structures", "II. Initial ...") or not ("Rule 25").
         bold_heading = _bold_heading(b)
         if bold_heading is not None:
-            level, num, spans = bold_heading
+            level, num, spans, display = bold_heading
             if level is None:                   # unnumbered: under the open heading
                 top = bld.hier[-1] if bld.hier else None
                 level = top.level if top is not None and top.kind == "bold" else \
                     (top.level + 0.5 if top is not None else 1)
-            bld.open_heading(level, num, spans)
+            bld.open_heading(level, num, spans, display)
             if num == "" and bld.hier:
                 bld.hier[-1].kind = "bold"
             i += 1
@@ -886,32 +1185,55 @@ _BOLD_TYPED_NUMBER = re.compile(r"^([IVXL]{1,5}|[A-Z]|\d{1,2}(?:\.\d{1,2})*)\.?\
 
 
 def _bold_heading(b: Block):
-    """(level, number, spans) when a bold paragraph is a heading, else
-    None. Level from the number: I. 1, A. 2, 1. 3, 1.1 4, 1.1.1 5;
-    None for an unnumbered one."""
+    """(level, number, spans, number as shown) when a bold paragraph is a
+    heading, else None. Level from the number: I. 1, A. 2, 1. 3, 1.1 4,
+    1.1.1 5; None for an unnumbered one."""
     if b.kind != "para" or b.fmt == "bullet":
         return None
     texts = [s for s in b.spans if s.note is None and s.text.strip()]
-    if not texts or not all(s.bold for s in texts):
+    # A section number typed in Arabic words ("أولاً -", "ألف -") makes a
+    # heading even when the line is not all bold.
+    arabic_section = LANG["_key"] == "ar" and not b.auto and b.display \
+        and b.fmt in ("upperRoman", "upperLetter")
+    # "Rule 25" alone on its line, bold or not.
+    rule = not b.num and LANG.get("rule") and re.fullmatch(LANG["rule"], b.text)
+    if not texts or not (arabic_section or rule or all(s.bold for s in texts)):
         return None
     text = b.text
-    if len(text) > 160 or text.endswith((".", ":", ";", ",")):
+    # A section number (I., A.) allows a longer title: translations are
+    # longer than English, and some have no heading styles.
+    longest = 300 if b.fmt in ("upperRoman", "upperLetter") else 160
+    if len(text) > longest or text.endswith((".", ":", ";", ",", "。", "：", "؛", "،")):
         return None
-    num, spans = b.num, b.spans
+    num, spans, display = b.num, b.spans, b.display
     if not num:
-        m = _BOLD_TYPED_NUMBER.match(text)
-        if m and not text.startswith(("Rule ", "Table ", "Figure ")):
+        latin = text.translate(_HOMOGLYPHS) if LANG["_key"] == "ru" else text
+        m = _BOLD_TYPED_NUMBER.match(latin)
+        if m and not text.startswith(tuple(LANG["not_headings"])):
             num = m.group(1) + ("." if not m.group(1)[-1:].isdigit() or "." not in m.group(1) else "")
+            typed = text[m.start(1):m.end(1)]
+            display = typed + num[len(m.group(1)):] if typed != m.group(1) else ""
             spans = strip_spans(spans, len(plain(spans)) - len(plain(spans).lstrip()) + m.end())
         else:
-            return None, "", spans
+            return None, "", spans, ""
     core = num.strip("().")
     if re.fullmatch(r"[IVXL]+", core) and core not in ("L",):
-        return 1, num, spans
+        return 1, num, spans, display
     if re.fullmatch(r"[A-Z]", core):
-        return 2, num, spans
+        return 2, num, spans, display
     if re.fullmatch(r"\d+(?:\.\d+)*", core):
-        return 2 + core.count(".") + 1, num, spans
+        return 2 + core.count(".") + 1, num, spans, display
+    return None
+
+
+def _section_alone(text: str):
+    """A section number alone on its line ("VIII", "七", "سابعاً"):
+    (number in the English form, number as shown or ""), else None."""
+    if _ROMAN_ONLY.match(text):
+        return text, ""
+    native = native_number(text, alone=True)
+    if native is not None and native[1] == "upperRoman":
+        return native[0].rstrip("."), native[2]
     return None
 
 
@@ -925,8 +1247,32 @@ def _decision_in_subheading(att: Node):
         return
     att.kind, att.decision = "decision", m.group(1)
     att.report_annex = True             # an annex of the report, not of a decision
-    att.heading = [Span(f"{norm(plain(att.heading))} - Decision {m.group(1)}")]
+    # "Decision IPBES/1/2" as typed (Décision, Решение ...).
+    att.heading = [Span(f"{norm(plain(att.heading))} - {text[:m.end(1)]}")]
     att.subheading = strip_spans(att.subheading, len(plain(att.subheading)) - len(plain(att.subheading).lstrip()) + m.end())
+
+
+def _annex_to_decision_line(b: Block, title: str) -> bool:
+    """A line that is only "Annex I to decision IPBES-5/1", in any style (a
+    translation has one in a table title style)."""
+    if b.kind != "para" or b.num or len(title) > 100 or not _ANNEX.match(title):
+        return False
+    m = _ANNEX_TO_DECISION.search(title)
+    return bool(m and m.end() >= len(title.rstrip(" .]")))
+
+
+def _decision_line(b: Block, title: str) -> bool:
+    """"Decision IPBES-2/2: Multidisciplinary Expert Panel" in any style (a
+    translation has decisions in a custom style, bold by the style): the
+    word "Decision", the symbol, a colon and a short title. The list of
+    decisions at the start of the annex has no "Decision" word, except in
+    IPBES-1, whose symbols have the old form (IPBES/1/1): left out."""
+    if b.kind != "para" or b.num or len(title) > 250:
+        return False
+    m = _DECISION.match(title)
+    s = _DECISION_SYMBOL.search(title)
+    return bool(m and s and s.start() > 0 and "/" not in s.group(0)[len(s.group(1)):].lstrip()[:1]
+                and title[s.end():].lstrip().startswith((":", "：")))
 
 
 def _starts_attachment(text: str) -> bool:
@@ -986,6 +1332,38 @@ class Info:
     title: str
     place: str
     symbol: str
+    session_label: str = ""         # "Onzième session", as on a translation's cover
+    translation: bool = False       # a translation of the English report
+
+
+def translation_info(bld: Builder, english: Info) -> Info:
+    """A translation's metadata: the work's (session, date, symbol) from the
+    English report; the title, session line and place from its own cover."""
+    lines = []
+    for b in bld.preface:
+        if b.kind == "table":
+            for row in b.rows:
+                for cell in row:
+                    for p in cell["paras"]:
+                        lines += [norm(x) for x in plain(p).split("\n") if norm(x)]
+        else:
+            lines.append(b.text)
+    title = next((b.text for b in bld.preface if b.kind != "table" and b.style == "BB_Title"), "") \
+        or next((x for x in lines if _is_report_title(x)), "") or english.title
+    label = place = ""
+    year = english.date[:4]
+    for k, line in enumerate(lines):
+        if not (re.search(LANG["session"], line, re.IGNORECASE) and len(line) < 60):
+            continue
+        # The place and dates, on one or two lines ("... 16 de diciembre" / "de 2024").
+        for after in (lines[k + 1:k + 2], lines[k + 1:k + 3]):
+            if after and year in " ".join(after):
+                label, place = line, " ".join(after)
+                break
+        if label:
+            break
+    return Info(english.session, english.date, title, place, english.symbol,
+                session_label=label, translation=True)
 
 
 def document_info(path: Path, bld: Builder, all_blocks: list[Block]) -> Info:
@@ -1004,7 +1382,7 @@ def document_info(path: Path, bld: Builder, all_blocks: list[Block]) -> Info:
                 break
     title = next((b.text for b in front if b.style == "BB_Title"), "")
     if not title:
-        title = next((b.text for b in front if b.text.startswith("Report of")), "")
+        title = next((b.text for b in front if _is_report_title(b.text)), "")
     if not title:
         title = CONFIG["document"]["title"].format(ordinal=_ORDINALS[int(session) - 1])
     date, place = "", ""
@@ -1034,7 +1412,9 @@ class Writer:
         ident = CONFIG["identification"]
         self.work = (f"/akn/{ident['country']}/{ident['doc_type']}/{ident['subtype']}/"
                      f"{ident['actor']}/{info.date}/{info.session}")
-        self.expr = f"{self.work}/{ident['language']}@{info.date}"
+        self.expr = f"{self.work}/{LANG['code']}@{info.date}"
+        # The English expression a translation is made from (AKN4UN 5.1.11).
+        self.source = f"{self.work}/{ident['language']}@{info.date}" if info.translation else ""
         self.used_ids: set[str] = set()
         self.note_number = 0
 
@@ -1075,7 +1455,11 @@ class Writer:
         etree.SubElement(expr, akn("FRBRuri"), value=self.expr)
         etree.SubElement(expr, akn("FRBRdate"), date=info.date, name="Generation")
         etree.SubElement(expr, akn("FRBRauthor"), href=author)
-        etree.SubElement(expr, akn("FRBRlanguage"), language=c["language"])
+        etree.SubElement(expr, akn("FRBRlanguage"), language=LANG["code"])
+        if self.source:
+            # "by" is required by the schema: the organization in <references>.
+            etree.SubElement(expr, akn("FRBRtranslation"), href=f"{self.source}/!{component}",
+                             fromLanguage=c["language"], by=c["source"])
         man = etree.SubElement(ident, akn("FRBRManifestation"))
         etree.SubElement(man, akn("FRBRthis"), value=f"{self.expr}/!{component}{ext}")
         etree.SubElement(man, akn("FRBRuri"), value=f"{self.expr}{ext}")
@@ -1176,7 +1560,7 @@ class Writer:
         eid = self.eid(prefix, abbr, node.num, index)
         el = etree.SubElement(parent, akn(node.tag), eId=eid)
         if node.num:
-            etree.SubElement(el, akn("num")).text = node.num
+            etree.SubElement(el, akn("num")).text = node.display or node.num
         if node.heading:
             self.inline(etree.SubElement(el, akn("heading")), node.heading, eid)
         if node.children:
@@ -1244,7 +1628,7 @@ class Writer:
         etree.SubElement(p, akn("docTitle")).text = info.title
         if info.session:
             p = etree.SubElement(preface, akn("p"), eId="preface__p_3")
-            etree.SubElement(p, akn("session"), value=info.session).text = \
+            etree.SubElement(p, akn("session"), value=info.session).text = info.session_label or \
                 f"{_ORDINALS[int(info.session) - 1].capitalize()} session"
         if info.place:
             p = etree.SubElement(preface, akn("p"), eId="preface__p_4")
@@ -1281,18 +1665,58 @@ def _merge(spans: list[Span]) -> list[Span]:
 # Command line
 # ---------------------------------------------------------------------------
 
+def split_name(path: Path) -> tuple[str, str]:
+    """(report, language): "2016-4.docx" -> ("2016-4", "en"),
+    "2024-11_fr.docx" -> ("2024-11", "fr"); also for a file saved as
+    "2016-4_fr.doc.docx". The languages are those in the settings."""
+    stem = path.stem.removesuffix(".doc")
+    report, _, lang = stem.rpartition("_")
+    if report and lang in CONFIG.get("languages", {}) and lang != "en":
+        return report, lang
+    return stem, "en"
+
+
 def report_name(path: Path) -> str:
-    """"2016-4.docx" -> "2016-4"; also for a file saved as "2016-4.doc.docx"."""
-    return path.stem.removesuffix(".doc")
+    """"2016-4.docx" -> "2016-4"; "2024-11_fr.docx" -> "2024-11"."""
+    return split_name(path)[0]
+
+
+def _english_original(path: Path) -> Path | None:
+    report = report_name(path)
+    for name in (f"{report}.docx", f"{report}.doc.docx"):
+        if (path.parent / name).exists():
+            return path.parent / name
+    return None
 
 
 def convert(path: Path) -> tuple[etree._Element, Info]:
     if not CONFIG:
         load_config()
-    blocks = read_blocks(path)
-    bld = build(blocks)
-    info = document_info(path, bld, blocks)
-    return Writer(info).document(bld), info
+    lang = split_name(path)[1]
+    english = None
+    if lang != "en" and (original := _english_original(path)) is not None:
+        set_language("en")
+        en_blocks = read_blocks(original)
+        english = document_info(original, build(en_blocks), en_blocks)
+    set_language(lang)
+    try:
+        blocks = read_blocks(path)
+        bld = build(blocks)
+        if english is not None:
+            info = translation_info(bld, english)
+        else:
+            info = document_info(path, bld, blocks)
+            info.translation = lang != "en"
+        return Writer(info).document(bld), info
+    finally:
+        set_language("en")
+
+
+def output_path(out: Path, path: Path) -> Path:
+    """<out>/2024-11.xml for an English report, <out>/fr/2024-11.xml for its
+    French translation."""
+    report, lang = split_name(path)
+    return (out / lang if lang != "en" else out) / f"{report}.xml"
 
 
 def main(argv=None):
@@ -1310,7 +1734,8 @@ def main(argv=None):
             print(f"skip {path.name}: old Word format; save it as .docx in Word")
             continue
         root, info = convert(path)
-        out = args.out / f"{report_name(path)}.xml"
+        out = output_path(args.out, path)
+        out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(etree.tostring(root, xml_declaration=True, encoding="utf-8"))
         counts = {t: sum(1 for _ in root.iter(akn(t))) for t in
                   ("division", "paragraph", "subparagraph", "attachment", "table", "authorialNote")}

@@ -64,7 +64,7 @@ appendix = "appendix"
 # Word paragraph styles of the UN templates.
 # Headings and their level (1: I., 2: A., 3: 1.). A numbered heading takes
 # its level from its number; the style gives the level of unnumbered ones.
-headings = { "CH1" = 1, "CH2" = 2, "CH3" = 3, "CH4" = 4, "H1" = 3, "H23" = 4, "_ H _Ch" = 1, "_ H_1" = 2, "_ H_2/3" = 3, "_ H_4" = 4, "_ H_5" = 4, "Heading 1" = 1, "Heading 2" = 2, "Heading 3" = 3, "Heading 4" = 4 }
+headings = { "CH1" = 1, "CH2" = 2, "CH3" = 3, "CH4" = 4, "H1" = 3, "H23" = 4, "_ H _Ch" = 1, "_ H_1" = 2, "_ H_2/3" = 3, "_ H_4" = 4, "_ H_5" = 4, "Heading 1" = 1, "Heading 2" = 2, "Heading 3" = 3, "Heading 4" = 4, "Title" = 1 }
 # Cover page title lines.
 titles = ["AA_Title", "BB_Title"]
 # Start of an annex ("Annex", "Annex II to decision ...").
@@ -73,3 +73,130 @@ annex_headers = ["ZZ_Anx_header"]
 annex_titles = ["ZZ_Anx_title"]
 # Left out.
 skip = ["A_Spacer"]
+
+# Languages. A translation is named after the English report with the
+# language appended (2024-11_fr.docx) and goes to <out>/<language>/2024-11.xml.
+# It is another expression of the same work: the date, session and symbol
+# are taken from the English report, the expression IRI and <FRBRlanguage>
+# use the code, and <FRBRtranslation> points to the English expression.
+#
+# The patterns recognise decisions, annexes and appendices in each language
+# (regular expressions; the code adds "^" where the text must start with
+# them). Placeholders: {symbol} a decision symbol in any of the bodies'
+# acronyms (IPBES-5/1, МПБЭУ-11/1, م.ح.د-11/1), {old_symbol} the old form
+# (IPBES/1/2), {body} the acronym alone.
+#   code               ISO 639-2 alpha-3, as in AKN4UN part 1, 6.1.2
+#   bodies             acronyms used in decision symbols, besides [document] body
+#                      (regular expressions)
+#   decision           a decision heading: "Decision IPBES-5/1: ..."
+#   decision_old       IPBES-1: "Decision IPBES/1/2 Next steps ..." (group 1: symbol)
+#   decision_typo      typed differently: "IPBES 4-4", "IPBES 11/2" (groups: prefix,
+#                      body, then the session and the number, the last group)
+#   annex, appendix    the start of an annex, an appendix
+#   annex_to_decision  "Annex I to decision IPBES-5/1" (group 1: the decision)
+#   header             the start of a paragraph in an annex header style that
+#                      is a real header (anything else there is a table note)
+#   table              the word before a table number ("Table 1")
+#   report             the report's title on the cover (a regular expression,
+#                      matched at the start)
+#   not_headings       bold lines starting with these are not numbered headings
+#   rule               a line that is only a rule number ("Rule 25"): a heading,
+#                      bold or not (rules of procedure)
+#   session            a word of the session line on the cover ("Eleventh
+#                      session"); the line after it gives the place and dates
+
+[languages.en]
+code = "eng"
+bodies = []
+decision = '(?:Decision\s+)?{symbol}'
+decision_old = 'Decision\s+({old_symbol})\s*:?\s*'
+decision_typo = '((?:Decision\s+)?)({body})(?:[\s-]?(\d+)[-‑]|\s+(\d+)/)(\d+)\b'
+annex = 'Annex(?:es)?\b'
+appendix = 'Appendi(?:x|ces)\b'
+annex_to_decision = '\bto\s+decision\s+({symbol})'
+header = 'Annex|Appendi|Decision|{body}'
+table = 'Table'
+report = "Report of"
+not_headings = ["Rule ", "Table ", "Figure "]
+rule = 'Rule\s+\d+'
+session = 'session'
+
+[languages.fr]
+code = "fra"
+bodies = []
+decision = '(?:Décision\s+)?{symbol}'
+decision_old = 'Décision\s+({old_symbol})\s*:?\s*'
+decision_typo = '((?:Décision\s+)?)({body})(?:[\s-]?(\d+)[-‑]|\s+(\d+)/)(\d+)\b'
+annex = 'Annexes?\b'
+appendix = 'Appendices?\b'
+annex_to_decision = '\b(?:de|à)\s+la\s+décision\s+({symbol})'
+header = 'Annexe|Appendice|Décision|{body}'
+table = 'Tableau'
+report = "Rapport"
+not_headings = ["Article ", "Règle ", "Tableau ", "Figure "]
+rule = 'Article\s+\d+'
+session = 'session'
+
+[languages.es]
+code = "spa"
+bodies = []
+decision = '(?:Decisión\s+)?{symbol}'
+decision_old = 'Decisión\s+({old_symbol})\s*:?\s*'
+decision_typo = '((?:Decisión\s+)?)({body})(?:[\s-]?(\d+)[-‑]|\s+(\d+)/)(\d+)\b'
+annex = 'Anexos?\b'
+appendix = 'Apéndices?\b'
+annex_to_decision = '\b(?:de|a)\s+la\s+decisión\s+({symbol})'
+header = 'Anexo|Apéndice|Decisión|{body}'
+table = 'Cuadro'
+report = "Informe"
+not_headings = ["Artículo ", "Cuadro ", "Figura ", "Gráfico "]
+rule = 'Artículo\s+\d+'
+session = 'sesiones'
+
+[languages.ru]
+code = "rus"
+bodies = ["МПБЭУ"]
+decision = '(?:Решение\s+)?{symbol}'
+decision_old = 'Решение\s+({old_symbol})\s*:?\s*'
+decision_typo = '((?:Решение\s+)?)({body})(?:[\s-]?(\d+)[-‑]|\s+(\d+)/)(\d+)\b'
+annex = 'Приложени[ея]\b'
+appendix = '(?:Добавлени|Дополнени)[ея]\b'
+annex_to_decision = '\bк\s+решению\s+({symbol})'
+header = 'Приложени|Добавлени|Дополнени|Решени|{body}'
+table = 'Таблица'
+report = "Доклад"
+not_headings = ["Правило ", "Статья ", "Таблица ", "Рисунок "]
+rule = 'Правило\s+\d+'
+session = 'сесси'
+
+[languages.ar]
+code = "ara"
+bodies = ['م\.?\s?ح\.?\s?د\.?']
+decision = '(?:مشروع\s+)?(?:ال)?(?:مقرر\s+)?{symbol}'
+decision_old = '(?:ال)?مقرر\s+({old_symbol})\s*:?\s*'
+decision_typo = '((?:(?:ال)?مقرر\s+)?)({body})(?:[\s-]?(\d+)[-‑]|\s+(\d+)/)(\d+)\b'
+annex = '(?:ال)?مرفق'
+appendix = '(?:ال)?تذييل'
+annex_to_decision = '(?:لل|ال)?مقرر\s+({symbol})'
+header = '(?:ال)?مرفق|(?:ال)?تذييل|(?:ال)?مقرر|{body}'
+table = 'الجدول'
+report = "تقرير"
+not_headings = ["المادة ", "الجدول ", "الشكل "]
+rule = 'المادة\s+\d+'
+session = 'الدورة'
+
+[languages.zh]
+code = "zho"
+bodies = []
+decision = '(?:第\s*)?{symbol}\s*(?:号决定(?!\s*的?\s*附件)|[:：])'
+decision_old = '第?\s*({old_symbol})\s*号决定\s*[:：]?\s*'
+decision_typo = '((?:第\s*)?)({body})(?:[\s-]?(\d+)[-‑]|\s+(\d+)/)(\d+)(?!\d)'
+annex = '(?:(?:第\s*)?{symbol}\s*号决定\s*的?\s*)?附件'
+appendix = '(?:附录|增编|.{0,80}(?:附录|增编)(?:[一二三四五六七八九十]+)?\s*$)'
+annex_to_decision = '({symbol})\s*号决定\s*的?\s*附件'
+header = '附件|附录|增编|第|{body}'
+table = '表'
+report = '.{0,100}报告\s*$'
+not_headings = ["第", "表", "图"]
+rule = '第\s*\d+\s*条'
+session = '届会议'

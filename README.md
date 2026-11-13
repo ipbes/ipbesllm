@@ -87,7 +87,7 @@ ipbesllm/
 ├── config/akn4un_ipbes.toml     # IPBES settings for docx_to_akn.py (metadata, decision symbols, Word styles)
 ├── config/pdf_to_ttl.toml       # Per-assessment settings for pdf_to_ttl.py (PDF, report code, Zotero group) and the shared experts and chapters lists
 ├── data/                        # Source documents (not in git; add locally)
-│   ├── docx/*.docx              # Plenary reports in Word, e.g. 2024-11.docx (converted by docx_to_akn.py)
+│   ├── docx/*.docx              # Plenary reports in Word, e.g. 2024-11.docx, and their translations, e.g. 2024-11_fr.docx (converted by docx_to_akn.py)
 │   ├── csv/ipbes_experts.csv    # Nominated experts of every assessment, with an Assessment column (IPBES export), for pdf_to_ttl.py
 │   ├── csv/ipbes_chapters.csv   # Chapter codes of each assessment, to check the experts list
 │   ├── pdf/*.pdf                # <assessment>_report.pdf (includes the SPM), <year>-<session>.pdf
@@ -103,6 +103,7 @@ ipbesllm/
 │   ├── ttl/*.ttl                # The assessments the app indexes: <A>.ttl, converted from the PDFs by pdf_to_ttl.py
 │   ├── ttl_original/*.ttl       # The earlier manual conversions (e.g. GA1_v11.ttl), for comparison; not indexed
 │   ├── xml/*.xml                # The Plenary reports the app indexes, e.g. 2013-1.xml, converted from Word by docx_to_akn.py
+│   ├── xml/<lang>/*.xml         # Their translations (ar, es, fr, ru, zh), e.g. xml/fr/2013-1.xml; not indexed
 │   └── xml_original/*.xml       # The reports made by hand in Indigo, for comparison; not indexed
 ├── dist/ipbes-data.zip          # Data bundle for the deployed app (built by data_bundle.py)
 ├── docs/ontology/*.ttl          # IPBES report ontology: the structure of the TTL files (used by ttl_audit.py)
@@ -139,6 +140,7 @@ ipbesllm/
 │   ├── pdf_ttl_compare.py       # Runs a question set through PDF and TTL
 │   ├── docx_to_akn.py           # Converts Word Plenary reports to Akoma Ntoso XML (AKN4UN)
 │   ├── xml_compare.py           # Compares converted XML with data/xml_original and the schema
+│   ├── xml_compare_lang.py      # Compares the translations' structure with the English reports
 │   ├── rdf_graph.py             # Thesaurus RAG (hybrid vector + graph)    
 │   └── *_test.py, xml_test_chunks.py, xml_test_loader.py, diagnose_chunks.py, ...   # Regression tests  and diagnostics
 ├── README.md
@@ -514,6 +516,23 @@ Old Word files (`.doc`) are skipped; save them as `.docx` in Word first (a file 
 Results on the eight sessions with both Word and XML (October 2026): 97.5–100% of the reference text found in both directions; the main-report paragraphs of IPBES-1, 4, 5, 6, 7 and 8 match the reference exactly (number, section and text); all decisions found, including some the Indigo files miss (IPBES/1/1, IPBES-4/4, IPBES-7/1; the IPBES-2 decisions are not labelled there); every file valid. Element identifiers (`eId`) are compared too: the main report's identifiers are identical to the reference in IPBES-1 and 4 to 8, the decisions' 97–100% in IPBES-4 to 8, and 85–99% of all identifiers are identical for IPBES-1, 6, 7 and 8; elsewhere the reference files differ among themselves in where they put tables (in the paragraph, in `wrapUp`, in an `hcontainer`, or in a `Table N` subdivision, which the converter uses, as most files do) and how they nest annexes to decisions (attachments, or divisions in IPBES-2 and 3). Decision symbols typed differently in a heading ("IPBES 4-4") are read as IPBES-4/4, and a page break inside a Word paragraph starts a new one ("Annex III to decision IPBES-4/1" follows one). The remaining differences are choices or slips made by hand in Indigo: notes under financial tables marked as footnotes (kept as text below the table here), table titles as subdivisions, agenda items numbered as paragraphs (IPBES-2), paragraph 82 numbered 71 (IPBES-3).
 
 After converting, run `xml_index.py` to index the new files.
+
+##### Translations
+
+The reports in Arabic, Chinese, French, Russian and Spanish are in `data/docx/` with the language appended (`2024-11_fr.docx`: `ar`, `es`, `fr`, `ru`, `zh`). `docx_to_akn.py` converts them with the English reports, to `data/xml/<lang>/<year>-<session>.xml`. They are not indexed: `xml_index.py` reads only `data/xml/*.xml`.
+
+- **Metadata.** A translation is another expression of the English report's work: the same work IRI, date, session and symbol (taken from the English report), its own expression IRI and `<FRBRlanguage>` with the ISO 639-2 code of AKN4UN part 1, 6.1.2 (`ara`, `zho`, `fra`, `rus`, `spa`), and `<FRBRtranslation href="…/eng@…" fromLanguage="eng" by="#UNEP"/>` (part 1, 5.1.11). Its title, session line and place come from its own cover.
+- **Same hierarchy as the English.** The structure is built on the English form of each number, so a translation has the English report's divisions, paragraphs, decisions and annexes, with the same element identifiers (`dvs_II__subdvs_A__para_9`); `<num>` shows the number as printed: "一、" (I.), "أولاً-" (I.), "ألف-" (A.), "(أ)" ((a)), "١-" (1.), Russian Cyrillic look-alikes ("В." for B.).
+- **Words of each language.** The words for decisions, annexes, appendices, "to decision", tables, rules and the cover are in `[languages.<lang>]` in `config/akn4un_ipbes.toml`, with the acronyms used in decision symbols (МПБЭУ, م.ح.د) and Chinese word order ("IPBES-11/1号决定附件一").
+- **Reports without heading styles** (Arabic, some Russian): headings are read from the typed section numbers and bold lines.
+
+| Task | Command |
+|---|---|
+| Convert the translations of one session | `PYTHONPATH=src python src/docx_to_akn.py data/docx/2024-11_*.docx` |
+| Compare every translation with the English | `PYTHONPATH=src python src/xml_compare_lang.py` (add `--csv <file>` for a table) |
+| Where one translation differs | `PYTHONPATH=src python src/xml_compare_lang.py fr 2017-5` |
+
+`xml_compare_lang.py` gives, per report and language, the share of the English structure found in the translation in order, the share of structural identifiers shared, and whether the decisions, annexes and appendices form the same tree. Results (November 2026), 60 translations: all valid against the schema; at least 99.7% of each Word file's text in the XML; the same decision and annex tree as the English in 56 (not in IPBES-2 in Spanish, Russian and Chinese, nor Arabic IPBES-4); 93–100% of the English structure found from IPBES-6 on in every language except Arabic IPBES-7 (72%), and 98–100% in French and Spanish from IPBES-5 on. The rest differ where the translations do: a section numbered differently from the English (Arabic IPBES-5: VIII for VII), a note in bold read as a heading, headings typed as text, the agenda numbered on from the paragraphs (French IPBES-3), and IPBES-2, whose English report is laid out differently from its translations. These need a reader of the language to review.
 
 ### PDF
 
